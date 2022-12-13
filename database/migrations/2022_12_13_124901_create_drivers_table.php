@@ -15,6 +15,8 @@ class CreateDriversTable extends Migration
     {
         Schema::create('drivers', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->enum('status',['active','disabled'])->default('active');
             $table->timestamps();
         });
     }

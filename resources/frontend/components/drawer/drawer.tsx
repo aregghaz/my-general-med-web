@@ -131,13 +131,13 @@ const Drawer: React.FC = () => {
             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className={s.sliderDiv}>
                 <div className={s.swiperCarousel}>
                     <Visible xl xxl>
-                        <HomeSlider slidesPerView={12} serials={homeData.serials}/>
+                    
                     </Visible>
                     <Visible md lg>
-                        <HomeSlider slidesPerView={8} serials={homeData.serials}/>
+                    
                     </Visible>
                     <Visible xs sm>
-                        <HomeSlider slidesPerView={3} serials={homeData.serials}/>
+                     
                     </Visible>
                 </div>
             </Col>

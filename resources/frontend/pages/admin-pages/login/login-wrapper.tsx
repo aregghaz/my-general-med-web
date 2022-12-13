@@ -1,0 +1,79 @@
+import React, {useEffect} from 'react'
+import Button from '../../../components/button/button'
+import {useTranslation} from 'react-i18next'
+import {Formik, FormikHelpers, FormikValues} from 'formik'
+import Input from '../../../components/input/input'
+import {login} from '../../../store/auth'
+import {useDispatch, useSelector} from 'react-redux'
+import {getAdminData} from '../../../store/selectors'
+import {useNavigate} from '@reach/router'
+
+import s from './login-wrapper.module.scss'
+
+
+interface ILoginWrapper {
+    path: string
+}
+
+
+const LoginWrapper: React.FC<ILoginWrapper> = () => {
+    const {t} = useTranslation()
+    const dispatch = useDispatch()
+    const {loggedIn} = useSelector(getAdminData)
+    const navigate = useNavigate()
+
+    const submit = (values: FormikValues, {setSubmitting}: FormikHelpers<FormikValues>) => {
+        setSubmitting(true)
+
+        const formData: FormData = new FormData()
+        formData.append('email', values.email)
+        formData.append('password', values.password)
+
+        dispatch(login(formData))
+    }
+
+    useEffect(() => {
+        if (loggedIn !== 0) {
+            navigate('/admin')
+                .catch(e => {
+                    throw e
+                })
+        }
+    })
+
+    return (
+        <div className={s.login}>
+            <Formik
+                initialValues={{
+                    email: '',
+                    password: ''
+                } as FormikValues}
+                onSubmit={submit}
+            >
+                {({values, handleSubmit, handleChange}) => (
+                    <form id={'form'} onSubmit={handleSubmit} className={s.form}>
+                        <h3> {t('login')} </h3>
+                        <Input
+                            label={t('email')}
+                            name={'email'}
+                            type={'text'}
+                            onChange={handleChange}
+                            value={values.email}
+                        />
+                        <Input
+                            label={t('password')}
+                            name={'password'}
+                            type={'password'}
+                            onChange={handleChange}
+                            value={values.password}
+                        />
+                        <div className={s.actions}>
+                            <Button isSubmit type={'green'} onClick={handleSubmit}>{t('login')}</Button>
+                        </div>
+                    </form>
+                )}
+            </Formik>
+        </div>
+    )
+}
+export default LoginWrapper
