@@ -1,0 +1,99 @@
+@import "../../styles/variables";
+@import "resources/frontend/styles/mixins";
+@import "resources/frontend/styles/color-pallete";
+
+
+.dataPicker {
+  display: flex;
+  justify-content: space-between;
+
+  .day,
+  .time {
+    width: 100px;
+  }
+
+  .month {
+    width: 180px;
+    @media only screen and (max-width: $smallDisplay) {
+      width: 130px;
+      margin: 0 15px;
+    }
+  }
+
+}
+
+.label {
+  font-size: 15px;
+  @include themify($themes) {
+    color: themed('modalTitleColor');
+  }
+  font-weight: normal;
+  margin-bottom: 10px;
+
+
+  @media only screen and (max-width: $smallDisplay) {
+    font-size: 12px;
+  }
+}
+
+:global {
+  // React Select custom style
+  .css-1extzgd-option,
+  .css-1fma7qu-option,
+  .css-1eqxr4i-option,
+  .css-iw3lq0-option,
+  .css-dmx9m0-placeholder {
+    margin-bottom: 15px;
+    cursor: pointer;
+    color: #757575;
+
+    @media only screen and (max-width: $smallDisplay) {
+      // Mobile Change Select Option styles
+      margin-bottom: 7px;
+      font-size: 12px !important;
+    }
+  }
+}
+
+.wrap {
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  .day {
+    width: calc(23% - 10px);
+    @media only screen and (max-width: $smallDisplay) {
+      width: calc(50% - 10px);
+    }
+  }
+
+  .month {
+    width: calc(33% - 10px);
+    @media only screen and (max-width: $smallDisplay) {
+      width: calc(50% - 10px);
+      margin: 0;
+    }
+  }
+}
+
+.from,
+.to {
+  width: calc(50% - 10px);
+}
+
+.doubleTime {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: calc(43% - 10px);
+  font-size: 15px;
+  @media only screen and (max-width: $smallDisplay) {
+    width: calc(90% - 50px);
+  }
+}
+
+.fromTo {
+  margin-bottom: 10px;
+  @include themify($themes) {
+    color: themed('inputBorderColor');
+  }
+}

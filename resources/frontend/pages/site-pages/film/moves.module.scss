@@ -1,0 +1,147 @@
+@import "../../../styles/variables";
+@import "resources/frontend/styles/mixins";
+@import "resources/frontend/styles/color-pallete";
+
+body {
+    overflow-x: hidden;
+    @include themify($themes) {
+        background-color: themed('backgroundColor');
+    }
+}
+
+.contentDiv {
+    width: 75%;
+    float: left;
+}
+
+
+.head {
+  display: flex;
+  justify-content: space-between;
+
+  .phoneLink {
+    font-family: $fontRegular;
+    color: $whiteColor;
+    font-size: 20px;
+    text-decoration: none;
+  }
+
+}
+.seeAll{
+    color:black;
+    background-color: transparent;
+    border: 1px solid;
+    text-decoration: none;
+    padding: 5px 10px;
+    font-size: 15px;
+    text-transform: capitalize;
+}
+.headerNew{
+    color: $greenColor;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.linkedin {
+  color: $whiteColor;
+  font-size: 27px;
+  cursor: pointer;
+  @media only screen and (max-width: $smallDisplay) {
+    font-size: 19px;
+  }
+}
+
+.facebook {
+  color: $whiteColor;
+  font-size: 30px;
+  cursor: pointer;
+  @media only screen and (max-width: $smallDisplay) {
+    font-size: 22px;
+  }
+}
+
+.instagram {
+  font-size: 33px;
+  color: $whiteColor;
+  @media only screen and (max-width: $largeDisplay) {
+    font-size: 28px;
+  }
+}
+
+.twitter {
+  color: $whiteColor;
+  font-size: 25px;
+  cursor: pointer;
+  @media only screen and (max-width: $smallDisplay) {
+    font-size: 19px;
+  }
+}
+
+
+.swiperCarousel {
+  margin-top: 40px;
+  min-width: 100%;
+  position: absolute;
+  left: 0;
+  @media only screen and (max-width: $mediumDisplay) {
+    margin-top: 20px;
+    right: 0;
+  }
+  @media only screen and (max-width: $smallDisplay) {
+    margin-top: 15px;
+    right: 0;
+  }
+
+}
+
+
+.swiperButtonNextTraditionalCrafts,
+.swiperButtonNextHandmadeProductsHead,
+.swiperButtonNextServices {
+  background-color: $greenColor;
+  margin-left: 8px;
+  border: 1px solid $greenColor;
+
+  @media only screen and (max-width: $smallDisplay) {
+    margin-left: 4px;
+  }
+
+  .arrow {
+    font-size: 20px;
+    @include themify($themes) {
+      color: themed('backgroundColor');
+    }
+    @media only screen and (max-width: $smallDisplay) {
+      font-size: 14px;
+    }
+  }
+}
+
+
+.rightThin {
+  margin-left: 10px;
+  font-size: 14px;
+  // fontello set fixed width element
+  &:before {
+    width: auto !important;
+  }
+}
+
+.swiperButtonNextPartners,
+.swiperButtonPrevPartners {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+
+  .arrow {
+    cursor: pointer;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+.detector {
+    width: 1px;
+    height: 1px;
+}
+
+

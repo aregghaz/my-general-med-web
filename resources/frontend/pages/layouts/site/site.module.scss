@@ -1,0 +1,9 @@
+@import "../../../styles/variables";
+
+.main {
+  min-height: calc(100vh - 200px);
+}
+.mainRow{
+    width: 100%;
+    margin-left: 0!important;
+}

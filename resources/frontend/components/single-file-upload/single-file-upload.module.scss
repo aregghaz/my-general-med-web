@@ -1,0 +1,39 @@
+@import "../../styles/variables";
+
+.uploadButtonWrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.fileInput {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.uploadFileText {
+  margin: 0 32px;
+}
+
+.uploadedImage {
+  font-size: 9px;
+}
+
+.existingImageBlock {
+  width: 300px;
+  margin-top: 20px;
+}
+
+.existingImage {
+  width: 100%;
+}
+
+.error {
+  margin-bottom: 10px;
+  color: #8B0000;
+}

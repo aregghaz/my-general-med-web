@@ -1,0 +1,98 @@
+@import "../../styles/variables";
+
+.image {
+    max-width: 100%;
+    min-width: 100%;
+    max-height: 650px;
+    min-height: 650px;
+    @media only screen and (max-width: $midlLargeDisplay) {
+        max-width: 100%;
+        min-width: 100%;
+        max-height: 550px;
+        min-height: 550px;
+    }
+    @media only screen and (max-width: $largeDisplay) {
+        max-width: 100%;
+        min-width: 100%;
+        max-height: 350px;
+        min-height: 350px;
+    }
+}
+
+
+
+.title {
+    max-height: 30px;
+}
+
+
+.cardIcon {
+    width: 20px;
+    height: 20px;
+
+    path, circle, g, g path, polygon {
+        fill: $greenColor;
+    }
+}
+
+.list {
+    padding: 5px;
+    list-style: none;
+    text-align: left;
+    color: $greenColor;
+    font-size: 16px;
+}
+
+.quality {
+    border: 1px solid $greenColor;
+    background-color: $greenColor;
+    color: white;
+    padding: 5px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: bolder;
+    display: inline-block;
+}
+
+.infoDiv {
+    border: 1px solid $greenColor;
+    margin-left:0!important;
+    margin-right:0!important;
+}
+
+.noPadding{
+    padding-left: 0!important;
+    padding-right: 0!important;
+}
+
+.iframe {
+    width: 100%;
+    @media only screen and (max-width: $extraExtraLargeDisplay) {
+        height: 750px;
+    }
+    @media only screen and (max-width: $extraExtraLargeDisplay) {
+        height: 750px;
+    }
+    @media only screen and (max-width: $extraLargeDisplay) {
+        height: 750px;
+    }
+    @media only screen and (max-width: $midlLargeDisplay) {
+        height: 750px;
+    }
+    @media only screen and (max-width: $largeDisplay) {
+        height: 450px;
+    }
+}
+.info{
+    margin-top: 10px;
+    font-weight: bolder
+}
+
+.cancelIcon {
+    position: absolute;
+    top: 15px;
+    right: 0;
+    font-size: 28px;
+    color: $whiteColor;
+    cursor: pointer;
+}

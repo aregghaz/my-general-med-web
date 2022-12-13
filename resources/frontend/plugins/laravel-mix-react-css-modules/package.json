@@ -1,0 +1,75 @@
+{
+    "_from": "laravel-mix-react-css-modules",
+    "_id": "laravel-mix-react-css-modules@1.3.0",
+    "_inBundle": false,
+    "_integrity": "sha512-lD984tAiOAiwBe78Ik/ii4K8CNpDebhaSGzkusfzPto9aeR5uppyaS37Qu/iMLEwVMcQ6ZQVTupe5cEYPAdZYg==",
+    "_location": "/laravel-mix-react-css-modules",
+    "_phantomChildren": {},
+    "_requested": {
+        "type": "tag",
+        "registry": true,
+        "raw": "laravel-mix-react-css-modules",
+        "name": "laravel-mix-react-css-modules",
+        "escapedName": "laravel-mix-react-css-modules",
+        "rawSpec": "",
+        "saveSpec": null,
+        "fetchSpec": "latest"
+    },
+    "_requiredBy": [
+        "#DEV:/",
+        "#USER"
+    ],
+    "_resolved": "https://registry.npmjs.org/laravel-mix-react-css-modules/-/laravel-mix-react-css-modules-1.3.0.tgz",
+    "_shasum": "552482b7d4fcf1b7229f129c373d86a39891bac3",
+    "_spec": "laravel-mix-react-css-modules",
+    "_where": "C:\\xampp\\htdocs\\neen",
+    "author": {
+        "name": "Lei Nelissen"
+    },
+    "bugs": {
+        "url": "https://github.com/leinelissen/laravel-mix-react-css-modules/issues"
+    },
+    "bundleDependencies": false,
+    "dependencies": {
+        "babel-plugin-react-css-modules": "^3.4.2",
+        "postcss-nested": "^3.0.0",
+        "postcss-scss": "^1.0.6"
+    },
+    "deprecated": false,
+    "description": "A React CSS Modules plugin for Laravel Mix",
+    "devDependencies": {
+        "microbundle": "^0.4.4",
+        "prettier": "^1.16.4"
+    },
+    "homepage": "https://github.com/leinelissen/laravel-mix-react-css-modules#readme",
+    "keywords": [
+        "laravel-mix",
+        "laravel",
+        "mix",
+        "react-css-modules",
+        "react",
+        "css",
+        "modules",
+        "babel",
+        "plugin",
+        "babel-plugin-react-css-modules"
+    ],
+    "license": "MIT",
+    "main": "dist/index.js",
+    "module": "dist/index.m.js",
+    "name": "laravel-mix-react-css-modules",
+    "peerDependencies": {
+        "laravel-mix": "^2.1.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/leinelissen/laravel-mix-react-css-modules.git"
+    },
+    "scripts": {
+        "build": "microbundle --compress=false --sourcemap=false",
+        "format": "prettier --write 'src/*.js'"
+    },
+    "source": "src/index.js",
+    "umd:main": "dist/index.umd.js",
+    "version": "1.3.0"
+}

@@ -1,0 +1,71 @@
+@import '../../styles/variables';
+@import "resources/frontend/styles/mixins";
+@import "resources/frontend/styles/color-pallete";
+
+.modernRadioContainer {
+    cursor: pointer;
+    display: flex;
+    user-select: none;
+    align-items: center;
+
+    & > input {
+        display: none;
+    }
+}
+
+.radioOuterCircle {
+    width: 20px;
+    height: 20px;
+    border: 2px solid $greenColor;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    transition: all 0.1s linear;
+
+    @media only screen and (max-width: $smallDisplay) {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+.radioInnerCircle {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: $greenColor;
+    transition: all 0.1s linear;
+    @media only screen and (max-width: $smallDisplay) {
+        width: 12px;
+        height: 12px;
+    }
+}
+
+.unselected {
+    @include themify($themes) {
+        border: 2px solid themed('modalTitleColor');
+    }
+}
+
+
+.helperText {
+    text-transform: uppercase;
+    cursor: pointer;
+    font-size: 16px;
+    @include themify($themes) {
+        color: themed('modalTitleColor');
+    }
+    padding-right: 8px;
+    transition: all 0.1s linear;
+    @media only screen and (max-width: $smallDisplay) {
+        font-size: 11px;
+    }
+}
+
+.helperTextActive {
+    @extend .helperText;
+    color: $greenColor !important;
+}
+
+

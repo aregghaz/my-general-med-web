@@ -1,0 +1,38 @@
+@import "../../../../styles/variables";
+
+.form {
+    padding: 25px;
+    box-shadow: 0 5px 25px rgba(34, 41, 97, 0.08);
+    background: $formBgColor;
+}
+
+.title {
+    margin-bottom: 25px;
+    text-transform: uppercase;
+}
+
+
+.item {
+    margin-bottom: 15px;
+    svg{
+        width: 20px;
+    }
+}
+
+.button{
+    padding: 0 32px;
+}
+
+.label{
+    margin-bottom: 10px;
+}
+
+.actionButtons{
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttonDiv{
+    text-align: end;
+}
+

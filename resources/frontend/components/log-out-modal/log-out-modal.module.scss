@@ -1,0 +1,61 @@
+@import "../../styles/variables";
+@import "resources/frontend/styles/mixins";
+@import "resources/frontend/styles/color-pallete";
+
+.modalBody {
+  text-align: center;
+  width: 100%;
+  @media only screen and (max-width: $smallDisplay) {
+    padding: 0 25px;
+  }
+}
+
+.icon {
+  font-size: 40px;
+  text-align: center;
+  @include themify($themes) {
+    color: themed('textColor');
+  }
+}
+
+.text {
+  font-size: 18px;
+  margin-top: 20px;
+  text-align: center;
+  @include themify($themes) {
+    color: themed('textColor');
+  }
+}
+
+.iconWrapper {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  @media only screen and (max-width: $smallDisplay) {
+    top: 35px;
+    right: 35px;
+  }
+
+  i {
+    @include themify($themes) {
+      color: themed('modalIconColor');
+    }
+    font-size: 22px;
+    cursor: pointer;
+    @media only screen and (max-width: $smallDisplay) {
+      font-size: 19px;
+
+    }
+  }
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+
+  .button {
+    width: 48%;
+    padding: 15px;
+  }
+}

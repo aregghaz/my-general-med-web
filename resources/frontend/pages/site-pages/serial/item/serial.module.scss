@@ -1,0 +1,163 @@
+@import "../../../../styles/variables";
+@import "resources/frontend/styles/mixins";
+@import "resources/frontend/styles/color-pallete";
+
+.contentDiv {
+    width: 75%;
+    float: left;
+}
+
+.seeAll {
+    color: black;
+    background-color: transparent;
+    border: 1px solid;
+    text-decoration: none;
+    padding: 5px 10px;
+    font-size: 15px;
+    text-transform: capitalize;
+}
+
+.headerNew {
+    color: $greenColor;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.infoDiv {
+    margin-top: 15px;
+}
+
+.detector {
+    width: 1px;
+    height: 1px;
+}
+
+.list {
+    list-style-type: none;
+    .title {
+        text-align: center;
+        color: $greenColor;
+    }
+}
+
+.info {
+    display: flex;
+    span {
+        line-height: 2;
+        font-size: 25px;
+        margin-bottom: 10px;
+        margin-left: 5px;
+    }
+}
+
+.cardIcon {
+    width: 50px;
+    height: 50px;
+    color: $greenColor;
+
+    path, circle, g, g path, polygon {
+        fill: $greenColor;
+    }
+
+}
+
+.iframe {
+    width: 100%;
+    @media only screen and (max-width: $extraExtraLargeDisplay) {
+        height: 750px;
+    }
+    @media only screen and (max-width: $extraExtraLargeDisplay) {
+        height: 750px;
+    }
+    @media only screen and (max-width: $extraLargeDisplay) {
+        height: 750px;
+    }
+    @media only screen and (max-width: $midlLargeDisplay) {
+        height: 750px;
+    }
+    @media only screen and (max-width: $largeDisplay) {
+        height: 450px;
+    }
+}
+
+.image {
+    object-fit: cover;
+    @media only screen and (max-width: $extraExtraLargeDisplay) {
+        img {
+            width: 400px;
+            height: 600px;
+        }
+    }
+    @media only screen and (max-width: $extraLargeDisplay) {
+        img {
+            width: 400px;
+            height: 600px;
+        }
+    }
+    @media only screen and (max-width: $midlLargeDisplay) {
+        img {
+            width: 340px;
+            height: 500px;
+        }
+    }
+    @media only screen and (max-width: $largeDisplay) {
+        height: 450px;
+    }
+    @media only screen and (max-width: $largeDisplay) {
+        img {
+            width: 300px;
+            height: 400px;
+        }
+    }
+    @media only screen and (max-width: $mediumDisplay) {
+        img {
+            width: 320px;
+            height: 400px;
+        }
+    }
+    @media only screen and (max-width: $smallDisplay) {
+        img {
+            width: 250px;
+            height: 400px;
+        }
+    }
+}
+
+.quality {
+    border: 1px solid $greenColor;
+    background-color: $greenColor;
+    color: white;
+    padding: 5px;
+    border-radius: 10px;
+    position: relative;
+    top: 5px;
+    right: 95px;
+    font-size: 15px;
+    font-weight: bolder;
+
+    @media only screen and (max-width: $extraExtraLargeDisplay) {
+        right: 9.2%;
+    }
+    @media only screen and (max-width: $midlLargeDisplay) {
+        top: 6px;
+        right: 9.6%;
+    }
+
+    @media only screen and (max-width: $largeDisplay) {
+        right: 36.5%;
+    }
+    @media only screen and (max-width: $mediumDisplay) {
+        right: 14.5%;
+    }
+    @media only screen and (max-width: $smallDisplay) {
+        right: 18.1%;
+    }
+}
+
+.staricon {
+    background-color: $greenColor;
+}
+
+.star-emptyicon {
+    border-color: $greenColor;
+}

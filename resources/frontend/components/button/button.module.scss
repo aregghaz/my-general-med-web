@@ -1,0 +1,57 @@
+@import "../../styles/variables";
+@import "resources/frontend/styles/mixins";
+@import "resources/frontend/styles/color-pallete";
+
+.primary,
+.secondary,
+.transparent,
+.green,
+.blank {
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  transition: 1s;
+  font-size: 13px;
+  background-color: transparent;
+
+  &:focus {
+    outline: none;
+    box-shadow: none
+  }
+}
+
+
+.primary {
+
+}
+
+.secondary {
+
+}
+
+.transparent {
+  background-color: transparent;
+  color: $greenColor;
+  border: 1.5px solid $greenColor;
+}
+
+
+.green {
+  background-color: $greenColor;
+  @include themify($themes) {
+    color: themed('modalBgColor')
+  }
+}
+
+.blank {
+  background-color: transparent;
+  border: none;
+}
+
+
+.update{
+    width: 150px;
+    height: 50px;
+    border-radius: 25px;
+    color: white!important;
+}

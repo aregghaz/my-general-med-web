@@ -1,0 +1,42 @@
+@import "../../styles/variables";
+
+.languagePicker {
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 20px;
+  top: 50px;
+
+  @media only screen and (max-width: $mediumDisplay) {
+    left: 10px;
+    top: 40px;
+  }
+
+  @media only screen and (max-width: $smallDisplay) {
+    left: 5px;
+    top: 35px;
+  }
+}
+
+.languagePickerItem {
+  font-family: $fontRegular;
+  font-size: 18px;
+  text-transform: uppercase;
+  color: $whiteColor;
+  margin-bottom: 15px;
+
+  &:hover {
+    border-bottom: 0.2px solid $whiteColor;
+  }
+
+  @media only screen and (max-width: $mediumDisplay) {
+    margin-bottom: 10px;
+    font-size: 17px;
+  }
+
+  @media only screen and (max-width: $smallDisplay) {
+    margin-bottom: 8px;
+    font-size: 11px;
+  }
+}

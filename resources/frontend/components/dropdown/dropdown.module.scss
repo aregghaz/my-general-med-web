@@ -1,0 +1,26 @@
+@import "../../styles/variables";
+
+.arrow {
+    display: block;
+    width: 14px;
+    height: 8px;
+}
+
+.button {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 12px;
+    font-weight: 300;
+    color: $grayColor;
+    text-align: left;
+}
+
+.rotatedArrow {
+    padding-left: 0;
+    transform: rotate(180deg) translateY(-13px);
+}
+
+.label {
+    color: $whiteColor;
+    font-size: 20px;
+}

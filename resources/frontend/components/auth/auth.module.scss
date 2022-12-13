@@ -1,0 +1,444 @@
+@import "../../styles/variables";
+@import "resources/frontend/styles/mixins";
+@import "resources/frontend/styles/color-pallete";
+
+.modalSignIn {
+    padding: 30px 30px 120px;
+    @include themify($themes) {
+        background-color: themed('modalBgColor');
+    }
+}
+
+.modalRegister {
+    @extend .modalSignIn;
+    padding: 20px 30px 50px;
+}
+
+.modalMobileAuth {
+    background-color: transparent;
+}
+
+.modalSuccess {
+    padding: 30px 30px 120px;
+    @include themify($themes) {
+        background-color: themed('modalBgColor');
+    }
+}
+
+.iconWrapper {
+    display: flex;
+    justify-content: flex-end;
+
+    @media only screen and (max-width: $largeDisplay) {
+        padding: 20px 50px 0;
+    }
+
+    @media only screen and (max-width: $smallDisplay) {
+        padding: 45px 25px 0;
+    }
+
+    i {
+        @include themify($themes) {
+            color: themed('modalIconColor');
+        }
+        font-size: 22px;
+        cursor: pointer;
+        @media only screen and (max-width: $largeDisplay) {
+            // change Mixin styles
+            color: $whiteColor !important;
+        }
+        @media only screen and (max-width: $smallDisplay) {
+            font-size: 19px;
+        }
+    }
+}
+
+
+.successModalIconWrapper {
+    @extend .iconWrapper;
+
+    @media only screen and (max-width: $smallDisplay) {
+        padding: 0 5px;
+    }
+
+    i {
+        @media only screen and (max-width: $largeDisplay) {
+            @include themify($themes) {
+                // Change Mobile styles icon
+                color: themed('modalIconColor') !important;
+            }
+        }
+    }
+}
+
+.modalContent {
+
+    .signInWrapper {
+        @media only screen and (max-width: $largeDisplay) {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        @media only screen and (max-width: $smallDisplay) {
+            max-width: 280px;
+            margin: 0 auto;
+        }
+    }
+
+    .signInText {
+        margin-bottom: 80px;
+        padding: 0 80px;
+        max-width: 400px;
+        margin-top: 40px;
+
+        @media only screen and (max-width: $smallDisplay) {
+            padding: 0;
+        }
+
+        h5 {
+            @include themify($themes) {
+                color: themed('modalTitleColor');
+            }
+            text-align: center;
+            font-size: 20px;
+            text-transform: uppercase;
+            @media only screen and (max-width: $largeDisplay) {
+                // change Mixin styles
+                color: $whiteColor !important;
+            }
+            @media only screen and (max-width: $smallDisplay) {
+                font-size: 18px;
+            }
+        }
+
+        p {
+            margin-top: 20px;
+            font-size: 14px;
+            line-height: 17px;
+            text-align: center;
+            @include themify($themes) {
+                color: themed('modalTitleColor');
+            }
+            @media only screen and (max-width: $largeDisplay) {
+                // change Mixin styles
+                color: $whiteColor !important;
+                font-size: 14px;
+            }
+            @media only screen and (max-width: $smallDisplay) {
+                font-size: 12px;
+            }
+        }
+    }
+
+    .registerText {
+        @extend .signInText;
+        max-width: 500px;
+        margin: 20px auto 30px;
+
+        @media only screen and (max-width: $smallDisplay) {
+            margin: 25px auto;
+        }
+    }
+}
+
+.signIn {
+    padding: 0 80px;
+
+    @media only screen and (max-width: $smallDisplay) {
+        padding: 0;
+    }
+
+    form > :first-child {
+        margin-bottom: 30px;
+    }
+
+    form > div {
+        position: relative;
+    }
+
+    .showIcon {
+        position: absolute;
+        top: 45px;
+        right: 10px;
+        cursor: pointer;
+        @include themify($themes) {
+            color: themed('inputShowIconColor');
+        }
+    }
+
+    .rememberData {
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .rememberDataLink {
+            @include themify($themes) {
+                color: themed('modalTitleColor');
+                font-size: 14px;
+                line-height: 16px;
+                cursor: pointer;
+                text-decoration: underline;
+
+                @media only screen and (max-width: $smallDisplay) {
+                    font-size: 12px;
+                    line-height: 14px;
+                }
+            }
+
+            @media only screen and (max-width: $largeDisplay) {
+                // change Mixin styles
+                color: $whiteColor !important;
+            }
+        }
+    }
+}
+
+.register {
+    padding: 0 30px;
+
+    @media only screen and (max-width: $smallDisplay) {
+        padding: 0 30px 50px;
+    }
+
+    .radioGroup {
+        display: flex;
+        justify-content: space-between;
+        max-width: 520px;
+        margin: 0 auto;
+
+        @media only screen and (max-width: $smallDisplay) {
+            justify-content: space-evenly;
+        }
+    }
+
+    .formInputs {
+        // Change Row style
+        max-width: 760px;
+        margin: 30px auto 0 !important;
+
+        input {
+            margin-bottom: 20px;
+        }
+
+
+        @media only screen and (max-width: $largeDisplay) {
+            :global {
+                // Change Select Bg Mobile Only Auth Modal
+                .css-137ou4n-singleValue {
+                    @include themify($themes) {
+                        color: themed('authSelectMobileColor') !important;
+                    }
+                }
+
+                .css-1ek8jvg-control {
+                    background-color: transparent !important;
+                }
+
+                .css-1g3v775-menu {
+                    background: rgba(0, 0, 0, 0.15) !important;
+                    backdrop-filter: blur(24px) !important;
+                }
+
+                .css-1extzgd-option {
+                    background: rgba(0, 0, 0, 0) !important;
+                    color: $whiteColor !important;
+                }
+
+                .css-dg0cio-control {
+                    background-color: transparent !important;
+                }
+
+                .css-epr7dm-control {
+                    background-color: transparent !important;
+                    border-color: white !important;
+                }
+
+                .css-1o1pn44-menu,
+                .css-1eqxr4i-option,
+                .css-1fma7qu-option,
+                .css-q124ov-control,
+                .css-iw3lq0-option {
+                    @media only screen and (max-width: $largeDisplay) {
+                        background: transparent !important;
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+.authCheckboxLabelStyle {
+    @include themify($themes) {
+        color: themed('authSelectMobileColor');
+    }
+}
+
+.inputLabelMobileStyle {
+    @include themify($themes) {
+        color: themed('authSelectMobileColor') !important;
+    }
+}
+
+.typeOfActivityInputWrapper {
+    position: relative;
+
+    .typeOfActivityCancelIcon {
+        position: absolute;
+        top: 45px;
+        right: 10px;
+        cursor: pointer;
+    }
+}
+
+.forgetPassword {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 0 50px;
+
+    @media only screen and (max-width: $smallDisplay) {
+        max-width: 300px;
+    }
+
+    .forgetBtn {
+        text-transform: uppercase;
+        margin-top: 40px;
+        width: 100%;
+        padding: 20px 0;
+        font-size: 18px;
+        line-height: 21px;
+
+        @media only screen and (max-width: $smallDisplay) {
+            font-size: 15px;
+            margin-top: 35px;
+            padding: 15px 0;
+        }
+    }
+}
+
+:global {
+    .css-g1d714-ValueContainer {
+        //change select heihgt
+        height: 50px !important;
+    }
+}
+
+.inputMobileStyle {
+    // Change input fixed styles
+    color: $whiteColor !important;
+    background-color: transparent !important;
+    border: 1px solid $whiteColor !important;
+}
+
+.labelStyle {
+    // Change label  fixed color
+    color: $whiteColor !important;
+}
+
+.checkboxMobileStyle {
+    // Change checkbox fixed styles
+    background-color: transparent !important;
+    border: 1px solid $whiteColor !important;
+    color: $whiteColor !important;
+}
+
+
+.btnGroup {
+    // Change Row Styles
+    max-width: 760px;
+    margin: 15px auto 0 !important;
+
+    button {
+        text-transform: uppercase;
+        width: 100%;
+        padding: 20px 0;
+        font-size: 18px;
+
+        @media only screen and (max-width: $smallDisplay) {
+            font-size: 14px;
+            padding: 15px 0;
+        }
+    }
+
+    & > :first-child {
+        margin-bottom: 24px;
+        @media only screen and (max-width: $smallDisplay) {
+            margin-bottom: 20px;
+        }
+    }
+
+    .termsText {
+        max-width: 650px;
+        margin: 8px auto 20px;
+        font-size: 16px;
+        line-height: 22px;
+        @include themify($themes) {
+            color: themed('termsTextColor');
+        }
+
+        @media only screen and (max-width: $smallDisplay) {
+            font-size: 12px;
+        }
+
+        span {
+            text-decoration: underline;
+        }
+    }
+
+    .alreadyRegisteredBtn {
+        text-decoration: underline;
+        text-transform: uppercase;
+        font-size: 18px;
+        padding: 0;
+        @include themify($themes) {
+            color: themed('modalTitleColor');
+        }
+
+        @media only screen and (max-width: $smallDisplay) {
+            font-size: 14px;
+        }
+    }
+}
+
+.successModal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 80px;
+
+    @media only screen and (max-width: $largeDisplay) {
+        padding: 0;
+    }
+
+    @media only screen and (max-width: $smallDisplay) {
+        padding: 0;
+    }
+
+    svg {
+        margin-bottom: 30px;
+        width: 100px;
+        height: 100px;
+    }
+
+    p {
+        @include themify($themes) {
+            color: themed('modalTextColor');
+        }
+        font-size: 18px;
+        max-width: 640px;
+        margin: 0 auto;
+
+        @media only screen and (max-width: $largeDisplay) {
+            min-width: 550px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        @media only screen and (max-width: $smallDisplay) {
+            min-width: 260px;
+            font-size: 12px;
+            text-align: center;
+        }
+    }
+}

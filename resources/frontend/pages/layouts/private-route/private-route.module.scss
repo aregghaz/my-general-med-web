@@ -1,0 +1,23 @@
+@import "../../../styles/variables";
+
+.example {
+  padding: 25px;
+}
+
+.root {
+  padding: 110px 15px 30px;
+  background: $adminBgColor;
+  min-height: 100vh;
+  //
+  margin-left: 300px;
+}
+
+.navigation {
+  width: 100%;
+  background-color: $whiteColor;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 20px;
+  z-index: 150;
+}
