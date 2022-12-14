@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "205ff82db5aa2476e12e391723f6eedb",
+    "content-hash": "149387af506aa32dc9a309c6579c1990",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -719,6 +719,61 @@
                 }
             ],
             "time": "2020-12-29T14:50:06+00:00"
+        },
+        {
+            "name": "fico7489/laravel-revisionable-upgrade",
+            "version": "3.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fico7489/laravel-revisionable-upgrade.git",
+                "reference": "5a004a8d619f3026f46159d6f5cc322f1472e797"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fico7489/laravel-revisionable-upgrade/zipball/5a004a8d619f3026f46159d6f5cc322f1472e797",
+                "reference": "5a004a8d619f3026f46159d6f5cc322f1472e797",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^5.5|^6.0|^7.0|^8.0",
+                "venturecraft/revisionable": "1.*"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "*",
+                "orchestra/testbench": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fico7489\\Laravel\\RevisionableUpgrade\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Filip Horvat",
+                    "email": "filip.horvat@am2studio.hr",
+                    "homepage": "http://am2studio.hr",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Upgrade for the venturecraft revisionable package, add many useful methods.",
+            "homepage": "https://github.com/fico7489/laravel-revisionable-upgrade",
+            "keywords": [
+                "laravel created_by",
+                "laravel deleted_by",
+                "laravel revisionable upgrade",
+                "laravel updated_at by key",
+                "laravel updated_by "
+            ],
+            "support": {
+                "issues": "https://github.com/fico7489/laravel-revisionable-upgrade/issues",
+                "source": "https://github.com/fico7489/laravel-revisionable-upgrade"
+            },
+            "time": "2020-09-28T08:31:16+00:00"
         },
         {
             "name": "fideloper/proxy",
@@ -5901,6 +5956,70 @@
                 "source": "https://github.com/tijsverkoyen/CssToInlineStyles/tree/2.2.3"
             },
             "time": "2020-07-13T06:12:54+00:00"
+        },
+        {
+            "name": "venturecraft/revisionable",
+            "version": "1.39.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/VentureCraft/revisionable.git",
+                "reference": "24ef304dfe7fe64362cc815faab0fc80030d0c59"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/VentureCraft/revisionable/zipball/24ef304dfe7fe64362cc815faab0fc80030d0c59",
+                "reference": "24ef304dfe7fe64362cc815faab0fc80030d0c59",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~4.0|~5.0|~5.1|^6.0|^7.0|^8.0|^9.0",
+                "laravel/framework": "~5.4|^6.0|^7.0|^8.0|^9.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Venturecraft\\Revisionable\\RevisionableServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Venturecraft\\Revisionable": "src/"
+                },
+                "classmap": [
+                    "src/migrations"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Duell",
+                    "email": "me@chrisduell.com"
+                }
+            ],
+            "description": "Keep a revision history for your models without thinking, created as a package for use with Laravel",
+            "homepage": "http://github.com/venturecraft/revisionable",
+            "keywords": [
+                "Audit",
+                "ardent",
+                "history",
+                "laravel",
+                "model",
+                "revision"
+            ],
+            "support": {
+                "issues": "https://github.com/VentureCraft/revisionable/issues",
+                "source": "https://github.com/VentureCraft/revisionable"
+            },
+            "time": "2022-01-20T05:56:12+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

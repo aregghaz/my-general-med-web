@@ -42,8 +42,8 @@ class AuthController extends Controller
             'phone_number' => $requestData['phone_number'],
             'email' => $requestData['email'],
             /////TODO CHANGE IT
-           //// 'password' => bcrypt($requestData['password']),
-            'password' => bcrypt('admin'),
+           'password' => bcrypt($requestData['password']),
+          ///  'password' => bcrypt('admin'),
             'birthday' => date ('Y-m-d', strtotime($requestData['birthday'])),
             'address' => $requestData['address'],
             'state_id' => $state->id,
