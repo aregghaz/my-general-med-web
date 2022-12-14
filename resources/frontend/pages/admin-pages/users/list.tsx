@@ -35,7 +35,7 @@ const Users: React.FC<Beneficiary> = () => {
                 const data = await AdminApi.getAllData(crudKey)
                 console.log(data)
                 setData(data.users)
-                setCount(data.data.count)
+                setCount(data.count)
 
             }
         )()
@@ -48,14 +48,14 @@ const Users: React.FC<Beneficiary> = () => {
         'email',
         'address',
         'phone_number',
-        'state',
+        // 'state',
         'birthday',
         'role',
         'image',
         'action',
     ]
 
-    const handlerAddBeneficiaryItem = () => navigate(`/admin/adminBeneficiaries/create`)
+    const handlerAddBeneficiaryItem = () => navigate(`/admin/users/create`)
 
 
     const handlerCloseModal = () => {
@@ -80,18 +80,6 @@ const Users: React.FC<Beneficiary> = () => {
     const HandlerPagination = (activeItem: number) => {
         const role = localStorage.getItem('role');
         localStorage.setItem('page', activeItem.toString());
-        // BeneficiaryItemAPI.getUserByRole(crudKey, role, activeItem).then((data) => {
-        //     setCountPages(data.show)
-        //     setActiveItem(data.page)
-        //     setCountAdmin(data.data.adminUsers)
-        //     setMasterUsers(data.data.masterUsers)
-        //     setCallOperator(data.data.callOperatorUsers)
-        //     setTourOperator(data.data.tourOperatorOperatorUsers)
-        //     setData(data.data.beneficiaries)
-        //     setCount(data.data.count)
-        //     setData(data.data)
-        //
-        // })
 
     }
 

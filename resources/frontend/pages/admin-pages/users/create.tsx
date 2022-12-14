@@ -10,7 +10,7 @@ interface IUserCreate {
 
 const UserCreate: React.FC<IUserCreate> = () => {
     const {t} = useTranslation()
-    const crudKey = 'adminBeneficiaries'
+    const crudKey = 'users'
     const [data, setData] = useState(null)
     const fields: Array<IItem> = [
         {name: 'image', type: 'file', label: 'image'},
@@ -45,9 +45,10 @@ const UserCreate: React.FC<IUserCreate> = () => {
     }, [])
 
 
-    return data && <Create
+    return  <Create
         crudKey={crudKey}
-        data={data}
+        ////TODO FIX THIS MISSING DATA FOR CREATE USER
+        data={{}}
         fields={fields}
         title={''}
         children={t('create')}

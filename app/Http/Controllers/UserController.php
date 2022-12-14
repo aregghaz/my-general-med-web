@@ -17,7 +17,8 @@ class UserController extends Controller
     
         $users = User::get();
         return response()->json([
-           'users' => new UserCollection($users)
+           'users' => new UserCollection($users),
+           "count"=> count($users)
         ], 200);
     }
 

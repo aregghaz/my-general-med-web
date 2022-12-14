@@ -20,12 +20,11 @@ class UserCollection extends ResourceCollection
                 'id' => $user->id,
                 'fullName' => $user->name.' ' .$user->surname,
                 'email' => $user->email,
-                'phone_number' => $user->phone_number,
-                'role' => $user->role,
-        
                 'address' => $user->address,
-                "image" => $user->image ? '/uploads/users/' . $user->image : null,
+                'phone_number' => $user->phone_number,
                 'birthday' => $user->birthday,
+                'role' => $user->role,
+                "image" => $user->image ? '/uploads/users/' . $user->image : null,
             ];
         });
 
