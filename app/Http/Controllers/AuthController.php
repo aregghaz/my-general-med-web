@@ -133,7 +133,7 @@ class AuthController extends Controller
         $data = [];
         $userId = $request->user()->id;
         $user = User::find($userId);
-        $state =Province::find($user->state_id);
+      
         $data = [
             'id' => $user->id,
             'name' => $user->name,
@@ -142,7 +142,7 @@ class AuthController extends Controller
             'email' => $user->email,
             'phone_number' => $user->phone_number,
             'role' => $user->role,
-            'state' => $state->name,
+            // 'state' => $state->name,
             'address' => $user->address,
             'birthday' => $user->birthday,
         ];

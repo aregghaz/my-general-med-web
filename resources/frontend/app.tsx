@@ -10,13 +10,18 @@ import 'react-app-polyfill/stable'
 
 import PrivateRoute from './pages/layouts/private-route/private-route'
 
-
 import Site from './pages/layouts/site/site'
+
 
 // Site Pages
 import Home from './pages/site-pages/home/home'
 import NotFound from './pages/site-pages/not-found/not-found'
 import LoginWrapper from './pages/admin-pages/login/login-wrapper'
+
+
+// Admin Pages
+import Dashboard from './pages/admin-pages/dashbord/dashboard'
+import Users from './pages/admin-pages/users/list'
 
 const App = (): JSX.Element => (
     <Provider store={store}>
@@ -33,10 +38,12 @@ const App = (): JSX.Element => (
             <LoginWrapper path="/admin-login"/>
 
             <PrivateRoute path="/admin">
-            <NotFound default/>
+                <Dashboard path="/"/>
+                <Users path="/users"/>
+                <NotFound default/>
             </PrivateRoute>
 
         </Router>
     </Provider>
 )
-ReactDOM.render(<App/>, document.getElementById('kinomino'))
+ReactDOM.render(<App/>, document.getElementById('root'))

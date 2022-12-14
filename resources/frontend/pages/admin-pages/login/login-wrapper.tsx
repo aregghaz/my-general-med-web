@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import Button from '../../../components/button/button'
 import {useTranslation} from 'react-i18next'
 import {Formik, FormikHelpers, FormikValues} from 'formik'
 import Input from '../../../components/input/input'
 import {login} from '../../../store/auth'
 import {useDispatch, useSelector} from 'react-redux'
-import {getAdminData} from '../../../store/selectors'
+import {getAdminData, getUserData} from '../../../store/selectors'
 import {useNavigate} from '@reach/router'
 
 import s from './login-wrapper.module.scss'
@@ -21,6 +21,9 @@ const LoginWrapper: React.FC<ILoginWrapper> = () => {
     const dispatch = useDispatch()
     const {loggedIn} = useSelector(getAdminData)
     const navigate = useNavigate()
+   
+    const {user} = useSelector(getUserData)
+    const [isLoading, setLoading] = useState(true);
 
     const submit = (values: FormikValues, {setSubmitting}: FormikHelpers<FormikValues>) => {
         setSubmitting(true)
@@ -32,15 +35,23 @@ const LoginWrapper: React.FC<ILoginWrapper> = () => {
         dispatch(login(formData))
     }
 
+ 
     useEffect(() => {
-        if (loggedIn !== 0) {
-            navigate('/admin')
-                .catch(e => {
-                    throw e
-                })
+        console.log(loggedIn,'111111111111')
+        if(loggedIn){
+            console.log(user && user.role == 'driver','111111111111')
+            if(user && user.role == 'driver'){
+               
+                navigate('/')
+            }
+            if(user && user.role !== 'driver'){
+                navigate('/admin')
+              ///  setLoading(false)
+            }
+        }else{
+            navigate('/admin-login')
         }
-    })
-
+    }, [user])
     return (
         <div className={s.login}>
             <Formik

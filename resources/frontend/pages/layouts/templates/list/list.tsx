@@ -10,45 +10,63 @@ interface IList {
     isEdit?: boolean
     isDelete?: boolean
     isCreate?: boolean
+    isGetItems?: boolean
     handlerAddItem?: () => void
-    handlerEditItem?: (id:number) => void
-    handlerDeleteItem?: (id:number) => void
+    handlerEditItem?: (id: number) => void
+    handlerDeleteItem?: (id: number) => void
+    HandlerPagination?: (id: number) => void
+    HandlerGetProducts?: (id: number) => void
+    paginated: boolean
+    activeItem?: number
+    count?: number
+    className?: string
 }
 
 const List: React.FC<IList> = (
     {
         isDelete = false,
         isEdit = false,
+        isGetItems = false,
         data,
         titles,
         isCreate = false,
         handlerAddItem,
         handlerDeleteItem,
-        handlerEditItem
+        handlerEditItem,
+        HandlerPagination,
+        HandlerGetProducts,
+        activeItem,
+        count,
+        className,
+        paginated
     }) => {
-
-
     return (
         <>
             <div className={s.addBtnWrapper}>
                 {
                     isCreate &&
-                    <Button type='green' className={s.add} onClick={handlerAddItem}  >
+                    <Button type='green' className={s.add} onClick={handlerAddItem}>
                         <span>+</span>
                     </Button>
                 }
             </div>
-
+            
             <CrudTable
                 titles={titles}
                 data={data}
                 isEdit={isEdit}
                 isDelete={isDelete}
+                isGetItems={isGetItems}
                 handlerEditItem={handlerEditItem}
                 handlerDeleteItem={handlerDeleteItem}
+                HandlerPagination={HandlerPagination}
+                HandlerGetProducts={HandlerGetProducts}
+                activeItem={activeItem}
+                count={count}
+                className={className}
+                paginated={paginated}
             />
         </>
-
     )
 }
 

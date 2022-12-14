@@ -10,150 +10,15 @@
 
 
     &.fixed {
+        float: left;
+        color: black;
         height: calc(100% - 0px);
     }
 }
 
-.homeSlider {
-    height: 200px;
-}
-
-.swiperCarousel {
-    min-width: 100%;
-    position: absolute;
-    left: 0;
-
-    @media only screen and (max-width: $mediumDisplay) {
-        margin-top: 20px;
-        right: 0;
-    }
-    @media only screen and (max-width: $smallDisplay) {
-        margin-top: 15px;
-        right: 0;
-    }
-}
-
-.swiperCarouselItem {
-    cursor: pointer;
-    position: relative;
-    height: 200px;
-    width: 150px !important;
-
-    .backdrop {
-        width: 140px;
-        height: 100%;
-        backdrop-filter: blur(5px);
-        display: flex;
-        position: absolute;
-        justify-content: center;
-        align-items: center;
-        opacity: 0;
-        flex-direction: column;
-
-        h5 {
-            color: $whiteColor;
-            font-size: 15px;
-            text-transform: uppercase;
-            font-weight: normal;
-            text-align: center;
-            @media only screen and (max-width: $mediumDisplay) {
-                font-size: 16px;
-                line-height: 19px;
-            }
-            @media only screen and (max-width: $smallDisplay) {
-                font-size: 8px;
-                line-height: 12px;
-            }
-        }
-
-        .backdropBtnWrapper {
 
 
-            .backdropBtn {
-                margin-top: 30px;
-                border: 1px solid $whiteColor;
-                padding: 12px;
-                color: $whiteColor;
-                background-color: transparent;
-                text-transform: uppercase;
-                width: 100%;
-                font-size: 14px;
-                @media only screen and (max-width: $mediumDisplay) {
-                    margin-top: 20px;
-                    font-size: 12px;
-                    line-height: 14px;
-                }
-                @media only screen and (max-width: $smallDisplay) {
-                    margin-top: 10px;
-                    font-size: 8px;
-                    line-height: 9px;
-                    padding: 7px;
-                }
-            }
-        }
 
-    }
-
-    .backDropActive {
-        @extend .backdrop;
-        opacity: 1;
-    }
-
-    @media (pointer: fine) {
-        &:hover {
-            .backdrop {
-                opacity: 1;
-            }
-        }
-    }
-}
-
-.homeSliderImage {
-    width: 100%;
-    height: 200px;
-    object-fit: contain;
-}
-
-.sliderDiv {
-    display: block;
-    height: 200px;
-    margin-top: 10px;
-    @media only screen and (max-width: $midlLargeDisplay) {
-        height: 230px;
-        margin-top: 0;
-    }
-}
-
-.swiperCarouselImage {
-    height: 200px;
-    width: 140px;
-  }
-
-.sliderButtons {
-    height: 100%;
-    align-items: flex-end;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    @media only screen and (max-width: $mediumDisplay) {
-        justify-content: start;
-    }
-}
-
-.swiperButtonNextTraditionalCrafts,
-.swiperButtonPrevTraditionalCrafts,
-.swiperButtonNextHandmadeProductsHead,
-.swiperButtonPrevHandmadeProductsHead,
-.swiperButtonNextServices,
-.swiperButtonPrevServices {
-    position: relative;
-    width: 50px;
-    height: 50px;
-    @media only screen and (max-width: $smallDisplay) {
-        width: 30px;
-        height: 30px;
-    }
-}
 
 
 .languagePicker {
@@ -197,21 +62,6 @@
     }
 }
 
-.swiperButtonPrevTraditionalCrafts,
-.swiperButtonPrevHandmadeProductsHead,
-.swiperButtonPrevServices {
-    border: 1px solid $greenColor;
-    background-color: transparent;
-
-    .arrow {
-        font-size: 20px;
-        color: $greenColor;
-        @media only screen and (max-width: $smallDisplay) {
-            font-size: 14px;
-        }
-    }
-}
-
 .category {
     display: block;
     color: #fcfcfc;
@@ -226,7 +76,7 @@
     display: block;
     transition: 0.3s;
     white-space: nowrap;
-    color: $whiteColor;
+    color: $thTextColor;
     font-size: 20px;
 }
 
@@ -273,8 +123,9 @@
     width: 100%;
     padding: 23px 40px;
     color: #fff;
-    background-color: $greenColor;
+    background-color:$grayColor;
     z-index: 999;
+    height: 50px;
 }
 
 .navWrapper {

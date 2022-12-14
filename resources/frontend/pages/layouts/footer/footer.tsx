@@ -227,7 +227,7 @@ const Footer = (): JSX.Element => {
             <CustomContainer>
                 <div className={s.socialMedia}>
                     <p className={s.copyright}>
-                        Copyright {year}. <span className={s.logo}>KINOMINO</span> {t('allRightsReserved')}
+                        Copyright {year}. <span className={s.logo}></span> {t('allRightsReserved')}
                     </p>
                     <Visible sm md lg xl xxl>
                         <div className={s.icons}>
