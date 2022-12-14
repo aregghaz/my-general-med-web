@@ -1,15 +1,14 @@
 import React, {useEffect, useState} from 'react'
 import {IItem} from '../../layouts/templates/formik-handler/formik-handler'
 import {useTranslation} from 'react-i18next'
-import Edit from '../../layouts/templates/edit/edit'
 import Create from '../../layouts/templates/create/create'
 
-interface IBeneficiaryCreate {
+interface IUserCreate {
     path: string
 }
 
 
-const BeneficiaryCreate: React.FC<IBeneficiaryCreate> = () => {
+const UserCreate: React.FC<IUserCreate> = () => {
     const {t} = useTranslation()
     const crudKey = 'adminBeneficiaries'
     const [data, setData] = useState(null)
@@ -56,4 +55,4 @@ const BeneficiaryCreate: React.FC<IBeneficiaryCreate> = () => {
 
 }
 
-export default BeneficiaryCreate
+export default UserCreate

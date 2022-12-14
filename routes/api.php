@@ -31,9 +31,6 @@ Route::group([
     Route::group([
         'middleware' => 'auth:api'
     ], function () {
-
-    
-      
         Route::get('user', [\App\Http\Controllers\AuthController::class, 'user']);
         // Route::get('account-data', [\App\Http\Controllers\AuthController::class, 'userData']);
         // Route::post('reset', [\App\Http\Controllers\AuthController::class, 'reset']);

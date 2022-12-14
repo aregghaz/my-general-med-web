@@ -22,6 +22,8 @@ import LoginWrapper from './pages/admin-pages/login/login-wrapper'
 // Admin Pages
 import Dashboard from './pages/admin-pages/dashbord/dashboard'
 import Users from './pages/admin-pages/users/list'
+import UserEdit from  './pages/admin-pages/users/edit'
+import UserCreate from  './pages/admin-pages/users/create'
 
 const App = (): JSX.Element => (
     <Provider store={store}>
@@ -40,6 +42,8 @@ const App = (): JSX.Element => (
             <PrivateRoute path="/admin">
                 <Dashboard path="/"/>
                 <Users path="/users"/>
+                <UserEdit path="/users/:id"/>
+                <UserCreate path="/users/create"/>
                 <NotFound default/>
             </PrivateRoute>
 
