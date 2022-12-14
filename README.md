@@ -13,4 +13,6 @@ front end part location resources/frontend
 8. php artisan migrate:fresh --seed
 9. php artisan serve (it`should always run )
 10. npm run watch 
-11. if something wrong call the Areg +37494806080
+
+
+If you got error in steps call the Areg +37494806080
