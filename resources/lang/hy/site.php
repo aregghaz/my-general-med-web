@@ -3,6 +3,7 @@
 return [
     'category' => 'Ժանր',
     'seeMore' => 'Դիտել',
+    'adminBeneficiaries' => "Users",
     'seeMoves'=> 'Նոր կինոնկարներ',
     'seeSerials'=> 'Նոր սերիալներ',
     'date'=> 'Թողարկման ամսաթիվը',

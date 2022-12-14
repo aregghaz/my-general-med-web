@@ -52,7 +52,7 @@ const UserCreate: React.FC<IUserCreate> = () => {
         data={data}
         fields={fields}
         title={''}
-        children={t('create')}
+        children={t('admin.create')}
     />
 
 }

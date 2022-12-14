@@ -14,7 +14,7 @@ import {setLogOut} from "../../store/auth";
 const menuItemsFirst = [
 
     {
-        item: 'adminBeneficiaries',
+        item: 'admin.adminBeneficiaries',
         page: '/admin/users'
     },
    

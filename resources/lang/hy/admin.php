@@ -10,6 +10,7 @@ return [
     'news-items' => 'Նորություններ',
     'masters' => 'Վարպետներ',
     'operators' => 'Օպերատորներ',
+    "fullName" =>'aaaaaaaaaaaa',
     'orders' => 'Պատվերներ',
     'title' => 'Վերնագիր',
     'description' => 'Նկարագրություն',

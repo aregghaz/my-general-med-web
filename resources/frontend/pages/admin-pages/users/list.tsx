@@ -15,17 +15,12 @@ interface Beneficiary {
 const Users: React.FC<Beneficiary> = () => {
     const crudKey = 'users'
     const [data, setData] = useState([])
-    const [paginated, setPaginated] = useState(true)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [countPages, setCountPages] = useState(null)
     const [deleteId, setDeleteId] = useState(null)
     const [count, setCount] = useState([])
     const [activeItem, setActiveItem] = useState(null)
-    const [tourOperator, setTourOperator] = useState([])
-    const [countAdmin, setCountAdmin] = useState([])
-    const [masterUsers, setMasterUsers] = useState([])
-    const [callOperatorUsers, setCallOperator] = useState([])
-    const [optionsSelect, setOptionsSelect] = useState([])
+
 
     const navigate = useNavigate()
     const {t} = useTranslation()
@@ -137,11 +132,11 @@ const Users: React.FC<Beneficiary> = () => {
                     </div>
 
                     <i className={`binicon- ${s.icon}`}/>
-                    <p className={s.text}>{t('do_you_want_to_delete')}</p>
+                    <p className={s.text}>{t('admin.do_you_want_to_delete')}</p>
                     <div className={s.buttons}>
                         <Button type={'green'} onClick={handlerDeleteItem}
-                                className={s.button}>{t('yes')}</Button>
-                        <Button type={'transparent'} onClick={handlerCloseModal} className={s.button}>{t('no')}</Button>
+                                className={s.button}>{t('admin.yes')}</Button>
+                        <Button type={'transparent'} onClick={handlerCloseModal} className={s.button}>{t('admin.no')}</Button>
                     </div>
                 </div>
             </Modal>
