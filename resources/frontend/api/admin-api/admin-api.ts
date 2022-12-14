@@ -14,6 +14,10 @@ export const AdminApi = {
         return axios.get(`/api/admin/${crudKey}/${id}`).then(res => res.data)
 
     },
+    createItem(crudKey:string){
+        return axios.get(`/api/admin/${crudKey}/create`).then(res => res.data)
+    },
+    //////////
     create(crudKey:string) {
         return axios.get(`/api/auth/${crudKey}/create`).then(res => res.data)
     },

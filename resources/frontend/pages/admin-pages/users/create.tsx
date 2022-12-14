@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {IItem} from '../../layouts/templates/formik-handler/formik-handler'
 import {useTranslation} from 'react-i18next'
 import Create from '../../layouts/templates/create/create'
+import { AdminApi } from '../../../api/admin-api/admin-api'
 
 interface IUserCreate {
     path: string
@@ -29,26 +30,26 @@ const UserCreate: React.FC<IUserCreate> = () => {
         // {name: 'province', type: 'select', label: 'province'},
         // {name: 'region', type: 'select', label: 'region'},
         {name: 'role', type: 'select', label: 'role'},
-        {name: 'active', type: 'select', label: 'active'},
+        {name: 'status', type: 'select', label: 'status'},
         // {name: 'description', type: 'textarea', label: 'description'},
         // {name: 'text', type: 'textarea', label: 'text'}
     ]
     useEffect(() => {
         (
             async () => {
-                // const data = await BeneficiaryItemAPI.createItem(crudKey)
-                //
-                ///setData(data)
+                const data = await AdminApi.createItem(crudKey)
+                
+                setData(data)
             }
         )()
 
     }, [])
 
 
-    return  <Create
+    return data && <Create
         crudKey={crudKey}
         ////TODO FIX THIS MISSING DATA FOR CREATE USER
-        data={{}}
+        data={data}
         fields={fields}
         title={''}
         children={t('create')}

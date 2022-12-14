@@ -38,7 +38,7 @@ class UserSeeder extends Seeder
             "address" => 'test address',
             'email' => 'operator@admin.com',
             'password' => bcrypt('admin'),
-            'role'=> 'driver'
+            'role'=> 'vendor'
         ]);
     }
 }

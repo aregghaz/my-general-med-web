@@ -16,7 +16,7 @@ class StatusSeeder extends Seeder
     {
         $status= ['active','disabled', 'blocked'];
                 foreach($status as $item){
-                 DB::table('roles')->insert([
+                 DB::table('status')->insert([
                 'name' =>$item,
                 ]);
          }

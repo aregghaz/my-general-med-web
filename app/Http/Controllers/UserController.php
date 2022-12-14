@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\RoleCollection;
+use App\Http\Resources\StatusCollection;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserCollection;
+use App\Models\Role;
+use App\Models\Status;
+use Illuminate\Support\Facades\DB;
+
 class UserController extends Controller
 {
     /**
@@ -29,7 +35,12 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $role = Role::get();
+        $status = DB::table('status')->get();
+        return response()->json([
+            "role" =>  new RoleCollection( $role ),
+            'status' => new StatusCollection($status)
+         ], 200);
     }
 
     /**
@@ -51,9 +62,12 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        $role = Role::get();
+     
         $data = User::findOrFail($id);
         return response()->json([
-            'user' => $data 
+            'user' => $data,
+            "role" =>   $role 
          ], 200);
     }
 

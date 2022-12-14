@@ -33,7 +33,6 @@ const Users: React.FC<Beneficiary> = () => {
         (
             async () => {
                 const data = await AdminApi.getAllData(crudKey)
-                console.log(data)
                 setData(data.users)
                 setCount(data.count)
 
