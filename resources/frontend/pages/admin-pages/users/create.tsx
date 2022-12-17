@@ -15,10 +15,10 @@ const UserCreate: React.FC<IUserCreate> = () => {
     const [data, setData] = useState(null)
     const fields: Array<IItem> = [
         // {name: 'image', type: 'file', label: 'image'},
-        {name: 'name', type: 'input', label: 'title'},
+        {name: 'name', type: 'input', label: 'name'},
         {name: 'surname', type: 'input', label: 'surName'},
         {name: 'email', type: 'input', label: 'email'},
-        // {name: 'business_address', type: 'input', label: 'businessAddress'},
+        {name: 'address', type: 'input', label: 'address'},
         {name: 'birthday', type: 'input', label: 'birthDate'},
         {name: 'phone_number', type: 'input', label: 'phoneNumber'},
         // {name: 'selectedTypes', type: 'multiSelect', label: 'services'},

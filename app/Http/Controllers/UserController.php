@@ -10,7 +10,8 @@ use App\Http\Resources\UserCollection;
 use App\Models\Role;
 use App\Models\Status;
 use Illuminate\Support\Facades\DB;
-
+use App\Http\Requests\UserRequest;
+use \Validator;
 class UserController extends Controller
 {
     /**
@@ -51,7 +52,49 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make( (array) json_decode($request->value), [
+            'name' => 'required|string',
+            'surname' => 'string',
+            'phone_number' => 'required|string',
+            'email' => 'required|string|email|unique:users',
+            ///'password' => 'required|string|confirmed',
+            'birthday' => 'string',
+         'address' =>'string',
+            // 'address' => 'string',
+            
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['success' => 0, 'type' => 'validation_filed', 'error' => $validator->messages()], 422);
+        }
+        $requestData = $validator->validated();
+        // $state = json_decode($request->state);
+   // dd($requestData);
+        $user = new User([
+            'name' => $requestData['name'],
+            'surname' => $requestData['surname'],
+            'phone_number' => $requestData['phone_number'],
+            'email' => $requestData['email'],
+            /////TODO CHANGE IT
+           //// 'password' => bcrypt($requestData['password']),
+            'password' => bcrypt('admin'),
+            'birthday' => date ('Y-m-d', strtotime($requestData['birthday'])),
+            'address' => $requestData['address'],
+            // 'state_id' => $state->id,
+        ]);
+        if (!$user->save()) {
+            return response()->json([
+                'success' => '0',
+                'type' => 'forbidden',
+            ], 403);
+        }
+        // $user->notify(
+        //     new UserCreateNotification($user)
+        // );
+        return response()->json([
+            'success' => '1',
+            'type' => 'success',
+            'status'=> 200
+        ], 201);
     }
 
     /**

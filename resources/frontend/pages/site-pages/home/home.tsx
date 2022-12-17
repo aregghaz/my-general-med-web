@@ -6,12 +6,11 @@ import {useDispatch, useSelector} from 'react-redux'
 import {actions} from '../../../store/home'
 import {getHomePageData} from '../../../store/selectors'
 import {homeAPI} from "../../../api/site-api/home-api";
-import SerialCard from "../../../components/serial-card/serial-card";
-import {Link} from '@reach/router'
+import {Link, navigate} from '@reach/router'
 import s from './home.module.scss'
-import {ISerialCard} from "../../../types/serial";
-import {movesAPI} from "../../../api/site-api/move-api";
 import ModalItem from "../../../components/modal-item/modal-item";
+import CrudTable from '../../../components/crud-table-user/crud-table'
+import { ITitle } from '../../../types/home-types'
 SwiperCore.use([Navigation, Pagination, EffectFade, Autoplay])
 
 interface IHome {
@@ -20,48 +19,63 @@ interface IHome {
 
 const Home: React.FC<IHome> = () => {
     const {t} = useTranslation()
-
-    const [singleSerialItem, setSingleSerialItem] = useState(null)
-
-    const [singleMovesItem, setSingleMovesItem] = useState(null)
-
-    const [openSerialModal, setSerialOpen] = useState(false)
-
-    const [openMovesModal, setMovesOpen] = useState(false)
-
+    const [activeItem, setActiveItem] = useState(null)
+    const [count, setCount] = useState(0)
+    const [data, setData] = useState([])
+    const titles: Array<ITitle> = [
+        {name :'Id', show : true},
+        {name :'FullName', show : true},
+        {name :'Pick up addrees', show : true},
+        {name :'Drop down addrees', show : true},
+        {name :'Apartament number', show : true},
+        {name :'State', show : true},
+        {name :'CCN', show : true},
+        {name :'id number', show : true},
+        {name :'Birthday', show : true},
+     
+      
+    ]
     const homeData = useSelector(getHomePageData)
 
     const dispatch = useDispatch()
 
     const {serials, moves} = homeData
 
+
+
     useEffect(() => {
         (
             async () => {
-              ///  const data = await homeAPI.getHomePageData()
+               const homeData = await homeAPI.getHomePageData()
+               setData(homeData.users)
+               setCount(homeData.count)
                /// dispatch(actions.fetching(data))
             }
         )()
         return () => dispatch(actions.resetState())
     }, [])
 
-   
+    const HandlerPagination = (activeItem: number) => {
+        const role = localStorage.getItem('role');
+        localStorage.setItem('page', activeItem.toString());
 
-    return (<>
+    }
+    const HandlerGetData= (id: number) => navigate(`/admin/users-products/${id}`)
 
-        {/* <h2 className={s.headerNew}>
-            {t('seeSerials')} <Link className={s.seeAll} to={'/all/serials'}>{t('seeAll')}</Link>
-        </h2> */}
-        <Row className={s.imageGroup}>
-           
-        </Row>
-      
-        {/* <h2 className={s.headerNew}>
-            {t('seeMoves')} <Link className={s.seeAll} to={'/all/films'}>{t('seeAll')}</Link>
-        </h2> */}
-        <Row className={s.imageGroup}>
-         
-        </Row>
+    return (data && <>
+
+       
+            <CrudTable
+                titles={titles}
+                data={data}
+                HandlerPagination={HandlerPagination}
+                HandlerGetProducts={HandlerGetData}
+                activeItem={activeItem}
+                
+                count={count/20}
+                className={'pagination'}
+                paginated={true}
+            />
        
     </>)
 }

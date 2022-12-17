@@ -19,7 +19,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-
+Route::group([
+    'middleware' => 'auth:api'
+], function () {
+    Route::resources([
+        'home-data' => HomeController::class,
+    ]);
+});
 Route::group([
     'prefix' => 'auth'
 ], function () {
@@ -27,7 +33,7 @@ Route::group([
     Route::post('login', [\App\Http\Controllers\AuthController::class, 'login']);
     Route::post('signup', [\App\Http\Controllers\AuthController::class, 'signup']);
     Route::get('getFormData', [\App\Http\Controllers\AuthController::class, 'registerForm']);
-
+   
     Route::group([
         'middleware' => 'auth:api'
     ], function () {

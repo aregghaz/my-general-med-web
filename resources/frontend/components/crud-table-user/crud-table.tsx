@@ -3,17 +3,13 @@ import TableHead from './table-head/table-head'
 import TableBody from './table-body/table-body'
 import s from './crud-table.module.scss'
 import TableFoot from "./table-foot/table-foot";
+import { ITitle } from '../../types/home-types';
 
 
 const CrudTable: React.FC<ICrudTable> = (
     {
         data,
         titles,
-        isDelete,
-        isEdit,
-        isGetItems,
-        handlerEditItem,
-        handlerDeleteItem,
         HandlerGetProducts,
         count,
         activeItem,
@@ -28,11 +24,6 @@ const CrudTable: React.FC<ICrudTable> = (
                 <TableHead titles={titles}/>
                 <TableBody
                     data={data}
-                    isDelete={isDelete}
-                    isEdit={isEdit}
-                    isGetItems={isGetItems}
-                    handlerDeleteItem={handlerDeleteItem}
-                    handlerEditItem={handlerEditItem}
                     HandlerGetProducts={HandlerGetProducts}
                 />
             </table>
@@ -53,18 +44,13 @@ const CrudTable: React.FC<ICrudTable> = (
 interface ICrudTable {
     ////FIXME SHOULD ADD TYPE DATA
     data: Array<any>
-    titles:Array<string>
-    isEdit?: boolean
-    isDelete?: boolean
+    titles:Array<ITitle>
     paginated?: boolean
-    isGetItems?: boolean
-    count?: number
+    count: number
     activeItem?: number
     className: string
-    handlerEditItem?: (id: number) => void
-    handlerDeleteItem?: (id: number) => void
-    HandlerPagination?: (id: number) => void
-    HandlerGetProducts?: (id: number) => void
+    HandlerGetProducts?: (id: number) => void 
+    HandlerPagination?: (id: number) => void 
 }
 
 export default CrudTable

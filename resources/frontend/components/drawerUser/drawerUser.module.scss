@@ -1,0 +1,180 @@
+@import "../../styles/variables";
+
+.root {
+    height: 100%;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    transition: 0.5s;
+    margin: 10px 20px 20px;
+
+
+    &.fixed {
+        float: left;
+        color: black;
+        height: calc(100% - 0px);
+    }
+}
+
+
+
+
+
+
+.languagePicker {
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 20px;
+    top: 50px;
+
+    @media only screen and (max-width: $mediumDisplay) {
+        left: 10px;
+        top: 40px;
+    }
+
+    @media only screen and (max-width: $smallDisplay) {
+        left: 5px;
+        top: 35px;
+    }
+}
+
+.languagePickerItem {
+    font-family: $fontRegular;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: $whiteColor;
+    margin-bottom: 15px;
+
+    &:hover {
+        border-bottom: 0.2px solid $whiteColor;
+    }
+
+    @media only screen and (max-width: $mediumDisplay) {
+        margin-bottom: 10px;
+        font-size: 17px;
+    }
+
+    @media only screen and (max-width: $smallDisplay) {
+        margin-bottom: 8px;
+        font-size: 11px;
+    }
+}
+
+.category {
+    display: block;
+    color: #fcfcfc;
+    padding: 5px 0px 5px 25px;
+    border: 1px solid;
+    font-size: 20px;
+}
+
+.link {
+    padding: 10px 12px;
+    text-decoration: none;
+    display: block;
+    transition: 0.3s;
+    white-space: nowrap;
+    color: $thTextColor;
+    font-size: 20px;
+}
+
+.closeIcon {
+    position: absolute;
+    top: 10px;
+    left: 190px;
+    width: 30px;
+    margin-left: 50px;
+    transition: 0.5s;
+    z-index: 9000;
+}
+
+.openIcon {
+    width: 50px;
+    position: absolute;
+    top: 10px;
+    padding: 0 11px;
+    z-index: 9000;
+}
+
+
+.openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #111;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+}
+
+.openbtn:hover {
+    background-color: #444;
+}
+
+.listIcon {
+    position: absolute;
+    width: 70px;
+    padding: 6px 16px;
+}
+
+
+.headerNav {
+    width: 100%;
+    padding: 23px 40px;
+    color: #fff;
+    background-color:$grayColor;
+    z-index: 999;
+    height: 50px;
+}
+
+.navWrapper {
+    max-width: calc(100% - 70px);
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.icon {
+
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    position: relative;
+}
+
+.home {
+    display: block;
+    width: 200px;
+    color: white;
+    font-size: 30px;
+    margin-right: 10px;
+    position: relative;
+    font-weight: bolder;
+    letter-spacing: 15px;
+}
+
+.iconBlock {
+    & + & {
+        margin-left: 20px;
+    }
+}
+
+.icons {
+    display: flex;
+    float:left;
+    width: 50%;
+    justify-content:space-between;
+}
+.end{
+    justify-content:flex-end;
+}
+.logo{
+
+    padding: 0;
+    font-size: 30px;
+    font-weight: bolder;
+    letter-spacing: 15px;
+    font-style: inherit;
+    font-family: TAHOMA;
+}

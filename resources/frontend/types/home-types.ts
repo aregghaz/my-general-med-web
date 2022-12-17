@@ -9,7 +9,10 @@ export interface IPartner {
     slug?: string
 }
 
-
+export interface ITitle {
+    name : string,
+    show :boolean
+}
 export interface ITraditionalCraft {
     id: number
     text: string

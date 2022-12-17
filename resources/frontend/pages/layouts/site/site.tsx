@@ -4,7 +4,7 @@ import {checkLoggedIn} from '../../../store/auth'
 import {useDispatch, useSelector} from 'react-redux'
 
 import s from './site.module.scss'
-import Drawer from "../../../components/drawer/drawer";
+import DrawerUser from "../../../components/drawerUser/drawerUser";
 import {Col, Row} from 'react-grid-system'
 import { getAdminData, getUserData } from '../../../store/selectors'
 import { navigate } from '@reach/router'
@@ -42,7 +42,7 @@ const Site: React.FC<ISite> = ({children}) => {
     }, [user])
     return (
         <Row className={s.mainRow}>
-            <Drawer/>
+            <DrawerUser/>
             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className={s.mainContainer}>
                 {children}
             </Col>
