@@ -19,6 +19,8 @@ class Clients extends Model
     protected $fillable  =  [
         'name',
         'surname',
+        "client_id",
+        'driver_id',
         'pick_up_address',
         'drop_down_address',
         'apartament_number',

@@ -37,7 +37,7 @@ const Site: React.FC<ISite> = ({children}) => {
               ///  setLoading(false)
             }
         }else{
-            navigate('/admin-login')
+            navigate('/login')
         }
     }, [user])
     return (

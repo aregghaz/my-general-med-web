@@ -14,5 +14,8 @@ export const authAPI = {
     },
     getUser() {
         return axios.get('/api/auth/user').then(res => res.data)
+    },
+    logout() {
+        return axios.get('/api/auth/logout').then(res => res.data)
     }
 }

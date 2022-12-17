@@ -14,7 +14,17 @@ class ClientsController extends Controller
      */
     public function index()
     {
-        //
+        
+        if(Isset($request->querySearch)){
+        
+            
+            $clients = Clients::where( 'client_id', 'LIKE', '%' . $request->querySearch . '%' )->orWhere( 'driver_id', 'LIKE', '%' . $request->querySearch . '%' )->paginate(20);
+
+        }else{
+            $clients = Clients::paginate(20);
+
+        }
+        return response()->json($clients, 200);
     }
 
     /**

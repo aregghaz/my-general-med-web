@@ -44,7 +44,7 @@ Route::group([
         // /////TOODO CHECK THIS PART
         // Route::post('uploadAvatar', [\App\Http\Controllers\AuthController::class, 'uploadAvatar']);
         // Route::post('edit', [\App\Http\Controllers\AuthController::class, 'edit']);
-        // Route::get('logout', [\App\Http\Controllers\AuthController::class, 'logout']);
+        Route::get('logout', [\App\Http\Controllers\AuthController::class, 'logout']);
     });
 });
 Route::group([
@@ -56,6 +56,7 @@ Route::group([
         Route::resources([
             'home-data' => HomeController::class,
             'users' => \App\Http\Controllers\UserController::class,
+            'clients' => \App\Http\Controllers\ClientsController::class,
         
         ]);
     });

@@ -4,6 +4,7 @@ import axios from 'axios'
 import {Dispatch} from 'redux'
 import {authAPI} from '../api/site-api/auth-api'
 import {navigate} from '@reach/router'
+import { homeAPI } from '../api/site-api/home-api'
 
 const initialState = {
     user: null as IUser | null,
@@ -88,7 +89,7 @@ export const checkAdminLoggedIn = ():ThunkType => async (dispatch) =>{
             })
             await dispatch(getUserData())
         } else {
-             return  navigate('/admin-login')
+             return  navigate('/login')
         }
     }
     catch (e) {
@@ -132,7 +133,8 @@ export const getUserData = (): ThunkType => async (dispatch) => {
     }
 }
 
-export const setLogOut = () => (dispatch: Dispatch) => {
+export const setLogOut = () => async (dispatch: Dispatch) => {
+    const homeData = await authAPI.logout()
     localStorage.removeItem('access_token')
     dispatch(actions.logOut())
 }

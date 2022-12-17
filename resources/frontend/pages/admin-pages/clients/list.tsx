@@ -7,18 +7,19 @@ import s from "../../layouts/templates/list/list.module.scss";
 import Select, {IOption, IOptionMultiselect} from '../../../components/select/select'
 import {useTranslation} from 'react-i18next'
 import Modal from 'react-modal'
+import numberFormatting from '../../../constants/utils';
 
-interface Beneficiary {
+interface IClients {
     path: string
 }
 
-const Users: React.FC<Beneficiary> = () => {
-    const crudKey = 'users'
+const Clients: React.FC<IClients> = () => {
+    const crudKey = 'clients'
     const [data, setData] = useState([])
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [countPages, setCountPages] = useState(null)
     const [deleteId, setDeleteId] = useState(null)
-    const [count, setCount] = useState(0)
+    const [count, setCount] = useState({from:0, to:10})
     const [activeItem, setActiveItem] = useState(null)
 
 
@@ -28,8 +29,12 @@ const Users: React.FC<Beneficiary> = () => {
         (
             async () => {
                 const data = await AdminApi.getAllData(crudKey,1,'')
-                setData(data.users)
-                setCount(data.users.to)
+                console.log(data.to,'data.data.to');
+                data.to
+                setCount({from: data.to-3, to: data.to+5})
+                setData(data.data)
+               
+
 
             }
         )()
@@ -71,7 +76,11 @@ const Users: React.FC<Beneficiary> = () => {
     const handlerEditBeneficiaryItem = (id: number) => navigate(`/admin/${crudKey}/${id}`)
     const HandlerGetProducts = (id: number) => navigate(`/admin/users-products/${id}`)
 
-    const HandlerPagination = (activeItem: number) => {
+    const HandlerPagination = async (activeItem: number) => {
+        const query =  localStorage.getItem('query')
+        const homeData = await  AdminApi.getAllData(crudKey,activeItem+1,query ? query : '')
+        setCount({from: homeData.to-3, to: homeData.to+5})
+        setData(homeData.data)
         const role = localStorage.getItem('role');
         localStorage.setItem('page', activeItem.toString());
 
@@ -107,7 +116,6 @@ const Users: React.FC<Beneficiary> = () => {
                 titles={titles}
                 isDelete
                 isEdit
-                paginated={false}
                 isCreate
                 isGetItems
                 handlerAddItem={handlerAddBeneficiaryItem}
@@ -116,6 +124,7 @@ const Users: React.FC<Beneficiary> = () => {
                 HandlerPagination={HandlerPagination}
                 HandlerGetProducts={HandlerGetProducts}
                 count={count}
+                paginated={true}
                 activeItem={activeItem}
                 className={'pagination'}
             />
@@ -146,4 +155,4 @@ const Users: React.FC<Beneficiary> = () => {
 }
 
 
-export default Users
+export default Clients

@@ -18,6 +18,10 @@ const menuItemsFirst = [
         page: '/admin/users'
     },
    
+    {
+        item: 'admin.clients',
+        page: '/admin/clients'
+    },
 ]
 
 const Drawer: React.FC = () => {

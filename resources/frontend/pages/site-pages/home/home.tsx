@@ -11,6 +11,7 @@ import s from './home.module.scss'
 import ModalItem from "../../../components/modal-item/modal-item";
 import CrudTable from '../../../components/crud-table-user/crud-table'
 import { ITitle } from '../../../types/home-types'
+import Input from '../../../components/input/input'
 SwiperCore.use([Navigation, Pagination, EffectFade, Autoplay])
 
 interface IHome {
@@ -20,10 +21,15 @@ interface IHome {
 const Home: React.FC<IHome> = () => {
     const {t} = useTranslation()
     const [activeItem, setActiveItem] = useState(null)
-    const [count, setCount] = useState(0)
+    const [count, setCount] = useState({
+        from : 0,
+        to :5
+    })
     const [data, setData] = useState([])
     const titles: Array<ITitle> = [
         {name :'Id', show : true},
+        {name: "client_id",show:true},
+        {name: "driver_id",show:true},
         {name :'FullName', show : true},
         {name :'Pick up addrees', show : true},
         {name :'Drop down addrees', show : true},
@@ -46,33 +52,51 @@ const Home: React.FC<IHome> = () => {
     useEffect(() => {
         (
             async () => {
-               const homeData = await homeAPI.getHomePageData()
-               setData(homeData.users)
-               setCount(homeData.count)
+               const homeData = await homeAPI.getHomePageData(1)
+               setCount({from: homeData.to-3, to: homeData.to+5})
+               setData(homeData.users.data)
+               /////FIXME pagination functiononality 
+             
                /// dispatch(actions.fetching(data))
             }
         )()
         return () => dispatch(actions.resetState())
     }, [])
 
-    const HandlerPagination = (activeItem: number) => {
+    const HandlerPagination = async (activeItem: number) => {
+       const query =  localStorage.getItem('query')
+        const homeData = await homeAPI.getHomePageData(activeItem+1,query ? query : '')
+        setCount({from: homeData.to-3, to: homeData.to+5})
+        setData(homeData.users.data)
+       
         const role = localStorage.getItem('role');
         localStorage.setItem('page', activeItem.toString());
 
     }
     const HandlerGetData= (id: number) => navigate(`/admin/users-products/${id}`)
 
-    return (data && <>
 
+    ///FIXME  MISSING TYPE
+    const onSerachInput = async (event:any) => {
+        ////FIXME: its should be save in state 
+        localStorage.setItem('query', event.target.value);
+        const page = localStorage.getItem('page')
+        const homeData = await homeAPI.getHomePageData(parseFloat(page)+1,event.target.value)
+        setCount({from: homeData.to-3, to: homeData.to+5})
+        setData(homeData.users.data)
+       
+    }
+    return (data && <>
+<Input name={'search'} type={'text'} onChange={onSerachInput}/>
        
             <CrudTable
-                titles={titles}
+                titles={titles} 
                 data={data}
                 HandlerPagination={HandlerPagination}
                 HandlerGetProducts={HandlerGetData}
                 activeItem={activeItem}
                 
-                count={count/20}
+                count={count}
                 className={'pagination'}
                 paginated={true}
             />

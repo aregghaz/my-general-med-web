@@ -18,7 +18,9 @@ interface IList {
     HandlerGetProducts?: (id: number) => void
     paginated: boolean
     activeItem?: number
-    count?: number
+    ////FIXMECHANGE IT NORMA TYPR
+    ///count?: {from:number,to:number}
+    count?:any
     className?: string
 }
 

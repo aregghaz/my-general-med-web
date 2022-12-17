@@ -1,6 +1,10 @@
 export interface IPaginationTypes {
-    count: number
+    count: ICount
     activeItem:  number
     handlerChangeItem?: (id: number) => void
 }
 
+export interface ICount {
+    from : number,
+    to :number
+}
