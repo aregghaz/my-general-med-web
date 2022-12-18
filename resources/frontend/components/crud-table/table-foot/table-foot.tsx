@@ -13,53 +13,43 @@ const TableFoot: React.FC<IPaginationTypes> =
          handlerChangeItem
      }) => {
         console.log(count,'countcount');
-        const NumberCount= count.to -count.from
-const pagination = () =>{
-
-    ///////FIXMESTO HEAR
-     for(var i = NumberCount; i < count.to + 5; i++){
-            if (activeItem == i) {
-                return <span
-                    key={i + 1}
-                    className={`${styles.number} ${styles.active}`}
-                 >
-
-                    <Button
-                        key={i}
-                        onClick={() => handlerChangeItem(i)}
-                        type={'blank'}
-                    >
-                        {i + 1}
-                    </Button>
-
-                </span>
-            } else {
-                return <span
-                    key={i + 1}
-                    className={styles.number}
-                  >
-
-                    <Button
-                        key={i + 1}
-                        onClick={() => handlerChangeItem(i)}
-                        type={'blank'}
-                    >
-                        {i + 1}
-                    </Button>
-
-                </span>
-            }
-        }
-} 
-
-       
+        const Number = count.to -count.from
         return (
 
             <div className={styles.trPagination}>
-                {
-            
-                   
-               
+                {Array.from(Array(count), (e, i) => {
+                    if (activeItem == i) {
+                        return <span
+                            key={i + 1}
+                            className={`${styles.number} ${styles.active}`}
+                         >
+
+                            <Button
+                                key={i}
+                                onClick={() => handlerChangeItem(i)}
+                                type={'blank'}
+                            >
+                                {count.from + 1}
+                            </Button>
+
+                        </span>
+                    } else {
+                        return <span
+                            key={i + 1}
+                            className={styles.number}
+                          >
+
+                            <Button
+                                key={i + 1}
+                                onClick={() => handlerChangeItem(i)}
+                                type={'blank'}
+                            >
+                                {i + 1}
+                            </Button>
+
+                        </span>
+                    }
+                })
                 }
 
             </div>
