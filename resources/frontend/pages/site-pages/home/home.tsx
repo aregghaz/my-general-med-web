@@ -4,7 +4,8 @@ import {useTranslation} from 'react-i18next'
 import SwiperCore, {EffectFade, Navigation, Pagination, Autoplay} from 'swiper'
 import {useDispatch, useSelector} from 'react-redux'
 import {actions} from '../../../store/home'
-import {getHomePageData} from '../../../store/selectors'
+import {clientAction} from '../../../store/client'
+import {getClientData, getHomePageData} from '../../../store/selectors'
 import {homeAPI} from "../../../api/site-api/home-api";
 import {Link, navigate} from '@reach/router'
 import s from './home.module.scss'
@@ -43,11 +44,11 @@ const Home: React.FC<IHome> = () => {
       
     ]
     const homeData = useSelector(getHomePageData)
-
+    const clientDataSelector = useSelector(getClientData);
     const dispatch = useDispatch()
 
     const {data,pagination,last_page} = homeData
-
+    const {show, clientData} = clientDataSelector
 
 
     useEffect(() => {
@@ -73,6 +74,25 @@ const Home: React.FC<IHome> = () => {
     }, [])
 
     const HandlerPagination = async (activeItem: number) => {
+        let dataClient = {
+            show:false,
+            clientData :{
+                id : 0,
+                client_id:0,
+                driver_id:0,
+                surname:"string",
+                name:"",
+                drop_down_address:"",
+                pick_up_address:"",
+                apartament_number:"",
+                birthday:"",
+                email:"",
+                id_number:0,
+                phone_number:"",
+                status:0,
+            }
+        }
+        dispatch(clientAction.fetching(dataClient))
        const query =  localStorage.getItem('query')
         const homeData = await homeAPI.getHomePageData(activeItem+1,query ? query : '')
         /////FIXME pagination functiononality 
@@ -80,7 +100,7 @@ const Home: React.FC<IHome> = () => {
             pagination : {from: homeData.users.current_page, to: homeData.users.current_page+5},
             total: homeData.users.total,
             last_page:homeData.users.last_page,
-            data: homeData.users.data
+            data: homeData.users.data,
            }
            dispatch(actions.fetching(homeApi))
         const role = localStorage.getItem('role');
@@ -88,7 +108,13 @@ const Home: React.FC<IHome> = () => {
 
     }
     const handlerGetclientData= (client: any) => {
-        console.log(client,'aaaaaaaaaaaa');
+        console.log(client,'client');
+        
+        let dataClient = {
+            show:true,
+            clientData :client
+        }
+        dispatch(clientAction.fetching(dataClient))
         
     }
 
@@ -111,7 +137,22 @@ const Home: React.FC<IHome> = () => {
        dispatch(actions.fetching(homeApi))
     }
     return (data && <>
-                <Input name={'search'} type={'text'} onChange={onSerachInput}/>
+
+
+
+   {show&&
+     <div > 
+                <span>name :{clientData.name}</span>
+                <span>surname :{clientData.surname}</span>
+                <span>client_id :{clientData.surname}</span>
+                <span>driver_id :{clientData.driver_id}</span>
+     </div>
+   }
+
+    <div>
+    <Input name={'search'} type={'text'} onChange={onSerachInput}/>
+    </div>
+            
        
             <CrudTable
                 titles={titles} 

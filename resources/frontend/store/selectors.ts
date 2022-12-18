@@ -6,7 +6,10 @@ export const getHomePageData = (state: AppStateType) => ({
     last_page:state.homeReducer.last_page,
     pagination: state.homeReducer.pagination,
 })
-
+export const getClientData = (state:AppStateType)=>({
+    show: state.clientReducer.show,
+    clientData:state.clientReducer.clientData,
+})
 export const getUserData = (state: AppStateType) => ({user: state.authReducer.user})
 
 export const getAdminData = (state: AppStateType) => ({

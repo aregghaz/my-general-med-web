@@ -3,6 +3,7 @@ import homeReducer from './home'
 import authReducer from './auth'
 import serialsReducer from './moves'
 import itemReducer from "./item";
+import clientReducer from './client';
 
 
 const reducers = combineReducers({
@@ -10,6 +11,7 @@ const reducers = combineReducers({
     authReducer,
     serialsReducer,
     itemReducer,
+    clientReducer,
 })
 export type ReducerType = typeof reducers
 
