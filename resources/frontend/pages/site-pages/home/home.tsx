@@ -53,7 +53,7 @@ const Home: React.FC<IHome> = () => {
         (
             async () => {
                const homeData = await homeAPI.getHomePageData(1)
-               setCount({from: homeData.to-3, to: homeData.to+5})
+               setCount({from: homeData.users.current_page, to: homeData.users.current_page+5})
                setData(homeData.users.data)
                /////FIXME pagination functiononality 
              
@@ -66,7 +66,7 @@ const Home: React.FC<IHome> = () => {
     const HandlerPagination = async (activeItem: number) => {
        const query =  localStorage.getItem('query')
         const homeData = await homeAPI.getHomePageData(activeItem+1,query ? query : '')
-        setCount({from: homeData.to-3, to: homeData.to+5})
+        setCount({from: homeData.users.current_page, to: homeData.users.current_page+5})
         setData(homeData.users.data)
        
         const role = localStorage.getItem('role');
@@ -82,7 +82,7 @@ const Home: React.FC<IHome> = () => {
         localStorage.setItem('query', event.target.value);
         const page = localStorage.getItem('page')
         const homeData = await homeAPI.getHomePageData(parseFloat(page)+1,event.target.value)
-        setCount({from: homeData.to-3, to: homeData.to+5})
+        setCount({from: homeData.users.current_page, to: homeData.users.current_page+5})
         setData(homeData.users.data)
        
     }

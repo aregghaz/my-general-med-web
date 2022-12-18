@@ -79,7 +79,7 @@ const Clients: React.FC<IClients> = () => {
     const HandlerPagination = async (activeItem: number) => {
         const query =  localStorage.getItem('query')
         const homeData = await  AdminApi.getAllData(crudKey,activeItem+1,query ? query : '')
-        setCount({from: homeData.to-3, to: homeData.to+5})
+        setCount({from: homeData.current_page, to: homeData.current_page+5})
         setData(homeData.data)
         const role = localStorage.getItem('role');
         localStorage.setItem('page', activeItem.toString());

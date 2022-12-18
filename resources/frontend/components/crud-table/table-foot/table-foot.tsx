@@ -13,11 +13,11 @@ const TableFoot: React.FC<IPaginationTypes> =
          handlerChangeItem
      }) => {
         console.log(count,'countcount');
-        const Number = count.to -count.from
+        const Number = count.from
         return (
 
             <div className={styles.trPagination}>
-                {Array.from(Array(count), (e, i) => {
+                {Array.from(Array(10), (e, i) => {
                     if (activeItem == i) {
                         return <span
                             key={i + 1}
@@ -29,7 +29,7 @@ const TableFoot: React.FC<IPaginationTypes> =
                                 onClick={() => handlerChangeItem(i)}
                                 type={'blank'}
                             >
-                                {count.from + 1}
+                                {Number  +i  + 1}
                             </Button>
 
                         </span>
