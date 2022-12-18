@@ -93,9 +93,11 @@ const Home: React.FC<IHome> = () => {
     ///FIXME  MISSING TYPE
     const onSerachInput = async (event:any) => {
         ////FIXME: its should be save in state 
+
+        
         localStorage.setItem('query', event.target.value);
         const page = localStorage.getItem('page')
-        const homeData = await homeAPI.getHomePageData(parseFloat(page)+1,event.target.value)
+        const homeData = await homeAPI.getHomePageData(1,event.target.value)
        /////FIXME pagination functiononality 
        let homeApi ={
         pagination : {from: homeData.users.current_page, to: homeData.users.current_page+5},

@@ -20,13 +20,13 @@ const TableFoot: React.FC<IPaginationTypes> =
                 {Array.from(Array(10), (e, i) => {
                     if (activeItem == i) {
                         return <span
-                            key={i + 1}
+                            key={Number + i}
                             className={`${styles.number} ${styles.active}`}
                          >
 
                             <Button
                                 key={i}
-                                onClick={() => handlerChangeItem(i)}
+                                onClick={() => handlerChangeItem(Number  +i)}
                                 type={'blank'}
                             >
                                 {Number  +i}
@@ -35,13 +35,13 @@ const TableFoot: React.FC<IPaginationTypes> =
                         </span>
                     } else {
                         return <span
-                            key={i + 1}
+                        key={Number + i}
                             className={styles.number}
                           >
 
                             <Button
                                 key={i + 1}
-                                onClick={() => handlerChangeItem(i)}
+                                onClick={() => handlerChangeItem(Number  +i)}
                                 type={'blank'}
                             >
                                 {Number +i }
