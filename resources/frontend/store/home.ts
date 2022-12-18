@@ -1,11 +1,14 @@
 import {InferActionsTypes} from './store'
 import {ISerialCard} from "../types/serial";
-
+import { IClientsData } from '../types/home-types';
+import {ICount} from '../types/admin'
 const initialState = {
-    serials: [] as Array<ISerialCard>,
-    moves: [] as Array<ISerialCard>,
-
+    data: [] as Array<IClientsData>,
+    pagination:  {from : 0,
+        to :0}
 }
+
+
 type InitialState = typeof initialState
 type Actions = InferActionsTypes<typeof actions>
 
@@ -15,15 +18,16 @@ const homeReducer = (state = initialState, action: Actions): InitialState => {
         case 'FETCHING_HOME_PAGE_DATA':
             return {
                 ...state,
-                serials: [...action.payload.serials],
-                moves: [...action.payload.moves],
+                data: [...action.payload.data],
+                pagination: action.payload.pagination,
 
             }
         case 'RESET_HOME_PAGE_STATE':
             return {
                 ...state,
-                serials: [],
-                moves: [],
+                data: [],
+                pagination: {from : 0,
+                    to :0},
             }
         default:
             return state

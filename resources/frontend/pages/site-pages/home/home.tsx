@@ -25,7 +25,7 @@ const Home: React.FC<IHome> = () => {
         from : 0,
         to :5
     })
-    const [data, setData] = useState([])
+    ///const [data, setData] = useState([])
     const titles: Array<ITitle> = [
         {name :'Id', show : true},
         {name: "client_id",show:true},
@@ -45,7 +45,7 @@ const Home: React.FC<IHome> = () => {
 
     const dispatch = useDispatch()
 
-    const {serials, moves} = homeData
+    const {data,pagination} = homeData
 
 
 
@@ -53,10 +53,14 @@ const Home: React.FC<IHome> = () => {
         (
             async () => {
                const homeData = await homeAPI.getHomePageData(1)
-               setCount({from: homeData.users.current_page, to: homeData.users.current_page+5})
-               setData(homeData.users.data)
+             ///  setCount({from: homeData.users.current_page, to: homeData.users.current_page+5})
+              /// setData(homeData.users.data)
                /////FIXME pagination functiononality 
-             
+               let homeApi ={
+                pagination : {from: homeData.users.current_page, to: homeData.users.current_page+5},
+                data: homeData.users.data
+               }
+               dispatch(actions.fetching(homeApi))
                /// dispatch(actions.fetching(data))
             }
         )()
@@ -66,9 +70,12 @@ const Home: React.FC<IHome> = () => {
     const HandlerPagination = async (activeItem: number) => {
        const query =  localStorage.getItem('query')
         const homeData = await homeAPI.getHomePageData(activeItem+1,query ? query : '')
-        setCount({from: homeData.users.current_page, to: homeData.users.current_page+5})
-        setData(homeData.users.data)
-       
+        /////FIXME pagination functiononality 
+        let homeApi ={
+            pagination : {from: homeData.users.current_page, to: homeData.users.current_page+5},
+            data: homeData.users.data
+           }
+           dispatch(actions.fetching(homeApi))
         const role = localStorage.getItem('role');
         localStorage.setItem('page', activeItem.toString());
 
@@ -82,12 +89,15 @@ const Home: React.FC<IHome> = () => {
         localStorage.setItem('query', event.target.value);
         const page = localStorage.getItem('page')
         const homeData = await homeAPI.getHomePageData(parseFloat(page)+1,event.target.value)
-        setCount({from: homeData.users.current_page, to: homeData.users.current_page+5})
-        setData(homeData.users.data)
-       
+       /////FIXME pagination functiononality 
+       let homeApi ={
+        pagination : {from: homeData.users.current_page, to: homeData.users.current_page+5},
+        data: homeData.users.data
+       }
+       dispatch(actions.fetching(homeApi))
     }
     return (data && <>
-<Input name={'search'} type={'text'} onChange={onSerachInput}/>
+                <Input name={'search'} type={'text'} onChange={onSerachInput}/>
        
             <CrudTable
                 titles={titles} 
@@ -96,7 +106,7 @@ const Home: React.FC<IHome> = () => {
                 HandlerGetProducts={HandlerGetData}
                 activeItem={activeItem}
                 
-                count={count}
+                count={pagination}
                 className={'pagination'}
                 paginated={true}
             />

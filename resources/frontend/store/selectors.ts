@@ -1,8 +1,8 @@
 import {AppStateType} from './store'
 
 export const getHomePageData = (state: AppStateType) => ({
-    serials: state.homeReducer.serials,
-    moves: state.homeReducer.moves,
+    data: state.homeReducer.data,
+    pagination: state.homeReducer.pagination,
 })
 
 export const getUserData = (state: AppStateType) => ({user: state.authReducer.user})
