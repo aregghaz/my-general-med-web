@@ -16,7 +16,9 @@ const CrudTable: React.FC<ICrudTable> = (
         handlerEditItem,
         handlerDeleteItem,
         HandlerGetProducts,
+        handlerGetclientData,
         count,
+        last_page,
         activeItem,
         className,
         HandlerPagination,
@@ -33,6 +35,7 @@ const CrudTable: React.FC<ICrudTable> = (
                     isEdit={isEdit}
                     isGetItems={isGetItems}
                     handlerDeleteItem={handlerDeleteItem}
+                    handlerGetclientData={handlerGetclientData}
                     handlerEditItem={handlerEditItem}
                     HandlerGetProducts={HandlerGetProducts}
                 />
@@ -40,6 +43,7 @@ const CrudTable: React.FC<ICrudTable> = (
             {
                 paginated && <TableFoot
                     count={count}
+                    last_page={last_page}
                     activeItem={activeItem}
                     handlerChangeItem={HandlerPagination}
                 />
@@ -61,11 +65,13 @@ interface ICrudTable {
     isGetItems?: boolean
     count?: ICount
     activeItem?: number
+    last_page:number
     className: string
     handlerEditItem?: (id: number) => void
     handlerDeleteItem?: (id: number) => void
     HandlerPagination?: (id: number) => void
     HandlerGetProducts?: (id: number) => void
+    handlerGetclientData: (data:any) => void
 }
 
 export default CrudTable

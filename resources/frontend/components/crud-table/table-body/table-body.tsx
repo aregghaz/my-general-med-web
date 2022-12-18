@@ -14,6 +14,7 @@ interface ITableBody {
     handlerEditItem?: (id: number) => void
     handlerDeleteItem?: (id: number) => void
     HandlerGetProducts?: (id: number) => void
+    handlerGetclientData: (data: any) => void
 }
 
 const TableBody: React.FC<ITableBody> = (
@@ -23,6 +24,7 @@ const TableBody: React.FC<ITableBody> = (
         isDelete,
         isGetItems,
         handlerDeleteItem,
+        handlerGetclientData,
         handlerEditItem,
         HandlerGetProducts
     }) => {
@@ -38,19 +40,19 @@ const TableBody: React.FC<ITableBody> = (
                             {keys
                                 .map((key) => {
                                         if (key === 'image') {
-                                            return (
-                                                <TableData key={key}>
-                                                    <img
-                                                        src={item[key] ? item[key] : '/uploads/partners/avatar.png' }
-                                                        alt={key}
-                                                        className={s.img}
-                                                    />
-                                                </TableData>
-                                            )
+                                            // return (
+                                            //     <TableData key={key}>
+                                            //         <img
+                                            //             src={item[key] ? item[key] : '/uploads/partners/avatar.png' }
+                                            //             alt={key}
+                                            //             className={s.img}
+                                            //         />
+                                            //     </TableData>
+                                            // )
                                         }
 
                                         return (
-                                            <TableData key={key}>
+                                            <TableData key={key}   handlerGetclientData={handlerGetclientData}>
                                                 {item[key]}
                                             </TableData>
                                         )
@@ -58,7 +60,7 @@ const TableBody: React.FC<ITableBody> = (
                                 )
                             }
 
-                            {
+                            {/* {
                                 (isEdit || isDelete) &&
                                 <TableData>
                                     <div className={s.iconsWrapper}>
@@ -71,7 +73,7 @@ const TableBody: React.FC<ITableBody> = (
                                         <TrashIcon className={s.trashIcon} onClick={()=> handlerDeleteItem(item.id)}/>}
                                     </div>
                                 </TableData>
-                            }
+                            } */}
 
                         </TableRow>
                     )

@@ -10,10 +10,12 @@ const TableFoot: React.FC<IPaginationTypes> =
     ({
          count,
          activeItem,
+         last_page,
          handlerChangeItem
      }) => {
         console.log(count,'countcount');
         const Number = count.from
+        //////FIXME LAST PAGE PROBLEM
         return (
 
             <div className={styles.trPagination}>

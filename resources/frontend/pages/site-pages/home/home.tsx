@@ -46,7 +46,7 @@ const Home: React.FC<IHome> = () => {
 
     const dispatch = useDispatch()
 
-    const {data,pagination} = homeData
+    const {data,pagination,last_page} = homeData
 
 
 
@@ -87,7 +87,10 @@ const Home: React.FC<IHome> = () => {
         localStorage.setItem('page', activeItem.toString());
 
     }
-    const HandlerGetData= (id: number) => navigate(`/admin/users-products/${id}`)
+    const handlerGetclientData= (client: any) => {
+        console.log(client,'aaaaaaaaaaaa');
+        
+    }
 
 
     ///FIXME  MISSING TYPE
@@ -114,9 +117,10 @@ const Home: React.FC<IHome> = () => {
                 titles={titles} 
                 data={data}
                 HandlerPagination={HandlerPagination}
-                HandlerGetProducts={HandlerGetData}
+                // HandlerGetProducts={HandlerGetData}
+                handlerGetclientData={handlerGetclientData}
                 activeItem={activeItem}
-                
+                last_page={last_page}
                 count={pagination}
                 className={'pagination'}
                 paginated={true}

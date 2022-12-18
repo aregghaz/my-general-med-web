@@ -5,16 +5,18 @@ import TrashIcon from '-!svg-react-loader!../../../images/trash.svg'
 import EditIcon from '-!svg-react-loader!../../../images/edit.svg'
 import OrdersIcon from '-!svg-react-loader!../../../images/my-orders.svg'
 import s from '../crud-table.module.scss'
+import { IClientsData } from '../../../types/home-types'
 
 interface ITableBody {
     data: Array<any>
     HandlerGetProducts?: (id: number) => void
+    handlerGetclientData: (data: IClientsData) => void
 }
 
 const TableBody: React.FC<ITableBody> = (
     {
         data,
-        HandlerGetProducts
+        handlerGetclientData
     }) => {
 
     return (
@@ -27,20 +29,20 @@ const TableBody: React.FC<ITableBody> = (
                         <TableRow key={index}>
                             {keys
                                 .map((key) => {
-                                        if (key === 'image') {
-                                            return (
-                                                <TableData key={key}>
-                                                    <img
-                                                        src={item[key] ? item[key] : '/uploads/partners/avatar.png' }
-                                                        alt={key}
-                                                        className={s.img}
-                                                    />
-                                                </TableData>
-                                            )
-                                        }
+                                        // if (key === 'image') {
+                                        //     return (
+                                        //         <TableData key={key}>
+                                        //             <img
+                                        //                 src={item[key] ? item[key] : '/uploads/partners/avatar.png' }
+                                        //                 alt={key}
+                                        //                 className={s.img}
+                                        //             />
+                                        //         </TableData>
+                                        //     )
+                                        // }
 
                                         return (
-                                            <TableData key={key}>
+                                            <TableData key={key} item={item} handlerGetclientData={handlerGetclientData}>
                                                 {item[key]}
                                             </TableData>
                                         )
@@ -50,9 +52,9 @@ const TableBody: React.FC<ITableBody> = (
 
                             {
                                 
-                                <TableData>
+                                <TableData  item={item} handlerGetclientData={handlerGetclientData}>
                                     <div className={s.iconsWrapper}>
-                                        <OrdersIcon className={s.editIcon} onClick={() => HandlerGetProducts(item.id)}/>
+                                        <OrdersIcon className={s.editIcon} />
 
                                     </div>
                                 </TableData>

@@ -76,7 +76,7 @@ const Users: React.FC<Beneficiary> = () => {
         localStorage.setItem('page', activeItem.toString());
 
     }
-
+const handlerGetclientData = () => {}
     const customStyles: ReactModal.Styles = {
         content: {
             position: 'fixed',
@@ -115,6 +115,7 @@ const Users: React.FC<Beneficiary> = () => {
                 handlerEditItem={handlerEditBeneficiaryItem}
                 HandlerPagination={HandlerPagination}
                 HandlerGetProducts={HandlerGetProducts}
+                handlerGetclientData={handlerGetclientData}
                 count={count}
                 activeItem={activeItem}
                 className={'pagination'}
