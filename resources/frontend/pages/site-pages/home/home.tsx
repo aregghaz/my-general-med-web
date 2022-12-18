@@ -28,20 +28,19 @@ const Home: React.FC<IHome> = () => {
     })
     ///const [data, setData] = useState([])
     const titles: Array<ITitle> = [
-        {name :'Id', show : true},
+        {name :'id', show : true},
         {name: "client_id",show:true},
         {name: "driver_id",show:true},
-        {name :'FullName', show : true},
-        {name :'image', show : false},
-        {name :'Pick up addrees', show : true},
-        {name :'Drop down addrees', show : true},
-        {name :'Apartament number', show : true},
-        {name :'State', show : true},
-        {name :'CCN', show : true},
-        {name :'id number', show : true},
-        {name :'Birthday', show : true},
-     
-      
+        {name :'name', show : true},
+        {name :'surname', show : true},
+        {name :'email', show : true},
+        {name :'pick_up_address', show : true},
+        {name :'drop_down_address', show : true},
+        {name :'apartament_number', show : true},
+        // {name :'State', show : true},
+        // {name :'ccn', show : true},
+        {name :'id_number', show : true},
+        {name :'birthday', show : true},
     ]
     const homeData = useSelector(getHomePageData)
     const clientDataSelector = useSelector(getClientData);
@@ -55,11 +54,6 @@ const Home: React.FC<IHome> = () => {
         (
             async () => {
                const homeData = await homeAPI.getHomePageData(1)
-             ///  setCount({from: homeData.users.current_page, to: homeData.users.current_page+5})
-              /// setData(homeData.users.data)
-               /////FIXME pagination functiononality 
-
-         
                let homeApi ={
                 pagination : {from: homeData.users.current_page, to: homeData.users.current_page+5},
                 total: homeData.users.total,
@@ -67,7 +61,6 @@ const Home: React.FC<IHome> = () => {
                 data: homeData.users.data
                }
                dispatch(actions.fetching(homeApi))
-               /// dispatch(actions.fetching(data))
             }
         )()
         return () => dispatch(actions.resetState())
@@ -92,8 +85,9 @@ const Home: React.FC<IHome> = () => {
                 status:0,
             }
         }
+
         dispatch(clientAction.fetching(dataClient))
-       const query =  localStorage.getItem('query')
+        const query =  localStorage.getItem('query')
         const homeData = await homeAPI.getHomePageData(activeItem+1,query ? query : '')
         /////FIXME pagination functiononality 
         let homeApi ={

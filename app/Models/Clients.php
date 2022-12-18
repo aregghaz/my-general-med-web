@@ -27,6 +27,7 @@ class Clients extends Model
         'id_number',
         'birthday',
         'status',
+        'ccn',
         'phone_number'
     ];
 

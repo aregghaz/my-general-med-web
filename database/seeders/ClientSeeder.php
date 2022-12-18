@@ -26,6 +26,7 @@ class ClientSeeder extends Seeder
                     'id_number'=> '12321123213',
                     'birthday'=> date("Y-m-d H:i:s"),
                     'status'=> 1,
+                    'cnn'=> rand(pow(10, 3), pow(10, 4)-1),
                     "client_id" => rand(pow(10, 3), pow(10, 4)-1),
                      'driver_id' => rand(pow(10, 3), pow(10, 4)-1) 
                 ]);

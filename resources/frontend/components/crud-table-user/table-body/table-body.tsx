@@ -25,7 +25,9 @@ const TableBody: React.FC<ITableBody> = (
             data
                 .map((item, index) => {
                     const keys = Object.keys(item)
-                    return (
+             
+                    
+                    return keys.length >0 && (
                         <TableRow key={index}>
                             {keys
                                 .map((key) => {
@@ -52,12 +54,12 @@ const TableBody: React.FC<ITableBody> = (
 
                             {
                                 
-                                <TableData  item={item} handlerGetclientData={handlerGetclientData}>
-                                    <div className={s.iconsWrapper}>
-                                        <OrdersIcon className={s.editIcon} />
+                                // <TableData  item={item} handlerGetclientData={handlerGetclientData}>
+                                //     <div className={s.iconsWrapper}>
+                                //         <OrdersIcon className={s.editIcon} />
 
-                                    </div>
-                                </TableData>
+                                //     </div>
+                                // </TableData>
                             }
 
                         </TableRow>
