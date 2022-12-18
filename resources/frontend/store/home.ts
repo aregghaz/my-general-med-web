@@ -4,8 +4,12 @@ import { IClientsData } from '../types/home-types';
 import {ICount} from '../types/admin'
 const initialState = {
     data: [] as Array<IClientsData>,
-    pagination:  {from : 0,
-        to :0}
+    pagination:  {
+        from : 0,
+        to :0
+    },
+    total:0 as number,
+    last_page:0 as number
 }
 
 
@@ -19,6 +23,8 @@ const homeReducer = (state = initialState, action: Actions): InitialState => {
             return {
                 ...state,
                 data: [...action.payload.data],
+                total:action.payload.total,
+                last_page:action.payload.last_page,
                 pagination: action.payload.pagination,
 
             }
@@ -26,8 +32,12 @@ const homeReducer = (state = initialState, action: Actions): InitialState => {
             return {
                 ...state,
                 data: [],
-                pagination: {from : 0,
-                    to :0},
+                total:0,
+                last_page:0,
+                pagination: {
+                    from : 0,
+                    to :0
+                },
             }
         default:
             return state

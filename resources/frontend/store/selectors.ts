@@ -2,6 +2,8 @@ import {AppStateType} from './store'
 
 export const getHomePageData = (state: AppStateType) => ({
     data: state.homeReducer.data,
+    total:state.homeReducer.total,
+    last_page:state.homeReducer.last_page,
     pagination: state.homeReducer.pagination,
 })
 

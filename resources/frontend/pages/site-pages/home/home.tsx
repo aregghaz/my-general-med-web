@@ -31,6 +31,7 @@ const Home: React.FC<IHome> = () => {
         {name: "client_id",show:true},
         {name: "driver_id",show:true},
         {name :'FullName', show : true},
+        {name :'image', show : false},
         {name :'Pick up addrees', show : true},
         {name :'Drop down addrees', show : true},
         {name :'Apartament number', show : true},
@@ -56,8 +57,12 @@ const Home: React.FC<IHome> = () => {
              ///  setCount({from: homeData.users.current_page, to: homeData.users.current_page+5})
               /// setData(homeData.users.data)
                /////FIXME pagination functiononality 
+
+         
                let homeApi ={
                 pagination : {from: homeData.users.current_page, to: homeData.users.current_page+5},
+                total: homeData.users.total,
+                last_page:homeData.users.last_page,
                 data: homeData.users.data
                }
                dispatch(actions.fetching(homeApi))
@@ -73,6 +78,8 @@ const Home: React.FC<IHome> = () => {
         /////FIXME pagination functiononality 
         let homeApi ={
             pagination : {from: homeData.users.current_page, to: homeData.users.current_page+5},
+            total: homeData.users.total,
+            last_page:homeData.users.last_page,
             data: homeData.users.data
            }
            dispatch(actions.fetching(homeApi))
@@ -92,6 +99,8 @@ const Home: React.FC<IHome> = () => {
        /////FIXME pagination functiononality 
        let homeApi ={
         pagination : {from: homeData.users.current_page, to: homeData.users.current_page+5},
+        total: homeData.users.total,
+        last_page:homeData.users.last_page,
         data: homeData.users.data
        }
        dispatch(actions.fetching(homeApi))
