@@ -67,7 +67,7 @@
         "redux-thunk": "^2.3.0",
         "resolve-url-loader": "^3.1.0",
         "sass": "^1.26.11",
-        "sass-loader": "^10.0.2",
+        "sass-loader": "^7.0.0",
         "style-loader": "^1.2.1",
         "svg-react-loader": "^0.4.6",
         "swiper": "^6.3.1",
