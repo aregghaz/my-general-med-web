@@ -18,12 +18,14 @@ const TableHead: React.FC<ITableHead> = (
         rowspan = 1
     }) => {
     const {t} = useTranslation()
+    console.log(titles);
+    
     return (
         <thead className={s.tableHead}>
         <TableRow>
             {
                 titles
-                    .map((title, index) => (title.show &&
+                    .map((title, index) => (title.show == true &&
                             <th
                                 className={` ${s.tableTd} ${s.tableTh}`}
                                 key={index}

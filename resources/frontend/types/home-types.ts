@@ -9,6 +9,23 @@ export interface IPartner {
     slug?: string
 }
 
+export interface IClientsData {
+    id: number,
+    client_id: number
+    driver_id: number
+    surname: string
+    name: string
+    drop_down_address: string
+    pick_up_address: string
+    apartament_number: string
+    birthday: string
+    email: string
+    id_number: number
+    phone_number: string
+    status: number
+}
+
+
 export interface ITitle {
     name: string,
     show: boolean

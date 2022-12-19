@@ -1,10 +1,15 @@
 import {AppStateType} from './store'
 
 export const getHomePageData = (state: AppStateType) => ({
-    serials: state.homeReducer.serials,
-    moves: state.homeReducer.moves,
+    data: state.homeReducer.data,
+    total:state.homeReducer.total,
+    last_page:state.homeReducer.last_page,
+    pagination: state.homeReducer.pagination,
 })
-
+export const getClientData = (state:AppStateType)=>({
+    show: state.clientReducer.show,
+    clientData:state.clientReducer.clientData,
+})
 export const getUserData = (state: AppStateType) => ({user: state.authReducer.user})
 
 export const getAdminData = (state: AppStateType) => ({

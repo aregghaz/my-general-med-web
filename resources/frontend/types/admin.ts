@@ -1,10 +1,11 @@
 export interface IPaginationTypes {
     count: ICount
-    activeItem: number
+    last_page:number
+    activeItem:  number
     handlerChangeItem?: (id: number) => void
 }
 
 export interface ICount {
-    from: number,
-    to: number
+    from : number,
+    to :number
 }

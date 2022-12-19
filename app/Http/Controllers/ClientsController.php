@@ -21,7 +21,24 @@ class ClientsController extends Controller
             $clients = Clients::where( 'client_id', 'LIKE', '%' . $request->querySearch . '%' )->orWhere( 'driver_id', 'LIKE', '%' . $request->querySearch . '%' )->paginate(20);
 
         }else{
-            $clients = Clients::paginate(20);
+
+
+
+
+            $clients = Clients::select(
+                'id',
+            'client_id',
+            "driver_id",
+            'name',
+            'surname',
+            'email',
+            'pick_up_address',
+            'drop_down_address',
+            'Apartament',
+            // 'ccn',
+            'id_number',
+            'birthday')->paginate(20);
+
 
         }
         return response()->json($clients, 200);

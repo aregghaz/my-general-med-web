@@ -10,39 +10,43 @@ const TableFoot: React.FC<IPaginationTypes> =
     ({
          count,
          activeItem,
+         last_page,
          handlerChangeItem
      }) => {
+        console.log(count,'countcount');
+        const Number = count.from
+        //////FIXME LAST PAGE PROBLEM
         return (
 
             <div className={styles.trPagination}>
-                {Array.from(Array(50), (e, i) => {
+                {Array.from(Array(10), (e, i) => {
                     if (activeItem == i) {
                         return <span
-                            key={i + 1}
+                            key={Number + i}
                             className={`${styles.number} ${styles.active}`}
-                        >
+                         >
 
                             <Button
                                 key={i}
-                                onClick={() => handlerChangeItem(i)}
+                                onClick={() => handlerChangeItem(Number  +i)}
                                 type={'blank'}
                             >
-                                {i + 1}
+                                {Number  +i}
                             </Button>
 
                         </span>
                     } else {
                         return <span
-                            key={i + 1}
+                        key={Number + i}
                             className={styles.number}
-                        >
+                          >
 
                             <Button
                                 key={i + 1}
-                                onClick={() => handlerChangeItem(i)}
+                                onClick={() => handlerChangeItem(Number  +i)}
                                 type={'blank'}
                             >
-                                {i + 1}
+                                {Number +i }
                             </Button>
 
                         </span>

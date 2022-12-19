@@ -7,6 +7,7 @@ import s from "../../layouts/templates/list/list.module.scss";
 import Select, {IOption, IOptionMultiselect} from '../../../components/select/select'
 import {useTranslation} from 'react-i18next'
 import Modal from 'react-modal'
+import InfoBlock from "../../../components/info-block/info-block";
 
 interface Beneficiary {
     path: string
@@ -20,6 +21,8 @@ const Users: React.FC<Beneficiary> = () => {
     const [deleteId, setDeleteId] = useState(null)
     const [count, setCount] = useState(0)
     const [activeItem, setActiveItem] = useState(null)
+
+    const [dataID, setDataID] = useState(null)
 
 
     const navigate = useNavigate()
@@ -76,6 +79,10 @@ const Users: React.FC<Beneficiary> = () => {
         localStorage.setItem('page', activeItem.toString());
 
     }
+    const handlerGetclientData = (id: number) => {
+        setDataID(id)
+
+    }
 
     const customStyles: ReactModal.Styles = {
         content: {
@@ -98,10 +105,10 @@ const Users: React.FC<Beneficiary> = () => {
         }
     }
 
-
     return (
         data &&
         <>
+            <InfoBlock idData={dataID} items={data}/>
             <List
                 data={data}
                 titles={titles}
@@ -115,6 +122,7 @@ const Users: React.FC<Beneficiary> = () => {
                 handlerEditItem={handlerEditBeneficiaryItem}
                 HandlerPagination={HandlerPagination}
                 HandlerGetProducts={HandlerGetProducts}
+                handlerGetclientData={handlerGetclientData}
                 count={count}
                 activeItem={activeItem}
                 className={'pagination'}

@@ -3,8 +3,8 @@ import TableHead from './table-head/table-head'
 import TableBody from './table-body/table-body'
 import s from './crud-table.module.scss'
 import TableFoot from "./table-foot/table-foot";
-import {ITitle} from '../../types/home-types';
-import {ICount} from '../../types/admin';
+import { IClientsData, ITitle } from '../../types/home-types';
+import { ICount } from '../../types/admin';
 
 
 const CrudTable: React.FC<ICrudTable> = (
@@ -14,8 +14,10 @@ const CrudTable: React.FC<ICrudTable> = (
         HandlerGetProducts,
         count,
         activeItem,
+        last_page,
         className,
         HandlerPagination,
+        handlerGetclientData,
         paginated
     }) => {
 
@@ -25,12 +27,14 @@ const CrudTable: React.FC<ICrudTable> = (
                 <TableHead titles={titles}/>
                 <TableBody
                     data={data}
+                    handlerGetclientData={handlerGetclientData}
                     HandlerGetProducts={HandlerGetProducts}
                 />
             </table>
             {
                 paginated && <TableFoot
                     count={count}
+                    last_page={last_page}
                     activeItem={activeItem}
                     handlerChangeItem={HandlerPagination}
                 />
@@ -45,11 +49,13 @@ const CrudTable: React.FC<ICrudTable> = (
 interface ICrudTable {
     ////FIXME SHOULD ADD TYPE DATA
     data: Array<any>
-    titles: Array<ITitle>
+    titles:Array<ITitle>
     paginated?: boolean
     count: ICount
+    last_page:number
     activeItem?: number
     className: string
+    handlerGetclientData?: (data:IClientsData)=>void
     HandlerGetProducts?: (id: number) => void
     HandlerPagination?: (id: number) => void
 }

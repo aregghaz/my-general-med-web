@@ -41,7 +41,6 @@ const App = (): JSX.Element => (
                 <NotFound default/>
             </Site>
 
-
             <PrivateRoute path="/admin">
                 <Dashboard path="/"/>
                 <Users path="/users"/>

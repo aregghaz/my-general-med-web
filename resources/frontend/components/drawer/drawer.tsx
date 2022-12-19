@@ -37,28 +37,28 @@ const Drawer: React.FC = () => {
                     <div className={s.icons}>
                         <div key={'home'} className={s.iconBlock}>
                             <Button type={'blank'}>
-                            <span className={s.icon}>
-                                <HomeIcon/>
-                            </span>
+                                <span className={s.icon}>
+                                    <HomeIcon/>
+                                </span>
                             </Button>
                         </div>
-                        <div className={`${s.account} ${s.iconBlock}`}>
-                            <Button type={'blank'} className={s.personalInfo}>
-                            <span className={s.icon}>
-                                <Account/>
-                            </span>
+                        <div className={`${s.iconBlock}`}>
+                            <Button type={'blank'}>
+                                <span className={s.icon}>
+                                    <Account/>
+                                </span>
                             </Button>
                         </div>
-                    </div>
-                    <div className={s.iconBlock}>
-                        <Button type={'blank'} onClick={() => {
-                            handlerLogOut()
-                            navigate('/')
-                        }}>
-                            <span className={s.icon}>
-                                <Logout/>
-                            </span>
-                        </Button>
+                        <div className={s.iconBlock}>
+                            <Button type={'blank'} onClick={() => {
+                                handlerLogOut()
+                                navigate('/')
+                            }}>
+                                <span className={s.icon}>
+                                    <Logout/>
+                                </span>
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </nav>

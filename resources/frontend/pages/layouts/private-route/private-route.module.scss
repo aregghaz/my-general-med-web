@@ -5,10 +5,10 @@
 }
 
 .root {
-  padding: 110px 15px 30px;
+    border: 1px solid $adminBgColor;
+  //padding: 110px 15px 30px;
   background: $adminBgColor;
   min-height: 100vh;
-  //
   margin-left: 300px;
 }
 
