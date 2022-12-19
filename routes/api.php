@@ -57,6 +57,7 @@ Route::group([
             'home-data' => HomeController::class,
             'users' => \App\Http\Controllers\UserController::class,
             'clients' => \App\Http\Controllers\ClientsController::class,
+            'vendors' => \App\Http\Controllers\VendorController::class,
         
         ]);
     });

@@ -34,13 +34,16 @@ class ClientsController extends Controller
             'email',
             'pick_up_address',
             'drop_down_address',
-            'Apartament',
+            'apartament_number',
             // 'ccn',
             'id_number',
             'birthday')->paginate(20);
 
 
         }
+
+        // dd($clients->toArray()['data']);
+        // die;
         return response()->json($clients, 200);
     }
 

@@ -17,9 +17,9 @@ class CreateClientsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('driver_id');
+            $table->unsignedBigInteger('vendor_id');
             $table->string('name');
             $table->string('surname');
-            // $table->string('image')->nullable();
             $table->string('email');
             $table->string('pick_up_address');
             $table->string('drop_down_address');
@@ -29,6 +29,8 @@ class CreateClientsTable extends Migration
             $table->string('phone_number');
             $table->date('birthday')->nullable();
             $table->enum('status',[1,2,3,4,5])->default(1);
+            $table->date('pick_up')->nullable();
+            $table->date('drop_down')->nullable();
             $table->timestamps();
         });
     }

@@ -12,6 +12,7 @@ use App\Models\Status;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\UserRequest;
 use \Validator;
+
 class UserController extends Controller
 {
     /**

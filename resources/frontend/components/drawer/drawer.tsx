@@ -14,13 +14,17 @@ import {setLogOut} from "../../store/auth";
 const menuItemsFirst = [
 
     {
-        item: 'admin.adminBeneficiaries',
+        item: 'adminBeneficiaries',
         page: '/admin/users'
     },
 
     {
-        item: 'admin.clients',
+        item: 'clients',
         page: '/admin/clients'
+    },
+    {
+        item: 'vendors',
+        page: '/admin/vendors'
     },
 ]
 

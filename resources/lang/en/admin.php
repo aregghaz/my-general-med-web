@@ -2,5 +2,6 @@
 
 return [
     'ru' => 'Русский',
-    'adminBeneficiaries' => "Users"
+    'adminBeneficiaries' => "Users",
+    'fullName' => 'Նկար',
 ];

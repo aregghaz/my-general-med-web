@@ -20,7 +20,18 @@ class UserSeeder extends Seeder
             "address" => 'test address',
             'phone_number' => '+37494806080',
             'password' => bcrypt('admin'),
-            'role'=> 'admin'
+            'role'=> 'admin',
+            'vendor_id' => rand(1, 5),
+        ]);
+        DB::table('users')->insert([
+            'name' => 'admin',
+            'surname' => 'admin',
+            'email' => 'admin2@admin.com',
+            "address" => 'test address',
+            'phone_number' => '+37494806080',
+            'password' => bcrypt('admin'),
+            'role'=> 'admin',
+            'vendor_id' => rand(1, 5),
         ]);
         DB::table('users')->insert([
             'name' => 'admin',
@@ -29,7 +40,18 @@ class UserSeeder extends Seeder
             'email' => 'driver@admin.com',
             "address" => 'test address',
             'password' => bcrypt('admin'),
-            'role'=> 'driver'
+            'role'=> 'driver',
+            'vendor_id' => rand(1, 5),
+        ]);
+        DB::table('users')->insert([
+            'name' => 'admin',
+            'surname' => 'admin',
+            'phone_number' => '+37494806080',
+            'email' => 'driver2@admin.com',
+            "address" => 'test address',
+            'password' => bcrypt('admin'),
+            'role'=> 'driver',
+            'vendor_id' => rand(1, 5),
         ]);
         DB::table('users')->insert([
             'name' => 'admin',
@@ -38,7 +60,8 @@ class UserSeeder extends Seeder
             "address" => 'test address',
             'email' => 'operator@admin.com',
             'password' => bcrypt('admin'),
-            'role'=> 'vendor'
+            'role'=> 'operator',
+            'vendor_id' => rand(1, 5),
         ]);
     }
 }

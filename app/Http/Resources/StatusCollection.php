@@ -19,6 +19,8 @@ class StatusCollection extends ResourceCollection
             return [
                 'id' => $status->id,
                 'label' => $status->name,
+
+                'title' => $status->name,
               
             ];
         });

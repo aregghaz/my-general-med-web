@@ -27,6 +27,9 @@ import UserCreate from './pages/admin-pages/users/create'
 import Clients from './pages/admin-pages/clients/list'
 import ClientEdit from './pages/admin-pages/clients/edit'
 import ClientCreate from './pages/admin-pages/clients/create'
+import Vendors from './pages/admin-pages/vendors/list'
+import VendorEdit from './pages/admin-pages/vendors/edit'
+import VendorCreate from './pages/admin-pages/vendors/create'
 
 const App = (): JSX.Element => (
     <Provider store={store}>

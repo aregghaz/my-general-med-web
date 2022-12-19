@@ -21,8 +21,9 @@ export const AdminApi = {
     createItem(crudKey: string) {
         return axios.get(`/api/admin/${crudKey}/create`).then(res => res.data)
     },
-
-
+    getAllVendorData(crudKey:string,page:number,query:string) {
+        return axios.get(`/api/admin/${crudKey}?page=${page}&query=${query}`).then(res => res.data)
+    },
     //////////
     create(crudKey: string) {
         return axios.get(`/api/auth/${crudKey}/create`).then(res => res.data)

@@ -4,6 +4,7 @@ return [
 
     'ru' => 'Русский',
     'adminBeneficiaries' => "Users",
+    'fullName' => 'Նկար',
      "welcome_message_part_one" => "Բարի գալուստ",
      "welcome_message_part_two" => "Ընտանիքում բռնության դեպքերի կենտրոնացված հաշվառման տեղեկատվական համակարգ",
      'news-item' => 'Նորություններ',

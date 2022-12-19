@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('surname');
+            $table->unsignedBigInteger('vendor_id');
             $table->string('image')->nullable();
             $table->string('email');
             $table->string('password');
