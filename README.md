@@ -1,5 +1,6 @@
 How run application in local machine
 
+For succesfull install do all 12 steps only fisrt time
 front end part location resources/frontend
 
 
@@ -10,9 +11,15 @@ front end part location resources/frontend
 5. copy content of file in .env.example to .env don't forget chanhe db login and pass in file 
 6. php artisan vendor:publish --provider="Venturecraft\Revisionable\RevisionableServiceProvider"
 7. php artisan migrate
+
+IF YOU REFRESH YOUR MIGRATION PLEASE REAPET THIS STEPS BELOW
+/////START
 8. php artisan passport:install 
 9. php artisan passport:keys 
 10. php artisan migrate:fresh --seed
+//// END
+
+
 11. php artisan serve (dont close this teminal it`should always run )
 12. npm run watch open in new terminal
 
