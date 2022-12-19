@@ -20,7 +20,7 @@ interface IList {
     activeItem?: number
     ////FIXMECHANGE IT NORMA TYPR
     ///count?: {from:number,to:number}
-    count?:any
+    count?: any
     className?: string
 }
 
@@ -52,7 +52,7 @@ const List: React.FC<IList> = (
                     </Button>
                 }
             </div>
-            
+
             <CrudTable
                 titles={titles}
                 data={data}

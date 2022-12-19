@@ -40,38 +40,39 @@ const ModalItem: React.FC<IModalCard> = (
                 <Col xs={8} sm={8} md={9} lg={9} xl={9} xxl={9}>
                     <div>
                         <Button
-                        type={'blank'}
-                        className={s.backdropBtn}
-                        onClick={() => setSerialOpen(false)}
-                    >
+                            type={'blank'}
+                            className={s.backdropBtn}
+                            onClick={() => setSerialOpen(false)}
+                        >
                             <i className={`cancelicon- ${s.cancelIcon} `}
-                               onClick={() => serial ? setSerialOpen(false): setMovesOpen(false)} />
+                               onClick={() => serial ? setSerialOpen(false) : setMovesOpen(false)}/>
 
-                    </Button>
+                        </Button>
                     </div>
                     <ul className={s.list}>
                         <li className={s.title}><h1>{title}</h1></li>
                         <li className={s.info}><Genre className={s.cardIcon}/><span> {genre}</span></li>
                         <li className={s.info}><Year className={s.cardIcon}/><span> {year}</span></li>
-                        <li className={s.info}><Duration className={s.cardIcon}/><span> {duration} {t('hourly')}</span></li>
+                        <li className={s.info}><Duration className={s.cardIcon}/><span> {duration} {t('hourly')}</span>
+                        </li>
                         <li className={s.info}><span><Flag className={s.cardIcon}/> {country}</span></li>
                         <li className={s.info}><span>{director}</span></li>
                         <li className={s.quality}><span>{quality}</span></li>
                         <Visible xl xxl>
                             <li className={s.info}>
                                 <div className={s.partnerRating}>
-                                        {
-                                            new Array(10).fill(0)
-                                                .map((_, i) => (
-                                                    i < rating ?
-                                                        <i key={i}
-                                                           className={`staricon- ${s.star}`}/>
-                                                        :
-                                                        <i key={i}
-                                                           className={`star-emptyicon- ${s.star}`}/>
-                                                ))
-                                        }
-                                    </div>
+                                    {
+                                        new Array(10).fill(0)
+                                            .map((_, i) => (
+                                                i < rating ?
+                                                    <i key={i}
+                                                       className={`staricon- ${s.star}`}/>
+                                                    :
+                                                    <i key={i}
+                                                       className={`star-emptyicon- ${s.star}`}/>
+                                            ))
+                                    }
+                                </div>
                             </li>
                             <br/>
                             <li className={s.description}><span>{description}</span></li>

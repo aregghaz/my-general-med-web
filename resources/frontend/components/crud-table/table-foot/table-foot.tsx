@@ -6,24 +6,23 @@ import styles from './table-foot.module.scss'
 import {IPaginationTypes} from '../../../types/admin';
 
 //// </tfoot>
-const TableFoot: React.FC<IPaginationTypes> =
-    ({
-         count,
-         activeItem,
-         handlerChangeItem
-     }) => {
-        console.log(count,'countcount');
-        const Number = count.to -count.from
-        return (
+const TableFoot: React.FC<IPaginationTypes> = (
+    {
+        count,
+        activeItem,
+        handlerChangeItem
+    }) => {
+    console.log(count, 'countcount');
+    const Number = count.to - count.from
+    return (
 
-            <div className={styles.trPagination}>
-                {Array.from(Array(count), (e, i) => {
-                    if (activeItem == i) {
-                        return <span
-                            key={i + 1}
-                            className={`${styles.number} ${styles.active}`}
-                         >
-
+        <div className={styles.trPagination}>
+            {Array.from(Array(count), (e, i) => {
+                if (activeItem == i) {
+                    return <span
+                        key={i + 1}
+                        className={`${styles.number} ${styles.active}`}
+                    >
                             <Button
                                 key={i}
                                 onClick={() => handlerChangeItem(i)}
@@ -33,11 +32,11 @@ const TableFoot: React.FC<IPaginationTypes> =
                             </Button>
 
                         </span>
-                    } else {
-                        return <span
-                            key={i + 1}
-                            className={styles.number}
-                          >
+                } else {
+                    return <span
+                        key={i + 1}
+                        className={styles.number}
+                    >
 
                             <Button
                                 key={i + 1}
@@ -48,13 +47,13 @@ const TableFoot: React.FC<IPaginationTypes> =
                             </Button>
 
                         </span>
-                    }
-                })
                 }
+            })
+            }
 
-            </div>
+        </div>
 
-        );
-    };
+    );
+};
 
 export default TableFoot;

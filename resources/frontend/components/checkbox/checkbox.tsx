@@ -24,15 +24,15 @@ const Checkbox: React.FC<ICheckbox> = (
         labelStyle
     }) => (
     <span className={s.checkbox} onClick={handlerCheckbox}>
-            <input
-                type="checkbox"
-                name={name}
-                id={name}
-                disabled={disabled}
-                checked={checked}
-                onChange={handlerCheckbox}
-            />
-              <span className={`${className}`}/>
+        <input
+            type="checkbox"
+            name={name}
+            id={name}
+            disabled={disabled}
+            checked={checked}
+            onChange={handlerCheckbox}
+        />
+        <span className={`${className}`}/>
             <label
                 className={`${s.checkboxLabel}
                 ${labelStyle}`}
@@ -40,7 +40,7 @@ const Checkbox: React.FC<ICheckbox> = (
             >
                 {label}
             </label>
-       </span>
+    </span>
 )
 
 

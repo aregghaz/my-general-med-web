@@ -17,17 +17,17 @@ interface ILoginWrapper {
 
 
 const LoginWrapper: React.FC<ILoginWrapper> = () => {
-    
+
     const {t} = useTranslation()
     const dispatch = useDispatch()
     const {loggedIn} = useSelector(getAdminData)
     const navigate = useNavigate()
-   
+
     const {user} = useSelector(getUserData)
     const [isLoading, setLoading] = useState(false);
 
     const submit = (values: FormikValues, {setSubmitting}: FormikHelpers<FormikValues>) => {
-       
+
         setSubmitting(true)
 
         const formData: FormData = new FormData()
@@ -37,22 +37,22 @@ const LoginWrapper: React.FC<ILoginWrapper> = () => {
         dispatch(login(formData))
     }
 
- 
+
     useEffect(() => {
-if( localStorage.getItem('access_token')){
-    if(user && user.role == 'driver'){
-               
-        navigate('/')
-    }
-    if(user && user.role !== 'driver'){
-        navigate('/admin')
-      ///  setLoading(false)
-    }
-}else{
-    navigate('/login')
-}
-       
-    }, [isLoading,user])
+        if (localStorage.getItem('access_token')) {
+            if (user && user.role == 'driver') {
+
+                navigate('/')
+            }
+            if (user && user.role !== 'driver') {
+                navigate('/admin')
+                ///  setLoading(false)
+            }
+        } else {
+            navigate('/login')
+        }
+
+    }, [isLoading, user])
     return (
         <div className={s.login}>
             <Formik

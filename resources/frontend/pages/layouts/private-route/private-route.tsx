@@ -1,9 +1,9 @@
-import { navigate } from '@reach/router'
+import {navigate} from '@reach/router'
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import Drawer from '../../../components/drawer/drawer'
-import { checkAdminLoggedIn } from '../../../store/auth'
-import { getAdminData, getUserData } from '../../../store/selectors'
+import {checkAdminLoggedIn} from '../../../store/auth'
+import {getAdminData, getUserData} from '../../../store/selectors'
 
 import s from './private-route.module.scss'
 
@@ -13,7 +13,7 @@ interface IPrivateRoute {
 
 const PrivateRoute: React.FC<IPrivateRoute> = ({children}) => {
     const dispatch = useDispatch()
- 
+
     const {loggedIn} = useSelector(getAdminData)
     const {user} = useSelector(getUserData)
     const [isLoading, setLoading] = useState(true);
@@ -23,22 +23,22 @@ const PrivateRoute: React.FC<IPrivateRoute> = ({children}) => {
     }, [])
 
     useEffect(() => {
-        if(loggedIn){
-            if(user && user.role == 'driver'){
+        if (loggedIn) {
+            if (user && user.role == 'driver') {
                 navigate('/')
             }
-            if(user && user.role !== 'driver'){
+            if (user && user.role !== 'driver') {
                 setLoading(false)
             }
         }
     }, [user])
     return (
-            <>
-                <Drawer/>
-                <div className={s.root}>
-                    {children}
-                </div>
-            </>
+        <>
+            <Drawer/>
+            <div className={s.root}>
+                {children}
+            </div>
+        </>
     )
 }
 

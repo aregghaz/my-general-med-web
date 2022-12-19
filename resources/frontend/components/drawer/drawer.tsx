@@ -17,7 +17,7 @@ const menuItemsFirst = [
         item: 'admin.adminBeneficiaries',
         page: '/admin/users'
     },
-   
+
     {
         item: 'admin.clients',
         page: '/admin/clients'

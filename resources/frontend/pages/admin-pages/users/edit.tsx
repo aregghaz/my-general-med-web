@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react'
 import Edit from '../../layouts/templates/edit/edit'
 import {IItem} from '../../layouts/templates/formik-handler/formik-handler'
 import {useTranslation} from 'react-i18next'
-import { AdminApi } from '../../../api/admin-api/admin-api'
+import {AdminApi} from '../../../api/admin-api/admin-api'
+
 interface IUsersEditItem {
     path: string
     id?: number
@@ -21,11 +22,11 @@ const UserEdit: React.FC<IUsersEditItem> = ({id}) => {
         {name: 'birthday', type: 'input', label: 'birthDate'},
         {name: 'phone_number', type: 'input', label: 'phoneNumber'},
         {name: 'selectedTypes', type: 'multiSelect', label: 'services'},
-        {name: 'selectOptions', type: 'hidden',  inputType : 'hidden', },
+        {name: 'selectOptions', type: 'hidden', inputType: 'hidden',},
         // {name: 'province', type: 'hidden',  inputType : 'hidden', },
         // {name: 'languages', type: 'multiSelect', label: 'languages'},
         {name: 'rating', type: 'select', label: 'rating'},
-        {name: 'id', type: 'hidden', inputType : 'hidden'},
+        {name: 'id', type: 'hidden', inputType: 'hidden'},
         // {name: 'province', type: 'select', label: 'province'},
         // {name: 'region', type: 'select', label: 'region'},
         {name: 'role', type: 'select', label: 'role'},
@@ -41,7 +42,7 @@ const UserEdit: React.FC<IUsersEditItem> = ({id}) => {
                 const data = await AdminApi.getUserData(crudKey, id)
                 console.log(data)
                 setData(data.user)
-           
+
             }
         )()
 

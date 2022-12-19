@@ -41,7 +41,7 @@ const TableBody: React.FC<ITableBody> = (
                                             return (
                                                 <TableData key={key}>
                                                     <img
-                                                        src={item[key] ? item[key] : '/uploads/partners/avatar.png' }
+                                                        src={item[key] ? item[key] : '/uploads/partners/avatar.png'}
                                                         alt={key}
                                                         className={s.img}
                                                     />
@@ -63,12 +63,14 @@ const TableBody: React.FC<ITableBody> = (
                                 <TableData>
                                     <div className={s.iconsWrapper}>
                                         {isGetItems &&
-                                        <OrdersIcon className={s.editIcon} onClick={() => HandlerGetProducts(item.id)}/>}
+                                            <OrdersIcon className={s.editIcon}
+                                                        onClick={() => HandlerGetProducts(item.id)}/>}
                                         {isEdit &&
-                                        <EditIcon className={s.editIcon} onClick={() => handlerEditItem(item.id)}/>}
+                                            <EditIcon className={s.editIcon} onClick={() => handlerEditItem(item.id)}/>}
 
                                         {isDelete &&
-                                        <TrashIcon className={s.trashIcon} onClick={()=> handlerDeleteItem(item.id)}/>}
+                                            <TrashIcon className={s.trashIcon}
+                                                       onClick={() => handlerDeleteItem(item.id)}/>}
                                     </div>
                                 </TableData>
                             }

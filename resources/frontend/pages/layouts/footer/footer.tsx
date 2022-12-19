@@ -232,7 +232,7 @@ const Footer = (): JSX.Element => {
                     <Visible sm md lg xl xxl>
                         <div className={s.icons}>
                             <a href={'/'
-                            //    FACEBOOK
+                                //    FACEBOOK
                             } target="_blank">
                                 <i className={`facebookicon- ${s.facebook} `}/>
                             </a>

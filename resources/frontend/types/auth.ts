@@ -8,7 +8,7 @@ export interface IUser {
     id?: number
     birthday: string | null
     business_address: null | string
-   // spheresOfActivity?: Array<ISelect>
+    // spheresOfActivity?: Array<ISelect>
     email: string | null
     image?: string
     languages?: Array<ISelect>

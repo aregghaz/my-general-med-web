@@ -27,7 +27,7 @@ const Users: React.FC<Beneficiary> = () => {
     useEffect(() => {
         (
             async () => {
-                const data = await AdminApi.getAllData(crudKey,1,'')
+                const data = await AdminApi.getAllData(crudKey, 1, '')
                 setData(data.users)
                 setCount(data.users.to)
 
@@ -35,7 +35,7 @@ const Users: React.FC<Beneficiary> = () => {
         )()
     }, [])
 
-    
+
     const titles: Array<string> = [
         'id',
         'fullName',
@@ -136,7 +136,8 @@ const Users: React.FC<Beneficiary> = () => {
                     <div className={s.buttons}>
                         <Button type={'green'} onClick={handlerDeleteItem}
                                 className={s.button}>{t('admin.yes')}</Button>
-                        <Button type={'transparent'} onClick={handlerCloseModal} className={s.button}>{t('admin.no')}</Button>
+                        <Button type={'transparent'} onClick={handlerCloseModal}
+                                className={s.button}>{t('admin.no')}</Button>
                     </div>
                 </div>
             </Modal>

@@ -11,7 +11,6 @@ import s from './drawerUser.module.scss'
 import {setLogOut} from "../../store/auth";
 
 
-
 const DrawerUser: React.FC = () => {
     const {t} = useTranslation()
     const dispatch = useDispatch()
@@ -52,7 +51,7 @@ const DrawerUser: React.FC = () => {
             </nav>
             <nav className={`${s.root} ${s.fixed}`}>
                 <ul className={s.list}>
-                    
+
                 </ul>
             </nav>
 

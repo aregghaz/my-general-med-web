@@ -17,7 +17,7 @@ interface IDataPicker {
     name?: string
     time: string
     handleChange: (event: ChangeEvent<HTMLInputElement>) => void
-  ///  onChange: (event: ChangeEvent<HTMLInputElement>) => void
+    ///  onChange: (event: ChangeEvent<HTMLInputElement>) => void
     doubleTimeInput?: boolean
 }
 

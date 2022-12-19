@@ -31,7 +31,7 @@ const TableBody: React.FC<ITableBody> = (
                                             return (
                                                 <TableData key={key}>
                                                     <img
-                                                        src={item[key] ? item[key] : '/uploads/partners/avatar.png' }
+                                                        src={item[key] ? item[key] : '/uploads/partners/avatar.png'}
                                                         alt={key}
                                                         className={s.img}
                                                     />
@@ -49,7 +49,7 @@ const TableBody: React.FC<ITableBody> = (
                             }
 
                             {
-                                
+
                                 <TableData>
                                     <div className={s.iconsWrapper}>
                                         <OrdersIcon className={s.editIcon} onClick={() => HandlerGetProducts(item.id)}/>

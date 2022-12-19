@@ -22,10 +22,10 @@ export interface ISerialCard {
     quality?: string
     rating?: number
     description?: string
-    country?:string
-    director?:string
-    translation?:string
-    handlerLink?: (id: number,crudKey:string) => void
+    country?: string
+    director?: string
+    translation?: string
+    handlerLink?: (id: number, crudKey: string) => void
     setSerialOpen?: (status: boolean) => void
     home: boolean
 }
@@ -42,13 +42,14 @@ export interface IModalCard {
     quality?: string
     rating?: number
     description?: string
-    country?:string
-    director?:string
-    translation?:string
+    country?: string
+    director?: string
+    translation?: string
     setSerialOpen?: (status: boolean) => void
     setMovesOpen?: (status: boolean) => void
-    serial:boolean
+    serial: boolean
 }
+
 export interface ISelect {
     id: number
     name: string

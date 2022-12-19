@@ -1,30 +1,34 @@
 import axios from 'axios'
 
 export const AdminApi = {
-   
-    delete(crudKey:string,deleteId:number) {
+
+    delete(crudKey: string, deleteId: number) {
         return axios.get('/api/auth/user').then(res => res.data)
     },
-    store(formData: FormData,crudKey:string) {
-        return axios.post(`/api/admin/${crudKey}`,formData).then(res => res.data)
-    },
-    getUserData(crudKey:string,id:number) {
-        return axios.get(`/api/admin/${crudKey}/${id}`).then(res => res.data)
 
+    store(formData: FormData, crudKey: string) {
+        return axios.post(`/api/admin/${crudKey}`, formData).then(res => res.data)
     },
-    getAllData(crudKey:string,page:number,query:string) {
+
+    getUserData(crudKey: string, id: number) {
+        return axios.get(`/api/admin/${crudKey}/${id}`).then(res => res.data)
+    },
+
+    getAllData(crudKey: string, page: number, query: string) {
         return axios.get(`/api/admin/${crudKey}?page=${page}&query=${query}`).then(res => res.data)
     },
-    createItem(crudKey:string){
+
+    createItem(crudKey: string) {
         return axios.get(`/api/admin/${crudKey}/create`).then(res => res.data)
     },
 
 
     //////////
-    create(crudKey:string) {
+    create(crudKey: string) {
         return axios.get(`/api/auth/${crudKey}/create`).then(res => res.data)
     },
-    getDataFromSite(crudKey:string) {
+
+    getDataFromSite(crudKey: string) {
         return axios.get(`/api/auth/${crudKey}`).then(res => res.data)
     },
 }

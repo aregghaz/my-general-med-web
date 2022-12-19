@@ -11,6 +11,7 @@ import {authAPI} from '../../api/site-api/auth-api'
 import AsyncSelect from '../select/async-select'
 
 import s from './auth.module.scss'
+
 interface IRegister {
     handlerAlreadyRegistered: () => void
     handlerSuccessModal: () => void

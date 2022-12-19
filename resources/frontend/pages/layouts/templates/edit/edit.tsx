@@ -29,8 +29,8 @@ const Edit: React.FC<IEdit> = (
         setSubmitting(true)
         const formData: FormData = new FormData()
         formData.append('value', JSON.stringify(values))
-      ///  const res:any = await updateAPI.updateItem(formData, crudKey, values.id)
-      ///  if (Number(res.status === 200)) navigate('/admin/adminBeneficiaries')
+        ///  const res:any = await updateAPI.updateItem(formData, crudKey, values.id)
+        ///  if (Number(res.status === 200)) navigate('/admin/adminBeneficiaries')
     }
 
 

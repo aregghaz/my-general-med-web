@@ -27,7 +27,7 @@ const Input: React.FC<IInput> = (
         error,
         onChange,
         placeholder,
-        type= 'text',
+        type = 'text',
         isAsterisk,
         className,
         labelStyle
@@ -35,12 +35,12 @@ const Input: React.FC<IInput> = (
     <>
         {error && <div className={s.error}>{error}</div>}
         {label &&
-        <label
-            className={`${s.label} ${labelStyle}`}
-            htmlFor={name}
-        >
-            {`${label}`} {isAsterisk && <span>*</span>}
-        </label>}
+            <label
+                className={`${s.label} ${labelStyle}`}
+                htmlFor={name}
+            >
+                {`${label}`} {isAsterisk && <span>*</span>}
+            </label>}
         <input
             id={name}
             disabled={disable}

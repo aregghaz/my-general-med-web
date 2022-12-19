@@ -10,9 +10,10 @@ export interface IPartner {
 }
 
 export interface ITitle {
-    name : string,
-    show :boolean
+    name: string,
+    show: boolean
 }
+
 export interface ITraditionalCraft {
     id: number
     text: string

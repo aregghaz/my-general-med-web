@@ -15,12 +15,12 @@ const TableFoot: React.FC<IPaginationTypes> =
         return (
 
             <div className={styles.trPagination}>
-                {Array.from(Array(count), (e, i) => {
+                {Array.from(Array(50), (e, i) => {
                     if (activeItem == i) {
                         return <span
                             key={i + 1}
                             className={`${styles.number} ${styles.active}`}
-                         >
+                        >
 
                             <Button
                                 key={i}
@@ -35,7 +35,7 @@ const TableFoot: React.FC<IPaginationTypes> =
                         return <span
                             key={i + 1}
                             className={styles.number}
-                          >
+                        >
 
                             <Button
                                 key={i + 1}

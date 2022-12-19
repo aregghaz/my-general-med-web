@@ -4,7 +4,7 @@ import axios from 'axios'
 import {Dispatch} from 'redux'
 import {authAPI} from '../api/site-api/auth-api'
 import {navigate} from '@reach/router'
-import { homeAPI } from '../api/site-api/home-api'
+import {homeAPI} from '../api/site-api/home-api'
 
 const initialState = {
     user: null as IUser | null,
@@ -32,8 +32,8 @@ const authReducer = (state = initialState, action: Actions): InitialState => {
                 ...state,
                 user: {
                     ...action.payload,
-                ///    languages: [...action.payload.languages],
-                  ///  description: [...action.payload.description]
+                    ///    languages: [...action.payload.languages],
+                    ///  description: [...action.payload.description]
                 },
                 loggedIn: 1,
                 error: null
@@ -78,7 +78,7 @@ export const checkLoggedIn = (): ThunkType => async (dispatch) => {
     }
 }
 
-export const checkAdminLoggedIn = ():ThunkType => async (dispatch) =>{
+export const checkAdminLoggedIn = (): ThunkType => async (dispatch) => {
     try {
         const token = localStorage.getItem('access_token') || ''
         if (token) {
@@ -89,10 +89,9 @@ export const checkAdminLoggedIn = ():ThunkType => async (dispatch) =>{
             })
             await dispatch(getUserData())
         } else {
-             return  navigate('/login')
+            return navigate('/login')
         }
-    }
-    catch (e) {
+    } catch (e) {
         console.error(e)
     }
 }

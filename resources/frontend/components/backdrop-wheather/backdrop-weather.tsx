@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react'
 import useOnClickOutside from '../../hooks/use-on-click-outside'
 import {WeatherIconType, weekDay} from '../../constants/helpers'
 import {useTranslation} from 'react-i18next'
-import { weatherAPI } from '../../api/site-api/weather-api'
+import {weatherAPI} from '../../api/site-api/weather-api'
 
 import s from './backdrop-weather.module.scss'
 

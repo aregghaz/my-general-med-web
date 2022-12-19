@@ -10,8 +10,9 @@ import {Link, navigate} from '@reach/router'
 import s from './home.module.scss'
 import ModalItem from "../../../components/modal-item/modal-item";
 import CrudTable from '../../../components/crud-table-user/crud-table'
-import { ITitle } from '../../../types/home-types'
+import {ITitle} from '../../../types/home-types'
 import Input from '../../../components/input/input'
+
 SwiperCore.use([Navigation, Pagination, EffectFade, Autoplay])
 
 interface IHome {
@@ -22,24 +23,24 @@ const Home: React.FC<IHome> = () => {
     const {t} = useTranslation()
     const [activeItem, setActiveItem] = useState(null)
     const [count, setCount] = useState({
-        from : 0,
-        to :5
+        from: 0,
+        to: 5
     })
     const [data, setData] = useState([])
     const titles: Array<ITitle> = [
-        {name :'Id', show : true},
-        {name: "client_id",show:true},
-        {name: "driver_id",show:true},
-        {name :'FullName', show : true},
-        {name :'Pick up addrees', show : true},
-        {name :'Drop down addrees', show : true},
-        {name :'Apartament number', show : true},
-        {name :'State', show : true},
-        {name :'CCN', show : true},
-        {name :'id number', show : true},
-        {name :'Birthday', show : true},
-     
-      
+        {name: 'Id', show: true},
+        {name: "client_id", show: true},
+        {name: "driver_id", show: true},
+        {name: 'FullName', show: true},
+        {name: 'Pick up addrees', show: true},
+        {name: 'Drop down addrees', show: true},
+        {name: 'Apartament number', show: true},
+        {name: 'State', show: true},
+        {name: 'CCN', show: true},
+        {name: 'id number', show: true},
+        {name: 'Birthday', show: true},
+
+
     ]
     const homeData = useSelector(getHomePageData)
 
@@ -48,59 +49,58 @@ const Home: React.FC<IHome> = () => {
     const {serials, moves} = homeData
 
 
-
     useEffect(() => {
         (
             async () => {
-               const homeData = await homeAPI.getHomePageData(1)
-               setCount({from: homeData.to-3, to: homeData.to+5})
-               setData(homeData.users.data)
-               /////FIXME pagination functiononality 
-             
-               /// dispatch(actions.fetching(data))
+                const homeData = await homeAPI.getHomePageData(1)
+                setCount({from: homeData.to - 3, to: homeData.to + 5})
+                setData(homeData.users.data)
+                /////FIXME pagination functiononality
+
+                /// dispatch(actions.fetching(data))
             }
         )()
         return () => dispatch(actions.resetState())
     }, [])
 
     const HandlerPagination = async (activeItem: number) => {
-       const query =  localStorage.getItem('query')
-        const homeData = await homeAPI.getHomePageData(activeItem+1,query ? query : '')
-        setCount({from: homeData.to-3, to: homeData.to+5})
+        const query = localStorage.getItem('query')
+        const homeData = await homeAPI.getHomePageData(activeItem + 1, query ? query : '')
+        setCount({from: homeData.to - 3, to: homeData.to + 5})
         setData(homeData.users.data)
-       
+
         const role = localStorage.getItem('role');
         localStorage.setItem('page', activeItem.toString());
 
     }
-    const HandlerGetData= (id: number) => navigate(`/admin/users-products/${id}`)
+    const HandlerGetData = (id: number) => navigate(`/admin/users-products/${id}`)
 
 
     ///FIXME  MISSING TYPE
-    const onSerachInput = async (event:any) => {
-        ////FIXME: its should be save in state 
+    const onSerachInput = async (event: any) => {
+        ////FIXME: its should be save in state
         localStorage.setItem('query', event.target.value);
         const page = localStorage.getItem('page')
-        const homeData = await homeAPI.getHomePageData(parseFloat(page)+1,event.target.value)
-        setCount({from: homeData.to-3, to: homeData.to+5})
+        const homeData = await homeAPI.getHomePageData(parseFloat(page) + 1, event.target.value)
+        setCount({from: homeData.to - 3, to: homeData.to + 5})
         setData(homeData.users.data)
-       
+
     }
     return (data && <>
-<Input name={'search'} type={'text'} onChange={onSerachInput}/>
-       
-            <CrudTable
-                titles={titles} 
-                data={data}
-                HandlerPagination={HandlerPagination}
-                HandlerGetProducts={HandlerGetData}
-                activeItem={activeItem}
-                
-                count={count}
-                className={'pagination'}
-                paginated={true}
-            />
-       
+        <Input name={'search'} type={'text'} onChange={onSerachInput}/>
+
+        <CrudTable
+            titles={titles}
+            data={data}
+            HandlerPagination={HandlerPagination}
+            HandlerGetProducts={HandlerGetData}
+            activeItem={activeItem}
+
+            count={count}
+            className={'pagination'}
+            paginated={true}
+        />
+
     </>)
 }
 export default Home
