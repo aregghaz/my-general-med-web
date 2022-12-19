@@ -33,14 +33,14 @@ const Clients: React.FC<IClients> = () => {
                 data.to
                 setCount({from: data.to-3, to: data.to+5})
                 setData(data.data)
-               
+
 
 
             }
         )()
     }, [])
 
-    
+
     const titles: Array<string> = [
         'id',
         'fullName',
@@ -123,7 +123,7 @@ const Clients: React.FC<IClients> = () => {
                 handlerEditItem={handlerEditBeneficiaryItem}
                 HandlerPagination={HandlerPagination}
                 HandlerGetProducts={HandlerGetProducts}
-                
+
                 count={count}
                 paginated={true}
                 activeItem={activeItem}

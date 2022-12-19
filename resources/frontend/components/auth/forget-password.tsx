@@ -6,6 +6,7 @@ import Button from '../button/button'
 import {Visible} from 'react-grid-system'
 
 import s from './auth.module.scss'
+
 const ForgetPassword = () => {
     const {t} = useTranslation()
 

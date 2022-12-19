@@ -7,6 +7,7 @@ import s from "../../layouts/templates/list/list.module.scss";
 import Select, {IOption, IOptionMultiselect} from '../../../components/select/select'
 import {useTranslation} from 'react-i18next'
 import Modal from 'react-modal'
+import InfoBlock from "../../../components/info-block/info-block";
 
 interface Beneficiary {
     path: string
@@ -21,13 +22,15 @@ const Users: React.FC<Beneficiary> = () => {
     const [count, setCount] = useState(0)
     const [activeItem, setActiveItem] = useState(null)
 
+    const [dataID, setDataID] = useState(null)
+
 
     const navigate = useNavigate()
     const {t} = useTranslation()
     useEffect(() => {
         (
             async () => {
-                const data = await AdminApi.getAllData(crudKey,1,'')
+                const data = await AdminApi.getAllData(crudKey, 1, '')
                 setData(data.users)
                 setCount(data.users.to)
 
@@ -35,7 +38,7 @@ const Users: React.FC<Beneficiary> = () => {
         )()
     }, [])
 
-    
+
     const titles: Array<string> = [
         'id',
         'fullName',
@@ -76,7 +79,11 @@ const Users: React.FC<Beneficiary> = () => {
         localStorage.setItem('page', activeItem.toString());
 
     }
-const handlerGetclientData = () => {}
+    const handlerGetclientData = (id: number) => {
+        setDataID(id)
+
+    }
+
     const customStyles: ReactModal.Styles = {
         content: {
             position: 'fixed',
@@ -98,10 +105,10 @@ const handlerGetclientData = () => {}
         }
     }
 
-
     return (
         data &&
         <>
+            <InfoBlock idData={dataID} items={data}/>
             <List
                 data={data}
                 titles={titles}
@@ -137,7 +144,8 @@ const handlerGetclientData = () => {}
                     <div className={s.buttons}>
                         <Button type={'green'} onClick={handlerDeleteItem}
                                 className={s.button}>{t('admin.yes')}</Button>
-                        <Button type={'transparent'} onClick={handlerCloseModal} className={s.button}>{t('admin.no')}</Button>
+                        <Button type={'transparent'} onClick={handlerCloseModal}
+                                className={s.button}>{t('admin.no')}</Button>
                     </div>
                 </div>
             </Modal>

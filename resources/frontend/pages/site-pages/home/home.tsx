@@ -89,7 +89,7 @@ const Home: React.FC<IHome> = () => {
         dispatch(clientAction.fetching(dataClient))
         const query =  localStorage.getItem('query')
         const homeData = await homeAPI.getHomePageData(activeItem+1,query ? query : '')
-        /////FIXME pagination functiononality 
+        /////FIXME pagination functiononality
         let homeApi ={
             pagination : {from: homeData.users.current_page, to: homeData.users.current_page+5},
             total: homeData.users.total,
@@ -103,25 +103,25 @@ const Home: React.FC<IHome> = () => {
     }
     const handlerGetclientData= (client: any) => {
         console.log(client,'client');
-        
+
         let dataClient = {
             show:true,
             clientData :client
         }
         dispatch(clientAction.fetching(dataClient))
-        
+
     }
 
 
     ///FIXME  MISSING TYPE
     const onSerachInput = async (event:any) => {
-        ////FIXME: its should be save in state 
+        ////FIXME: its should be save in state
 
-        
+
         localStorage.setItem('query', event.target.value);
         const page = localStorage.getItem('page')
         const homeData = await homeAPI.getHomePageData(1,event.target.value)
-       /////FIXME pagination functiononality 
+       /////FIXME pagination functiononality
        let homeApi ={
         pagination : {from: homeData.users.current_page, to: homeData.users.current_page+5},
         total: homeData.users.total,
@@ -135,7 +135,7 @@ const Home: React.FC<IHome> = () => {
 
 
    {show&&
-     <div > 
+     <div >
                 <span>name :{clientData.name}</span>
                 <span>surname :{clientData.surname}</span>
                 <span>client_id :{clientData.surname}</span>
@@ -146,10 +146,10 @@ const Home: React.FC<IHome> = () => {
     <div>
     <Input name={'search'} type={'text'} onChange={onSerachInput}/>
     </div>
-            
-       
+
+
             <CrudTable
-                titles={titles} 
+                titles={titles}
                 data={data}
                 HandlerPagination={HandlerPagination}
                 // HandlerGetProducts={HandlerGetData}
@@ -160,7 +160,7 @@ const Home: React.FC<IHome> = () => {
                 className={'pagination'}
                 paginated={true}
             />
-       
+
     </>)
 }
 export default Home

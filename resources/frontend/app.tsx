@@ -22,8 +22,8 @@ import LoginWrapper from './pages/admin-pages/login/login-wrapper'
 // Admin Pages
 import Dashboard from './pages/admin-pages/dashbord/dashboard'
 import Users from './pages/admin-pages/users/list'
-import UserEdit from  './pages/admin-pages/users/edit'
-import UserCreate from  './pages/admin-pages/users/create'
+import UserEdit from './pages/admin-pages/users/edit'
+import UserCreate from './pages/admin-pages/users/create'
 import Clients from './pages/admin-pages/clients/list'
 import ClientEdit from './pages/admin-pages/clients/edit'
 import ClientCreate from './pages/admin-pages/clients/create'
@@ -31,7 +31,7 @@ import ClientCreate from './pages/admin-pages/clients/create'
 const App = (): JSX.Element => (
     <Provider store={store}>
         <Router>
-         <LoginWrapper path="/login"/>
+            <LoginWrapper path="/login"/>
             <Site path="/">
                 <Home path="/"/>
                 {/* <Film path="/all/films"/> */}
@@ -41,16 +41,14 @@ const App = (): JSX.Element => (
                 <NotFound default/>
             </Site>
 
-           
-
             <PrivateRoute path="/admin">
                 <Dashboard path="/"/>
                 <Users path="/users"/>
                 <UserEdit path="/users/:id"/>
                 <UserCreate path="/users/create"/>
-                <Clients path="clients" />
-                <ClientEdit path='clients/:id' />
-                <ClientCreate path='clients/create' />
+                <Clients path="clients"/>
+                <ClientEdit path='clients/:id'/>
+                <ClientCreate path='clients/create'/>
                 <NotFound default/>
             </PrivateRoute>
 

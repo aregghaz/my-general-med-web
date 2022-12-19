@@ -81,8 +81,6 @@ const FormikHandler: React.FC<IFormikHandler> = (
                 />
             )
         case 'select':
-            console.log(selectOptions)
-            console.log(values)
             return (
                 <Select
                     value={values[item.name]}

@@ -3,7 +3,7 @@ import TableHead from './table-head/table-head'
 import TableBody from './table-body/table-body'
 import s from './crud-table.module.scss'
 import TableFoot from "./table-foot/table-foot";
-import { ICount } from '../../types/admin';
+import {ICount} from '../../types/admin';
 
 
 const CrudTable: React.FC<ICrudTable> = (
@@ -58,7 +58,7 @@ const CrudTable: React.FC<ICrudTable> = (
 interface ICrudTable {
     ////FIXME SHOULD ADD TYPE DATA
     data: Array<any>
-    titles:Array<string>
+    titles: Array<string>
     isEdit?: boolean
     isDelete?: boolean
     paginated?: boolean

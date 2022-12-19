@@ -5,7 +5,7 @@ import TrashIcon from '-!svg-react-loader!../../../images/trash.svg'
 import EditIcon from '-!svg-react-loader!../../../images/edit.svg'
 import OrdersIcon from '-!svg-react-loader!../../../images/my-orders.svg'
 import s from '../crud-table.module.scss'
-import { IClientsData } from '../../../types/home-types'
+import {IClientsData} from '../../../types/home-types'
 
 interface ITableBody {
     data: Array<any>
@@ -25,9 +25,9 @@ const TableBody: React.FC<ITableBody> = (
             data
                 .map((item, index) => {
                     const keys = Object.keys(item)
-             
-                    
-                    return keys.length >0 && (
+
+
+                    return keys.length > 0 && (
                         <TableRow key={index}>
                             {keys
                                 .map((key) => {
@@ -53,7 +53,7 @@ const TableBody: React.FC<ITableBody> = (
                             }
 
                             {
-                                
+
                                 // <TableData  item={item} handlerGetclientData={handlerGetclientData}>
                                 //     <div className={s.iconsWrapper}>
                                 //         <OrdersIcon className={s.editIcon} />

@@ -56,8 +56,8 @@ interface ICrudTable {
     activeItem?: number
     className: string
     handlerGetclientData?: (data:IClientsData)=>void
-    HandlerGetProducts?: (id: number) => void 
-    HandlerPagination?: (id: number) => void 
+    HandlerGetProducts?: (id: number) => void
+    HandlerPagination?: (id: number) => void
 }
 
 export default CrudTable

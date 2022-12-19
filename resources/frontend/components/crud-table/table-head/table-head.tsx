@@ -3,6 +3,7 @@ import TableRow from '../table-row/table-row'
 
 import s from '../crud-table.module.scss'
 import {useTranslation} from 'react-i18next'
+
 interface ITableHead {
     titles: Array<string>
     colspan?: number

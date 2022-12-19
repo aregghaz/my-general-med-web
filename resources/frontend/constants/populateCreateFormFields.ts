@@ -1,6 +1,6 @@
 import {IItem} from "../pages/layouts/templates/formik-handler/formik-handler";
 
-const populateCreateFormFields = (fields: Array<IItem>, data:  { [key: string]: Object }) => {
+const populateCreateFormFields = (fields: Array<IItem>, data: { [key: string]: Object }) => {
 
     const values: any = {}
 
@@ -17,10 +17,10 @@ const populateCreateFormFields = (fields: Array<IItem>, data:  { [key: string]: 
                     //  values[''] = data['']
                     break
                 case 'select':
-                   // values.selectOptions[field.name] = data[field.name]
+                    // values.selectOptions[field.name] = data[field.name]
                     break
                 case 'multiSelect':
-                  //  values[field.name] = []
+                    //  values[field.name] = []
                     break
                 case 'datepicker':
                     // values.selectOptions[''] = data['']
@@ -29,7 +29,7 @@ const populateCreateFormFields = (fields: Array<IItem>, data:  { [key: string]: 
                 //     values[`${field.name}_province`] = data[`${field.name}_province`]
                 //     break
                 default:
-             //       values[field.name] = []
+                    //       values[field.name] = []
                     break
             }
         })

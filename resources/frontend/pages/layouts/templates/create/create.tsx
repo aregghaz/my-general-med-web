@@ -6,7 +6,7 @@ import Button from "../../../../components/button/button";
 import {Formik, FormikHelpers, FormikValues} from 'formik'
 import {useNavigate} from '@reach/router'
 import populateCreateFormFields from "../../../../constants/populateCreateFormFields";
-import { AdminApi } from '../../../../api/admin-api/admin-api';
+import {AdminApi} from '../../../../api/admin-api/admin-api';
 
 interface ICreate {
     data: { [key: string]: Object }
@@ -23,20 +23,20 @@ const Create: React.FC<ICreate> = (
         data,
         children
     }) => {
-   const navigate = useNavigate()
+    const navigate = useNavigate()
     const create = async (values: FormikValues, {setSubmitting}: FormikHelpers<FormikValues>) => {
         setSubmitting(true)
         const formData: FormData = new FormData()
         formData.append('value', JSON.stringify(values))
-       const res: any = await AdminApi.store(formData, crudKey)
-       if (Number(res.status === 200)) navigate(`/admin/${crudKey}`)
+        const res: any = await AdminApi.store(formData, crudKey)
+        if (Number(res.status === 200)) navigate(`/admin/${crudKey}`)
     }
 
     return (
         <div>
 
             <Formik
-                selectOptions={data || {}}  
+                selectOptions={data || {}}
                 initialValues={populateCreateFormFields(fields, data)}
                 onSubmit={create}
             >

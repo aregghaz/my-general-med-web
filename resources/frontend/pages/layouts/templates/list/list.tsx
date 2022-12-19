@@ -55,7 +55,7 @@ const List: React.FC<IList> = (
                     </Button>
                 }
             </div>
-            
+
             <CrudTable
                 titles={titles}
                 data={data}

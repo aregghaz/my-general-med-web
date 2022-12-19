@@ -28,7 +28,6 @@ const TableBody: React.FC<ITableBody> = (
         handlerEditItem,
         HandlerGetProducts
     }) => {
-
     return (
         <tbody>
         {
@@ -43,7 +42,7 @@ const TableBody: React.FC<ITableBody> = (
                                             // return (
                                             //     <TableData key={key}>
                                             //         <img
-                                            //             src={item[key] ? item[key] : '/uploads/partners/avatar.png' }
+                                            //             src={item[key] ? item[key] : '/uploads/partners/avatar.png'}
                                             //             alt={key}
                                             //             className={s.img}
                                             //         />
@@ -52,7 +51,7 @@ const TableBody: React.FC<ITableBody> = (
                                         }
 
                                         return (
-                                            <TableData key={key}   handlerGetclientData={handlerGetclientData}>
+                                            <TableData data={item.id} key={key} handlerGetclientData={handlerGetclientData}>
                                                 {item[key]}
                                             </TableData>
                                         )
@@ -60,20 +59,20 @@ const TableBody: React.FC<ITableBody> = (
                                 )
                             }
 
-                            {/* {
-                                (isEdit || isDelete) &&
-                                <TableData>
-                                    <div className={s.iconsWrapper}>
-                                        {isGetItems &&
-                                        <OrdersIcon className={s.editIcon} onClick={() => HandlerGetProducts(item.id)}/>}
-                                        {isEdit &&
-                                        <EditIcon className={s.editIcon} onClick={() => handlerEditItem(item.id)}/>}
+                            {/* {*/}
+                            {/*    (isEdit || isDelete) &&*/}
+                            {/*    <TableData>*/}
+                            {/*        <div className={s.iconsWrapper}>*/}
+                            {/*            {isGetItems &&*/}
+                            {/*            <OrdersIcon className={s.editIcon} onClick={() => HandlerGetProducts(item.id)}/>}*/}
+                            {/*            {isEdit &&*/}
+                            {/*            <EditIcon className={s.editIcon} onClick={() => handlerEditItem(item.id)}/>}*/}
 
-                                        {isDelete &&
-                                        <TrashIcon className={s.trashIcon} onClick={()=> handlerDeleteItem(item.id)}/>}
-                                    </div>
-                                </TableData>
-                            } */}
+                            {/*            {isDelete &&*/}
+                            {/*            <TrashIcon className={s.trashIcon} onClick={()=> handlerDeleteItem(item.id)}/>}*/}
+                            {/*        </div>*/}
+                            {/*    </TableData>*/}
+                            {/*}*/}
 
                         </TableRow>
                     )

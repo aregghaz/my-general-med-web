@@ -7,6 +7,7 @@ interface IButton {
     onClick?: () => void
     className?: string
 }
+
 const Button: React.FC<IButton> = (
     {
         isSubmit = false,
@@ -33,7 +34,7 @@ const Button: React.FC<IButton> = (
             styleName = s.green
             break
         case 'adminUpdate':
-            styleName = s.green +' '+ s.update
+            styleName = s.green + ' ' + s.update
             break
         default:
             styleName = s.primary

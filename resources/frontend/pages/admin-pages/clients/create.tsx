@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {IItem} from '../../layouts/templates/formik-handler/formik-handler'
 import {useTranslation} from 'react-i18next'
 import Create from '../../layouts/templates/create/create'
-import { AdminApi } from '../../../api/admin-api/admin-api'
+import {AdminApi} from '../../../api/admin-api/admin-api'
 
 interface IClientCreate {
     path: string
@@ -38,7 +38,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         (
             async () => {
                 const data = await AdminApi.createItem(crudKey)
-                
+
                 setData(data)
             }
         )()

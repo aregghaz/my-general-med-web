@@ -1,5 +1,5 @@
 import React from 'react'
-import { IClientsData } from '../../../types/home-types'
+import {IClientsData} from '../../../types/home-types'
 import s from '../crud-table.module.scss'
 
 
@@ -7,8 +7,8 @@ interface ITableData {
     rowspan?: number
     colspan?: number
     className?: string,
-    item:any,
-    handlerGetclientData: (data:IClientsData)=>void
+    item: any,
+    handlerGetclientData: (data: IClientsData) => void
 }
 
 const TableData: React.FC<ITableData> = (

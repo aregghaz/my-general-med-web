@@ -3,7 +3,8 @@ import TableRow from '../table-row/table-row'
 
 import s from '../crud-table.module.scss'
 import {useTranslation} from 'react-i18next'
-import { ITitle } from '../../../types/home-types'
+import {ITitle} from '../../../types/home-types'
+
 interface ITableHead {
     titles: Array<ITitle>
     colspan?: number
