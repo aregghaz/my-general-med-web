@@ -52,6 +52,9 @@ const App = (): JSX.Element => (
                 <Clients path="clients"/>
                 <ClientEdit path='clients/:id'/>
                 <ClientCreate path='clients/create'/>
+                <Vendors path="vendors" />
+                <VendorEdit path='vendors/:id' />
+                <VendorCreate path='vendors/create' />
                 <NotFound default/>
             </PrivateRoute>
 
