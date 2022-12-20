@@ -34,14 +34,14 @@ const Vendors: React.FC<IVendors> = () => {
                 data.to
                 setCount({from: data.to-3, to: data.to+5})
                 setData(data.vendors)
-               
+
 
 
             }
         )()
     }, [])
 
-    
+
     const titles: Array<string> = [
         'id',
         'name',

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {useDispatch} from 'react-redux'
 import Button from '../button/button'
 import HomeIcon from '-!svg-react-loader!../../images/home.svg'
@@ -9,6 +9,7 @@ import {Link, useNavigate} from '@reach/router'
 
 import s from './drawer.module.scss'
 import {setLogOut} from "../../store/auth";
+import ColumnsHideShow from "../columns-hide-show/columns-hide-show";
 
 
 const menuItemsFirst = [
@@ -32,7 +33,13 @@ const Drawer: React.FC = () => {
     const {t} = useTranslation()
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    const [show, setShow] = useState(false)
     const handlerLogOut = () => dispatch(setLogOut());
+    const filterColumns = () => {
+        setShow(!show)
+        console.log(show)
+    }
 
     return (
         <>
@@ -46,12 +53,20 @@ const Drawer: React.FC = () => {
                                 </span>
                             </Button>
                         </div>
-                        <div className={`${s.iconBlock}`}>
+                        <div className={s.iconBlock}>
                             <Button type={'blank'}>
                                 <span className={s.icon}>
                                     <Account/>
                                 </span>
                             </Button>
+                        </div>
+                        <div className={s.iconBlock}>
+                            <Button type={'blank'}>
+                                <span className={s.icon} onClick={filterColumns}>
+                                    columns
+                                </span>
+                            </Button>
+                            <ColumnsHideShow show={show}/>
                         </div>
                         <div className={s.iconBlock}>
                             <Button type={'blank'} onClick={() => {

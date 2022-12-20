@@ -45,13 +45,11 @@ const Users: React.FC<Beneficiary> = () => {
         'email',
         'address',
         'phone_number',
-        // 'state',
         'birthday',
         'role',
         'image',
         'action',
     ]
-
     const handlerAddBeneficiaryItem = () => navigate(`/admin/users/create`)
 
 

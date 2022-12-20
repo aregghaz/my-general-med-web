@@ -1,0 +1,18 @@
+.show_column  {
+    display: block;
+    background-color: white;
+    min-width: 150px;
+    border: 1px solid #e0e0e0;
+    color: black;
+    position: absolute;
+    z-index: 11111;
+    padding: 5px;
+    border-radius: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.hide_column {
+    display: none;
+}
+

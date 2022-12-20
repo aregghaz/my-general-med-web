@@ -17,7 +17,6 @@ const PrivateRoute: React.FC<IPrivateRoute> = ({children}) => {
     const {loggedIn} = useSelector(getAdminData)
     const {user} = useSelector(getUserData)
     const [isLoading, setLoading] = useState(true);
-console.log(isLoading,'111111111111111111111111111');
 
     useEffect(() => {
         dispatch(checkAdminLoggedIn())

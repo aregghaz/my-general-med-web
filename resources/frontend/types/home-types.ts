@@ -24,8 +24,8 @@ export interface IClientsData {
     phone_number: string
     status: number
     ccn: number
-    pick_up:string
-    drop_down:string
+    pick_up: string
+    drop_down: string
 }
 
 

@@ -49,6 +49,10 @@ const TableBody: React.FC<ITableBody> = (
                                             //     </TableData>
                                             // )
                                         }
+                                        /*FIXME this was made to correct table data*/
+                                        if (key === 'client_id' || key === "driver_id") {
+                                            return null
+                                        }
 
                                         return (
                                             <TableData data={item.id} key={key} handlerGetclientData={handlerGetclientData}>
@@ -59,16 +63,17 @@ const TableBody: React.FC<ITableBody> = (
                                 )
                             }
 
-                             {
+                            {
                                 (isEdit || isDelete) &&
                                 <TableData>
                                     <div className={s.iconsWrapper}>
 
                                         {isEdit &&
-                                        <EditIcon className={s.editIcon} onClick={() => handlerEditItem(item.id)}/>}
+                                            <EditIcon className={s.editIcon} onClick={() => handlerEditItem(item.id)}/>}
 
                                         {isDelete &&
-                                        <TrashIcon className={s.trashIcon} onClick={()=> handlerDeleteItem(item.id)}/>}
+                                            <TrashIcon className={s.trashIcon}
+                                                       onClick={() => handlerDeleteItem(item.id)}/>}
                                     </div>
                                 </TableData>
                             }

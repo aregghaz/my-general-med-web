@@ -3,9 +3,8 @@
 .addBtnWrapper {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 20px;
-    //position: fixed;
-    bottom: 0;
+    position: fixed;
+    bottom: 30px;
     right: 30px;
     z-index: 1111111111;
 }
