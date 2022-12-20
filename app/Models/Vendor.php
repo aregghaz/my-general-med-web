@@ -16,11 +16,12 @@ class Vendor extends Model
 
     //enable this if you want use methods that gets information about creating
     protected $revisionCreationsEnabled = true;
-    
+
     protected $fillable  =  [
         'name',
         'address',
         'status',
+        'email',
         'phone_number',
     ];
 }

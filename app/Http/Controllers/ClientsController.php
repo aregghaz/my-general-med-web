@@ -10,39 +10,31 @@ class ClientsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        
-        if(Isset($request->querySearch)){
-        
-            
-            $clients = Clients::where( 'client_id', 'LIKE', '%' . $request->querySearch . '%' )->orWhere( 'driver_id', 'LIKE', '%' . $request->querySearch . '%' )->paginate(20);
 
-        }else{
+        if (isset($request->querySearch)) {
+            $clients = Clients::where('client_id', 'LIKE', '%' . $request->querySearch . '%')->orWhere('driver_id', 'LIKE', '%' . $request->querySearch . '%')->paginate(20);
+        } else {
             $clients = Clients::select(
                 'id',
-            'client_id',
-            "driver_id",
-            'name',
-            'surname',
-            'email',
-            'pick_up_address',
-            'drop_down_address',
-            'apartament_number',
-             'ccn',
-             "pick_up",
-             'drop_down',
-             'status',
-            'id_number',
-            'birthday')->paginate(20);
-
-
+                'client_id',
+                "driver_id",
+                'name',
+                'surname',
+                'email',
+                'pick_up_address',
+                'drop_down_address',
+                'apartament_number',
+                'cnn',
+                "pick_up",
+                'drop_down',
+                'status',
+                'id_number',
+                'birthday')->paginate(20);
         }
-
-        // dd($clients->toArray()['data']);
-        // die;
         return response()->json($clients, 200);
     }
 
@@ -59,7 +51,7 @@ class ClientsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -70,7 +62,7 @@ class ClientsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Clients  $clients
+     * @param \App\Models\Clients $clients
      * @return \Illuminate\Http\Response
      */
     public function show(Clients $clients)
@@ -81,7 +73,7 @@ class ClientsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Clients  $clients
+     * @param \App\Models\Clients $clients
      * @return \Illuminate\Http\Response
      */
     public function edit(Clients $clients)
@@ -92,8 +84,8 @@ class ClientsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Clients  $clients
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Clients $clients
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Clients $clients)
@@ -104,7 +96,7 @@ class ClientsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Clients  $clients
+     * @param \App\Models\Clients $clients
      * @return \Illuminate\Http\Response
      */
     public function destroy(Clients $clients)

@@ -13,8 +13,8 @@ class ClientSeeder extends Seeder
      */
     public function run()
     {
-    
-            for($i = 0  ;$i < 10000 ; $i++){
+
+            for($i = 0  ;$i < 500 ; $i++){
                 DB::table('clients')->insert([
                     'name' => 'clientName'.$i,
                     'surname' => 'clientSurname'.$i,
@@ -31,10 +31,10 @@ class ClientSeeder extends Seeder
                     'cnn'=> rand(pow(10, 3), pow(10, 4)-1),
                     'vendor_id' => rand(1, 5),
                     "client_id" => rand(pow(10, 3), pow(10, 4)-1),
-                    'driver_id' => rand(pow(10, 3), pow(10, 4)-1) 
+                    'driver_id' => rand(pow(10, 3), pow(10, 4)-1)
                 ]);
 
             }
-       
+
     }
 }

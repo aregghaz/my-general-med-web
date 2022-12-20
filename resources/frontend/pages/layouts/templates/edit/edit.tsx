@@ -7,9 +7,10 @@ import {useNavigate} from '@reach/router'
 
 
 import s from './edit.module.scss'
+import {AdminApi} from "../../../../api/admin-api/admin-api";
 
 interface IEdit {
-    data: { [key: string]: Object }
+    data: {data: { [key: string]: Object }}
     fields: Array<IItem>
     crudKey?: string
     title: string
@@ -28,11 +29,11 @@ const Edit: React.FC<IEdit> = (
     const submit = async (values: FormikValues, {setSubmitting}: FormikHelpers<FormikValues>) => {
         setSubmitting(true)
         const formData: FormData = new FormData()
+        formData.append('_method', 'put');
         formData.append('value', JSON.stringify(values))
-        ///  const res:any = await updateAPI.updateItem(formData, crudKey, values.id)
-        ///  if (Number(res.status === 200)) navigate('/admin/adminBeneficiaries')
+         const res:any = await AdminApi.update(formData, crudKey, values.id)
+         if (Number(res.status === 200)) await navigate(`/admin/${crudKey}`)
     }
-
 
     return (
         <div>

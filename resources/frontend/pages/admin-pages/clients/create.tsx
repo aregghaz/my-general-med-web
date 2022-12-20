@@ -52,7 +52,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         data={data}
         fields={fields}
         title={''}
-        children={t('admin.create')}
+        children={t('create')}
     />
 
 }

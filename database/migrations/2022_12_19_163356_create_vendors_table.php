@@ -19,6 +19,7 @@ class CreateVendorsTable extends Migration
             $table->string('address');
             $table->string('email');
             $table->string('notes')->nullable();
+            $table->string('phone_number')->nullable();
             $table->enum('status',[0,1])->default(0);
             $table->timestamps();
         });

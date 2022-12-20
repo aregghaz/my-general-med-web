@@ -22,7 +22,7 @@ const VendorCreate: React.FC<IVendorCreate> = () => {
         {name: 'status', type: 'select', label: 'status'},
         {name: 'id', type: 'hidden', inputType: 'hidden'},
         {name: 'users', type: 'multiSelect', label: 'users'}
-        
+
         // {name: 'selectedTypes', type: 'multiSelect', label: 'services'},
         // {name: 'selectOptions', type: 'hidden', inputType: 'hidden'},
         // {name: 'province', type: 'hidden', inputType: 'hidden'},
@@ -40,7 +40,7 @@ const VendorCreate: React.FC<IVendorCreate> = () => {
         (
             async () => {
                 const data = await AdminApi.createItem(crudKey)
-                
+
                 setData(data)
             }
         )()
@@ -54,7 +54,7 @@ const VendorCreate: React.FC<IVendorCreate> = () => {
         data={data}
         fields={fields}
         title={''}
-        children={t('admin.create')}
+        children={t('create')}
     />
 
 }

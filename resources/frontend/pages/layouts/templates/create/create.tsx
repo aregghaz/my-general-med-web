@@ -29,7 +29,7 @@ const Create: React.FC<ICreate> = (
         const formData: FormData = new FormData()
         formData.append('value', JSON.stringify(values))
         const res: any = await AdminApi.store(formData, crudKey)
-        if (Number(res.status === 200)) navigate(`/admin/${crudKey}`)
+        if (Number(res.status === 200)) await navigate(`/admin/${crudKey}`)
     }
 
     return (

@@ -29,7 +29,7 @@ class Clients extends Model
         'id_number',
         'birthday',
         'status',
-        'ccn',
+        'cnn',
         'phone_number',
         'pick_up',
         'drop_down'

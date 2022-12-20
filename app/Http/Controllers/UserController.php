@@ -22,11 +22,11 @@ class UserController extends Controller
      */
     public function index()
     {
-    
+
         $users = User::get();
         return response()->json([
-           'users' => new UserCollection($users),
-           "count"=> count($users)
+            'users' => new UserCollection($users),
+            "count" => count($users)
         ], 200);
     }
 
@@ -40,45 +40,43 @@ class UserController extends Controller
         $role = Role::get();
         $status = DB::table('status')->get();
         return response()->json([
-            "role" =>  new RoleCollection( $role ),
+            "role" => new RoleCollection($role),
             'status' => new StatusCollection($status)
-         ], 200);
+        ], 200);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
-        $validator = Validator::make( (array) json_decode($request->value), [
+        $validator = Validator::make((array)json_decode($request->value), [
             'name' => 'required|string',
             'surname' => 'string',
             'phone_number' => 'required|string',
             'email' => 'required|string|email|unique:users',
             ///'password' => 'required|string|confirmed',
             'birthday' => 'string',
-         'address' =>'string',
+            'address' => 'string',
             // 'address' => 'string',
-            
+
         ]);
         if ($validator->fails()) {
             return response()->json(['success' => 0, 'type' => 'validation_filed', 'error' => $validator->messages()], 422);
         }
         $requestData = $validator->validated();
-        // $state = json_decode($request->state);
-   // dd($requestData);
         $user = new User([
             'name' => $requestData['name'],
             'surname' => $requestData['surname'],
             'phone_number' => $requestData['phone_number'],
             'email' => $requestData['email'],
             /////TODO CHANGE IT
-           //// 'password' => bcrypt($requestData['password']),
+            //// 'password' => bcrypt($requestData['password']),
             'password' => bcrypt('admin'),
-            'birthday' => date ('Y-m-d', strtotime($requestData['birthday'])),
+            'birthday' => date('Y-m-d', strtotime($requestData['birthday'])),
             'address' => $requestData['address'],
             // 'state_id' => $state->id,
         ]);
@@ -94,31 +92,31 @@ class UserController extends Controller
         return response()->json([
             'success' => '1',
             'type' => 'success',
-            'status'=> 200
+            'status' => 200
         ], 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $id
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\User $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
     {
         $role = Role::get();
-     
+
         $data = User::findOrFail($id);
         return response()->json([
-            'user' => $data,
-            "role" =>   $role 
-         ], 200);
+            'data' => $data,
+            "role" => $role
+        ], 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param \App\Models\User $user
      * @return \Illuminate\Http\Response
      */
     public function edit(User $user)
@@ -129,19 +127,51 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\User $user
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, User $user)
     {
-        //
+
+        $validator = Validator::make((array)json_decode($request->value), [
+            'name' => 'required|string',
+            'surname' => 'string',
+            'phone_number' => 'required|string',
+            'email' => 'required|string|email',
+            ///'password' => 'required|string|confirmed',
+            'birthday' => 'string',
+            'business_address' => 'string',
+            // 'address' => 'string',
+
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['success' => 0, 'type' => 'validation_filed', 'error' => $validator->messages()], 422);
+        }
+        $requestData = $validator->validated();
+
+       User::update([
+            'name' => $requestData['name'],
+            'surname' => $requestData['surname'],
+            'phone_number' => $requestData['phone_number'],
+            'email' => $requestData['email'],
+            /////TODO CHANGE IT
+            //// 'password' => bcrypt($requestData['password']),
+            'birthday' => date('Y-m-d', strtotime($requestData['birthday'])),
+            'business_address' => $requestData['business_address'],
+            // 'state_id' => $state->id,
+        ]);
+        return response()->json([
+            'success' => '1',
+            'type' => 'success',
+            'status' => 200
+        ], 201);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $user
+     * @param \App\Models\User $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)

@@ -38,7 +38,6 @@ const FormikHandler: React.FC<IFormikHandler> = (
         selectOptions
     }) => {
     const {t} = useTranslation()
-
     switch (item.type) {
         case 'input':
             return (

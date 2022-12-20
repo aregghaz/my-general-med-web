@@ -16,11 +16,11 @@ const VendorEdit: React.FC<IVendorEditItem> = ({id}) => {
         {name: 'name', type: 'input', label: 'name'},
         {name: 'email', type: 'input', label: 'email'},
         {name: 'address', type: 'input', label: 'address'},
-        {name: 'phone_number', type: 'input', label: 'phoneNumber'},
+        {name: 'phone_number', type: 'input', label: 'phone_number'},
         {name: 'status', type: 'select', label: 'status'},
         {name: 'id', type: 'hidden', inputType: 'hidden'},
         {name: 'users', type: 'multiSelect', label: 'users'}
-        
+
     ]
 
 
@@ -30,7 +30,7 @@ const VendorEdit: React.FC<IVendorEditItem> = ({id}) => {
                 const data = await AdminApi.getUserData(crudKey, id)
                 console.log(data)
                 setData(data)
-           
+
             }
         )()
 
