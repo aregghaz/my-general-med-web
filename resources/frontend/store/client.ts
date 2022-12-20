@@ -18,6 +18,9 @@ const initialState = {
         id_number:0,
         phone_number:"",
         status:0,
+        ccn: 0,
+        pick_up:'',
+        drop_down:'',
     }
 }
 
@@ -36,6 +39,9 @@ const defaultDat ={
     id_number:0,
     phone_number:"",
     status:0,
+    ccn: 0,
+    pick_up:'',
+    drop_down:'',
 }
 
 type InitialState = typeof initialState

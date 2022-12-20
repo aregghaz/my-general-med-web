@@ -21,10 +21,6 @@ class ClientsController extends Controller
             $clients = Clients::where( 'client_id', 'LIKE', '%' . $request->querySearch . '%' )->orWhere( 'driver_id', 'LIKE', '%' . $request->querySearch . '%' )->paginate(20);
 
         }else{
-
-
-
-
             $clients = Clients::select(
                 'id',
             'client_id',
@@ -35,7 +31,10 @@ class ClientsController extends Controller
             'pick_up_address',
             'drop_down_address',
             'apartament_number',
-            // 'ccn',
+             'ccn',
+             "pick_up",
+             'drop_down',
+             'status',
             'id_number',
             'birthday')->paginate(20);
 

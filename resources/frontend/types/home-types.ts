@@ -10,7 +10,7 @@ export interface IPartner {
 }
 
 export interface IClientsData {
-    id: number,
+    id: number
     client_id: number
     driver_id: number
     surname: string
@@ -23,6 +23,9 @@ export interface IClientsData {
     id_number: number
     phone_number: string
     status: number
+    ccn: number
+    pick_up:string
+    drop_down:string
 }
 
 

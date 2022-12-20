@@ -108,7 +108,7 @@ const Users: React.FC<Beneficiary> = () => {
     return (
         data &&
         <>
-            <InfoBlock idData={dataID} items={data}/>
+            {/* <InfoBlock  items={data}/> */}
             <List
                 data={data}
                 titles={titles}

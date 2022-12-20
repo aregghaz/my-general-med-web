@@ -13,6 +13,7 @@ import ModalItem from "../../../components/modal-item/modal-item";
 import CrudTable from '../../../components/crud-table-user/crud-table'
 import { ITitle } from '../../../types/home-types'
 import Input from '../../../components/input/input'
+import InfoBlock from '../../../components/info-block/info-block'
 SwiperCore.use([Navigation, Pagination, EffectFade, Autoplay])
 
 interface IHome {
@@ -38,7 +39,9 @@ const Home: React.FC<IHome> = () => {
         {name :'drop_down_address', show : true},
         {name :'apartament_number', show : true},
         // {name :'State', show : true},
-        // {name :'ccn', show : true},
+        {name :'ccn', show : true},
+        {name :'drop_down', show : true},
+        {name :'pick_up', show : true},
         {name :'id_number', show : true},
         {name :'birthday', show : true},
     ]
@@ -83,6 +86,9 @@ const Home: React.FC<IHome> = () => {
                 id_number:0,
                 phone_number:"",
                 status:0,
+                ccn: 0,
+                pick_up:'',
+                drop_down:'',
             }
         }
 
@@ -136,10 +142,9 @@ const Home: React.FC<IHome> = () => {
 
    {show&&
      <div >
-                <span>name :{clientData.name}</span>
-                <span>surname :{clientData.surname}</span>
-                <span>client_id :{clientData.surname}</span>
-                <span>driver_id :{clientData.driver_id}</span>
+
+        <InfoBlock  items={clientData}/>
+              
      </div>
    }
 
