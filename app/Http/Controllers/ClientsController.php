@@ -15,6 +15,8 @@ class ClientsController extends Controller
     public function index()
     {
 
+
+     
         if (isset($request->querySearch)) {
             $clients = Clients::where('client_id', 'LIKE', '%' . $request->querySearch . '%')->orWhere('driver_id', 'LIKE', '%' . $request->querySearch . '%')->paginate(20);
         } else {

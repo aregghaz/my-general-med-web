@@ -5,17 +5,19 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ClientCollection;
 use App\Models\Clients;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     public function index(Request $request)
     {
-       //  dd($request->showmore);
+        $vendorID = Auth::user()->vendor_id;
         $showMore = $request->showmore;
       
+     
         if(Isset($request->querySearch)){
         
             
-            $clients = Clients::where( 'client_id', 'LIKE', '%' . $request->querySearch . '%' )->orWhere( 'driver_id', 'LIKE', '%' . $request->querySearch . '%' )->paginate(20);
+            $clients = Clients::where('vendor_id', $vendorID)->where( 'client_id', 'LIKE', '%' . $request->querySearch . '%' )->orWhere( 'driver_id', 'LIKE', '%' . $request->querySearch . '%' )->paginate(20);
 
         }else{
             $clients = Clients::select(

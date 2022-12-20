@@ -103,8 +103,9 @@ const Home: React.FC<IHome> = () => {
             data: homeData.users.data,
            }
            dispatch(actions.fetching(homeApi))
-        const role = localStorage.getItem('role');
-        localStorage.setItem('page', activeItem.toString());
+            ////FIXME: its should be save in state
+            const role = localStorage.getItem('role');
+            localStorage.setItem('page', activeItem.toString());
 
     }
     const handlerGetclientData= (client: any) => {
@@ -122,8 +123,6 @@ const Home: React.FC<IHome> = () => {
     ///FIXME  MISSING TYPE
     const onSerachInput = async (event:any) => {
         ////FIXME: its should be save in state
-
-
         localStorage.setItem('query', event.target.value);
         const page = localStorage.getItem('page')
         const homeData = await homeAPI.getHomePageData(1,event.target.value)

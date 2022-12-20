@@ -26,15 +26,16 @@ const LoginWrapper: React.FC<ILoginWrapper> = () => {
     const {user} = useSelector(getUserData)
     const [isLoading, setLoading] = useState(false);
 
-    const submit = (values: FormikValues, {setSubmitting}: FormikHelpers<FormikValues>) => {
+    const submit = async (values: FormikValues, {setSubmitting}: FormikHelpers<FormikValues>) => {
 
         setSubmitting(true)
 
         const formData: FormData = new FormData()
         formData.append('email', values.email)
         formData.append('password', values.password)
+        await dispatch(login(formData))
+        
         setLoading(true)
-        dispatch(login(formData))
     }
 
 
@@ -52,7 +53,7 @@ const LoginWrapper: React.FC<ILoginWrapper> = () => {
             navigate('/login')
         }
 
-    }, [isLoading, user])
+    }, [isLoading])
     return (
         <div className={s.login}>
             <Formik

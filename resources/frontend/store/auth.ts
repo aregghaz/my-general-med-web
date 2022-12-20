@@ -133,9 +133,10 @@ export const getUserData = (): ThunkType => async (dispatch) => {
 }
 
 export const setLogOut = () => async (dispatch: Dispatch) => {
-    const homeData = await authAPI.logout()
     localStorage.removeItem('access_token')
     dispatch(actions.logOut())
+     await authAPI.logout()
+ 
 }
 
 

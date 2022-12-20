@@ -29,13 +29,13 @@ const DrawerUser: React.FC = () => {
                                 </span>
                             </Button>
                         </div>
-                        <div className={`${s.account} ${s.iconBlock}`}>
+                        {/* <div className={`${s.account} ${s.iconBlock}`}>
                             <Button type={'blank'} className={s.personalInfo}>
                                 <span className={s.icon}>
                                     <Account/>
                                 </span>
                             </Button>
-                        </div>
+                        </div> */}
                     </div>
                     <div className={s.iconBlock}>
                         <Button type={'blank'} onClick={() => {

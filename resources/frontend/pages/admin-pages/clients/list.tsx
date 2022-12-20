@@ -42,19 +42,25 @@ const Clients: React.FC<IClients> = () => {
 
 
     const titles: Array<string> = [
-        'id',
-        'fullName',
+        'name',
+        'surname',
         'email',
-        'address',
-        'phone_number',
-        // 'state',
+        "client_id",
+        'driver_id',
+        'vendor_id',
+        'pick_up_address',
+        'drop_down_address',
+        'apartament_number',
+        'id_number',
         'birthday',
-        'role',
-        'image',
-        'action',
+        'status',
+        'cnn',
+        'phone_number',
+        'pick_up',
+        'drop_down'
     ]
 
-    const handlerAddBeneficiaryItem = () => navigate(`/admin/users/create`)
+    const handlerAddClientItem = () => navigate(`/admin/${crudKey}/create`)
 
 
     const handlerCloseModal = () => {
@@ -118,7 +124,7 @@ const Clients: React.FC<IClients> = () => {
                 isEdit
                 isCreate
                 isGetItems
-                handlerAddItem={handlerAddBeneficiaryItem}
+                handlerAddItem={handlerAddClientItem}
                 handlerDeleteItem={handlerDeleteModal}
                 handlerEditItem={handlerEditBeneficiaryItem}
                 HandlerPagination={HandlerPagination}
