@@ -9,23 +9,46 @@ export interface IPartner {
     slug?: string
 }
 
+export interface IClient {trip_id:number,
+    name:string,
+    surname:string,
+    gender:string,
+    pick_up_address:string,
+    los:string,
+    phone_number:string,
+    date_of_service:string,
+    appointment_time:string,
+    pick_up:string,
+    drop_down:string,
+    request_type: number,
+    status:number,
+
+    origin_name:string,
+    origin_street:string,
+    origin_suite:string,
+    origin_city:string,
+    origin_state:string,
+    origin_postal:string,
+    origin_country:string,
+    origin_phone:string,
+    origin_comment:string,
+    destination_name:string,
+    destination_street:string,
+    destination_suite:string,
+    destination_city:string,
+    destination_state:string,
+    destination_postal:string,
+    destination_country:string,
+    destination_phone:string,
+    destination_comment:string,
+    escortType:number,
+    type_of_trip:number,
+    miles:number,
+    member_uniqie_identifer:number,
+    birthday:number}
 export interface IClientsData {
-    id: number
-    client_id: number
-    driver_id: number
-    surname: string
-    name: string
-    drop_down_address: string
-    pick_up_address: string
-    apartament_number: string
-    birthday: string
-    email: string
-    id_number: number
-    phone_number: string
-    status: number
-    ccn: number
-    pick_up: string
-    drop_down: string
+    show:false,
+            clientData :Array<any>    
 }
 
 

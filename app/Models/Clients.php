@@ -4,6 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\RequestType;
+use App\Models\ClientStatus;
+use App\Models\TypeOfTrip;
+use App\Models\Escort;
+use App\Models\OriginAddress;
+use App\Models\DestinationAddress;
 use Laravel\Passport\HasApiTokens;
 use Venturecraft\Revisionable\RevisionableTrait;
 use Fico7489\Laravel\RevisionableUpgrade\Traits\RevisionableUpgradeTrait;
@@ -17,23 +23,57 @@ class Clients extends Model
     //enable this if you want use methods that gets information about creating
     protected $revisionCreationsEnabled = true;
     protected $fillable  =  [
+        "client_id",
+        'car_id',
+        'vendor_id',    
+        'trip_id',
         'name',
         'surname',
-        'email',
-        "client_id",
-        'driver_id',
-        'vendor_id',
-        'pick_up_address',
-        'drop_down_address',
-        'apartament_number',
-        'id_number',
-        'birthday',
-        'status',
-        'cnn',
+        'gender',
+        'los',
         'phone_number',
+        'date_of_service',
+        'appointment_time',
         'pick_up',
-        'drop_down'
-    ];
-
-
+        'drop_down',
+        'request_type', ///seect
+        'status',///seect
+        'origin_id',
+        "destination_id",
+        'origin_comment',
+        'destination_comments',
+        'escortType',//select
+        'type_of_trip',//select
+        'miles',
+        'member_uniqie_identifer',
+        'birthday',
+        
+    ];	
+    public function origin()
+    {
+        return $this->hasOne(OriginAddress::class, 'id', 'origin_id');
+    }
+    public function destination()
+    {
+        return $this->hasOne(DestinationAddress::class, 'id', 'destination_id');
+    }
+    
+    public function typeOfTrip()
+    {
+        return $this->hasOne(TypeOfTrip::class, 'id', 'type_of_trip');
+    }
+    
+    public function escortType()
+    {
+        return $this->hasOne(Escort::class, 'id', 'escortType');
+    }
+     
+    public function clientStatus()
+    {
+        return $this->hasOne(ClientStatus::class, 'id', 'status');
+    }
+    public function requestType()
+    {
+        return $this->hasOne(RequestType::class, 'id', 'request_type');
+    }
 }

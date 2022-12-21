@@ -13,40 +13,56 @@ const TableFoot: React.FC<IPaginationTypes> =
          last_page,
          handlerChangeItem
      }) => {
+        const curentPage = count.from;
         console.log(count,'countcount');
         const Number = count.from
+        const paginationArray:Array<number> = [];
+        if(curentPage <= 2){
+            Array.from(Array(10), (e, i) => {
+                paginationArray.push(curentPage+i)
+            })
+        } else if (curentPage > 2){
+            Array.from(Array(10), (e, i) => {
+                paginationArray.push(curentPage-2+i)
+            })
+        } else {
+
+        }
+
+        console.log(paginationArray ,'ssssssssssssss');
+        
         //////FIXME LAST PAGE PROBLEM
         return (
 
             <div className={styles.trPagination}>
-                {Array.from(Array(10), (e, i) => {
-                    if (activeItem == i) {
+                {Array.from(Array(10), (e, i:number) => {
+                    if (activeItem == Number + i) {
                         return <span
-                            key={Number + i}
+                            key={paginationArray[i]-1}
                             className={`${styles.number} ${styles.active}`}
                          >
 
                             <Button
                                 key={i}
-                                onClick={() => handlerChangeItem(Number  +i)}
+                                onClick={() => handlerChangeItem(paginationArray[i]-1)}
                                 type={'blank'}
                             >
-                                {Number  +i}
+                                {paginationArray[i]}
                             </Button>
 
                         </span>
-                    } else {
+                    } else if(last_page >= Number + i) {
                         return <span
-                        key={Number + i}
+                        key={paginationArray[i]-1}
                             className={styles.number}
                           >
 
                             <Button
                                 key={i + 1}
-                                onClick={() => handlerChangeItem(Number  +i)}
+                                onClick={() => handlerChangeItem(paginationArray[i]-1)}
                                 type={'blank'}
                             >
-                                {Number +i }
+                               {paginationArray[i]}
                             </Button>
 
                         </span>

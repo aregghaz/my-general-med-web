@@ -22,7 +22,7 @@ const InfoBlock: FC<IProps> = ({items}) => {
                 <span className={`${cls.menu} ${cls.menu_active}`}>Trip Detail</span>
                 <span className={cls.menu}>Notes</span>
             </div>
-            <div className={cls.items}>
+            {/* <div className={cls.items}>
                 {
                     newData &&
                     <>
@@ -100,7 +100,7 @@ const InfoBlock: FC<IProps> = ({items}) => {
                         </div>
                     </>
                 }
-            </div>
+            </div> */}
         </div>
     )
 }

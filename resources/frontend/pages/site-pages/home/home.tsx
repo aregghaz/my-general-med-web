@@ -27,72 +27,131 @@ const Home: React.FC<IHome> = () => {
         from : 0,
         to :5
     })
+
+    
     ///const [data, setData] = useState([])
     const titles: Array<ITitle> = [
-        {name :'id', show : true},
-        {name: "client_id",show:true},
-        {name: "driver_id",show:true},
+
+
+        // {name :'id', show : true},
+        // {name: "car_id",show:true},
+        // {name: "vendor_id",show:true},
+        {name :'trip_id', show : true},
         {name :'name', show : true},
         {name :'surname', show : true},
-        {name :'email', show : true},
-        {name :'pick_up_address', show : true},
-        {name :'drop_down_address', show : true},
-        {name :'apartament_number', show : true},
-        // {name :'State', show : true},
-        {name :'ccn', show : true},
-        {name :'drop_down', show : true},
+        {name :'gender', show : true},
+        {name :'los', show : true},
+        {name :'phone_number', show : true},
+        {name :'date_of_service', show : true},
+        {name :'appointment_time', show : true},
         {name :'pick_up', show : true},
-        {name :'id_number', show : true},
+        {name :'drop_down', show : true},
+        {name :'request_type', show : true},
+        {name :'status', show : true},
+        {name :'origin_name', show : true},
+        {name :'origin_stree', show : true},
+        {name :'origin_suite', show : true},
+        {name :'origin_city', show : true},
+        {name :'origin_state', show : true},
+        {name :'origin_postal', show : true},
+        {name :'origin_country', show : true},
+        {name :'origin_phone', show : true},
+        {name :'origin_comment', show : true},
+        {name :'destination_name', show : true},
+        {name :'destination_stree', show : true},
+        {name :'destination_suite', show : true},
+        {name :'destination_city', show : true},
+        {name :'destination_state', show : true},
+        {name :'destination_postal', show : true},
+        {name :'destination_country', show : true},
+        {name :'destination_phone', show : true},
+        {name :'destination_comments', show : true},
+        {name :'escortType', show : true},
+        {name :'type_of_trip', show : true},
+        {name :'miles', show : true},
+        {name :'member_uniqie_identifer', show : true},
         {name :'birthday', show : true},
+        
+        // {name :'State', show : true},
+      
     ]
     const homeData = useSelector(getHomePageData)
     const clientDataSelector = useSelector(getClientData);
     const dispatch = useDispatch()
 
-    const {data,pagination,last_page} = homeData
+    const {data} = homeData
     const {show, clientData} = clientDataSelector
 
-
+const pagination= {from:0,to:0};
+    const last_page =0;
     useEffect(() => {
         (
             async () => {
                const homeData = await homeAPI.getHomePageData(1)
                let homeApi ={
-                pagination : {from: homeData.users.current_page, to: homeData.users.current_page+5},
-                total: homeData.users.total,
-                last_page:homeData.users.last_page,
-                data: homeData.users.data
+                // pagination : {from: homeData.users.current_page, to: homeData.users.current_page+5},
+                // total: homeData.users.total,
+                // last_page:homeData.users.last_page,
+                data: homeData.users
                }
                dispatch(actions.fetching(homeApi))
             }
         )()
         return () => dispatch(actions.resetState())
     }, [])
-
+    const defaultDat ={
+        // client_id:0,
+        // car_id:0,
+        // vendor_id:0,
+        trip_id:0,
+        name:"",
+        surname:'',
+        gender:"",
+        pick_up_address:"",
+        los:"",
+        phone_number:"",
+        date_of_service:"",
+        appointment_time:"",
+        pick_up:"",
+        drop_down:"",
+        request_type: 0,
+        status:0,
+    
+        origin_name:"",
+        origin_street:"",
+        origin_suite:"",
+        origin_city:"",
+        origin_state:"",
+        origin_postal:"",
+        origin_country:"",
+        origin_phone:"",
+        origin_comment:'',
+        destination_name:'',
+        destination_street:'',
+        destination_suite:'',
+        destination_city:'',
+        destination_state:'',
+        destination_postal:'',
+        destination_country:'',
+        destination_phone:'',
+        destination_comment:'',
+        escortType:0,
+        type_of_trip:0,
+        miles:0,
+        member_uniqie_identifer:0,
+        birthday:0
+      
+        
+      
+    }
+    
     const HandlerPagination = async (activeItem: number) => {
-        let dataClient = {
-            show:false,
-            clientData :{
-                id : 0,
-                client_id:0,
-                driver_id:0,
-                surname:"string",
-                name:"",
-                drop_down_address:"",
-                pick_up_address:"",
-                apartament_number:"",
-                birthday:"",
-                email:"",
-                id_number:0,
-                phone_number:"",
-                status:0,
-                ccn: 0,
-                pick_up:'',
-                drop_down:'',
-            }
-        }
+        // let dataClient = {
+        //     show:false,
+        //     clientData :defaultDat
+        // }
 
-        dispatch(clientAction.fetching(dataClient))
+        // dispatch(clientAction.fetching(dataClient))
         const query =  localStorage.getItem('query')
         const homeData = await homeAPI.getHomePageData(activeItem+1,query ? query : '')
         /////FIXME pagination functiononality
@@ -130,6 +189,7 @@ const Home: React.FC<IHome> = () => {
        let homeApi ={
         pagination : {from: homeData.users.current_page, to: homeData.users.current_page+5},
         total: homeData.users.total,
+        current_page:  homeData.users.current_page,
         last_page:homeData.users.last_page,
         data: homeData.users.data
        }
@@ -139,13 +199,13 @@ const Home: React.FC<IHome> = () => {
 
 
 
-   {show&&
-     <div >
+   {/* {show&&
+    //  <div >
 
-        <InfoBlock  items={clientData}/>
+    //     <InfoBlock  items={clientData}/>
               
-     </div>
-   }
+    //  </div>
+   } */}
 
     <div>
     <Input name={'search'} type={'text'} onChange={onSerachInput}/>

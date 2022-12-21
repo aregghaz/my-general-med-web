@@ -20,6 +20,8 @@ const TableData: React.FC<ITableData> = (
         data
     }
 ) => {
+    console.log(children,'222');
+    
     return (
         <td
             className={`${s.tableTd} ${className ? className : ''}`}

@@ -20,15 +20,12 @@ const Site: React.FC<ISite> = ({children}) => {
     const {loggedIn} = useSelector(getAdminData)
     const {user} = useSelector(getUserData)
     const [isLoading, setLoading] = useState(true);
-    console.log(user, loggedIn, 'aaaaaaaaaaaaa')
     useEffect(() => {
         dispatch(checkLoggedIn())
     }, [])
 
     useEffect(() => {
-        console.log(loggedIn, '22222222222')
         if (loggedIn) {
-            console.log(user && user.role == 'driver', '22222222222')
             if (user && user.role == 'driver') {
                 navigate('/')
             }
