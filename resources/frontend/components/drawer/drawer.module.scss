@@ -2,16 +2,24 @@
 
 .headerNav {
     width: 100%;
-    padding: 23px 40px;
     color: #fff;
     background-color: $grayColor;
     z-index: 999;
-    height: 50px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    box-shadow: 0 0 4px $grayColor;
 }
 
 .navWrapper {
     max-width: calc(100% - 70px);
     display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    margin: auto;
 }
 
 .icons {
@@ -22,11 +30,13 @@
     justify-content: space-between;
 }
 
-//.iconBlock {
-//    & + & {
-//        margin-left: 20px;
-//    }
-//}
+.iconBlock {
+    position: relative;
+
+    button {
+        display: block;
+    }
+}
 
 .icon {
     width: 30px;

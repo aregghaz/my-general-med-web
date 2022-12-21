@@ -19,7 +19,7 @@
     <link href="{{asset('css/swiper.css')}}" rel="stylesheet">
     <link href="{{asset('css/image-gallery.css')}}" rel="stylesheet">
 
-    <title>Kinomino</title>
+    <title>Application</title>
 
 </head>
 <body>

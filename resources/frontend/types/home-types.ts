@@ -49,7 +49,6 @@ export interface IClient {trip_id:number,
 export interface IClientsData {
     show:false,
             clientData :Array<any>    
-  
 }
 
 

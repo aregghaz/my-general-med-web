@@ -12,7 +12,7 @@ const TableFoot: React.FC<IPaginationTypes> =
          activeItem,
          handlerChangeItem
      }) => {
-        console.log(count,'countcount');
+        // console.log(count,'countcount');
         const Number = count.from
         return (
 

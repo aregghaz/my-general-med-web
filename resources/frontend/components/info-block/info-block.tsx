@@ -93,7 +93,7 @@ const InfoBlock: FC<IProps> = ({items}) => {
                             <span className={cls.b_text}>{t('drop_down')}: </span>
                             {newData.drop_down}
                         </div>
-                     
+
                         <div className={cls.item}>
                             <span className={cls.b_text}>{t('status')}: </span>
                             {newData.status}

@@ -1,14 +1,16 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {useDispatch} from 'react-redux'
 import Button from '../button/button'
 import HomeIcon from '-!svg-react-loader!../../images/home.svg'
 import Account from '-!svg-react-loader!../../images/account.svg'
 import Logout from '-!svg-react-loader!../../images/logout.svg'
+import ColumnSvg from '-!svg-react-loader!../../images/column.svg'
 import {useTranslation} from 'react-i18next'
 import {Link, useNavigate} from '@reach/router'
 
 import s from './drawer.module.scss'
 import {setLogOut} from "../../store/auth";
+import ColumnsHideShow from "../columns-hide-show/columns-hide-show";
 
 
 const menuItemsFirst = [
@@ -32,7 +34,13 @@ const Drawer: React.FC = () => {
     const {t} = useTranslation()
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    const [show, setShow] = useState(false)
     const handlerLogOut = () => dispatch(setLogOut());
+    const filterColumns = () => {
+        setShow(!show)
+        console.log(show)
+    }
 
     return (
         <>
@@ -46,12 +54,20 @@ const Drawer: React.FC = () => {
                                 </span>
                             </Button>
                         </div>
-                        <div className={`${s.iconBlock}`}>
+                        <div className={s.iconBlock}>
                             <Button type={'blank'}>
                                 <span className={s.icon}>
                                     <Account/>
                                 </span>
                             </Button>
+                        </div>
+                        <div className={s.iconBlock}>
+                            <Button type={'blank'}>
+                                <span className={s.icon} onClick={filterColumns}>
+                                   <ColumnSvg/>
+                                </span>
+                            </Button>
+                            <ColumnsHideShow show={show}/>
                         </div>
                         <div className={s.iconBlock}>
                             <Button type={'blank'} onClick={() => {
