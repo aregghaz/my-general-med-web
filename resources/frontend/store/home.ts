@@ -4,30 +4,59 @@ import {IClientsData} from '../types/home-types';
 import {ICount} from '../types/admin'
 
 const initialState = {
-    data: [] as Array<IClientsData>,
-    pagination: {
-        from: 0,
-        to: 0
-    },
-    total: 0 as number,
-    last_page: 0 as number,
+    data: [] as Array<typeof defaultDat>,
+    // pagination: {
+    //     from: 0,
+    //     to: 0
+    // },
+    // total: 0 as number,
+    // last_page: 0 as number,
 }
 
 
-const defaultDat = {
-    id: 0,
-    client_id: 0,
-    driver_id: 0,
-    surname: "string",
-    name: "",
-    drop_down_address: "",
-    pick_up_address: "",
-    apartament_number: "",
-    birthday: "",
-    email: "",
-    id_number: 0,
-    phone_number: "",
-    status: 0,
+const defaultDat ={
+    // client_id:0,
+    // car_id:0,
+    // vendor_id:0,
+    trip_id:0,
+    name:"",
+    surname:'',
+    gender:"",
+    pick_up_address:"",
+    los:"",
+    phone_number:"",
+    date_of_service:"",
+    appointment_time:"",
+    pick_up:"",
+    drop_down:"",
+    request_type: 0,
+    status:0,
+
+    origin_name:"",
+    origin_stree:"",
+    origin_suite:"",
+    origin_city:"",
+    origin_state:"",
+    origin_postal:"",
+    origin_country:"",
+    origin_phone:"",
+    origin_comment:'',
+    destination_name:'',
+    destination_street:'',
+    destination_suite:'',
+    destination_city:'',
+    destination_state:'',
+    destination_postal:'',
+    destination_country:'',
+    destination_phone:'',
+    destination_comment:'',
+    escortType:0,
+    type_of_trip:0,
+    miles:0,
+    member_uniqie_identifer:0,
+    birthday:0
+
+  
 }
 
 type InitialState = typeof initialState
@@ -40,20 +69,20 @@ const homeReducer = (state = initialState, action: Actions): InitialState => {
             return {
                 ...state,
                 data: [...action.payload.data],
-                total: action.payload.total,
-                last_page: action.payload.last_page,
-                pagination: action.payload.pagination,
+                // total: action.payload.total,
+                // last_page: action.payload.last_page,
+              ///  pagination: action.payload.pagination,
             }
         case 'RESET_HOME_PAGE_STATE':
             return {
                 ...state,
                 data: [],
-                total: 0,
-                last_page: 0,
-                pagination: {
-                    from: 0,
-                    to: 0
-                },
+                // total: 0,
+                // last_page: 0,
+                // pagination: {
+                //     from: 0,
+                //     to: 0
+                // },
             }
         default:
             return state

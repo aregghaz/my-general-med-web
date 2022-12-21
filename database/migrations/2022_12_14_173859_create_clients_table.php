@@ -15,23 +15,31 @@ class CreateClientsTable extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('client_id');
-            $table->unsignedBigInteger('driver_id');
-            $table->unsignedBigInteger('vendor_id');
+            $table->unsignedBigInteger('client_id')->nullable();
+            $table->unsignedBigInteger('car_id')->nullable();
+            $table->unsignedBigInteger('vendor_id')->nullable();
+            $table->string('trip_id');
             $table->string('name');
             $table->string('surname');
-            $table->string('email');
-            $table->string('pick_up_address');
-            $table->string('drop_down_address');
-            $table->string('apartament_number');
-            $table->string('id_number');
-            $table->string('cnn');
+            $table->string('gender');
+            $table->string('los');
             $table->string('phone_number');
-            $table->date('birthday')->nullable();
-            $table->enum('status',[1,2,3,4,5])->default(1);
-            $table->date('pick_up')->nullable();
-            $table->date('drop_down')->nullable();
-            $table->timestamps();
+            $table->string('date_of_service');
+            $table->string('appointment_time');
+            $table->string('pick_up');
+            $table->string('drop_down');
+            $table->unsignedBigInteger('request_type');
+            $table->unsignedBigInteger('status');
+            $table->unsignedBigInteger('escortType');
+            $table->unsignedBigInteger('type_of_trip');
+            $table->unsignedBigInteger('origin_id');
+            $table->unsignedBigInteger('destination_id');
+            $table->text('origin_comment')->nullable();
+            $table->text('destination_comments')->nullable();
+            $table->unsignedBigInteger('miles')->nullable();
+            $table->string('member_uniqie_identifer');
+            $table->string('birthday')->nullable();
+            $table->timestamps();       
         });
     }
 

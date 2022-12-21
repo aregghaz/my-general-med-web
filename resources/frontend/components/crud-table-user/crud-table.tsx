@@ -23,6 +23,15 @@ const CrudTable: React.FC<ICrudTable> = (
 
     return (
         <>
+         {
+                paginated && <TableFoot
+                    count={count}
+                    last_page={last_page}
+                    activeItem={activeItem}
+                    handlerChangeItem={HandlerPagination}
+                />
+
+            }
             <table className={s.table}>
                 <TableHead titles={titles}/>
                 <TableBody

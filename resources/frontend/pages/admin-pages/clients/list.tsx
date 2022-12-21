@@ -129,7 +129,6 @@ const Clients: React.FC<IClients> = () => {
                 handlerEditItem={handlerEditBeneficiaryItem}
                 HandlerPagination={HandlerPagination}
                 HandlerGetProducts={HandlerGetProducts}
-
                 count={count}
                 paginated={true}
                 activeItem={activeItem}
