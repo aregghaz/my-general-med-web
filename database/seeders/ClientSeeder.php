@@ -14,7 +14,7 @@ class ClientSeeder extends Seeder
     public function run()
     {
 
-            for($i = 0  ;$i < 500 ; $i++){
+            for($i = 0  ;$i < 100 ; $i++){
                 DB::table('clients')->insert([
                     'name' => 'clientName'.$i,
                     'surname' => 'clientSurname'.$i,

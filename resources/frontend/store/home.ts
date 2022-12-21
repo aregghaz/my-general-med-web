@@ -11,6 +11,8 @@ const initialState = {
     },
     total: 0 as number,
     last_page: 0 as number,
+    filtered_data: {} as IClientsData,
+    titles: [] as string[]
 }
 
 
@@ -55,6 +57,26 @@ const homeReducer = (state = initialState, action: Actions): InitialState => {
                     to: 0
                 },
             }
+
+        case 'FILTER_COLUMNS_DATA':
+            return {
+                ...state,
+                filtered_data: action.payload
+            }
+
+
+        case 'SET_TITLES':
+            return {
+                ...state,
+                titles: action.payload
+            }
+
+        case 'RESET_FILTER_DATA':
+            return {
+                ...state,
+                filtered_data: {}
+            }
+
         default:
             return state
     }
@@ -64,7 +86,10 @@ const homeReducer = (state = initialState, action: Actions): InitialState => {
 
 export const actions = {
     fetching: (data: InitialState) => ({type: 'FETCHING_HOME_PAGE_DATA', payload: data} as const),
-    resetState: () => ({type: 'RESET_HOME_PAGE_STATE'} as const)
+    resetState: () => ({type: 'RESET_HOME_PAGE_STATE'} as const),
+    filterColumns: (data: any) => ({type: 'FILTER_COLUMNS_DATA', payload: data} as const),
+    setTitles: (data: any) => ({type: 'SET_TITLES', payload: data} as const),
+    clearData: () => ({type: 'RESET_FILTER_DATA'} as const),
 }
 
 

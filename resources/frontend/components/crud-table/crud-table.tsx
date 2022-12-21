@@ -4,6 +4,7 @@ import TableBody from './table-body/table-body'
 import s from './crud-table.module.scss'
 import TableFoot from "./table-foot/table-foot";
 import {ICount} from '../../types/admin';
+import {useSelector} from "react-redux";
 
 
 const CrudTable: React.FC<ICrudTable> = (
@@ -24,10 +25,14 @@ const CrudTable: React.FC<ICrudTable> = (
         HandlerPagination,
         paginated
     }) => {
+    //@ts-ignore
+    const strName = useSelector(state => state.homeReducer.filtered_data)
+    let filteredTitles = Object.keys(strName).length > 0 ? Object.keys(strName) : titles;
     return (
         <>
             <table className={s.table}>
-                <TableHead titles={titles}/>
+                {/*@ts-ignore*/}
+                <TableHead titles={filteredTitles}/>
                 <TableBody
                     data={data}
                     isDelete={isDelete}

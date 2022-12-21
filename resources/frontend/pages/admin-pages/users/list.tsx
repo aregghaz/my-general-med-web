@@ -8,12 +8,15 @@ import Select, {IOption, IOptionMultiselect} from '../../../components/select/se
 import {useTranslation} from 'react-i18next'
 import Modal from 'react-modal'
 import InfoBlock from "../../../components/info-block/info-block";
+import {actions} from "../../../store/home";
+import {useDispatch} from "react-redux";
 
 interface Beneficiary {
     path: string
 }
 
 const Users: React.FC<Beneficiary> = () => {
+    const dispatch = useDispatch();
     const crudKey = 'users'
     const [data, setData] = useState([])
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -36,6 +39,8 @@ const Users: React.FC<Beneficiary> = () => {
 
             }
         )()
+        dispatch(actions.setTitles(titles))
+        dispatch(actions.clearData())
     }, [])
 
 

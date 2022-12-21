@@ -3,6 +3,7 @@ import TableRow from '../table-row/table-row'
 
 import s from '../crud-table.module.scss'
 import {useTranslation} from 'react-i18next'
+import {useSelector} from "react-redux";
 
 interface ITableHead {
     titles: Array<string>
@@ -17,21 +18,24 @@ const TableHead: React.FC<ITableHead> = (
         rowspan = 1
     }) => {
     const {t} = useTranslation()
+    //@ts-ignore
     return (
         <thead className={s.tableHead}>
         <TableRow>
             {
                 titles
-                    .map((title, index) => (
-                            <th
-                                className={` ${s.tableTd} ${s.tableTh}`}
-                                key={index}
-                                colSpan={colspan || 1}
-                                rowSpan={rowspan || 1}
-                            >
-                                {t(title)}
-                            </th>
-                        )
+                    .map((title, index) => {
+                            return (
+                                <th
+                                    className={` ${s.tableTd} ${s.tableTh}`}
+                                    key={index}
+                                    colSpan={colspan || 1}
+                                    rowSpan={rowspan || 1}
+                                >
+                                    {t(title)}
+                                </th>
+                            )
+                        }
                     )
             }
         </TableRow>

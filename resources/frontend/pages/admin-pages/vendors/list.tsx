@@ -9,18 +9,21 @@ import {useTranslation} from 'react-i18next'
 import Modal from 'react-modal'
 import numberFormatting from '../../../constants/utils';
 import BackDropSearch from '../../../components/backdrop-search/backdrop-search';
+import {useDispatch} from "react-redux";
+import {actions} from "../../../store/home";
 
 interface IVendors {
     path: string
 }
 
 const Vendors: React.FC<IVendors> = () => {
+    const dispatch = useDispatch();
     const crudKey = 'vendors'
     const [data, setData] = useState([])
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [countPages, setCountPages] = useState(null)
     const [deleteId, setDeleteId] = useState(null)
-    const [count, setCount] = useState({from:0, to:10})
+    const [count, setCount] = useState({from: 0, to: 10})
     const [activeItem, setActiveItem] = useState(null)
 
 
@@ -29,16 +32,16 @@ const Vendors: React.FC<IVendors> = () => {
     useEffect(() => {
         (
             async () => {
-                const data = await AdminApi.getAllVendorData(crudKey,1,'')
-                console.log(data.to,'data.data.to');
+                const data = await AdminApi.getAllVendorData(crudKey, 1, '')
                 data.to
-                setCount({from: data.to-3, to: data.to+5})
+                setCount({from: data.to - 3, to: data.to + 5})
                 setData(data.vendors)
-
 
 
             }
         )()
+        dispatch(actions.setTitles(titles))
+        dispatch(actions.clearData())
     }, [])
 
 
@@ -50,7 +53,6 @@ const Vendors: React.FC<IVendors> = () => {
         'status',
         'action',
     ]
-
     const handlerAddBeneficiaryItem = () => navigate(`/admin/${crudKey}/create`)
 
 
@@ -74,9 +76,9 @@ const Vendors: React.FC<IVendors> = () => {
     const HandlerGetProducts = (id: number) => navigate(`/admin/users-products/${id}`)
 
     const HandlerPagination = async (activeItem: number) => {
-        const query =  localStorage.getItem('query')
-        const homeData = await  AdminApi.getAllData(crudKey,activeItem+1,query ? query : '')
-        setCount({from: homeData.current_page, to: homeData.current_page+5})
+        const query = localStorage.getItem('query')
+        const homeData = await AdminApi.getAllData(crudKey, activeItem + 1, query ? query : '')
+        setCount({from: homeData.current_page, to: homeData.current_page + 5})
         setData(homeData.data)
         const role = localStorage.getItem('role');
         localStorage.setItem('page', activeItem.toString());

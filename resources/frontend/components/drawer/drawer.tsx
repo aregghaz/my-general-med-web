@@ -4,6 +4,7 @@ import Button from '../button/button'
 import HomeIcon from '-!svg-react-loader!../../images/home.svg'
 import Account from '-!svg-react-loader!../../images/account.svg'
 import Logout from '-!svg-react-loader!../../images/logout.svg'
+import ColumnSvg from '-!svg-react-loader!../../images/column.svg'
 import {useTranslation} from 'react-i18next'
 import {Link, useNavigate} from '@reach/router'
 
@@ -63,7 +64,7 @@ const Drawer: React.FC = () => {
                         <div className={s.iconBlock}>
                             <Button type={'blank'}>
                                 <span className={s.icon} onClick={filterColumns}>
-                                    columns
+                                   <ColumnSvg/>
                                 </span>
                             </Button>
                             <ColumnsHideShow show={show}/>

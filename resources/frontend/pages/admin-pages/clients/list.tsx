@@ -8,18 +8,21 @@ import Select, {IOption, IOptionMultiselect} from '../../../components/select/se
 import {useTranslation} from 'react-i18next'
 import Modal from 'react-modal'
 import numberFormatting from '../../../constants/utils';
+import {actions} from "../../../store/home";
+import {useDispatch} from "react-redux";
 
 interface IClients {
     path: string
 }
 
 const Clients: React.FC<IClients> = () => {
+    const dispatch = useDispatch();
     const crudKey = 'clients'
     const [data, setData] = useState([])
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [countPages, setCountPages] = useState(null)
     const [deleteId, setDeleteId] = useState(null)
-    const [count, setCount] = useState({from:0, to:10})
+    const [count, setCount] = useState({from: 0, to: 10})
     const [activeItem, setActiveItem] = useState(null)
 
 
@@ -28,16 +31,16 @@ const Clients: React.FC<IClients> = () => {
     useEffect(() => {
         (
             async () => {
-                const data = await AdminApi.getAllData(crudKey,1,'')
-                console.log(data.to,'data.data.to');
+                const data = await AdminApi.getAllData(crudKey, 1, '')
                 data.to
-                setCount({from: data.to-3, to: data.to+5})
+                setCount({from: data.to - 3, to: data.to + 5})
                 setData(data.data)
-
 
 
             }
         )()
+        dispatch(actions.setTitles(titles))
+        dispatch(actions.clearData())
     }, [])
 
 
@@ -83,9 +86,9 @@ const Clients: React.FC<IClients> = () => {
     const HandlerGetProducts = (id: number) => navigate(`/admin/users-products/${id}`)
 
     const HandlerPagination = async (activeItem: number) => {
-        const query =  localStorage.getItem('query')
-        const homeData = await  AdminApi.getAllData(crudKey,activeItem+1,query ? query : '')
-        setCount({from: homeData.current_page, to: homeData.current_page+5})
+        const query = localStorage.getItem('query')
+        const homeData = await AdminApi.getAllData(crudKey, activeItem + 1, query ? query : '')
+        setCount({from: homeData.current_page, to: homeData.current_page + 5})
         setData(homeData.data)
         const role = localStorage.getItem('role');
         localStorage.setItem('page', activeItem.toString());
@@ -112,7 +115,6 @@ const Clients: React.FC<IClients> = () => {
             backdropFilter: 'blur(5px)'
         }
     }
-
 
     return (
         data &&
@@ -152,7 +154,8 @@ const Clients: React.FC<IClients> = () => {
                     <div className={s.buttons}>
                         <Button type={'green'} onClick={handlerDeleteItem}
                                 className={s.button}>{t('admin.yes')}</Button>
-                        <Button type={'transparent'} onClick={handlerCloseModal} className={s.button}>{t('admin.no')}</Button>
+                        <Button type={'transparent'} onClick={handlerCloseModal}
+                                className={s.button}>{t('admin.no')}</Button>
                     </div>
                 </div>
             </Modal>
