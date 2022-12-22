@@ -92,6 +92,7 @@ const pagination= {from:0,to:0};
                 // pagination : {from: homeData.users.current_page, to: homeData.users.current_page+5},
                 // total: homeData.users.total,
                 // last_page:homeData.users.last_page,
+                showMore:20,
                 data: homeData.users
                }
                dispatch(actions.fetching(homeApi))
@@ -156,9 +157,7 @@ const pagination= {from:0,to:0};
         const homeData = await homeAPI.getHomePageData(activeItem+1,query ? query : '')
         /////FIXME pagination functiononality
         let homeApi ={
-            pagination : {from: homeData.users.current_page, to: homeData.users.current_page+5},
-            total: homeData.users.total,
-            last_page:homeData.users.last_page,
+            showMore:10,
             data: homeData.users.data,
            }
            dispatch(actions.fetching(homeApi))
@@ -187,10 +186,7 @@ const pagination= {from:0,to:0};
         const homeData = await homeAPI.getHomePageData(1,event.target.value)
        /////FIXME pagination functiononality
        let homeApi ={
-        pagination : {from: homeData.users.current_page, to: homeData.users.current_page+5},
-        total: homeData.users.total,
-        current_page:  homeData.users.current_page,
-        last_page:homeData.users.last_page,
+        showMore:5,
         data: homeData.users.data
        }
        dispatch(actions.fetching(homeApi))

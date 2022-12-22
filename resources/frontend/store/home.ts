@@ -5,13 +5,10 @@ import {ICount} from '../types/admin'
 
 const initialState = {
     data: [] as Array<typeof defaultDat>,
-    // pagination: {
-    //     from: 0,
-    //     to: 0
-    // },
-    // total: 0 as number,
-    // last_page: 0 as number,
-
+    showMore: 0 as number,
+    // filtered_data: {} as typeof defaultDat,
+    // titles: [] as string[]
+}
 
 
 const defaultDat ={
@@ -69,6 +66,7 @@ const homeReducer = (state = initialState, action: Actions): InitialState => {
             return {
                 ...state,
                 data: [...action.payload.data],
+                showMore: action.payload.showMore
                 // total: action.payload.total,
                 // last_page: action.payload.last_page,
               ///  pagination: action.payload.pagination,
@@ -77,6 +75,7 @@ const homeReducer = (state = initialState, action: Actions): InitialState => {
             return {
                 ...state,
                 data: [],
+                showMore:0
                 // total: 0,
                 // last_page: 0,
                 // pagination: {
@@ -85,25 +84,24 @@ const homeReducer = (state = initialState, action: Actions): InitialState => {
                 // },
             }
 
-        case 'FILTER_COLUMNS_DATA':
-            return {
-                ...state,
-                filtered_data: action.payload
-            }
+        // case 'FILTER_COLUMNS_DATA':
+        //     return {
+        //         ...state,
+        //         filtered_data: action.payload
+        //     }
 
 
-        case 'SET_TITLES':
-            return {
-                ...state,
-                titles: action.payload
-            }
+        // case 'SET_TITLES':
+        //     return {
+        //         ...state,
+        //         titles: action.payload
+        //     }
 
-        case 'RESET_FILTER_DATA':
-            return {
-                ...state,
-                filtered_data: {}
-            }
-
+        // case 'RESET_FILTER_DATA':
+        //     return {
+        //         ...state,
+        //         filtered_data: typeof defaultDat
+        //     }
         default:
             return state
     }

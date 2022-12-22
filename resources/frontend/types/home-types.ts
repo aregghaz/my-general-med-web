@@ -9,7 +9,8 @@ export interface IPartner {
     slug?: string
 }
 
-export interface IClient {trip_id:number,
+export interface IClientsData {
+    trip_id:number,
     name:string,
     surname:string,
     gender:string,
@@ -46,10 +47,10 @@ export interface IClient {trip_id:number,
     miles:number,
     member_uniqie_identifer:number,
     birthday:number}
-export interface IClientsData {
-    show:false,
-            clientData :Array<any>    
-}
+// export interface IClientsData {
+//     show:false,
+//             clientData :Array<any>    
+// }
 
 
 export interface ITitle {
