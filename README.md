@@ -27,6 +27,7 @@ IF YOU REFRESH YOUR MIGRATION PLEASE REAPET THIS STEPS BELOW
 2. php artisan passport:install 
 3. php artisan passport:keys 
 4. php artisan db:seed
+5. http://127.0.0.1:8000/api/test browser run ara mi agnam
 
 users
 admin@admin.com
