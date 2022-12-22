@@ -5,6 +5,8 @@ import s from './crud-table.module.scss'
 import TableFoot from "./table-foot/table-foot";
 import { IClientsData, ITitle } from '../../types/home-types';
 import { ICount } from '../../types/admin';
+import { IOption } from '../select/select';
+
 
 
 const CrudTable: React.FC<ICrudTable> = (
@@ -15,6 +17,8 @@ const CrudTable: React.FC<ICrudTable> = (
         count,
         activeItem,
         last_page,
+        countRef,
+        ref,
         className,
         HandlerPagination,
         handlerGetclientData,
@@ -36,10 +40,13 @@ const CrudTable: React.FC<ICrudTable> = (
                 <TableHead titles={titles}/>
                 <TableBody
                     data={data}
+                    countRef={countRef}
                     handlerGetclientData={handlerGetclientData}
                     HandlerGetProducts={HandlerGetProducts}
                 />
+               
             </table>
+           
             {
                 paginated && <TableFoot
                     count={count}
@@ -58,9 +65,11 @@ const CrudTable: React.FC<ICrudTable> = (
 interface ICrudTable {
     ////FIXME SHOULD ADD TYPE DATA
     data: Array<any>
-    titles:Array<string>
+    titles:Array<IOption>
     paginated?: boolean
     count: ICount
+    countRef:any
+    ref:any
     last_page:number
     activeItem?: number
     className: string

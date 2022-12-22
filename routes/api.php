@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/test', [\App\Http\Controllers\TestController::class, 'index']);
-
+Route::post('/clientData', [HomeController::class, 'clientData']);
 Route::group([
     'middleware' => 'auth:api'
 ], function () {
@@ -53,9 +53,10 @@ Route::group([
     Route::group([
         'middleware' => 'auth:api'
     ], function () {
+       
         Route::resources([
             'home-data' => HomeController::class,
-            'users' => \App\Http\Controllers\UserController::class,
+            'users' => UserController::class,
             'clients' => \App\Http\Controllers\ClientsController::class,
             'vendors' => \App\Http\Controllers\VendorController::class,
         

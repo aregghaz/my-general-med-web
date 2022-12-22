@@ -3,9 +3,9 @@ import {AppStateType} from './store'
 export const getHomePageData = (state: AppStateType) => ({
   ///  filtered_data: state.homeReducer.filtered_data,
     titlesData: state.homeReducer.titles,
-    // total:state.homeReducer.total,
-    // last_page:state.homeReducer.last_page,
-    // pagination: state.homeReducer.pagination,
+    titles:state.homeReducer.titles,
+    selectedTitle:state.homeReducer.selectedTitle,
+    clients: state.homeReducer.clients,
 })
 export const getClientData = (state:AppStateType)=>({
     show: state.clientReducer.show,

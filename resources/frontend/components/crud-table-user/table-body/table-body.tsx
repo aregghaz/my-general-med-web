@@ -9,6 +9,7 @@ import {IClientsData} from '../../../types/home-types'
 
 interface ITableBody {
     data: Array<any>
+    countRef:any
     HandlerGetProducts?: (id: number) => void
     handlerGetclientData: (data: IClientsData) => void
 }
@@ -16,11 +17,12 @@ interface ITableBody {
 const TableBody: React.FC<ITableBody> = (
     {
         data,
+        countRef,
         handlerGetclientData
     }) => {
 
     return (
-        <tbody>
+        <tbody ref={countRef}>
         {
             data
                 .map((item, index) => {
@@ -47,6 +49,7 @@ const TableBody: React.FC<ITableBody> = (
                                             <TableData key={key} item={item} handlerGetclientData={handlerGetclientData}>
                                                 {item[key]}
                                             </TableData>
+                                            
                                         )
                                     }
                                 )

@@ -3,56 +3,21 @@ import {ISerialCard} from "../types/serial";
 import {IClientsData} from '../types/home-types';
 import {ICount} from '../types/admin'
 import { ITitle } from '../types/home-types'
+import { IOption } from '../components/select/select';
 const initialState = {
    
    // filtered_data: [] as Array<typeof defaultDat>,
-    titles: [] as Array<string>
+    titles: [] as Array<IOption>,
+    selectedTitle:[] as Array<IOption>,
+    clients:[] as Array<IClientsData>
 }
 
 
-const defaultDat ={
-    // client_id:0,
-    // car_id:0,
-    // vendor_id:0,
-    trip_id:0,
-    name:"",
-    surname:'',
-    gender:"",
-    pick_up_address:"",
-    los:"",
-    phone_number:"",
-    date_of_service:"",
-    appointment_time:"",
-    pick_up:"",
-    drop_down:"",
-    request_type: 0,
-    status:0,
-
-    origin_name:"",
-    origin_stree:"",
-    origin_suite:"",
-    origin_city:"",
-    origin_state:"",
-    origin_postal:"",
-    origin_country:"",
-    origin_phone:"",
-    origin_comment:'',
-    destination_name:'',
-    destination_street:'',
-    destination_suite:'',
-    destination_city:'',
-    destination_state:'',
-    destination_postal:'',
-    destination_country:'',
-    destination_phone:'',
-    destination_comment:'',
-    escortType:0,
-    type_of_trip:0,
-    miles:0,
-    member_uniqie_identifer:0,
-    birthday:0
-
-  
+const defaultDat ={ id: 0,
+            value: '',
+            label: '',
+            slug: ""
+    
 }
 
 type InitialState = typeof initialState
@@ -65,7 +30,8 @@ const homeReducer = (state = initialState, action: Actions): InitialState => {
             return {
                 ...state,
             ///    filtered_data: [],
-                titles: []
+                titles: [],
+                selectedTitle:[]
                 // total: action.payload.total,
                 // last_page: action.payload.last_page,
               ///  pagination: action.payload.pagination,
@@ -74,7 +40,9 @@ const homeReducer = (state = initialState, action: Actions): InitialState => {
             return {
                 ...state,
                 ///filtered_data: [],
-                titles:  []
+                titles:  [],
+                selectedTitle:[],
+                clients:[]
                 // total: 0,
                 // last_page: 0,
                 // pagination: {
@@ -87,15 +55,20 @@ const homeReducer = (state = initialState, action: Actions): InitialState => {
             return {
                 ...state,
               ///  filtered_data: action.payload.filtered_data,
-                titles: action.payload.titles
+              titles:  action.payload.titles,
+              selectedTitle: action.payload.selectedTitle,
+              clients: action.payload.clients
             }
 
 
         case 'SET_TITLES':
             return {
                 ...state,
+                titles:  action.payload.titles,
+                selectedTitle: action.payload.selectedTitle,
+                clients: action.payload.clients
               ///  filtered_data: action.payload.filtered_data,
-                titles: action.payload.titles
+               
             
             }
 

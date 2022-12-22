@@ -22,7 +22,7 @@ const TableData: React.FC<ITableData> = (
     }
 ) => {
 
-    console.log(children,'childrenchildren');
+    ///console.log(children,'childrenchildren');
     
     return (
         <td

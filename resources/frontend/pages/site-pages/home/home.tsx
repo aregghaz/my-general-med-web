@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState,useRef} from 'react'
 import {Col, Row} from 'react-grid-system'
 import {useTranslation} from 'react-i18next'
 import SwiperCore, {EffectFade, Navigation, Pagination, Autoplay} from 'swiper'
@@ -17,6 +17,9 @@ import InfoBlock from '../../../components/info-block/info-block'
 import Button from '../../../components/button/button'
 import ColumnsHideShow from '../../../components/columns-hide-show/columns-hide-show'
 import ColumnSvg from '-!svg-react-loader!../../../images/column.svg'
+import Select, { IOption } from '../../../components/select/select'
+import { useInView } from 'react-intersection-observer'
+
 interface IHome {
     path: string
 }
@@ -24,14 +27,14 @@ interface IHome {
 const Home: React.FC<IHome> = () => {
     const {t} = useTranslation()
     const [activeItem, setActiveItem] = useState(null)
-    const [count, setCount] = useState({
-        from : 0,
-        to :5
-    })
-
-    
+    const [defaultData, setDefaultData] = useState([])
+    const [ref, inView] = useInView({
+        threshold: 0,
+      });
+    const contentRef = useRef();
+    const countRef = useRef(1);
     ///const [data, setData] = useState([])
-    const titles: Array<string> = [
+    const titlesDef: Array<string> = [
 
         "client_id",
         'car_id',
@@ -74,38 +77,51 @@ const Home: React.FC<IHome> = () => {
         'miles',
         'member_uniqie_identifer',
         'birthday',
-        // {name :'id', show : true},
-        // {name: "car_id",show:true},
-        // {name: "vendor_id",show:true},
-        
-        // {name :'State', show : true},
-      
     ]
+ 
     const homeData = useSelector(getHomePageData)
     const clientDataSelector = useSelector(getClientData);
     const dispatch = useDispatch()
 
     const {data} = clientDataSelector
-    const { titlesData} = homeData
+    const { titlesData,titles,selectedTitle,clients} = homeData
 
 const pagination= {from:0,to:0};
+
+
+const defaultFieldAction = () =>{
+    titlesDef && titlesDef.forEach((item:string,index:number) => {
+        setDefaultData((state)=>{
+            return [
+                ...state,
+                {id: index,
+                    value: item,
+                    label: item,
+                    slug: item
+                }
+            ];
+        })
+    })
+}
+console.log(countRef.current,'22222222');
+
     const last_page =0;
     useEffect(() => {
         (
             async () => {
-               const homeData = await homeAPI.getHomePageData(1)
-               let homeApi ={
-                // pagination : {from: homeData.users.current_page, to: homeData.users.current_page+5},
-                // total: homeData.users.total,
-                // last_page:homeData.users.last_page,
-                show:20,
-                data: homeData.users
-               }
-               dispatch(actions.setTitles({titles:titles}))
-               dispatch(clientAction.fetching(homeApi))
+                await defaultFieldAction();
+                const homeData = await homeAPI.getHomePageData(1)
+                await dispatch(actions.setTitles({
+                    selectedTitle: homeData.titles,
+                    clients: homeData.clients,
+                    titles: titles
+                }))
+                console.log(countRef.current,'11111111111');
+                
+             ///await  dispatch(clientAction.fetching(homeApi))
             }
         )()
-        return () => dispatch(clientAction.resetState())
+        return () => dispatch(actions.resetState())
     }, [])
     const defaultDat ={
         // client_id:0,
@@ -184,11 +200,26 @@ const pagination= {from:0,to:0};
 
     }
 
-
+    useEffect(() => {
+        (async () => {
+          if (inView) {
+            const homeData= await homeAPI.getClientData({titles:titles,showMore:countRef.current})
+            dispatch(actions.setTitles({
+                selectedTitle: homeData.title,
+                clients: homeData.clients,
+                titles: titles
+            }))
+            countRef.current++;
+            console.log(countRef.current,'countRef.currentcountRef.currentcountRef.current');
+            
+          }
+        })();
+        ///return () => dispatch(actions.resetState())
+      }, [inView]);
     ///FIXME  MISSING TYPE
     const onSerachInput = async (event:any) => {
         ////FIXME: its should be save in state
-        localStorage.setItem('query', event.target.value);
+        localStorage.setItem('query', event);
         const page = localStorage.getItem('page')
         const homeData = await homeAPI.getHomePageData(1,event.target.value)
        /////FIXME pagination functiononality
@@ -198,15 +229,17 @@ const pagination= {from:0,to:0};
        }
        dispatch(clientAction.fetching(homeApi))
     }
-    const [show, setShow] = useState(false)
-    const filterColumns = () => {
-        setShow(!show)
-        console.log(show)
-    }
-    return (data && <>
 
+    const changeFields = async (options:Array<IOption>) => {
+            const homeData= await homeAPI.getClientData({titles:options,showMore:countRef.current})
+                dispatch(actions.setTitles({
+                    selectedTitle: homeData.title,
+                    clients: homeData.clients,
+                    titles: options
+                }))
+        }
 
-
+    return (clients   && titlesData &&<>
    {/* {show&&
     //  <div >
 
@@ -219,28 +252,49 @@ const pagination= {from:0,to:0};
     <Input name={'search'} type={'text'} onChange={onSerachInput}/>
     </div>
     <div className={s.iconBlock}>
-                            <Button type={'blank'}>
-                                <span className={s.icon} onClick={filterColumns}>
-                                    dddddd
-                                   <ColumnSvg/>
-                                </span>
-                            </Button>
-                            <ColumnsHideShow show={show}/>
-                        </div>
+        <Select  
+  ///  isSearchable?: boolean
+        placeholder={'sssss'}
+        options={defaultData}
+          onChange={(options:Array<IOption>)=>{
+            changeFields(options);
+          }}
+          //placeholder={'aaaa'}
+        getOptionValue={(option: IOption) =>  option.value}
+        getOptionLabel={(option: IOption) => option.label}
+   ///</IOption> getOptionLabel: (option: IOption) => string
+ ///   getOptionValue: (option: IOption) => string
+ ///   value?: Array<IOption> | IOption
+    name={'filtre'}
+   ///</IOption> label?: string
+    isMulti={true}
+   //</> authCheckboxLabelStyle?: string
+    ///labelStyle?: string
+    //handlerMenuOpen?: () => void
+    ///handlerMenuClose?: () => void
+    ///hideSelectedOptions?: boolean
+    ///isMenuAdd?: boolean,
+    ///handlerAdd?: () => void 
+    
+    
+    />
+</div>
 
             <CrudTable
-                titles={titles}
-                data={data}
+                titles={titlesData}
+                data={clients}
+                ref={ref}
+                countRef={contentRef}
                 HandlerPagination={HandlerPagination}
                 // HandlerGetProducts={HandlerGetData}
                 handlerGetclientData={handlerGetclientData}
                 activeItem={activeItem}
-                last_page={last_page}
+                last_page={5}
                 count={pagination}
                 className={'pagination'}
-                paginated={true}
+                paginated={false}
             />
-
+ <div className={s.detector} ref={ref} />
     </>)
 }
 export default Home
