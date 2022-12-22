@@ -39,8 +39,8 @@ const Users: React.FC<Beneficiary> = () => {
 
             }
         )()
-        dispatch(actions.setTitles(titles))
-        dispatch(actions.clearData())
+        // dispatch(actions.setTitles(titles))
+        // dispatch(actions.clearData())
     }, [])
 
 

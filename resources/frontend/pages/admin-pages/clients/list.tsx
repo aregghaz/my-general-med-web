@@ -39,8 +39,8 @@ const Clients: React.FC<IClients> = () => {
 
             }
         )()
-        dispatch(actions.setTitles(titles))
-        dispatch(actions.clearData())
+        // dispatch(actions.setTitles(titles))
+        // dispatch(actions.clearData())
     }, [])
 
 

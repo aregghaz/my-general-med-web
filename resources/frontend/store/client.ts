@@ -19,7 +19,6 @@ const defaultDat ={
     drop_down:"",
     request_type: 0,
     status:0,
-
     origin_name:"",
     origin_stree:"",
     origin_suite:"",
@@ -48,8 +47,8 @@ const defaultDat ={
 }
 
 const initialState = {
-    show:false,
-    clientData: [typeof defaultDat]
+    show:0 ,
+    data: [typeof defaultDat]
 }
 
 
@@ -62,15 +61,16 @@ const clientReducer = (state = initialState, action: clientAction): InitialState
         case 'FETCHING_CLIENT_DATA':
             return {
                 ...state,
-                clientData: action.payload.clientData,
+                data: action.payload.data,
                 show: action.payload.show,
 
             }
+
         case 'RESET_HOME_PAGE_STATE':
             return {
                 ...state,
-                show:false,
-                clientData:[],
+                show:0,
+                data:[typeof defaultDat],
             
             }
         default:

@@ -2,12 +2,11 @@ import {InferActionsTypes} from './store'
 import {ISerialCard} from "../types/serial";
 import {IClientsData} from '../types/home-types';
 import {ICount} from '../types/admin'
-
+import { ITitle } from '../types/home-types'
 const initialState = {
-    data: [] as Array<typeof defaultDat>,
-    showMore: 0 as number,
-    // filtered_data: {} as typeof defaultDat,
-    // titles: [] as string[]
+   
+   // filtered_data: [] as Array<typeof defaultDat>,
+    titles: [] as Array<string>
 }
 
 
@@ -65,8 +64,8 @@ const homeReducer = (state = initialState, action: Actions): InitialState => {
         case 'FETCHING_HOME_PAGE_DATA':
             return {
                 ...state,
-                data: [...action.payload.data],
-                showMore: action.payload.showMore
+            ///    filtered_data: [],
+                titles: []
                 // total: action.payload.total,
                 // last_page: action.payload.last_page,
               ///  pagination: action.payload.pagination,
@@ -74,8 +73,8 @@ const homeReducer = (state = initialState, action: Actions): InitialState => {
         case 'RESET_HOME_PAGE_STATE':
             return {
                 ...state,
-                data: [],
-                showMore:0
+                ///filtered_data: [],
+                titles:  []
                 // total: 0,
                 // last_page: 0,
                 // pagination: {
@@ -84,24 +83,23 @@ const homeReducer = (state = initialState, action: Actions): InitialState => {
                 // },
             }
 
-        // case 'FILTER_COLUMNS_DATA':
-        //     return {
-        //         ...state,
-        //         filtered_data: action.payload
-        //     }
+        case 'FILTER_COLUMNS_DATA':
+            return {
+                ...state,
+              ///  filtered_data: action.payload.filtered_data,
+                titles: action.payload.titles
+            }
 
 
-        // case 'SET_TITLES':
-        //     return {
-        //         ...state,
-        //         titles: action.payload
-        //     }
+        case 'SET_TITLES':
+            return {
+                ...state,
+              ///  filtered_data: action.payload.filtered_data,
+                titles: action.payload.titles
+            
+            }
 
-        // case 'RESET_FILTER_DATA':
-        //     return {
-        //         ...state,
-        //         filtered_data: typeof defaultDat
-        //     }
+     
         default:
             return state
     }
@@ -110,10 +108,10 @@ const homeReducer = (state = initialState, action: Actions): InitialState => {
 
 
 export const actions = {
-    fetching: (data: InitialState) => ({type: 'FETCHING_HOME_PAGE_DATA', payload: data} as const),
+    fetching: (data:InitialState ) => ({type: 'FETCHING_HOME_PAGE_DATA', payload: data} as const),
     resetState: () => ({type: 'RESET_HOME_PAGE_STATE'} as const),
-    filterColumns: (data: any) => ({type: 'FILTER_COLUMNS_DATA', payload: data} as const),
-    setTitles: (data: any) => ({type: 'SET_TITLES', payload: data} as const),
+    filterColumns: (data: InitialState) => ({type: 'FILTER_COLUMNS_DATA', payload: data} as const),
+    setTitles: (data: InitialState) => ({type: 'SET_TITLES', payload: data} as const),
     clearData: () => ({type: 'RESET_FILTER_DATA'} as const),
 }
 

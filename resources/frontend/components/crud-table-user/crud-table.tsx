@@ -58,7 +58,7 @@ const CrudTable: React.FC<ICrudTable> = (
 interface ICrudTable {
     ////FIXME SHOULD ADD TYPE DATA
     data: Array<any>
-    titles:Array<ITitle>
+    titles:Array<string>
     paginated?: boolean
     count: ICount
     last_page:number

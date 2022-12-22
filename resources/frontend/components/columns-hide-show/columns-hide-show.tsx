@@ -7,6 +7,7 @@ import {actions} from "../../store/home";
 
 interface IProps {
     show: boolean;
+    
 }
 
 
@@ -42,7 +43,7 @@ const ColumnsHideShow: FC<IProps> = ({show}) => {
             }
         }
 
-        dispatch(actions.filterColumns(filteredData))
+      //// dispatch(actions.filterColumns(filteredData))
     }
 
 

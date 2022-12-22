@@ -35,12 +35,12 @@ const Drawer: React.FC = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const [show, setShow] = useState(false)
+   /// const [show, setShow] = useState(false)
     const handlerLogOut = () => dispatch(setLogOut());
-    const filterColumns = () => {
-        setShow(!show)
-        console.log(show)
-    }
+    // const filterColumns = () => {
+    //     setShow(!show)
+    //     console.log(show)
+    // }
 
     return (
         <>
@@ -61,14 +61,14 @@ const Drawer: React.FC = () => {
                                 </span>
                             </Button>
                         </div>
-                        <div className={s.iconBlock}>
+                        {/* <div className={s.iconBlock}>
                             <Button type={'blank'}>
                                 <span className={s.icon} onClick={filterColumns}>
                                    <ColumnSvg/>
                                 </span>
                             </Button>
                             <ColumnsHideShow show={show}/>
-                        </div>
+                        </div> */}
                         <div className={s.iconBlock}>
                             <Button type={'blank'} onClick={() => {
                                 handlerLogOut()

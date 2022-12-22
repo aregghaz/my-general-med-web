@@ -6,7 +6,7 @@ import {useTranslation} from 'react-i18next'
 import {ITitle} from '../../../types/home-types'
 
 interface ITableHead {
-    titles: Array<ITitle>
+    titles: Array<string>
     colspan?: number
     rowspan?: number
 }
@@ -25,14 +25,14 @@ const TableHead: React.FC<ITableHead> = (
         <TableRow>
             {
                 titles
-                    .map((title, index) => (title.show == true &&
+                    .map((title, index) => (
                             <th
                                 className={` ${s.tableTd} ${s.tableTh}`}
                                 key={index}
                                 colSpan={colspan || 1}
                                 rowSpan={rowspan || 1}
                             >
-                                {t(title.name)}
+                                {t(title)}
                             </th>
                         )
                     )

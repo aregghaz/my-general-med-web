@@ -14,8 +14,9 @@ import CrudTable from '../../../components/crud-table-user/crud-table'
 import { ITitle } from '../../../types/home-types'
 import Input from '../../../components/input/input'
 import InfoBlock from '../../../components/info-block/info-block'
-SwiperCore.use([Navigation, Pagination, EffectFade, Autoplay])
-
+import Button from '../../../components/button/button'
+import ColumnsHideShow from '../../../components/columns-hide-show/columns-hide-show'
+import ColumnSvg from '-!svg-react-loader!../../../images/column.svg'
 interface IHome {
     path: string
 }
@@ -30,47 +31,52 @@ const Home: React.FC<IHome> = () => {
 
     
     ///const [data, setData] = useState([])
-    const titles: Array<ITitle> = [
+    const titles: Array<string> = [
 
-
+        "client_id",
+        'car_id',
+        'vendor_id',    
+        'trip_id',
+        'name',
+        'surname',
+        'gender',
+        'los',
+        'phone_number',
+        'date_of_service',
+        'appointment_time',
+        'pick_up',
+        'drop_down',
+        'request_type', ///seect
+        'status',///seect
+        // 'origin_id',
+        // "destination_id",
+        "origin_name",
+        "origin_stree",
+        "origin_suite",
+        "origin_city",
+        "origin_state",
+        "origin_postal",
+        "origin_country",
+        "origin_phone",
+        "origin_comment",
+        "destination_name",
+        "destination_stree",
+        "destination_suite",
+        "destination_city",
+        "destination_state",
+        "destination_postal",
+        "destination_country",
+        "destination_phone",
+        "destination_comments",
+        
+        'escortType',//select
+        'type_of_trip',//select
+        'miles',
+        'member_uniqie_identifer',
+        'birthday',
         // {name :'id', show : true},
         // {name: "car_id",show:true},
         // {name: "vendor_id",show:true},
-        {name :'trip_id', show : true},
-        {name :'name', show : true},
-        {name :'surname', show : true},
-        {name :'gender', show : true},
-        {name :'los', show : true},
-        {name :'phone_number', show : true},
-        {name :'date_of_service', show : true},
-        {name :'appointment_time', show : true},
-        {name :'pick_up', show : true},
-        {name :'drop_down', show : true},
-        {name :'request_type', show : true},
-        {name :'status', show : true},
-        {name :'origin_name', show : true},
-        {name :'origin_stree', show : true},
-        {name :'origin_suite', show : true},
-        {name :'origin_city', show : true},
-        {name :'origin_state', show : true},
-        {name :'origin_postal', show : true},
-        {name :'origin_country', show : true},
-        {name :'origin_phone', show : true},
-        {name :'origin_comment', show : true},
-        {name :'destination_name', show : true},
-        {name :'destination_stree', show : true},
-        {name :'destination_suite', show : true},
-        {name :'destination_city', show : true},
-        {name :'destination_state', show : true},
-        {name :'destination_postal', show : true},
-        {name :'destination_country', show : true},
-        {name :'destination_phone', show : true},
-        {name :'destination_comments', show : true},
-        {name :'escortType', show : true},
-        {name :'type_of_trip', show : true},
-        {name :'miles', show : true},
-        {name :'member_uniqie_identifer', show : true},
-        {name :'birthday', show : true},
         
         // {name :'State', show : true},
       
@@ -79,8 +85,8 @@ const Home: React.FC<IHome> = () => {
     const clientDataSelector = useSelector(getClientData);
     const dispatch = useDispatch()
 
-    const {data} = homeData
-    const {show, clientData} = clientDataSelector
+    const {data} = clientDataSelector
+    const { titlesData} = homeData
 
 const pagination= {from:0,to:0};
     const last_page =0;
@@ -92,13 +98,14 @@ const pagination= {from:0,to:0};
                 // pagination : {from: homeData.users.current_page, to: homeData.users.current_page+5},
                 // total: homeData.users.total,
                 // last_page:homeData.users.last_page,
-                showMore:20,
+                show:20,
                 data: homeData.users
                }
-               dispatch(actions.fetching(homeApi))
+               dispatch(actions.setTitles({titles:titles}))
+               dispatch(clientAction.fetching(homeApi))
             }
         )()
-        return () => dispatch(actions.resetState())
+        return () => dispatch(clientAction.resetState())
     }, [])
     const defaultDat ={
         // client_id:0,
@@ -157,10 +164,10 @@ const pagination= {from:0,to:0};
         const homeData = await homeAPI.getHomePageData(activeItem+1,query ? query : '')
         /////FIXME pagination functiononality
         let homeApi ={
-            showMore:10,
+            show:10,
             data: homeData.users.data,
            }
-           dispatch(actions.fetching(homeApi))
+           dispatch(clientAction.fetching(homeApi))
             ////FIXME: its should be save in state
             const role = localStorage.getItem('role');
             localStorage.setItem('page', activeItem.toString());
@@ -170,8 +177,8 @@ const pagination= {from:0,to:0};
         console.log(client,'client');
 
         let dataClient = {
-            show:true,
-            clientData :client
+            show:10,
+            data :client
         }
         dispatch(clientAction.fetching(dataClient))
 
@@ -186,10 +193,15 @@ const pagination= {from:0,to:0};
         const homeData = await homeAPI.getHomePageData(1,event.target.value)
        /////FIXME pagination functiononality
        let homeApi ={
-        showMore:5,
+        show:5,
         data: homeData.users.data
        }
-       dispatch(actions.fetching(homeApi))
+       dispatch(clientAction.fetching(homeApi))
+    }
+    const [show, setShow] = useState(false)
+    const filterColumns = () => {
+        setShow(!show)
+        console.log(show)
     }
     return (data && <>
 
@@ -206,7 +218,15 @@ const pagination= {from:0,to:0};
     <div>
     <Input name={'search'} type={'text'} onChange={onSerachInput}/>
     </div>
-
+    <div className={s.iconBlock}>
+                            <Button type={'blank'}>
+                                <span className={s.icon} onClick={filterColumns}>
+                                    dddddd
+                                   <ColumnSvg/>
+                                </span>
+                            </Button>
+                            <ColumnsHideShow show={show}/>
+                        </div>
 
             <CrudTable
                 titles={titles}
