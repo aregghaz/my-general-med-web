@@ -14,11 +14,7 @@ const CrudTable: React.FC<ICrudTable> = (
         data,
         titles,
         HandlerGetProducts,
-        count,
-        activeItem,
-        last_page,
         countRef,
-        ref,
         className,
         HandlerPagination,
         handlerGetclientData,
@@ -27,15 +23,7 @@ const CrudTable: React.FC<ICrudTable> = (
 
     return (
         <>
-         {
-                paginated && <TableFoot
-                    count={count}
-                    last_page={last_page}
-                    activeItem={activeItem}
-                    handlerChangeItem={HandlerPagination}
-                />
-
-            }
+        
             <table className={s.table}>
                 <TableHead titles={titles}/>
                 <TableBody
@@ -47,7 +35,7 @@ const CrudTable: React.FC<ICrudTable> = (
                
             </table>
            
-            {
+            {/* {
                 paginated && <TableFoot
                     count={count}
                     last_page={last_page}
@@ -55,7 +43,7 @@ const CrudTable: React.FC<ICrudTable> = (
                     handlerChangeItem={HandlerPagination}
                 />
 
-            }
+            } */}
 
 
         </>
@@ -67,11 +55,9 @@ interface ICrudTable {
     data: Array<any>
     titles:Array<IOption>
     paginated?: boolean
-    count: ICount
+    count?: ICount
     countRef:any
-    ref:any
-    last_page:number
-    activeItem?: number
+
     className: string
     handlerGetclientData?: (data:IClientsData)=>void
     HandlerGetProducts?: (id: number) => void
