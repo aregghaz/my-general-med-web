@@ -14,7 +14,7 @@ class HomeController extends Controller
 
     public function clientData(Request $request)
     {
-        $vendorID = 1;
+       
         $title = [
             'trip_id',
             'name',
@@ -45,7 +45,7 @@ class HomeController extends Controller
             'destination_postal',
             'destination_country',
             'destination_phone',
-            'destination_comments',
+            'destination_comment',
             'escortType', //select
             'type_of_trip', //select
             'miles',
@@ -88,7 +88,7 @@ class HomeController extends Controller
                 $clientsData[] =  'clients.' . $request->titles[$i];
             }
         }
-        $result=array_diff($title,$selectedFieldsTitle);
+        $result= array_diff($title,$selectedFieldsTitle);
 
         $selectedFields = count($clientsData) > 0 ? $clientsData : $clientData;
         //dd($request->titles);

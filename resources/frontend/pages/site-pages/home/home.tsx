@@ -100,9 +100,6 @@ const Home: React.FC<IHome> = () => {
                         clients: homeData.clients
                     }))
                 }
-
-
-                ///await  dispatch(clientAction.fetching(homeApi))
             }
         )()
         return async () => await dispatch(actions.resetState())
@@ -132,13 +129,12 @@ const Home: React.FC<IHome> = () => {
                         selectedTitle: homeData.selectedFields,
                         clients: homeData.clients
                     }))
-                    countRef.current++;
+                   
                 }
-
+                    countRef.current++;
 
             }
         })();
-        return async () => await dispatch(actions.resetState())
     }, [inView]);
     ///FIXME  MISSING TYPE
     const onSerachInput = async (event: any) => {
@@ -169,7 +165,7 @@ const Home: React.FC<IHome> = () => {
         return true
     }
 
-    return (clients && (selectedTitle || titles) && <>
+    return (clients && <>
         {/* {show&&
     //  <div >
 
