@@ -270,6 +270,7 @@
 }
 
 .authCheckboxLabelStyle {
+    width: 150px;
     @include themify($themes) {
         color: themed('authSelectMobileColor');
     }

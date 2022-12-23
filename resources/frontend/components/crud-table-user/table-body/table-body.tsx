@@ -9,30 +9,28 @@ import {IClientsData} from '../../../types/home-types'
 
 interface ITableBody {
     data: Array<any>
-    countRef:any
     HandlerGetProducts?: (id: number) => void
-    handlerGetclientData: (data: IClientsData) => void
+    handlerGetclientData?: (data: number) => void
 }
 
 const TableBody: React.FC<ITableBody> = (
     {
         data,
-        countRef,
         handlerGetclientData
     }) => {
 
     return (
-        <tbody ref={countRef}>
+        <tbody>
         {
             data
                 .map((item, index) => {
                     const keys = Object.keys(item)
-
-
-                    return keys.length > 0 && (
-                        <TableRow key={index}>
+                    console.log(keys,'keys');
+                    
+                    return  keys.length > 0 && (
+                        <TableRow key={index} data-rowid={item['id']}>
                             {keys
-                                .map((key) => {
+                                .map((key: React.Key, index: number) => {
                                         // if (key === 'image') {
                                         //     return (
                                         //         <TableData key={key}>
@@ -45,7 +43,7 @@ const TableBody: React.FC<ITableBody> = (
                                         //     )
                                         // }
 
-                                        return (
+                                        return  index !== 0 &&  (
                                             <TableData key={key} item={item} handlerGetclientData={handlerGetclientData}>
                                                 {item[key]}
                                             </TableData>

@@ -32,10 +32,10 @@ const Home: React.FC<IHome> = () => {
         threshold: 0,
     });
     const contentRef = useRef();
-    const countRef = useRef(1);
+    const countRef = useRef(2);
     ///const [data, setData] = useState([])
     const titlesDef: Array<string> = [
-
+'id',
         // "client_id",
         // 'car_id',
         // 'vendor_id',
@@ -94,7 +94,7 @@ const Home: React.FC<IHome> = () => {
                 if (titlesDef.length > 0) {
                     const homeData = await homeAPI.getClientData({ titles: titlesDef, showMore: countRef.current })
                     setDefaultData(homeData.titles)
-                     dispatch(actions.setTitles({
+                    dispatch(actions.setTitles({
                         titles: homeData.titles,
                         selectedTitle: homeData.selectedFields,
                         clients: homeData.clients
@@ -109,11 +109,11 @@ const Home: React.FC<IHome> = () => {
     const handlerGetclientData = (client: any) => {
         console.log(client, 'client');
 
-        let dataClient = {
-            show: 10,
-            data: client
-        }
-        dispatch(clientAction.fetching(dataClient))
+        // let dataClient = {
+        //     show: 10,
+        //     data: client
+        // }
+        // dispatch(clientAction.fetching(dataClient))
 
     }
 
@@ -124,14 +124,14 @@ const Home: React.FC<IHome> = () => {
                 if (result.length > 0) {
                     const homeData = await homeAPI.getClientData({ titles: result, showMore: countRef.current })
                     setDefaultData(homeData.titles)
-                     dispatch(actions.setTitles({
+                    dispatch(actions.setTitles({
                         titles: homeData.titles,
                         selectedTitle: homeData.selectedFields,
                         clients: homeData.clients
                     }))
-                   
+
                 }
-                    countRef.current++;
+                countRef.current++;
 
             }
         })();
@@ -166,12 +166,12 @@ const Home: React.FC<IHome> = () => {
     }
 
     return (clients && <>
-        {/* {show&&
-    //  <div >
+        {/* {show  &&
+     <div >
 
-    //     <InfoBlock  items={clientData}/>
+        <InfoBlock  items={clientData}/>
               
-    //  </div>
+     </div>
    } */}
 
         <div>
@@ -205,18 +205,17 @@ const Home: React.FC<IHome> = () => {
 
             />
         </div>
+        <div ref={contentRef}>
+            <CrudTable
+                titles={selectedTitle}
+                data={clients}
+                handlerGetclientData={handlerGetclientData}
+                className={'pagination'}
+                paginated={false}
+            />
+            <div className={s.detector} ref={ref} />
+        </div>
 
-        <CrudTable
-            titles={selectedTitle}
-            data={clients}
-            countRef={contentRef}
-            /// HandlerPagination={HandlerPagination}
-            // HandlerGetProducts={HandlerGetData}
-            handlerGetclientData={handlerGetclientData}
-            className={'pagination'}
-            paginated={false}
-        />
-        <div className={s.detector} ref={ref} />
     </>)
 }
 export default Home

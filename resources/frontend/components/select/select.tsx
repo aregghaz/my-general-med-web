@@ -1,9 +1,9 @@
 import React from 'react'
 import useLocalStorage from '../../hooks/use-local-storage'
 import Checkbox from '../checkbox/checkbox'
-import ReactSelect, {components, MenuProps, OptionProps, OptionTypeBase} from 'react-select'
-import {getStyles} from './common'
-import {useTranslation} from 'react-i18next'
+import ReactSelect, { components, MenuProps, OptionProps, OptionTypeBase } from 'react-select'
+import { getStyles } from './common'
+import { useTranslation } from 'react-i18next'
 
 import s from './select.module.scss'
 
@@ -57,8 +57,8 @@ const Option = (props: OptionProps<OptionTypeBase>) => (
     </components.Option>
 )
 
-const Menu: React.FC<IMenu> = ({props, handlerAdd}) => {
-    const {t} = useTranslation()
+const Menu: React.FC<IMenu> = ({ props, handlerAdd }) => {
+    const { t } = useTranslation()
     return (
         <components.Menu {...props} >
             <>
@@ -66,13 +66,13 @@ const Menu: React.FC<IMenu> = ({props, handlerAdd}) => {
                     {
                         props.options
                             .map((item, index) => (
-                                    <li
-                                        key={index}
-                                        onClick={() => props.selectOption(item)}
-                                    >
-                                        {item.value}
-                                    </li>
-                                )
+                                <li
+                                    key={index}
+                                    onClick={() => props.selectOption(item)}
+                                >
+                                    {item.value}
+                                </li>
+                            )
                             )
                     }
                 </ul>
@@ -113,21 +113,41 @@ const Select: React.FC<ISelect> = (
             <label className={`${s.label} ${labelStyle} `} htmlFor={name}>{label}</label>
             <ReactSelect
                 isMulti={isMulti}
-                styles={getStyles(themeType)}
+                styles={{
+                    /////SENC DZELU ES TIKO
+                    control: (baseStyles, state) => ({
+                        ...baseStyles,
+                        borderColor: state.isFocused ? 'grey' : 'red',
+                    }),
+                    multiValue: (baseStyles, state) => ({
+                        ...baseStyles,
+                        height: 30,
+                       fontSize: 20,
+                      lineHeight: 1.5,
+                      color: "black",
+                        /* font-weight: bold; */
+                     borderRadius: 10,
+                        backgroundColor: '#336983'
+                    }),
+                    multiValueLabel: (styles: any, { data }: any) => ({
+                        ...styles,
+                        color: data.color,
+                    }),
+                }}
                 className={s.select}
                 placeholder={placeholder}
                 components={isCheckbox ? {
-                        Option,
-                        IndicatorSeparator: () => null
-                    }
+                    Option,
+                    IndicatorSeparator: () => null
+                }
                     :
                     isMenuAdd ?
                         {
-                            Menu: (props) => <Menu props={props} handlerAdd={handlerAdd}/>,
+                            Menu: (props) => <Menu props={props} handlerAdd={handlerAdd} />,
                             IndicatorSeparator: () => null
                         }
                         :
-                        {IndicatorSeparator: () => null}}
+                        { IndicatorSeparator: () => null }}
                 options={options}
                 name={name}
                 isSearchable={isSearchable}

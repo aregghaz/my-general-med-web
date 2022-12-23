@@ -14,7 +14,7 @@ class HomeController extends Controller
 
     public function clientData(Request $request)
     {
-       
+
         $title = [
             'trip_id',
             'name',
@@ -88,13 +88,14 @@ class HomeController extends Controller
                 $clientsData[] =  'clients.' . $request->titles[$i];
             }
         }
-        $result= array_diff($title,$selectedFieldsTitle);
+        $result = array_diff($title, $selectedFieldsTitle);
 
         $selectedFields = count($clientsData) > 0 ? $clientsData : $clientData;
         //dd($request->titles);
         $clients = $clients->select($selectedFields);
         $clients =  $clients->take(15 * $showMore)->get();
-
+        unset($selectedFieldsTitle[0]);
+        unset($result[0]);
         return response()->json([
             'clients' => $clients,
             'selectedFields' =>  new ClientFieldCollection($selectedFieldsTitle),

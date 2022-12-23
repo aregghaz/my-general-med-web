@@ -6,8 +6,13 @@
 .select {
   margin: 10px 0;
 }
+.react-select-container{
+  background-color: black;
+}
 
-
+.e-multiselect.e-input-group .e-multi-select-wrapper {
+  background-color: red;
+}
 .label {
   font-size: 15px;
   @include themify($themes) {
