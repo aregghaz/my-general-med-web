@@ -20,6 +20,7 @@ interface IHome {
 const Home: React.FC<IHome> = () => {
     const [defaultData, setDefaultData] = useState([])
     const [show, setShow] = useState(false)
+    const [query, setQuery] = useState('')
     const [ref, inView] = useInView({
         threshold: 0,
     });
@@ -123,16 +124,18 @@ const Home: React.FC<IHome> = () => {
         })();
     }, [inView]);
     ///FIXME  MISSING TYPE
-    const onSerachInput = async (event: any) => {
+    const onSerachInput = async (event: string) => {
         ////FIXME: its should be save in state
-        localStorage.setItem('query', event);
-        const page = localStorage.getItem('page')
-        const homeData = await homeAPI.getHomePageData(1, event.target.value)
-        /////FIXME pagination functiononality
-        let homeApi = {
-            clientById: homeData.users.data
+        setQuery(event)
+        if (titlesDef.length > 0) {
+            const homeData = await homeAPI.getClientData({ titles: titlesDef, showMore: countRef.current,query: event})
+            setDefaultData(homeData.titles)
+            dispatch(actions.setTitles({
+                titles: homeData.titles,
+                selectedTitle: homeData.selectedFields,
+                clients: homeData.clients
+            }))
         }
-        dispatch(clientAction.fetching(homeApi))
     }
 
     const changeFields = async (options: Array<IOption>) => {

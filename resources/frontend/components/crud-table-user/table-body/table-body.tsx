@@ -30,18 +30,6 @@ const TableBody: React.FC<ITableBody> = (
                         <TableRow key={index} data-rowid={item['id']}>
                             {keys
                                 .map((key: React.Key, index: number) => {
-                                        // if (key === 'image') {
-                                        //     return (
-                                        //         <TableData key={key}>
-                                        //             <img
-                                        //                 src={item[key] ? item[key] : '/uploads/partners/avatar.png' }
-                                        //                 alt={key}
-                                        //                 className={s.img}
-                                        //             />
-                                        //         </TableData>
-                                        //     )
-                                        // }
-
                                         return  index !== 0 &&  (
                                             <TableData key={key} item={item} handlerGetclientData={handlerGetclientData}>
                                                 {item[key]}
@@ -51,17 +39,6 @@ const TableBody: React.FC<ITableBody> = (
                                     }
                                 )
                             }
-
-                            {
-
-                                // <TableData  item={item} handlerGetclientData={handlerGetclientData}>
-                                //     <div className={s.iconsWrapper}>
-                                //         <OrdersIcon className={s.editIcon} />
-
-                                //     </div>
-                                // </TableData>
-                            }
-
                         </TableRow>
                     )
                 })
