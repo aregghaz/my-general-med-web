@@ -25,8 +25,7 @@ const TableBody: React.FC<ITableBody> = (
             data
                 .map((item, index) => {
                     const keys = Object.keys(item)
-                    console.log(keys,'keys');
-                    
+                
                     return  keys.length > 0 && (
                         <TableRow key={index} data-rowid={item['id']}>
                             {keys

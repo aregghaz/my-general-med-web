@@ -6,8 +6,7 @@ export const getHomePageData = (state: AppStateType) => ({
     clients: state.homeReducer.clients,
 })
 export const getClientData = (state:AppStateType)=>({
-    show: state.clientReducer.show,
-    data:state.clientReducer.data,
+    clientById:state.clientReducer.clientById,
 })
 export const getUserData = (state: AppStateType) => ({user: state.authReducer.user})
 

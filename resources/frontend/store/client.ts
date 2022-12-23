@@ -3,6 +3,7 @@ import {ISerialCard} from "../types/serial";
 import { IClientsData } from '../types/home-types';
 import {ICount} from '../types/admin'
 const defaultDat ={
+    
     // client_id:0,
     // car_id:0,
     // vendor_id:0,
@@ -42,13 +43,10 @@ const defaultDat ={
     miles:0,
     member_uniqie_identifer:0,
     birthday:0
-
-  
 }
 
 const initialState = {
-    show:0 ,
-    data: [typeof defaultDat]
+    clientById: [typeof defaultDat]
 }
 
 
@@ -61,16 +59,13 @@ const clientReducer = (state = initialState, action: clientAction): InitialState
         case 'FETCHING_CLIENT_DATA':
             return {
                 ...state,
-                data: action.payload.data,
-                show: action.payload.show,
-
+                clientById: action.payload.clientById,
             }
 
         case 'RESET_HOME_PAGE_STATE':
             return {
                 ...state,
-                show:0,
-                data:[typeof defaultDat],
+                clientById:[],
             
             }
         default:

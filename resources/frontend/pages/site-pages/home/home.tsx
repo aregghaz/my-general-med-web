@@ -1,33 +1,25 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Col, Row } from 'react-grid-system'
 import { useTranslation } from 'react-i18next'
-import SwiperCore, { EffectFade, Navigation, Pagination, Autoplay } from 'swiper'
 import { useDispatch, useSelector } from 'react-redux'
 import { actions } from '../../../store/home'
 import { clientAction } from '../../../store/client'
 import { getClientData, getHomePageData } from '../../../store/selectors'
 import { homeAPI } from "../../../api/site-api/home-api";
-import { Link, navigate } from '@reach/router'
 import s from './home.module.scss'
-import ModalItem from "../../../components/modal-item/modal-item";
 import CrudTable from '../../../components/crud-table-user/crud-table'
-import { ITitle } from '../../../types/home-types'
 import Input from '../../../components/input/input'
-import InfoBlock from '../../../components/info-block/info-block'
-import Button from '../../../components/button/button'
-import ColumnsHideShow from '../../../components/columns-hide-show/columns-hide-show'
-import ColumnSvg from '-!svg-react-loader!../../../images/column.svg'
 import Select, { IOption } from '../../../components/select/select'
 import { useInView } from 'react-intersection-observer'
+import InfoBlock from '../../../components/info-block/info-block'
 
 interface IHome {
     path: string
 }
 
 const Home: React.FC<IHome> = () => {
-
-    const [activeItem, setActiveItem] = useState(null)
     const [defaultData, setDefaultData] = useState([])
+    const [show, setShow] = useState(false)
     const [ref, inView] = useInView({
         threshold: 0,
     });
@@ -35,7 +27,7 @@ const Home: React.FC<IHome> = () => {
     const countRef = useRef(2);
     ///const [data, setData] = useState([])
     const titlesDef: Array<string> = [
-'id',
+        'id',
         // "client_id",
         // 'car_id',
         // 'vendor_id',
@@ -80,14 +72,11 @@ const Home: React.FC<IHome> = () => {
     ]
 
     const homeData = useSelector(getHomePageData)
+    const clientData = useSelector(getClientData)
     const dispatch = useDispatch()
 
-    const { titles, selectedTitle, clients } = homeData
-
-    const pagination = { from: 0, to: 0 };
-
-
-
+    const { selectedTitle, clients } = homeData
+    const {clientById} = clientData
     useEffect(() => {
         (
             async () => {
@@ -107,11 +96,10 @@ const Home: React.FC<IHome> = () => {
 
 
     const handlerGetclientData = async (id: number) => {
-        console.log(id, 'client');
-
         const homeData = await homeAPI.getCLientById(id)
-        console.log(homeData,'homeDatahomeData');
-        
+        dispatch(clientAction.fetching({clientById:homeData.client}))
+
+        setShow(true)
 
     }
 
@@ -142,8 +130,7 @@ const Home: React.FC<IHome> = () => {
         const homeData = await homeAPI.getHomePageData(1, event.target.value)
         /////FIXME pagination functiononality
         let homeApi = {
-            show: 5,
-            data: homeData.users.data
+            clientById: homeData.users.data
         }
         dispatch(clientAction.fetching(homeApi))
     }
@@ -164,13 +151,13 @@ const Home: React.FC<IHome> = () => {
     }
 
     return (clients && <>
-        {/* {show  &&
+        {show&& clientById  &&
      <div >
 
-        <InfoBlock  items={clientData}/>
+        <InfoBlock  clientById={clientById}/>
               
      </div>
-   } */}
+   }
 
         <div>
             <Input name={'search'} type={'text'} onChange={onSerachInput} />
