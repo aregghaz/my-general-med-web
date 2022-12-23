@@ -25,14 +25,12 @@ const CrudTable: React.FC<ICrudTable> = (
         HandlerPagination,
         paginated
     }) => {
-    //@ts-ignore
-    const strName = useSelector(state => state.homeReducer.filtered_data)
-    let filteredTitles = Object.keys(strName).length > 0 ? Object.keys(strName) : titles;
+  
     return (
         <>
             <table className={s.table}>
                 {/*@ts-ignore*/}
-                <TableHead titles={filteredTitles}/>
+                <TableHead titles={titles}/>
                 <TableBody
                     data={data}
                     isDelete={isDelete}

@@ -30,9 +30,6 @@ const TableBody: React.FC<ITableBody> = (
         HandlerGetProducts
     }) => {
 
-    //@ts-ignore
-    const strName = useSelector(state => state.homeReducer.filtered_data)
-    const arrayKeys = Object.values(strName).length > 0 ? Object.values(strName) : null;
 
     return (
         <tbody>
@@ -43,39 +40,8 @@ const TableBody: React.FC<ITableBody> = (
                     return (
                         <TableRow key={index}>
                             {
-                                arrayKeys
-                                    ? (
-                                        arrayKeys
-                                            .map((key) => {
-                                                    if (key === 'image') {
-                                                        // return (
-                                                        //     <TableData key={key}>
-                                                        //         <img
-                                                        //             src={item[key] ? item[key] : '/uploads/partners/avatar.png'}
-                                                        //             alt={key}
-                                                        //             className={s.img}
-                                                        //         />
-                                                        //     </TableData>
-                                                        // )
-                                                    }
-                                                    /*FIXME this was made to correct table data*/
-                                                    if (key === 'client_id' || key === "driver_id") {
-                                                        return null
-                                                    }
-
-
-                                                    return (
-                                                        //@ts-ignore
-                                                        <TableData data={item.id} key={key}
-                                                                   handlerGetclientData={handlerGetclientData}>
-                                                            {/*@ts-ignore*/}
-                                                            {item[key]}
-                                                        </TableData>
-                                                    )
-                                                }
-                                            )
-                                    )
-                                    : (
+                                keys.length> 0 &&
+                                      (
                                         keys
                                             .map((key) => {
                                                     if (key === 'image') {

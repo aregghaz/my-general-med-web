@@ -165,7 +165,11 @@ const Home: React.FC<IHome> = () => {
    }
 
         <div>
-            <Input name={'search'} type={'text'} onBlur={onSerachInput} />
+            <Input name={'search'}
+             type={'text'} 
+             ////FIXE ME
+            onBlur={onSerachInput} 
+            />
         </div>
         <div className={s.iconBlock}>
             <Select

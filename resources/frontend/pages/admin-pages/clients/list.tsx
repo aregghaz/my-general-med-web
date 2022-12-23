@@ -45,22 +45,48 @@ const Clients: React.FC<IClients> = () => {
 
 
     const titles: Array<string> = [
+        'id',
+        // "client_id",
+        // 'car_id',
+        // 'vendor_id',
+        'trip_id',
         'name',
         'surname',
-        'email',
-        "client_id",
-        'driver_id',
-        'vendor_id',
-        'pick_up_address',
-        'drop_down_address',
-        'apartament_number',
-        'id_number',
-        'birthday',
-        'status',
-        'cnn',
+        'gender',
+        'los',
         'phone_number',
+        'date_of_service',
+        'appointment_time',
         'pick_up',
-        'drop_down'
+        'drop_down',
+        'request_type', ///seect
+        'status',///seect
+        // 'origin_id',
+        // "destination_id",
+        "origin_name",
+        "origin_street",
+        "origin_suite",
+        "origin_city",
+        "origin_state",
+        "origin_postal",
+        "origin_country",
+        "origin_phone",
+        "origin_comment",
+        "destination_name",
+        "destination_street",
+        "destination_suite",
+        "destination_city",
+        "destination_state",
+        "destination_postal",
+        "destination_country",
+        "destination_phone",
+        "destination_comments",
+
+        'escortType',//select
+        'type_of_trip',//select
+        'miles',
+        'member_uniqie_identifer',
+        'birthday',
     ]
 
     const handlerAddClientItem = () => navigate(`/admin/${crudKey}/create`)
