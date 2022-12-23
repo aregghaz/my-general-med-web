@@ -106,14 +106,12 @@ const Home: React.FC<IHome> = () => {
     }, [])
 
 
-    const handlerGetclientData = (client: any) => {
-        console.log(client, 'client');
+    const handlerGetclientData = async (id: number) => {
+        console.log(id, 'client');
 
-        // let dataClient = {
-        //     show: 10,
-        //     data: client
-        // }
-        // dispatch(clientAction.fetching(dataClient))
+        const homeData = await homeAPI.getCLientById(id)
+        console.log(homeData,'homeDatahomeData');
+        
 
     }
 

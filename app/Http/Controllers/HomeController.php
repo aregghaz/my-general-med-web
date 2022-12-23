@@ -104,7 +104,20 @@ class HomeController extends Controller
     }
 
 
-
+    public function show($id)
+    {
+        $client = Clients::where('id',$id)->with([
+            'origin',
+            'destination',
+            'typeOfTrip',
+            'escortType',
+            'clientStatus',
+            'requestType'
+        ])->limit(1)->get();
+        return response()->json([
+            'client' => $client
+        ], 200);
+    }
 
 
     public function index(Request $request)
@@ -198,4 +211,7 @@ class HomeController extends Controller
             //    "count"=> (Clients::count() / 20)
         ], 200);
     }
+
+
+
 }
