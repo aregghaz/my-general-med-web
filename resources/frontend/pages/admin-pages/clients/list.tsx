@@ -34,7 +34,7 @@ const Clients: React.FC<IClients> = () => {
                 const data = await AdminApi.getAllData(crudKey, 1, '')
                 data.to
                 setCount({from: data.to - 3, to: data.to + 5})
-                setData(data.data)
+                setData(data)
 
 
             }
@@ -45,7 +45,7 @@ const Clients: React.FC<IClients> = () => {
 
 
     const titles: Array<string> = [
-        'id',
+        // 'id',
         // "client_id",
         // 'car_id',
         // 'vendor_id',
@@ -115,7 +115,7 @@ const Clients: React.FC<IClients> = () => {
         const query = localStorage.getItem('query')
         const homeData = await AdminApi.getAllData(crudKey, activeItem + 1, query ? query : '')
         setCount({from: homeData.current_page, to: homeData.current_page + 5})
-        setData(homeData.data)
+        setData(homeData)
         const role = localStorage.getItem('role');
         localStorage.setItem('page', activeItem.toString());
 

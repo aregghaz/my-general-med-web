@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ClientCollection;
 use App\Models\Clients;
 use Illuminate\Http\Request;
 
@@ -12,32 +13,49 @@ class ClientsController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
 
 
      
         if (isset($request->querySearch)) {
-            $clients = Clients::where('client_id', 'LIKE', '%' . $request->querySearch . '%')->orWhere('driver_id', 'LIKE', '%' . $request->querySearch . '%')->paginate(20);
+            $clients = Clients::where('member_uniqie_identifer', 'LIKE', '%' . $request->querySearch . '%')->orWhere('car_id', 'LIKE', '%' . $request->querySearch . '%')->paginate(20);
         } else {
-            $clients = Clients::select(
-                'id',
-                'client_id',
-                "driver_id",
+            $clients = Clients::with([
+                'origin',
+                'destination',
+                'typeOfTrip',
+                'escortType',
+                'clientStatus',
+                'requestType'
+            ])->select(
+                // "client_id",
+                // 'car_id',
+                // 'vendor_id',
+                'trip_id',
                 'name',
                 'surname',
-                'email',
-                'pick_up_address',
-                'drop_down_address',
-                'apartament_number',
-                'cnn',
-                "pick_up",
+                'gender',
+                'los',
+                'phone_number',
+                'date_of_service',
+                'appointment_time',
+                'pick_up',
                 'drop_down',
-                'status',
-                'id_number',
+
+                'request_type', ///seect
+                'status', ///seect
+                'origin_id',
+                "destination_id",
+                'origin_comment',
+                'destination_comments',
+                'escortType', //select
+                'type_of_trip', //select
+                'miles',
+                'member_uniqie_identifer',
                 'birthday')->paginate(20);
         }
-        return response()->json($clients, 200);
+        return response()->json( new ClientCollection($clients), 200);
     }
 
     /**
