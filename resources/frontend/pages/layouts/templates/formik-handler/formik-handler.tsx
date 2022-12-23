@@ -8,6 +8,7 @@ import Input from '../../../../components/input/input'
 import Checkbox from '../../../../components/checkbox/checkbox'
 import RichText from '../../../../components/rich-text/rich-text'
 import {useTranslation} from 'react-i18next'
+import DataPicker from '../../../../components/data-picker/data-picker'
 
 export interface IItem {
     type?: 'input' | 'checkbox' | 'richText' | 'textarea' | 'select' | 'file' | 'textField' | 'radio' | 'datepicker' | 'multiSelect' | "hidden"
@@ -126,17 +127,27 @@ const FormikHandler: React.FC<IFormikHandler> = (
                     placeholder={item.placeholder}
                 />
             )
-        // case 'datepicker':
-        //     return (
-        //         <DataPicker
-        //             name={item.name}
-        //             setFieldValue={values[item.name]}
-        //             handleChange={handleChange}
-        //             label={item.placeholder}
-        //             day={new Date()}
-        //
-        //         />
-        //     )
+        case 'datepicker':
+            return (
+                <DataPicker
+                    name={item.name}
+                    setFieldValue={values[item.name]}
+                    handleChange={handleChange}
+                    label={item.placeholder}
+                    day={{
+                        id: 0,
+                        value: "22",
+                        label: '22',
+                        slug: "22"
+                    }}
+                     currentMonths={{
+                        id: 0,
+                        value: "12",
+                        label: '12',
+                        slug: "12"
+                    }} time={'12:25'}        
+                />
+            )
         default:
             return (
                 <Input
