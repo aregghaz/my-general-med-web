@@ -1,41 +1,57 @@
 @import "../../styles/variables";
 
-.headerNav {
+.header_nav {
+    background-color: #181D31;
+    height: 50px;
     width: 100%;
-    color: #fff;
-    background-color: $grayColor;
-    z-index: 999;
-    height: 60px;
     display: flex;
+    justify-content: flex-end;
     align-items: center;
-    position: sticky;
-    top: 0;
-    box-shadow: 0 0 4px $grayColor;
 }
 
-.navWrapper {
-    max-width: calc(100% - 70px);
+.side_icon {
     display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
-    margin: auto;
+    position: absolute;
+    top: 50%;
+    transform: translate(-290%, -50%);
 }
 
-.icons {
-    //border: 1px solid red;
-    width: 100%;
+.main {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+}
+
+.side_panel {
+    width: 50px;
+    //height: 100%;
+    background-color: $grayColor
+}
+
+.list {
+    //height: 100%;
+    border-right: 1px solid #ddd;
+}
+
+.content_part {
+    display: flex;
+    min-height: calc(100vh - 50px);
 }
 
 .iconBlock {
     position: relative;
+    margin-right: 30px;
 
     button {
         display: block;
     }
+}
+
+.item {
+    list-style-type: none;
+}
+
+.icon_item {
+    display: flex;
+    align-items: center;
 }
 
 .icon {
@@ -44,23 +60,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    //border: 1px solid red;
-}
-
-.root {
-    height: 100%;
-    z-index: 1;
-    top: 0;
-    overflow-x: hidden;
-    transition: 0.5s;
-    margin: 10px 20px 20px;
-
-
-    &.fixed {
-        float: left;
-        color: black;
-        height: calc(100% - 0px);
-    }
 }
 
 
@@ -114,13 +113,20 @@
 }
 
 .link {
-    padding: 10px 12px;
+    padding: 20px 12px;
+    border: 1px solid #ccc;
+    min-width: 200px;
+    //overflow: hidden;
+    border-radius: 5px;
+    position: relative;
     text-decoration: none;
-    display: block;
+    display: flex;
+    align-items: center;
     transition: 0.3s;
     white-space: nowrap;
     color: $thTextColor;
     font-size: 20px;
+    margin: 20px;
 }
 
 .closeIcon {

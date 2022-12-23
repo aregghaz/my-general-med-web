@@ -17,10 +17,6 @@
 }
 
 
-
-
-
-
 .languagePicker {
     background-color: transparent;
     display: flex;
@@ -119,17 +115,26 @@
 }
 
 
-.headerNav {
-    width: 100%;
-    padding: 23px 40px;
-    color: #fff;
-    background-color:$grayColor;
-    z-index: 999;
+//.headerNav {
+//    width: 100%;
+//    padding: 23px 40px;
+//    color: #fff;
+//    background-color:#181D31;
+//    z-index: 999;
+//    height: 50px;
+//}
+
+.header_nav {
+    background-color: #181D31;
     height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .navWrapper {
-    max-width: calc(100% - 70px);
+    width: 100%;
     display: flex;
     justify-content: space-between;
 }
@@ -139,7 +144,7 @@
 
     width: 30px;
     height: 30px;
-    margin-right: 40px;
+    margin-right: 30px;
     position: relative;
 }
 
@@ -162,14 +167,16 @@
 
 .icons {
     display: flex;
-    float:left;
-    width: 50%;
-    justify-content:space-between;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 }
-.end{
-    justify-content:flex-end;
+
+.end {
+    justify-content: flex-end;
 }
-.logo{
+
+.logo {
 
     padding: 0;
     font-size: 30px;
