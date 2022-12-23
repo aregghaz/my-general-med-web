@@ -45,76 +45,62 @@ class HomeController extends Controller
             'destination_postal',
             'destination_country',
             'destination_phone',
-            'destination_comment',
+            'destination_comments',
             'escortType', //select
-            'typeOfTrip', //select
+            'type_of_trip', //select
             'miles',
             'member_uniqie_identifer',
             'birthday'
         ];
         $clientData = new ClientFieldCollection($title);
         $showMore = $request->showMore;
-
-        $fieldData  = [];
         $clientsData = [];
+        $selectedFieldsTitle = [];
         $clients = DB::table('clients');
         $clientsDataWith = [];
         for ($i = 0; $i < count($request->titles); $i++) {
-            $exploseReletion = explode("_", $request->titles[$i]['slug']);
-
-            if ($exploseReletion[0]  == 'origin') {
-                if (!in_array($exploseReletion[0], $clientsDataWith)) {
-                    $clientsDataWith[] = $exploseReletion[0];
-                    $clientsDataWith[] = $exploseReletion[0];
+            $selectedFieldsTitle[] = $request->titles[$i];
+            $explodeRelation = explode("_", $request->titles[$i]);
+            if ($explodeRelation[0]  == 'origin') {
+                if (!in_array($explodeRelation[0], $clientsDataWith)) {
+                    $clientsDataWith[] = $explodeRelation[0];
+                    $clientsDataWith[] = $explodeRelation[0];
                     $clients = $clients->join('origin_addresses', 'clients.origin_id', '=', 'origin_addresses.id');
-                    $clientsData[] = "origin_addresses." . $exploseReletion[1];
-                } elseif (in_array($exploseReletion[0], $clientsDataWith) and $exploseReletion[1] !== 'comment') {
-                    $clientsData[] = "origin_addresses." . $exploseReletion[1]." as origin_".$exploseReletion[1];
+                    $clientsData[] = "origin_addresses." . $explodeRelation[1];
+                } elseif (in_array($explodeRelation[0], $clientsDataWith) and $explodeRelation[1] !== 'comment') {
+                    $clientsData[] = "origin_addresses." . $explodeRelation[1] . " as origin_" . $explodeRelation[1];
+                } elseif ($explodeRelation[1] == 'comment') {
+                    $clientsData[] =  'clients.' . $request->titles[$i];
                 }
-            }else if ($exploseReletion[0] == 'destination') {
-
-                if (!in_array($exploseReletion[0], $clientsDataWith)) {
-                    $clientsDataWith[] = $exploseReletion[0];
-                    $clientsDataWith[] = $exploseReletion[0];
+            } else if ($explodeRelation[0] == 'destination') {
+                if (!in_array($explodeRelation[0], $clientsDataWith)) {
+                    $clientsDataWith[] = $explodeRelation[0];
+                    $clientsDataWith[] = $explodeRelation[0];
                     $clients = $clients->join('destination_addresses', 'clients.origin_id', '=', 'destination_addresses.id');
-                    $clientsData[] = "destination_addresses." . $exploseReletion[1];
-                } elseif (in_array($exploseReletion[0], $clientsDataWith) and $exploseReletion[1] !== 'comment') {
-                    $clientsData[] = "destination_addresses." . $exploseReletion[1]." as destination_".$exploseReletion[1];;
+                    $clientsData[] = "destination_addresses." . $explodeRelation[1];
+                } elseif (in_array($explodeRelation[0], $clientsDataWith) and $explodeRelation[1] !== 'comments') {
+                    $clientsData[] = "destination_addresses." . $explodeRelation[1] . " as destination_" . $explodeRelation[1];;
+                } elseif ($explodeRelation[1] == 'comments') {
+                    $clientsData[] =  'clients.' . $request->titles[$i];
                 }
-            } else if ($request->titles[$i]['slug']== 'typeOfTrip') {
-
-           
-            }else {
-                $clientsData[] =  'clients.'.$request->titles[$i]['slug'];
+            } else if ($request->titles[$i] == 'typeOfTrip') {
+            } else {
+                $clientsData[] =  'clients.' . $request->titles[$i];
             }
         }
-      ///  dd($clientsData);
-        $clients = $clients->select(count($clientsData) > 0 ? $clientsData : $clientData);
+        $result=array_diff($title,$selectedFieldsTitle);
+
+        $selectedFields = count($clientsData) > 0 ? $clientsData : $clientData;
+        //dd($request->titles);
+        $clients = $clients->select($selectedFields);
         $clients =  $clients->take(15 * $showMore)->get();
-        // if(Isset($request->querySearch)){
-
-
-        //     //$clients = Clients::where('vendor_id', $vendorID)->where( 'client_id', 'LIKE', '%' . $request->querySearch . '%' )->orWhere( 'driver_id', 'LIKE', '%' . $request->querySearch . '%' )->paginate(20);
-
-        // }else{
-
-
-        // }
-        //dd($fieldData);
-
 
         return response()->json([
             'clients' => $clients,
-
-            "titles" => new ClientFieldCollection($title)
-            //    "count"=> (Clients::count() / 20)
+            'selectedFields' =>  new ClientFieldCollection($selectedFieldsTitle),
+            "titles" => new ClientFieldCollection($result)
         ], 200);
     }
-
-
-
-
-
 
 
 
@@ -197,7 +183,7 @@ class HomeController extends Controller
             'destination_postal',
             'destination_country',
             'destination_phone',
-            'destination_comment',
+            'destination_comments',
             'escortType', //select
             'typeOfTrip', //select
             'miles',

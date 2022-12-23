@@ -1,8 +1,6 @@
 import {AppStateType} from './store'
 
 export const getHomePageData = (state: AppStateType) => ({
-  ///  filtered_data: state.homeReducer.filtered_data,
-    titlesData: state.homeReducer.titles,
     titles:state.homeReducer.titles,
     selectedTitle:state.homeReducer.selectedTitle,
     clients: state.homeReducer.clients,

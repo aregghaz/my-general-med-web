@@ -5,19 +5,9 @@ import {ICount} from '../types/admin'
 import { ITitle } from '../types/home-types'
 import { IOption } from '../components/select/select';
 const initialState = {
-   
-   // filtered_data: [] as Array<typeof defaultDat>,
     titles: [] as Array<IOption>,
     selectedTitle:[] as Array<IOption>,
     clients:[] as Array<IClientsData>
-}
-
-
-const defaultDat ={ id: 0,
-            value: '',
-            label: '',
-            slug: ""
-    
 }
 
 type InitialState = typeof initialState
@@ -29,47 +19,36 @@ const homeReducer = (state = initialState, action: Actions): InitialState => {
         case 'FETCHING_HOME_PAGE_DATA':
             return {
                 ...state,
-            ///    filtered_data: [],
                 titles: [],
-                selectedTitle:[]
-                // total: action.payload.total,
-                // last_page: action.payload.last_page,
-              ///  pagination: action.payload.pagination,
+                selectedTitle:[],
+                clients:[]
             }
         case 'RESET_HOME_PAGE_STATE':
             return {
                 ...state,
-                ///filtered_data: [],
                 titles:  [],
                 selectedTitle:[],
                 clients:[]
-                // total: 0,
-                // last_page: 0,
-                // pagination: {
-                //     from: 0,
-                //     to: 0
-                // },
             }
 
         case 'FILTER_COLUMNS_DATA':
+
+        console.log(action.payload,'action.payloadaction.payload');
+        
             return {
                 ...state,
-              ///  filtered_data: action.payload.filtered_data,
-              titles:  action.payload.titles,
-              selectedTitle: action.payload.selectedTitle,
-              clients: action.payload.clients
+              titles: [...action.payload.titles],
+              selectedTitle: [...action.payload.selectedTitle],
+              clients: [...action.payload.clients]
             }
 
 
         case 'SET_TITLES':
             return {
                 ...state,
-                titles:  action.payload.titles,
+                titles: action.payload.titles,
                 selectedTitle: action.payload.selectedTitle,
-                clients: action.payload.clients
-              ///  filtered_data: action.payload.filtered_data,
-               
-            
+                clients:action.payload.clients
             }
 
      

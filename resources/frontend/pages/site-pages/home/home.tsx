@@ -36,9 +36,9 @@ const Home: React.FC<IHome> = () => {
     ///const [data, setData] = useState([])
     const titlesDef: Array<string> = [
 
-        "client_id",
-        'car_id',
-        'vendor_id',
+        // "client_id",
+        // 'car_id',
+        // 'vendor_id',
         'trip_id',
         'name',
         'surname',
@@ -54,7 +54,7 @@ const Home: React.FC<IHome> = () => {
         // 'origin_id',
         // "destination_id",
         "origin_name",
-        "origin_stree",
+        "origin_street",
         "origin_suite",
         "origin_city",
         "origin_state",
@@ -63,7 +63,7 @@ const Home: React.FC<IHome> = () => {
         "origin_phone",
         "origin_comment",
         "destination_name",
-        "destination_stree",
+        "destination_street",
         "destination_suite",
         "destination_city",
         "destination_state",
@@ -82,43 +82,30 @@ const Home: React.FC<IHome> = () => {
     const homeData = useSelector(getHomePageData)
     const dispatch = useDispatch()
 
-    const { titlesData, titles, selectedTitle, clients } = homeData
+    const { titles, selectedTitle, clients } = homeData
 
     const pagination = { from: 0, to: 0 };
 
 
-    const defaultFieldAction = () => {
-        titlesDef && titlesDef.forEach((item: string, index: number) => {
-            setDefaultData((state) => {
-                return [
-                    ...state,
-                    {
-                        id: index,
-                        value: item,
-                        label: item,
-                        slug: item
-                    }
-                ];
-            })
-        })
-    }
 
     useEffect(() => {
         (
             async () => {
-                await defaultFieldAction();
-                const homeData = await homeAPI.getHomePageData(1)
-                await dispatch(actions.setTitles({
-                    selectedTitle: homeData.titles,
-                    clients: homeData.clients,
-                    titles:homeData.titles,
-                }))
-                console.log(countRef.current, '11111111111');
+                if (titlesDef.length > 0) {
+                    const homeData = await homeAPI.getClientData({ titles: titlesDef, showMore: countRef.current })
+                    setDefaultData(homeData.titles)
+                     dispatch(actions.setTitles({
+                        titles: homeData.titles,
+                        selectedTitle: homeData.selectedFields,
+                        clients: homeData.clients
+                    }))
+                }
+
 
                 ///await  dispatch(clientAction.fetching(homeApi))
             }
         )()
-        return () => dispatch(actions.resetState())
+        return async () => await dispatch(actions.resetState())
     }, [])
 
 
@@ -136,24 +123,22 @@ const Home: React.FC<IHome> = () => {
     useEffect(() => {
         (async () => {
             if (inView) {
-                const homeData = await homeAPI.getClientData({ titles: titles, showMore: countRef.current })
-                console.log(
-                  homeData.title,
-                   homeData.clients,
-                    selectedTitle
-                    );
-                
-                await dispatch(actions.setTitles({
-                    selectedTitle: titles,
-                    clients: homeData.clients,
-                    titles:  titles,
-                }))
-                countRef.current++;
-                console.log(countRef.current, 'countRef.currentcountRef.currentcountRef.current');
+                let result = selectedTitle.map(a => a.slug);
+                if (result.length > 0) {
+                    const homeData = await homeAPI.getClientData({ titles: result, showMore: countRef.current })
+                    setDefaultData(homeData.titles)
+                     dispatch(actions.setTitles({
+                        titles: homeData.titles,
+                        selectedTitle: homeData.selectedFields,
+                        clients: homeData.clients
+                    }))
+                    countRef.current++;
+                }
+
 
             }
         })();
-        ///return () => dispatch(actions.resetState())
+        return async () => await dispatch(actions.resetState())
     }, [inView]);
     ///FIXME  MISSING TYPE
     const onSerachInput = async (event: any) => {
@@ -170,15 +155,21 @@ const Home: React.FC<IHome> = () => {
     }
 
     const changeFields = async (options: Array<IOption>) => {
-        const homeData = await homeAPI.getClientData({ titles: options, showMore: countRef.current })
-        dispatch(actions.setTitles({
-            selectedTitle: homeData.title,
-            clients: homeData.clients,
-            titles: options
-        }))
+        let result = options.map(a => a.slug);
+        if (result.length > 0) {
+
+            const homeData = await homeAPI.getClientData({ titles: result, showMore: countRef.current })
+            setDefaultData(homeData.titles)
+            dispatch(actions.setTitles({
+                selectedTitle: homeData.selectedFields,
+                clients: homeData.clients,
+                titles: homeData.title
+            }))
+        }
+        return true
     }
 
-    return (clients && titlesData && <>
+    return (clients && (selectedTitle || titles) && <>
         {/* {show&&
     //  <div >
 
@@ -220,7 +211,7 @@ const Home: React.FC<IHome> = () => {
         </div>
 
         <CrudTable
-            titles={titlesData}
+            titles={selectedTitle}
             data={clients}
             countRef={contentRef}
             /// HandlerPagination={HandlerPagination}

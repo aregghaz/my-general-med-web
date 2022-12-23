@@ -3,7 +3,7 @@ import { IOption } from '../../components/select/select'
 
 
 interface IClintSendData {
-    titles:Array<IOption>,
+    titles:Array<string>,
     showMore:number
 }
 export const homeAPI = {

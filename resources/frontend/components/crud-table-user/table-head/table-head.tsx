@@ -19,7 +19,6 @@ const TableHead: React.FC<ITableHead> = (
         rowspan = 1
     }) => {
     const {t} = useTranslation()
-    console.log(titles,'1111111111111111111111111111111111111');
     
     return (
         <thead className={s.tableHead}>

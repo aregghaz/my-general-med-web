@@ -22,8 +22,6 @@ const TableData: React.FC<ITableData> = (
     }
 ) => {
 
-    ///console.log(children,'childrenchildren');
-    
     return (
         <td
             className={`${s.tableTd} ${className ? className : ''}`}
