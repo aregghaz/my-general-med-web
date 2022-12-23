@@ -9,6 +9,7 @@ interface IInput {
     type: string
     error?: string
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void
+    onBlur?: (event: ChangeEvent<HTMLInputElement>) => void
     autoComplete?: string
     disable?: boolean
     label?: string
@@ -25,6 +26,7 @@ const Input: React.FC<IInput> = (
         autoComplete = 'off',
         disable,
         error,
+        onBlur,
         onChange,
         placeholder,
         type = 'text',
@@ -49,6 +51,7 @@ const Input: React.FC<IInput> = (
             type={type}
             placeholder={placeholder}
             value={value}
+            onBlur={onChange}
             onChange={onChange}
             autoComplete={autoComplete}
         />

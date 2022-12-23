@@ -124,8 +124,10 @@ const Home: React.FC<IHome> = () => {
         })();
     }, [inView]);
     ///FIXME  MISSING TYPE
-    const onSerachInput = async (event: string) => {
-        ////FIXME: its should be save in state
+    const onSerachInput = async (event: any) => {
+        ////FIXME: its should be save in state,'
+        console.log(event.target.value,'event');
+        
         setQuery(event)
         if (titlesDef.length > 0) {
             const homeData = await homeAPI.getClientData({ titles: titlesDef, showMore: countRef.current,query: event})
@@ -163,7 +165,7 @@ const Home: React.FC<IHome> = () => {
    }
 
         <div>
-            <Input name={'search'} type={'text'} onChange={onSerachInput} />
+            <Input name={'search'} type={'text'} onBlur={onSerachInput} />
         </div>
         <div className={s.iconBlock}>
             <Select
