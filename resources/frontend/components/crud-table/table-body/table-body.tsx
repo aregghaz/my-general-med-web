@@ -44,23 +44,6 @@ const TableBody: React.FC<ITableBody> = (
                                       (
                                         keys
                                             .map((key) => {
-                                                    if (key === 'image') {
-                                                        // return (
-                                                        //     <TableData key={key}>
-                                                        //         <img
-                                                        //             src={item[key] ? item[key] : '/uploads/partners/avatar.png'}
-                                                        //             alt={key}
-                                                        //             className={s.img}
-                                                        //         />
-                                                        //     </TableData>
-                                                        // )
-                                                    }
-                                                    /*FIXME this was made to correct table data*/
-                                                    if (key === 'client_id' || key === "driver_id") {
-                                                        return null
-                                                    }
-
-
                                                     return (
                                                         <TableData data={item.id} key={key}
                                                                    handlerGetclientData={handlerGetclientData}>
@@ -71,7 +54,6 @@ const TableBody: React.FC<ITableBody> = (
                                             )
                                     )
                             }
-
 
                             {
                                 (isEdit || isDelete) &&

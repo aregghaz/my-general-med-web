@@ -56,7 +56,7 @@ Route::group([
        
         Route::resources([
             'home-data' => HomeController::class,
-            'users' => UserController::class,
+            'users' => \App\Http\Controllers\UserController::class,
             'clients' => \App\Http\Controllers\ClientsController::class,
             'vendors' => \App\Http\Controllers\VendorController::class,
         
