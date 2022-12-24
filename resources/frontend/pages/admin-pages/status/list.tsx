@@ -17,7 +17,7 @@ interface Beneficiary {
 
 const Status: React.FC<Beneficiary> = () => {
     const dispatch = useDispatch();
-    const crudKey = 'users'
+    const crudKey = 'changeStatus'
     const [data, setData] = useState([])
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [countPages, setCountPages] = useState(null)
@@ -33,9 +33,9 @@ const Status: React.FC<Beneficiary> = () => {
     useEffect(() => {
         (
             async () => {
-                const data = await AdminApi.getAllData(crudKey, 1, '')
-                setData(data.users)
-                setCount(data.users.to)
+                const data = await AdminApi.getAllStatusData(crudKey)
+                setData(data.table)
+                setCount(data.count)
 
             }
         )()
@@ -46,14 +46,8 @@ const Status: React.FC<Beneficiary> = () => {
 
     const titles: Array<string> = [
         'id',
-        'fullName',
-        'email',
-        'address',
-        'phone_number',
-        'birthday',
-        'role',
-        'image',
-        'action',
+        'name',
+        'slug'
     ]
     const handlerAddBeneficiaryItem = () => navigate(`/admin/users/create`)
 

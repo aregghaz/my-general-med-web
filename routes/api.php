@@ -5,7 +5,7 @@ use App\Http\Controllers\WeatherApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Admin\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+
 Route::get('/test', [\App\Http\Controllers\TestController::class, 'index']);
 Route::post('/clientData', [HomeController::class, 'clientData']);
 Route::group([
@@ -29,11 +31,11 @@ Route::group([
 Route::group([
     'prefix' => 'auth'
 ], function () {
-  
+
     Route::post('login', [\App\Http\Controllers\AuthController::class, 'login']);
     Route::post('signup', [\App\Http\Controllers\AuthController::class, 'signup']);
     Route::get('getFormData', [\App\Http\Controllers\AuthController::class, 'registerForm']);
-   
+
     Route::group([
         'middleware' => 'auth:api'
     ], function () {
@@ -48,18 +50,10 @@ Route::group([
     });
 });
 Route::group([
-    'prefix' => 'admin'
+    'prefix' => 'admin', 'middleware' => 'auth:api'
 ], function () {
-    Route::group([
-        'middleware' => 'auth:api'
-    ], function () {
-       
-        Route::resources([
-            'home-data' => HomeController::class,
-            'users' => \App\Http\Controllers\UserController::class,
-            'clients' => \App\Http\Controllers\ClientsController::class,
-            'vendors' => \App\Http\Controllers\VendorController::class,
-        
-        ]);
-    });
+    Route::get('/changeStatus/{slug}', [AdminController::class, 'changeStatus']);
+    Route::get('/changeStatus/{slug}/{id}', [AdminController::class, 'getStatusById']);
+    Route::post('/changeStatus/{slug}', [AdminController::class, 'createStatus']);
 });
+

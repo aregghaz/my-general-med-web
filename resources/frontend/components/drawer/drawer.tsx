@@ -7,10 +7,11 @@ import Logout from '-!svg-react-loader!../../images/logout.svg'
 import ColumnSvg from '-!svg-react-loader!../../images/column.svg'
 import {useTranslation} from 'react-i18next'
 import {Link, useNavigate} from '@reach/router'
-
+import MenuBar from '-!svg-react-loader!../../svgs/menuBar.svg';
 import s from './drawer.module.scss'
 import {setLogOut} from "../../store/auth";
 import ColumnsHideShow from "../columns-hide-show/columns-hide-show";
+import Dropdown from '../dropdown/dropdown'
 
 
 const menuItemsFirst = [
@@ -32,10 +33,10 @@ const menuItemsFirst = [
         item: 'status',
         page: '/admin/status'
     },
-    
+
 ]
 
-const Drawer: React.FC = () => {
+const Drawer: React.FC = ({ isOpen, handleToggle }:any) => {
     const {t} = useTranslation()
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -88,6 +89,25 @@ const Drawer: React.FC = () => {
                 </div>
             </nav>
             <nav className={`${s.root} ${s.fixed}`}>
+                {/*<ul className={s.list}>*/}
+                {/*    <li key="management-dropdown">*/}
+                {/*        <Dropdown title={t('admin:management_subsystem')}>*/}
+                {/*            {menuItemsFirst.map(({ item, page }) => {*/}
+                {/*                return (*/}
+                {/*                    <li key={item}>*/}
+                {/*                        <Link*/}
+                {/*                            to={page}*/}
+                {/*                            className={`${s.link} ${s.secondaryLink}`}*/}
+                {/*                        >*/}
+                {/*                            {t(`admin:${item}`)}*/}
+                {/*                        </Link>*/}
+                {/*                    </li>*/}
+                {/*                );*/}
+                {/*            })}*/}
+                {/*        </Dropdown>*/}
+                {/*    </li>*/}
+
+                {/*</ul>*/}
                 <ul className={s.list}>
                     {menuItemsFirst
                         .map(
