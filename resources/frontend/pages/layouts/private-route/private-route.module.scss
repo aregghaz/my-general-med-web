@@ -4,13 +4,16 @@
     padding: 25px;
 }
 
+.root_wrapper {
+    //border: 1px solid red;
+    display: flex;
+}
+
 .root {
     border: 1px solid $adminBgColor;
     //padding: 110px 15px 30px;
     background: $adminBgColor;
-    //min-height: calc(100vh - 60px);
-    min-height: 100vh;
-    margin-left: 300px;
+    min-height: calc(100vh - 300px);
 }
 
 .navigation {

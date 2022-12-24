@@ -1,16 +1,16 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { Col, Row } from 'react-grid-system'
-import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
-import { actions } from '../../../store/home'
-import { clientAction } from '../../../store/client'
-import { getClientData, getHomePageData } from '../../../store/selectors'
-import { homeAPI } from "../../../api/site-api/home-api";
+import React, {useEffect, useState, useRef} from 'react'
+import {Col, Row} from 'react-grid-system'
+import {useTranslation} from 'react-i18next'
+import {useDispatch, useSelector} from 'react-redux'
+import {actions} from '../../../store/home'
+import {clientAction} from '../../../store/client'
+import {getClientData, getHomePageData} from '../../../store/selectors'
+import {homeAPI} from "../../../api/site-api/home-api";
 import s from './home.module.scss'
 import CrudTable from '../../../components/crud-table-user/crud-table'
 import Input from '../../../components/input/input'
-import Select, { IOption } from '../../../components/select/select'
-import { useInView } from 'react-intersection-observer'
+import Select, {IOption} from '../../../components/select/select'
+import {useInView} from 'react-intersection-observer'
 import InfoBlock from '../../../components/info-block/info-block'
 
 interface IHome {
@@ -76,13 +76,13 @@ const Home: React.FC<IHome> = () => {
     const clientData = useSelector(getClientData)
     const dispatch = useDispatch()
 
-    const { selectedTitle, clients } = homeData
+    const {selectedTitle, clients} = homeData
     const {clientById} = clientData
     useEffect(() => {
         (
             async () => {
                 if (titlesDef.length > 0) {
-                    const homeData = await homeAPI.getClientData({ titles: titlesDef, showMore: countRef.current })
+                    const homeData = await homeAPI.getClientData({titles: titlesDef, showMore: countRef.current})
                     setDefaultData(homeData.titles)
                     dispatch(actions.setTitles({
                         titles: homeData.titles,
@@ -98,7 +98,7 @@ const Home: React.FC<IHome> = () => {
 
     const handlerGetclientData = async (id: number) => {
         const homeData = await homeAPI.getCLientById(id)
-        dispatch(clientAction.fetching({clientById:homeData.client}))
+        dispatch(clientAction.fetching({clientById: homeData.client}))
 
         setShow(true)
 
@@ -109,7 +109,7 @@ const Home: React.FC<IHome> = () => {
             if (inView) {
                 let result = selectedTitle.map(a => a.slug);
                 if (result.length > 0) {
-                    const homeData = await homeAPI.getClientData({ titles: result, showMore: countRef.current })
+                    const homeData = await homeAPI.getClientData({titles: result, showMore: countRef.current})
                     setDefaultData(homeData.titles)
                     dispatch(actions.setTitles({
                         titles: homeData.titles,
@@ -126,11 +126,11 @@ const Home: React.FC<IHome> = () => {
     ///FIXME  MISSING TYPE
     const onSerachInput = async (event: any) => {
         ////FIXME: its should be save in state,'
-        console.log(event.target.value,'event');
-        
+        console.log(event.target.value, 'event');
+
         setQuery(event)
         if (titlesDef.length > 0) {
-            const homeData = await homeAPI.getClientData({ titles: titlesDef, showMore: countRef.current,query: event})
+            const homeData = await homeAPI.getClientData({titles: titlesDef, showMore: countRef.current, query: event})
             setDefaultData(homeData.titles)
             dispatch(actions.setTitles({
                 titles: homeData.titles,
@@ -144,7 +144,7 @@ const Home: React.FC<IHome> = () => {
         let result = options.map(a => a.slug);
         if (result.length > 0) {
 
-            const homeData = await homeAPI.getClientData({ titles: result, showMore: countRef.current })
+            const homeData = await homeAPI.getClientData({titles: result, showMore: countRef.current})
             setDefaultData(homeData.titles)
             dispatch(actions.setTitles({
                 selectedTitle: homeData.selectedFields,
@@ -156,19 +156,19 @@ const Home: React.FC<IHome> = () => {
     }
 
     return (clients && <>
-        {show&& clientById  &&
-     <div >
+        {show && clientById &&
+            <div>
 
-        <InfoBlock  clientById={clientById}/>
-              
-     </div>
-   }
+                <InfoBlock clientById={clientById}/>
+
+            </div>
+        }
 
         <div>
             <Input name={'search'}
-             type={'text'} 
-             ////FIXE ME
-            onBlur={onSerachInput} 
+                   type={'text'}
+                ////FIXE ME
+                   onBlur={onSerachInput}
             />
         </div>
         <div className={s.iconBlock}>
@@ -188,13 +188,13 @@ const Home: React.FC<IHome> = () => {
                 name={'filtre'}
                 ///</IOption> label?: string
                 isMulti={true}
-            //</> authCheckboxLabelStyle?: string
-            ///labelStyle?: string
-            //handlerMenuOpen?: () => void
-            ///handlerMenuClose?: () => void
-            ///hideSelectedOptions?: boolean
-            ///isMenuAdd?: boolean,
-            ///handlerAdd?: () => void 
+                //</> authCheckboxLabelStyle?: string
+                ///labelStyle?: string
+                //handlerMenuOpen?: () => void
+                ///handlerMenuClose?: () => void
+                ///hideSelectedOptions?: boolean
+                ///isMenuAdd?: boolean,
+                ///handlerAdd?: () => void
 
 
             />
@@ -207,7 +207,7 @@ const Home: React.FC<IHome> = () => {
                 className={'pagination'}
                 paginated={false}
             />
-            <div className={s.detector} ref={ref} />
+            <div className={s.detector} ref={ref}/>
         </div>
 
     </>)

@@ -33,12 +33,13 @@ const PrivateRoute: React.FC<IPrivateRoute> = ({children}) => {
         }
     }, [isLoading])
     return (
-        <>
-            <Drawer/>
-            <div className={s.root}>
-                {children}
-            </div>
-        </>
+        <div className={s.root_wrapper}>
+            <Drawer>
+                <div className={s.root}>
+                    {children}
+                </div>
+            </Drawer>
+        </div>
     )
 }
 

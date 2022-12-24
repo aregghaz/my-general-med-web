@@ -1,19 +1,19 @@
 import React, {FC} from "react";
-import { useTranslation } from "react-i18next";
-import { IClientsData } from "../../types/home-types";
+import {useTranslation} from "react-i18next";
+import {IClientsData} from "../../types/home-types";
 import cls from './info-block.module.scss'
 
 
 interface IProps {
-    clientById:any,
+    clientById: any,
     idData?: number,
 }
 
 
 const InfoBlock: FC<IProps> = ({clientById}) => {
-   /// const infoData: any = items.find(item => item.id === idData);
-    const newData =clientById[0]
-console.log(newData,'newData');
+    /// const infoData: any = items.find(item => item.id === idData);
+    const newData = clientById[0]
+    console.log(newData, 'newData');
 
     const {t} = useTranslation()
 
@@ -27,7 +27,7 @@ console.log(newData,'newData');
                 {
                     newData &&
                     <>
-                  
+
                         <div className={cls.item}>
                             <span className={cls.b_text}>{t('surname')}: </span>
                             {newData.surname}
@@ -40,7 +40,7 @@ console.log(newData,'newData');
                             <span className={cls.b_text}>{t('pick_up_address')}: </span>
                             {newData.pick_up_address}
                         </div>
-              
+
 
                         <div className={cls.item}>
                             <span className={cls.b_text}>{t('birthday')}: </span>
@@ -63,7 +63,7 @@ console.log(newData,'newData');
                             <span className={cls.b_text}>{t('phone_number')}: </span>
                             {newData.phone_number}
                         </div>
-{/* 
+                        {/*
                         <div className={cls.item}>
                             <span className={cls.b_text}>{t('ccn')}: </span>
                             {newData.ccn}
@@ -88,4 +88,5 @@ console.log(newData,'newData');
     )
 }
 
-export default InfoBlock
+// @ts-ignore
+export default InfoBlock;

@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 import {useDispatch} from 'react-redux'
 import Button from '../button/button'
 import HomeIcon from '-!svg-react-loader!../../images/home.svg'
-import Account from '-!svg-react-loader!../../images/account.svg'
-import Logout from '-!svg-react-loader!../../images/logout.svg'
+import Account from '-!svg-react-loader!../../images/User.svg'
+import Logout from '-!svg-react-loader!../../images/SignOut.svg'
+import Settings from '-!svg-react-loader!../../images/Settings.svg'
 import {useTranslation} from 'react-i18next'
 import {Link, useNavigate} from '@reach/router'
 
@@ -12,6 +13,7 @@ import {setLogOut} from "../../store/auth";
 import ColumnsHideShow from '../columns-hide-show/columns-hide-show'
 
 import ColumnSvg from '-!svg-react-loader!../../images/column.svg'
+
 const DrawerUser: React.FC = () => {
     const {t} = useTranslation()
     const dispatch = useDispatch()
@@ -24,35 +26,47 @@ const DrawerUser: React.FC = () => {
     }
     return (
         <>
-            <nav className={s.headerNav}>
+            <nav className={s.header_nav}>
                 <div className={s.navWrapper}>
                     <div className={s.icons}>
-                        <div key={'home'} className={s.iconBlock}>
-                            <Button type={'blank'}>
+                        <div>
+                            <div key={'home'} className={s.iconBlock} style={{paddingLeft:"30px"}}>
+                                <Button type={'blank'}>
                                 <span className={s.icon}>
                                     <HomeIcon/>
                                 </span>
-                            </Button>
+                                </Button>
+                            </div>
                         </div>
-                        {/* <div className={`${s.account} ${s.iconBlock}`}>
-                            <Button type={'blank'} className={s.personalInfo}>
+                        <div style={{display:"flex"}}>
+                            <div key={'home'} className={s.iconBlock}>
+                                <Button type={'blank'}>
+                                <span className={s.icon}>
+                                    <Settings/>
+                                </span>
+                                </Button>
+                            </div>
+                            <div className={`${s.account} ${s.iconBlock}`}>
+                                <Button type={'blank'} className={s.personalInfo}>
                                 <span className={s.icon}>
                                     <Account/>
                                 </span>
-                            </Button>
-                        </div> */}
-                    </div>
-              
-                    <div className={s.iconBlock}>
-                        <Button type={'blank'} onClick={() => {
-                            handlerLogOut()
-                            navigate('/')
-                        }}>
+                                </Button>
+                            </div>
+
+                            <div className={s.iconBlock}>
+                                <Button type={'blank'} onClick={() => {
+                                    handlerLogOut()
+                                    navigate('/')
+                                }}>
                             <span className={s.icon}>
                                 <Logout/>
                             </span>
-                        </Button>
+                                </Button>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </nav>
             <nav className={`${s.root} ${s.fixed}`}>
