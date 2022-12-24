@@ -43,8 +43,8 @@ const TableBody: React.FC<ITableBody> = (
                                 keys.length> 0 &&
                                       (
                                         keys
-                                            .map((key) => {
-                                                    return (
+                                            .map((key, i) => {
+                                                  return i !=0 &&   (
                                                         <TableData data={item.id} key={key}
                                                                    handlerGetclientData={handlerGetclientData}>
                                                             {item[key]}

@@ -24,8 +24,9 @@ class ClientCollection extends ResourceCollection
                 'trip_id' => $client->trip_id,
                 'name' => $client->name,
                 'surname' => $client->surname,
-                'gender' => $client->gender,
+                
                 'los' => $client->los,
+                'gender' => $client->genderType->name,
                 'phone_number' => $client->phone_number,
                 'date_of_service' => $client->date_of_service,
                 'appointment_time' => $client->appointment_time,

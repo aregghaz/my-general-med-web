@@ -21,7 +21,7 @@ class CreateClientsTable extends Migration
             $table->string('trip_id');
             $table->string('name');
             $table->string('surname');
-            $table->string('gender');
+            $table->unsignedBigInteger('gender');
             $table->string('los');
             $table->string('phone_number');
             $table->string('date_of_service');
