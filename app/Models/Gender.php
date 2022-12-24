@@ -8,7 +8,7 @@ use Laravel\Passport\HasApiTokens;
 use Venturecraft\Revisionable\RevisionableTrait;
 use Fico7489\Laravel\RevisionableUpgrade\Traits\RevisionableUpgradeTrait;
 
-class Escort extends Model
+class Gender extends Model
 {
     use HasApiTokens, HasFactory;
     use RevisionableTrait;

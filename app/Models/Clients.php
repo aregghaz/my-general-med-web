@@ -23,13 +23,13 @@ class Clients extends Model
     //enable this if you want use methods that gets information about creating
     protected $revisionCreationsEnabled = true;
     protected $fillable  =  [
-        "client_id",
+       // "id",
         'car_id',
         'vendor_id',    
         'trip_id',
         'name',
         'surname',
-        'gender',
+        'gender',///seect
         'los',
         'phone_number',
         'date_of_service',
@@ -67,7 +67,14 @@ class Clients extends Model
     {
         return $this->hasOne(Escort::class, 'id', 'escortType');
     }
-     
+    public function escort()
+    {
+        return $this->hasOne(Escort::class, 'id', 'escortType');
+    }
+    public function genderType()
+    {
+        return $this->hasOne(Gender::class, 'id', 'gender');
+    }
     public function clientStatus()
     {
         return $this->hasOne(ClientStatus::class, 'id', 'status');

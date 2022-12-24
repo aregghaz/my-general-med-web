@@ -7,7 +7,10 @@ use App\Http\Resources\ClientFieldCollection;
 use App\Http\Resources\StatusCollection;
 use App\Models\Clients;
 use App\Models\ClientStatus;
+use App\Models\Escort;
+use App\Models\Gender;
 use App\Models\RequestType;
+use App\Models\TypeOfTrip;
 use Illuminate\Http\Request;
 
 class ClientsController extends Controller
@@ -96,12 +99,15 @@ class ClientsController extends Controller
 
         $request_type = RequestType::get();
         $clientStatus = ClientStatus::get();
-
+        $escort = Escort::get();
+        $typeOfTrip = TypeOfTrip::get();
+        $gender = Gender::get();
         $client =  Clients::with([
             'origin',
             'destination',
             'typeOfTrip',
-            'escortType',
+            'escort',
+            'genderType',
             'clientStatus',
             'requestType'
         ])->find($id);
@@ -111,6 +117,10 @@ class ClientsController extends Controller
         
         return response()->json([
             'data' => $clientdata,
+            'escortType'=> new StatusCollection($escort),
+            "gender"=> new StatusCollection($gender),
+            'request_type'=> new StatusCollection($request_type),
+            "type_of_trip" => new StatusCollection($typeOfTrip),
             'status' => new StatusCollection($clientStatus),
             
         ], 200);
@@ -154,20 +164,31 @@ class ClientsController extends Controller
 
     public function convertSingleData($client)
     {
- 
+      
+
       return [
             'id' => $client->id,
             'trip_id' => $client->trip_id,
             'name' => $client->name,
             'surname' => $client->surname,
-            'gender' => $client->gender,
+            'gender' => [
+                'id' => $client->genderType->id,
+                'label' => $client->genderType->name,
+                'slug' =>  $client->genderType->slug,
+                'value' => $client->genderType->slug,
+            ],
             'los' => $client->los,
             'phone_number' => $client->phone_number,
             'date_of_service' => $client->date_of_service,
             'appointment_time' => $client->appointment_time,
             'pick_up' => $client->pick_up,
             'drop_down' => $client->drop_down,
-            'request_type' =>  $client->request_type,
+            'request_type' => [
+                'id' => $client->requestType->id,
+                'label' => $client->requestType->name,
+                'slug' =>  $client->requestType->slug,
+                'value' => $client->requestType->slug,
+            ],
             ///seect
             
             'status' =>  [
@@ -195,9 +216,19 @@ class ClientsController extends Controller
             'destination_country' => $client->destination->country,
             'destination_phone' => $client->destination->phone,
             'destination_comment' => $client->destination_comment,
-            'escortType' => $client->escortType,
+            'escortType' =>   [
+                'id' => $client->escort->id,
+                'label' => $client->escort->name,
+                'slug' =>  $client->escort->slug,
+                'value' => $client->escort->slug,
+            ],
             //select
-            'typeOfTrip' => $client->typeOfTrip->name,
+            'type_of_trip' =>  [
+                'id' => $client->typeOfTrip->id,
+                'label' => $client->typeOfTrip->name,
+                'slug' =>  $client->typeOfTrip->slug,
+                'value' => $client->typeOfTrip->slug,
+            ],
             //select
             'miles' => $client->miles,
             'member_uniqie_identifer' => $client->member_uniqie_identifer,
