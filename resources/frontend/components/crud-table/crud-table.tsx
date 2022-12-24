@@ -25,7 +25,7 @@ const CrudTable: React.FC<ICrudTable> = (
         HandlerPagination,
         paginated
     }) => {
-  
+
     return (
         <>
             <table className={s.table}>
