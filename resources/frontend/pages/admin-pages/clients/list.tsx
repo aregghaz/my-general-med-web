@@ -108,7 +108,7 @@ const Clients: React.FC<IClients> = () => {
             setIsModalOpen(false)
         })
     }
-    const handlerEditBeneficiaryItem = (id: number) => navigate(`/admin/${crudKey}/${id}`)
+    const handlerEditItem = (id: number) => navigate(`/admin/${crudKey}/${id}`)
     const HandlerGetProducts = (id: number) => navigate(`/admin/users-products/${id}`)
 
     const HandlerPagination = async (activeItem: number) => {
@@ -154,7 +154,7 @@ const Clients: React.FC<IClients> = () => {
                 isGetItems
                 handlerAddItem={handlerAddClientItem}
                 handlerDeleteItem={handlerDeleteModal}
-                handlerEditItem={handlerEditBeneficiaryItem}
+                handlerEditItem={handlerEditItem}
                 HandlerPagination={HandlerPagination}
                 HandlerGetProducts={HandlerGetProducts}
                 count={count}

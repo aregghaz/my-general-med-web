@@ -15,7 +15,6 @@ const ClientCreate: React.FC<IClientCreate> = () => {
     const [data, setData] = useState(null)
     const fields: Array<IItem> = [
         { name: 'trip_id', type: 'input', label: 'trip_id' },
-        { name: 'member_uniqie_identifer', type: 'input', label: 'member_uniqie_identifer' },
         { name: 'name', type: 'input', label: 'name' },
         { name: 'surname', type: 'input', label: 'surName' },
         { name: 'gender', type: 'select', label: 'gender' },
@@ -35,31 +34,35 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         { name: 'id', type: 'hidden', inputType: 'hidden' },
         // {name: 'province', type: 'select', label: 'province'},
         // {name: 'region', type: 'select', label: 'region'},
+        { name: 'origin_name', type: 'input', label: 'origin_name' },
+        { name: 'origin_street', type: 'input', label: 'origin_street' },
+        { name: 'origin_suite', type: 'input', label: 'origin_suite' },
+        { name: 'origin_city', type: 'input', label: 'origin_city' },
+        { name: 'origin_state', type: 'input', label: 'origin_state' },
+        { name: 'origin_postal', type: 'input', label: 'origin_postal' },
+        { name: 'origin_country', type: 'input', label: 'origin_country' },
+        { name: 'origin_phone', type: 'input', label: 'origin_phone' },
+        { name: 'origin_comment', type: 'input', label: 'origin_comment' },
+        { name: 'destination_name', type: 'input', label: 'destination_name' },
+        { name: 'destination_street', type: 'input', label: 'destination_street' },
+        { name: 'destination_suite', type: 'input', label: 'destination_suite' },
+        { name: 'destination_city', type: 'input', label: 'destination_city' },
+        { name: 'destination_state', type: 'input', label: 'destination_state' },
+        { name: 'destination_postal', type: 'input', label: 'destination_postal' },
+        { name: 'destination_country', type: 'input', label: 'destination_country' },
+        { name: 'destination_phone', type: 'input', label: 'destination_phone' },
+        { name: 'destination_comments', type: 'input', label: 'destination_comments' },
+        
         { name: 'escortType', type: 'select', label: 'escortType' },
         { name: 'type_of_trip', type: 'select', label: 'type_of_trip' },
         { name: 'status', type: 'select', label: 'status' },
+        { name: 'member_uniqie_identifer', type: 'input', label: 'member_uniqie_identifer' },
         { name: 'birthday', type: 'datepicker', label: 'birthday' },
         { name: 'miles', type: 'input', label: 'miles' },
-        { name: 'origin_comment', type: 'textarea', label: 'origin_comment' },
-        { name: 'destination_comments', type: 'textarea', label: 'destination_comments' }
-        // "origin_name",
-        // "origin_street",
-        // "origin_suite",
-        // "origin_city",
-        // "origin_state",
-        // "origin_postal",
-        // "origin_country",
-        // "origin_phone",
-        // "origin_comment",
-        // "destination_name",
-        // "destination_street",
-        // "destination_suite",
-        // "destination_city",
-        // "destination_state",
-        // "destination_postal",
-        // "destination_country",
-        // "destination_phone",
-        // "destination_comments",
+
+     
+
+    
 
 
 
