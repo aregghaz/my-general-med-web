@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ClientsController;
+use App\Http\Controllers\UserController;
+
 use App\Http\Controllers\WeatherApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -55,6 +57,7 @@ Route::group([
 ], function () {
     Route::resources([
         'clients' => ClientsController::class,
+        'users'=> UserController::class,
     ]);
     Route::get('/changeStatus/{slug}', [AdminController::class, 'changeStatus']);
     Route::get('/changeStatus/{slug}/{id}', [AdminController::class, 'getStatusById']);
