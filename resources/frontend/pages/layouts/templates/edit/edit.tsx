@@ -10,7 +10,7 @@ import s from './edit.module.scss'
 import {AdminApi} from "../../../../api/admin-api/admin-api";
 
 interface IEdit {
-    data: {data: { [key: string]: Object }}
+    data: {[key: string]: { [key: string]: Object }}
     fields: Array<IItem>
     crudKey?: string
     title: string
@@ -48,8 +48,7 @@ const Edit: React.FC<IEdit> = (
                       setFieldValue
                   }) => {
 
-                    console.log(values,
-                        setFieldValue);
+                    console.log(values,'aaaaaaaaaaaaaaaaa');
                     
                     return (
                         <>
@@ -63,7 +62,7 @@ const Edit: React.FC<IEdit> = (
                                                     handleChange={handleChange}
                                                     values={values}
                                                     setFieldValue={setFieldValue}
-                                                    // selectOptions={}
+                                                     selectOptions={data}
                                                 />
                                             </div>
                                         )

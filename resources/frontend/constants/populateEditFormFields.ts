@@ -1,7 +1,7 @@
 import {IItem} from '../pages/layouts/templates/formik-handler/formik-handler'
 
 
-const populateEditFormFields = (fields: Array<IItem>, data: {data : { [key: string]: Object }}) => {
+const populateEditFormFields = (fields: Array<IItem>, data: { [key: string] : { [key: string]: Object }}) => {
     const values: { [key: string]: Object } = {}
     console.log(data,'datadata')
     fields

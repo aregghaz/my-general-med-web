@@ -78,6 +78,7 @@ const ClientEdit: React.FC<IClientEditItem> = ({id}) => {
             fields={fields}
             title={''}
             children={t('update')}
+            
         />
     )
 }
