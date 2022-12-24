@@ -30,6 +30,9 @@ import ClientCreate from './pages/admin-pages/clients/create'
 import Vendors from './pages/admin-pages/vendors/list'
 import VendorEdit from './pages/admin-pages/vendors/edit'
 import VendorCreate from './pages/admin-pages/vendors/create'
+import Status from './pages/admin-pages/status/list'
+import StatusCreate from './pages/admin-pages/status/create'
+import StatusEdit from './pages/admin-pages/status/edit'
 
 const App = (): JSX.Element => (
     <Provider store={store}>
@@ -55,6 +58,9 @@ const App = (): JSX.Element => (
                 <Vendors path="vendors" />
                 <VendorEdit path='vendors/:id' />
                 <VendorCreate path='vendors/create' />
+                <Status path='status' /> 
+                <StatusCreate path='status/create' />  
+                <StatusEdit path='status/:id' />   
                 <NotFound default/>
             </PrivateRoute>
 

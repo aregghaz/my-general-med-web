@@ -11,10 +11,11 @@ import Clients from '-!svg-react-loader!../../images/Clients.svg'
 import Users from '-!svg-react-loader!../../images/Users.svg'
 import {useTranslation} from 'react-i18next'
 import {Link, useNavigate} from '@reach/router'
-
+import MenuBar from '-!svg-react-loader!../../svgs/menuBar.svg';
 import s from './drawer.module.scss'
 import {setLogOut} from "../../store/auth";
 import ColumnsHideShow from "../columns-hide-show/columns-hide-show";
+import Dropdown from '../dropdown/dropdown'
 
 
 const menuItemsFirst = [
@@ -37,7 +38,7 @@ const menuItemsFirst = [
     {
         Icon: <Status/>,
         item: 'status',
-        page: '/admin/vendors'
+        page: '/admin/status'
     },
     {
         Icon: <UserRole/>,
@@ -51,13 +52,18 @@ const menuItemsFirst = [
     },
 ]
 
-const Drawer: React.FC = ({children}) => {
+const Drawer: React.FC = ({ children,isOpen, handleToggle }:any) => {
     const {t} = useTranslation()
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
     /// const [show, setShow] = useState(false)
     const handlerLogOut = () => dispatch(setLogOut());
+    // const filterColumns = () => {
+    //     setShow(!show)
+    //     console.log(show)
+    // }
+
     return (
         <div style={{width: "100%"}}>
             <nav className={s.header_nav}>

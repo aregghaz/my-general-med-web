@@ -17,7 +17,9 @@ export const AdminApi = {
     getAllData(crudKey: string, page: number, query: string) {
         return axios.get(`/api/admin/${crudKey}?page=${page}&query=${query}`).then(res => res.data)
     },
-
+    getAllStatusData(crudKey: string) {
+        return axios.get(`/api/admin/${crudKey}/escortType`).then(res => res.data)
+    },
     createItem(crudKey: string) {
         return axios.get(`/api/admin/${crudKey}/create`).then(res => res.data)
     },

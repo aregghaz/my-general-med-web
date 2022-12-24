@@ -15,13 +15,12 @@ class StatusCollection extends ResourceCollection
     public function toArray($request)
     {
         return $this->map(function ($status) {
-          
+
             return [
                 'id' => $status->id,
                 'label' => $status->name,
-
                 'title' => $status->name,
-              
+
             ];
         });
     }

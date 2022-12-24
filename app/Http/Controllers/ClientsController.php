@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ClientCollection;
+use App\Http\Resources\ClientFieldCollection;
 use App\Models\Clients;
+use App\Models\RequestType;
 use Illuminate\Http\Request;
 
 class ClientsController extends Controller
@@ -17,7 +19,7 @@ class ClientsController extends Controller
     {
 
 
-     
+
         if (isset($request->querySearch)) {
             $clients = Clients::where('member_uniqie_identifer', 'LIKE', '%' . $request->querySearch . '%')->orWhere('car_id', 'LIKE', '%' . $request->querySearch . '%')->paginate(20);
         } else {
@@ -32,6 +34,7 @@ class ClientsController extends Controller
                 // "client_id",
                 // 'car_id',
                 // 'vendor_id',
+                'id',
                 'trip_id',
                 'name',
                 'surname',
@@ -53,9 +56,10 @@ class ClientsController extends Controller
                 'type_of_trip', //select
                 'miles',
                 'member_uniqie_identifer',
-                'birthday')->paginate(20);
+                'birthday'
+            )->paginate(20);
         }
-        return response()->json( new ClientCollection($clients), 200);
+        return response()->json(new ClientCollection($clients), 200);
     }
 
     /**
@@ -83,11 +87,27 @@ class ClientsController extends Controller
      * Display the specified resource.
      *
      * @param \App\Models\Clients $clients
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response->json()
      */
-    public function show(Clients $clients)
+    public function show(Clients $clients, $id)
     {
-        //
+
+        $request_type = RequestType::get();
+        $clients =  Clients::with([
+            'origin',
+            'destination',
+            'typeOfTrip',
+            'escortType',
+            'clientStatus',
+            'requestType'
+        ])->find($id)->limit(1);
+
+
+
+        return response()->json([
+            'data' => new ClientCollection($clients),
+            'request_type'=> new ClientFieldCollection($request_type),
+        ], 200);
     }
 
     /**

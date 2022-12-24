@@ -7,23 +7,25 @@ import s from "../../layouts/templates/list/list.module.scss";
 import Select, {IOption, IOptionMultiselect} from '../../../components/select/select'
 import {useTranslation} from 'react-i18next'
 import Modal from 'react-modal'
-import numberFormatting from '../../../constants/utils';
+import InfoBlock from "../../../components/info-block/info-block";
 import {actions} from "../../../store/home";
 import {useDispatch} from "react-redux";
 
-interface IClients {
+interface Beneficiary {
     path: string
 }
 
-const Clients: React.FC<IClients> = () => {
+const Status: React.FC<Beneficiary> = () => {
     const dispatch = useDispatch();
-    const crudKey = 'clients'
+    const crudKey = 'changeStatus'
     const [data, setData] = useState([])
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [countPages, setCountPages] = useState(null)
     const [deleteId, setDeleteId] = useState(null)
-    const [count, setCount] = useState({from: 0, to: 10})
+    const [count, setCount] = useState(0)
     const [activeItem, setActiveItem] = useState(null)
+
+    const [dataID, setDataID] = useState(null)
 
 
     const navigate = useNavigate()
@@ -31,11 +33,9 @@ const Clients: React.FC<IClients> = () => {
     useEffect(() => {
         (
             async () => {
-                const data = await AdminApi.getAllData(crudKey, 1, '')
-                data.to
-                setCount({from: data.to - 3, to: data.to + 5})
-                setData(data)
-
+                const data = await AdminApi.getAllStatusData(crudKey)
+                setData(data.table)
+                setCount(data.count)
 
             }
         )()
@@ -45,51 +45,11 @@ const Clients: React.FC<IClients> = () => {
 
 
     const titles: Array<string> = [
-        // 'id',
-        // "client_id",
-        // 'car_id',
-        // 'vendor_id',
-        'trip_id',
+        'id',
         'name',
-        'surname',
-        'gender',
-        'los',
-        'phone_number',
-        'date_of_service',
-        'appointment_time',
-        'pick_up',
-        'drop_down',
-        'request_type', ///seect
-        'status',///seect
-        // 'origin_id',
-        // "destination_id",
-        "origin_name",
-        "origin_street",
-        "origin_suite",
-        "origin_city",
-        "origin_state",
-        "origin_postal",
-        "origin_country",
-        "origin_phone",
-        "origin_comment",
-        "destination_name",
-        "destination_street",
-        "destination_suite",
-        "destination_city",
-        "destination_state",
-        "destination_postal",
-        "destination_country",
-        "destination_phone",
-        "destination_comments",
-
-        'escortType',//select
-        'type_of_trip',//select
-        'miles',
-        'member_uniqie_identifer',
-        'birthday',
+        'slug'
     ]
-
-    const handlerAddClientItem = () => navigate(`/admin/${crudKey}/create`)
+    const handlerAddBeneficiaryItem = () => navigate(`/admin/users/create`)
 
 
     const handlerCloseModal = () => {
@@ -108,16 +68,16 @@ const Clients: React.FC<IClients> = () => {
             setIsModalOpen(false)
         })
     }
-    const handlerEditItem = (id: number) => navigate(`/admin/${crudKey}/${id}`)
+    const handlerEditBeneficiaryItem = (id: number) => navigate(`/admin/${crudKey}/${id}`)
     const HandlerGetProducts = (id: number) => navigate(`/admin/users-products/${id}`)
 
-    const HandlerPagination = async (activeItem: number) => {
-        const query = localStorage.getItem('query')
-        const homeData = await AdminApi.getAllData(crudKey, activeItem + 1, query ? query : '')
-        setCount({from: homeData.current_page, to: homeData.current_page + 5})
-        setData(homeData)
+    const HandlerPagination = (activeItem: number) => {
         const role = localStorage.getItem('role');
         localStorage.setItem('page', activeItem.toString());
+
+    }
+    const handlerGetclientData = (id: number) => {
+        setDataID(id)
 
     }
 
@@ -145,20 +105,22 @@ const Clients: React.FC<IClients> = () => {
     return (
         data &&
         <>
+            {/* <InfoBlock  items={data}/> */}
             <List
                 data={data}
                 titles={titles}
                 isDelete
                 isEdit
+                paginated={false}
                 isCreate
                 isGetItems
-                handlerAddItem={handlerAddClientItem}
+                handlerAddItem={handlerAddBeneficiaryItem}
                 handlerDeleteItem={handlerDeleteModal}
-                handlerEditItem={handlerEditItem}
+                handlerEditItem={handlerEditBeneficiaryItem}
                 HandlerPagination={HandlerPagination}
                 HandlerGetProducts={HandlerGetProducts}
+                handlerGetclientData={handlerGetclientData}
                 count={count}
-                paginated={true}
                 activeItem={activeItem}
                 className={'pagination'}
             />
@@ -190,4 +152,4 @@ const Clients: React.FC<IClients> = () => {
 }
 
 
-export default Clients
+export default Status
