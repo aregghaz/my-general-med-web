@@ -33,6 +33,7 @@ class ClientsController extends Controller
                 'destination',
                 'typeOfTrip',
                 'escortType',
+                'genderType',
                 'clientStatus',
                 'requestType'
             ])->select(

@@ -136,7 +136,7 @@ class HomeController extends Controller
                 'destination',
                 'typeOfTrip',
                 'escortType',
-                'gender',
+                'genderType',
                 'clientStatus',
                 'requestType'
             ])->select(
