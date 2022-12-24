@@ -63,7 +63,7 @@ const Edit: React.FC<IEdit> = (
                                                     handleChange={handleChange}
                                                     values={values}
                                                     setFieldValue={setFieldValue}
-                                                    selectOptions={}
+                                                    // selectOptions={}
                                                 />
                                             </div>
                                         )
