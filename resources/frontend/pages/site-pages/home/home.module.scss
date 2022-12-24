@@ -16,19 +16,20 @@ body {
 
 
 .head {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 
-  .phoneLink {
-    font-family: $fontRegular;
-    color: $whiteColor;
-    font-size: 20px;
-    text-decoration: none;
-  }
+    .phoneLink {
+        font-family: $fontRegular;
+        color: $whiteColor;
+        font-size: 20px;
+        text-decoration: none;
+    }
 
 }
-.seeAll{
-    color:black;
+
+.seeAll {
+    color: black;
     background-color: transparent;
     border: 1px solid;
     text-decoration: none;
@@ -37,60 +38,62 @@ body {
     text-transform: capitalize;
     border-radius: 15px;
 }
-.headerNew{
+
+.headerNew {
     color: $greenColor;
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
 .linkedin {
-  color: $whiteColor;
-  font-size: 27px;
-  cursor: pointer;
-  @media only screen and (max-width: $smallDisplay) {
-    font-size: 19px;
-  }
+    color: $whiteColor;
+    font-size: 27px;
+    cursor: pointer;
+    @media only screen and (max-width: $smallDisplay) {
+        font-size: 19px;
+    }
 }
 
 .facebook {
-  color: $whiteColor;
-  font-size: 30px;
-  cursor: pointer;
-  @media only screen and (max-width: $smallDisplay) {
-    font-size: 22px;
-  }
+    color: $whiteColor;
+    font-size: 30px;
+    cursor: pointer;
+    @media only screen and (max-width: $smallDisplay) {
+        font-size: 22px;
+    }
 }
 
 .instagram {
-  font-size: 33px;
-  color: $whiteColor;
-  @media only screen and (max-width: $largeDisplay) {
-    font-size: 28px;
-  }
+    font-size: 33px;
+    color: $whiteColor;
+    @media only screen and (max-width: $largeDisplay) {
+        font-size: 28px;
+    }
 }
 
 .twitter {
-  color: $whiteColor;
-  font-size: 25px;
-  cursor: pointer;
-  @media only screen and (max-width: $smallDisplay) {
-    font-size: 19px;
-  }
+    color: $whiteColor;
+    font-size: 25px;
+    cursor: pointer;
+    @media only screen and (max-width: $smallDisplay) {
+        font-size: 19px;
+    }
 }
 
 
 .swiperCarousel {
-  margin-top: 40px;
-  min-width: 100%;
-  position: absolute;
-  left: 0;
-  @media only screen and (max-width: $mediumDisplay) {
-    margin-top: 20px;
-    right: 0;
-  }
-  @media only screen and (max-width: $smallDisplay) {
-    margin-top: 15px;
-    right: 0;
-  }
+    margin-top: 40px;
+    min-width: 100%;
+    position: absolute;
+    left: 0;
+    @media only screen and (max-width: $mediumDisplay) {
+        margin-top: 20px;
+        right: 0;
+    }
+    @media only screen and (max-width: $smallDisplay) {
+        margin-top: 15px;
+        right: 0;
+    }
 
 }
 
@@ -98,61 +101,91 @@ body {
 .swiperButtonNextTraditionalCrafts,
 .swiperButtonNextHandmadeProductsHead,
 .swiperButtonNextServices {
-  background-color: $greenColor;
-  margin-left: 8px;
-  border: 1px solid $greenColor;
+    background-color: $greenColor;
+    margin-left: 8px;
+    border: 1px solid $greenColor;
 
-  @media only screen and (max-width: $smallDisplay) {
-    margin-left: 4px;
-  }
-
-  .arrow {
-    font-size: 20px;
-    @include themify($themes) {
-      color: themed('backgroundColor');
-    }
     @media only screen and (max-width: $smallDisplay) {
-      font-size: 14px;
+        margin-left: 4px;
     }
-  }
+
+    .arrow {
+        font-size: 20px;
+        @include themify($themes) {
+            color: themed('backgroundColor');
+        }
+        @media only screen and (max-width: $smallDisplay) {
+            font-size: 14px;
+        }
+    }
 }
 
 
 .rightThin {
-  margin-left: 10px;
-  font-size: 14px;
-  // fontello set fixed width element
-  &:before {
-    width: auto !important;
-  }
+    margin-left: 10px;
+    font-size: 14px;
+    // fontello set fixed width element
+    &:before {
+        width: auto !important;
+    }
 }
 
 .swiperButtonNextPartners,
 .swiperButtonPrevPartners {
-  display: flex;
-  align-items: center;
-  padding: 0 10px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
 
-  .arrow {
-    cursor: pointer;
-    font-size: 20px;
-    color: rgba(255, 255, 255, 0.8);
-  }
+    .arrow {
+        cursor: pointer;
+        font-size: 20px;
+        color: rgba(255, 255, 255, 0.8);
+    }
 }
 
 
-
-.imageGroup{
-    margin-right:0!important;
+.imageGroup {
+    margin-right: 0 !important;
 }
 
+.table_wrapper {
+    margin-top: 10px;
+    overflow: auto;
+    border: 1px solid #ddd;
+}
 
-
-
-
-///////////////////?Areg
-/// 
 .detector {
-  width: 1px;
-  height: 1px;
+    width: 1px;
+    height: 1px;
 }
+
+.upload_panel {
+    padding: 20px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.upload_block, .import_block {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    label {
+        cursor: pointer;
+    }
+
+    &:hover {
+        background-color: lightblue;
+    }
+}
+

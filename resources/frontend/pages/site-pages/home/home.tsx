@@ -12,6 +12,8 @@ import Input from '../../../components/input/input'
 import Select, {IOption} from '../../../components/select/select'
 import {useInView} from 'react-intersection-observer'
 import InfoBlock from '../../../components/info-block/info-block'
+import Upload from '-!svg-react-loader!../../../images/Upload.svg'
+import Import from '-!svg-react-loader!../../../images/Import.svg'
 
 interface IHome {
     path: string
@@ -20,6 +22,8 @@ interface IHome {
 const Home: React.FC<IHome> = () => {
     const [defaultData, setDefaultData] = useState([])
     const [show, setShow] = useState(false)
+    const [loadFile, setLoadFile] = useState<any>(null)
+    const [errorMessage, setErrorMessage] = useState<string>("")
     const [query, setQuery] = useState('')
     const [ref, inView] = useInView({
         threshold: 0,
@@ -92,16 +96,16 @@ const Home: React.FC<IHome> = () => {
                 }
             }
         )()
-        return async () => await dispatch(actions.resetState())
+        /*FIXME commented this part avoiding unmount async error*/
+        // return async () => await dispatch(actions.resetState())
+        return () => dispatch(actions.resetState())
     }, [])
 
-
+    console.log(loadFile)
     const handlerGetclientData = async (id: number) => {
         const homeData = await homeAPI.getCLientById(id)
         dispatch(clientAction.fetching({clientById: homeData.client}))
-
         setShow(true)
-
     }
 
     useEffect(() => {
@@ -155,61 +159,98 @@ const Home: React.FC<IHome> = () => {
         return true
     }
 
-    return (clients && <>
-        {show && clientById &&
-            <div>
+    const fileUploader = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const validValues = ["text/csv", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"]
 
-                <InfoBlock clientById={clientById}/>
+        if (e.target.files) {
+            if (validValues.includes(e.target.files[0].type)) {
+                setLoadFile(e.target.files[0])
+            } else {
+                setErrorMessage("please upload valid type!")
+            }
 
-            </div>
         }
+    }
+    // console.log(loadFile, "load file!!!!")
 
-        <div>
-            <Input name={'search'}
-                   type={'text'}
-                ////FIXE ME
-                   onBlur={onSerachInput}
-            />
-        </div>
-        <div className={s.iconBlock}>
-            <Select
-                isSearchable={true}
-                placeholder={'sssss'}
-                options={defaultData}
-                onChange={(options: Array<IOption>) => {
-                    changeFields(options);
-                }}
-                //placeholder={'aaaa'}
-                getOptionValue={(option: IOption) => option.value}
-                getOptionLabel={(option: IOption) => option.label}
-                ///</IOption> getOptionLabel: (option: IOption) => string
-                ///   getOptionValue: (option: IOption) => string
-                value={selectedTitle}
-                name={'filtre'}
-                ///</IOption> label?: string
-                isMulti={true}
-                //</> authCheckboxLabelStyle?: string
-                ///labelStyle?: string
-                //handlerMenuOpen?: () => void
-                ///handlerMenuClose?: () => void
-                ///hideSelectedOptions?: boolean
-                ///isMenuAdd?: boolean,
-                ///handlerAdd?: () => void
+    return (
+        clients && <>
+            <div className={s.upload_panel}>
+                <div className={s.upload_block}>
+                    <label htmlFor="uploadFile">
+                        <Upload/>
+                    </label>
+                    <input
+                        id="uploadFile"
+                        type="file"
+                        onChange={fileUploader}
+                        style={{display: "none"}}
+                        accept=".xls, .xlsx, .csv"
+                    />
+                </div>
+                <div className={s.import_block}>
+                    <label >
+                        <Import/>
+                    </label>
+                </div>
+            </div>
+            {errorMessage && <div style={{color: "red"}}>{errorMessage}</div>}
+            {
+                show && clientById &&
+                <div>
+                    <InfoBlock clientById={clientById}/>
+
+                </div>
+            }
 
 
-            />
-        </div>
-        <div ref={contentRef}>
-            <CrudTable
-                titles={selectedTitle}
-                data={clients}
-                handlerGetclientData={handlerGetclientData}
-                className={'pagination'}
-                paginated={false}
-            />
-            <div className={s.detector} ref={ref}/>
-        </div>
+            <div className={s.iconBlock}>
+                <Select
+                    isSearchable={true}
+                    placeholder={'sssss'}
+                    options={defaultData}
+                    onChange={(options: Array<IOption>) => {
+                        changeFields(options);
+                    }}
+                    //placeholder={'aaaa'}
+                    getOptionValue={(option: IOption) => option.value}
+                    getOptionLabel={(option: IOption) => option.label}
+                    ///</IOption> getOptionLabel: (option: IOption) => string
+                    ///   getOptionValue: (option: IOption) => string
+                    value={selectedTitle}
+                    name={'filtre'}
+                    ///</IOption> label?: string
+                    isMulti={true}
+                    //</> authCheckboxLabelStyle?: string
+                    ///labelStyle?: string
+                    //handlerMenuOpen?: () => void
+                    ///handlerMenuClose?: () => void
+                    ///hideSelectedOptions?: boolean
+                    ///isMenuAdd?: boolean,
+                    ///handlerAdd?: () => void
 
-    </>)
+
+                />
+            </div>
+            <div>
+                <Input name={'search'}
+                       type={'text'}
+                    ////FIXME
+                       onBlur={onSerachInput}
+                />
+            </div>
+            <div ref={contentRef} className={s.table_wrapper}>
+                <CrudTable
+                    titles={selectedTitle}
+                    data={clients}
+                    handlerGetclientData={handlerGetclientData}
+                    className={'pagination'}
+                    paginated={false}
+                />
+                <div className={s.detector} ref={ref}/>
+            </div>
+
+        </>
+    )
 }
 export default Home
