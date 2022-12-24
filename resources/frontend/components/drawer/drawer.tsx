@@ -88,12 +88,12 @@ const Drawer: React.FC = ({children}) => {
                                 .map(li => (
                                         <li className={s.item} key={`first-${li.item}`}>
                                             <Link to={li.page} className={s.link}>
-                                            <span className={s.side_icon}>
-                                                {li.Icon}
-                                            </span>
+                                                <span className={s.side_icon}>
+                                                    {li.Icon}
+                                                </span>
                                                 <span>
-                                                {t(`${li.item}`)}
-                                            </span>
+                                                    {t(`${li.item}`)}
+                                                </span>
                                             </Link>
                                         </li>
                                     )
