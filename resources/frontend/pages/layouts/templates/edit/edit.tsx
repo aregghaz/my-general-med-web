@@ -47,6 +47,10 @@ const Edit: React.FC<IEdit> = (
                       values,
                       setFieldValue
                   }) => {
+
+                    console.log(values,
+                        setFieldValue);
+                    
                     return (
                         <>
                             <form className={s.form}>
@@ -59,6 +63,7 @@ const Edit: React.FC<IEdit> = (
                                                     handleChange={handleChange}
                                                     values={values}
                                                     setFieldValue={setFieldValue}
+                                                    selectOptions={}
                                                 />
                                             </div>
                                         )
