@@ -107,10 +107,11 @@ class ClientsController extends Controller
         ])->find($id);
 
 
-        $clientdata = $this->convertSingleData($client,$request_type,$clientStatus);
+        $clientdata = $this->convertSingleData($client);
         
         return response()->json([
             'data' => $clientdata,
+            'status' => new StatusCollection($clientStatus),
             
         ], 200);
     }
@@ -151,8 +152,9 @@ class ClientsController extends Controller
         //
     }
 
-    public function convertSingleData($client,$request_type,$clientStatuss)
+    public function convertSingleData($client)
     {
+ 
       return [
             'id' => $client->id,
             'trip_id' => $client->trip_id,
@@ -165,9 +167,15 @@ class ClientsController extends Controller
             'appointment_time' => $client->appointment_time,
             'pick_up' => $client->pick_up,
             'drop_down' => $client->drop_down,
-            'request_type' => new StatusCollection($request_type),
+            'request_type' =>  $client->request_type,
             ///seect
-            'status' => new StatusCollection($clientStatuss),
+            
+            'status' =>  [
+                'id' => $client->clientStatus->id,
+                'label' => $client->clientStatus->name,
+                'slug' =>  $client->clientStatus->slug,
+                'value' => $client->clientStatus->slug,
+            ],
             ///seect
             'origin_name' => $client->origin->name,
             'origin_street' => $client->origin->street,

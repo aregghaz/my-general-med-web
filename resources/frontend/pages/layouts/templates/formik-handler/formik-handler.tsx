@@ -81,14 +81,13 @@ const FormikHandler: React.FC<IFormikHandler> = (
                 />
             )
         case 'select':
-            console.log(item.name);
-            console.log(values);
+            console.log(values[item.name])
             return (
                 <Select
                     value={values[item.name]}
                     getOptionValue={(option: IOption) => option.value}
                     getOptionLabel={(option: IOption) => option.label}
-                    options={values.selectOptions ? values.selectOptions[item.name] : selectOptions}
+                    options={selectOptions ? selectOptions[item.name] : selectOptions}
                     onChange={(option: IOption) => setFieldValue(item.name, option)}
                     label={item.label}
                     isSearchable={false}
@@ -114,7 +113,7 @@ const FormikHandler: React.FC<IFormikHandler> = (
                 />
             )
         case 'multiSelect':
-            console.log(item)
+
             return (
                 <Select
                     value={values[item.name]}
