@@ -124,10 +124,13 @@ const Select: React.FC<ISelect> = (
                         height: 30,
                         fontSize: 20,
                         lineHeight: 1.5,
-                        color: "black",
+                        // color: "black",
+                        color: "white",
                         /* font-weight: bold; */
                         borderRadius: 10,
-                        backgroundColor: '#336983'
+                        // backgroundColor: '#336983'
+                        backgroundColor: '#165f8d',
+                        padding: "0 8px"
                     }),
                     multiValueLabel: (styles: any, {data}: any) => ({
                         ...styles,

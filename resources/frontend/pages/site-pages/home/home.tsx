@@ -230,13 +230,13 @@ const Home: React.FC<IHome> = () => {
 
                 />
             </div>
-            <div>
-                <Input name={'search'}
-                       type={'text'}
-                    ////FIXME
-                       onBlur={onSerachInput}
-                />
-            </div>
+            {/*<div>*/}
+            {/*    <Input name={'search'}*/}
+            {/*           type={'text'}*/}
+            {/*        ////FIXME*/}
+            {/*           onBlur={onSerachInput}*/}
+            {/*    />*/}
+            {/*</div>*/}
             <div ref={contentRef} className={s.table_wrapper}>
                 <CrudTable
                     titles={selectedTitle}

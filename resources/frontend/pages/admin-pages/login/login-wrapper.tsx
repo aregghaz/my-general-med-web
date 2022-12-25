@@ -34,15 +34,16 @@ const LoginWrapper: React.FC<ILoginWrapper> = () => {
         formData.append('email', values.email)
         formData.append('password', values.password)
         await dispatch(login(formData))
-        
+
         setLoading(true)
     }
 
 
     useEffect(() => {
         if (localStorage.getItem('access_token')) {
+            console.log(localStorage.getItem('access_token'), "localStorage.getItem('access_token')")
+            console.log(user, " user")
             if (user && user.role == 'driver') {
-
                 navigate('/')
             }
             if (user && user.role !== 'driver') {
@@ -50,10 +51,11 @@ const LoginWrapper: React.FC<ILoginWrapper> = () => {
                 ///  setLoading(false)
             }
         } else {
+            console.log(user, " user else")
             navigate('/login')
         }
 
-    }, [isLoading])
+    }, [isLoading, user])
     return (
         <div className={s.login}>
             <Formik
