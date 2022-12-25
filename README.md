@@ -24,8 +24,8 @@ If you got error in steps call the Areg +37494806080
 
 IF YOU REFRESH YOUR MIGRATION PLEASE REAPET THIS STEPS BELOW
 1. php artisan migrate:refresh
-2. php artisan passport:install 
-3. php artisan passport:keys 
+2. php artisan passport:install --force
+3. php artisan passport:keys  --force
 4. php artisan db:seed
 5. http://127.0.0.1:8000/api/test browser run ara mi agnam
 
