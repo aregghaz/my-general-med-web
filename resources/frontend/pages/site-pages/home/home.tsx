@@ -101,7 +101,6 @@ const Home: React.FC<IHome> = () => {
         return () => dispatch(actions.resetState())
     }, [])
 
-    console.log(loadFile)
     const handlerGetclientData = async (id: number) => {
         const homeData = await homeAPI.getCLientById(id)
         dispatch(clientAction.fetching({clientById: homeData.client}))
@@ -171,7 +170,6 @@ const Home: React.FC<IHome> = () => {
 
         }
     }
-    // console.log(loadFile, "load file!!!!")
 
     return (
         clients && <>
@@ -189,7 +187,7 @@ const Home: React.FC<IHome> = () => {
                     />
                 </div>
                 <div className={s.import_block}>
-                    <label >
+                    <label>
                         <Import/>
                     </label>
                 </div>

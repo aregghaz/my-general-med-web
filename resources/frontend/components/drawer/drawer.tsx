@@ -107,36 +107,7 @@ const Drawer: React.FC = ({ children,isOpen, handleToggle }:any) => {
                         }
                     </ul>
                 </nav>
-                <div style={{width: "100%"}}>
-                    <div style={{
-                        border: "1px solid grey",
-                        width: "calc(100% - 20px)",
-                        minHeight: "100px",
-                        borderRadius: "4px",
-                        padding: "10px",
-                        margin: "10px auto",
-                    }}>
-                        <div style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            width: "100%",
-                        }}>
-                            <div>drivers</div>
-                            <div>vendors</div>
-                            <div>operators</div>
-                            <div>admin</div>
-                        </div>
-                        <div>
-                            <div>create</div>
-                            <div>
-                                <div></div>
-                                <div>*</div>
-                                <div>*</div>
-                                <div>*</div>
-                            </div>
-                        </div>
-                    </div>
+                <div style={{width: "100%", maxWidth:"calc(100% - 290px)"}}>
                     {children}
                 </div>
             </div>

@@ -21,9 +21,28 @@ interface IList {
     activeItem?: number
     ////FIXMECHANGE IT NORMA TYPR
     last_page?: number
-    count?:any
+    count?: any
     className?: string
 }
+
+const tabs = [
+    {
+        id: 1,
+        name: "drivers",
+    },
+    {
+        id: 2,
+        name: "vendors",
+    },
+    {
+        id: 3,
+        name: "operators",
+    },
+    {
+        id: 4,
+        name: "admin",
+    },
+]
 
 const List: React.FC<IList> = (
     {
@@ -55,24 +74,48 @@ const List: React.FC<IList> = (
                     </Button>
                 }
             </div>
-
-            <CrudTable
-                titles={titles}
-                data={data}
-                isEdit={isEdit}
-                last_page={last_page}
-                isDelete={isDelete}
-                isGetItems={isGetItems}
-                handlerEditItem={handlerEditItem}
-                handlerDeleteItem={handlerDeleteItem}
-                HandlerPagination={HandlerPagination}
-                HandlerGetProducts={HandlerGetProducts}
-                handlerGetclientData={handlerGetclientData}
-                activeItem={activeItem}
-                count={count}
-                className={className}
-                paginated={paginated}
-            />
+            <div className={s.table_upper_tab_box}>
+                <div className={s.table_upper_tab}>
+                    {
+                        tabs.map(tab => (
+                            <div
+                                className={s.table_upper_tab_item}
+                                key={tab.id}
+                            >
+                                {tab.name}
+                            </div>
+                        ))
+                    }
+                </div>
+                {/*<div>*/}
+                {/*    <div>create</div>*/}
+                {/*    <div>*/}
+                {/*        <div></div>*/}
+                {/*        <div>*</div>*/}
+                {/*        <div>*</div>*/}
+                {/*        <div>*</div>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
+            </div>
+            <div className={s.table_wrapper}>
+                <CrudTable
+                    titles={titles}
+                    data={data}
+                    isEdit={isEdit}
+                    last_page={last_page}
+                    isDelete={isDelete}
+                    isGetItems={isGetItems}
+                    handlerEditItem={handlerEditItem}
+                    handlerDeleteItem={handlerDeleteItem}
+                    HandlerPagination={HandlerPagination}
+                    HandlerGetProducts={HandlerGetProducts}
+                    handlerGetclientData={handlerGetclientData}
+                    activeItem={activeItem}
+                    count={count}
+                    className={className}
+                    paginated={paginated}
+                />
+            </div>
         </>
     )
 }

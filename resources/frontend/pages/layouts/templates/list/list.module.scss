@@ -9,6 +9,35 @@
     z-index: 1111111111;
 }
 
+.table_wrapper {
+    width: 100%;
+    border: 1px solid #ddd;
+    overflow: auto;
+}
+
+.table_upper_tab_box {
+    padding: 10px;
+    background-color: #E6DDC4
+}
+
+.table_upper_tab {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.table_upper_tab_item {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    background: white;
+    cursor: pointer;
+    &:hover {
+        background-color: #9a9a9a
+    }
+}
+
 .add {
     border-radius: 50%;
 
