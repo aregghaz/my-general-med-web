@@ -35,7 +35,7 @@ const TableBody: React.FC<ITableBody> = (
                                 .map((key: any, i: number) => {
                                     console.log(calue);
                                     
-                                       return   (titles[i]['slug'] == keys[i]) && index !== 0 &&  (
+                                       return    i !== 0 &&  (
                                             <TableData key={key} item={item} handlerGetclientData={handlerGetclientData}>
                                                 {item[key]}
                                             </TableData>
