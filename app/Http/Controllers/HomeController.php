@@ -62,15 +62,15 @@ class HomeController extends Controller
         for ($i = 0; $i < count($request->titles); $i++) {
             $selectedFieldsTitle[] = $request->titles[$i];
             $explodeRelation = explode("_", $request->titles[$i]);
-         //   var_dump($explodeRelation[0]);
+            //   var_dump($explodeRelation[0]);
             if ($explodeRelation[0]  === 'origin') {
                 if (!in_array($explodeRelation[0], $clientsDataWith)) {
                     $clientsDataWith[] = $explodeRelation[0];
-                  
+
                     $clients = $clients->join('origin_addresses', 'clients.origin_id', '=', 'origin_addresses.id');
                     $clientsData[] = "origin_addresses." . $explodeRelation[1] . " as origin_" . $explodeRelation[1];
                 } elseif (in_array($explodeRelation[0], $clientsDataWith) and $explodeRelation[1] !== 'comment') {
-                 //   var_dump($explodeRelation[1]);
+                    //   var_dump($explodeRelation[1]);
                     $clientsData[] = "origin_addresses." . $explodeRelation[1] . " as origin_" . $explodeRelation[1];
                 } elseif ($explodeRelation[1] == 'comment') {
                     $clientsData[] =  'clients.' . $request->titles[$i];
@@ -85,26 +85,30 @@ class HomeController extends Controller
                 } elseif ($explodeRelation[1] == 'comments') {
                     $clientsData[] =  'clients.' . $selectedFieldsTitle[$i];
                 }
-            } else if ($request->titles[$i] == 'typeOfTrip') {
-
+            } else if ($request->titles[$i] == 'type_of_trip') {
+                $clients = $clients->join('type_of_trips', 'clients.status', '=', 'type_of_trips.id');
+                $clientsData[] = "type_of_trips.name as type_of_trip";
+            } else if ($request->titles[$i] == 'request_type') {
+                $clients = $clients->join('request_types', 'clients.request_type', '=', 'request_types.id');
+                $clientsData[] = "request_types.name as request_type";
             } else if ($request->titles[$i] == 'status') {
-                
                 $clients = $clients->join('client_statuses', 'clients.status', '=', 'client_statuses.id');
                 $clientsData[] = "client_statuses.name as status";
-
             } else if ($request->titles[$i] == 'gender') {
+                $clients = $clients->join('genders', 'clients.gender', '=', 'genders.id');
+                $clientsData[] = "genders.name as gender";
             } else {
-                $clientsData[] =  'clients.' . $selectedFieldsTitle[$i]." as " . $selectedFieldsTitle[$i];
+                $clientsData[] =  'clients.' . $selectedFieldsTitle[$i] . " as " . $selectedFieldsTitle[$i];
             }
         }
         $result = array_diff($title, $selectedFieldsTitle);
 
         $selectedFields = count($clientsData) > 0 ? $clientsData : $clientData;
         //dd($request->titles);
-       /// dd($selectedFields);
+        /// dd($selectedFields);
         $clients = $clients->select($selectedFields);
         $clients =  $clients->take(15 * $showMore)->get();
-       // unset($selectedFieldsTitle[0]);
+        // unset($selectedFieldsTitle[0]);
         //unset($result[0]);
         return response()->json([
             'clients' => $clients,
@@ -116,7 +120,7 @@ class HomeController extends Controller
 
     public function show($id)
     {
-        $client = Clients::where('id',$id)->with([
+        $client = Clients::where('id', $id)->with([
             'origin',
             'destination',
             'typeOfTrip',
@@ -221,7 +225,4 @@ class HomeController extends Controller
             //    "count"=> (Clients::count() / 20)
         ], 200);
     }
-
-
-
 }
