@@ -4,11 +4,12 @@
 
 
 .backDropSearchWrapper {
-  position: fixed;
+  // position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
+  color: $borderColor;
   z-index: 600;
   @include themify($themes) {
     background-color: themed('backdropSearchColor');
@@ -16,9 +17,11 @@
   }
 }
 
-
+input{
+  color: $borderColor!important;
+}
 .backDropSearch {
-  margin: 185px auto 0;
+  // margin: 185px auto 0;
   max-width: 900px;
 
   @media only screen and (max-width: $largeDisplay) {
@@ -44,7 +47,7 @@
 
   .icon {
     font-size: 28px;
-    color: $whiteColor;
+    color: $borderColor;
     cursor: pointer;
 
     @media only screen and (max-width: $smallDisplay) {
@@ -66,7 +69,7 @@
   top: 15px;
   right: 0;
   font-size: 28px;
-  color: $whiteColor;
+  color: $borderColor;
   cursor: pointer;
 }
 

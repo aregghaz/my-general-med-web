@@ -15,7 +15,7 @@ import s from './header-icons.module.scss'
 
 interface IHeaderIcons {
     isLanguagePicker: boolean
-    handlerLanguagePicker: () => void
+    handlerLanguagePicker?: () => void
     handlerCloseLanguagePicker: () => void
     handlerCloseIcon: () => void
     handlerUserIcon: () => void
@@ -95,11 +95,11 @@ const HeaderIcons: React.FC<IHeaderIcons> = (
                 isShowWeather &&
                 <BackDropWeather handlerCloseBackDrop={handlerCloseBackDrop}/>
             }
-            {
+            {/* {
 
                 isBackDropSearch &&
                 <BackDropSearch handlerCloseBackDropSearch={handlerCloseBackDropSearch}/>
-            }
+            } */}
             <div className={s.icons}>
                 <div className={s.user}>
                     {
@@ -136,7 +136,7 @@ const HeaderIcons: React.FC<IHeaderIcons> = (
                        onClick={handlerBackDropWeather}
                     />
                 </div>
-                <div className={s.languagePicker}>
+                {/* <div className={s.languagePicker}>
                     <i onClick={handlerLanguagePicker}
                        className={`languageicon- ${s.language}
                                         ${isLanguagePicker && s.languagePickerActive}`}
@@ -145,7 +145,7 @@ const HeaderIcons: React.FC<IHeaderIcons> = (
                         isLanguagePicker &&
                         <LanguagePicker handlerCloseLanguagePicker={handlerCloseLanguagePicker}/>
                     }
-                </div>
+                </div> */}
                 {/*<div>*/}
                 {/*    {*/}
                 {/*        themeType === 'dark' ?*/}

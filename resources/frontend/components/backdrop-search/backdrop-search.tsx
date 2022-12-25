@@ -7,13 +7,18 @@ import {Visible} from 'react-grid-system'
 import s from './backdrop-search.module.scss'
 
 interface IBackDropSearch {
-    handlerCloseBackDropSearch: () => void
+    handlerCloseBackDropSearch?: () => void
+    handlerSubmit: (event: {search:string}) => void
 }
 
-const BackDropSearch: React.FC<IBackDropSearch> = ({handlerCloseBackDropSearch}) => {
+const BackDropSearch: React.FC<IBackDropSearch> = ({handlerCloseBackDropSearch,handlerSubmit}) => {
     const {t} = useTranslation()
 
-    const handlerSubmit = () => console.log('Work')
+    // const handlerSubmit = (event: {search:string}) => {
+    //     console.log('Work')
+    //     console.log(event);
+        
+    // }
 
     useEffect(() => {
         document.body.style.overflow = 'hidden'

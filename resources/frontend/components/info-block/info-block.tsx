@@ -13,8 +13,6 @@ interface IProps {
 const InfoBlock: FC<IProps> = ({clientById}) => {
     /// const infoData: any = items.find(item => item.id === idData);
     const newData = clientById[0]
-    console.log(newData, 'newData');
-
     const {t} = useTranslation()
 
     return (
