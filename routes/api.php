@@ -22,7 +22,7 @@ use App\Http\Controllers\Admin\AdminController;
 */
 
 
-Route::get('/test', [\App\Http\Controllers\TestController::class, 'index']);
+Route::post('/test', [\App\Http\Controllers\TestController::class, 'index']);
 Route::post('/clientData', [HomeController::class, 'clientData']);
 Route::group([
     'middleware' => 'auth:api'

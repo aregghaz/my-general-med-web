@@ -16,6 +16,7 @@ class HomeController extends Controller
     {
 
         $title = [
+            'id',
             'trip_id',
             'name',
             'surname',
@@ -45,7 +46,7 @@ class HomeController extends Controller
             'destination_postal',
             'destination_country',
             'destination_phone',
-            'destination_comment',
+            'destination_comments',
             'escortType', //select
             'type_of_trip', //select
             'miles',
@@ -84,6 +85,13 @@ class HomeController extends Controller
                     $clientsData[] =  'clients.' . $request->titles[$i];
                 }
             } else if ($request->titles[$i] == 'typeOfTrip') {
+
+            } else if ($request->titles[$i] == 'status') {
+                
+                $clients = $clients->join('client_statuses', 'clients.status', '=', 'client_statuses.id');
+                $clientsData[] = "client_statuses.name as status";
+
+            } else if ($request->titles[$i] == 'gender') {
             } else {
                 $clientsData[] =  'clients.' . $request->titles[$i];
             }
@@ -153,7 +161,6 @@ class HomeController extends Controller
                 'appointment_time',
                 'pick_up',
                 'drop_down',
-
                 'request_type', ///seect
                 'status', ///seect
                 'origin_id',

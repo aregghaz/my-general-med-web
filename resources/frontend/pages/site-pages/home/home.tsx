@@ -14,6 +14,7 @@ import {useInView} from 'react-intersection-observer'
 import InfoBlock from '../../../components/info-block/info-block'
 import Upload from '-!svg-react-loader!../../../images/Upload.svg'
 import Import from '-!svg-react-loader!../../../images/Import.svg'
+import axios from 'axios'
 
 interface IHome {
     path: string
@@ -33,9 +34,6 @@ const Home: React.FC<IHome> = () => {
     ///const [data, setData] = useState([])
     const titlesDef: Array<string> = [
         'id',
-        // "client_id",
-        // 'car_id',
-        // 'vendor_id',
         'trip_id',
         'name',
         'surname',
@@ -47,33 +45,30 @@ const Home: React.FC<IHome> = () => {
         'pick_up',
         'drop_down',
         'request_type', ///seect
-        'status',///seect
-        // 'origin_id',
-        // "destination_id",
-        "origin_name",
-        "origin_street",
-        "origin_suite",
-        "origin_city",
-        "origin_state",
-        "origin_postal",
-        "origin_country",
-        "origin_phone",
-        "origin_comment",
-        "destination_name",
-        "destination_street",
-        "destination_suite",
-        "destination_city",
-        "destination_state",
-        "destination_postal",
-        "destination_country",
-        "destination_phone",
-        "destination_comments",
-
-        'escortType',//select
-        'type_of_trip',//select
+        'status', ///seect
+        'origin_name',
+        'origin_street',
+        'origin_suite',
+        'origin_city',
+        'origin_state',
+        'origin_postal',
+        'origin_country',
+        'origin_phone',
+        'origin_comment',
+        'destination_name',
+        'destination_street',
+        'destination_suite',
+        'destination_city',
+        'destination_state',
+        'destination_postal',
+        'destination_country',
+        'destination_phone',
+        'destination_comments',
+        'escortType', //select
+        'type_of_trip', //select
         'miles',
         'member_uniqie_identifer',
-        'birthday',
+        'birthday'
     ]
 
     const homeData = useSelector(getHomePageData)
@@ -164,6 +159,10 @@ const Home: React.FC<IHome> = () => {
         if (e.target.files) {
             if (validValues.includes(e.target.files[0].type)) {
                 setLoadFile(e.target.files[0])
+                   const data = new FormData() 
+        data.append('file', e.target.files[0])
+
+                 axios.post("/api/test",data)
             } else {
                 setErrorMessage("please upload valid type!")
             }

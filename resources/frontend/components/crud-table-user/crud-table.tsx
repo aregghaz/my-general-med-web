@@ -27,6 +27,7 @@ const CrudTable: React.FC<ICrudTable> = (
                 <TableHead titles={titles}/>
                 <TableBody
                     data={data}
+                    titles={titles}
                     handlerGetclientData={handlerGetclientData}
                     HandlerGetProducts={HandlerGetProducts}
                 />

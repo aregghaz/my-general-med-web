@@ -6,9 +6,11 @@ import EditIcon from '-!svg-react-loader!../../../images/edit.svg'
 import OrdersIcon from '-!svg-react-loader!../../../images/my-orders.svg'
 import s from '../crud-table.module.scss'
 import {IClientsData} from '../../../types/home-types'
+import { IOption } from '../../select/select'
 
 interface ITableBody {
     data: Array<any>
+    titles:Array<IOption>
     HandlerGetProducts?: (id: number) => void
     handlerGetclientData?: (data: number) => void
 }
@@ -16,6 +18,7 @@ interface ITableBody {
 const TableBody: React.FC<ITableBody> = (
     {
         data,
+        titles,
         handlerGetclientData
     }) => {
 
@@ -25,12 +28,14 @@ const TableBody: React.FC<ITableBody> = (
             data
                 .map((item, index) => {
                     const keys = Object.keys(item)
-                
+                    const calue:Array<string>  = Object.keys(item)
                     return  keys.length > 0 && (
                         <TableRow key={index} data-rowid={item['id']}>
                             {keys
-                                .map((key: React.Key, index: number) => {
-                                        return  index !== 0 &&  (
+                                .map((key: any, i: number) => {
+                                    console.log(calue);
+                                    
+                                       return   (titles[i]['slug'] == keys[i]) && index !== 0 &&  (
                                             <TableData key={key} item={item} handlerGetclientData={handlerGetclientData}>
                                                 {item[key]}
                                             </TableData>
