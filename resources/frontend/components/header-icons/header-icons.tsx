@@ -95,11 +95,7 @@ const HeaderIcons: React.FC<IHeaderIcons> = (
                 isShowWeather &&
                 <BackDropWeather handlerCloseBackDrop={handlerCloseBackDrop}/>
             }
-            {/* {
 
-                isBackDropSearch &&
-                <BackDropSearch handlerCloseBackDropSearch={handlerCloseBackDropSearch}/>
-            } */}
             <div className={s.icons}>
                 <div className={s.user}>
                     {

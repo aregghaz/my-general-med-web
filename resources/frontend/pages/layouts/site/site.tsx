@@ -21,12 +21,14 @@ const Site: React.FC<ISite> = ({children}) => {
     const {loggedIn} = useSelector(getAdminData)
     const {user} = useSelector(getUserData)
     const [isLoading, setLoading] = useState(true);
+    //
+    // useEffect(() => {
+    //     dispatch(checkLoggedIn())
+    // }, [])
 
     useEffect(() => {
         dispatch(checkLoggedIn())
-    }, [])
-
-    useEffect(() => {
+        console.log(loggedIn,'loggedInloggedIn')
         if (loggedIn) {
             if (user && user.role == 'driver') {
                 navigate('/')
@@ -34,6 +36,8 @@ const Site: React.FC<ISite> = ({children}) => {
             if (user && user.role !== 'driver') {
                 setLoading(false)
             }
+        }else {
+            navigate('/login')
         }
     }, [isLoading])
     return (

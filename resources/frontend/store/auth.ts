@@ -101,7 +101,7 @@ export const login = (formData: FormData): ThunkType => {
     return async (dispatch) => {
         try {
             const response = await authAPI.login(formData)
-
+            console.log(response.status, 'response.statusresponse.status')
             if (response.status === 200) {
                 axios.interceptors.request.use(function (config) {
                     config.headers.Authorization = 'Bearer ' + response.data.access_token
@@ -125,6 +125,15 @@ export const login = (formData: FormData): ThunkType => {
 
 export const getUserData = (): ThunkType => async (dispatch) => {
     try {
+
+        const token = localStorage.getItem('access_token') || ''
+
+
+        axios.interceptors.request.use(function (config) {
+            config.headers.Authorization = 'Bearer ' + token
+            return config
+        })
+
         const user = await authAPI.getUser()
         dispatch(actions.setUser(user))
     } catch (e) {
@@ -135,8 +144,8 @@ export const getUserData = (): ThunkType => async (dispatch) => {
 export const setLogOut = () => async (dispatch: Dispatch) => {
     localStorage.removeItem('access_token')
     dispatch(actions.logOut())
-     await authAPI.logout()
- 
+    await authAPI.logout()
+
 }
 
 

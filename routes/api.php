@@ -23,10 +23,11 @@ use App\Http\Controllers\Admin\AdminController;
 
 
 Route::post('/test', [\App\Http\Controllers\TestController::class, 'index']);
-Route::post('/clientData', [HomeController::class, 'clientData']);
+
 Route::group([
     'middleware' => 'auth:api'
 ], function () {
+    Route::post('/clientData', [HomeController::class, 'clientData']);
     Route::resources([
         'home-data' => HomeController::class,
     ]);
@@ -58,6 +59,13 @@ Route::group([
     Route::resources([
         'clients' => ClientsController::class,
         'users'=> UserController::class,
+    ]);
+    Route::resources([
+        ///'home-data' => HomeController::class,
+        'users' => \App\Http\Controllers\UserController::class,
+        'clients' => \App\Http\Controllers\ClientsController::class,
+        'vendors' => \App\Http\Controllers\VendorController::class,
+
     ]);
     Route::get('/changeStatus/{slug}', [AdminController::class, 'changeStatus']);
     Route::get('/changeStatus/{slug}/{id}', [AdminController::class, 'getStatusById']);

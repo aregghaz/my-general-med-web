@@ -34,13 +34,13 @@ const LoginWrapper: React.FC<ILoginWrapper> = () => {
         formData.append('email', values.email)
         formData.append('password', values.password)
         await dispatch(login(formData))
-        
+
         setLoading(true)
     }
 
 
     useEffect(() => {
-        if (localStorage.getItem('access_token')) {
+        if (isLoading) {
             if (user && user.role == 'driver') {
 
                 navigate('/')

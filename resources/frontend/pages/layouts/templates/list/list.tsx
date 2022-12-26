@@ -23,26 +23,10 @@ interface IList {
     last_page?: number
     count?: any
     className?: string
+    tabs?:Array<{id:number, name:string, count?:number,slug?:string}>
 }
 
-const tabs = [
-    {
-        id: 1,
-        name: "drivers",
-    },
-    {
-        id: 2,
-        name: "vendors",
-    },
-    {
-        id: 3,
-        name: "operators",
-    },
-    {
-        id: 4,
-        name: "admin",
-    },
-]
+
 
 const List: React.FC<IList> = (
     {
@@ -61,6 +45,7 @@ const List: React.FC<IList> = (
         last_page,
         activeItem,
         count,
+        tabs,
         className,
         paginated
     }) => {
@@ -77,7 +62,7 @@ const List: React.FC<IList> = (
             <div className={s.table_upper_tab_box}>
                 <div className={s.table_upper_tab}>
                     {
-                        tabs.map(tab => (
+                        tabs && tabs.length>0 && tabs.map(tab => (
                             <div
                                 className={s.table_upper_tab_item}
                                 key={tab.id}

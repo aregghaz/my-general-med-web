@@ -30,6 +30,9 @@ const Home: React.FC<IHome> = () => {
     const [ref, inView] = useInView({
         threshold: 0,
     });
+    const [isBackDropSearch, setBackdropSearch] = useState<boolean>(false)
+    const handlerBackDropSearch = () => setBackdropSearch(true)
+    const handlerCloseBackDropSearch = () => setBackdropSearch(false)
     const contentRef = useRef();
     const countRef = useRef(2);
     ///const [data, setData] = useState([])
@@ -97,10 +100,15 @@ const Home: React.FC<IHome> = () => {
         return () => dispatch(actions.resetState())
     }, [])
 
-    const handlerGetclientData = async (id: number) => {
-        const homeData = await homeAPI.getCLientById(id)
-        dispatch(clientAction.fetching({ clientById: homeData.client }))
-        setShow(true)
+    const handlerGetclientData = async (event:any,id: number) => {
+        if (event.ctrlKey || event.shiftKey) {
+            console.debug("Ctrl+click has just happened!",id);
+        }else{
+            const homeData = await homeAPI.getCLientById(id)
+            dispatch(clientAction.fetching({ clientById: homeData.client }))
+            setShow(true)
+        }
+
     }
 
     useEffect(() => {
@@ -125,7 +133,7 @@ const Home: React.FC<IHome> = () => {
     ///FIXME  MISSING TYPE
     const onSerachInput = async (event: {search:string}) => {
   console.log(event,'search');
-  
+
         if (titlesDef.length > 0) {
             const homeData = await homeAPI.getClientData({ titles: titlesDef, showMore: countRef.current, queryData: event.search })
             setDefaultData(homeData.titles)
@@ -169,7 +177,7 @@ const Home: React.FC<IHome> = () => {
 
     return (
         clients && <>
-        
+
             <div className={s.upload_panel}>
                 <div className={s.upload_block}>
                     <label htmlFor="uploadFile">
@@ -187,6 +195,24 @@ const Home: React.FC<IHome> = () => {
                     <label>
                         <Import />
                     </label>
+                </div>
+                <div>
+                    <div>
+                        {
+
+                            isBackDropSearch &&
+                            <BackDropSearch  handlerCloseBackDropSearch={handlerCloseBackDropSearch} handlerSubmit={onSerachInput}/>
+                        }
+
+                        {
+                            !isBackDropSearch &&
+                            <i className={`searchicon-  ${s.search}`}
+                               onClick={handlerBackDropSearch}
+                            />
+                        }
+
+                    </div>
+
                 </div>
             </div>
             {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
@@ -227,10 +253,7 @@ const Home: React.FC<IHome> = () => {
 
                 />
             </div>
-            <div>
-                <BackDropSearch handlerSubmit={onSerachInput} />
-                
-            </div>
+
             <div ref={contentRef} className={s.table_wrapper}>
                 <CrudTable
                     titles={selectedTitle}
