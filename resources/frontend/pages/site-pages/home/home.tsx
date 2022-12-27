@@ -1,21 +1,24 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { Col, Row } from 'react-grid-system'
-import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
-import { actions } from '../../../store/home'
-import { clientAction } from '../../../store/client'
-import { getClientData, getHomePageData } from '../../../store/selectors'
-import { homeAPI } from "../../../api/site-api/home-api";
+import React, {useEffect, useState, useRef} from 'react'
+import {Col, Row} from 'react-grid-system'
+import {useTranslation} from 'react-i18next'
+import {useDispatch, useSelector} from 'react-redux'
+import {actions} from '../../../store/home'
+import {clientAction} from '../../../store/client'
+import {getClientData, getHomePageData} from '../../../store/selectors'
+import {homeAPI} from "../../../api/site-api/home-api";
 import s from './home.module.scss'
 import CrudTable from '../../../components/crud-table-user/crud-table'
 import Input from '../../../components/input/input'
-import Select, { IOption } from '../../../components/select/select'
-import { useInView } from 'react-intersection-observer'
+import Select, {IOption} from '../../../components/select/select'
+import {useInView} from 'react-intersection-observer'
 import InfoBlock from '../../../components/info-block/info-block'
 import Upload from '-!svg-react-loader!../../../images/Upload.svg'
 import Import from '-!svg-react-loader!../../../images/Import.svg'
+import Search from '-!svg-react-loader!../../../images/Search.svg'
+import Close from '-!svg-react-loader!../../../images/Close.svg'
 import axios from 'axios'
 import BackDropSearch from '../../../components/backdrop-search/backdrop-search'
+import Button from "../../../components/button/button";
 
 interface IHome {
     path: string
@@ -27,6 +30,7 @@ const Home: React.FC<IHome> = () => {
     const [loadFile, setLoadFile] = useState<any>(null)
     const [errorMessage, setErrorMessage] = useState<string>("")
     const [query, setQuery] = useState('')
+    const [open, setOpen] = useState<boolean>(false)
     const [ref, inView] = useInView({
         threshold: 0,
     });
@@ -75,17 +79,21 @@ const Home: React.FC<IHome> = () => {
         'birthday'
     ]
 
+    const openSearch = () => {
+        setOpen(!open)
+    }
+
     const homeData = useSelector(getHomePageData)
     const clientData = useSelector(getClientData)
     const dispatch = useDispatch()
 
-    const { selectedTitle, clients } = homeData
-    const { clientById } = clientData
+    const {selectedTitle, clients} = homeData
+    const {clientById} = clientData
     useEffect(() => {
         (
             async () => {
                 if (titlesDef.length > 0) {
-                    const homeData = await homeAPI.getClientData({ titles: titlesDef, showMore: countRef.current })
+                    const homeData = await homeAPI.getClientData({titles: titlesDef, showMore: countRef.current})
                     setDefaultData(homeData.titles)
                     dispatch(actions.setTitles({
                         titles: homeData.titles,
@@ -97,15 +105,18 @@ const Home: React.FC<IHome> = () => {
         )()
         /*FIXME commented this part avoiding unmount async error*/
         // return async () => await dispatch(actions.resetState())
-        return () => dispatch(actions.resetState())
+        return () => {
+            dispatch(actions.resetState())
+            homeAPI.cancelRequest()
+        }
     }, [])
 
-    const handlerGetclientData = async (event:any,id: number) => {
+    const handlerGetclientData = async (event: any, id: number) => {
         if (event.ctrlKey || event.shiftKey) {
-            console.debug("Ctrl+click has just happened!",id);
-        }else{
+            console.debug("Ctrl+click has just happened!", id);
+        } else {
             const homeData = await homeAPI.getCLientById(id)
-            dispatch(clientAction.fetching({ clientById: homeData.client }))
+            dispatch(clientAction.fetching({clientById: homeData.client}))
             setShow(true)
         }
 
@@ -116,7 +127,7 @@ const Home: React.FC<IHome> = () => {
             if (inView) {
                 let result = selectedTitle.map(a => a.slug);
                 if (result.length > 0) {
-                    const homeData = await homeAPI.getClientData({ titles: result, showMore: countRef.current })
+                    const homeData = await homeAPI.getClientData({titles: result, showMore: countRef.current})
                     setDefaultData(homeData.titles)
                     dispatch(actions.setTitles({
                         titles: homeData.titles,
@@ -131,11 +142,15 @@ const Home: React.FC<IHome> = () => {
         })();
     }, [inView]);
     ///FIXME  MISSING TYPE
-    const onSerachInput = async (event: {search:string}) => {
-  console.log(event,'search');
+    const onSerachInput = async (event: { search: string }) => {
+        console.log(event, 'search');
 
         if (titlesDef.length > 0) {
-            const homeData = await homeAPI.getClientData({ titles: titlesDef, showMore: countRef.current, queryData: event.search })
+            const homeData = await homeAPI.getClientData({
+                titles: titlesDef,
+                showMore: countRef.current,
+                queryData: event.search
+            })
             setDefaultData(homeData.titles)
             dispatch(actions.setTitles({
                 titles: homeData.titles,
@@ -149,7 +164,7 @@ const Home: React.FC<IHome> = () => {
         let result = options.map(a => a.slug);
         if (result.length > 0) {
 
-            const homeData = await homeAPI.getClientData({ titles: result, showMore: countRef.current })
+            const homeData = await homeAPI.getClientData({titles: result, showMore: countRef.current})
             setDefaultData(homeData.titles)
             dispatch(actions.setTitles({
                 selectedTitle: homeData.selectedFields,
@@ -181,45 +196,62 @@ const Home: React.FC<IHome> = () => {
             <div className={s.upload_panel}>
                 <div className={s.upload_block}>
                     <label htmlFor="uploadFile">
-                        <Upload />
+                        <Upload/>
                     </label>
                     <input
                         id="uploadFile"
                         type="file"
                         onChange={fileUploader}
-                        style={{ display: "none" }}
+                        style={{display: "none"}}
                         accept=".xls, .xlsx, .csv"
                     />
                 </div>
                 <div className={s.import_block}>
                     <label>
-                        <Import />
+                        <Import/>
                     </label>
                 </div>
-                <div>
-                    <div>
-                        {
-
-                            isBackDropSearch &&
-                            <BackDropSearch  handlerCloseBackDropSearch={handlerCloseBackDropSearch} handlerSubmit={onSerachInput}/>
-                        }
-
-                        {
-                            !isBackDropSearch &&
-                            <i className={`searchicon-  ${s.search}`}
-                               onClick={handlerBackDropSearch}
-                            />
-                        }
-
-                    </div>
-
+                <div className={s.import_block} onClick={() => {
+                    openSearch()
+                }}>
+                    {open ? <Close/> : <Search/>}
                 </div>
+                <div
+                    className={`${s.header_input_block} ${open ? s.active : s.passive}`}
+                >
+                    {/*<Input name={'search'}*/}
+                    {/*       type={'text'}*/}
+                    {/*    ////FIXME*/}
+                    {/*    //    onBlur={onSerachInput}*/}
+                    {/*/>*/}
+                    <BackDropSearch handlerCloseBackDropSearch={handlerCloseBackDropSearch}
+                                    handlerSubmit={onSerachInput}/>
+                </div>
+                {/*<div>*/}
+                {/*    <div>*/}
+                {/*        {*/}
+
+                {/*            isBackDropSearch &&*/}
+                {/*            <BackDropSearch handlerCloseBackDropSearch={handlerCloseBackDropSearch}*/}
+                {/*                            handlerSubmit={onSerachInput}/>*/}
+                {/*        }*/}
+
+                {/*        {*/}
+                {/*            !isBackDropSearch &&*/}
+                {/*            <i className={`searchicon-  ${s.search}`}*/}
+                {/*               onClick={handlerBackDropSearch}*/}
+                {/*            />*/}
+                {/*        }*/}
+
+                {/*    </div>*/}
+
+                {/*</div>*/}
             </div>
-            {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
+            {errorMessage && <div style={{color: "red"}}>{errorMessage}</div>}
             {
                 show && clientById &&
                 <div>
-                    <InfoBlock clientById={clientById} />
+                    <InfoBlock clientById={clientById}/>
 
                 </div>
             }
@@ -242,13 +274,13 @@ const Home: React.FC<IHome> = () => {
                     name={'filtre'}
                     ///</IOption> label?: string
                     isMulti={true}
-                //</> authCheckboxLabelStyle?: string
-                ///labelStyle?: string
-                //handlerMenuOpen?: () => void
-                ///handlerMenuClose?: () => void
-                ///hideSelectedOptions?: boolean
-                ///isMenuAdd?: boolean,
-                ///handlerAdd?: () => void
+                    //</> authCheckboxLabelStyle?: string
+                    ///labelStyle?: string
+                    //handlerMenuOpen?: () => void
+                    ///handlerMenuClose?: () => void
+                    ///hideSelectedOptions?: boolean
+                    ///isMenuAdd?: boolean,
+                    ///handlerAdd?: () => void
 
 
                 />
@@ -262,7 +294,7 @@ const Home: React.FC<IHome> = () => {
                     className={'pagination'}
                     paginated={false}
                 />
-                <div className={s.detector} ref={ref} />
+                <div className={s.detector} ref={ref}/>
             </div>
 
         </>

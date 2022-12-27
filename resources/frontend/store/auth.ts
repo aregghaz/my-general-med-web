@@ -101,7 +101,7 @@ export const login = (formData: FormData): ThunkType => {
     return async (dispatch) => {
         try {
             const response = await authAPI.login(formData)
-            console.log(response.status, 'response.statusresponse.status')
+
             if (response.status === 200) {
                 axios.interceptors.request.use(function (config) {
                     config.headers.Authorization = 'Bearer ' + response.data.access_token

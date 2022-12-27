@@ -40,9 +40,10 @@ const LoginWrapper: React.FC<ILoginWrapper> = () => {
 
 
     useEffect(() => {
+        console.log(localStorage.getItem('access_token'), "localStorage.getItem('access_token')")
         if (isLoading) {
+            console.log(user, "user")
             if (user && user.role == 'driver') {
-
                 navigate('/')
             }
             if (user && user.role !== 'driver') {

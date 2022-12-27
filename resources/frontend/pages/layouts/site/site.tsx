@@ -16,7 +16,7 @@ interface ISite {
 
 const Site: React.FC<ISite> = ({children}) => {
 
-        const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
     const {loggedIn} = useSelector(getAdminData)
     const {user} = useSelector(getUserData)
@@ -28,7 +28,6 @@ const Site: React.FC<ISite> = ({children}) => {
 
     useEffect(() => {
         dispatch(checkLoggedIn())
-        console.log(loggedIn,'loggedInloggedIn')
         if (loggedIn) {
             if (user && user.role == 'driver') {
                 navigate('/')
@@ -36,10 +35,10 @@ const Site: React.FC<ISite> = ({children}) => {
             if (user && user.role !== 'driver') {
                 setLoading(false)
             }
-        }else {
+        } else {
             navigate('/login')
         }
-    }, [isLoading])
+    }, [isLoading, loggedIn])
     return (
         <Row className={s.mainRow}>
             <DrawerUser/>
