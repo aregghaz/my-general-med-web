@@ -23,26 +23,27 @@ import Button from "../../../components/button/button";
 interface IHome {
     path: string
 }
+
 const tabs = [
     {
         id: 1,
         name: "Trips",
-        count:15
+        count: 15
     },
     {
         id: 2,
         name: "Close Outs",
-        count:45
+        count: 45
     },
     {
         id: 3,
         name: "Download History",
-        count:38
+        count: 38
     },
     {
         id: 4,
         name: "Available Trips",
-        count:72
+        count: 72
     },
 ]
 const Home: React.FC<IHome> = () => {
@@ -53,7 +54,7 @@ const Home: React.FC<IHome> = () => {
     const [query, setQuery] = useState('')
     const [open, setOpen] = useState<boolean>(false)
     const [ref, inView] = useInView({
-        threshold: 0,
+        threshold: 1,
     });
     const [isBackDropSearch, setBackdropSearch] = useState<boolean>(false)
     const handlerBackDropSearch = () => setBackdropSearch(true)
@@ -144,8 +145,9 @@ const Home: React.FC<IHome> = () => {
     }
 
     useEffect(() => {
-        (async () => {
-            if (inView) {
+        if (inView) {
+            (async () => {
+
                 let result = selectedTitle.map(a => a.slug);
                 if (result.length > 0) {
                     const homeData = await homeAPI.getClientData({titles: result, showMore: countRef.current})
@@ -158,9 +160,10 @@ const Home: React.FC<IHome> = () => {
 
                 }
                 countRef.current++;
+            })();
+            console.log(inView, "in view")
+        }
 
-            }
-        })();
     }, [inView]);
     ///FIXME  MISSING TYPE
     const onSerachInput = async (event: { search: string }) => {
@@ -217,7 +220,7 @@ const Home: React.FC<IHome> = () => {
             <div className={s.upload_panel}>
                 <div className={s.table_upper_tab}>
                     {
-                        tabs && tabs.length>0 && tabs.map(tab => (
+                        tabs && tabs.length > 0 && tabs.map(tab => (
                             <div
                                 className={s.table_upper_tab_item}
                                 key={tab.id}
@@ -252,11 +255,11 @@ const Home: React.FC<IHome> = () => {
                 <div
                     className={`${s.header_input_block} ${open ? s.active : s.passive}`}
                 >
-                
+
                     <BackDropSearch handlerCloseBackDropSearch={handlerCloseBackDropSearch}
                                     handlerSubmit={onSerachInput}/>
                 </div>
-    
+
             </div>
             {errorMessage && <div style={{color: "red"}}>{errorMessage}</div>}
             {
