@@ -203,14 +203,14 @@ const Home: React.FC<IHome> = () => {
 
     }
 
-    const fileUploader = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const fileUploader = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const validValues = ["text/csv", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"]
         if (e.target.files) {
             if (validValues.includes(e.target.files[0].type)) {
                 setLoadFile(e.target.files[0])
                 const data = new FormData()
                 data.append('file', e.target.files[0])
-                axios.post("/api/test", data)
+               await  axios.post("/api/test", data)
                 setLoading(true)
             } else {
                 setErrorMessage("please upload valid type!")
