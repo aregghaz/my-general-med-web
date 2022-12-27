@@ -287,11 +287,22 @@ tbody {
 }
 
 
-.actiona_block{
+.actiona_block {
     height: 30px;
     /* width: 100%; */
     display: inline-block;
-    border: 1px solid black;
+    border: 1px solid #ddd;
+    border-radius: 5px;
     padding: 5px;
+    cursor: pointer;
+
+    label {
+        cursor: pointer;
+    }
+
+    &:hover {
+        background-color: #165f8d;
+        color: white;
+    }
 }
 

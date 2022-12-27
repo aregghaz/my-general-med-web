@@ -1,145 +1,153 @@
 @import "../../styles/variables";
 
 .root {
-  width: 100%;
-  overflow-x: auto;
-  box-shadow: $adminBoxShadow;
+    width: 100%;
+    overflow-x: auto;
+    box-shadow: $adminBoxShadow;
 
-  &.altUsage {
-    display: table;
-  }
+    &.altUsage {
+        display: table;
+    }
 }
 
 .detector {
-  width: 1px;
-  height: 1px;
+    width: 1px;
+    height: 1px;
 }
 
 .table {
-  table-layout: fixed;
-  border-collapse: collapse;
-  min-width: 100%;
-  //display: grid;
-  min-height: 500px;
+    table-layout: fixed;
+    border-collapse: collapse;
+    min-width: 100%;
+    //display: grid;
+    min-height: 500px;
 }
 
 .tableHead {
-  display: table-header-group;
+    display: table-header-group;
 }
 
 .tableBody {
-  display: table-row-group;
+    display: table-row-group;
 }
 
 
 .tableFooter {
-  display: table-footer-group;
+    display: table-footer-group;
 
 }
 
 .iconsWrapper {
-  display: flex;
-  flex-direction: row;
+    display: flex;
+    flex-direction: row;
 
-  .editIcon {
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
+    .editIcon {
+        width: 25px;
+        height: 25px;
+        cursor: pointer;
 
-  }
+    }
 
-  .trashIcon {
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-  }
+    .trashIcon {
+        width: 25px;
+        height: 25px;
+        cursor: pointer;
+    }
 
 }
 
 .tableRow {
-  color: inherit;
-  display: table-row;
-  outline: 0;
-  vertical-align: middle;
+    color: inherit;
+    display: table-row;
+    outline: 0;
+    vertical-align: middle;
 }
 
 .tableTd {
-  display: table-cell;
-  padding: 9px;
-  text-align: center;
-  border: 1px solid #e0e0e0;
-  font-weight: 400;
-  vertical-align: inherit;
-  background: $tdBgColor;
-  color: $thTextColor;
-  //FIXME: Fix for large sizes & no support for vw
-  font-size: min(max(16px, 1vw), 19px);
-  @media only screen and (max-width: $mediumDisplay) {
-    font-size: min(max(12px, 1vw), 19px);
-  }
-  @media only screen and (max-width: $smallDisplay) {
-    font-size: min(max(10px, 1vw), 19px);
-  }
+    display: table-cell;
+    padding: 9px;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+    font-weight: 400;
+    vertical-align: inherit;
+    //background: $tdBgColor;
+    color: $thTextColor;
+    //FIXME: Fix for large sizes & no support for vw
+    font-size: min(max(16px, 1vw), 19px);
+    @media only screen and (max-width: $mediumDisplay) {
+        font-size: min(max(12px, 1vw), 19px);
+    }
+    @media only screen and (max-width: $smallDisplay) {
+        font-size: min(max(10px, 1vw), 19px);
+    }
 
-  &.searchable {
-    padding-bottom: 0;
-    padding-right: 0;
-    padding-left: 0;
-  }
+    &.searchable {
+        padding-bottom: 0;
+        padding-right: 0;
+        padding-left: 0;
+    }
 }
 
 .img {
-  width: 100px;
-  height: 100px;
+    width: 100px;
+    height: 100px;
 }
 
 .tableTh {
-  z-index: 2;
-  background-color: $thBgColor;
-  font-weight: bold;
-  //FIXME: Fix for large sizes & no support for vw
-  white-space: nowrap;
-  font-size: min(max(16px, 1vw), 25px);
-  @media only screen and (max-width: $mediumDisplay) {
-    font-size: min(max(12px, 1vw), 25px);
-  }
-  @media only screen and (max-width: $smallDisplay) {
-    font-size: min(max(10px, 1vw), 25px);
-  }
+    z-index: 2;
+    background-color: $thBgColor;
+    font-weight: bold;
+    //FIXME: Fix for large sizes & no support for vw
+    white-space: nowrap;
+    font-size: min(max(16px, 1vw), 25px);
+    @media only screen and (max-width: $mediumDisplay) {
+        font-size: min(max(12px, 1vw), 25px);
+    }
+    @media only screen and (max-width: $smallDisplay) {
+        font-size: min(max(10px, 1vw), 25px);
+    }
 
-  &:first-of-type {
-    // number column
-    width: 40px;
-  }
+    &:first-of-type {
+        // number column
+        width: 40px;
+    }
 }
 
 .inputWrapper {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
 .tableHeadText {
-  font-weight: normal;
-  color: $thTextColor;
-  margin: auto;
-  font-size: 15px;
-  line-height: 22px;
-  max-height: 58px;
-  padding: 0 6px;
+    font-weight: normal;
+    color: $thTextColor;
+    margin: auto;
+    font-size: 15px;
+    line-height: 22px;
+    max-height: 58px;
+    padding: 0 6px;
 }
 
 .tableHeadBlock {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 :global {
-  svg[focusable=false] {
-    width: 20px;
-    height: 20px;
-  }
+    svg[focusable=false] {
+        width: 20px;
+        height: 20px;
+    }
 }
 
 .row {
-  background-color: $tdBgColor;
+    background-color: $tdBgColor;
+}
+
+.poxos {
+    background-color: lightblue;
+}
+
+.petros {
+    //background-color: green;
 }

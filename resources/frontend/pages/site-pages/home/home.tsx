@@ -1,16 +1,16 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { Col, Row } from 'react-grid-system'
-import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
-import { actions } from '../../../store/home'
-import { clientAction } from '../../../store/client'
-import { getClientData, getHomePageData } from '../../../store/selectors'
-import { homeAPI } from "../../../api/site-api/home-api";
+import React, {useEffect, useState, useRef} from 'react'
+import {Col, Row} from 'react-grid-system'
+import {useTranslation} from 'react-i18next'
+import {useDispatch, useSelector} from 'react-redux'
+import {actions} from '../../../store/home'
+import {clientAction} from '../../../store/client'
+import {getClientData, getHomePageData} from '../../../store/selectors'
+import {homeAPI} from "../../../api/site-api/home-api";
 import s from './home.module.scss'
 import CrudTable from '../../../components/crud-table-user/crud-table'
 import Input from '../../../components/input/input'
-import Select, { IOption } from '../../../components/select/select'
-import { useInView } from 'react-intersection-observer'
+import Select, {IOption} from '../../../components/select/select'
+import {useInView} from 'react-intersection-observer'
 import InfoBlock from '../../../components/info-block/info-block'
 import Upload from '-!svg-react-loader!../../../images/Upload.svg'
 import Import from '-!svg-react-loader!../../../images/Import.svg'
@@ -46,8 +46,8 @@ const Home: React.FC<IHome> = () => {
     const clientData = useSelector(getClientData)
     const dispatch = useDispatch()
 
-    const { selectedTitle, clients, tripCount, availableCount } = homeData
-    const { clientById } = clientData
+    const {selectedTitle, clients, tripCount, availableCount} = homeData
+    const {clientById} = clientData
 
     const tabs = [
         {
@@ -120,7 +120,11 @@ const Home: React.FC<IHome> = () => {
         (
             async () => {
                 if (titles.length > 0) {
-                    const homeData = await homeAPI.getClientData({ titles: titles, showMore: countRef.current, typeId: typeId })
+                    const homeData = await homeAPI.getClientData({
+                        titles: titles,
+                        showMore: countRef.current,
+                        typeId: typeId
+                    })
                     setDefaultData(homeData.titles)
                     dispatch(actions.setTitles({
                         titles: homeData.titles,
@@ -151,21 +155,30 @@ const Home: React.FC<IHome> = () => {
             console.debug("Ctrl+click has just happened!", id);
         } else {
             const homeData = await homeAPI.getCLientById(id)
-            dispatch(clientAction.fetching({ clientById: homeData.client }))
+            dispatch(clientAction.fetching({clientById: homeData.client}))
             setShow(true)
         }
 
     }
 
-    
+    // @ts-ignore
+    // let newIds = ids.length > 0 ? [...new Set(ids)] : ids
+    // console.log(newIds, "newIdsnewIds")
+    // console.log(ids, "ids")
+
+
     useEffect(() => {
         (async () => {
             if (inView || loding) {
                 let result = selectedTitle.map(a => a.slug);
-                console.log(result,'resultresult');
-                
+                // console.log(result, 'resultresult');
+
                 if (result.length > 0) {
-                    const homeData = await homeAPI.getClientData({ titles: titles, showMore: countRef.current, typeId: typeId })
+                    const homeData = await homeAPI.getClientData({
+                        titles: titles,
+                        showMore: countRef.current,
+                        typeId: typeId
+                    })
                     setDefaultData(homeData.titles)
                     dispatch(actions.setTitles({
                         titles: homeData.titles,
@@ -177,7 +190,7 @@ const Home: React.FC<IHome> = () => {
                     countRef.current++;
                     setLoading(false)
                 }
-              
+
             }
         })();
     }, [inView, loding]);
@@ -232,9 +245,10 @@ const Home: React.FC<IHome> = () => {
         setTypeId(tabId)
         setLoading(true)
     }
-
+// console.log([...new Set(ids)], "ipipiip")
+    console.log(ids, "ipipiip")
     const handlerActionClient = async (status: number) => {
-        const homeData = await homeAPI.changeClientsTypes({ status, ids})
+        const homeData = await homeAPI.changeClientsTypes({status, ids})
         setLoading(true)
 
 
@@ -249,7 +263,10 @@ const Home: React.FC<IHome> = () => {
                             <div
                                 className={s.table_upper_tab_item}
                                 key={tab.id}
-                                style={typeId == tab.id ? { backgroundColor: '#165f8d', color: "white" } : { backgroundColor: 'white' }}
+                                style={typeId == tab.id ? {
+                                    backgroundColor: '#165f8d',
+                                    color: "white"
+                                } : {backgroundColor: 'white'}}
                                 onClick={() => handlerChangeTabe(tab.id)}
                             >
                                 {tab.name}{tab.count && <span className={s.bage_count}>{tab.count}</span>}
@@ -259,40 +276,40 @@ const Home: React.FC<IHome> = () => {
                 </div>
                 <div className={s.upload_block}>
                     <label htmlFor="uploadFile">
-                        <Upload />
+                        <Upload/>
                     </label>
                     <input
                         id="uploadFile"
                         type="file"
                         onChange={fileUploader}
-                        style={{ display: "none" }}
+                        style={{display: "none"}}
                         accept=".xls, .xlsx, .csv"
                     />
                 </div>
                 <div className={s.import_block}>
                     <label>
-                        <Import />
+                        <Import/>
                     </label>
                 </div>
                 <div className={s.import_block} onClick={() => {
                     openSearch()
                 }}>
-                    {open ? <Close /> : <Search />}
+                    {open ? <Close/> : <Search/>}
                 </div>
                 <div
                     className={`${s.header_input_block} ${open ? s.active : s.passive}`}
                 >
 
                     <BackDropSearch handlerCloseBackDropSearch={handlerCloseBackDropSearch}
-                        handlerSubmit={onSerachInput} />
+                                    handlerSubmit={onSerachInput}/>
                 </div>
 
             </div>
-            {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
+            {errorMessage && <div style={{color: "red"}}>{errorMessage}</div>}
             {
                 show && clientById &&
                 <div>
-                    <InfoBlock clientById={clientById} />
+                    <InfoBlock clientById={clientById}/>
 
                 </div>
             }
@@ -334,8 +351,9 @@ const Home: React.FC<IHome> = () => {
                     handlerGetclientData={handlerGetclientData}
                     className={'pagination'}
                     paginated={false}
+                    selectedIds={ids}
                 />
-                <div className={s.detector} ref={ref} />
+                <div className={s.detector} ref={ref}/>
             </div>
 
         </>

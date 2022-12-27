@@ -16,7 +16,8 @@ const CrudTable: React.FC<ICrudTable> = (
         className,
         HandlerPagination,
         handlerGetclientData,
-        paginated
+        paginated,
+        selectedIds,
     }) => {
 
     return (
@@ -28,6 +29,7 @@ const CrudTable: React.FC<ICrudTable> = (
                     titles={titles}
                     handlerGetclientData={handlerGetclientData}
                     HandlerGetProducts={HandlerGetProducts}
+                    selectedIds={selectedIds}
                 />
 
             </table>
@@ -57,6 +59,7 @@ interface ICrudTable {
     handlerGetclientData?: (event: any, data: number) => void
     HandlerGetProducts?: (id: number) => void
     HandlerPagination?: (event: any, id: number) => void
+    selectedIds: number[]
 
 }
 
