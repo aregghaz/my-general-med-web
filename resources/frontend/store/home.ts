@@ -2,12 +2,13 @@ import {InferActionsTypes} from './store'
 import {ISerialCard} from "../types/serial";
 import {IClientsData} from '../types/home-types';
 import {ICount} from '../types/admin'
-import { ITitle } from '../types/home-types'
-import { IOption } from '../components/select/select';
+import {ITitle} from '../types/home-types'
+import {IOption} from '../components/select/select';
+
 const initialState = {
     titles: [] as Array<IOption>,
-    selectedTitle:[] as Array<IOption>,
-    clients:[] as Array<IClientsData>
+    selectedTitle: [] as Array<IOption>,
+    clients: [] as Array<IClientsData>
 }
 
 type InitialState = typeof initialState
@@ -20,26 +21,26 @@ const homeReducer = (state = initialState, action: Actions): InitialState => {
             return {
                 ...state,
                 titles: [],
-                selectedTitle:[],
-                clients:[]
+                selectedTitle: [],
+                clients: []
             }
         case 'RESET_HOME_PAGE_STATE':
             return {
                 ...state,
-                titles:  [],
-                selectedTitle:[],
-                clients:[]
+                titles: [],
+                selectedTitle: [],
+                clients: []
             }
 
         case 'FILTER_COLUMNS_DATA':
 
-        console.log(action.payload,'action.payloadaction.payload');
-        
+            console.log(action.payload, 'action.payloadaction.payload');
+
             return {
                 ...state,
-              titles: [...action.payload.titles],
-              selectedTitle: [...action.payload.selectedTitle],
-              clients: [...action.payload.clients]
+                titles: [...action.payload.titles],
+                selectedTitle: [...action.payload.selectedTitle],
+                clients: [...action.payload.clients]
             }
 
 
@@ -48,10 +49,10 @@ const homeReducer = (state = initialState, action: Actions): InitialState => {
                 ...state,
                 titles: action.payload.titles,
                 selectedTitle: action.payload.selectedTitle,
-                clients:action.payload.clients
+                clients: action.payload.clients
             }
 
-     
+
         default:
             return state
     }
@@ -60,7 +61,7 @@ const homeReducer = (state = initialState, action: Actions): InitialState => {
 
 
 export const actions = {
-    fetching: (data:InitialState ) => ({type: 'FETCHING_HOME_PAGE_DATA', payload: data} as const),
+    fetching: (data: InitialState) => ({type: 'FETCHING_HOME_PAGE_DATA', payload: data} as const),
     resetState: () => ({type: 'RESET_HOME_PAGE_STATE'} as const),
     filterColumns: (data: InitialState) => ({type: 'FILTER_COLUMNS_DATA', payload: data} as const),
     setTitles: (data: InitialState) => ({type: 'SET_TITLES', payload: data} as const),

@@ -5,7 +5,8 @@ import HomeIcon from '-!svg-react-loader!../../images/home.svg'
 import Account from '-!svg-react-loader!../../images/User.svg'
 import Logout from '-!svg-react-loader!../../images/SignOut.svg'
 import Settings from '-!svg-react-loader!../../images/Settings.svg'
-import Search from '-!svg-react-loader!../../images/Search.svg'
+// import Search from '-!svg-react-loader!../../images/Search.svg'
+// import Close from '-!svg-react-loader!../../images/Close.svg'
 import {useTranslation} from 'react-i18next'
 import {Link, useNavigate} from '@reach/router'
 
@@ -22,14 +23,14 @@ const DrawerUser: React.FC = () => {
     const navigate = useNavigate()
     const handlerLogOut = () => dispatch(setLogOut());
     const [show, setShow] = useState(false)
-    const [open, setOpen] = useState(false)
+    // const [open, setOpen] = useState(false)
     const filterColumns = () => {
         setShow(!show)
         console.log(show)
     }
-    const openSearch = () => {
-        setOpen(!open)
-    }
+    // const openSearch = () => {
+    //     setOpen(!open)
+    // }
     return (
         <>
             <nav className={s.header_nav}>
@@ -47,30 +48,29 @@ const DrawerUser: React.FC = () => {
                         </div>
 
                         <div className={s.header_icons_block}>
-                            <div
-                                className={`${s.header_input_block} ${open ? s.active : s.passive}`}
-                                // style={open ? {height: "30px", minWidth: "500px", overflow: "hidden"} : {
-                                //     height: "30px",
-                                //     width: 0,
-                                //     overflow: "hidden"
-                                // }}
-                            >
-                                <Input name={'search'}
-                                       type={'text'}
-                                    ////FIXME
-                                    //    onBlur={onSerachInput}
-                                />
-                            </div>
-                            <div className={s.iconBlock}>
-                                <Button type={'blank'} onClick={() => {
-                                    openSearch()
-                                    navigate('/')
-                                }}>
-                                <span className={s.icon}>
-                                    <Search/>
-                                </span>
-                                </Button>
-                            </div>
+                            {/*<div*/}
+                            {/*    className={`${s.header_input_block} ${open ? s.active : s.passive}`}*/}
+                            {/*    // style={open ? {height: "30px", minWidth: "500px", overflow: "hidden"} : {*/}
+                            {/*    //     height: "30px",*/}
+                            {/*    //     width: 0,*/}
+                            {/*    //     overflow: "hidden"*/}
+                            {/*    // }}*/}
+                            {/*>*/}
+                            {/*    <Input name={'search'}*/}
+                            {/*           type={'text'}*/}
+                            {/*        ////FIXME*/}
+                            {/*        //    onBlur={onSerachInput}*/}
+                            {/*    />*/}
+                            {/*</div>*/}
+                            {/*<div className={s.iconBlock}>*/}
+                            {/*    <Button type={'blank'} onClick={() => {*/}
+                            {/*        openSearch()*/}
+                            {/*    }}>*/}
+                            {/*    <span className={s.icon}>*/}
+                            {/*        {open ? <Close/> : <Search/>}*/}
+                            {/*    </span>*/}
+                            {/*    </Button>*/}
+                            {/*</div>*/}
                             <div className={s.iconBlock}>
                                 <Button type={'blank'}>
                                 <span className={s.icon}>

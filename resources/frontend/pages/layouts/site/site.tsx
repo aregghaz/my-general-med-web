@@ -28,7 +28,6 @@ const Site: React.FC<ISite> = ({children}) => {
 
     useEffect(() => {
         dispatch(checkLoggedIn())
-        console.log(loggedIn, 'loggedInloggedIn')
         if (loggedIn) {
             if (user && user.role == 'driver') {
                 navigate('/')
