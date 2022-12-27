@@ -28,6 +28,7 @@ Route::group([
     'middleware' => 'auth:api'
 ], function () {
     Route::post('/clientData', [HomeController::class, 'clientData']);
+    Route::post('/changeClientType', [HomeController::class, 'changeClientType']);
     Route::resources([
         'home-data' => HomeController::class,
     ]);
