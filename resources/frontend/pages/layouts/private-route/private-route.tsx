@@ -25,12 +25,15 @@ const PrivateRoute: React.FC<IPrivateRoute> = ({children}) => {
     useEffect(() => {
         if (loggedIn) {
             if (user && user.role == 'driver') {
-                navigate('/')
+                navigate('/login')
             }
             if (user && user.role !== 'driver') {
                 setLoading(false)
             }
+        }else {
+            navigate('/login')
         }
+
     }, [isLoading])
     return (
         <div className={s.root_wrapper}>

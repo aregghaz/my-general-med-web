@@ -17,7 +17,7 @@ use App\Http\Resources\RegionCollection;
 
 class AuthController extends Controller
 {
-   
+
     public function signup(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -35,7 +35,7 @@ class AuthController extends Controller
         }
         $requestData = $validator->validated();
         $state = json_decode($request->state);
-     
+
         $user = new User([
             'name' => $requestData['name'],
             'surname' => $requestData['surname'],
@@ -122,6 +122,7 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
+
         $request->user()->token()->revoke();
         return response()->json([
             'message' => 'Successfully logged out',
@@ -133,7 +134,7 @@ class AuthController extends Controller
         $data = [];
         $userId = $request->user()->id;
         $user = User::find($userId);
-      
+
         $data = [
             'id' => $user->id,
             'name' => $user->name,

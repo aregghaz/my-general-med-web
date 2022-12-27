@@ -46,7 +46,6 @@ const App = (): JSX.Element => (
                 <SerialItem path="/serials/:slug"/> */}
                 <NotFound default/>
             </Site>
-
             <PrivateRoute path="/admin">
                 <Dashboard path="/"/>
                 <Users path="/users"/>
@@ -58,9 +57,9 @@ const App = (): JSX.Element => (
                 <Vendors path="vendors" />
                 <VendorEdit path='vendors/:id' />
                 <VendorCreate path='vendors/create' />
-                <Status path='status' /> 
-                <StatusCreate path='status/create' />  
-                <StatusEdit path='status/:id' />   
+                <Status path='status' />
+                <StatusCreate path='status/create' />
+                <StatusEdit path='status/:id' />
                 <NotFound default/>
             </PrivateRoute>
 

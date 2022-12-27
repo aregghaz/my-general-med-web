@@ -86,7 +86,24 @@ const Users: React.FC<Beneficiary> = () => {
         setDataID(id)
 
     }
-
+    const tabs = [
+        {
+            id: 1,
+            name: "drivers",
+        },
+        {
+            id: 2,
+            name: "operator",
+        },
+        {
+            id: 3,
+            name: "vendor",
+        },
+        {
+            id: 4,
+            name: "admin",
+        },
+    ]
     const customStyles: ReactModal.Styles = {
         content: {
             position: 'fixed',
@@ -120,6 +137,7 @@ const Users: React.FC<Beneficiary> = () => {
                 paginated={false}
                 isCreate
                 isGetItems
+                tabs={tabs}
                 handlerAddItem={handlerAddBeneficiaryItem}
                 handlerDeleteItem={handlerDeleteModal}
                 handlerEditItem={handlerEditBeneficiaryItem}

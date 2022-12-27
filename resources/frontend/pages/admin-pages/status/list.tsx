@@ -81,6 +81,28 @@ const Status: React.FC<Beneficiary> = () => {
 
     }
 
+    const tabs = [
+        {
+            id: 1,
+            name: "gender",
+        },
+        {
+            id: 2,
+            name: "escortType",
+        },
+        {
+            id: 3,
+            name: "type_of_trip",
+        },
+        {
+            id: 4,
+            name: "request_type",
+        },
+        {
+            id: 5,
+            name: "status",
+        },
+    ]
     const customStyles: ReactModal.Styles = {
         content: {
             position: 'fixed',
@@ -111,6 +133,7 @@ const Status: React.FC<Beneficiary> = () => {
                 titles={titles}
                 isDelete
                 isEdit
+                tabs={tabs}
                 paginated={false}
                 isCreate
                 isGetItems
@@ -124,6 +147,7 @@ const Status: React.FC<Beneficiary> = () => {
                 activeItem={activeItem}
                 className={'pagination'}
             />
+
             <Modal
                 isOpen={isModalOpen !== false}
                 style={customStyles}

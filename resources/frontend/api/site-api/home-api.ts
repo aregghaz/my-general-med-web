@@ -4,7 +4,7 @@ import { IOption } from '../../components/select/select'
 
 interface IClintSendData {
     titles:Array<string>,
-    query?:string,
+    queryData?:string,
     showMore:number
 }
 export const homeAPI = {

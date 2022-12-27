@@ -14,16 +14,20 @@ use App\Models\Gender;
 
 class TestController extends Controller
 {
-  public function index()
+  public function index(Request $request)
   {
     /* open this for local file testing purposes only*/
 
-    $csv_data = file_get_contents(base_path() . '/public/uploads/1.csv');
+  
 
     /// DB::beginTransaction();
 
-    $rows = str_getcsv($csv_data, "\n");
 
+    $path = $request->file('file');
+    $csv_data = file_get_contents($path);
+    /// $data = \Excel::load($path)->get();
+    $rows = str_getcsv($csv_data , "\n");
+    
     $result = array();
     foreach ($rows as $k => $row) {
       if ($k > 0) {
