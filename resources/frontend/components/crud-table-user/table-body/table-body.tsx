@@ -12,7 +12,8 @@ interface ITableBody {
     data: Array<any>
     titles: Array<IOption>
     HandlerGetProducts?: (id: number) => void
-    handlerGetclientData?: (event: any, data: number) => void
+    handlerGetclientData?: (event: any, data: number) => void,
+    selectedIds: number[]
 
 }
 
@@ -20,7 +21,8 @@ const TableBody: React.FC<ITableBody> = (
     {
         data,
         titles,
-        handlerGetclientData
+        handlerGetclientData,
+        selectedIds,
     }) => {
 
     return (
@@ -28,11 +30,13 @@ const TableBody: React.FC<ITableBody> = (
         {
             data
                 .map((item, index) => {
+                    console.log(item['id'], "ooooooooooooooooooooooooooo")
                     const keys = Object.keys(item)
                     return keys.length > 0 && (
-                        <TableRow key={index} data-rowid={item['id']}>
-                            {keys
-                                .map((key: any, i: number) => {
+                        <TableRow key={index} data-rowid={item['id']}
+                                  className={selectedIds.includes(item['id']) ? `${s.poxos}` : `${s.petros}`}>
+                            {
+                                keys.map((key: any, i: number) => {
                                         return i !== 0 && (
                                             <TableData key={key} item={item} handlerGetclientData={handlerGetclientData}>
                                                 {item[key]}
