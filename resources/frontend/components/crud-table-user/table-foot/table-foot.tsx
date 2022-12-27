@@ -14,7 +14,6 @@ const TableFoot: React.FC<IPaginationTypes> =
          handlerChangeItem
      }) => {
         const curentPage = count.from;
-        console.log(count,'countcount');
         const Number = count.from
         const paginationArray:Array<number> = [];
         if(curentPage <= 2){
@@ -29,8 +28,7 @@ const TableFoot: React.FC<IPaginationTypes> =
 
         }
 
-        console.log(paginationArray ,'ssssssssssssss');
-        
+
         //////FIXME LAST PAGE PROBLEM
         return (
 

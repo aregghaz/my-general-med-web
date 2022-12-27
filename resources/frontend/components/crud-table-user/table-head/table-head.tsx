@@ -4,7 +4,7 @@ import TableRow from '../table-row/table-row'
 import s from '../crud-table.module.scss'
 import {useTranslation} from 'react-i18next'
 import {ITitle} from '../../../types/home-types'
-import { IOption } from '../../select/select'
+import {IOption} from '../../select/select'
 
 interface ITableHead {
     titles: Array<IOption>
@@ -19,13 +19,13 @@ const TableHead: React.FC<ITableHead> = (
         rowspan = 1
     }) => {
     const {t} = useTranslation()
-    
+
     return (
         <thead className={s.tableHead}>
         <TableRow>
             {
-               titles && titles
-                    .map((title, index) => index !== 0 &&(
+                titles && titles
+                    .map((title, index) => index !== 0 && (
                             <th
                                 className={` ${s.tableTd} ${s.tableTh}`}
                                 key={index}

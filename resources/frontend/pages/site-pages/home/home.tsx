@@ -35,7 +35,7 @@ const Home: React.FC<IHome> = () => {
     const [loding, setLoading] = useState<boolean>(false)
     const [typeId, setTypeId] = useState<number>(1)
     const [ref, inView] = useInView({
-        threshold: 0,
+        threshold: 1,
     });
     const [isBackDropSearch, setBackdropSearch] = useState<boolean>(false)
     const handlerCloseBackDropSearch = () => setBackdropSearch(false)

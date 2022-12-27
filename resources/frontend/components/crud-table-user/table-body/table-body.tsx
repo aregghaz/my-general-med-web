@@ -6,13 +6,13 @@ import EditIcon from '-!svg-react-loader!../../../images/edit.svg'
 import OrdersIcon from '-!svg-react-loader!../../../images/my-orders.svg'
 import s from '../crud-table.module.scss'
 import {IClientsData} from '../../../types/home-types'
-import { IOption } from '../../select/select'
+import {IOption} from '../../select/select'
 
 interface ITableBody {
     data: Array<any>
-    titles:Array<IOption>
+    titles: Array<IOption>
     HandlerGetProducts?: (id: number) => void
-    handlerGetclientData?: (event:any,data: number) => void
+    handlerGetclientData?: (event: any, data: number) => void
 
 }
 
@@ -29,15 +29,14 @@ const TableBody: React.FC<ITableBody> = (
             data
                 .map((item, index) => {
                     const keys = Object.keys(item)
-                    return  keys.length > 0 && (
+                    return keys.length > 0 && (
                         <TableRow key={index} data-rowid={item['id']}>
                             {keys
                                 .map((key: any, i: number) => {
-                                       return    i !== 0 &&  (
-                                            <TableData key={key} item={item}  handlerGetclientData={handlerGetclientData}>
+                                        return i !== 0 && (
+                                            <TableData key={key} item={item} handlerGetclientData={handlerGetclientData}>
                                                 {item[key]}
                                             </TableData>
-
                                         )
                                     }
                                 )

@@ -48,8 +48,7 @@ const Edit: React.FC<IEdit> = (
                       setFieldValue
                   }) => {
 
-                    console.log(values,'aaaaaaaaaaaaaaaaa');
-                    
+
                     return (
                         <>
                             <form className={s.form}>
