@@ -219,33 +219,11 @@ const Home: React.FC<IHome> = () => {
                 <div
                     className={`${s.header_input_block} ${open ? s.active : s.passive}`}
                 >
-                    {/*<Input name={'search'}*/}
-                    {/*       type={'text'}*/}
-                    {/*    ////FIXME*/}
-                    {/*    //    onBlur={onSerachInput}*/}
-                    {/*/>*/}
+                
                     <BackDropSearch handlerCloseBackDropSearch={handlerCloseBackDropSearch}
                                     handlerSubmit={onSerachInput}/>
                 </div>
-                {/*<div>*/}
-                {/*    <div>*/}
-                {/*        {*/}
-
-                {/*            isBackDropSearch &&*/}
-                {/*            <BackDropSearch handlerCloseBackDropSearch={handlerCloseBackDropSearch}*/}
-                {/*                            handlerSubmit={onSerachInput}/>*/}
-                {/*        }*/}
-
-                {/*        {*/}
-                {/*            !isBackDropSearch &&*/}
-                {/*            <i className={`searchicon-  ${s.search}`}*/}
-                {/*               onClick={handlerBackDropSearch}*/}
-                {/*            />*/}
-                {/*        }*/}
-
-                {/*    </div>*/}
-
-                {/*</div>*/}
+    
             </div>
             {errorMessage && <div style={{color: "red"}}>{errorMessage}</div>}
             {
@@ -260,29 +238,16 @@ const Home: React.FC<IHome> = () => {
             <div className={s.iconBlock}>
                 <Select
                     isSearchable={true}
-                    placeholder={'sssss'}
+                    placeholder={'title'}
                     options={defaultData}
                     onChange={(options: Array<IOption>) => {
                         changeFields(options);
                     }}
-                    //placeholder={'aaaa'}
                     getOptionValue={(option: IOption) => option.value}
                     getOptionLabel={(option: IOption) => option.label}
-                    ///</IOption> getOptionLabel: (option: IOption) => string
-                    ///   getOptionValue: (option: IOption) => string
                     value={selectedTitle}
                     name={'filtre'}
-                    ///</IOption> label?: string
                     isMulti={true}
-                    //</> authCheckboxLabelStyle?: string
-                    ///labelStyle?: string
-                    //handlerMenuOpen?: () => void
-                    ///handlerMenuClose?: () => void
-                    ///hideSelectedOptions?: boolean
-                    ///isMenuAdd?: boolean,
-                    ///handlerAdd?: () => void
-
-
                 />
             </div>
 

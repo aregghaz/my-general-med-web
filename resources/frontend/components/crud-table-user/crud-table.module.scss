@@ -19,6 +19,8 @@
   table-layout: fixed;
   border-collapse: collapse;
   min-width: 100%;
+  display: grid;
+  min-height: 500px;
 }
 
 .tableHead {
