@@ -23,7 +23,7 @@ class Clients extends Model
     //enable this if you want use methods that gets information about creating
     protected $revisionCreationsEnabled = true;
     protected $fillable  =  [
-       // "id",
+       "id",
         'car_id',
         'vendor_id',
         'type_id' ,   

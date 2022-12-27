@@ -30,6 +30,7 @@ const Home: React.FC<IHome> = () => {
     const [loadFile, setLoadFile] = useState<any>(false)
     const [errorMessage, setErrorMessage] = useState<string>("")
     const [query, setQuery] = useState('')
+    const [ids, setIds] = useState([])
     const [open, setOpen] = useState<boolean>(false)
     const [loding, setLoading] = useState<boolean>(false)
     const [typeId, setTypeId] = useState<number>(1)
@@ -37,7 +38,6 @@ const Home: React.FC<IHome> = () => {
         threshold: 1,
     });
     const [isBackDropSearch, setBackdropSearch] = useState<boolean>(false)
-    const handlerBackDropSearch = () => setBackdropSearch(true)
     const handlerCloseBackDropSearch = () => setBackdropSearch(false)
     const contentRef = useRef();
     const countRef = useRef(2);
@@ -56,7 +56,7 @@ const Home: React.FC<IHome> = () => {
             count: tripCount
         },
         {
-            id: 2,
+            id: 4,
             name: "Close Outs",
             // count:45
         },
@@ -66,7 +66,7 @@ const Home: React.FC<IHome> = () => {
             //count:38
         },
         {
-            id: 4,
+            id: 2,
             name: "Available Trips",
             count: availableCount
         },
@@ -142,6 +142,12 @@ const Home: React.FC<IHome> = () => {
 
     const handlerGetclientData = async (event: any, id: number) => {
         if (event.ctrlKey || event.shiftKey) {
+            setIds((state) => {
+                return [
+                    ...state,
+                    id
+                ]
+            })
             console.debug("Ctrl+click has just happened!", id);
         } else {
             const homeData = await homeAPI.getCLientById(id)
@@ -210,7 +216,7 @@ const Home: React.FC<IHome> = () => {
                 setLoadFile(e.target.files[0])
                 const data = new FormData()
                 data.append('file', e.target.files[0])
-               await  axios.post("/api/test", data)
+                await axios.post("/api/test", data)
                 setLoading(true)
             } else {
                 setErrorMessage("please upload valid type!")
@@ -222,6 +228,14 @@ const Home: React.FC<IHome> = () => {
     const handlerChangeTabe = async (tabId: number) => {
         setTypeId(tabId)
         setLoading(true)
+    }
+
+    const handlerActionClient = async (status: number) => {
+        const homeData = await homeAPI.changeClientsTypes({ status, ids})
+
+        setLoading(true)
+
+
     }
     return (
         clients && <>
@@ -297,7 +311,20 @@ const Home: React.FC<IHome> = () => {
                     isMulti={true}
                 />
             </div>
+            <div className={s.upload_panel}>
+                <div className={s.actiona_block} onClick={() => handlerActionClient(1)}>
+                    <label>
+                        Claim Trip
+                    </label>
 
+                </div>
+                <div className={s.actiona_block} onClick={() => handlerActionClient(4)}>
+                    <label>
+                        Cancel Trip
+                    </label>
+
+                </div>
+            </div>
             <div ref={contentRef} className={s.table_wrapper}>
                 <CrudTable
                     titles={selectedTitle}

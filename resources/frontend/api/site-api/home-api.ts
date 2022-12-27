@@ -16,7 +16,13 @@ export const homeAPI = {
     getCLientById(id: number) {
         return axios.get(`/api/home-data/${id}`).then(res => res.data)
     },
-
+    changeClientsTypes(clientTypeChangeData: {status:number, ids:Array<number>}){
+        return axios.post(`/api/changeClientType`, clientTypeChangeData, {
+            cancelToken: new CancelToken(function executor(c) {
+                cancelPost = c;
+            })
+        }).then(res => res.data)
+    },
     getHomePageData(activeItem: number, query: string = '') {
         return axios.get(`/api/home-data?page=${activeItem}&querySearch=${query}`).then(res => res.data)
     },

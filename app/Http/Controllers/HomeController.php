@@ -55,15 +55,15 @@ class HomeController extends Controller
     public function clientData(Request $request)
     {
 
-        
+
         $clientData = new ClientFieldCollection($this->title);
         $showMore = $request->showMore;
         $clientsData = [];
         $selectedFieldsTitle = [];
-        $tripCount =Clients::where(['vendor_id' =>1,'type_id'=> 1])->count();
-        $available =Clients::where(['type_id'=>2])->count();
-       
-        $clients = DB::table('clients')->where(['vendor_id' =>1,'type_id'=> $request->typeId]);
+        $tripCount = Clients::where(['vendor_id' => 1, 'type_id' => 1])->count();
+        $available = Clients::where('type_id', 2)->count();
+
+        $clients = DB::table('clients')->where(['vendor_id' => 1, 'type_id' => $request->typeId]);
         $clientsDataWith = [];
         for ($i = 0; $i < count($request->titles); $i++) {
             $selectedFieldsTitle[] = $request->titles[$i];
@@ -115,17 +115,17 @@ class HomeController extends Controller
         $selectedFields = count($clientsData) > 0 ? $clientsData : $clientData;
         $clients = $clients->select($selectedFields);
         if (isset($request->queryData)) {
-            $queryData = $this->convertQuery($request->queryData, $request->titles,$clients);
+            $queryData = $this->convertQuery($request->queryData, $request->titles, $clients);
         }
-       
+
         $clients =  $clients->take(15 * $showMore)->get();
 
         return response()->json([
             'clients' => $clients,
             'selectedFields' =>  new ClientFieldCollection($selectedFieldsTitle),
             "titles" => new ClientFieldCollection($result),
-            'tripCount'=>$tripCount,
-            'availableCount'=>$available,
+            'tripCount' => $tripCount,
+            'availableCount' => $available,
 
         ], 200);
     }
@@ -194,7 +194,7 @@ class HomeController extends Controller
             )->take(15)->get();
         }
 
-     
+
 
         return response()->json([
             'clients' => new ClientCollection($clients),
@@ -202,18 +202,27 @@ class HomeController extends Controller
             //    "count"=> (Clients::count() / 20)
         ], 200);
     }
+    public function changeClientType(Request $request)
+    {
 
+        $ids = $request->ids;
+        $data = Clients::whereIn('id', $ids)->update(['type_id'=>  $request->status]);
+      //  dd($data);
+       return response()->json([
+        'status' => 200
+    ], 200);
+    }
 
-    protected function convertQuery ($query, $title,$clients){
+    protected function convertQuery($query, $title, $clients)
+    {
         $data = false;
-        for($i = 0; $i < count($title); $i++){
-           if($title[$i] !== 'name' && $title[$i] !== 'id'){
-            $clients = $clients->orWhere($title[$i], 'LIKE', '%' . $query . '%');
-           }
-          
+        for ($i = 0; $i < count($title); $i++) {
+            if ($title[$i] !== 'name' && $title[$i] !== 'id') {
+                $clients = $clients->orWhere($title[$i], 'LIKE', '%' . $query . '%');
+            }
         }
-        
-       /// dd($query, $title);
+
+        /// dd($query, $title);
         return $clients;
     }
 }
