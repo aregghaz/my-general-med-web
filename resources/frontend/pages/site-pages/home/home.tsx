@@ -157,10 +157,13 @@ const Home: React.FC<IHome> = () => {
 
     }
 
+    
     useEffect(() => {
         (async () => {
-            if (inView && loding) {
+            if (inView || loding) {
                 let result = selectedTitle.map(a => a.slug);
+                console.log(result,'resultresult');
+                
                 if (result.length > 0) {
                     const homeData = await homeAPI.getClientData({ titles: titles, showMore: countRef.current, typeId: typeId })
                     setDefaultData(homeData.titles)
@@ -171,10 +174,10 @@ const Home: React.FC<IHome> = () => {
                         tripCount: homeData.tripCount,
                         availableCount: homeData.availableCount
                     }))
-
+                    countRef.current++;
+                    setLoading(false)
                 }
-                countRef.current++;
-                setLoading(false)
+              
             }
         })();
     }, [inView, loding]);
@@ -232,7 +235,6 @@ const Home: React.FC<IHome> = () => {
 
     const handlerActionClient = async (status: number) => {
         const homeData = await homeAPI.changeClientsTypes({ status, ids})
-
         setLoading(true)
 
 
