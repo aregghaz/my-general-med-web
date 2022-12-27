@@ -8,7 +8,10 @@ import {IOption} from '../components/select/select';
 const initialState = {
     titles: [] as Array<IOption>,
     selectedTitle: [] as Array<IOption>,
-    clients: [] as Array<IClientsData>
+    clients: [] as Array<IClientsData>,
+    tripCount:0 as number,
+    availableCount:0 as number
+
 }
 
 type InitialState = typeof initialState
@@ -49,7 +52,9 @@ const homeReducer = (state = initialState, action: Actions): InitialState => {
                 ...state,
                 titles: action.payload.titles,
                 selectedTitle: action.payload.selectedTitle,
-                clients: action.payload.clients
+                clients: action.payload.clients,
+                tripCount:action.payload.tripCount,
+                availableCount:action.payload.availableCount
             }
 
 

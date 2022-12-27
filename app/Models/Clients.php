@@ -25,7 +25,8 @@ class Clients extends Model
     protected $fillable  =  [
        // "id",
         'car_id',
-        'vendor_id',    
+        'vendor_id',
+        'type_id' ,   
         'trip_id',
         'name',
         'surname',
