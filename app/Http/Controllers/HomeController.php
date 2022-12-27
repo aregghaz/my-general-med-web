@@ -60,7 +60,10 @@ class HomeController extends Controller
         $showMore = $request->showMore;
         $clientsData = [];
         $selectedFieldsTitle = [];
-        $clients = DB::table('clients');
+        $tripCount =Clients::where(['vendor_id' =>1,'type_id'=> 1])->count();
+        $available =Clients::where(['type_id'=>2])->count();
+       
+        $clients = DB::table('clients')->where(['vendor_id' =>1,'type_id'=> $request->typeId]);
         $clientsDataWith = [];
         for ($i = 0; $i < count($request->titles); $i++) {
             $selectedFieldsTitle[] = $request->titles[$i];
@@ -120,7 +123,10 @@ class HomeController extends Controller
         return response()->json([
             'clients' => $clients,
             'selectedFields' =>  new ClientFieldCollection($selectedFieldsTitle),
-            "titles" => new ClientFieldCollection($result)
+            "titles" => new ClientFieldCollection($result),
+            'tripCount'=>$tripCount,
+            'availableCount'=>$available,
+
         ], 200);
     }
 

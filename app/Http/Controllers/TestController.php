@@ -18,7 +18,7 @@ class TestController extends Controller
   {
     /* open this for local file testing purposes only*/
 
-  
+
 
     /// DB::beginTransaction();
 
@@ -26,8 +26,8 @@ class TestController extends Controller
     $path = $request->file('file');
     $csv_data = file_get_contents($path);
     /// $data = \Excel::load($path)->get();
-    $rows = str_getcsv($csv_data , "\n");
-    
+    $rows = str_getcsv($csv_data, "\n");
+
     $result = array();
     foreach ($rows as $k => $row) {
       if ($k > 0) {
@@ -112,16 +112,16 @@ class TestController extends Controller
       }
 
       //////Clinet escortType
-      $escortTypeData = Escort::where('name', $data[$escortType])->first();
-      $escortType = 0;
+      $escortTypeData = Escort::where('name', (int)$data[$escortType]  ? 'yes' :"no")->first();
+      $escortTypeId = 0;
       if (isset($escortTypeData)) {
-        $escortType = $escortTypeData->id;
+        $escortTypeId = $escortTypeData->id;
       } else {
         $dataCreate = Escort::create([
-          'name' => $data[$escortType],
-          "slug" => $data[$escortType]
+          'name' => (int)$data[$escortType] ? 'yes' :"no",
+          "slug" => (int)$data[$escortType]  ? 'yes' :"no"
         ]);
-        $escortType = $dataCreate->id;
+        $escortTypeId = $dataCreate->id;
       }
       //   dd($data);
       //////Clinet type_of_trip
@@ -179,9 +179,13 @@ class TestController extends Controller
         $originDataId = $OriginAddressData->id;
       }
       // dd(111111);
+      ///    dd( (int)rand(1,4));
+      // dd(  ['client_id' => (int)rand(1,4)]);
       $clients = Clients::create(
         [
           'vendor_id' => 1,
+          'car_id' => 2,
+          'type_id' => rand(1,4),
           'trip_id' => $data[$trip_id],
           'name' => $data[$name],
           'surname' => $data[$surname],
@@ -196,7 +200,7 @@ class TestController extends Controller
           'status' => $statusId, ///seect
           'origin_id' => $originDataId,
           "destination_id" => $destinetionDataId,
-          'escortType' => $escortType, //select
+          'escortType' => $escortTypeId, //select
           'type_of_trip' => $typeOfTripId, //select
           'origin_comment' => $data[$origin_comment],
           'destination_comments' => $data[$destination_comments],

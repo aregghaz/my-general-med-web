@@ -5,7 +5,8 @@ import {IOption} from '../../components/select/select'
 interface IClintSendData {
     titles: Array<string>,
     queryData?: string,
-    showMore: number
+    showMore: number,
+    typeId:number
 }
 
 const CancelToken = axios.CancelToken

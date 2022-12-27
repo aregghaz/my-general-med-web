@@ -4,6 +4,8 @@ export const getHomePageData = (state: AppStateType) => ({
     titles:state.homeReducer.titles,
     selectedTitle:state.homeReducer.selectedTitle,
     clients: state.homeReducer.clients,
+    availableCount:state.homeReducer.availableCount,
+    tripCount:state.homeReducer.tripCount
 })
 export const getClientData = (state:AppStateType)=>({
     clientById:state.clientReducer.clientById,

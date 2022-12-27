@@ -15,23 +15,23 @@ class CreateClientsTable extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('client_id')->nullable();
             $table->unsignedBigInteger('car_id')->nullable();
             $table->unsignedBigInteger('vendor_id')->nullable();
             $table->string('trip_id');
             $table->string('name');
             $table->string('surname');
-            $table->unsignedBigInteger('gender');
+            $table->tinyInteger('gender');
             $table->string('los');
             $table->string('phone_number');
             $table->string('date_of_service');
             $table->string('appointment_time');
             $table->string('pick_up');
             $table->string('drop_down');
-            $table->unsignedBigInteger('request_type');
-            $table->unsignedBigInteger('status');
-            $table->unsignedBigInteger('escortType');
-            $table->unsignedBigInteger('type_of_trip');
+            $table->tinyInteger('type_id');
+            $table->tinyInteger('request_type');
+            $table->tinyInteger('status');
+            $table->tinyInteger('escortType');
+            $table->tinyInteger('type_of_trip');
             $table->unsignedBigInteger('origin_id');
             $table->unsignedBigInteger('destination_id');
             $table->text('origin_comment')->nullable();

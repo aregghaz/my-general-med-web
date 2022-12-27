@@ -1,16 +1,16 @@
-import React, {useEffect, useState, useRef} from 'react'
-import {Col, Row} from 'react-grid-system'
-import {useTranslation} from 'react-i18next'
-import {useDispatch, useSelector} from 'react-redux'
-import {actions} from '../../../store/home'
-import {clientAction} from '../../../store/client'
-import {getClientData, getHomePageData} from '../../../store/selectors'
-import {homeAPI} from "../../../api/site-api/home-api";
+import React, { useEffect, useState, useRef } from 'react'
+import { Col, Row } from 'react-grid-system'
+import { useTranslation } from 'react-i18next'
+import { useDispatch, useSelector } from 'react-redux'
+import { actions } from '../../../store/home'
+import { clientAction } from '../../../store/client'
+import { getClientData, getHomePageData } from '../../../store/selectors'
+import { homeAPI } from "../../../api/site-api/home-api";
 import s from './home.module.scss'
 import CrudTable from '../../../components/crud-table-user/crud-table'
 import Input from '../../../components/input/input'
-import Select, {IOption} from '../../../components/select/select'
-import {useInView} from 'react-intersection-observer'
+import Select, { IOption } from '../../../components/select/select'
+import { useInView } from 'react-intersection-observer'
 import InfoBlock from '../../../components/info-block/info-block'
 import Upload from '-!svg-react-loader!../../../images/Upload.svg'
 import Import from '-!svg-react-loader!../../../images/Import.svg'
@@ -24,35 +24,15 @@ interface IHome {
     path: string
 }
 
-const tabs = [
-    {
-        id: 1,
-        name: "Trips",
-        count: 15
-    },
-    {
-        id: 2,
-        name: "Close Outs",
-        count: 45
-    },
-    {
-        id: 3,
-        name: "Download History",
-        count: 38
-    },
-    {
-        id: 4,
-        name: "Available Trips",
-        count: 72
-    },
-]
 const Home: React.FC<IHome> = () => {
     const [defaultData, setDefaultData] = useState([])
     const [show, setShow] = useState(false)
-    const [loadFile, setLoadFile] = useState<any>(null)
+    const [loadFile, setLoadFile] = useState<any>(false)
     const [errorMessage, setErrorMessage] = useState<string>("")
     const [query, setQuery] = useState('')
     const [open, setOpen] = useState<boolean>(false)
+    const [loding, setLoading] = useState<boolean>(false)
+    const [typeId, setTypeId] = useState<number>(1)
     const [ref, inView] = useInView({
         threshold: 1,
     });
@@ -62,6 +42,35 @@ const Home: React.FC<IHome> = () => {
     const contentRef = useRef();
     const countRef = useRef(2);
     ///const [data, setData] = useState([])
+    const homeData = useSelector(getHomePageData)
+    const clientData = useSelector(getClientData)
+    const dispatch = useDispatch()
+
+    const { selectedTitle, clients, tripCount, availableCount } = homeData
+    const { clientById } = clientData
+
+    const tabs = [
+        {
+            id: 1,
+            name: "Trips",
+            count: tripCount
+        },
+        {
+            id: 2,
+            name: "Close Outs",
+            // count:45
+        },
+        {
+            id: 3,
+            name: "Download History",
+            //count:38
+        },
+        {
+            id: 4,
+            name: "Available Trips",
+            count: availableCount
+        },
+    ]
     const titlesDef: Array<string> = [
         'id',
         'trip_id',
@@ -100,27 +109,25 @@ const Home: React.FC<IHome> = () => {
         'member_uniqie_identifer',
         'birthday'
     ]
+    const [titles, setTitles] = useState<Array<string>>(titlesDef)
 
     const openSearch = () => {
         setOpen(!open)
     }
 
-    const homeData = useSelector(getHomePageData)
-    const clientData = useSelector(getClientData)
-    const dispatch = useDispatch()
 
-    const {selectedTitle, clients} = homeData
-    const {clientById} = clientData
     useEffect(() => {
         (
             async () => {
-                if (titlesDef.length > 0) {
-                    const homeData = await homeAPI.getClientData({titles: titlesDef, showMore: countRef.current})
+                if (titles.length > 0) {
+                    const homeData = await homeAPI.getClientData({ titles: titles, showMore: countRef.current, typeId: typeId })
                     setDefaultData(homeData.titles)
                     dispatch(actions.setTitles({
                         titles: homeData.titles,
                         selectedTitle: homeData.selectedFields,
-                        clients: homeData.clients
+                        clients: homeData.clients,
+                        tripCount: homeData.tripCount,
+                        availableCount: homeData.availableCount
                     }))
                 }
             }
@@ -138,33 +145,33 @@ const Home: React.FC<IHome> = () => {
             console.debug("Ctrl+click has just happened!", id);
         } else {
             const homeData = await homeAPI.getCLientById(id)
-            dispatch(clientAction.fetching({clientById: homeData.client}))
+            dispatch(clientAction.fetching({ clientById: homeData.client }))
             setShow(true)
         }
 
     }
 
     useEffect(() => {
-        if (inView) {
-            (async () => {
-
+        (async () => {
+            if (inView && loding) {
                 let result = selectedTitle.map(a => a.slug);
                 if (result.length > 0) {
-                    const homeData = await homeAPI.getClientData({titles: result, showMore: countRef.current})
+                    const homeData = await homeAPI.getClientData({ titles: titles, showMore: countRef.current, typeId: typeId })
                     setDefaultData(homeData.titles)
                     dispatch(actions.setTitles({
                         titles: homeData.titles,
                         selectedTitle: homeData.selectedFields,
-                        clients: homeData.clients
+                        clients: homeData.clients,
+                        tripCount: homeData.tripCount,
+                        availableCount: homeData.availableCount
                     }))
 
                 }
                 countRef.current++;
-            })();
-            console.log(inView, "in view")
-        }
-
-    }, [inView]);
+                setLoading(false)
+            }
+        })();
+    }, [inView, loding]);
     ///FIXME  MISSING TYPE
     const onSerachInput = async (event: { search: string }) => {
         console.log(event, 'search');
@@ -173,13 +180,16 @@ const Home: React.FC<IHome> = () => {
             const homeData = await homeAPI.getClientData({
                 titles: titlesDef,
                 showMore: countRef.current,
-                queryData: event.search
+                queryData: event.search,
+                typeId: typeId
             })
             setDefaultData(homeData.titles)
             dispatch(actions.setTitles({
                 titles: homeData.titles,
                 selectedTitle: homeData.selectedFields,
-                clients: homeData.clients
+                clients: homeData.clients,
+                tripCount: homeData.tripCount,
+                availableCount: homeData.availableCount
             }))
         }
     }
@@ -187,26 +197,21 @@ const Home: React.FC<IHome> = () => {
     const changeFields = async (options: Array<IOption>) => {
         let result = options.map(a => a.slug);
         if (result.length > 0) {
-
-            const homeData = await homeAPI.getClientData({titles: result, showMore: countRef.current})
-            setDefaultData(homeData.titles)
-            dispatch(actions.setTitles({
-                selectedTitle: homeData.selectedFields,
-                clients: homeData.clients,
-                titles: homeData.title
-            }))
+            setTitles(result)
+            setLoading(true)
         }
-        return true
+
     }
 
-    const fileUploader = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const fileUploader = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const validValues = ["text/csv", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"]
         if (e.target.files) {
             if (validValues.includes(e.target.files[0].type)) {
                 setLoadFile(e.target.files[0])
                 const data = new FormData()
                 data.append('file', e.target.files[0])
-                axios.post("/api/test", data)
+               await  axios.post("/api/test", data)
+                setLoading(true)
             } else {
                 setErrorMessage("please upload valid type!")
             }
@@ -214,6 +219,10 @@ const Home: React.FC<IHome> = () => {
         }
     }
 
+    const handlerChangeTabe = async (tabId: number) => {
+        setTypeId(tabId)
+        setLoading(true)
+    }
     return (
         clients && <>
 
@@ -224,48 +233,50 @@ const Home: React.FC<IHome> = () => {
                             <div
                                 className={s.table_upper_tab_item}
                                 key={tab.id}
+                                style={typeId == tab.id ? { backgroundColor: '#165f8d', color: "white" } : { backgroundColor: 'white' }}
+                                onClick={() => handlerChangeTabe(tab.id)}
                             >
-                                {tab.name} <span className={s.bage_count}>{tab.count}</span>
+                                {tab.name}{tab.count && <span className={s.bage_count}>{tab.count}</span>}
                             </div>
                         ))
                     }
                 </div>
                 <div className={s.upload_block}>
                     <label htmlFor="uploadFile">
-                        <Upload/>
+                        <Upload />
                     </label>
                     <input
                         id="uploadFile"
                         type="file"
                         onChange={fileUploader}
-                        style={{display: "none"}}
+                        style={{ display: "none" }}
                         accept=".xls, .xlsx, .csv"
                     />
                 </div>
                 <div className={s.import_block}>
                     <label>
-                        <Import/>
+                        <Import />
                     </label>
                 </div>
                 <div className={s.import_block} onClick={() => {
                     openSearch()
                 }}>
-                    {open ? <Close/> : <Search/>}
+                    {open ? <Close /> : <Search />}
                 </div>
                 <div
                     className={`${s.header_input_block} ${open ? s.active : s.passive}`}
                 >
 
                     <BackDropSearch handlerCloseBackDropSearch={handlerCloseBackDropSearch}
-                                    handlerSubmit={onSerachInput}/>
+                        handlerSubmit={onSerachInput} />
                 </div>
 
             </div>
-            {errorMessage && <div style={{color: "red"}}>{errorMessage}</div>}
+            {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
             {
                 show && clientById &&
                 <div>
-                    <InfoBlock clientById={clientById}/>
+                    <InfoBlock clientById={clientById} />
 
                 </div>
             }
@@ -295,7 +306,7 @@ const Home: React.FC<IHome> = () => {
                     className={'pagination'}
                     paginated={false}
                 />
-                <div className={s.detector} ref={ref}/>
+                <div className={s.detector} ref={ref} />
             </div>
 
         </>
