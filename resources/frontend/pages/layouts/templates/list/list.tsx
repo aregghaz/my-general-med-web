@@ -72,15 +72,6 @@ const List: React.FC<IList> = (
                         ))
                     }
                 </div>
-                {/*<div>*/}
-                {/*    <div>create</div>*/}
-                {/*    <div>*/}
-                {/*        <div></div>*/}
-                {/*        <div>*</div>*/}
-                {/*        <div>*</div>*/}
-                {/*        <div>*</div>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
             </div>
             <div className={s.table_wrapper}>
                 <CrudTable

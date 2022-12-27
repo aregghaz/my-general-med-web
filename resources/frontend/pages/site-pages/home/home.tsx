@@ -23,7 +23,28 @@ import Button from "../../../components/button/button";
 interface IHome {
     path: string
 }
-
+const tabs = [
+    {
+        id: 1,
+        name: "Trips",
+        count:15
+    },
+    {
+        id: 2,
+        name: "Close Outs",
+        count:45
+    },
+    {
+        id: 3,
+        name: "Download History",
+        count:38
+    },
+    {
+        id: 4,
+        name: "Available Trips",
+        count:72
+    },
+]
 const Home: React.FC<IHome> = () => {
     const [defaultData, setDefaultData] = useState([])
     const [show, setShow] = useState(false)
@@ -194,6 +215,18 @@ const Home: React.FC<IHome> = () => {
         clients && <>
 
             <div className={s.upload_panel}>
+                <div className={s.table_upper_tab}>
+                    {
+                        tabs && tabs.length>0 && tabs.map(tab => (
+                            <div
+                                className={s.table_upper_tab_item}
+                                key={tab.id}
+                            >
+                                {tab.name} <span className={s.bage_count}>{tab.count}</span>
+                            </div>
+                        ))
+                    }
+                </div>
                 <div className={s.upload_block}>
                     <label htmlFor="uploadFile">
                         <Upload/>

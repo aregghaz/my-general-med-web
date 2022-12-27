@@ -4,6 +4,7 @@
 
 body {
     overflow-x: hidden;
+
     @include themify($themes) {
         background-color: themed('backgroundColor');
     }
@@ -49,6 +50,7 @@ body {
     color: $whiteColor;
     font-size: 27px;
     cursor: pointer;
+
     @media only screen and (max-width: $smallDisplay) {
         font-size: 19px;
     }
@@ -58,6 +60,7 @@ body {
     color: $whiteColor;
     font-size: 30px;
     cursor: pointer;
+
     @media only screen and (max-width: $smallDisplay) {
         font-size: 22px;
     }
@@ -66,6 +69,7 @@ body {
 .instagram {
     font-size: 33px;
     color: $whiteColor;
+
     @media only screen and (max-width: $largeDisplay) {
         font-size: 28px;
     }
@@ -75,6 +79,7 @@ body {
     color: $whiteColor;
     font-size: 25px;
     cursor: pointer;
+
     @media only screen and (max-width: $smallDisplay) {
         font-size: 19px;
     }
@@ -86,10 +91,12 @@ body {
     min-width: 100%;
     position: absolute;
     left: 0;
+
     @media only screen and (max-width: $mediumDisplay) {
         margin-top: 20px;
         right: 0;
     }
+
     @media only screen and (max-width: $smallDisplay) {
         margin-top: 15px;
         right: 0;
@@ -111,9 +118,11 @@ body {
 
     .arrow {
         font-size: 20px;
+
         @include themify($themes) {
             color: themed('backgroundColor');
         }
+
         @media only screen and (max-width: $smallDisplay) {
             font-size: 14px;
         }
@@ -124,6 +133,7 @@ body {
 .rightThin {
     margin-left: 10px;
     font-size: 14px;
+
     // fontello set fixed width element
     &:before {
         width: auto !important;
@@ -170,7 +180,15 @@ body {
     gap: 20px;
 }
 
-.upload_block, .import_block {
+.table_upper_tab {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.upload_block,
+.import_block {
     width: 40px;
     height: 40px;
     border: 1px solid #ddd;
@@ -244,3 +262,26 @@ tbody {
 // table {
 //     width: 100%
 // }
+///////Areg
+
+.table_upper_tab_item {
+    //height: 100px;
+    background: #ffffff;
+    border: 1px solid rgba(162, 162, 162, 0.2);
+    box-shadow: 0 5px 10px 2px rgb(162 162 162 / 20%);
+    border-radius: 5px;
+    position: relative;
+    padding: 20px;
+    width: 32.3%;
+}
+
+.bage_count {
+    color: white;
+    background-color: red;
+    padding: 6px 6px 3px 6px;
+    font-size: 12px;
+    /* border: 85px; */
+    /* width: 50px; */
+    /* min-height: 147px; */
+    border-radius: 10px;
+}
