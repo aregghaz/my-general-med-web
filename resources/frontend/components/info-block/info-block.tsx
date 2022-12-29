@@ -29,63 +29,53 @@ const InfoBlock: FC<IProps> = ({clientById,calculateRoute}) => {
                     newData &&
                     <>
 
-                    <div className={cls.item} >
-                            <span className={cls.b_text}>{t('surname')}: </span>
-                            {newData.surname}
-                        </div>
+                    
                         <div className={cls.item}>
                             <span className={cls.b_text}>{t('name')}: </span>
-                            {newData.name}
+                            {newData.name+' '+newData.surname}
+                        </div>
+                       
+        
+                        <div className={cls.item}>
+                            <span className={cls.b_text}>{t('date_of_service')}: </span>
+                            {newData.date_of_service}
                         </div>
                         <div className={cls.item}>
-                            <span className={cls.b_text}>{t('pick_up_address')}: </span>
-                            {newData.pick_up_address}
+                            <span className={cls.b_text}>{t('appointment_time')}: </span>
+                            {newData.appointment_time}
                         </div>
-
-
-                        <div className={cls.item}>
-                            <span className={cls.b_text}>{t('birthday')}: </span>
-                            {newData.birthday}
-                        </div>
-
-                        {/* <div className={cls.item}>
-                            <span className={cls.b_text}>{t('email')}: </span>
-                            {newData.email}
-                        </div>
-                        <div className={cls.item}>
-                            <span className={cls.b_text}>{t('email')}: </span>
-                            {newData.email}
-                        </div> */}
-                        {/* <div className={cls.item}>
-                            <span className={cls.b_text}>{t('id_number')}: </span>
-                            {newData.id_number}
-                        </div> */}
-                        <div className={cls.item}>
-                            <span className={cls.b_text}>{t('phone_number')}: </span>
-                            {newData.phone_number}
-                        </div>
-                        {/*
-                        <div className={cls.item}>
-                            <span className={cls.b_text}>{t('ccn')}: </span>
-                            {newData.ccn}
-                        </div> */}
                         <div className={cls.item}>
                             <span className={cls.b_text}>{t('pick_up')}: </span>
                             {newData.pick_up}
                         </div>
+                    
                         <div className={cls.item}>
                             <span className={cls.b_text}>{t('drop_down')}: </span>
                             {newData.drop_down}
                         </div>
+                        
+                        <div className={cls.item}>
+                            <span className={cls.b_text}>{t('pick_up_address')}: </span>
+                            {newData.origin.city +' ' +  newData.origin.street +' ' +  newData.origin.suite}
+                  
+                        </div>
+                        <div className={cls.item}>
+                            <span className={cls.b_text}>{t('destination')}: </span>
+                            { newData.destination.city +' ' +  newData.destination.street +' ' +  newData.destination.suite}
+                        </div>
 
                         <div className={cls.item}>
-                            <span className={cls.b_text}>{t('status')}: </span>
-                            {newData.status}
+                            <span className={cls.b_text}>{t('origin_comment')}: </span>
+                            {newData.origin_comment}
+                        </div>
+                        <div className={cls.item}>
+                            <span className={cls.b_text}>{t('destination_comments')}: </span>
+                            {newData.destination_comments}
                         </div>
 
                         <div className={cls.item} onClick={() => calculateRoute(newData)}>
                            
-                          map
+                          Show map
                         </div>
                     </>
                 }

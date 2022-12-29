@@ -183,9 +183,10 @@ const Home: React.FC<IHome> = () => {
     useEffect(() => {
         (
             async () => {
+              const titlesData = localStorage.getItem('titles')
                 if (titles.length > 0) {
                     const homeData = await homeAPI.getClientData({
-                        titles: titles,
+                        titles: titlesData ? JSON.parse(titlesData) : titles,
                         showMore: countRef.current,
                         typeId: typeId
                     })
@@ -238,6 +239,7 @@ const Home: React.FC<IHome> = () => {
                 // console.log(result, 'resultresult');
 
                 if (result.length > 0) {
+                    localStorage.setItem('titles',JSON.stringify(titles))
                     const homeData = await homeAPI.getClientData({
                         titles: titles,
                         showMore: countRef.current,

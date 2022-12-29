@@ -30,15 +30,15 @@ const TableBody: React.FC<ITableBody> = (
         {
             data
                 .map((item, index) => {
-                    console.log(item['id'], "ooooooooooooooooooooooooooo")
                     const keys = Object.keys(item)
                     return keys.length > 0 && (
                         <TableRow key={index} data-rowid={item['id']}
+                           ///FIXME TIKO CHANGE CLASS NAME 
                                   className={selectedIds.includes(item['id']) ? `${s.poxos}` : `${s.petros}`}>
                             {
                                 keys.map((key: any, i: number) => {
                                         return i !== 0 && (
-                                            <TableData key={key} item={item} handlerGetclientData={handlerGetclientData}>
+                                            <TableData key={key} item={item} handlerGetclientData={() =>handlerGetclientData(event,item['id'])}>
                                                 {item[key]}
                                             </TableData>
                                         )

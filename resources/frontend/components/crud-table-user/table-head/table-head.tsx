@@ -25,7 +25,7 @@ const TableHead: React.FC<ITableHead> = (
         <TableRow>
             {
                 titles && titles
-                    .map((title, index) => index !== 0 && (
+                    .map((title, index) =>  (
                             <th
                                 className={` ${s.tableTd} ${s.tableTh}`}
                                 key={index}

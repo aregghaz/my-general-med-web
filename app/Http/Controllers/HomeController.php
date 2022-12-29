@@ -70,7 +70,7 @@ class HomeController extends Controller
             $explodeRelation = explode("_", $request->titles[$i]);
             //////origin_address reletion cheking and add to title 
             if ($explodeRelation[0]  === 'origin') {
-                if (!in_array($explodeRelation[0], $clientsDataWith)) {
+                if (!in_array($explodeRelation[0], $clientsDataWith)and $explodeRelation[1] !== 'comment') {
                     $clientsDataWith[] = $explodeRelation[0];
                     $clients = $clients->join('origin_addresses', 'clients.origin_id', '=', 'origin_addresses.id');
                     $clientsData[] = "origin_addresses." . $explodeRelation[1] . " as origin_" . $explodeRelation[1];
@@ -113,13 +113,16 @@ class HomeController extends Controller
         }
         $result = array_diff($this->title, $selectedFieldsTitle);
         $selectedFields = count($clientsData) > 0 ? $clientsData : $clientData;
+        array_unshift($selectedFields,'clients.id as id');
+   
         $clients = $clients->select($selectedFields);
         if (isset($request->queryData)) {
             $queryData = $this->convertQuery($request->queryData, $request->titles, $clients);
         }
 
         $clients =  $clients->take(15 * $showMore)->get();
-
+     array_shift($selectedFieldsTitle);
+      //   dd($selectedFieldsTitle);
         return response()->json([
             'clients' => $clients,
             'selectedFields' =>  new ClientFieldCollection($selectedFieldsTitle),
