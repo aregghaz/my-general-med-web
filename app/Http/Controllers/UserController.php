@@ -20,10 +20,17 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-
-        $users = User::get();
+        $users = new User;
+        if ($request->input('tabId')) {
+            $users = $users->where('role',$request->input('tabId'));
+        } 
+        // else {
+        //     $users = $users->get();
+        // }
+        $users = $users->get();
+      ///  $users = User::get();
         return response()->json([
             'users' => new UserCollection($users),
             "count" => count($users)

@@ -85,22 +85,27 @@ const Status: React.FC<Beneficiary> = () => {
         {
             id: 1,
             name: "gender",
+            count:0
         },
         {
             id: 2,
             name: "escortType",
+            count:0
         },
         {
             id: 3,
             name: "type_of_trip",
+            count:0
         },
         {
             id: 4,
             name: "request_type",
+            count:0
         },
         {
             id: 5,
             name: "status",
+            count:0
         },
     ]
     const customStyles: ReactModal.Styles = {

@@ -29,7 +29,6 @@ const CrudTable: React.FC<ICrudTable> = (
     return (
         <>
             <table className={s.table}>
-                {/*@ts-ignore*/}
                 <TableHead titles={titles}/>
                 <TableBody
                     data={data}

@@ -24,16 +24,18 @@ const Users: React.FC<Beneficiary> = () => {
     const [deleteId, setDeleteId] = useState(null)
     const [count, setCount] = useState(0)
     const [activeItem, setActiveItem] = useState(null)
-
+    const [tabId, setTabId] = useState(1)
+    const [tabIdSelected, setTabIdSelected] = useState('')
     const [dataID, setDataID] = useState(null)
 
 
     const navigate = useNavigate()
     const {t} = useTranslation()
+
     useEffect(() => {
         (
             async () => {
-                const data = await AdminApi.getAllData(crudKey, 1, '')
+                const data = await AdminApi.getAllData(crudKey, 1, '',tabIdSelected)
                 setData(data.users)
                 setCount(data.users.to)
 
@@ -41,7 +43,7 @@ const Users: React.FC<Beneficiary> = () => {
         )()
         // dispatch(actions.setTitles(titles))
         // dispatch(actions.clearData())
-    }, [])
+    }, [tabIdSelected])
 
 
     const titles: Array<string> = [
@@ -86,22 +88,31 @@ const Users: React.FC<Beneficiary> = () => {
         setDataID(id)
 
     }
+    const handlerChangeTabe = async (tabId: string) => {
+        setTabIdSelected(tabId)
+        // setLoading(true)
+    }
+
     const tabs = [
         {
             id: 1,
-            name: "drivers",
+            name: "driver",
+            count:0
         },
         {
             id: 2,
             name: "operator",
+            count:0
         },
         {
             id: 3,
             name: "vendor",
+            count:0
         },
         {
             id: 4,
             name: "admin",
+            count:0
         },
     ]
     const customStyles: ReactModal.Styles = {
@@ -138,6 +149,7 @@ const Users: React.FC<Beneficiary> = () => {
                 isCreate
                 isGetItems
                 tabs={tabs}
+                tabId={tabId}
                 handlerAddItem={handlerAddBeneficiaryItem}
                 handlerDeleteItem={handlerDeleteModal}
                 handlerEditItem={handlerEditBeneficiaryItem}
@@ -145,6 +157,7 @@ const Users: React.FC<Beneficiary> = () => {
                 HandlerGetProducts={HandlerGetProducts}
                 handlerGetclientData={handlerGetclientData}
                 count={count}
+                handlerChangeTabe={handlerChangeTabe}
                 activeItem={activeItem}
                 className={'pagination'}
             />
