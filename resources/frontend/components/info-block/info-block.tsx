@@ -7,13 +7,16 @@ import cls from './info-block.module.scss'
 interface IProps {
     clientById: any,
     idData?: number,
+    calculateRoute:(newData:any)=>void
 }
 
 
-const InfoBlock: FC<IProps> = ({clientById}) => {
+const InfoBlock: FC<IProps> = ({clientById,calculateRoute}) => {
     /// const infoData: any = items.find(item => item.id === idData);
     const newData = clientById[0]
     const {t} = useTranslation()
+
+
 
     return (
         <div className={cls.block}>
@@ -26,7 +29,7 @@ const InfoBlock: FC<IProps> = ({clientById}) => {
                     newData &&
                     <>
 
-                        <div className={cls.item}>
+                    <div className={cls.item} >
                             <span className={cls.b_text}>{t('surname')}: </span>
                             {newData.surname}
                         </div>
@@ -78,6 +81,11 @@ const InfoBlock: FC<IProps> = ({clientById}) => {
                         <div className={cls.item}>
                             <span className={cls.b_text}>{t('status')}: </span>
                             {newData.status}
+                        </div>
+
+                        <div className={cls.item} onClick={() => calculateRoute(newData)}>
+                           
+                          map
                         </div>
                     </>
                 }

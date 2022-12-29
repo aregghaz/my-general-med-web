@@ -76,6 +76,7 @@
         "typings-for-css-modules-loader": "^1.7.0"
     },
     "dependencies": {
+        "@react-google-maps/api": "^2.17.1",
         "react-iframe": "^1.8.0",
         "react-intersection-observer": "^8.32.0"
     }
