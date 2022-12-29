@@ -58,6 +58,7 @@ const Home: React.FC<IHome> = () => {
     const [loding, setLoading] = useState<boolean>(false)
     const [typeId, setTypeId] = useState<number>(1)
     const [steps, setSteps] = useState<Array<any>>([])
+    const [searching, setSearching] = useState(false)
     const [ref, inView] = useInView({
         threshold: 1,
     });
@@ -234,7 +235,7 @@ const Home: React.FC<IHome> = () => {
 
     useEffect(() => {
         (async () => {
-            if (inView || loding) {
+            if ((inView || loding) && !open) {
                 let result = selectedTitle.map(a => a.slug);
                 // console.log(result, 'resultresult');
 
@@ -273,6 +274,7 @@ const Home: React.FC<IHome> = () => {
                 typeId: typeId
             })
             setDefaultData(homeData.titles)
+            setSearching(true)
             dispatch(actions.setTitles({
                 titles: homeData.titles,
                 selectedTitle: homeData.selectedFields,
@@ -312,8 +314,8 @@ const Home: React.FC<IHome> = () => {
         setTypeId(tabId)
         setLoading(true)
     }
-// console.log([...new Set(ids)], "ipipiip")
-    console.log(ids, "ipipiip")
+
+    
     const handlerActionClient = async (status: number) => {
         const homeData = await homeAPI.changeClientsTypes({status, ids})
         setLoading(true)

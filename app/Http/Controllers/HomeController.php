@@ -55,7 +55,6 @@ class HomeController extends Controller
     public function clientData(Request $request)
     {
 
-
         $clientData = new ClientFieldCollection($this->title);
         $showMore = $request->showMore;
         $clientsData = [];
@@ -64,13 +63,19 @@ class HomeController extends Controller
         $available = Clients::where('type_id', 2)->count();
 
         $clients = DB::table('clients')->where(['vendor_id' => 1, 'type_id' => $request->typeId]);
+        if (isset($request->queryData)) {
+              $this->convertQuery($request->queryData, $request->titles, $clients);
+       
+        }
+
+
         $clientsDataWith = [];
         for ($i = 0; $i < count($request->titles); $i++) {
             $selectedFieldsTitle[] = $request->titles[$i];
             $explodeRelation = explode("_", $request->titles[$i]);
             //////origin_address reletion cheking and add to title 
             if ($explodeRelation[0]  === 'origin') {
-                if (!in_array($explodeRelation[0], $clientsDataWith)and $explodeRelation[1] !== 'comment') {
+                if (!in_array($explodeRelation[0], $clientsDataWith) and $explodeRelation[1] !== 'comment') {
                     $clientsDataWith[] = $explodeRelation[0];
                     $clients = $clients->join('origin_addresses', 'clients.origin_id', '=', 'origin_addresses.id');
                     $clientsData[] = "origin_addresses." . $explodeRelation[1] . " as origin_" . $explodeRelation[1];
@@ -113,16 +118,13 @@ class HomeController extends Controller
         }
         $result = array_diff($this->title, $selectedFieldsTitle);
         $selectedFields = count($clientsData) > 0 ? $clientsData : $clientData;
-        array_unshift($selectedFields,'clients.id as id');
-   
+        array_unshift($selectedFields, 'clients.id as id');
+
         $clients = $clients->select($selectedFields);
-        if (isset($request->queryData)) {
-            $queryData = $this->convertQuery($request->queryData, $request->titles, $clients);
-        }
 
         $clients =  $clients->take(15 * $showMore)->get();
-     array_shift($selectedFieldsTitle);
-      //   dd($selectedFieldsTitle);
+        array_shift($selectedFieldsTitle);
+        //   dd($selectedFieldsTitle);
         return response()->json([
             'clients' => $clients,
             'selectedFields' =>  new ClientFieldCollection($selectedFieldsTitle),
@@ -209,23 +211,34 @@ class HomeController extends Controller
     {
 
         $ids = $request->ids;
-        $data = Clients::whereIn('id', $ids)->update(['type_id'=>  $request->status]);
-      //  dd($data);
-       return response()->json([
-        'status' => 200
-    ], 200);
+        $data = Clients::whereIn('id', $ids)->update(['type_id' =>  $request->status]);
+        //  dd($data);
+        return response()->json([
+            'status' => 200
+        ], 200);
     }
 
-    protected function convertQuery($query, $title, $clients)
+    protected function convertQuery($queryData, $title, $clients)
     {
-        $data = false;
-        for ($i = 0; $i < count($title); $i++) {
-            if ($title[$i] !== 'name' && $title[$i] !== 'id') {
-                $clients = $clients->orWhere($title[$i], 'LIKE', '%' . $query . '%');
-            }
-        }
 
-        /// dd($query, $title);
+        $clients = $clients->where(function ($query) use ($title, $queryData) {
+            // $clients =  $this->convertQuery($request->queryData, $request->titles, $clients);
+
+            for ($i = 0; $i < count($title); $i++) {
+                if ($title[$i] !== 'name' && $title[$i] !== 'id') {
+                    $explodeRelation = explode("_", $title[$i]);
+                    //////origin_address reletion cheking and add to title 
+///FIIME THIS PART
+                    if (($explodeRelation[0] === 'origin' || $explodeRelation[0] === 'destination') and $explodeRelation[1] !== 'comment') {
+                        //   $clients = $clients->orWhere($explodeRelation[1], 'LIKE', '%' . $query . '%');
+                    } else {
+
+                         $query->orWhere($title[$i], 'LIKE', '%' . $queryData . '%');
+                    }
+                }
+            }
+        });
         return $clients;
     }
+    
 }
