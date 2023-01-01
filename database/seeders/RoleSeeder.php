@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\Role;
 class RoleSeeder extends Seeder
 {
     /**
@@ -13,6 +14,7 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
+        Role::truncate();
         $roles= ['user','admin', 'vendor', 'driver', 'operator'];
             foreach($roles as $role){
                 DB::table('roles')->insert([

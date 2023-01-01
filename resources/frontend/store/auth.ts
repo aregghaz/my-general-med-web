@@ -67,10 +67,6 @@ export const checkLoggedIn = (): ThunkType => async (dispatch) => {
         const token = localStorage.getItem('access_token') || ''
         if (token) {
             dispatch(actions.setLoggedIn(token))
-            axios.interceptors.request.use(function (config) {
-                config.headers.Authorization = 'Bearer ' + token
-                return config
-            })
             await dispatch(getUserData())
         }
     } catch (e) {
@@ -83,10 +79,6 @@ export const checkAdminLoggedIn = (): ThunkType => async (dispatch) => {
         const token = localStorage.getItem('access_token') || ''
         if (token) {
             dispatch(actions.setLoggedIn(token))
-            axios.interceptors.request.use(function (config) {
-                config.headers.Authorization = 'Bearer ' + token
-                return config
-            })
             await dispatch(getUserData())
         } else {
             return navigate('/login')
@@ -102,16 +94,21 @@ export const login = (formData: FormData): ThunkType => {
         try {
             const response = await authAPI.login(formData)
 
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access_token
+
             if (response.status === 200) {
-                axios.interceptors.request.use(function (config) {
-                    config.headers.Authorization = 'Bearer ' + response.data.access_token
-                    return config
-                })
                 if (response.data) {
                     dispatch(actions.setLoggedIn(response.data.access_token))
                     localStorage.setItem('access_token', response.data.access_token)
 
-                    await dispatch(getUserData())
+                    try {
+                        console.log(response.data.access_token, '111')
+                        const user = await authAPI.getUser()
+                        dispatch(actions.setUser(user))
+                    } catch (e) {
+                        console.error(e)
+                    }
+                    ///  await dispatch(getUserData())
                 }
             }
         } catch (e) {
@@ -125,15 +122,6 @@ export const login = (formData: FormData): ThunkType => {
 
 export const getUserData = (): ThunkType => async (dispatch) => {
     try {
-
-        const token = localStorage.getItem('access_token') || ''
-
-
-        axios.interceptors.request.use(function (config) {
-            config.headers.Authorization = 'Bearer ' + token
-            return config
-        })
-
         const user = await authAPI.getUser()
         dispatch(actions.setUser(user))
     } catch (e) {

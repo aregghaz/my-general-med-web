@@ -16,8 +16,9 @@ class StatusSeeder extends Seeder
     {
         $status= ['active','disabled', 'blocked'];
                 foreach($status as $item){
-                 DB::table('status')->insert([
+                 DB::table('client_statuses')->insert([
                 'name' =>$item,
+                'slug' =>$item,
                 ]);
          }
     }

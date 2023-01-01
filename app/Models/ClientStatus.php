@@ -20,4 +20,5 @@ class ClientStatus extends Model
         'id',
         'name',
         'slug'
-    ];}
+    ];
+}

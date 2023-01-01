@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
+use App\Models\User;
 
 class UserSeeder extends Seeder
 {
@@ -13,6 +14,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        User::truncate();
         DB::table('users')->insert([
             'name' => 'admin',
             'surname' => 'admin',

@@ -1,10 +1,5 @@
 import axios from 'axios'
 
-const token = localStorage.getItem('access_token') || ''
-axios.interceptors.request.use(function (config) {
-    config.headers.Authorization = 'Bearer ' + token
-    return config
-})
 export const authAPI = {
 
     register(formData: FormData) {

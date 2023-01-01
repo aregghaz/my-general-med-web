@@ -40,7 +40,7 @@ const LoginWrapper: React.FC<ILoginWrapper> = () => {
 
 
     useEffect(() => {
-        if (isLoading) {
+        if (user) {
             if (user && user.role == 'driver') {
                 navigate('/')
             }
@@ -52,7 +52,7 @@ const LoginWrapper: React.FC<ILoginWrapper> = () => {
             navigate('/login')
         }
 
-    }, [isLoading])
+    }, [user])
     return (
         <div className={s.login}>
             <Formik
