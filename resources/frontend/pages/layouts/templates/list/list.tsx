@@ -66,6 +66,7 @@ const List: React.FC<IList> = (
             <div className={s.table_upper_tab_box}>
                 <div className={s.table_upper_tab}>
                     {
+
                         tabs && tabs.length>0 && tabs.map(tab => (
                             <div
                             className={s.table_upper_tab_item}

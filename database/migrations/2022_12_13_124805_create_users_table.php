@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             // $table->unsignedBigInteger('state_id');
             $table->string('address');
             $table->date('birthday')->nullable();
-            $table->enum('role',['user','admin','vendor','driver','operator'])->default('user');
+            $table->unsignedBigInteger('role_id');
             $table->timestamps();
         });
     }
