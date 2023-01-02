@@ -47,8 +47,8 @@ const menuItemsFirst = [
     },
     {
         Icon: <Actions/>,
-        item: 'actions',
-        page: '/admin'
+        item: 'vendors',
+        page: '/admin/vendors'
     },
 ]
 

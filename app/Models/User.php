@@ -25,8 +25,15 @@ class User extends Authenticatable
         'phone_number',
         'password',
         'role_id',
-        'state_id',
         'address',
         'birthday',
     ];
+    public function role()
+    {
+        return $this->hasOne(Role::class, 'id', 'role_id');
+    }
+    public function fields()
+    {
+        return $this->BelongsToMany('App\Models\ClientTable', 'user_fields', 'user_id', 'field_id');
+    }
 }

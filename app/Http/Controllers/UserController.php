@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserCollection;
 use App\Models\Role;
+use App\Models\ClientStatus;
 use App\Models\Status;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\UserRequest;
@@ -20,20 +21,23 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    protected function getRole($id){
+
+    }
     public function index(Request $request)
     {
         $users = new User;
         if ($request->input('tabId')) {
-            $users = $users->where('role',$request->input('tabId'));
+            $users = $users->where('role_id',$request->input('tabId'));
         } 
-        // else {
-        //     $users = $users->get();
-        // }
+        $roles = Role::withCount('users')->get();
+    
         $users = $users->get();
       ///  $users = User::get();
         return response()->json([
-            'users' => new UserCollection($users),
-            "count" => count($users)
+            'data' => new UserCollection($users),
+            'roles' => new RoleCollection($roles),
+
         ], 200);
     }
 
@@ -45,7 +49,7 @@ class UserController extends Controller
     public function create()
     {
         $role = Role::get();
-        $status = DB::table('status')->get();
+        $status =ClientStatus::get();
         return response()->json([
             "role" => new RoleCollection($role),
             'status' => new StatusCollection($status)

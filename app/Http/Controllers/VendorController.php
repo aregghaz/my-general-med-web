@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\VendorRequest;
 use App\Models\Vendor;
 use App\Models\User;
+use App\Models\ClientTable;
+use App\Models\ClientStatus;
 use Illuminate\Http\Request;
 use App\Http\Resources\VendorsCollection;
 
@@ -26,22 +28,18 @@ class VendorController extends Controller
         if (isset($request->querySearch)) {
 
 
-            $vendorData = Vendor::where('client_id', 'LIKE', '%' . $request->querySearch . '%')->orWhere('driver_id', 'LIKE', '%' . $request->querySearch . '%')->paginate(20);
+            $vendorData = User::where('role_id',2)->get();
 
         } else {
 
 
-            $vendorData = Vendor::paginate(20);
+            $vendorData = User::where('role_id',2)->get();
 
 
         }
 
 
         return response()->json([
-            "current_page" => $vendorData->toArray()['current_page'],
-            "last_page" => $vendorData->toArray()['last_page'],
-            "to" => 5,
-            "total" => $vendorData->toArray()['total'],
             'vendors' => new VendorsCollection($vendorData),
         ], 200);
     }
@@ -53,11 +51,12 @@ class VendorController extends Controller
      */
     public function create()
     {
-        $status = DB::table('status')->get();
+        $clientTable = ClientTable::get();
         $users = User::get();
+        $status = ClientStatus::get();
         return response()->json([
-            'users' => new StatusCollection($users),
-            'status' => new StatusCollection($status)
+            'status' => new StatusCollection($status),
+            'fields' => new StatusCollection($clientTable)
         ], 200);
     }
 
@@ -70,31 +69,39 @@ class VendorController extends Controller
      */
     public function store(Request $request)
     {
-
         $validator = Validator::make((array)json_decode($request->value), [
-            'name' => 'required|string',
+            'companyName' => 'required|string',
             'phone_number' => 'required|string',
             'email' => 'required|string|email|unique:vendors',
+            'password' => 'string',
+            'status' => 'required',
             'address' => 'string',
-//            'role' =>'string',
-            // 'address' => 'string',
-
+            'fields' => 'required',
         ]);
+        if ($validator->fails()) {
+            return response()->json(['success' => 0, 'type' => 'validation_filed', 'error' => $validator->messages()], 422);
+        }
+       
         $requestData = $validator->validated();
-        // $state = json_decode($request->state);
-
-        $vendor = new Vendor([
-            'name' => $requestData['name'],
+       
+        $vendor = new User([
+            'name' => $requestData['companyName'],
             'phone_number' => $requestData['phone_number'],
             'email' => $requestData['email'],
             'status' => json_decode($request->value)->status->id,
             'address' => $requestData['address'],
+            'password' =>  bcrypt($requestData['password']),
+            'role_id' => 2,
         ]);
         if (!$vendor->save()) {
             return response()->json([
                 'success' => '0',
                 'type' => 'forbidden',
             ], 200);
+        }else{
+            $idCats = array_column($requestData['fields'], 'id');
+        
+            $vendor->fields()->sync( $idCats);
         }
         return response()->json([
             'success' => '1',

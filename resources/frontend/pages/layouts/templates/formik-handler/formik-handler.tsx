@@ -81,13 +81,15 @@ const FormikHandler: React.FC<IFormikHandler> = (
                 />
             )
         case 'select':
-            console.log(values[item.name])
+            console.log(selectOptions,item,'111')
             return (
                 <Select
                     value={values[item.name]}
                     getOptionValue={(option: IOption) => option.value}
                     getOptionLabel={(option: IOption) => option.label}
-                    options={selectOptions ? selectOptions[item.name] : selectOptions}
+                    ///
+                    ///   options={selectOptions ? selectOptions[item.name] : selectOptions}
+                    options={selectOptions}
                     onChange={(option: IOption) => setFieldValue(item.name, option)}
                     label={item.label}
                     isSearchable={false}

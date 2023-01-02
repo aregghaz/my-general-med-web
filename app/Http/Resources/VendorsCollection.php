@@ -17,7 +17,8 @@ class VendorsCollection extends ResourceCollection
         return $this->map(function ($vendor) {
             return [
                 'id' => $vendor->id,
-                "name" => $vendor->name,
+                "companyName" => $vendor->name,
+                "email" => $vendor->email,
                 'address' => $vendor->address,
                 'phone_number' => $vendor->phone_number,
                 'status' => $vendor->status,

@@ -18,7 +18,8 @@ class RoleCollection extends ResourceCollection
           
             return [
                 'id' => $role->id,
-                'label' => $role->name,
+                'name' => $role->name,
+                'count' => $role->users_count,
               
             ];
         });

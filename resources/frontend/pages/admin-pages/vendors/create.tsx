@@ -14,27 +14,16 @@ const VendorCreate: React.FC<IVendorCreate> = () => {
     const crudKey = 'vendors'
     const [data, setData] = useState(null)
     const fields: Array<IItem> = [
-        // {name: 'image', type: 'file', label: 'image'},
-        {name: 'name', type: 'input', label: 'name'},
+        {name: 'logo', type: 'file', label: 'logo'},
+        {name: 'companyName', type: 'input', label: 'companyName'},
         {name: 'email', type: 'input', label: 'email'},
         {name: 'address', type: 'input', label: 'address'},
         {name: 'phone_number', type: 'input', label: 'phoneNumber'},
-        {name: 'status', type: 'select', label: 'status'},
         {name: 'id', type: 'hidden', inputType: 'hidden'},
-        {name: 'users', type: 'multiSelect', label: 'users'}
-
-        // {name: 'selectedTypes', type: 'multiSelect', label: 'services'},
-        // {name: 'selectOptions', type: 'hidden', inputType: 'hidden'},
-        // {name: 'province', type: 'hidden', inputType: 'hidden'},
-        // {name: 'languages', type: 'multiSelect', label: 'languages'},
-        // {name: 'rating', type: 'select', label: 'rating'},
-        // {name: 'id', type: 'hidden', inputType: 'hidden'},
-        // // {name: 'province', type: 'select', label: 'province'},
-        // // {name: 'region', type: 'select', label: 'region'},
-        // {name: 'role', type: 'select', label: 'role'},
-        // {name: 'status', type: 'select', label: 'status'},
-        // {name: 'description', type: 'textarea', label: 'description'},
-        // {name: 'text', type: 'textarea', label: 'text'}
+        {name: 'fields', type: 'multiSelect', label: 'fields'},
+        {name: 'password', type: 'input', label: 'password'},
+         {name: 'status', type: 'select', label: 'status'},
+         {name: 'text', type: 'textarea', label: 'text'}
     ]
     useEffect(() => {
         (
@@ -48,10 +37,10 @@ const VendorCreate: React.FC<IVendorCreate> = () => {
     }, [])
 
 
-    return  data && <Create
+    return  <Create
         crudKey={crudKey}
         ////TODO FIX THIS MISSING DATA FOR CREATE USER
-        data={data}
+         data={data}
         fields={fields}
         title={''}
         children={t('create')}

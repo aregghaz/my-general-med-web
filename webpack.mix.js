@@ -68,7 +68,7 @@ mix.webpackConfig({
 
 mix.react('resources/frontend/index.js', 'public/js')
     .reactCSSModules()
-    .copy('resources/frontend/plugins/swiper/swiper.css', 'public/css/swiper.css')
+    ///.copy('resources/frontend/plugins/swiper/swiper.css', 'public/css/swiper.css')
     .copy('resources/frontend/plugins/image-gallery/image-gallery.css', 'public/css/image-gallery.css')
     .copy('resources/frontend/fontello-25b26084/css/fontello.css', 'public/css')
     .copy('resources/frontend/fontello-25b26084/font', 'public/font')

@@ -25,7 +25,7 @@ class UserCollection extends ResourceCollection
                 'address' => $user->address,
                 'phone_number' => $user->phone_number,
                 'birthday' => $user->birthday,
-                'role' => $user->role,
+                'role' => $user->role->name,
                 "image" => $user->image ? '/uploads/users/' . $user->image : null,
             ];
         });

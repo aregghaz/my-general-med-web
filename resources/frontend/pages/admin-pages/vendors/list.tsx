@@ -47,9 +47,12 @@ const Vendors: React.FC<IVendors> = () => {
 
     const titles: Array<string> = [
         'id',
-        'name',
+        'companyName',
+        'email',
         'address',
         'phone_number',
+        'address',
+        'fields',
         'status',
         'action',
     ]

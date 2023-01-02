@@ -19,7 +19,7 @@ class CreateClientsTable extends Migration
             $table->unsignedBigInteger('vendor_id')->nullable();
             $table->string('trip_id');
             $table->string('name');
-            $table->string('surname');
+            $table->string('surname')->nullable();
             $table->tinyInteger('gender');
             $table->string('los');
             $table->string('phone_number');

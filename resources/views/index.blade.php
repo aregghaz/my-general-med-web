@@ -16,7 +16,7 @@
     <link rel="preload" as="font" href="/font/ArTarumianHandes.woff" type="font/woff2" crossorigin="anonymous">
     <link href="{{asset('css/main.css')}}" rel="stylesheet">
     <link href="{{asset('css/fontello.css')}}" rel="stylesheet">
-    <link href="{{asset('css/swiper.css')}}" rel="stylesheet">
+
     <link href="{{asset('css/image-gallery.css')}}" rel="stylesheet">
 
     <title>Application</title>

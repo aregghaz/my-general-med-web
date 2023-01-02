@@ -14,11 +14,11 @@ const UserEdit: React.FC<IUsersEditItem> = ({id}) => {
     const crudKey = 'users';
     const [data, setData] = useState(null)
     const fields: Array<IItem> = [
-        {name: 'main_image', type: 'file', label: 'image'},
-        {name: 'name', type: 'input', label: 'title'},
+        {name: 'logo', type: 'file', label: 'image'},
+        {name: 'company', type: 'input', label: 'title'},
         {name: 'surname', type: 'input', label: 'surName'},
         {name: 'email', type: 'input', label: 'email'},
-        {name: 'business_address', type: 'input', label: 'businessAddress'},
+        // {name: 'business_address', type: 'input', label: 'businessAddress'},
         {name: 'birthday', type: 'input', label: 'birthDate'},
         {name: 'phone_number', type: 'input', label: 'phoneNumber'},
         {name: 'selectedTypes', type: 'multiSelect', label: 'services'},

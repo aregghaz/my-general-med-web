@@ -55,7 +55,7 @@ const Edit: React.FC<IEdit> = (
                                 {
                                     fields
                                         .map((field, index) =>
-                                            <div key={index} className={s.item}>
+                                            <div key={index} className={s.item} style={field.type == 'hidden' ? {display:"none"}:{}}>
                                                 <FormikHandler
                                                     item={field}
                                                     handleChange={handleChange}

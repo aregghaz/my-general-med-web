@@ -59,16 +59,15 @@ class HomeController extends Controller
         $showMore = $request->showMore;
         $clientsData = [];
         $selectedFieldsTitle = [];
-        $tripCount = Clients::where(['vendor_id' => 1, 'type_id' => 1])->count();
+        $tripCount = Clients::where(['vendor_id' => 2, 'type_id' => 1])->count();
         $available = Clients::where('type_id', 2)->count();
 
-        $clients = DB::table('clients')->where(['vendor_id' => 1, 'type_id' => $request->typeId]);
+        $clients = DB::table('clients')->where(['vendor_id' => 2, 'type_id' => $request->typeId]);
+       
         if (isset($request->queryData)) {
               $this->convertQuery($request->queryData, $request->titles, $clients);
-       
         }
-
-
+       
         $clientsDataWith = [];
         for ($i = 0; $i < count($request->titles); $i++) {
             $selectedFieldsTitle[] = $request->titles[$i];
@@ -96,33 +95,41 @@ class HomeController extends Controller
                     $clientsData[] =  'clients.' . $selectedFieldsTitle[$i];
                 }
                 //////type_of_trip reletion cheking and add to title 
-            } else if ($request->titles[$i] == 'type_of_trip') {
-                $clients = $clients->join('type_of_trips', 'clients.status', '=', 'type_of_trips.id');
+            } 
+            else if ($request->titles[$i] == 'type_of_trip') {
+                $clients = $clients->join('type_of_trips', 'clients.type_of_trip', '=', 'type_of_trips.id');
                 $clientsData[] = "type_of_trips.name as type_of_trip";
                 //////request_type reletion cheking and add to title 
-            } else if ($request->titles[$i] == 'request_type') {
+           } 
+            else if ($request->titles[$i] == 'request_type') {
                 $clients = $clients->join('request_types', 'clients.request_type', '=', 'request_types.id');
                 $clientsData[] = "request_types.name as request_type";
                 //////status reletion cheking and add to title 
-            } else if ($request->titles[$i] == 'status') {
+            } 
+            else if ($request->titles[$i] == 'status') {
                 $clients = $clients->join('client_statuses', 'clients.status', '=', 'client_statuses.id');
                 $clientsData[] = "client_statuses.name as status";
                 //////gender reletion cheking and add to title 
-            } else if ($request->titles[$i] == 'gender') {
+            } 
+            else if ($request->titles[$i] == 'gender') {
                 $clients = $clients->join('genders', 'clients.gender', '=', 'genders.id');
                 $clientsData[] = "genders.name as gender";
                 //////adding default fields in to select
-            } else {
+            }  else {
                 $clientsData[] =  'clients.' . $selectedFieldsTitle[$i] . " as " . $selectedFieldsTitle[$i];
             }
         }
+       
         $result = array_diff($this->title, $selectedFieldsTitle);
         $selectedFields = count($clientsData) > 0 ? $clientsData : $clientData;
-        array_unshift($selectedFields, 'clients.id as id');
-
+        //array_unshift($selectedFields, 'clients.id as id');
+      ///dd( $selectedFields);
+     
         $clients = $clients->select($selectedFields);
 
         $clients =  $clients->take(15 * $showMore)->get();
+        // dd($clients);
+        // dd( $clients->get());
         array_shift($selectedFieldsTitle);
         //   dd($selectedFieldsTitle);
         return response()->json([

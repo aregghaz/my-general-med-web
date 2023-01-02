@@ -9,7 +9,7 @@ import populateCreateFormFields from "../../../../constants/populateCreateFormFi
 import {AdminApi} from '../../../../api/admin-api/admin-api';
 
 interface ICreate {
-    data: { [key: string]: Object }
+    data?: { [key: string]: Object }
     fields: Array<IItem>
     crudKey?: string
     title: string
@@ -50,9 +50,9 @@ const Create: React.FC<ICreate> = (
                         <>
                             <form className={s.form}>
                                 {
-                                    fields
+                                 fields
                                         .map((field, index) => {
-                                                if (data[field.name]) {
+                                                if (  data && data[field.name]) {
                                                     return <div key={index} className={s.item}>
                                                         <FormikHandler
                                                             item={field}

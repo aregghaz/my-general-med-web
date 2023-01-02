@@ -41,10 +41,10 @@ const LoginWrapper: React.FC<ILoginWrapper> = () => {
 
     useEffect(() => {
         if (user) {
-            if (user && user.role == 'driver') {
+            if (user && user.role == 'vendor') {
                 navigate('/')
             }
-            if (user && user.role !== 'driver') {
+            if (user && user.role == 'admin') {
                 navigate('/admin')
                 ///  setLoading(false)
             }
