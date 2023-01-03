@@ -41,10 +41,11 @@ const Site: React.FC<ISite> = ({children}) => {
     }, [isLoading, loggedIn])
     return (
         <Row className={s.mainRow}>
-            <DrawerUser/>
+            <DrawerUser>
             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className={s.mainContainer}>
                 {children}
             </Col>
+            </DrawerUser>
         </Row>
     )
 

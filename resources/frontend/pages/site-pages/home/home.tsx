@@ -71,7 +71,7 @@ const Home: React.FC<IHome> = () => {
     const clientData = useSelector(getClientData)
     const dispatch = useDispatch()
 
-    const {selectedTitle, clients, tripCount, availableCount} = homeData
+    const {selectedTitle,titles:allTiles, clients, tripCount, availableCount} = homeData
     const {clientById} = clientData
 
 
@@ -165,6 +165,8 @@ const Home: React.FC<IHome> = () => {
         'member_uniqie_identifer',
         'birthday'
     ]
+
+    ////FIXME FIX DYNAMIC TABLE FIRELDS
     const [titles, setTitles] = useState<Array<string>>(titlesDef)
 
     const openSearch = () => {
@@ -230,6 +232,8 @@ const Home: React.FC<IHome> = () => {
                 let result = selectedTitle.map(a => a.slug);
                 if (result.length > 0) {
                     ///localStorage.setItem('titles',JSON.stringify(titles))
+                    console.log(titles,'titles');
+                    
                     const homeData = await homeAPI.getClientData({
                         titles: titles,
                         showMore: countRef.current,

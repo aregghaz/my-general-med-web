@@ -16,8 +16,12 @@ import ColumnsHideShow from '../columns-hide-show/columns-hide-show'
 
 import ColumnSvg from '-!svg-react-loader!../../images/column.svg'
 import Input from "../input/input";
-
-const DrawerUser: React.FC = () => {
+//import Logout from '-!svg-react-loader!../../images/SignOut.svg'
+import Status from '-!svg-react-loader!../../images/Status.svg'
+import UserRole from '-!svg-react-loader!../../images/UserRole.svg'
+import Actions from '-!svg-react-loader!../../images/Actions.svg'
+import Clients from '-!svg-react-loader!../../images/Clients.svg'
+const DrawerUser: React.FC = ({children}) => {
     const {t} = useTranslation()
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -28,9 +32,40 @@ const DrawerUser: React.FC = () => {
         setShow(!show)
         console.log(show)
     }
-    // const openSearch = () => {
-    //     setOpen(!open)
-    // }
+    const menuItemsFirst = [
+
+        {
+            Icon: <HomeIcon/>,
+            item: 'Home',
+            page: '/admin'
+        },
+        // {
+        //     Icon: <Users/>,
+        //     item: 'vendors',
+        //     page: '/admin/vendors'
+        // },
+        // {
+        //     Icon: <Users/>,
+        //     item: 'adminBeneficiaries',
+        //     page: '/admin/users'
+        // },
+        {
+            Icon: <Clients/>,
+            item: 'clients',
+            page: '/admin/clients'
+        },
+        {
+            Icon: <Status/>,
+            item: 'status',
+            page: '/admin/status'
+        },
+        {
+            Icon: <UserRole/>,
+            item: 'role',
+            page: '/admin'
+        },
+    
+    ]
     return (
         <>
             <nav className={s.header_nav}>
@@ -48,29 +83,7 @@ const DrawerUser: React.FC = () => {
                         </div>
 
                         <div className={s.header_icons_block}>
-                            {/*<div*/}
-                            {/*    className={`${s.header_input_block} ${open ? s.active : s.passive}`}*/}
-                            {/*    // style={open ? {height: "30px", minWidth: "500px", overflow: "hidden"} : {*/}
-                            {/*    //     height: "30px",*/}
-                            {/*    //     width: 0,*/}
-                            {/*    //     overflow: "hidden"*/}
-                            {/*    // }}*/}
-                            {/*>*/}
-                            {/*    <Input name={'search'}*/}
-                            {/*           type={'text'}*/}
-                            {/*        ////FIXME*/}
-                            {/*        //    onBlur={onSerachInput}*/}
-                            {/*    />*/}
-                            {/*</div>*/}
-                            {/*<div className={s.iconBlock}>*/}
-                            {/*    <Button type={'blank'} onClick={() => {*/}
-                            {/*        openSearch()*/}
-                            {/*    }}>*/}
-                            {/*    <span className={s.icon}>*/}
-                            {/*        {open ? <Close/> : <Search/>}*/}
-                            {/*    </span>*/}
-                            {/*    </Button>*/}
-                            {/*</div>*/}
+                    
                             <div className={s.iconBlock}>
                                 <Button type={'blank'}>
                                 <span className={s.icon}>
@@ -101,12 +114,30 @@ const DrawerUser: React.FC = () => {
 
                 </div>
             </nav>
-            <nav className={`${s.root} ${s.fixed}`}>
-                <ul className={s.list}>
-
-                </ul>
-            </nav>
-
+            <div className={s.content_part}>
+                <nav className={s.main}>
+                    <div className={s.side_panel}></div>
+                    <ul className={s.list}>
+                        {
+                            menuItemsFirst
+                                .map(li => (
+                                        <li className={s.item} key={`first-${li.item}`}>
+                                            <Link to={li.page} className={s.link}>
+                                                <span className={s.side_icon}>
+                                                    {li.Icon}
+                                                </span>
+                                        
+                                            </Link>
+                                        </li>
+                                    )
+                                )
+                        }
+                    </ul>
+                </nav>
+                <div className={s.body} style={{width: "100%", maxWidth:"calc(100% - 90px)", display:'inline-block'}}>
+                    {children}
+                </div>
+            </div>
         </>
     )
 }
