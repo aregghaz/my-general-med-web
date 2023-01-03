@@ -149,3 +149,18 @@ tbody {
 .row {
     background-color: $tdBgColor;
 }
+
+
+////Areg
+/// 
+
+
+.label_span{
+    border: 1px solid $headColor;
+    color:$headColor;
+    font-size: 11px;
+    padding: 0 2px;
+    border-radius: 25px;
+    margin-left: 2px;
+    background-color: $iconColor;
+}

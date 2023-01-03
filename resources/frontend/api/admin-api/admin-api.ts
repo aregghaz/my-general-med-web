@@ -13,6 +13,9 @@ export const AdminApi = {
     getUserData(crudKey: string, id: number) {
         return axios.get(`/api/admin/${crudKey}/${id}`).then(res => res.data)
     },
+    editUserData(crudKey: string, id: number) {
+        return axios.get(`/api/admin/${crudKey}/${id}/edit`).then(res => res.data)
+    },
 
     getAllData(crudKey: string, page: number, query: string,tabId?:number) {
         return axios.get(`/api/admin/${crudKey}?page=${page}&query=${query}&tabId=${tabId}`).then(res => res.data)

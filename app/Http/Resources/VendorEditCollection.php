@@ -3,8 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use App\Http\Resources\StatusCollection;
 
-class VendorsCollection extends ResourceCollection
+class VendorEditCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -15,21 +16,14 @@ class VendorsCollection extends ResourceCollection
     public function toArray($request)
     {
         return $this->map(function ($vendor) {
-            $fields = [];
-           
-            if(count($vendor->fields)){
-                for($i=0;$i< count($vendor->fields);$i++){
-                    $fields[] = $vendor->fields[$i]->name;
-                  
-                }
-            }
+        
             return [
                 'id' => $vendor->id,
                 "companyName" => $vendor->name,
                 "email" => $vendor->email,
                 'address' => $vendor->address,
                 'phone_number' => $vendor->phone_number,
-                'fields' =>  $fields
+                'fields' => new StatusCollection($vendor->fields)
             ];
         });
     }

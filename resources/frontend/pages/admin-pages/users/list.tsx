@@ -87,7 +87,7 @@ const Users: React.FC<Beneficiary> = () => {
         const role = localStorage.getItem("role");
         localStorage.setItem("page", activeItem.toString());
     };
-    const handlerGetclientData = (id: number) => {
+    const handlerGetClientData = (id: number) => {
         setDataID(id);
     };
     const handlerChangeTabs = async (tabId: number) => {
@@ -135,7 +135,7 @@ const Users: React.FC<Beneficiary> = () => {
                     handlerEditItem={handlerEditBeneficiaryItem}
                     HandlerPagination={HandlerPagination}
                     HandlerGetProducts={HandlerGetProducts}
-                    handlerGetclientData={handlerGetclientData}
+                    handlerGetClientData={handlerGetClientData}
                     count={count}
                     handlerChangeTabs={handlerChangeTabs}
                     activeItem={activeItem}

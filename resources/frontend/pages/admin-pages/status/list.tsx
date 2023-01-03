@@ -76,7 +76,7 @@ const Status: React.FC<Beneficiary> = () => {
         localStorage.setItem('page', activeItem.toString());
 
     }
-    const handlerGetclientData = (id: number) => {
+    const handlerGetClientData = (id: number) => {
         setDataID(id)
 
     }
@@ -147,7 +147,7 @@ const Status: React.FC<Beneficiary> = () => {
                 handlerEditItem={handlerEditBeneficiaryItem}
                 HandlerPagination={HandlerPagination}
                 HandlerGetProducts={HandlerGetProducts}
-                handlerGetclientData={handlerGetclientData}
+                handlerGetClientData={handlerGetClientData}
                 count={count}
                 activeItem={activeItem}
                 className={'pagination'}

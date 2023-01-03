@@ -190,7 +190,7 @@ class ClientsController extends Controller
                 'slug' =>  $client->requestType->slug,
                 'value' => $client->requestType->slug,
             ],
-            ///seect
+            ///select
             
             'status' =>  [
                 'id' => $client->clientStatus->id,
@@ -198,7 +198,7 @@ class ClientsController extends Controller
                 'slug' =>  $client->clientStatus->slug,
                 'value' => $client->clientStatus->slug,
             ],
-            ///seect
+            ///select
             'origin_name' => $client->origin->name,
             'origin_street' => $client->origin->street,
             'origin_suite' => $client->origin->suite,

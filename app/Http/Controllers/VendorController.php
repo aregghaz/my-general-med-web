@@ -23,7 +23,7 @@ class VendorController extends Controller
      */
     public function index()
     {
-        $vendorData = Vendor::paginate(20);
+       /// $vendorData = Vendor::paginate(20);
 
         if (isset($request->querySearch)) {
 
@@ -33,7 +33,7 @@ class VendorController extends Controller
         } else {
 
 
-            $vendorData = User::where('role_id',2)->get();
+            $vendorData = User::where('role_id',2)->with('fields')->get();
 
 
         }
@@ -101,7 +101,7 @@ class VendorController extends Controller
         }else{
             $idCats = array_column($requestData['fields'], 'id');
         
-            $vendor->fields()->sync( $idCats);
+            $vendor->fields()->sync($idCats);
         }
         return response()->json([
             'success' => '1',
@@ -118,6 +118,7 @@ class VendorController extends Controller
      */
     public function show(Vendor $vendor)
     {
+        dd('a');
         $status = DB::table('status')->get();
         $users = User::get();
 
@@ -131,18 +132,27 @@ class VendorController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Vendor $vendor
+     * @param \App\Models\User $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Vendor $vendor)
+    public function edit(Request $request)
     {
-        $status = DB::table('status')->get();
-        $users = User::get();
-
+        $vendorData = User::with('fields')->where('id',$request->id)->first();
+        $clientTable = ClientTable::get();
+   
+       
         return response()->json([
-            "data" => $vendor,
-            'users' => new StatusCollection($users),
-            'status' => new StatusCollection($status)
+            "data" =>[
+                'id' => $vendorData->id,
+                "companyName" => $vendorData->name,
+                "email" => $vendorData->email,
+                'address' => $vendorData->address,
+                'phone_number' => $vendorData->phone_number,
+                'fields' => new StatusCollection($vendorData->fields)
+            ],///  new VendorsCollection($vendor),
+            'fields' => new StatusCollection($clientTable)
+         ///   'users' => new StatusCollection($users),
+        ///    'status' => new StatusCollection($status)
         ], 200);
     }
 
@@ -154,8 +164,38 @@ class VendorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Vendor $vendor)
-    {
-        //
+    { $validator = Validator::make((array)json_decode($request->value), [
+        'companyName' => 'required|string',
+        'phone_number' => 'required|string',
+        'email' => 'required|string|email',
+      ///  'status' => 'required',
+        'address' => 'string',
+        'fields' => 'required',
+    ]);
+    if ($validator->fails()) {
+        return response()->json(['success' => 0, 'type' => 'validation_filed', 'error' => $validator->messages()], 422);
+    }
+   
+    $requestData = $validator->validated();
+   
+    $vendor =  User::find($request->id)->update([
+        'name' => $requestData['companyName'],
+        'phone_number' => $requestData['phone_number'],
+        'email' => $requestData['email'],
+       /// 'status' => json_decode($request->value)->status->id,
+        'address' => $requestData['address'],
+        ///'password' =>  bcrypt($requestData['password']),
+        'role_id' => 2,
+    ]);
+    $idCats = array_column($requestData['fields'], 'id');
+    
+    User::find($request->id)->fields()->sync($idCats);
+
+    return response()->json([
+        'success' => '1',
+        'type' => 'success',
+        'status' => 200
+    ], 201);//
     }
 
     /**

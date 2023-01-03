@@ -51,9 +51,7 @@ const Vendors: React.FC<IVendors> = () => {
         'email',
         'address',
         'phone_number',
-        'address',
         'fields',
-        'status',
         'action',
     ]
     const handlerAddBeneficiaryItem = () => navigate(`/admin/${crudKey}/create`)

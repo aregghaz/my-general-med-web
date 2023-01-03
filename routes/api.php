@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VendorController;
 
 use App\Http\Controllers\WeatherApiController;
 use Illuminate\Http\Request;
@@ -65,9 +66,17 @@ Route::group([
         ///'home-data' => HomeController::class,
         'users' => \App\Http\Controllers\UserController::class,
         'clients' => \App\Http\Controllers\ClientsController::class,
-        'vendors' => \App\Http\Controllers\VendorController::class,
+        ///'vendors' => \App\Http\Controllers\VendorController::class,
 
     ]);
+    Route::get('/vendors', [VendorController::class, 'index']);
+    Route::get('/vendors/create', [VendorController::class, 'create']);
+    Route::get('/vendors/create', [VendorController::class, 'create']);
+    Route::post('/vendors', [VendorController::class, 'store']);
+    Route::get('/vendors/{id}', [VendorController::class, 'show']);
+    Route::put('/vendors/{id}', [VendorController::class, 'update']);
+    Route::get('/vendors/{id}/edit', [VendorController::class, 'edit']);
+
     Route::get('/changeStatus/{slug}', [AdminController::class, 'changeStatus']);
     Route::get('/changeStatus/{slug}/{id}', [AdminController::class, 'getStatusById']);
     Route::post('/changeStatus/{slug}', [AdminController::class, 'createStatus']);

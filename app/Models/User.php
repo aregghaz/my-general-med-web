@@ -34,6 +34,6 @@ class User extends Authenticatable
     }
     public function fields()
     {
-        return $this->BelongsToMany('App\Models\ClientTable', 'user_fields', 'user_id', 'field_id');
+        return $this->BelongsToMany(ClientTable::class, 'user_fields', 'user_id', 'field_id');
     }
 }

@@ -115,16 +115,18 @@ const FormikHandler: React.FC<IFormikHandler> = (
                 />
             )
         case 'multiSelect':
+console.log( selectOptions[item.name],'values');
+
 
             return (
                 <Select
                     value={values[item.name]}
                     getOptionValue={(option: IOption) => option.label}
                     getOptionLabel={(option: IOption) => option.label}
-                    options={values.selectOptions ? values.selectOptions[item.name] : selectOptions}
+                    options={values.selectOptions ? values.selectOptions[item.name] : selectOptions[item.name]}
                     onChange={(option: IOption) => setFieldValue(item.name, option)}
                     label={item.label}
-                    isSearchable={false}
+                    isSearchable={true}
                     name={item.name}
                     isMulti={true}
                     placeholder={item.placeholder}

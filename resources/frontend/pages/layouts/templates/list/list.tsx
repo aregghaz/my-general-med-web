@@ -16,7 +16,7 @@ interface IList {
     handlerDeleteItem?: (id: number) => void
     HandlerPagination?: (id: number) => void
     HandlerGetProducts?: (id: number) => void
-    handlerGetclientData?: (id: any) => void
+    handlerGetClientData?: (id: any) => void
     paginated: boolean
     activeItem?: number
     ////FIXMECHANGE IT NORMA TYPR
@@ -43,7 +43,7 @@ const List: React.FC<IList> = (
         handlerEditItem,
         HandlerPagination,
         HandlerGetProducts,
-        handlerGetclientData,
+        handlerGetClientData,
         last_page,
         activeItem,
         tabId,
@@ -95,7 +95,7 @@ const List: React.FC<IList> = (
                     handlerDeleteItem={handlerDeleteItem}
                     HandlerPagination={HandlerPagination}
                     HandlerGetProducts={HandlerGetProducts}
-                    handlerGetclientData={handlerGetclientData}
+                    handlerGetClientData={handlerGetClientData}
                     activeItem={activeItem}
                     count={count}
                     className={className}

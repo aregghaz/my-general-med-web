@@ -15,7 +15,7 @@ interface ITableBody {
     handlerEditItem?: (id: number) => void
     handlerDeleteItem?: (id: number) => void
     HandlerGetProducts?: (id: number) => void
-    handlerGetclientData: (data: any) => void
+    handlerGetClientData: (data: any) => void
 }
 
 const TableBody: React.FC<ITableBody> = (
@@ -25,7 +25,7 @@ const TableBody: React.FC<ITableBody> = (
         isDelete,
         isGetItems,
         handlerDeleteItem,
-        handlerGetclientData,
+        handlerGetClientData,
         handlerEditItem,
         HandlerGetProducts
     }) => {
@@ -44,12 +44,25 @@ const TableBody: React.FC<ITableBody> = (
                                       (
                                         keys
                                             .map((key, i) => {
-                                                  return i !=0 &&   (
+                                    
+                                                  if(key == 'fields'){
+                                                    return i !=0 &&   (
                                                         <TableData data={item.id} key={key}
-                                                                   handlerGetclientData={handlerGetclientData}>
+                                                                   handlerGetClientData={handlerGetClientData}>
+                                                            {item[key].map((e:string) => {
+                                                                return <span className={s.label_span}>{e}</span>
+                                                            })}
+                                                        </TableData>
+                                                    )
+                                                  }else{
+                                                    return i !=0 &&   (
+                                                        <TableData data={item.id} key={key}
+                                                                   handlerGetClientData={handlerGetClientData}>
                                                             {item[key]}
                                                         </TableData>
                                                     )
+                                                  }
+                                                
                                                 }
                                             )
                                     )

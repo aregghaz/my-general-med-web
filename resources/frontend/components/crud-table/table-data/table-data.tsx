@@ -7,7 +7,7 @@ interface ITableData {
     rowspan?: number
     colspan?: number
     className?: string
-    handlerGetclientData?: (data: any) => void
+    handlerGetClientData?: (data: any) => void
 }
 
 const TableData: React.FC<ITableData> = (
@@ -16,7 +16,7 @@ const TableData: React.FC<ITableData> = (
         colspan = 1,
         className,
         children,
-        handlerGetclientData,
+        handlerGetClientData,
         data
     }
 ) => {
@@ -26,7 +26,7 @@ const TableData: React.FC<ITableData> = (
             className={`${s.tableTd} ${className ? className : ''}`}
             colSpan={colspan || 1}
             rowSpan={rowspan || 1}
-            onClick={() => handlerGetclientData(data)}
+            onClick={() => handlerGetClientData(data)}
         >
             {children}
         </td>
