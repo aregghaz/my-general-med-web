@@ -54,24 +54,27 @@ class HomeController extends Controller
 
     public function clientData(Request $request)
     {
-
-        $clientData = new ClientFieldCollection($this->title);
+        $allFields  =  $request->user()->fields()->get()->pluck('name')->toArray();
+        $vendorFields = $request->titles ?$request->titles :  $allFields;
+     
+        $clientData = new ClientFieldCollection($vendorFields);
         $showMore = $request->showMore;
         $clientsData = [];
         $selectedFieldsTitle = [];
-        $tripCount = Clients::where(['vendor_id' => 2, 'type_id' => 1])->count();
+
+        $tripCount = Clients::where(['vendor_id' => $request->user()->id, 'type_id' => 1])->count();
         $available = Clients::where('type_id', 2)->count();
 
-        $clients = DB::table('clients')->where(['vendor_id' => 2, 'type_id' => $request->typeId]);
+        $clients = DB::table('clients')->where(['vendor_id' =>$request->user()->id, 'type_id' => $request->typeId]);
        
         if (isset($request->queryData)) {
-              $this->convertQuery($request->queryData, $request->titles, $clients);
+              $this->convertQuery($request->queryData, $vendorFields, $clients);
         }
        
         $clientsDataWith = [];
-        for ($i = 0; $i < count($request->titles); $i++) {
-            $selectedFieldsTitle[] = $request->titles[$i];
-            $explodeRelation = explode("_", $request->titles[$i]);
+        for ($i = 0; $i < count($vendorFields); $i++) {
+            $selectedFieldsTitle[] = $vendorFields[$i];
+            $explodeRelation = explode("_", $vendorFields[$i]);
             //////origin_address reletion cheking and add to title 
             if ($explodeRelation[0]  === 'origin') {
                 if (!in_array($explodeRelation[0], $clientsDataWith) and $explodeRelation[1] !== 'comment') {
@@ -81,7 +84,7 @@ class HomeController extends Controller
                 } elseif (in_array($explodeRelation[0], $clientsDataWith) and $explodeRelation[1] !== 'comment') {
                     $clientsData[] = "origin_addresses." . $explodeRelation[1] . " as origin_" . $explodeRelation[1];
                 } elseif ($explodeRelation[1] == 'comment') {
-                    $clientsData[] =  'clients.' . $request->titles[$i];
+                    $clientsData[] =  'clients.' . $vendorFields[$i];
                 }
                 //////destination reletion cheking and add to title 
             } else if ($explodeRelation[0] === 'destination') {
@@ -96,22 +99,22 @@ class HomeController extends Controller
                 }
                 //////type_of_trip reletion cheking and add to title 
             } 
-            else if ($request->titles[$i] == 'type_of_trip') {
+            else if ($vendorFields[$i] == 'type_of_trip') {
                 $clients = $clients->join('type_of_trips', 'clients.type_of_trip', '=', 'type_of_trips.id');
                 $clientsData[] = "type_of_trips.name as type_of_trip";
                 //////request_type reletion cheking and add to title 
            } 
-            else if ($request->titles[$i] == 'request_type') {
+            else if ($vendorFields[$i] == 'request_type') {
                 $clients = $clients->join('request_types', 'clients.request_type', '=', 'request_types.id');
                 $clientsData[] = "request_types.name as request_type";
                 //////status reletion cheking and add to title 
             } 
-            else if ($request->titles[$i] == 'status') {
+            else if ($vendorFields[$i] == 'status') {
                 $clients = $clients->join('client_statuses', 'clients.status', '=', 'client_statuses.id');
                 $clientsData[] = "client_statuses.name as status";
                 //////gender reletion cheking and add to title 
             } 
-            else if ($request->titles[$i] == 'gender') {
+            else if ($vendorFields[$i] == 'gender') {
                 $clients = $clients->join('genders', 'clients.gender', '=', 'genders.id');
                 $clientsData[] = "genders.name as gender";
                 //////adding default fields in to select
@@ -120,17 +123,20 @@ class HomeController extends Controller
             }
         }
        
-        $result = array_diff($this->title, $selectedFieldsTitle);
+        $result = array_diff( $allFields, $selectedFieldsTitle);
         $selectedFields = count($clientsData) > 0 ? $clientsData : $clientData;
-        //array_unshift($selectedFields, 'clients.id as id');
+        array_unshift($selectedFields, 'clients.id as id');
       ///dd( $selectedFields);
      
         $clients = $clients->select($selectedFields);
 
         $clients =  $clients->take(15 * $showMore)->get();
-        // dd($clients);
-        // dd( $clients->get());
-        array_shift($selectedFieldsTitle);
+        // // dd($clients);
+        // // dd( $clients->get());
+        // if(count($selectedFieldsTitle) > 1){
+        //  array_shift($selectedFieldsTitle);
+        // }
+       
         //   dd($selectedFieldsTitle);
         return response()->json([
             'clients' => $clients,
@@ -229,7 +235,7 @@ class HomeController extends Controller
     {
 
         $clients = $clients->where(function ($query) use ($title, $queryData) {
-            // $clients =  $this->convertQuery($request->queryData, $request->titles, $clients);
+            // $clients =  $this->convertQuery($request->queryData, $vendorFields, $clients);
 
             for ($i = 0; $i < count($title); $i++) {
                 if ($title[$i] !== 'name' && $title[$i] !== 'id') {

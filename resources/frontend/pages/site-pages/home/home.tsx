@@ -55,7 +55,7 @@ const Home: React.FC<IHome> = () => {
     const [query, setQuery] = useState('')
     const [ids, setIds] = useState([])
     const [open, setOpen] = useState<boolean>(false)
-    const [loding, setLoading] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(false)
     const [typeId, setTypeId] = useState<number>(1)
     const [steps, setSteps] = useState<Array<any>>([])
     const [searching, setSearching] = useState(false)
@@ -86,21 +86,12 @@ const Home: React.FC<IHome> = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
   
     async function calculateRoute(newData: any) {
-        ///const homeData = await homeAPI.getDirection()
-        console.log({
-            origin: newData.origin.city +' ' +  newData.origin.street +' ' +  newData.origin.suite,
-            destination:newData.destination.city +' ' +  newData.destination.street +' ' +  newData.destination.suite,
-            
-        },newData, 'newData');
-
         const directionsService = new google.maps.DirectionsService()
         const results = await directionsService.route({
             origin: newData.origin.city +' ' +  newData.origin.street +' ' +  newData.origin.suite,
             destination:newData.destination.city +' ' +  newData.destination.street +' ' +  newData.destination.suite,
             travelMode: google.maps.TravelMode.DRIVING,
         })
-        console.log(results, 'results');
-
         setDirectionsResponse(results)
         setDistance(results.routes[0].legs[0].distance.text)
         setDuration(results.routes[0].legs[0].duration.text)
@@ -125,11 +116,11 @@ const Home: React.FC<IHome> = () => {
             name: "Close Outs",
             // count:45
         },
-        {
-            id: 3,
-            name: "Download History",
-            //count:38
-        },
+        // {
+        //     id: 3,
+        //     name: "Download History",
+        //     //count:38
+        // },
         {
             id: 2,
             name: "Available Trips",
@@ -187,7 +178,7 @@ const Home: React.FC<IHome> = () => {
               const titlesData = localStorage.getItem('titles')
                 if (titles.length > 0) {
                     const homeData = await homeAPI.getClientData({
-                        titles: titlesData ? JSON.parse(titlesData) : titles,
+                        titles:JSON.parse(titlesData),
                         showMore: countRef.current,
                         typeId: typeId
                     })
@@ -235,10 +226,8 @@ const Home: React.FC<IHome> = () => {
 
     useEffect(() => {
         (async () => {
-            if ((inView || loding) && !open) {
+            if ((inView || loading) && !open) {
                 let result = selectedTitle.map(a => a.slug);
-                // console.log(result, 'resultresult');
-
                 if (result.length > 0) {
                     localStorage.setItem('titles',JSON.stringify(titles))
                     const homeData = await homeAPI.getClientData({
@@ -260,7 +249,7 @@ const Home: React.FC<IHome> = () => {
 
             }
         })();
-    }, [inView, loding]);
+    }, [inView, loading]);
     ///FIXME  MISSING TYPE
 
     const onSerachInput = async (event: { search: string }) => {
@@ -287,8 +276,13 @@ const Home: React.FC<IHome> = () => {
 
     const changeFields = async (options: Array<IOption>) => {
         let result = options.map(a => a.slug);
+        let selectedTitleSlug = selectedTitle.map(a => a.slug);
         if (result.length > 0) {
-            setTitles(result)
+            console.log(result,'result');
+            
+            const array3 =Array.from(new Set(selectedTitleSlug.concat(result)))
+           /// var d = array3.filter((item, pos) => array3.indexOf(item) === pos)
+            setTitles( result)
             setLoading(true)
         }
 
