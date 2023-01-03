@@ -27,9 +27,14 @@ const menuItemsFirst = [
     },
     {
         Icon: <Users/>,
-        item: 'adminBeneficiaries',
-        page: '/admin/users'
+        item: 'vendors',
+        page: '/admin/vendors'
     },
+    // {
+    //     Icon: <Users/>,
+    //     item: 'adminBeneficiaries',
+    //     page: '/admin/users'
+    // },
     {
         Icon: <Clients/>,
         item: 'clients',
@@ -45,11 +50,7 @@ const menuItemsFirst = [
         item: 'role',
         page: '/admin'
     },
-    {
-        Icon: <Actions/>,
-        item: 'vendors',
-        page: '/admin/vendors'
-    },
+
 ]
 
 const Drawer: React.FC = ({ children,isOpen, handleToggle }:any) => {

@@ -229,7 +229,7 @@ const Home: React.FC<IHome> = () => {
             if ((inView || loading) && !open) {
                 let result = selectedTitle.map(a => a.slug);
                 if (result.length > 0) {
-                    localStorage.setItem('titles',JSON.stringify(titles))
+                    ///localStorage.setItem('titles',JSON.stringify(titles))
                     const homeData = await homeAPI.getClientData({
                         titles: titles,
                         showMore: countRef.current,
@@ -280,8 +280,6 @@ const Home: React.FC<IHome> = () => {
         if (result.length > 0) {
             console.log(result,'result');
             
-            const array3 =Array.from(new Set(selectedTitleSlug.concat(result)))
-           /// var d = array3.filter((item, pos) => array3.indexOf(item) === pos)
             setTitles( result)
             setLoading(true)
         }
@@ -304,7 +302,7 @@ const Home: React.FC<IHome> = () => {
         }
     }
 
-    const handlerChangeTabe = async (tabId: number) => {
+    const handlerChangeTabs = async (tabId: number) => {
         setTypeId(tabId)
         setLoading(true)
     }
@@ -338,7 +336,7 @@ const Home: React.FC<IHome> = () => {
                                     backgroundColor: '#165f8d',
                                     color: "white"
                                 } : {backgroundColor: 'white'}}
-                                onClick={() => handlerChangeTabe(tab.id)}
+                                onClick={() => handlerChangeTabs(tab.id)}
                             >
                                 {tab.name}{tab.count && <span className={s.bage_count}>{tab.count}</span>}
                             </div>
