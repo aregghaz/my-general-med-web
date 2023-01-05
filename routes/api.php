@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
+use App\Http\Controllers\Vendor\VendorUsersController;
 
 use App\Http\Controllers\WeatherApiController;
 use Illuminate\Http\Request;
@@ -32,6 +33,7 @@ Route::group([
     Route::post('/changeClientType', [HomeController::class, 'changeClientType']);
     Route::resources([
         'home-data' => HomeController::class,
+        'vendorClients' => VendorUsersController::class,
     ]);
 });
 Route::group([

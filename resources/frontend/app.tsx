@@ -33,6 +33,8 @@ import VendorCreate from './pages/admin-pages/vendors/create'
 import Status from './pages/admin-pages/status/list'
 import StatusCreate from './pages/admin-pages/status/create'
 import StatusEdit from './pages/admin-pages/status/edit'
+import VendorUsers from './pages/site-pages/users/list'
+import VendorUsersEdit from './pages/site-pages/users/edit'
 
 const App = (): JSX.Element => (
     <Provider store={store}>
@@ -40,6 +42,8 @@ const App = (): JSX.Element => (
             <LoginWrapper path="/login"/>
             <Site path="/">
                 <Home path="/"/>
+                <VendorUsers path="/users"/>
+                <VendorUsersEdit path="/users/:id"/>
                 {/* <Film path="/all/films"/> */}
                 {/* <Serial path="/all/serials"/>
                 <MovesItem path="/films/:slug"/>

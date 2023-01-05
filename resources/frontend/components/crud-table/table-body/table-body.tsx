@@ -15,7 +15,7 @@ interface ITableBody {
     handlerEditItem?: (id: number) => void
     handlerDeleteItem?: (id: number) => void
     HandlerGetProducts?: (id: number) => void
-    handlerGetClientData: (data: any) => void
+   /// handlerGetClientData: (data: any) => void
 }
 
 const TableBody: React.FC<ITableBody> = (
@@ -25,7 +25,7 @@ const TableBody: React.FC<ITableBody> = (
         isDelete,
         isGetItems,
         handlerDeleteItem,
-        handlerGetClientData,
+    ///    handlerGetClientData,
         handlerEditItem,
         HandlerGetProducts
     }) => {
@@ -48,7 +48,8 @@ const TableBody: React.FC<ITableBody> = (
                                                   if(key == 'fields'){
                                                     return i !=0 &&   (
                                                         <TableData data={item.id} key={key}
-                                                                   handlerGetClientData={handlerGetClientData}>
+                                                                 ///  handlerGetClientData={handlerGetClientData}
+                                                                   >
                                                             {item[key].map((e:string) => {
                                                                 return <span className={s.label_span}>{e}</span>
                                                             })}
@@ -57,7 +58,8 @@ const TableBody: React.FC<ITableBody> = (
                                                   }else{
                                                     return i !=0 &&   (
                                                         <TableData data={item.id} key={key}
-                                                                   handlerGetClientData={handlerGetClientData}>
+                                                                 ///  handlerGetClientData={handlerGetClientData}
+                                                                   >
                                                             {item[key]}
                                                         </TableData>
                                                     )

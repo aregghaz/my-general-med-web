@@ -23,13 +23,6 @@ export const homeAPI = {
             })
         }).then(res => res.data)
     },
-    getDirection(){
-            return axios.get(`https://maps.googleapis.com/maps/api/directions/json?
-                origin=Iowa+St
-                &destination=Imperial+Hwy
-                &key=AIzaSyBKkr76ZgeVEhZLj-ZT5u8XQBbT4SUQI5E`)
-            .then(res => res.data)
-        },
     getHomePageData(activeItem: number, query: string = '') {
         return axios.get(`/api/home-data?page=${activeItem}&querySearch=${query}`).then(res => res.data)
     },
@@ -40,8 +33,11 @@ export const homeAPI = {
             })
         }).then(res => res.data)
     },
-    getCategory() {
-        return axios.get('/api/homeData').then(res => res.data)
+    getVendorData(tabId:number) {
+        return axios.get('/api/vendorClients').then(res => res.data)
+    },
+    editUserData(crudKey: string, id: number) {
+        return axios.get(`/api/${crudKey}/${id}/edit`).then(res => res.data)
     },
     cancelRequest() {
         return cancelPost()

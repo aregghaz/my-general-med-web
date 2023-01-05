@@ -147,7 +147,7 @@ const Status: React.FC<Beneficiary> = () => {
                 handlerEditItem={handlerEditBeneficiaryItem}
                 HandlerPagination={HandlerPagination}
                 HandlerGetProducts={HandlerGetProducts}
-                handlerGetClientData={handlerGetClientData}
+             //   handlerGetClientData={handlerGetClientData}
                 count={count}
                 activeItem={activeItem}
                 className={'pagination'}

@@ -5,64 +5,28 @@ import HomeIcon from '-!svg-react-loader!../../images/home.svg'
 import Account from '-!svg-react-loader!../../images/User.svg'
 import Logout from '-!svg-react-loader!../../images/SignOut.svg'
 import Settings from '-!svg-react-loader!../../images/Settings.svg'
-// import Search from '-!svg-react-loader!../../images/Search.svg'
-// import Close from '-!svg-react-loader!../../images/Close.svg'
+import Clients from '-!svg-react-loader!../../images/Clients.svg'
 import {useTranslation} from 'react-i18next'
 import {Link, useNavigate} from '@reach/router'
-
 import s from './drawerUser.module.scss'
 import {setLogOut} from "../../store/auth";
-import ColumnsHideShow from '../columns-hide-show/columns-hide-show'
-
-import ColumnSvg from '-!svg-react-loader!../../images/column.svg'
-import Input from "../input/input";
-//import Logout from '-!svg-react-loader!../../images/SignOut.svg'
-import Status from '-!svg-react-loader!../../images/Status.svg'
-import UserRole from '-!svg-react-loader!../../images/UserRole.svg'
-import Actions from '-!svg-react-loader!../../images/Actions.svg'
-import Clients from '-!svg-react-loader!../../images/Clients.svg'
+import Users from '-!svg-react-loader!../../images/Users.svg'
 const DrawerUser: React.FC = ({children}) => {
     const {t} = useTranslation()
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const handlerLogOut = () => dispatch(setLogOut());
-    const [show, setShow] = useState(false)
-    // const [open, setOpen] = useState(false)
-    const filterColumns = () => {
-        setShow(!show)
-        console.log(show)
-    }
-    const menuItemsFirst = [
 
-        {
-            Icon: <HomeIcon/>,
-            item: 'Home',
-            page: '/admin'
-        },
-        // {
-        //     Icon: <Users/>,
-        //     item: 'vendors',
-        //     page: '/admin/vendors'
-        // },
-        // {
-        //     Icon: <Users/>,
-        //     item: 'adminBeneficiaries',
-        //     page: '/admin/users'
-        // },
+    const menuItemsFirst = [
         {
             Icon: <Clients/>,
             item: 'clients',
-            page: '/admin/clients'
+            page: '/'
         },
         {
-            Icon: <Status/>,
-            item: 'status',
-            page: '/admin/status'
-        },
-        {
-            Icon: <UserRole/>,
-            item: 'role',
-            page: '/admin'
+            Icon: <Users/>,
+            item: 'Users',
+            page: '/users'
         },
     
     ]

@@ -220,11 +220,6 @@ const Home: React.FC<IHome> = () => {
 
     }
 
-    // @ts-ignore
-    // let newIds = ids.length > 0 ? [...new Set(ids)] : ids
-    // console.log(newIds, "newIdsnewIds")
-    // console.log(ids, "ids")
-
 
     useEffect(() => {
         (async () => {
