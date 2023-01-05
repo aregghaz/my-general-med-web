@@ -15,7 +15,7 @@ const CrudTable: React.FC<ICrudTable> = (
         HandlerGetProducts,
         className,
         HandlerPagination,
-        handlerGetclientData,
+        handlerGetClientData,
         paginated,
         selectedIds,
     }) => {
@@ -27,7 +27,7 @@ const CrudTable: React.FC<ICrudTable> = (
                 <TableBody
                     data={data}
                     titles={titles}
-                    handlerGetclientData={handlerGetclientData}
+                    handlerGetClientData={handlerGetClientData}
                     HandlerGetProducts={HandlerGetProducts}
                     selectedIds={selectedIds}
                 />
@@ -56,7 +56,7 @@ interface ICrudTable {
     paginated?: boolean
     count?: ICount
     className: string
-    handlerGetclientData?: (event: any, data: number) => void
+    handlerGetClientData?: (event: any, data: number) => void
     HandlerGetProducts?: (id: number) => void
     HandlerPagination?: (event: any, id: number) => void
     selectedIds: number[]

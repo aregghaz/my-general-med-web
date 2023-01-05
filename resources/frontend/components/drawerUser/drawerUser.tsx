@@ -134,7 +134,7 @@ const DrawerUser: React.FC = ({children}) => {
                         }
                     </ul>
                 </nav>
-                <div className={s.body} style={{width: "100%", maxWidth:"calc(100% - 90px)", display:'inline-block'}}>
+                <div className={s.body} style={{width: "100%", maxWidth:"calc(100% - 40px)", display:'inline-block'}}>
                     {children}
                 </div>
             </div>

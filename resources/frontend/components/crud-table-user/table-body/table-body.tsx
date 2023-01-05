@@ -12,7 +12,7 @@ interface ITableBody {
     data: Array<any>
     titles: Array<IOption>
     HandlerGetProducts?: (id: number) => void
-    handlerGetclientData?: (event: any, data: number) => void,
+    handlerGetClientData?: (event: any, data: number) => void,
     selectedIds: number[]
 
 }
@@ -21,7 +21,7 @@ const TableBody: React.FC<ITableBody> = (
     {
         data,
         titles,
-        handlerGetclientData,
+        handlerGetClientData,
         selectedIds,
     }) => {
 
@@ -38,7 +38,7 @@ const TableBody: React.FC<ITableBody> = (
                             {
                                 keys.map((key: any, i: number) => {
                                         return i !== 0 && (
-                                            <TableData key={key} item={item} handlerGetclientData={() =>handlerGetclientData(event,item['id'])}>
+                                            <TableData key={key} item={item} handlerGetClientData={() =>handlerGetClientData(event,item['id'])}>
                                                 {item[key]}
                                             </TableData>
                                         )

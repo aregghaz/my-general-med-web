@@ -203,7 +203,7 @@ const Home: React.FC<IHome> = () => {
         }
     }, [])
 
-    const handlerGetclientData = async (event: any, id: number) => {
+    const handlerGetClientData = async (event: any, id: number) => {
         if (event.ctrlKey || event.shiftKey) {
             setIds((state) => {
                 return [
@@ -231,11 +231,11 @@ const Home: React.FC<IHome> = () => {
             if ((inView || loading) && !open) {
                 let result = selectedTitle.map(a => a.slug);
                 if (result.length > 0) {
-                    ///localStorage.setItem('titles',JSON.stringify(titles))
-                    console.log(titles,'titles');
+                    ///localStorage.result('titles',JSON.stringify(titles))
+                    console.log(result,'titles');
                     
                     const homeData = await homeAPI.getClientData({
-                        titles: titles,
+                        titles: result,
                         showMore: countRef.current,
                         typeId: typeId
                     })
@@ -315,9 +315,8 @@ const Home: React.FC<IHome> = () => {
     const handlerActionClient = async (status: number) => {
         const homeData = await homeAPI.changeClientsTypes({status, ids})
         setLoading(true)
-
-
     }
+
     const handlerCloseModal = () => {
         setIsModalOpen(false)
     }
@@ -328,7 +327,6 @@ const Home: React.FC<IHome> = () => {
 
     return (
         clients && <>
-
             <div className={s.upload_panel}>
                 <div className={s.table_upper_tab}>
                     {
@@ -459,7 +457,7 @@ const Home: React.FC<IHome> = () => {
                 <CrudTable
                     titles={selectedTitle}
                     data={clients}
-                    handlerGetclientData={handlerGetclientData}
+                    handlerGetClientData={handlerGetClientData}
                     className={'pagination'}
                     paginated={false}
                     selectedIds={ids}
