@@ -309,6 +309,7 @@ const Home: React.FC<IHome> = () => {
     
     const handlerActionClient = async (status: number) => {
         const homeData = await homeAPI.changeClientsTypes({status, ids})
+        setIds([]);
         setLoading(true)
     }
 

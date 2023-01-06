@@ -65,8 +65,10 @@ class HomeController extends Controller
         $tripCount = Clients::where(['vendor_id' => $request->user()->id, 'type_id' => 1])->count();
         $available = Clients::where('type_id', 2)->count();
 
-        $clients = DB::table('clients')->where(['vendor_id' =>$request->user()->id, 'type_id' => $request->typeId]);
-       
+        $clients = DB::table('clients')->where('type_id', $request->typeId);
+        if ($request->typeId != 2) {
+            $clients = $clients->where('vendor_id', $request->user()->id);
+        }
         if (isset($request->queryData)) {
               $this->convertQuery($request->queryData, $vendorFields, $clients);
         }
@@ -224,8 +226,8 @@ class HomeController extends Controller
     {
 
         $ids = $request->ids;
-        $data = Clients::whereIn('id', $ids)->update(['type_id' =>  $request->status]);
-        //  dd($data);
+        Clients::whereIn('id', $ids)->update(['type_id' =>  $request->status, 'vendor_id' => $request->user()->id]);
+       
         return response()->json([
             'status' => 200
         ], 200);
