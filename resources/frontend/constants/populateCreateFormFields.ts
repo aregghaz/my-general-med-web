@@ -17,10 +17,10 @@ const populateCreateFormFields = (fields: Array<IItem>, data: { [key: string]: O
                     //  values[''] = data['']
                     break
                 case 'select':
-                    // values.selectOptions[field.name] = data[field.name]
+                    /// values.selectOptions[field.name] = data[field.name]
                     break
                 case 'multiSelect':
-                    //  values[field.name] = []
+                    // values[field.name]= data[field.name]
                     break
                 case 'datepicker':
                     // values.selectOptions[''] = data['']

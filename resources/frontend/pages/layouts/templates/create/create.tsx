@@ -59,7 +59,7 @@ const Create: React.FC<ICreate> = (
                                                             handleChange={handleChange}
                                                             values={values}
                                                             setFieldValue={setFieldValue}
-                                                            selectOptions={data[field.name]}
+                                                            selectOptions={data}
                                                         />
                                                     </div>
                                                 } else {

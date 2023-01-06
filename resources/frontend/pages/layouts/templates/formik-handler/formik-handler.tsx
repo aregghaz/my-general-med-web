@@ -115,9 +115,9 @@ const FormikHandler: React.FC<IFormikHandler> = (
                 />
             )
         case 'multiSelect':
-console.log( selectOptions[item.name],'values');
-
-
+            console.log(values, '111');
+            
+console.log( selectOptions,item.name,'values');
             return (
                 <Select
                     value={values[item.name]}

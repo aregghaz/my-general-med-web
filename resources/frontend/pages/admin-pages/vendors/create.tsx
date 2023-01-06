@@ -14,16 +14,13 @@ const VendorCreate: React.FC<IVendorCreate> = () => {
     const crudKey = 'vendors'
     const [data, setData] = useState(null)
     const fields: Array<IItem> = [
-        {name: 'logo', type: 'file', label: 'logo'},
         {name: 'companyName', type: 'input', label: 'companyName'},
         {name: 'email', type: 'input', label: 'email'},
         {name: 'address', type: 'input', label: 'address'},
-        {name: 'phone_number', type: 'input', label: 'phoneNumber'},
-        {name: 'id', type: 'hidden', inputType: 'hidden'},
+        {name: 'phone_number', type: 'input', label: 'phone_number'},
         {name: 'fields', type: 'multiSelect', label: 'fields'},
-        {name: 'password', type: 'input', label: 'password'},
-         {name: 'status', type: 'select', label: 'status'},
-         {name: 'text', type: 'textarea', label: 'text'}
+        {name: 'id', type: 'hidden', inputType: 'hidden'},
+        {name: 'password', type: 'input', inputType: 'password'},
     ]
     useEffect(() => {
         (
@@ -37,7 +34,7 @@ const VendorCreate: React.FC<IVendorCreate> = () => {
     }, [])
 
 
-    return  <Create
+    return  data && <Create
         crudKey={crudKey}
         ////TODO FIX THIS MISSING DATA FOR CREATE USER
          data={data}

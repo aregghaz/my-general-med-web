@@ -74,7 +74,7 @@ class VendorController extends Controller
             'phone_number' => 'required|string',
             'email' => 'required|string|email|unique:vendors',
             'password' => 'string',
-            'status' => 'required',
+          //  'status' => 'required',
             'address' => 'string',
             'fields' => 'required',
         ]);
@@ -88,7 +88,7 @@ class VendorController extends Controller
             'name' => $requestData['companyName'],
             'phone_number' => $requestData['phone_number'],
             'email' => $requestData['email'],
-            'status' => json_decode($request->value)->status->id,
+          ///  'status' => json_decode($request->value)->status->id,
             'address' => $requestData['address'],
             'password' =>  bcrypt($requestData['password']),
             'role_id' => 2,
