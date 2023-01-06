@@ -41,4 +41,7 @@ export const AdminApi = {
     getDataFromSite(crudKey: string) {
         return axios.get(`/api/auth/${crudKey}`).then(res => res.data)
     },
+    getVendorUsers(id:number) {
+        return axios.get(`/api/admin/getVendorUsers/${id}`).then(res => res.data)
+    }
 }

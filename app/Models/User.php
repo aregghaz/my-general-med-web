@@ -22,6 +22,7 @@ class User extends Authenticatable
         "image",
         'surname',
         'email',
+        'vendor_id',
         'phone_number',
         'password',
         'role_id',
@@ -36,4 +37,5 @@ class User extends Authenticatable
     {
         return $this->BelongsToMany(ClientTable::class, 'user_fields', 'user_id', 'field_id');
     }
+
 }

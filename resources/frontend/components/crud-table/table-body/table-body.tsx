@@ -6,7 +6,7 @@ import EditIcon from '-!svg-react-loader!../../../images/edit.svg'
 import OrdersIcon from '-!svg-react-loader!../../../images/my-orders.svg'
 import s from '../crud-table.module.scss'
 import {useSelector} from "react-redux";
-
+import UsersIcon from '-!svg-react-loader!../../../images/Users.svg'
 interface ITableBody {
     data: Array<any>
     isEdit?: boolean
@@ -15,7 +15,7 @@ interface ITableBody {
     handlerEditItem?: (id: number) => void
     handlerDeleteItem?: (id: number) => void
     HandlerGetProducts?: (id: number) => void
-   /// handlerGetClientData: (data: any) => void
+    handlerGetVendorUsers?:(id: number) => void
 }
 
 const TableBody: React.FC<ITableBody> = (
@@ -25,7 +25,7 @@ const TableBody: React.FC<ITableBody> = (
         isDelete,
         isGetItems,
         handlerDeleteItem,
-    ///    handlerGetClientData,
+        handlerGetVendorUsers,
         handlerEditItem,
         HandlerGetProducts
     }) => {
@@ -71,13 +71,13 @@ const TableBody: React.FC<ITableBody> = (
                             }
 
                             {
-                                (isEdit || isDelete) &&
+                                (isEdit || isDelete || isGetItems) &&
                                 <TableData>
                                     <div className={s.iconsWrapper}>
 
                                         {isEdit &&
                                             <EditIcon className={s.editIcon} onClick={() => handlerEditItem(item.id)}/>}
-
+                                           {isGetItems &&  <UsersIcon  className={s.editIcon} onClick={() => handlerGetVendorUsers(item.id)}/>},
                                         {isDelete &&
                                             <TrashIcon className={s.trashIcon}
                                                        onClick={() => handlerDeleteItem(item.id)}/>}

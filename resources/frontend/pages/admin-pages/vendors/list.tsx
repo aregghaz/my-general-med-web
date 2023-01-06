@@ -81,11 +81,16 @@ const Vendors: React.FC<IVendors> = () => {
         const homeData = await AdminApi.getAllData(crudKey, activeItem + 1, query ? query : '')
         setCount({from: homeData.current_page, to: homeData.current_page + 5})
         setData(homeData.data)
-        const role = localStorage.getItem('role');
+      ///  const role = localStorage.getItem('role');
         localStorage.setItem('page', activeItem.toString());
 
     }
 
+
+
+    const handlerGetVendorUsers = async (id:number) => {
+        navigate(`/admin/users/${id}`)
+    }
     const customStyles: ReactModal.Styles = {
         content: {
             position: 'fixed',
@@ -123,6 +128,7 @@ const Vendors: React.FC<IVendors> = () => {
                 handlerEditItem={handlerEditBeneficiaryItem}
                 HandlerPagination={HandlerPagination}
                 HandlerGetProducts={HandlerGetProducts}
+                handlerGetVendorUsers={handlerGetVendorUsers}
                 count={count}
                 paginated={true}
                 activeItem={activeItem}

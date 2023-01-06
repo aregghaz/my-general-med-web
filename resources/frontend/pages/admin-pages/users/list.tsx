@@ -16,9 +16,10 @@ import { useDispatch } from "react-redux";
 
 interface Beneficiary {
     path: string;
+    id?:number
 }
 
-const Users: React.FC<Beneficiary> = () => {
+const Users: React.FC<Beneficiary> = ({id}) => {
     const dispatch = useDispatch();
     const crudKey = "users";
     const [data, setData] = useState([]);
@@ -37,14 +38,9 @@ const Users: React.FC<Beneficiary> = () => {
 
     useEffect(() => {
         (async () => {
-            const data = await AdminApi.getAllData(
-                crudKey,
-                1,
-                "",
-                tabIdSelected
-            );
-            setData(data.data);
-            setTabs(data.roles)
+            const homeData = await AdminApi.getVendorUsers(id)
+            setData(homeData.data);
+           /// setTabs(data.roles)
         })();
         // dispatch(actions.setTitles(titles))
         // dispatch(actions.clearData())
@@ -127,7 +123,6 @@ const Users: React.FC<Beneficiary> = () => {
                     isEdit
                     paginated={false}
                     isCreate
-                    isGetItems
                     tabs={tabs}
                     tabId={tabId}
                     handlerAddItem={handlerAddBeneficiaryItem}

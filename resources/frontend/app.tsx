@@ -52,9 +52,9 @@ const App = (): JSX.Element => (
             </Site>
             <PrivateRoute path="/admin">
                 <Dashboard path="/"/>
-                <Users path="/users"/>
-                <UserEdit path="/users/:id"/>
-                <UserCreate path="/users/create"/>
+                <Users path="/users/:id"/>
+                {/* <UserEdit path="/users/:id"/>
+                <UserCreate path="/users/create"/> */}
                 <Clients path="clients"/>
                 <ClientEdit path='clients/:id'/>
                 <ClientCreate path='clients/create'/>
