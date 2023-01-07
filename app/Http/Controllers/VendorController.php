@@ -22,7 +22,7 @@ class VendorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         /// $vendorData = Vendor::paginate(20);
         if (isset($request->querySearch)) {

@@ -3,13 +3,14 @@ import {IItem} from '../../layouts/templates/formik-handler/formik-handler'
 import {useTranslation} from 'react-i18next'
 import Create from '../../layouts/templates/create/create'
 import {AdminApi} from '../../../api/admin-api/admin-api'
+import { vendorAPI } from '../../../api/site-api/vendor-api'
 
 interface IUserCreate {
     path: string
 }
 
 
-const UserCreate: React.FC<IUserCreate> = () => {
+const VendorUsersCreate: React.FC<IUserCreate> = () => {
     const {t} = useTranslation()
     const crudKey = 'users'
     const [data, setData] = useState(null)
@@ -37,7 +38,7 @@ const UserCreate: React.FC<IUserCreate> = () => {
     useEffect(() => {
         (
             async () => {
-                const data = await AdminApi.createItem(crudKey)
+                const data = await vendorAPI.createUserData('vendorClients')
 
                 setData(data)
             }
@@ -57,4 +58,4 @@ const UserCreate: React.FC<IUserCreate> = () => {
 
 }
 
-export default UserCreate
+export default VendorUsersCreate

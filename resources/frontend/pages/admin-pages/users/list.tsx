@@ -58,7 +58,7 @@ const Users: React.FC<Beneficiary> = ({id}) => {
         "action",
     ];
     
-    const handlerAddBeneficiaryItem = () => navigate(`/admin/vendors/create`);
+    const handlerAddBeneficiaryItem = () => navigate(`/admin/${crudKey}/create/${id}`);
 
     const handlerCloseModal = () => {
         setIsModalOpen(false);

@@ -21,7 +21,7 @@ interface IList {
     activeItem?: number
     ////FIXMECHANGE IT NORMA TYPR
     last_page?: number
-    handlerChangeTabs?: (id: number) => void
+    handlerChangeTabs?: (id: number,name:string) => void
     count?: any
     className?: string
     tabId?:number
@@ -75,7 +75,7 @@ const List: React.FC<IList> = (
                             //     backgroundColor: '#165f8d',
                             //     color: "white"
                             // } : {backgroundColor: 'white'}}
-                            onClick={() => handlerChangeTabs(tab.id)}
+                            onClick={() => handlerChangeTabs(tab.id,tab.name)}
                             >
                                 {tab.name} {tab.count && <span className={s.bage_count}>{tab.count}</span>}
                             </div>

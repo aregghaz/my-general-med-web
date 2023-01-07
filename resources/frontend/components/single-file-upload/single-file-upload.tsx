@@ -10,6 +10,7 @@ interface ISingleFileUpload {
     oldName?: string
     onChange: (e: React.ChangeEvent<any>) => void
     error?: string
+    label:string
     value: any
     media: string
     name: string
@@ -21,6 +22,7 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
         name,
         value,
         media,
+        label,
         oldImage,
         oldName,
         oldVideo,
@@ -44,6 +46,7 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
                 {error && <div className={s.error}>{error}</div>}
                 <Button type={'blank'}>
                     <span className={s.uploadFileText}>
+                        {label}
                         <img src="/images/button.svg" alt=""/>
                     </span>
                     {value && <span className={s.uploadedImage}>{value.name}</span>}

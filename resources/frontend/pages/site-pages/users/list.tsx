@@ -32,7 +32,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
     const [tabIdSelected, setTabIdSelected] = useState(1);
     const [dataID, setDataID] = useState(null);
     const [tabs, setTabs] = useState([]);
-
+    const [typeName, setTypeName] = useState<string>()
     const navigate = useNavigate();
     const { t } = useTranslation();
 
@@ -60,7 +60,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
         "action",
     ];
     
-    const handlerAddBeneficiaryItem = () => navigate(`/admin/vendors/create`);
+    const handlerAddBeneficiaryItem = () => navigate(`/users/${typeName}/create`);
 
     const handlerCloseModal = () => {
         setIsModalOpen(false);
@@ -78,17 +78,15 @@ const VendorUsers: React.FC<Beneficiary> = () => {
     };
     const handlerEditBeneficiaryItem = (id: number) =>
         navigate(`/${crudKey}/${id}`);
-    const HandlerGetProducts = (id: number) =>
-        navigate(`/admin/users-products/${id}`);
+
 
     const HandlerPagination = (activeItem: number) => {
         const role = localStorage.getItem("role");
         localStorage.setItem("page", activeItem.toString());
     };
-    const handlerGetClientData = (id: number) => {
-        setDataID(id);
-    };
-    const handlerChangeTabs = async (tabId: number) => {
+  
+    const handlerChangeTabs = async (tabId: number, name:string) => {
+        setTypeName(name)
         setTabIdSelected(tabId);
         // setLoading(true)
     };
@@ -117,6 +115,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
     return (
         data && (
             <>
+                  
                 {/* <InfoBlock  items={data}/> */}
                 <List
                     data={data}
@@ -132,7 +131,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
                     handlerDeleteItem={handlerDeleteModal}
                     handlerEditItem={handlerEditBeneficiaryItem}
                     HandlerPagination={HandlerPagination}
-                    HandlerGetProducts={HandlerGetProducts}
+                  //  HandlerGetProducts={HandlerGetProducts}
                     ///handlerGetClientData={handlerGetClientData}
                     count={count}
                     handlerChangeTabs={handlerChangeTabs}

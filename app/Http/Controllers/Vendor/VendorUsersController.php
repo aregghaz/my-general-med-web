@@ -13,7 +13,7 @@ use App\Http\Resources\StatusCollection;
 class VendorUsersController extends Controller
 {
     public function index(Request $request){
-        $users =  User::where('vendor_id', $request->user()->id);
+        $users =  User::where('vendor_id', $request->user()->id)->where('id','!=', $request->user()->id);
         if ($request->input('tabId')) {
 
             $users = $users->where('role_id',$request->input('tabId'));
@@ -22,7 +22,7 @@ class VendorUsersController extends Controller
         $users = $users->get();
       ///  $users = User::get();
       $roles = Role::where("id", ">" ,$request->user()->role_id )->withCount('users')->get();
-
+     ///   dd($users);
       return response()->json([
             'data' => new UserCollection($users),
             'roles' => new RoleCollection($roles),
@@ -50,5 +50,15 @@ class VendorUsersController extends Controller
             ///    'status' => new StatusCollection($status)
             ], 200);
         }
+    }
+    public function create(Request $request)
+    {
+        $roles = Role::where("id", ">" ,$request->user()->role_id )->withCount('users')->get();
+        return response()->json([
+            // 'data' => new UserCollection($users),
+            'roles' => new RoleCollection($roles),
+
+        ], 200);
+
     }
 }

@@ -15,11 +15,11 @@ class UserCollection extends ResourceCollection
     public function toArray($request)
     {
         return $this->map(function ($user) {
-          
+         
             return [
                 'id' => $user->id,
                 // "client_id" => $user->client_id,
-                // 'driver_id'=> $user->client_id,
+                // $user->name'driver_id'=> $user->client_id,
                 'fullName' => $user->name.' ' .$user->surname,
                 'email' => $user->email,
                 'address' => $user->address,

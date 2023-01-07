@@ -34,7 +34,7 @@ export const homeAPI = {
         }).then(res => res.data)
     },
     getVendorData(tabId:number) {
-        return axios.get('/api/vendorClients').then(res => res.data)
+        return axios.get(`/api/vendorClients?tabId=${tabId}`).then(res => res.data)
     },
     editUserData(crudKey: string, id: number) {
         return axios.get(`/api/${crudKey}/${id}/edit`).then(res => res.data)

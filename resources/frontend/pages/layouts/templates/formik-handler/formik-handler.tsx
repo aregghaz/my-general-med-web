@@ -9,6 +9,7 @@ import Checkbox from '../../../../components/checkbox/checkbox'
 import RichText from '../../../../components/rich-text/rich-text'
 import {useTranslation} from 'react-i18next'
 import DataPicker from '../../../../components/data-picker/data-picker'
+import SingleFileUpload from '../../../../components/single-file-upload/single-file-upload'
 
 export interface IItem {
     type?: 'input' | 'checkbox' | 'richText' | 'textarea' | 'select' | 'file' | 'textField' | 'radio' | 'datepicker' | 'multiSelect' | "hidden"
@@ -99,9 +100,7 @@ const FormikHandler: React.FC<IFormikHandler> = (
             )
         case 'file':
             return (
-                <div>
-                    file
-                </div>
+                <SingleFileUpload onChange={handleChange}  label={item.label}  value={values[item.name]} media={''} name={item.name} />
             )
         case 'textField':
             return (
@@ -115,9 +114,7 @@ const FormikHandler: React.FC<IFormikHandler> = (
                 />
             )
         case 'multiSelect':
-            console.log(values, '111');
-            
-console.log( selectOptions,item.name,'values');
+
             return (
                 <Select
                     value={values[item.name]}

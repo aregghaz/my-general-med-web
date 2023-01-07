@@ -6,16 +6,17 @@ import {AdminApi} from '../../../api/admin-api/admin-api'
 
 interface IUserCreate {
     path: string
+    id:number
 }
 
 
-const UserCreate: React.FC<IUserCreate> = () => {
+const UserCreate: React.FC<IUserCreate> = ({id}) => {
     const {t} = useTranslation()
     const crudKey = 'users'
     const [data, setData] = useState(null)
     const fields: Array<IItem> = [
         {name: 'logo', type: 'file', label: 'image'},
-        {name: 'company', type: 'input', label: 'title'},
+        {name: 'name', type: 'input', label: 'name'},
         {name: 'surname', type: 'input', label: 'surName'},
         {name: 'email', type: 'input', label: 'email'},
         {name: 'birthday', type: 'input', label: 'birthDate'},
@@ -37,14 +38,15 @@ const UserCreate: React.FC<IUserCreate> = () => {
     }, [])
 
 
-    return data && <Create
-        crudKey={crudKey}
-        ////TODO FIX THIS MISSING DATA FOR CREATE USER
-        data={data}
-        fields={fields}
-        title={''}
-        children={t('create')}
-    />
+    return <>sss</>
+    //  data && <Create
+    //     crudKey={crudKey}
+    //     ////TODO FIX THIS MISSING DATA FOR CREATE USER
+    //     data={data}
+    //     fields={fields}
+    //     title={''}
+    //     children={t('create')}
+    // />
 
 }
 
