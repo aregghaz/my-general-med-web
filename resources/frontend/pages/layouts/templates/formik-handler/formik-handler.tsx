@@ -10,6 +10,7 @@ import RichText from '../../../../components/rich-text/rich-text'
 import {useTranslation} from 'react-i18next'
 import DataPicker from '../../../../components/data-picker/data-picker'
 import SingleFileUpload from '../../../../components/single-file-upload/single-file-upload'
+import getFieldLabel from '../../../../utils/getFieldLabel'
 
 export interface IItem {
     type?: 'input' | 'checkbox' | 'richText' | 'textarea' | 'select' | 'file' | 'textField' | 'radio' | 'datepicker' | 'multiSelect' | "hidden"
@@ -26,8 +27,9 @@ interface IFormikHandler {
     handleChange: (e: React.ChangeEvent<any>) => void
     values: FormikValues
     setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
-    errors?: string
     selectOptions?: any
+    requiredFields?:Array<string>
+    errors?:any
 }
 
 const FormikHandler: React.FC<IFormikHandler> = (
@@ -37,20 +39,30 @@ const FormikHandler: React.FC<IFormikHandler> = (
         values,
         handleChange,
         setFieldValue,
-        selectOptions
+        selectOptions,
+        requiredFields
     }) => {
     const {t} = useTranslation()
+
+
     switch (item.type) {
         case 'input':
+            // console.log(errors,errors[item.name],'errors[item.name]');
+            
             return (
-                <Input
-                    name={item.name}
-                    value={values[item.name]}
-                    type={item.inputType}
-                    onChange={handleChange}
-                    placeholder={item.placeholder}
-                    label={item.label}
-                />
+             <>
+                {/* {errors[item.name] && <div >{errors[item.name] }</div>} */}
+
+                        <Input
+                            name={item.name}
+                            value={values[item.name]}
+                            type={item.inputType}
+                            onChange={handleChange}
+                            placeholder={item.placeholder}
+                            label={getFieldLabel(t, item.label, item.name, requiredFields)}
+                            error={errors[item.name]}
+                            />
+             </>
             )
         case 'checkbox':
             return (
@@ -100,7 +112,17 @@ const FormikHandler: React.FC<IFormikHandler> = (
             )
         case 'file':
             return (
-                <SingleFileUpload onChange={handleChange}  label={item.label}  value={values[item.name]} media={''} name={item.name} />
+                <SingleFileUpload
+                    name={item.name}
+                    oldImage={values[item.name]}
+                    onChange={(event) => {
+                        setFieldValue(item.name, event.currentTarget.files[0])
+                    } }
+                    label={item.label}
+                    media={'image'} 
+                    value={values[item.name]}
+                    error={errors[item.name]}
+                                        />
             )
         case 'textField':
             return (

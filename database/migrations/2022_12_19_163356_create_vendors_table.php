@@ -15,12 +15,16 @@ class CreateVendorsTable extends Migration
     {
         Schema::create('vendors', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('address');
-            $table->string('email');
-            $table->string('notes')->nullable();
-            $table->string('phone_number')->nullable();
-            $table->enum('status',[0,1])->default(0);
+            $table->string('license');
+            $table->string('picture');
+            $table->string('sex_offender_check');
+            $table->string('motor_vehicle_record')->nullable();
+            $table->string('defensive_driving')->nullable();
+            $table->string('wheelchair_securement')->nullable();
+            $table->string('pass_bassic')->nullable();
+            $table->string('emt_1')->nullable();
+            $table->string('first_aid');
+            $table->string('company_training');
             $table->timestamps();
         });
     }

@@ -7,12 +7,16 @@ import {Formik, FormikHelpers, FormikValues} from 'formik'
 import {useNavigate} from '@reach/router'
 import populateCreateFormFields from "../../../../constants/populateCreateFormFields";
 import {AdminApi} from '../../../../api/admin-api/admin-api';
+import validationRules from '../../../../utils/validationRule';
+import { useTranslation } from 'react-i18next';
 
 interface ICreate {
     data?: { [key: string]: Object }
     fields: Array<IItem>
     crudKey?: string
-    title: string
+    isAdmin?:boolean 
+    title: string,
+    requiredFields?:Array<string>
 }
 
 
@@ -21,15 +25,22 @@ const Create: React.FC<ICreate> = (
         fields,
         crudKey,
         data,
-        children
+        isAdmin = true,
+        children,
+        requiredFields
     }) => {
     const navigate = useNavigate()
+    const {t} = useTranslation()
+   
+    const validate = (values:FormikValues) => validationRules(values, requiredFields, fields, t)
+
     const create = async (values: FormikValues, {setSubmitting}: FormikHelpers<FormikValues>) => {
         setSubmitting(true)
         const formData: FormData = new FormData()
+        formData.append('input1', values['input1'])
         formData.append('value', JSON.stringify(values))
-        const res: any = await AdminApi.store(formData, crudKey)
-        if (Number(res.status === 200)) await navigate(`/admin/${crudKey}`)
+        const res: any = await AdminApi.store(formData, crudKey,isAdmin)
+        if (Number(res.status === 200)) await navigate(`/${isAdmin ? 'admin/' : '/'}${crudKey}`)
     }
 
     return (
@@ -39,12 +50,14 @@ const Create: React.FC<ICreate> = (
                 selectOptions={data || {}}
                 initialValues={populateCreateFormFields(fields, data)}
                 onSubmit={create}
+                validate={(values:FormikValues) => validate(values)}
             >
                 {({
                       handleSubmit,
                       handleChange,
                       values,
                       setFieldValue,
+                      errors,
                   }) => {
                     return (
                         <>
@@ -60,6 +73,8 @@ const Create: React.FC<ICreate> = (
                                                             values={values}
                                                             setFieldValue={setFieldValue}
                                                             selectOptions={data}
+                                                            requiredFields={requiredFields}
+                                                            errors={errors}
                                                         />
                                                     </div>
                                                 } else {
@@ -69,6 +84,8 @@ const Create: React.FC<ICreate> = (
                                                             handleChange={handleChange}
                                                             values={values}
                                                             setFieldValue={setFieldValue}
+                                                            requiredFields={requiredFields}
+                                                            errors={errors}
                                                         />
                                                     </div>
                                                 }

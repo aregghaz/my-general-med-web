@@ -32,6 +32,7 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
 
     return (
         <>
+            {/* <Viewer fileUrl={url} /> */}
             {oldImage && (
                 <div className={s.existingImageBlock}>
                     <img className={s.existingImage} src={oldImage} alt={oldName}/>

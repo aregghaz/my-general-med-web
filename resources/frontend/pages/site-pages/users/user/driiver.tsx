@@ -12,7 +12,7 @@ interface IUserCreate {
 
 const VendorDriverCreate: React.FC<IUserCreate> = () => {
     const {t} = useTranslation()
-    const crudKey = 'users'
+    const crudKey = 'vendorClients'
     const [data, setData] = useState(null)
     const fields: Array<IItem> = [
         // {name: 'image', type: 'file', label: 'image'},
@@ -21,16 +21,16 @@ const VendorDriverCreate: React.FC<IUserCreate> = () => {
         {name: 'email', type: 'input', label: 'email'},
         {name: 'address', type: 'input', label: 'address'},
         {name: 'birthday', type: 'input', label: 'birthDate'},
-        {name: 'driver_license', type: 'file', label: 'Driver License'},
-        {name: 'driver_picture', type: 'file', label: 'Driver Picture'},
-        {name: 'sex_offender_check ', type: 'file', label: 'Sex Offender Check '},
+        {name: 'license', type: 'file', label: 'Driver License'},
+        {name: 'picture', type: 'file', label: 'Driver Picture'},
+        {name: 'sex_offender_check', type: 'file', label: 'Sex Offender Check '},
         {name: 'motor_vehicle_record', type: 'file', label: 'Motor Vehicle Record'},
-        {name: 'defensive_driving_certificate', type: 'file', label: 'Defensive Driving Certificate'},
-        {name: 'wheelchair_securement_certificate', type: 'file', label: 'Wheelchair Securement Certificate'},
+        {name: 'defensive_driving', type: 'file', label: 'Defensive Driving Certificate'},
+        {name: 'wheelchair_securement', type: 'file', label: 'Wheelchair Securement Certificate'},
         {name: 'pass_bassic', type: 'file', label: 'Pass Basic'},
-        {name: 'emt_1_certificate', type: 'file', label: 'EMT 1 Certificate'},
-        {name: 'input1', type: 'file', label: 'First Aid and CPR Certificate'},
-        {name: 'input2', type: 'file', label: 'Company Training Letter'},
+        {name: 'emt_1', type: 'file', label: 'EMT 1 Certificate'},
+        {name: 'first_aid', type: 'file', label: 'First Aid and CPR Certificate'},
+        {name: 'company_training', type: 'file', label: 'Company Training Letter'},
 
     ]
     useEffect(() => {
@@ -43,13 +43,27 @@ const VendorDriverCreate: React.FC<IUserCreate> = () => {
         )()
 
     }, [])
-
+    const requiredFields = [
+        'name',
+        'license',
+        'picture',
+        'sex_offender_check',
+        'motor_vehicle_record',
+        'defensive_driving',
+        'wheelchair_securement',
+        'pass_bassic',
+        'emt_1',
+        'first_aid',
+        'company_training'       
+    ]
 
     return data && <Create
         crudKey={crudKey}
         ////TODO FIX THIS MISSING DATA FOR CREATE USER
         data={data}
         fields={fields}
+        isAdmin={false}
+        requiredFields={requiredFields}
         title={''}
         children={t('create')}
     />

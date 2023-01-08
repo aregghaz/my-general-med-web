@@ -10,6 +10,16 @@ class Driver extends Model
     use HasFactory;
     protected $fillable  =  [
         'id',
-      'user_id'
+      'license',
+      'picture',
+      'sex_offender_check',
+  'motor_vehicle_record',
+  'defensive_driving',
+  'wheelchair_securement',
+  'pass_bassic',
+  'emt_1',
+  'first_aid',
+  'company_training'
+
     ];
 }

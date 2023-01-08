@@ -6,8 +6,8 @@ export const AdminApi = {
         return axios.get('/api/auth/user').then(res => res.data)
     },
 
-    store(formData: FormData, crudKey: string) {
-        return axios.post(`/api/admin/${crudKey}`, formData).then(res => res.data)
+    store(formData: FormData, crudKey: string,isAdmin:boolean) {
+        return axios.post(`/api/${isAdmin ? 'admin/' : ''}${crudKey}`, formData).then(res => res.data)
     },
 
     getUserData(crudKey: string, id: number) {
