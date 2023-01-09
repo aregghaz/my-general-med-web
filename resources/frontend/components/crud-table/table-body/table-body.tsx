@@ -77,7 +77,7 @@ const TableBody: React.FC<ITableBody> = (
 
                                         {isEdit &&
                                             <EditIcon className={s.editIcon} onClick={() => handlerEditItem(item.id)}/>}
-                                           {isGetItems &&  <UsersIcon  className={s.editIcon} onClick={() => handlerGetVendorUsers(item.id)}/>},
+                                           {isGetItems &&  <UsersIcon  className={s.editIcon} onClick={() => handlerGetVendorUsers(item.id)}/>}
                                         {isDelete &&
                                             <TrashIcon className={s.trashIcon}
                                                        onClick={() => handlerDeleteItem(item.id)}/>}

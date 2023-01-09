@@ -16,7 +16,16 @@ class CreateDriversTable extends Migration
         Schema::create('drivers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->enum('status',['active','disabled'])->default('active');
+            $table->string('license');
+            $table->string('picture');
+            $table->string('sex_offender_check');
+            $table->string('motor_vehicle_record');
+            $table->string('defensive_driving');
+            $table->string('wheelchair_securement');
+            $table->string('pass_bassic');
+            $table->string('emt_1');
+            $table->string('first_aid');
+            $table->string('company_training');
             $table->timestamps();
         });
     }

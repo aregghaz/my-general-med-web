@@ -37,10 +37,23 @@ const Create: React.FC<ICreate> = (
     const create = async (values: FormikValues, {setSubmitting}: FormikHelpers<FormikValues>) => {
         setSubmitting(true)
         const formData: FormData = new FormData()
-        formData.append('input1', values['input1'])
+        if(crudKey == 'vendorClients'){
+            formData.append('sex_offender_check', values['sex_offender_check'])
+            formData.append('motor_vehicle_record', values['motor_vehicle_record'])
+            formData.append('defensive_driving', values['defensive_driving'])
+            formData.append('wheelchair_securement', values['wheelchair_securement'])
+            formData.append('pass_bassic', values['pass_bassic'])
+            formData.append('emt_1', values['emt_1'])
+            formData.append('first_aid', values['first_aid'])
+            formData.append('company_training', values['company_training'])
+            formData.append('license', values['license']) 
+            formData.append('picture', values['picture'])
+        
+        }
+
         formData.append('value', JSON.stringify(values))
         const res: any = await AdminApi.store(formData, crudKey,isAdmin)
-        if (Number(res.status === 200)) await navigate(`/${isAdmin ? 'admin/' : '/'}${crudKey}`)
+        if (Number(res.status === 200)) await navigate(`/${isAdmin ? 'admin/' : ''}${crudKey}`)
     }
 
     return (

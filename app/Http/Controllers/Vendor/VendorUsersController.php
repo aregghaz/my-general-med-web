@@ -11,6 +11,7 @@ use App\Models\ClientTable;
 use App\Http\Resources\RoleCollection;
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\StatusCollection;
+use App\Models\Driver;
 use Validator;
 class VendorUsersController extends Controller
 {
@@ -55,10 +56,10 @@ class VendorUsersController extends Controller
     }
     public function create(Request $request)
     {
-        $roles = Role::where("id", ">" ,$request->user()->role_id )->withCount('users')->get();
+        $roles = Role::where("id", ">" ,$request->user()->role_id )->get();
         return response()->json([
             // 'data' => new UserCollection($users),
-            'roles' => new RoleCollection($roles),
+            'roles' => new StatusCollection($roles),
 
         ], 200);
 
@@ -69,41 +70,42 @@ class VendorUsersController extends Controller
         $validator = Validator::make((array)$data, [
             'name' => 'required|string',
             'surname' => 'string',
-            'phone_number' => 'required|string',
+            //'phone_number' => 'required|string',
             'email' => 'required|string|email|unique:users',
-            ///'password' => 'required|string|confirmed',
+            'password' => 'required|string',
             'birthday' => 'string',
             'address' => 'string',
             // 'address' => 'string',
 
         ]);
-        $validator2 = Validator::make($request, [
-            'license'=> 'required|mimes:doc,pdf,docx,zip',
-            'picture'=> 'required|mimes:doc,pdf,docx,zip',
-            'sex_offender_check'=> 'required|mimes:doc,pdf,docx,zip',
-            'motor_vehicle_record'=> 'required|mimes:doc,pdf,docx,zip',
-            'defensive_driving'=> 'required|mimes:doc,pdf,docx,zip',
-            'wheelchair_securement'=> 'required|mimes:doc,pdf,docx,zip',
-            'pass_bassic'=> 'required|mimes:doc,pdf,docx,zip',
-            'emt_1'=> 'required|mimes:doc,pdf,docx,zip',
-            'first_aid'=> 'required|mimes:doc,pdf,docx,zip',
-            'company_training'=> 'required|mimes:doc,pdf,docx,zip',
-        ]);
-        if ($validator->fails() && $validator2->false()) {
-            return response()->json(['success' => 0, 'type' => 'validation_filed', 'error' => $validator->messages().' '. $validator2->messages()], 422);
+        // $validator2 = Validator::make($request, [
+        //     'license'=> 'required|mimes:doc,pdf,docx,zip',
+        //     'picture'=> 'required|mimes:doc,pdf,docx,zip',
+        //     'sex_offender_check'=> 'required|mimes:doc,pdf,docx,zip',
+        //     'motor_vehicle_record'=> 'required|mimes:doc,pdf,docx,zip',
+        //     'defensive_driving'=> 'required|mimes:doc,pdf,docx,zip',
+        //     'wheelchair_securement'=> 'required|mimes:doc,pdf,docx,zip',
+        //     'pass_bassic'=> 'required|mimes:doc,pdf,docx,zip',
+        //     'emt_1'=> 'required|mimes:doc,pdf,docx,zip',
+        //     'first_aid'=> 'required|mimes:doc,pdf,docx,zip',
+        //     'company_training'=> 'required|mimes:doc,pdf,docx,zip',
+        // ]);
+        if ($validator->fails()) {
+            return response()->json(['success' => 0, 'type' => 'validation_filed', 'error' => $validator->messages()], 422);
         }
         $requestData = $validator->validated();
         $user = new User([
             'name' => $requestData['name'],
             'surname' => $requestData['surname'],
-            'phone_number' => $requestData['phone_number'],
+            'vendor_id' => $request->user()->vendor_id,
             'email' => $requestData['email'],
+            'role_id'=> 3,
             /////TODO CHANGE IT
-            //// 'password' => bcrypt($requestData['password']),
-            'password' => bcrypt('admin'),
+             'password' => bcrypt($requestData['password']),
+            ///'password' => bcrypt('admin'),
             'birthday' => date('Y-m-d', strtotime($requestData['birthday'])),
             'address' => $requestData['address'],
-            // 'state_id' => $state->id,
+            'phone_number' => '12313',
         ]);
         if (!$user->save()) {
             return response()->json([
@@ -112,60 +114,61 @@ class VendorUsersController extends Controller
             ], 403);
         } else {
  
-            $vendor = new Vendor();
+            $vendor = new Driver();
             
             $vendor->user_id = $user->id;
 
             $license = $request->file("license");
-            $license_name = time() . $license->getClientOriginalName();
-            $license->move('uploads/product', $license_name);
+            $license_name = time()+1 . $license->getClientOriginalName();
+            $license->move("uploads/$request->user()->vendor_id/$user->id", $license_name);
             $vendor->license = $license_name;
             
             $picture = $request->file("picture");
-            $picture_name = time() . $picture->getClientOriginalName();
-            $picture->move('uploads/product', $picture_name);
+            $picture_name = time()+2 . $picture->getClientOriginalName();
+            $picture->move("uploads/$request->user()->vendor_id/$user->id", $picture_name);
             $vendor->picture = $picture_name;
 
             $sex_offender_check = $request->file("sex_offender_check");
-            $sex_offender_check_name = time()+1 . $sex_offender_check->getClientOriginalName();
-            $sex_offender_check->move('uploads/product', $sex_offender_check_name);
+            $sex_offender_check_name = time()+3 . $sex_offender_check->getClientOriginalName();
+            $sex_offender_check->move("uploads/$request->user()->vendor_id/$user->id", $sex_offender_check_name);
             $vendor->sex_offender_check = $sex_offender_check_name;
 
             $motor_vehicle_record = $request->file("motor_vehicle_record");
-            $motor_vehicle_record_name = time() +10 . $motor_vehicle_record->getClientOriginalName();
-            $motor_vehicle_record->move('uploads/product', $motor_vehicle_record_name);
+            $motor_vehicle_record_name = time() +4 . $motor_vehicle_record->getClientOriginalName();
+            $motor_vehicle_record->move("uploads/$request->user()->vendor_id/$user->id", $motor_vehicle_record_name);
             $vendor->motor_vehicle_record = $motor_vehicle_record;
 
             $defensive_driving = $request->file("defensive_driving");
-            $defensive_driving_name = time() +15 . $defensive_driving->getClientOriginalName();
-            $defensive_driving->move('uploads/product', $defensive_driving_name);
+            $defensive_driving_name = time() +5 . $defensive_driving->getClientOriginalName();
+            $defensive_driving->move("uploads/$request->user()->vendor_id/$user->id", $defensive_driving_name);
             $vendor->defensive_driving = $defensive_driving_name;
 
 
             $wheelchair_securement = $request->file("wheelchair_securement");
-            $wheelchair_securement_name = time() +15 . $wheelchair_securement->getClientOriginalName();
-            $wheelchair_securement->move('uploads/product', $wheelchair_securement_name);
+            $wheelchair_securement_name = time() +6 . $wheelchair_securement->getClientOriginalName();
+            $wheelchair_securement->move("uploads/$request->user()->vendor_id/$user->id", $wheelchair_securement_name);
             $vendor->wheelchair_securement = $defensive_driving_name;
 
             $pass_bassic = $request->file("pass_bassic");
-            $pass_bassic_name = time() +15 . $pass_bassic->getClientOriginalName();
-            $pass_bassic->move('uploads/product', $pass_bassic_name);
+            $pass_bassic_name = time() +7 . $pass_bassic->getClientOriginalName();
+            $pass_bassic->move("uploads/$request->user()->vendor_id/$user->id", $pass_bassic_name);
             $vendor->pass_bassic = $pass_bassic_name;
 
             $emt_1 = $request->file("emt_1");
-            $emt_1_name = time() +15 . $emt_1->getClientOriginalName();
-            $emt_1->move('uploads/product', $emt_1_name);
+            $emt_1_name = time() +8 . $emt_1->getClientOriginalName();
+            $emt_1->move("uploads/$request->user()->vendor_id/$user->id", $emt_1_name);
             $vendor->emt_1 = $emt_1_name;
           
             $first_aid = $request->file("first_aid");
-            $first_aid_name = time() +15 . $first_aid->getClientOriginalName();
-            $first_aid->move('uploads/product', $first_aid_name);
+            $first_aid_name = time() +9 . $first_aid->getClientOriginalName();
+            $first_aid->move("uploads/$request->user()->vendor_id/$user->id", $first_aid_name);
             $vendor->first_aid = $first_aid_name;
           
             $company_training = $request->file("company_training");
-            $company_training_name = time() +15 . $company_training->getClientOriginalName();
-            $company_training->move('uploads/product', $company_training_name);
+            $company_training_name = time() +10 . $company_training->getClientOriginalName();
+            $company_training->move("uploads/$request->user()->vendor_id/$user->id", $company_training_name);
             $vendor->company_training = $company_training_name;
+            $vendor->save();
           
         }
         // $user->notify(

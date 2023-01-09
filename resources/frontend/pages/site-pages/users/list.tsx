@@ -29,10 +29,10 @@ const VendorUsers: React.FC<Beneficiary> = () => {
     const [count, setCount] = useState(0);
     const [activeItem, setActiveItem] = useState(null);
     const [tabId, setTabId] = useState(1);
-    const [tabIdSelected, setTabIdSelected] = useState(1);
+    const [tabIdSelected, setTabIdSelected] = useState(3);
     const [dataID, setDataID] = useState(null);
     const [tabs, setTabs] = useState([]);
-    const [typeName, setTypeName] = useState<string>()
+    const [typeName, setTypeName] = useState<string>('driver')
     const navigate = useNavigate();
     const { t } = useTranslation();
 
@@ -124,7 +124,6 @@ const VendorUsers: React.FC<Beneficiary> = () => {
                     isEdit
                     paginated={false}
                     isCreate
-                    isGetItems
                     tabs={tabs}
                     tabId={tabId}
                     handlerAddItem={handlerAddBeneficiaryItem}

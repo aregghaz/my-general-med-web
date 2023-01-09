@@ -21,6 +21,9 @@ const VendorDriverCreate: React.FC<IUserCreate> = () => {
         {name: 'email', type: 'input', label: 'email'},
         {name: 'address', type: 'input', label: 'address'},
         {name: 'birthday', type: 'input', label: 'birthDate'},
+        {name: 'phone_number', type: 'input', label: 'phone_number'},
+        {name: 'password', type: 'input', label: 'password'},
+        {name: 'roles', type: 'select', label: 'role'},
         {name: 'license', type: 'file', label: 'Driver License'},
         {name: 'picture', type: 'file', label: 'Driver Picture'},
         {name: 'sex_offender_check', type: 'file', label: 'Sex Offender Check '},
@@ -31,6 +34,7 @@ const VendorDriverCreate: React.FC<IUserCreate> = () => {
         {name: 'emt_1', type: 'file', label: 'EMT 1 Certificate'},
         {name: 'first_aid', type: 'file', label: 'First Aid and CPR Certificate'},
         {name: 'company_training', type: 'file', label: 'Company Training Letter'},
+        {name: 'id', type: 'hidden', inputType: 'hidden'},
 
     ]
     useEffect(() => {
