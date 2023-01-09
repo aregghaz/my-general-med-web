@@ -183,7 +183,7 @@ class TestController extends Controller
       // dd(  ['client_id' => (int)rand(1,4)]);
       $clients = Clients::create(
         [
-          'vendor_id' => 1,
+          'vendor_id' => 2,
           'car_id' => 2,
           'type_id' => rand(1,4),
           'trip_id' => $data[$trip_id],

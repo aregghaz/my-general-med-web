@@ -19,16 +19,19 @@ const VendorEdit: React.FC<IVendorEditItem> = ({id}) => {
         {name: 'phone_number', type: 'input', label: 'phone_number'},
         {name: 'fields', type: 'multiSelect', label: 'fields'},
         {name: 'id', type: 'hidden', inputType: 'hidden'},
-    
-    ]
 
+    ]
+    const requiredFields = [
+            'companyName',
+        'phone_number'
+    ]
 
     useEffect(() => {
         (
             async () => {
                 const data = await AdminApi.editUserData(crudKey, id)
                 console.log(data,'datadata');
-                
+
                 setData(data)
 
             }
@@ -40,6 +43,7 @@ const VendorEdit: React.FC<IVendorEditItem> = ({id}) => {
         <Edit
             crudKey={crudKey}
             data={data}
+            requiredFields={requiredFields}
             fields={fields}
             title={''}
             children={t('update')}

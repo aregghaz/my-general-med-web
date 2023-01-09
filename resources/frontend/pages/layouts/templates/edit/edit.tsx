@@ -8,12 +8,15 @@ import {useNavigate} from '@reach/router'
 
 import s from './edit.module.scss'
 import {AdminApi} from "../../../../api/admin-api/admin-api";
+import validationRules from "../../../../utils/validationRule";
+import {useTranslation} from "react-i18next";
 
 interface IEdit {
     data: {[key: string]: { [key: string]: Object }}
     fields: Array<IItem>
     crudKey?: string
-    title: string
+    title: string,
+    requiredFields?:Array<string>
 }
 
 const Edit: React.FC<IEdit> = (
@@ -21,10 +24,13 @@ const Edit: React.FC<IEdit> = (
         fields,
         crudKey,
         data,
-        children
+        children,
+        requiredFields,
     }) => {
+    const {t} = useTranslation()
 
     const navigate = useNavigate()
+    const validate = (values:FormikValues) => validationRules(values, requiredFields, fields, t)
 
     const submit = async (values: FormikValues, {setSubmitting}: FormikHelpers<FormikValues>) => {
         setSubmitting(true)
@@ -40,12 +46,14 @@ const Edit: React.FC<IEdit> = (
             <Formik
                 initialValues={populateEditFormFields(fields, data)}
                 onSubmit={submit}
+                validate={validate}
             >
                 {({
                       handleSubmit,
                       handleChange,
                       values,
-                      setFieldValue
+                      setFieldValue,
+                    errors
                   }) => {
 
 
@@ -60,8 +68,10 @@ const Edit: React.FC<IEdit> = (
                                                     item={field}
                                                     handleChange={handleChange}
                                                     values={values}
+                                                    requiredFields={requiredFields}
                                                     setFieldValue={setFieldValue}
                                                      selectOptions={data}
+                                                    errors={errors}
                                                 />
                                             </div>
                                         )
