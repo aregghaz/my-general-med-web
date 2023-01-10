@@ -11,11 +11,12 @@ import s from './data-picker.module.scss'
 interface IDataPicker {
     setFieldValue: (name: string, option: IOption) => void
     ///value: (name: string, option: IOption) => void
-    day: IOption | null
-    currentMonths: IOption | null
-    label?: string
-    name?: string
-    time: string
+    day?: IOption | null
+    currentMonths?: IOption | null
+    label: string
+    name: string
+    time?: string
+    value:any
     handleChange: (event: ChangeEvent<HTMLInputElement>) => void
     ///  onChange: (event: ChangeEvent<HTMLInputElement>) => void
     doubleTimeInput?: boolean
@@ -29,10 +30,12 @@ const DataPicker: React.FC<IDataPicker> = (
         setFieldValue,
         label,
         time,
+        value,
         handleChange,
         doubleTimeInput = false,
     }) => {
     const {t} = useTranslation()
+console.log(value,'valuevaluevalue');
 
     return (
         <>
@@ -45,7 +48,7 @@ const DataPicker: React.FC<IDataPicker> = (
                         getOptionValue={(option) => option.value}
                         getOptionLabel={(option) => t(option.value)}
                         options={getMonthDays(getDaysInMonth(new Date()))}
-                        placeholder={t(`${getDaysInMonth(new Date())}`)}
+                        placeholder={t('day')}
                         onChange={(option: IOption) =>
                             setFieldValue('day', option)}
                         isMulti={false}

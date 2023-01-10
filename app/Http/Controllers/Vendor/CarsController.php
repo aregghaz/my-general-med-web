@@ -1,20 +1,24 @@
 <?php
 
-namespace App\Http\Controllers;
-
-use App\Models\Driver;
+namespace App\Http\Controllers\Vendor;
+use App\Http\Controllers\Controller;
+use App\Models\Cars;
 use Illuminate\Http\Request;
+use App\Http\Resources\CarsCollection;
 
-class DriverController extends Controller
+class CarsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $cars =  Cars::where('vendor_id', $request->user()->vendor_id)->where('id','!=', $request->user()->id)->get();
+        return response()->json([
+            'cars' => new CarsCollection($cars),
+        ], 200);
     }
 
     /**
@@ -41,10 +45,10 @@ class DriverController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Driver  $driver
+     * @param  \App\Models\Cars  $cars
      * @return \Illuminate\Http\Response
      */
-    public function show(Driver $driver)
+    public function show(Cars $cars)
     {
         //
     }
@@ -52,10 +56,10 @@ class DriverController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Driver  $driver
+     * @param  \App\Models\Cars  $cars
      * @return \Illuminate\Http\Response
      */
-    public function edit(Driver $driver)
+    public function edit(Cars $cars)
     {
         //
     }
@@ -64,10 +68,10 @@ class DriverController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Driver  $driver
+     * @param  \App\Models\Cars  $cars
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Driver $driver)
+    public function update(Request $request, Cars $cars)
     {
         //
     }
@@ -75,10 +79,10 @@ class DriverController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Driver  $driver
+     * @param  \App\Models\Cars  $cars
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Driver $driver)
+    public function destroy(Cars $cars)
     {
         //
     }

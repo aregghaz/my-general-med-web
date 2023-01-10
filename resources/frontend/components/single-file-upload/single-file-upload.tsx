@@ -1,7 +1,7 @@
 import React from 'react'
 import {useTranslation} from 'react-i18next'
 import Button from '../button/button'
-
+import ButtonSVg from '-!svg-react-loader!../../images/button.svg'
 import s from './single-file-upload.module.scss'
 
 interface ISingleFileUpload {
@@ -43,12 +43,13 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
                     <video controls className={s.existingImage} src={oldVideo}/>
                 </div>
             )}
+
             <div className={s.uploadButtonWrapper}>
                 {error && <div className={s.error}>{error}</div>}
                 <Button type={'blank'}>
                     <span className={s.uploadFileText}>
                         {label}
-                        <img src="/images/button.svg" alt=""/>
+                        <ButtonSVg/>
                     </span>
                     {value && <span className={s.uploadedImage}>{value.name}</span>}
                 </Button>

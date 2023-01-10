@@ -22,10 +22,11 @@ class CreateDriversTable extends Migration
             $table->string('motor_vehicle_record');
             $table->string('defensive_driving');
             $table->string('wheelchair_securement');
-            $table->string('pass_bassic');
+            $table->string('pass_basic');
             $table->string('emt_1');
             $table->string('first_aid');
             $table->string('company_training');
+            $table->string('drug_test');
             $table->timestamps();
         });
     }

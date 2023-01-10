@@ -13,10 +13,11 @@ use App\Http\Resources\UserCollection;
 use App\Http\Resources\StatusCollection;
 use App\Models\Driver;
 use Validator;
+
 class VendorUsersController extends Controller
 {
     public function index(Request $request){
-        $users =  User::where('vendor_id', $request->user()->id)->where('id','!=', $request->user()->id);
+        $users =  User::where('vendor_id', $request->user()->vendor_id)->where('id','!=', $request->user()->id);
         if ($request->input('tabId')) {
 
             $users = $users->where('role_id',$request->input('tabId'));
@@ -85,7 +86,7 @@ class VendorUsersController extends Controller
         //     'motor_vehicle_record'=> 'required|mimes:doc,pdf,docx,zip',
         //     'defensive_driving'=> 'required|mimes:doc,pdf,docx,zip',
         //     'wheelchair_securement'=> 'required|mimes:doc,pdf,docx,zip',
-        //     'pass_bassic'=> 'required|mimes:doc,pdf,docx,zip',
+        //     'pass_basic'=> 'required|mimes:doc,pdf,docx,zip',
         //     'emt_1'=> 'required|mimes:doc,pdf,docx,zip',
         //     'first_aid'=> 'required|mimes:doc,pdf,docx,zip',
         //     'company_training'=> 'required|mimes:doc,pdf,docx,zip',
@@ -149,10 +150,10 @@ class VendorUsersController extends Controller
             $wheelchair_securement->move("uploads/$request->user()->vendor_id/$user->id", $wheelchair_securement_name);
             $vendor->wheelchair_securement = $defensive_driving_name;
 
-            $pass_bassic = $request->file("pass_bassic");
-            $pass_bassic_name = time() +7 . $pass_bassic->getClientOriginalName();
-            $pass_bassic->move("uploads/$request->user()->vendor_id/$user->id", $pass_bassic_name);
-            $vendor->pass_bassic = $pass_bassic_name;
+            $pass_basic = $request->file("pass_basic");
+            $pass_basic_name = time() +7 . $pass_basic->getClientOriginalName();
+            $pass_basic->move("uploads/$request->user()->vendor_id/$user->id", $pass_basic_name);
+            $vendor->pass_basic = $pass_basic_name;
 
             $emt_1 = $request->file("emt_1");
             $emt_1_name = time() +8 . $emt_1->getClientOriginalName();

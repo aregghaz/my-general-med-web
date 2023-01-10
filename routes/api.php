@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
+use App\Http\Controllers\Vendor\CarsController;
 use App\Http\Controllers\Vendor\VendorUsersController;
 
 use App\Http\Controllers\WeatherApiController;
@@ -34,6 +35,7 @@ Route::group([
     Route::resources([
         'home-data' => HomeController::class,
         'vendorClients' => VendorUsersController::class,
+        'cars' => CarsController::class,
     ]);
 });
 Route::group([
