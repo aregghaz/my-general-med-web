@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import TableHead from './table-head/table-head'
 import TableBody from './table-body/table-body'
 import s from './crud-table.module.scss'
@@ -26,12 +26,27 @@ const CrudTable: React.FC<ICrudTable> = (
         paginated
     }) => {
 
+    const [filterTable, setFilterTable] = useState<string>("ASC")
+    const [filteredData, setFilteredData] = useState<any[]>(null)
+    const [titleName, setTitleName] = useState<string>("")
+
+    const titleSort = (name: string) => {
+        if (filterTable === "ASC") {
+            setFilteredData(data.sort((a, b) => a[name].toLowerCase() > b[name].toLowerCase() ? 1 : -1))
+            setFilterTable("DSC")
+        }
+        if (filterTable === "DSC") {
+            setFilteredData(data.sort((a, b) => a[name].toLowerCase() < b[name].toLowerCase() ? 1 : -1))
+            setFilterTable("ASC")
+        }
+        setTitleName(name)
+    }
     return (
         <>
             <table className={s.table}>
-                <TableHead titles={titles}/>
+                <TableHead titles={titles} titleSort={titleSort} filterTable={filterTable} titleName={titleName}/>
                 <TableBody
-                    data={data}
+                    data={filteredData ? filteredData : data}
                     isDelete={isDelete}
                     isEdit={isEdit}
                     isGetItems={isGetItems}
@@ -73,7 +88,7 @@ interface ICrudTable {
     HandlerPagination?: (id: number) => void
     HandlerGetProducts?: (id: number) => void
     handlerGetVendorUsers?: (id: number) => void
-   /// handlerGetClientData: (data: any) => void
+    /// handlerGetClientData: (data: any) => void
 }
 
 export default CrudTable

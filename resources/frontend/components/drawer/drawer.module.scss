@@ -24,7 +24,7 @@
     width: 50px;
     //height: 100%;
     background-color: $headColor;
-   
+
 }
 
 .list {
@@ -44,6 +44,8 @@
 
     button {
         display: block;
+        color: white;
+
     }
 }
 
@@ -126,7 +128,7 @@
     align-items: center;
     transition: 0.3s;
     white-space: nowrap;
-    color:$iconColor;
+    color: $iconColor;
     font-size: 20px;
     margin: 20px;
 }

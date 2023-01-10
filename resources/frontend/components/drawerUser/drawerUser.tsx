@@ -11,7 +11,7 @@ import {Link, useNavigate} from '@reach/router'
 import s from './drawerUser.module.scss'
 import {setLogOut} from "../../store/auth";
 import Users from '-!svg-react-loader!../../images/Users.svg'
-import Cars from '-!svg-react-loader!../../images/cars.svg'
+import Cars from '-!svg-react-loader!../../images/Car.svg'
 const DrawerUser: React.FC = ({children}) => {
     const {t} = useTranslation()
     const dispatch = useDispatch()
@@ -34,7 +34,7 @@ const DrawerUser: React.FC = ({children}) => {
             item: 'Cars',
             page: '/cars'
         }
-    
+
     ]
     return (
         <>
@@ -53,7 +53,7 @@ const DrawerUser: React.FC = ({children}) => {
                         </div>
 
                         <div className={s.header_icons_block}>
-                    
+
                             <div className={s.iconBlock}>
                                 <Button type={'blank'}>
                                 <span className={s.icon}>
@@ -96,7 +96,7 @@ const DrawerUser: React.FC = ({children}) => {
                                                 <span className={s.side_icon}>
                                                     {li.Icon}
                                                 </span>
-                                        
+
                                             </Link>
                                         </li>
                                     )

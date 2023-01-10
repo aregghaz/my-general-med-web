@@ -19,12 +19,15 @@ import Close from '-!svg-react-loader!../../../images/Close.svg'
 import axios from 'axios'
 import BackDropSearch from '../../../components/backdrop-search/backdrop-search'
 import Button from "../../../components/button/button";
-import { DirectionsRenderer, GoogleMap, Marker, useJsApiLoader, Autocomplete, } from '@react-google-maps/api'
+import {DirectionsRenderer, GoogleMap, Marker, useJsApiLoader, Autocomplete,} from '@react-google-maps/api'
 import Modal from 'react-modal'
-const center = { lat: 48.8584, lng: 2.2945 }
+
+const center = {lat: 48.8584, lng: 2.2945}
+
 interface IHome {
     path: string
 }
+
 const customStyles: ReactModal.Styles = {
     content: {
         position: 'fixed',
@@ -34,8 +37,8 @@ const customStyles: ReactModal.Styles = {
         top: '50%',
         left: '50%',
         transform: 'translate(-50% , -50%)',
-        
-        display: 'flex',
+
+        // display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         height: '600px'
@@ -71,25 +74,25 @@ const Home: React.FC<IHome> = () => {
     const clientData = useSelector(getClientData)
     const dispatch = useDispatch()
 
-    const {selectedTitle,titles:allTiles, clients, tripCount, availableCount} = homeData
+    const {selectedTitle, titles: allTiles, clients, tripCount, availableCount} = homeData
     const {clientById} = clientData
 
 
-    const { isLoaded } = useJsApiLoader({
+    const {isLoaded} = useJsApiLoader({
         googleMapsApiKey: 'AIzaSyBKkr76ZgeVEhZLj-ZT5u8XQBbT4SUQI5E',
-        libraries: ['geometry','drawing','places'],
+        libraries: ['geometry', 'drawing', 'places'],
     })
     const [map, setMap] = useState(/** @type google.maps.Map */(null))
     const [directionsResponse, setDirectionsResponse] = useState(null)
     const [distance, setDistance] = useState('')
     const [duration, setDuration] = useState('')
     const [isModalOpen, setIsModalOpen] = useState(false)
-  
+
     async function calculateRoute(newData: any) {
         const directionsService = new google.maps.DirectionsService()
         const results = await directionsService.route({
-            origin: newData.origin.city +' ' +  newData.origin.street +' ' +  newData.origin.suite,
-            destination:newData.destination.city +' ' +  newData.destination.street +' ' +  newData.destination.suite,
+            origin: newData.origin.city + ' ' + newData.origin.street + ' ' + newData.origin.suite,
+            destination: newData.destination.city + ' ' + newData.destination.street + ' ' + newData.destination.suite,
             travelMode: google.maps.TravelMode.DRIVING,
         })
         setDirectionsResponse(results)
@@ -97,6 +100,7 @@ const Home: React.FC<IHome> = () => {
         setDuration(results.routes[0].legs[0].duration.text)
         setSteps(results.routes[0].legs[0].steps)
     }
+
     function clearRoute() {
         setDirectionsResponse(null)
         setDistance('')
@@ -177,10 +181,10 @@ const Home: React.FC<IHome> = () => {
     useEffect(() => {
         (
             async () => {
-              const titlesData = localStorage.getItem('titles')
+                const titlesData = localStorage.getItem('titles')
                 if (titles.length > 0) {
                     const homeData = await homeAPI.getClientData({
-                        titles:JSON.parse(titlesData),
+                        titles: JSON.parse(titlesData),
                         showMore: countRef.current,
                         typeId: typeId
                     })
@@ -227,8 +231,7 @@ const Home: React.FC<IHome> = () => {
                 let result = selectedTitle.map(a => a.slug);
                 if (result.length > 0) {
                     ///localStorage.result('titles',JSON.stringify(titles))
-                    console.log(result,'titles');
-                    
+
                     const homeData = await homeAPI.getClientData({
                         titles: result,
                         showMore: countRef.current,
@@ -277,9 +280,8 @@ const Home: React.FC<IHome> = () => {
         let result = options.map(a => a.slug);
         let selectedTitleSlug = selectedTitle.map(a => a.slug);
         if (result.length > 0) {
-            console.log(result,'result');
-            
-            setTitles( result)
+
+            setTitles(result)
             setLoading(true)
         }
 
@@ -306,7 +308,7 @@ const Home: React.FC<IHome> = () => {
         setLoading(true)
     }
 
-    
+
     const handlerActionClient = async (status: number) => {
         const homeData = await homeAPI.changeClientsTypes({status, ids})
         setIds([]);
@@ -341,27 +343,29 @@ const Home: React.FC<IHome> = () => {
                         ))
                     }
                 </div>
-                <div className={s.upload_block}>
-                    <label htmlFor="uploadFile">
-                        <Upload/>
-                    </label>
-                    <input
-                        id="uploadFile"
-                        type="file"
-                        onChange={fileUploader}
-                        style={{display: "none"}}
-                        accept=".xls, .xlsx, .csv"
-                    />
-                </div>
-                <div className={s.import_block}>
-                    <label>
-                        <Import/>
-                    </label>
-                </div>
-                <div className={s.import_block} onClick={() => {
-                    openSearch()
-                }}>
-                    {open ? <Close/> : <Search/>}
+                <div style={{display: "flex", gap: "10px"}}>
+                    <div className={s.upload_block}>
+                        <label htmlFor="uploadFile">
+                            <Upload/>
+                        </label>
+                        <input
+                            id="uploadFile"
+                            type="file"
+                            onChange={fileUploader}
+                            style={{display: "none"}}
+                            accept=".xls, .xlsx, .csv"
+                        />
+                    </div>
+                    <div className={s.import_block}>
+                        <label>
+                            <Import/>
+                        </label>
+                    </div>
+                    <div className={s.import_block} onClick={() => {
+                        openSearch()
+                    }}>
+                        {open ? <Close/> : <Search/>}
+                    </div>
                 </div>
                 <div
                     className={`${s.header_input_block} ${open ? s.active : s.passive}`}
@@ -375,8 +379,8 @@ const Home: React.FC<IHome> = () => {
             {
                 show && clientById &&
                 <div>
-                 
-                    <InfoBlock clientById={clientById} calculateRoute={handlerOpenModal} />
+
+                    <InfoBlock clientById={clientById} calculateRoute={handlerOpenModal}/>
 
                 </div>
             }
@@ -388,35 +392,40 @@ const Home: React.FC<IHome> = () => {
                 <div className={s.modalBody}>
                     <div className={s.iconWrapper}>
                         <i className='cancelicon-'
-                            onClick={handlerCloseModal}
+                           onClick={handlerCloseModal}
                         />
                     </div>
 
                     {isLoaded && <div className={s.googleMap}>
                         <GoogleMap
-                        ///  center={center}
-                        zoom={15}
-                        mapContainerStyle={{ width: '100%', height: '100%' }}
-                        options={{
-                            zoomControl: true,
-                            streetViewControl: false,
-                            mapTypeControl: false,
-                            fullscreenControl: false,
-                        }}
-                        onLoad={map => setMap(map)}
-                    >
-                        {/* <Marker position={center} /> */}
-                        {directionsResponse && (
-                            <DirectionsRenderer  directions={directionsResponse} />
-                        )}
-                      
-                    </GoogleMap>
-                    <div>
-                        { steps && steps.map((el:any)=> {
-                            return <div dangerouslySetInnerHTML={{__html:el.instructions}}></div>
-                        })}
+                            ///  center={center}
+                            zoom={15}
+                            mapContainerStyle={{width: '100%', height: '100%'}}
+                            options={{
+                                zoomControl: true,
+                                streetViewControl: false,
+                                mapTypeControl: false,
+                                fullscreenControl: false,
+                            }}
+                            onLoad={map => setMap(map)}
+                        >
+                            {/* <Marker position={center} /> */}
+                            {directionsResponse && (
+                                <DirectionsRenderer directions={directionsResponse}/>
+                            )}
+
+                        </GoogleMap>
+                        <div style={{border: "1px solid #ddd", padding: "5px", marginTop: "10px"}}>
+                            {steps && steps.map((el: any) => {
+                                return (
+                                    <div
+                                        className={s.directions}
+                                        dangerouslySetInnerHTML={{__html: el.instructions}}
+                                    />
+                                )
+                            })}
                         </div>
-                        </div>}
+                    </div>}
                 </div>
             </Modal>
 

@@ -64,7 +64,8 @@
     display: block;
     transition: 0.3s;
     white-space: nowrap;
-    color: $thTextColor;
+    //color: $thTextColor;
+    color: #35bcbf;
     font-size: 20px;
 }
 
@@ -171,6 +172,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    color: white;
 }
 
 .home {
@@ -210,12 +212,14 @@
     font-style: inherit;
     font-family: TAHOMA;
 }
-.list{
-    
+
+.list {
+
     width: 40px;
     float: left;
 
 }
-.content_part{
+
+.content_part {
     width: 100%;
 }
