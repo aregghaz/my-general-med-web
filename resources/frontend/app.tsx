@@ -35,7 +35,8 @@ import StatusCreate from './pages/admin-pages/status/create'
 import StatusEdit from './pages/admin-pages/status/edit'
 import VendorUsers from './pages/site-pages/users/list'
 import VendorUsersEdit from './pages/site-pages/users/edit'
-import VendorDriverCreate from'./pages/site-pages/users/user/driver'
+import VendorDriverCreate from'./pages/site-pages/users/create/driver'
+import VendorDriverEdit from './pages/site-pages/users/edit/driver'
 const App = (): JSX.Element => (
     <Provider store={store}>
         <Router>
@@ -43,7 +44,7 @@ const App = (): JSX.Element => (
             <Site path="/">
                 <Home path="/"/>
                 <VendorUsers path="/users"/>
-                <VendorUsersEdit path="/users/:id"/>
+                <VendorDriverEdit path="/users/driver/:id"/>
                 <VendorDriverCreate path="/users/driver/create"/>
                 {/* <Film path="/all/films"/> */}
                 {/* <Serial path="/all/serials"/>

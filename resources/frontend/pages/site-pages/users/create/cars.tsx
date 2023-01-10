@@ -10,7 +10,7 @@ interface IUserCreate {
 }
 
 
-const VendorDriverCreate: React.FC<IUserCreate> = () => {
+const VendorCarsCreate: React.FC<IUserCreate> = () => {
     const {t} = useTranslation()
     const crudKey = 'vendorClients'
     const [data, setData] = useState(null)
@@ -23,7 +23,7 @@ const VendorDriverCreate: React.FC<IUserCreate> = () => {
         {name: 'birthday', type: 'input', label: 'birthDate'},
         {name: 'phone_number', type: 'input', label: 'phone_number'},
         {name: 'password', type: 'input', label: 'password'},
-        {name: 'roles', type: 'select', label: 'role'},
+      ///  {name: 'roles', type: 'select', label: 'role'},
         {name: 'license', type: 'file', label: 'Driver License'},
         {name: 'picture', type: 'file', label: 'Driver Picture'},
         {name: 'sex_offender_check', type: 'file', label: 'Sex Offender Check '},
@@ -74,4 +74,4 @@ const VendorDriverCreate: React.FC<IUserCreate> = () => {
 
 }
 
-export default VendorDriverCreate
+export default VendorCarsCreate

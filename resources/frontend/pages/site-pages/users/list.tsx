@@ -76,8 +76,8 @@ const VendorUsers: React.FC<Beneficiary> = () => {
             setIsModalOpen(false);
         });
     };
-    const handlerEditBeneficiaryItem = (id: number) =>
-        navigate(`/${crudKey}/${id}`);
+    const handlerEditItem = (id: number) =>
+        navigate(`/users/${typeName}/${id}`);
 
 
     const HandlerPagination = (activeItem: number) => {
@@ -128,7 +128,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
                     tabId={tabId}
                     handlerAddItem={handlerAddBeneficiaryItem}
                     handlerDeleteItem={handlerDeleteModal}
-                    handlerEditItem={handlerEditBeneficiaryItem}
+                    handlerEditItem={handlerEditItem}
                     HandlerPagination={HandlerPagination}
                   //  HandlerGetProducts={HandlerGetProducts}
                     ///handlerGetClientData={handlerGetClientData}
