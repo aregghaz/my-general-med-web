@@ -45,6 +45,7 @@ tbody {
 .iconsWrapper {
     display: flex;
     justify-content: space-around;
+    color: #35bcbf;
 
     .editIcon {
         width: 25px;
@@ -152,12 +153,12 @@ tbody {
 
 
 ////Areg
-/// 
+///
 
 
-.label_span{
+.label_span {
     border: 1px solid $headColor;
-    color:$headColor;
+    color: $headColor;
     font-size: 11px;
     padding: 0 2px;
     border-radius: 25px;

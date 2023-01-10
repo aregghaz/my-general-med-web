@@ -7,15 +7,14 @@ import cls from './info-block.module.scss'
 interface IProps {
     clientById: any,
     idData?: number,
-    calculateRoute:(newData:any)=>void
+    calculateRoute: (newData: any) => void
 }
 
 
-const InfoBlock: FC<IProps> = ({clientById,calculateRoute}) => {
+const InfoBlock: FC<IProps> = ({clientById, calculateRoute}) => {
     /// const infoData: any = items.find(item => item.id === idData);
     const newData = clientById[0]
     const {t} = useTranslation()
-
 
 
     return (
@@ -29,13 +28,13 @@ const InfoBlock: FC<IProps> = ({clientById,calculateRoute}) => {
                     newData &&
                     <>
 
-                    
+
                         <div className={cls.item}>
                             <span className={cls.b_text}>{t('name')}: </span>
-                            {newData.name+' '+newData.surname}
+                            {newData.name + ' ' + newData.surname}
                         </div>
-                       
-        
+
+
                         <div className={cls.item}>
                             <span className={cls.b_text}>{t('date_of_service')}: </span>
                             {newData.date_of_service}
@@ -48,20 +47,20 @@ const InfoBlock: FC<IProps> = ({clientById,calculateRoute}) => {
                             <span className={cls.b_text}>{t('pick_up')}: </span>
                             {newData.pick_up}
                         </div>
-                    
+
                         <div className={cls.item}>
                             <span className={cls.b_text}>{t('drop_down')}: </span>
                             {newData.drop_down}
                         </div>
-                        
+
                         <div className={cls.item}>
                             <span className={cls.b_text}>{t('pick_up_address')}: </span>
-                            {newData.origin.city +' ' +  newData.origin.street +' ' +  newData.origin.suite}
-                  
+                            {newData.origin.city + ' ' + newData.origin.street + ' ' + newData.origin.suite}
+
                         </div>
                         <div className={cls.item}>
                             <span className={cls.b_text}>{t('destination')}: </span>
-                            { newData.destination.city +' ' +  newData.destination.street +' ' +  newData.destination.suite}
+                            {newData.destination.city + ' ' + newData.destination.street + ' ' + newData.destination.suite}
                         </div>
 
                         <div className={cls.item}>
@@ -73,9 +72,8 @@ const InfoBlock: FC<IProps> = ({clientById,calculateRoute}) => {
                             {newData.destination_comments}
                         </div>
 
-                        <div className={cls.item} onClick={() => calculateRoute(newData)}>
-                           
-                          Show map
+                        <div className={cls.item}>
+                            <div className={cls.showBtn} onClick={() => calculateRoute(newData)}> Show map</div>
                         </div>
                     </>
                 }
