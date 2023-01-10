@@ -112,13 +112,13 @@
 //    width: 100%;
 //    padding: 23px 40px;
 //    color: #fff;
-//    background-color:#181D31;
+//    background-color:#ADA2FF;
 //    z-index: 999;
 //    height: 50px;
 //}
 
 .header_nav {
-    background-color: #181D31;
+    background-color: $headColor;
     height: 50px;
     width: 100%;
     display: flex;
@@ -127,7 +127,7 @@
     position: sticky;
     top: 0;
     z-index: 111111;
-    box-shadow: 0 0 4px #181D31;
+    box-shadow: 0 0 4px $headColor;
 }
 
 .navWrapper {

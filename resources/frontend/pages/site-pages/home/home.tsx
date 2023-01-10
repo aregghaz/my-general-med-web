@@ -95,6 +95,7 @@ const Home: React.FC<IHome> = () => {
             destination: newData.destination.city + ' ' + newData.destination.street + ' ' + newData.destination.suite,
             travelMode: google.maps.TravelMode.DRIVING,
         })
+        
         setDirectionsResponse(results)
         setDistance(results.routes[0].legs[0].distance.text)
         setDuration(results.routes[0].legs[0].duration.text)
@@ -182,7 +183,7 @@ const Home: React.FC<IHome> = () => {
         (
             async () => {
                 const titlesData = localStorage.getItem('titles')
-                if (titles.length > 0) {
+                
                     const homeData = await homeAPI.getClientData({
                         titles: JSON.parse(titlesData),
                         showMore: countRef.current,
@@ -196,7 +197,7 @@ const Home: React.FC<IHome> = () => {
                         tripCount: homeData.tripCount,
                         availableCount: homeData.availableCount
                     }))
-                }
+               
             }
         )()
         /*FIXME commented this part avoiding unmount async error*/
@@ -228,12 +229,9 @@ const Home: React.FC<IHome> = () => {
     useEffect(() => {
         (async () => {
             if ((inView || loading) && !open) {
-                let result = selectedTitle.map(a => a.slug);
-                if (result.length > 0) {
-                    ///localStorage.result('titles',JSON.stringify(titles))
-
+                if (titles.length > 0) {
                     const homeData = await homeAPI.getClientData({
-                        titles: result,
+                        titles: titles,
                         showMore: countRef.current,
                         typeId: typeId
                     })
@@ -278,6 +276,8 @@ const Home: React.FC<IHome> = () => {
 
     const changeFields = async (options: Array<IOption>) => {
         let result = options.map(a => a.slug);
+        console.log(result,'result');
+        
         let selectedTitleSlug = selectedTitle.map(a => a.slug);
         if (result.length > 0) {
 
@@ -319,6 +319,7 @@ const Home: React.FC<IHome> = () => {
         setIsModalOpen(false)
     }
     const handlerOpenModal = async (newData: any) => {
+        console.log(newData,'newDatanewData')
         await calculateRoute(newData);
         setIsModalOpen(true)
     }
@@ -333,9 +334,9 @@ const Home: React.FC<IHome> = () => {
                                 className={s.table_upper_tab_item}
                                 key={tab.id}
                                 style={typeId == tab.id ? {
-                                    backgroundColor: '#165f8d',
-                                    color: "white"
-                                } : {backgroundColor: 'white'}}
+                                    backgroundColor: '#6D9886',
+                                    color: "#393E46"
+                                } : {backgroundColor: '#F2E7D5', color: "#393E46"}}
                                 onClick={() => handlerChangeTabs(tab.id)}
                             >
                                 {tab.name}{tab.count && <span className={s.bage_count}>{tab.count}</span>}

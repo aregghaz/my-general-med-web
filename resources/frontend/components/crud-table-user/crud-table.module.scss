@@ -67,10 +67,10 @@
     display: table-cell;
     padding: 9px;
     text-align: center;
-    border: 1px solid #e0e0e0;
+    border: 1px solid $headColor;
     font-weight: 400;
     vertical-align: inherit;
-    //background: $tdBgColor;
+    background:$whiteColor;
     color: $thTextColor;
     //FIXME: Fix for large sizes & no support for vw
     font-size: min(max(16px, 1vw), 19px);
@@ -95,7 +95,7 @@
 
 .tableTh {
     z-index: 2;
-    background-color: $thBgColor;
+    background-color: $menuColor;
     font-weight: bold;
     //FIXME: Fix for large sizes & no support for vw
     white-space: nowrap;

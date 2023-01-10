@@ -18,9 +18,9 @@ export const homeAPI = {
     },
     changeClientsTypes(clientTypeChangeData: {status:number, ids:Array<number>}){
         return axios.post(`/api/changeClientType`, clientTypeChangeData, {
-            cancelToken: new CancelToken(function executor(c) {
-                cancelPost = c;
-            })
+            // cancelToken: new CancelToken(function executor(c) {
+            //     cancelPost = c;
+            // })
         }).then(res => res.data)
     },
     getHomePageData(activeItem: number, query: string = '') {
@@ -28,9 +28,9 @@ export const homeAPI = {
     },
     getClientData(options: IClintSendData) {
         return axios.post(`/api/clientData`, options, {
-            cancelToken: new CancelToken(function executor(c) {
-                cancelPost = c;
-            })
+            // cancelToken: new CancelToken(function executor(c) {
+            //     cancelPost = c;
+            // })
         }).then(res => res.data)
     },
     getVendorData(tabId:number) {
@@ -40,7 +40,7 @@ export const homeAPI = {
         return axios.get(`/api/${crudKey}/${id}/edit`).then(res => res.data)
     },
     cancelRequest() {
-        return cancelPost()
+      ///  return cancelPost()
     }
 
 }

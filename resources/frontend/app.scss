@@ -6,8 +6,11 @@
     padding: 0;
     box-sizing: border-box;
     font-family: $fontRegular;
+  
 }
-
+body{
+    background-color: $whiteColor;
+}
 
 @font-face {
     font-family: 'ArTarumianKamar-Regular';

@@ -171,7 +171,8 @@ body {
 
 .upload_panel {
     padding: 20px 10px;
-    border: 1px solid #ddd;
+   /// border: 1px solid #ddd;
+   background-color:$whiteColor;
     border-radius: 5px;
     width: 100%;
     min-height: 50px;
