@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Vendor;
+use App\Http\Controllers\Controller;
 use App\Models\Cars;
 use Illuminate\Http\Request;
+use App\Http\Resources\CarsCollection;
 
 class CarsController extends Controller
 {
@@ -12,9 +13,12 @@ class CarsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $cars =  Cars::where('vendor_id', $request->user()->vendor_id)->where('id','!=', $request->user()->id)->get();
+        return response()->json([
+            'cars' => new CarsCollection($cars),
+        ], 200);
     }
 
     /**

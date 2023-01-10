@@ -158,18 +158,7 @@ const FormikHandler: React.FC<IFormikHandler> = (
                     setFieldValue={values[item.name]}
                     handleChange={handleChange}
                     label={item.placeholder}
-                    day={{
-                        id: 0,
-                        value: "22",
-                        label: '22',
-                        slug: "22"
-                    }}
-                     currentMonths={{
-                        id: 0,
-                        value: "12",
-                        label: '12',
-                        slug: "12"
-                    }} time={'12:25'}        
+                    day={new Date()}     
                 />
             )
         default:

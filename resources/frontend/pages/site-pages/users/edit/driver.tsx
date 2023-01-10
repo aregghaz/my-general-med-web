@@ -30,10 +30,11 @@ const VendorDriverEdit: React.FC<IUsersEditItem> = ({id}) => {
         {name: 'motor_vehicle_record', type: 'file', label: 'Motor Vehicle Record'},
         {name: 'defensive_driving', type: 'file', label: 'Defensive Driving Certificate'},
         {name: 'wheelchair_securement', type: 'file', label: 'Wheelchair Securement Certificate'},
-        {name: 'pass_bassic', type: 'file', label: 'Pass Basic'},
+        {name: 'pass_basic', type: 'file', label: 'Pass Basic'},
         {name: 'emt_1', type: 'file', label: 'EMT 1 Certificate'},
         {name: 'first_aid', type: 'file', label: 'First Aid and CPR Certificate'},
         {name: 'company_training', type: 'file', label: 'Company Training Letter'},
+        {name: 'drug_test', type: 'file', label: 'Drug Test'},
         {name: 'id', type: 'hidden', inputType: 'hidden'},
 
     ]

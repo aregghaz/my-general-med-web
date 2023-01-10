@@ -11,7 +11,7 @@ import Clients from '-!svg-react-loader!../../images/Clients.svg'
 import Users from '-!svg-react-loader!../../images/Users.svg'
 import {useTranslation} from 'react-i18next'
 import {Link, useNavigate} from '@reach/router'
-import MenuBar from '-!svg-react-loader!../../svgs/menuBar.svg';
+import MenuBar from '-!svg-react-loader!../../svg/menuBar.svg';
 import s from './drawer.module.scss'
 import {setLogOut} from "../../store/auth";
 import ColumnsHideShow from "../columns-hide-show/columns-hide-show";

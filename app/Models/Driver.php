@@ -13,13 +13,14 @@ class Driver extends Model
       'license',
       'picture',
       'sex_offender_check',
-  'motor_vehicle_record',
-  'defensive_driving',
-  'wheelchair_securement',
-  'pass_bassic',
-  'emt_1',
-  'first_aid',
-  'company_training'
+      'motor_vehicle_record',
+      'defensive_driving',
+      'wheelchair_securement',
+      'pass_basic',
+      'emt_1',
+      'first_aid',
+      'company_training',
+      'drug_test'
 
     ];
 }
