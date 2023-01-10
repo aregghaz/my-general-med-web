@@ -1,55 +1,108 @@
-import React, {ChangeEvent, useState} from 'react'
+import React, {ChangeEvent} from 'react'
 import Select, {IOption} from '../select/select'
 import {getDaysInMonth, getMonthDays} from '../../constants/utils'
 import {months} from '../../constants/helpers'
 import {useTranslation} from 'react-i18next'
 import Input from '../input/input'
 
-import styles from './data-picker.module.scss'
-import TextField from '../text-field/text-field'
-import Calendar from "react-calendar";
+import s from './data-picker.module.scss'
 
 
 interface IDataPicker {
     setFieldValue: (name: string, option: IOption) => void
     ///value: (name: string, option: IOption) => void
-    fieldName:string
-    label?: string
-    name?: string
-    type?: string
-    error?: string
-  
+    day?: IOption | null
+    currentMonths?: IOption | null
+    label: string
+    name: string
+    time?: string
+    value:any
+    handleChange: (event: ChangeEvent<HTMLInputElement>) => void
+    ///  onChange: (event: ChangeEvent<HTMLInputElement>) => void
+    doubleTimeInput?: boolean
 }
 
-const DataPicker: React.FC<IDataPicker> = ({ fieldName, name, type, setFieldValue, error }) => {
-    const [dateValue, setDateValue] = useState(new Date());
+const DataPicker: React.FC<IDataPicker> = (
+    {
+        name,
+        day,
+        currentMonths,
+        setFieldValue,
+        label,
+        time,
+        value,
+        handleChange,
+        doubleTimeInput = false,
+    }) => {
+    const {t} = useTranslation()
+console.log(value,'valuevaluevalue');
 
-
-  return (
-    <>
-      <span className={styles.label}>{name}*</span>
-      <TextField
-        hidden
-        label={""}
-        name={name}
-        type={type}
-        value={+dateValue / 1000}
-        onChange={() => {
-        }}
-        autoComplete={false}
-        error={error}
-      />
-      <Calendar
-        minDate={new Date()}
-        onChange={(date) => {
-          setFieldValue(fieldName, +date / 1000);
-          setDateValue(date);
-        }}
-        value={dateValue}
-      />
-    </>
-  );
-};
+    return (
+        <>
+            <label className={s.label}>{label}</label>
+            <div className={`${s.dataPicker} ${doubleTimeInput ? s.wrap : ''}`}>
+                <div className={s.day}>
+                    <Select
+                        isCheckbox={false}
+                        value={day}
+                        getOptionValue={(option) => option.value}
+                        getOptionLabel={(option) => t(option.value)}
+                        options={getMonthDays(getDaysInMonth(new Date()))}
+                        placeholder={t('day')}
+                        onChange={(option: IOption) =>
+                            setFieldValue('day', option)}
+                        isMulti={false}
+                        isSearchable={false}
+                    />
+                </div>
+                <div className={s.month}>
+                    <Select
+                        isCheckbox={false}
+                        value={currentMonths}
+                        getOptionValue={(option) => option.value}
+                        getOptionLabel={(option) => t(option.value)}
+                        options={months}
+                        placeholder={t('month')}
+                        onChange={(option: IOption) =>
+                            setFieldValue('months', option)}
+                        isMulti={false}
+                        isSearchable={false}
+                    />
+                </div>
+                {doubleTimeInput === false ?
+                    <div className={s.time}>
+                        <Input
+                            name={'time'}
+                            value={time}
+                            type={'time'}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    :
+                    <div className={s.doubleTime}>
+                        <div className={s.from}>
+                            <Input
+                                name={'from'}
+                                value={time}
+                                type={'time'}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className={s.fromTo}>-</div>
+                        <div className={s.to}>
+                            <Input
+                                name={'to'}
+                                value={time}
+                                type={'time'}
+                                onChange={handleChange}
+                            />
+                        </div>
+                    </div>
+                }
+            </div>
+        </>
+    )
+}
 
 
 export default DataPicker

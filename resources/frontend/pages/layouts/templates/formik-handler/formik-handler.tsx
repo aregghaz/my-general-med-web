@@ -155,10 +155,10 @@ const FormikHandler: React.FC<IFormikHandler> = (
             return (
                 <DataPicker
                     name={item.name}
-                    setFieldValue={values[item.name]}
+                    setFieldValue={setFieldValue}
                     handleChange={handleChange}
                     label={item.placeholder}
-                    day={new Date()}     
+                    value={values[item.name]}
                 />
             )
         default:
