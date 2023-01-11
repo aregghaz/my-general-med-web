@@ -48,6 +48,8 @@ class Clients extends Model
         'miles',
         'member_uniqie_identifer',
         'birthday',
+        'weight',
+        'height',
         
     ];	
     public function origin()

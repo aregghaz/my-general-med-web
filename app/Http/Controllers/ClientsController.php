@@ -62,7 +62,9 @@ class ClientsController extends Controller
                 'type_of_trip', //select
                 'miles',
                 'member_uniqie_identifer',
-                'birthday'
+                'birthday',
+                'weight',
+                'height'
             )->paginate(20);
         }
         return response()->json(new ClientCollection($clients), 200);
@@ -234,6 +236,8 @@ class ClientsController extends Controller
             'miles' => $client->miles,
             'member_uniqie_identifer' => $client->member_uniqie_identifer,
             'birthday' => $client->birthday,
+            'height' => $client->height,
+            'weight' => $client->weight,
         ];
     }
 }

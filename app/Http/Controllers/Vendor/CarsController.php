@@ -39,7 +39,77 @@ class CarsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = json_decode($request->value);
+        $validator = Validator::make((array) $data, [
+            'name' => 'required|string',
+            'surname' => 'string',
+            'email' => 'required|string|email|unique:users',
+            'password' => 'required|string',
+            'birthday' => 'string',
+            'address' => 'string',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(
+                [
+                    'success' => 0,
+                    'type' => 'validation_filed',
+                    'error' => $validator->messages(),
+                ],
+                422
+            );
+        }
+        $requestData = $validator->validated();
+        $cars =  new Cars();
+        $cars->make = $requestData->make;
+        $cars->model = $requestData->model;
+        $cars->year = $requestData->year;
+
+        $inspection = $request->file('inspection');
+        $inspection_name =
+            time() + 4 . $inspection->getClientOriginalName();
+        $inspection->move(
+            "uploads/$request->user()->vendor_id",
+            $inspection_name
+        );
+        $cars->inspection = $inspection;
+
+
+        $insurance = $request->file('insurance');
+        $insurance_name =
+            time() + 4 . $insurance->getClientOriginalName();
+        $insurance->move(
+            "uploads/$request->user()->vendor_id",
+            $insurance_name
+        );
+        $cars->insurance = $insurance_name;
+
+
+        $vendor->motor_vehicle_record = $motor_vehicle_record;
+
+        $cars->registration = $requestData->registration;
+       
+       
+
+        $cars->liability = $requestData->liability;
+    
+        if (!$cars->save()) {
+            return response()->json(
+                [
+                    'success' => '0',
+                    'type' => 'forbidden',
+                ],
+                403
+            );
+        }
+
+        return response()->json(
+            [
+                'success' => '1',
+                'type' => 'success',
+                'status' => 200,
+            ],
+            201
+        );
     }
 
     /**

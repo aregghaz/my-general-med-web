@@ -77,7 +77,7 @@ const List: React.FC<IList> = (
                             // } : {backgroundColor: 'white'}}
                             onClick={() => handlerChangeTabs(tab.id,tab.name)}
                             >
-                                {tab.name} {tab.count && <span className={s.bage_count}>{tab.count}</span>}
+                                {tab.name} {tab.count >=0 && <span className={s.bage_count}>{tab.count}</span>}
                             </div>
                         ))
                     }

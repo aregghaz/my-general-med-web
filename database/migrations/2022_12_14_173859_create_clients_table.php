@@ -39,6 +39,8 @@ class CreateClientsTable extends Migration
             $table->unsignedBigInteger('miles')->nullable();
             $table->string('member_uniqie_identifer');
             $table->string('birthday')->nullable();
+            $table->string('weight')->nullable();
+            $table->string('height')->nullable();
             $table->timestamps();       
         });
     }

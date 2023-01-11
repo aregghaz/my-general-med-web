@@ -57,6 +57,8 @@ class ClientCollection extends ResourceCollection
                 'miles' => $client->miles,
                 'member_uniqie_identifer' => $client->member_uniqie_identifer,
                 'birthday' => $client->birthday,
+                'height' => $client->height,
+                'weight' => $client->weight,
             ];
         });
     }

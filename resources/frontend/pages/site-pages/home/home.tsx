@@ -51,17 +51,16 @@ const customStyles: ReactModal.Styles = {
 }
 
 const Home: React.FC<IHome> = () => {
+    const {t} = useTranslation()
     const [defaultData, setDefaultData] = useState([])
     const [show, setShow] = useState(false)
     const [loadFile, setLoadFile] = useState<any>(false)
     const [errorMessage, setErrorMessage] = useState<string>("")
-    const [query, setQuery] = useState('')
     const [ids, setIds] = useState([])
     const [open, setOpen] = useState<boolean>(false)
     const [loading, setLoading] = useState<boolean>(false)
     const [typeId, setTypeId] = useState<number>(1)
     const [steps, setSteps] = useState<Array<any>>([])
-    const [searching, setSearching] = useState(false)
     const [ref, inView] = useInView({
         threshold: 1,
     });
@@ -142,34 +141,34 @@ const Home: React.FC<IHome> = () => {
     }
 
 
-    useEffect(() => {
-        (
-            async () => {
-                const titlesData = localStorage.getItem('titles')
+    // useEffect(() => {
+    //     (
+    //         async () => {
+    //             const titlesData = localStorage.getItem('titles')
                 
-                    const homeData = await homeAPI.getClientData({
-                        titles: JSON.parse(titlesData),
-                        showMore: countRef.current,
-                        typeId: typeId
-                    })
-                    setDefaultData(homeData.titles)
-                    dispatch(actions.setTitles({
-                        titles: homeData.titles,
-                        selectedTitle: homeData.selectedFields,
-                        clients: homeData.clients,
-                        tripCount: homeData.tripCount,
-                        availableCount: homeData.availableCount
-                    }))
+    //                 const homeData = await homeAPI.getClientData({
+    //                     titles: JSON.parse(titlesData),
+    //                     showMore: countRef.current,
+    //                     typeId: typeId
+    //                 })
+    //                 setDefaultData(homeData.titles)
+    //                 dispatch(actions.setTitles({
+    //                     titles: homeData.titles,
+    //                     selectedTitle: homeData.selectedFields,
+    //                     clients: homeData.clients,
+    //                     tripCount: homeData.tripCount,
+    //                     availableCount: homeData.availableCount
+    //                 }))
                
-            }
-        )()
-        /*FIXME commented this part avoiding unmount async error*/
-        // return async () => await dispatch(actions.resetState())
-        return () => {
-            dispatch(actions.resetState())
-            homeAPI.cancelRequest()
-        }
-    }, [])
+    //         }
+    //     )()
+    //     /*FIXME commented this part avoiding unmount async error*/
+    //     // return async () => await dispatch(actions.resetState())
+        // return () => {
+        //     dispatch(actions.resetState())
+        //     homeAPI.cancelRequest()
+        // }
+    // }, [])
 
     const handlerGetClientData = async (event: any, id: number) => {
         if (event.ctrlKey || event.shiftKey) {
@@ -192,9 +191,9 @@ const Home: React.FC<IHome> = () => {
     useEffect(() => {
         (async () => {
             if ((inView || loading) && !open) {
-                if (titles.length > 0) {
+                const titlesData = localStorage.getItem('titles')
                     const homeData = await homeAPI.getClientData({
-                        titles: titles,
+                        titles: titles ? titles : JSON.parse(titlesData),
                         showMore: countRef.current,
                         typeId: typeId
                     })
@@ -208,10 +207,14 @@ const Home: React.FC<IHome> = () => {
                     }))
                     countRef.current++;
                     setLoading(false)
-                }
+               
 
             }
-        })();
+        })()   
+             return () => {
+            ///dispatch(actions.resetState())
+            homeAPI.cancelRequest()
+        }
     }, [inView, loading]);
     ///FIXME  MISSING TYPE
 
@@ -285,13 +288,15 @@ const Home: React.FC<IHome> = () => {
         setIsModalOpen(true)
     }
 
+
+
     return (
         clients && <>
             <div className={s.upload_panel}>
                 <div className={s.table_upper_tab}>
                     {
                         
-                        tabs && tabs.length > 0 && tabs.map(tab => (
+                        tabs && tabs.length >= 0 && tabs.map(tab => (
                             <div
                                 className={s.table_upper_tab_item}
                                 key={tab.id}
@@ -306,7 +311,6 @@ const Home: React.FC<IHome> = () => {
                         ))
                     }
                 </div>
-                
                 <div style={{display: "flex", gap: "10px"}}>
                     <div className={s.upload_block}>
                         <label htmlFor="uploadFile">
@@ -392,7 +396,6 @@ const Home: React.FC<IHome> = () => {
                     </div>}
                 </div>
             </Modal>
-
             <div className={s.iconBlock}>
                 <Select
                     isSearchable={true}
@@ -402,7 +405,7 @@ const Home: React.FC<IHome> = () => {
                         changeFields(options);
                     }}
                     getOptionValue={(option: IOption) => option.value}
-                    getOptionLabel={(option: IOption) => option.label}
+                    getOptionLabel={(option: IOption) => t(option.label)}
                     value={selectedTitle}
                     name={'filtre'}
                     isMulti={true}

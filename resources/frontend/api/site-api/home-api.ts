@@ -12,7 +12,6 @@ interface IClintSendData {
 const CancelToken = axios.CancelToken
 let cancelPost: any;
 export const homeAPI = {
-
     getCLientById(id: number) {
         return axios.get(`/api/home-data/${id}`).then(res => res.data)
     },
