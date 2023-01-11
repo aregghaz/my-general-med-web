@@ -1,39 +1,48 @@
 @import "../../styles/variables";
 
 .uploadButtonWrapper {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-  margin-top: 20px;
-  cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin-top: 20px;
+    cursor: pointer;
 }
 
 .fileInput {
-  font-size: 100px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
+    display: none;
 }
 
 .uploadFileText {
-  margin: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
 }
 
 .uploadedImage {
-  font-size: 9px;
+    font-size: 9px;
 }
 
 .existingImageBlock {
-  width: 300px;
-  margin-top: 20px;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        object-fit: contain;
+    }
 }
 
 .existingImage {
-  width: 100%;
+    width: 100%;
 }
 
 .error {
-  margin-bottom: 10px;
-  color: #8B0000;
+    margin-bottom: 10px;
+    color: #8B0000;
 }

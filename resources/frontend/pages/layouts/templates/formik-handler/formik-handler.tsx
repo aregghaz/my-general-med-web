@@ -28,8 +28,8 @@ interface IFormikHandler {
     values: FormikValues
     setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
     selectOptions?: any
-    requiredFields?:Array<string>
-    errors?:any
+    requiredFields?: Array<string>
+    errors?: any
 }
 
 const FormikHandler: React.FC<IFormikHandler> = (
@@ -47,22 +47,20 @@ const FormikHandler: React.FC<IFormikHandler> = (
 
     switch (item.type) {
         case 'input':
-            // console.log(errors,errors[item.name],'errors[item.name]');
-            
             return (
-             <>
-                {/* {errors[item.name] && <div >{errors[item.name] }</div>} */}
+                <>
+                    {/* {errors[item.name] && <div >{errors[item.name] }</div>} */}
 
-                        <Input
-                            name={item.name}
-                            value={values[item.name]}
-                            type={item.inputType}
-                            onChange={handleChange}
-                            placeholder={item.placeholder}
-                            label={getFieldLabel(t, item.label, item.name, requiredFields)}
-                            error={errors[item.name]}
-                            />
-             </>
+                    <Input
+                        name={item.name}
+                        value={values[item.name]}
+                        type={item.inputType}
+                        onChange={handleChange}
+                        placeholder={item.placeholder}
+                        label={getFieldLabel(t, item.label, item.name, requiredFields)}
+                        error={errors[item.name]}
+                    />
+                </>
             )
         case 'checkbox':
             return (
@@ -94,7 +92,7 @@ const FormikHandler: React.FC<IFormikHandler> = (
                 />
             )
         case 'select':
-            console.log(selectOptions,item,'111')
+            console.log(selectOptions, item, '111')
             return (
                 <Select
                     value={values[item.name]}
@@ -117,12 +115,12 @@ const FormikHandler: React.FC<IFormikHandler> = (
                     oldImage={values[item.name]}
                     onChange={(event) => {
                         setFieldValue(item.name, event.currentTarget.files[0])
-                    } }
+                    }}
                     label={item.label}
-                    media={'image'} 
+                    media={'image'}
                     value={values[item.name]}
                     error={errors[item.name]}
-                                        />
+                />
             )
         case 'textField':
             return (
