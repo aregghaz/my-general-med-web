@@ -132,47 +132,10 @@ const Home: React.FC<IHome> = () => {
             count: availableCount
         },
     ]
-    const titlesDef: Array<string> = [
-        'id',
-        'trip_id',
-        'name',
-        'surname',
-        'gender',
-        'los',
-        'phone_number',
-        'date_of_service',
-        'appointment_time',
-        'pick_up',
-        'drop_down',
-        'request_type', ///seect
-        'status', ///seect
-        'origin_name',
-        'origin_street',
-        'origin_suite',
-        'origin_city',
-        'origin_state',
-        'origin_postal',
-        'origin_country',
-        'origin_phone',
-        'origin_comment',
-        'destination_name',
-        'destination_street',
-        'destination_suite',
-        'destination_city',
-        'destination_state',
-        'destination_postal',
-        'destination_country',
-        'destination_phone',
-        'destination_comments',
-        'escortType', //select
-        'type_of_trip', //select
-        'miles',
-        'member_uniqie_identifer',
-        'birthday'
-    ]
+  
 
     ////FIXME FIX DYNAMIC TABLE FIRELDS
-    const [titles, setTitles] = useState<Array<string>>(titlesDef)
+    const [titles, setTitles] = useState<Array<string>>([])
 
     const openSearch = () => {
         setOpen(!open)
@@ -252,26 +215,24 @@ const Home: React.FC<IHome> = () => {
     }, [inView, loading]);
     ///FIXME  MISSING TYPE
 
-    const onSerachInput = async (event: { search: string }) => {
-        console.log(event, 'search');
-
-        if (titlesDef.length > 0) {
+    const onSearchInput = async (event: { search: string }) => {
+        const titlesData = localStorage.getItem('titles')
+       /// if (titlesData.length > 0) {
             const homeData = await homeAPI.getClientData({
-                titles: titlesDef,
+                titles: JSON.parse(titlesData),
                 showMore: countRef.current,
+                typeId: typeId,
                 queryData: event.search,
-                typeId: typeId
             })
             setDefaultData(homeData.titles)
-            setSearching(true)
             dispatch(actions.setTitles({
                 titles: homeData.titles,
-                selectedTitle: homeData.selectedFields,
-                clients: homeData.clients,
-                tripCount: homeData.tripCount,
-                availableCount: homeData.availableCount
+                        selectedTitle: homeData.selectedFields,
+                        clients: homeData.clients,
+                        tripCount: homeData.tripCount,
+                        availableCount: homeData.availableCount
             }))
-        }
+       // }
     }
 
     const changeFields = async (options: Array<IOption>) => {
@@ -329,6 +290,7 @@ const Home: React.FC<IHome> = () => {
             <div className={s.upload_panel}>
                 <div className={s.table_upper_tab}>
                     {
+                        
                         tabs && tabs.length > 0 && tabs.map(tab => (
                             <div
                                 className={s.table_upper_tab_item}
@@ -344,6 +306,7 @@ const Home: React.FC<IHome> = () => {
                         ))
                     }
                 </div>
+                
                 <div style={{display: "flex", gap: "10px"}}>
                     <div className={s.upload_block}>
                         <label htmlFor="uploadFile">
@@ -372,7 +335,7 @@ const Home: React.FC<IHome> = () => {
                     className={`${s.header_input_block} ${open ? s.active : s.passive}`}
                 >
                     <BackDropSearch handlerCloseBackDropSearch={handlerCloseBackDropSearch}
-                                    handlerSubmit={onSerachInput}/>
+                                    handlerSubmit={onSearchInput}/>
                 </div>
 
             </div>

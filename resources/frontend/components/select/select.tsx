@@ -117,8 +117,23 @@ const Select: React.FC<ISelect> = (
                     /////SENC DZELU ES TIKO
                     control: (baseStyles, state) => ({
                         ...baseStyles,
-                        borderColor: state.isFocused ? 'blue' : '#ddd',
+                        borderColor: state.isFocused ?'#6D9886' : '#6D9886',
+                        backgroundColor: '#6D9886',
                     }),
+                    menu: base => ({
+                        ...base,
+                        // override border radius to match the box
+                        borderRadius: 0,
+                        backgroundColor: '#6D9886',
+                        // kill the gap
+                        marginTop: 0
+                      }),
+                      menuList: base => ({
+                        ...base,
+                        // kill the white space on first and last option
+                        padding: 0,
+                        backgroundColor: '#6D9886',
+                      }),
                     multiValue: (baseStyles, state) => ({
                         ...baseStyles,
                         height: 30,
@@ -127,10 +142,10 @@ const Select: React.FC<ISelect> = (
                         // color: "black",
                         color: "#393E46",
                         /* font-weight: bold; */
-                        borderRadius: 10,
+                        ///borderRadius: 10,
                         // backgroundColor: '#336983'
                         backgroundColor: '#6D9886',
-                        padding: "0 8px"
+                       /// padding: "0 8px"
                     }),
                     multiValueLabel: (styles: any, {data}: any) => ({
                         ...styles,
