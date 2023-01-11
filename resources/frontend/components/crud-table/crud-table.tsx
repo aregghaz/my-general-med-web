@@ -5,6 +5,8 @@ import s from './crud-table.module.scss'
 import TableFoot from "./table-foot/table-foot";
 import {ICount} from '../../types/admin';
 import {useSelector} from "react-redux";
+// @ts-ignore
+import ReactHTMLTableToExcel from "react-html-table-to-excel";
 
 
 const CrudTable: React.FC<ICrudTable> = (
@@ -43,7 +45,16 @@ const CrudTable: React.FC<ICrudTable> = (
     }
     return (
         <>
-            <table className={s.table}>
+            <ReactHTMLTableToExcel
+                id="test-table-xls-button-1"
+                className={s.download_btn}
+                table="download_table_s"
+                filename="table data"
+                sheet="table data"
+                buttonText="Download table to Excel file"
+            />
+
+            <table className={s.table} id="download_table_s">
                 <TableHead titles={titles} titleSort={titleSort} filterTable={filterTable} titleName={titleName}/>
                 <TableBody
                     data={filteredData ? filteredData : data}

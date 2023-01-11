@@ -15,6 +15,20 @@
     height: 1px;
 }
 
+.download_btn {
+    background-color: green;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 10px;
+
+    &:hover {
+        background-color: darkgreen;
+    }
+}
+
 .table {
     table-layout: fixed;
     border-collapse: collapse;
@@ -67,10 +81,10 @@
     display: table-cell;
     padding: 9px;
     text-align: center;
-    border: 0.5px  solid $menuColor;
+    border: 0.5px solid $menuColor;
     font-weight: 400;
     vertical-align: inherit;
-    background:$whiteColor;
+    background: $whiteColor;
     color: $thTextColor;
     //FIXME: Fix for large sizes & no support for vw
     font-size: min(max(16px, 1vw), 19px);
@@ -144,10 +158,10 @@
     background-color: $tdBgColor;
 }
 
-.poxos {
+.chosen {
     background-color: lightblue;
 }
 
-.petros {
+.unChosen {
     //background-color: green;
 }

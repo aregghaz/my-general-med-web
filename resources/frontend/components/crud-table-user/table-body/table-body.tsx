@@ -33,12 +33,12 @@ const TableBody: React.FC<ITableBody> = (
                     const keys = Object.keys(item)
                     return keys.length > 0 && (
                         <TableRow key={index} data-rowid={item['id']}
-                           ///FIXME TIKO CHANGE CLASS NAME 
-                                  className={selectedIds.includes(item['id']) ? `${s.poxos}` : `${s.petros}`}>
+                                  className={selectedIds.includes(item['id']) ? `${s.chosen}` : `${s.unChosen}`}>
                             {
                                 keys.map((key: any, i: number) => {
                                         return i !== 0 && (
-                                            <TableData key={key} item={item} handlerGetClientData={() =>handlerGetClientData(event,item['id'])}>
+                                            <TableData key={key} item={item}
+                                                       handlerGetClientData={() => handlerGetClientData(event, item['id'])}>
                                                 {item[key]}
                                             </TableData>
                                         )
