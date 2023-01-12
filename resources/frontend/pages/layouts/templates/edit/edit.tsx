@@ -12,11 +12,11 @@ import validationRules from "../../../../utils/validationRule";
 import {useTranslation} from "react-i18next";
 
 interface IEdit {
-    data: {[key: string]: { [key: string]: Object }}
+    data: { [key: string]: { [key: string]: Object } }
     fields: Array<IItem>
     crudKey?: string
     title: string,
-    requiredFields?:Array<string>
+    requiredFields?: Array<string>
 }
 
 const Edit: React.FC<IEdit> = (
@@ -30,15 +30,15 @@ const Edit: React.FC<IEdit> = (
     const {t} = useTranslation()
 
     const navigate = useNavigate()
-    const validate = (values:FormikValues) => validationRules(values, requiredFields, fields, t)
+    const validate = (values: FormikValues) => validationRules(values, requiredFields, fields, t)
 
     const submit = async (values: FormikValues, {setSubmitting}: FormikHelpers<FormikValues>) => {
         setSubmitting(true)
         const formData: FormData = new FormData()
         formData.append('_method', 'put');
         formData.append('value', JSON.stringify(values))
-         const res:any = await AdminApi.update(formData, crudKey, values.id)
-         if (Number(res.status === 200)) await navigate(`/admin/${crudKey}`)
+        const res: any = await AdminApi.update(formData, crudKey, values.id)
+        if (Number(res.status === 200)) await navigate(`/admin/${crudKey}`)
     }
 
     return (
@@ -53,7 +53,7 @@ const Edit: React.FC<IEdit> = (
                       handleChange,
                       values,
                       setFieldValue,
-                    errors
+                      errors
                   }) => {
 
 
@@ -63,14 +63,15 @@ const Edit: React.FC<IEdit> = (
                                 {
                                     fields
                                         .map((field, index) =>
-                                            <div key={index} className={s.item} style={field.type == 'hidden' ? {display:"none"}:{}}>
+                                            <div key={index} className={s.item}
+                                                 style={field.type == 'hidden' ? {display: "none"} : {}}>
                                                 <FormikHandler
                                                     item={field}
                                                     handleChange={handleChange}
                                                     values={values}
                                                     requiredFields={requiredFields}
                                                     setFieldValue={setFieldValue}
-                                                     selectOptions={data}
+                                                    selectOptions={data}
                                                     errors={errors}
                                                 />
                                             </div>
