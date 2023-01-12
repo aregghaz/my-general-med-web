@@ -15,9 +15,9 @@ const CarsCreate: React.FC<IUserCreate> = () => {
     const [data, setData] = useState(null)
     const fields: Array<IItem> = [
         // {name: 'image', type: 'file', label: 'image'},
-        // {name: 'make', type: 'select', label: 'make'},
-        // {name: 'model', type: 'select', label: 'model'},
-        {name: 'year', type: 'datepicker', label: 'year'},
+        {name: 'make', type: 'select', label: 'make'},
+        {name: 'model', type: 'select', label: 'model'},
+        {name: 'year', type: 'select', label: 'year'},
         {name: 'registration', type: 'input', label: 'registration'},
         {name: 'inspection', type: 'file', label: 'inspection'},
         {name: 'insurance', type: 'file', label: 'insurance'},

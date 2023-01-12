@@ -30,7 +30,7 @@
 
 .table_upper_tab_item {
     border: 1px solid $iconColor;
-    border-radius: 5px;
+    border-radius: $borderRadius;
     padding: 10px;
     background:$menuColor;
     cursor: pointer;
@@ -155,7 +155,7 @@
     overflow: hidden;
     box-shadow: none;
     border: 1px solid $iconColor;
-    border-radius: 8px;
+    border-radius:$borderRadius;
     padding: 0.5rem 1.5rem;
     display: flex;
     -webkit-box-align: center;

@@ -34,7 +34,10 @@
     border-collapse: collapse;
     min-width: 100%;
     //display: grid;
-    min-height: 500px;
+ 
+    tbody{
+           max-height: 60vh;
+    }
 }
 
 .tableHead {
@@ -43,6 +46,7 @@
 
 .tableBody {
     display: table-row-group;
+    max-height: 60vh;
 }
 
 
@@ -75,16 +79,16 @@
     display: table-row;
     outline: 0;
     vertical-align: middle;
+  
 }
 
 .tableTd {
     display: table-cell;
     padding: 9px;
     text-align: center;
-    border: 0.5px solid $menuColor;
-    font-weight: 400;
+    font-weight: bold;
     vertical-align: inherit;
-    background: $whiteColor;
+   /// background: $whiteColor;
     color: $thTextColor;
     //FIXME: Fix for large sizes & no support for vw
     font-size: min(max(16px, 1vw), 19px);
@@ -155,13 +159,14 @@
 }
 
 .row {
-    background-color: $tdBgColor;
+    background: $whiteColor;
+    border: 0.5px solid $menuColor;
 }
 
 .chosen {
-    background-color: lightblue;
+    background-color: $asteriskColor;
 }
 
-.unChosen {
-    //background-color: green;
-}
+// .unChosen {
+//     //background-color: green;
+// }

@@ -17,12 +17,6 @@ const VendorCarsCreate: React.FC<IUserCreate> = () => {
     const fields: Array<IItem> = [
         // {name: 'image', type: 'file', label: 'image'},
         {name: 'name', type: 'input', label: 'name'},
-        {name: 'surname', type: 'input', label: 'surName'},
-        {name: 'email', type: 'input', label: 'email'},
-        {name: 'address', type: 'input', label: 'address'},
-        {name: 'birthday', type: 'input', label: 'birthDate'},
-        {name: 'phone_number', type: 'input', label: 'phone_number'},
-        {name: 'password', type: 'input', label: 'password'},
       ///  {name: 'roles', type: 'select', label: 'role'},
         {name: 'license', type: 'file', label: 'Driver License'},
         {name: 'picture', type: 'file', label: 'Driver Picture'},

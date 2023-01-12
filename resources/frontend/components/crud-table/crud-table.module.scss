@@ -3,10 +3,11 @@
 
 tbody {
     tr {
-        background-color: white;
-
+        background-color: $whiteColor;
+        border: 0.5px dotted $headColor;
+        
         &:hover {
-            background-color: lightblue;
+            background-color: $greyColor;
             cursor: pointer;
         }
     }
@@ -87,7 +88,7 @@ tbody {
     display: table-cell;
     padding: 9px;
     text-align: center;
-    border: 0.5px dotted $headColor;
+
     font-weight: 400;
     vertical-align: inherit;
     //background: $tdBgColor;

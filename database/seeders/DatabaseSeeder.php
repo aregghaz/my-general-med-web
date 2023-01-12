@@ -19,7 +19,9 @@ class DatabaseSeeder extends Seeder
             StatusSeeder::class,
            /// ClientSeeder::class,
            /// VendorSeeder::class,
-            TablesFieldsSeeder::class
+            TablesFieldsSeeder::class,
+            MakeSeeder::class,
+            YearSeeder::class,
 
         ]);
     }

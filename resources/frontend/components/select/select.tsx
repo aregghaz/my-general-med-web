@@ -119,6 +119,7 @@ const Select: React.FC<ISelect> = (
                         ...baseStyles,
                         borderColor: state.isFocused ?'#6D9886' : '#6D9886',
                         backgroundColor: '#6D9886',
+                        borderRadius:"15px"
                     }),
                     menu: base => ({
                         ...base,
@@ -141,10 +142,10 @@ const Select: React.FC<ISelect> = (
                         lineHeight: 1.5,
                         // color: "black",
                         color: "#393E46",
-                        /* font-weight: bold; */
+                        fontWeight: "bold", 
                         ///borderRadius: 10,
-                        // backgroundColor: '#336983'
-                        backgroundColor: '#6D9886',
+                      
+                    backgroundColor: '#6D9886',
                        /// padding: "0 8px"
                     }),
                     multiValueLabel: (styles: any, {data}: any) => ({

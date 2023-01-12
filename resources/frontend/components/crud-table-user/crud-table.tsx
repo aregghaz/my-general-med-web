@@ -4,8 +4,8 @@ import TableBody from './table-body/table-body'
 import s from './crud-table.module.scss'
 import {ICount} from '../../types/admin';
 import {IOption} from '../select/select';
-// @ts-ignore
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+
+///import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import Import from '-!svg-react-loader!../../images/Import.svg'
 
 const CrudTable: React.FC<ICrudTable> = (
@@ -38,14 +38,14 @@ const CrudTable: React.FC<ICrudTable> = (
 
     return (
         <>
-            <ReactHTMLTableToExcel
+            {/* <ReactHTMLTableToExcel
                 id="test-table-xls-button"
                 className={s.download_btn}
                 table="download_table"
                 filename="table data"
                 sheet="table data"
                 buttonText="Download table to Excel file"
-            />
+            /> */}
 
             <table className={s.table} id="download_table">
                 <TableHead titles={titles} titleSort={titleSort} filterTable={filterTable} titleName={titleName}/>

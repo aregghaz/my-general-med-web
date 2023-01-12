@@ -292,7 +292,8 @@ const Home: React.FC<IHome> = () => {
 
     return (
         clients && <>
-            <div className={s.upload_panel}>
+           <div className={s.panel}>
+           <div className={s.upload_panel}>
                 <div className={s.table_upper_tab}>
                     {
                         
@@ -425,6 +426,9 @@ const Home: React.FC<IHome> = () => {
 
                 </div>
             </div>
+
+           </div>
+
             <div ref={contentRef} className={s.table_wrapper}>
                 <CrudTable
                     titles={selectedTitle}
