@@ -4,7 +4,7 @@ import s from '../crud-table.module.scss'
 
 interface ITableRow {
     className?: string
-    onClick?:any
+    onClick?: any
 }
 
 const TableRow: React.FC<ITableRow> = (

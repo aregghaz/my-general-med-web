@@ -22,6 +22,20 @@ tbody {
     }
 }
 
+.download_btn {
+    background-color: green;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 10px;
+
+    &:hover {
+        background-color: darkgreen;
+    }
+}
+
 .table {
     table-layout: fixed;
     border-collapse: collapse;
