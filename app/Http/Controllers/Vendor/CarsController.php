@@ -51,25 +51,7 @@ class CarsController extends Controller
     public function store(Request $request)
     {
         $data = json_decode($request->value);
-        $validator = Validator::make((array) $data, [
-            'name' => 'required|string',
-            'surname' => 'string',
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required|string',
-            'birthday' => 'string',
-            'address' => 'string',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(
-                [
-                    'success' => 0,
-                    'type' => 'validation_filed',
-                    'error' => $validator->messages(),
-                ],
-                422
-            );
-        }
-        $requestData = $validator->validated();
+       
         $cars =  new Cars();
         $cars->make = $requestData->make;
         $cars->model = $requestData->model;
@@ -92,6 +74,7 @@ class CarsController extends Controller
             "uploads/$request->user()->vendor_id",
             $insurance_name
         );
+
         $cars->insurance = $insurance_name;
 
 
@@ -122,7 +105,9 @@ class CarsController extends Controller
             201
         );
     }
-
+    public function make() {
+        
+    }
     /**
      * Display the specified resource.
      *
