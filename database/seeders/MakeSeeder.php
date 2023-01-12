@@ -3,7 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-
+use App\Models\Make;
+use Illuminate\Support\Facades\DB;
 class MakeSeeder extends Seeder
 {
     /**
