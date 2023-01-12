@@ -3,6 +3,7 @@ import {IItem} from '../../layouts/templates/formik-handler/formik-handler'
 import {useTranslation} from 'react-i18next'
 import Create from '../../layouts/templates/create/create'
 import {AdminApi} from '../../../api/admin-api/admin-api'
+import { vendorAPI } from '../../../api/site-api/vendor-api'
 
 interface IUserCreate {
     path: string
@@ -11,12 +12,12 @@ interface IUserCreate {
 
 const CarsCreate: React.FC<IUserCreate> = () => {
     const {t} = useTranslation()
-    const crudKey = 'users'
+    const crudKey = 'cars'
     const [data, setData] = useState(null)
     const fields: Array<IItem> = [
         // {name: 'image', type: 'file', label: 'image'},
         {name: 'make', type: 'select', label: 'make'},
-        {name: 'model', type: 'select', label: 'model'},
+      ///  {name: 'model', type: 'select', label: 'model'},
         {name: 'year', type: 'select', label: 'year'},
         {name: 'registration', type: 'input', label: 'registration'},
         {name: 'inspection', type: 'file', label: 'inspection'},
@@ -36,7 +37,7 @@ const CarsCreate: React.FC<IUserCreate> = () => {
     useEffect(() => {
         (
             async () => {
-                const data = await AdminApi.createItem(crudKey)
+                const data = await vendorAPI.createUserData(crudKey)
 
                 setData(data)
             }
@@ -48,9 +49,10 @@ const CarsCreate: React.FC<IUserCreate> = () => {
     return data && <Create
         crudKey={crudKey}
         ////TODO FIX THIS MISSING DATA FOR CREATE USER
-    ///    data={data}
+        data={data}
         fields={fields}
         title={''}
+        isAdmin={false}
         requiredFields={requiredFields}
         children={t('create')}
     />

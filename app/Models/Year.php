@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Laravel\Passport\HasApiTokens;
 use Venturecraft\Revisionable\RevisionableTrait;
 use Fico7489\Laravel\RevisionableUpgrade\Traits\RevisionableUpgradeTrait;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Year extends Model
 {

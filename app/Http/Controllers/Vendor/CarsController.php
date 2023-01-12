@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Vendor;
 use App\Http\Controllers\Controller;
 use App\Models\Cars;
+use App\Models\Year;
+use App\Models\Make;
 use Illuminate\Http\Request;
 use App\Http\Resources\CarsCollection;
+use App\Http\Resources\StatusCollection;
 
 class CarsController extends Controller
 {
@@ -28,7 +31,15 @@ class CarsController extends Controller
      */
     public function create()
     {
-        //
+        $Year = Year::get();
+        $Make = Make::get();
+        return response()->json(
+            [
+                'year' => new StatusCollection($Year),
+                'make' => new StatusCollection($Make),
+            ],
+            200
+        );
     }
 
     /**

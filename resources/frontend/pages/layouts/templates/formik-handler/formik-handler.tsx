@@ -101,8 +101,8 @@ const FormikHandler: React.FC<IFormikHandler> = (
                     getOptionValue={(option: IOption) => option.value}
                     getOptionLabel={(option: IOption) => option.label}
                     ///
-                    ///   options={selectOptions ? selectOptions[item.name] : selectOptions}
-                    options={selectOptions}
+                     options={selectOptions ? selectOptions[item.name] : selectOptions}
+                   /// options={selectOptions}
                     onChange={(option: IOption) => setFieldValue(item.name, option)}
                     label={item.label}
                     isSearchable={false}
