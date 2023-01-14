@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             TablesFieldsSeeder::class,
             MakeSeeder::class,
             YearSeeder::class,
+            MakeModelSeeder::class
 
         ]);
     }

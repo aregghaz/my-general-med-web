@@ -15,9 +15,9 @@ export const vendorAPI = {
 
     getVendorData(tabId:number) {
         return axios.get('/api/vendorClients').then(res => res.data)
-    },   
-    getModel(model:string){
-        return axios.get(`/api/make/${model}`).then(res => res.data)
+    },
+    getModel(id:number){
+        return axios.get(`/api/make/${id}`).then(res => res.data)
     },
     getCarsData(crudKey: string) {
         return axios.get(`/api/${crudKey}`).then(res => res.data)
