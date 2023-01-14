@@ -142,9 +142,9 @@ const Select: React.FC<ISelect> = (
                         lineHeight: 1.5,
                         // color: "black",
                         color: "#393E46",
-                        fontWeight: "bold", 
+                        fontWeight: "bold",
                         ///borderRadius: 10,
-                      
+
                     backgroundColor: '#6D9886',
                        /// padding: "0 8px"
                     }),
@@ -172,6 +172,8 @@ const Select: React.FC<ISelect> = (
                 name={name}
                 isSearchable={isSearchable}
                 onChange={onChange}
+              ///FIXME: ADD THIS PART
+               /// isOptionDisabled={() => 5 >= 3}
                 getOptionLabel={getOptionLabel}
                 getOptionValue={getOptionValue}
                 value={value}

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Vendor;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\FullNameCollection;
 use App\Models\Cars;
+use App\Models\Driver;
 use App\Models\MakeModel;
+use App\Models\User;
 use App\Models\Year;
 use App\Models\Make;
 use Illuminate\Http\Request;
@@ -30,14 +33,17 @@ class CarsController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function create()
+    public function create(Request $request)
     {
-        $Year = Year::get();
-        $Make = Make::get();
+        $year = Year::get();
+        $make = Make::get();
+        $vendorId = $request->user()->vendor_id;
+        $drives = User::where(['role_id'=> 3, 'vendor_id' =>$vendorId])->whereHas('driver')->get();
         return response()->json(
             [
-                'year' => new StatusCollection($Year),
-                'make' => new StatusCollection($Make),
+                'year' => new StatusCollection($year),
+                'make' => new StatusCollection($make),
+                'drivers' => new FullNameCollection($drives),
             ],
             200
         );
@@ -99,7 +105,10 @@ class CarsController extends Controller
                 403
             );
         }
-
+        $ids = array_column($data->drivers, 'id');
+//        $cars->driver()->save($ids);
+     //   dd($ids);
+       Driver::whereIn('id',$ids)->update(["car_id"=> $cars->id]);
 
         return response()->json(
             [

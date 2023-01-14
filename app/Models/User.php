@@ -13,7 +13,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory;
     use RevisionableTrait;
     use RevisionableUpgradeTrait;
-    
+
     //enable this if you want use methods that gets information about creating
     protected $revisionCreationsEnabled = true;
     protected $fillable  =  [
@@ -37,5 +37,8 @@ class User extends Authenticatable
     {
         return $this->BelongsToMany(ClientTable::class, 'user_fields', 'user_id', 'field_id');
     }
-
+    public function driver()
+    {
+        return $this->hasOne(Driver::class, 'user_id', 'id');
+    }
 }

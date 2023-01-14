@@ -49,16 +49,13 @@ const CarsCreate: React.FC<IUserCreate> = () => {
 
     }, []);
     const requiredFields = [
-        "license",
-        "picture",
-        "sex_offender_check",
-        "motor_vehicle_record",
-        "defensive_driving",
-        "wheelchair_securement",
-        "pass_basic",
-        "emt_1",
-        "first_aid",
-        "company_training"
+        // 'make',
+        // 'model',
+        // 'year',
+        'registration',
+        // 'inspection',
+        // 'insurance',
+        // 'liability',
     ];
 
     const navigate = useNavigate();
@@ -69,14 +66,14 @@ const CarsCreate: React.FC<IUserCreate> = () => {
         setSubmitting(true);
         const formData: FormData = new FormData();
         formData.append('inspection', values['inspection'])
-        formData.append('insurance', values['insurance'])
-        formData.append('liability', values['liability'])
-        formData.append('front', values['front'])
-        formData.append('rear', values['rear'])
-        formData.append('right', values['right'])
-        formData.append('left', values['left'])
-        formData.append('interior_1', values['interior_1'])
-        formData.append('interior_2', values['interior_2'])
+        formData.append('insurance', values['inspection'])
+        formData.append('liability', values['inspection'])
+        formData.append('front', values['inspection'])
+        formData.append('rear', values['inspection'])
+        formData.append('right', values['inspection'])
+        formData.append('left', values['inspection'])
+        formData.append('interior_1', values['inspection'])
+        formData.append('interior_2', values['inspection'])
         formData.append("value", JSON.stringify(values));
         const res: any = await AdminApi.store(formData, crudKey, false);
         if (Number(res.status === 200)) await navigate(`/${crudKey}`);
@@ -85,6 +82,7 @@ const CarsCreate: React.FC<IUserCreate> = () => {
     const loadOptions4 = async (id:number) => {
         const data = await vendorAPI.getModel(id);
         setMake(data.make)
+
     };
 
     const loadOptions3 = async () => {
@@ -148,6 +146,23 @@ const CarsCreate: React.FC<IUserCreate> = () => {
                                         isSearchable={false}
                                         name={"model"}
                                         placeholder={"model"}
+                                    />
+                                }
+                                {
+                                    <Select
+                                        value={values['drivers']}
+                                        getOptionValue={(option: IOption) => option.slug}
+                                        getOptionLabel={(option: IOption) => option.label}
+                                        isMulti={true}
+                                        ///
+                                        options={data ? data["drivers"] : data}
+                                        /// options={selectOptions}
+                                        onChange={(option: IOption) => setFieldValue("drivers", option)}
+                                        hideSelectedOptions={true}
+                                        label={"drivers"}
+                                        isSearchable={true}
+                                        name={"drivers"}
+                                        placeholder={"drivers"}
                                     />
                                 }
                                 {

@@ -130,7 +130,7 @@ class VendorUsersController extends Controller
             $license = $request->file('license');
             $license_name = time() + 1 . $license->getClientOriginalName();
             $license->move(
-                "uploads/$request->user()->vendor_id/$user->id",
+                "uploads/$user->vendor_id/$user->id",
                 $license_name
             );
 
@@ -138,7 +138,7 @@ class VendorUsersController extends Controller
             $picture = $request->file('picture');
             $picture_name = time() + 2 . $picture->getClientOriginalName();
             $picture->move(
-                "uploads/$request->user()->vendor_id/$user->id",
+                "uploads/$user->vendor_id/$user->id",
                 $picture_name
             );
 
@@ -147,7 +147,7 @@ class VendorUsersController extends Controller
             $sex_offender_check_name =
                 time() + 3 . $sex_offender_check->getClientOriginalName();
             $sex_offender_check->move(
-                "uploads/$request->user()->vendor_id/$user->id",
+                "uploads/$user->vendor_id/$user->id",
                 $sex_offender_check_name
             );
 
@@ -156,16 +156,16 @@ class VendorUsersController extends Controller
             $motor_vehicle_record_name =
                 time() + 4 . $motor_vehicle_record->getClientOriginalName();
             $motor_vehicle_record->move(
-                "uploads/$request->user()->vendor_id/$user->id",
+                "uploads/$user->vendor_id/$user->id",
                 $motor_vehicle_record_name
             );
             $vendor->motor_vehicle_record = $motor_vehicle_record;
-            
+
             $defensive_driving = $request->file('defensive_driving');
             $defensive_driving_name =
                 time() + 5 . $defensive_driving->getClientOriginalName();
             $defensive_driving->move(
-                "uploads/$request->user()->vendor_id/$user->id",
+                "uploads/$user->vendor_id/$user->id",
                 $defensive_driving_name
             );
             $vendor->defensive_driving = $defensive_driving_name;
@@ -174,7 +174,7 @@ class VendorUsersController extends Controller
             $wheelchair_securement_name =
                 time() + 6 . $wheelchair_securement->getClientOriginalName();
             $wheelchair_securement->move(
-                "uploads/$request->user()->vendor_id/$user->id",
+                "uploads/$user->vendor_id/$user->id",
                 $wheelchair_securement_name
             );
             $vendor->wheelchair_securement = $defensive_driving_name;
@@ -183,7 +183,7 @@ class VendorUsersController extends Controller
             $pass_basic_name =
                 time() + 7 . $pass_basic->getClientOriginalName();
             $pass_basic->move(
-                "uploads/$request->user()->vendor_id/$user->id",
+                "uploads/$user->vendor_id/$user->id",
                 $pass_basic_name
             );
             $vendor->pass_basic = $pass_basic_name;
@@ -191,7 +191,7 @@ class VendorUsersController extends Controller
             $emt_1 = $request->file('emt_1');
             $emt_1_name = time() + 8 . $emt_1->getClientOriginalName();
             $emt_1->move(
-                "uploads/$request->user()->vendor_id/$user->id",
+                "uploads/$user->vendor_id/$user->id",
                 $emt_1_name
             );
             $vendor->emt_1 = $emt_1_name;
@@ -199,7 +199,7 @@ class VendorUsersController extends Controller
             $first_aid = $request->file('first_aid');
             $first_aid_name = time() + 9 . $first_aid->getClientOriginalName();
             $first_aid->move(
-                "uploads/$request->user()->vendor_id/$user->id",
+                "uploads/$user->vendor_id/$user->id",
                 $first_aid_name
             );
             $vendor->first_aid = $first_aid_name;
@@ -208,10 +208,20 @@ class VendorUsersController extends Controller
             $company_training_name =
                 time() + 10 . $company_training->getClientOriginalName();
             $company_training->move(
-                "uploads/$request->user()->vendor_id/$user->id",
+                "uploads/$user->vendor_id/$user->id",
                 $company_training_name
             );
             $vendor->company_training = $company_training_name;
+
+            $drug_test = $request->file('drug_test');
+            $drug_test_name =
+                time() + 10 . $drug_test->getClientOriginalName();
+            $drug_test->move(
+                "uploads/$user->vendor_id/$user->id",
+                $drug_test_name
+            );
+            $vendor->drug_test = $drug_test_name;
+
             $vendor->save();
         }
         // $user->notify(

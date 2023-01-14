@@ -30,7 +30,7 @@ const VendorCarsCreate: React.FC<IUserCreate> = () => {
         {name: 'motor_vehicle_record', type: 'file', label: 'Motor Vehicle Record'},
         {name: 'defensive_driving', type: 'file', label: 'Defensive Driving Certificate'},
         {name: 'wheelchair_securement', type: 'file', label: 'Wheelchair Securement Certificate'},
-        {name: 'pass_bassic', type: 'file', label: 'Pass Basic'},
+        {name: 'pass_basic', type: 'file', label: 'Pass Basic'},
         {name: 'emt_1', type: 'file', label: 'EMT 1 Certificate'},
         {name: 'first_aid', type: 'file', label: 'First Aid and CPR Certificate'},
         {name: 'company_training', type: 'file', label: 'Company Training Letter'},
@@ -55,10 +55,10 @@ const VendorCarsCreate: React.FC<IUserCreate> = () => {
         'motor_vehicle_record',
         'defensive_driving',
         'wheelchair_securement',
-        'pass_bassic',
+        'pass_basic',
         'emt_1',
         'first_aid',
-        'company_training'       
+        'company_training'
     ]
 
     return data && <Create
