@@ -15,7 +15,7 @@ front end part location resources/frontend
 9. php artisan passport:keys 
 10. php artisan migrate:fresh --seed
 11. php artisan serve (dont close this teminal it`should always run )
-12. npm run watch open in new terminal
+12. npm run watch
 
 
 If you got error in steps call the Areg +37494806080

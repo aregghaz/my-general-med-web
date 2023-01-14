@@ -1,16 +1,19 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import Button from '../button/button'
 import ButtonSVg from '-!svg-react-loader!../../images/button.svg'
 import s from './single-file-upload.module.scss'
+import PDFViewer from "../pdf-viewer/pdf-viewer";
+// import PDFViewer from "../pdf-viewer/pdf-viewer";
+// import ExamplePDFViewer from "../pdf-viewer/pdf-viewer";
 
 interface ISingleFileUpload {
-    oldImage?: string
+    oldImage?: string | any
     oldVideo?: string
     oldName?: string
     onChange: (e: React.ChangeEvent<any>) => void
     error?: string
-    label:string
+    label: string
     value: any
     media: string
     name: string
@@ -29,20 +32,37 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
         onChange
     }) => {
     const {t} = useTranslation()
-
+    console.log(error)
+    const [viewPDF, setViewPDF] = useState<null | object>(null)
+    const fileType = ["application/pdf"]
+    // if (oldImage) {
+    //     if (oldImage && fileType.includes(oldImage.type)) {
+    //         let reader = new FileReader()
+    //         reader.readAsDataURL(oldImage)
+    //
+    //         reader.onload = (e: ProgressEvent<FileReader>) => setViewPDF(e.target.result)
+    //     } else {
+    //         setViewPDF(null)
+    //     }
+    // }
+    console.log(oldImage, "old image")
     return (
         <>
             {/* <Viewer fileUrl={url} /> */}
             {oldImage && (
                 <div className={s.existingImageBlock}>
-                    <img className={s.existingImage} src={oldImage} alt={oldName}/>
+                    <img className={s.existingImage} src={URL.createObjectURL(oldImage)} alt={oldName}/>
                 </div>
             )}
-            {oldVideo && (
+            {/*FIXME this PDF viewer has some errors and doesn't run properly ???*/}
+            {/*<PDFViewer viewPDF={viewPDF}/>*/}
+            {/*<ExamplePDFViewer/>*/}
+            {
+                oldVideo &&
                 <div className={s.existingImageBlock}>
                     <video controls className={s.existingImage} src={oldVideo}/>
                 </div>
-            )}
+            }
 
             <div className={s.uploadButtonWrapper}>
                 {error && <div className={s.error}>{error}</div>}

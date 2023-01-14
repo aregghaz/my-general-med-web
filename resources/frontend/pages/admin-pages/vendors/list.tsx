@@ -11,6 +11,7 @@ import numberFormatting from '../../../constants/utils';
 import BackDropSearch from '../../../components/backdrop-search/backdrop-search';
 import {useDispatch} from "react-redux";
 import {actions} from "../../../store/home";
+import PopupModal from "../../../components/popup-modal/popup-modal";
 
 interface IVendors {
     path: string
@@ -40,8 +41,8 @@ const Vendors: React.FC<IVendors> = () => {
 
             }
         )()
-      ///  dispatch(actions.setTitles(titles))
-       //// dispatch(actions.clearData())
+        ///  dispatch(actions.setTitles(titles))
+        //// dispatch(actions.clearData())
     }, [])
 
 
@@ -81,14 +82,13 @@ const Vendors: React.FC<IVendors> = () => {
         const homeData = await AdminApi.getAllData(crudKey, activeItem + 1, query ? query : '')
         setCount({from: homeData.current_page, to: homeData.current_page + 5})
         setData(homeData.data)
-      ///  const role = localStorage.getItem('role');
+        ///  const role = localStorage.getItem('role');
         localStorage.setItem('page', activeItem.toString());
 
     }
 
 
-
-    const handlerGetVendorUsers = async (id:number) => {
+    const handlerGetVendorUsers = async (id: number) => {
         navigate(`/admin/users/${id}`)
     }
     const customStyles: ReactModal.Styles = {

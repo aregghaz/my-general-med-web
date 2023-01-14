@@ -1,5 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react'
-import {Col, Row} from 'react-grid-system'
+import React, {useEffect, useRef, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {useDispatch, useSelector} from 'react-redux'
 import {actions} from '../../../store/home'
@@ -8,7 +7,6 @@ import {getClientData, getHomePageData} from '../../../store/selectors'
 import {homeAPI} from "../../../api/site-api/home-api";
 import s from './home.module.scss'
 import CrudTable from '../../../components/crud-table-user/crud-table'
-import Input from '../../../components/input/input'
 import Select, {IOption} from '../../../components/select/select'
 import {useInView} from 'react-intersection-observer'
 import InfoBlock from '../../../components/info-block/info-block'
@@ -18,9 +16,9 @@ import Search from '-!svg-react-loader!../../../images/Search.svg'
 import Close from '-!svg-react-loader!../../../images/Close.svg'
 import axios from 'axios'
 import BackDropSearch from '../../../components/backdrop-search/backdrop-search'
-import Button from "../../../components/button/button";
-import {DirectionsRenderer, GoogleMap, Marker, useJsApiLoader, Autocomplete,} from '@react-google-maps/api'
+import {DirectionsRenderer, GoogleMap, useJsApiLoader,} from '@react-google-maps/api'
 import Modal from 'react-modal'
+import PopupModal from "../../../components/popup-modal/popup-modal";
 
 const center = {lat: 48.8584, lng: 2.2945}
 
@@ -86,6 +84,8 @@ const Home: React.FC<IHome> = () => {
     const [distance, setDistance] = useState('')
     const [duration, setDuration] = useState('')
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState<boolean>(false)
+    const [agreement, setAgreement] = useState<boolean>(false)
 
     async function calculateRoute(newData: any) {
         const directionsService = new google.maps.DirectionsService()
@@ -94,7 +94,7 @@ const Home: React.FC<IHome> = () => {
             destination: newData.destination.city + ' ' + newData.destination.street + ' ' + newData.destination.suite,
             travelMode: google.maps.TravelMode.DRIVING,
         })
-        
+
         setDirectionsResponse(results)
         setDistance(results.routes[0].legs[0].distance.text)
         setDuration(results.routes[0].legs[0].duration.text)
@@ -131,7 +131,7 @@ const Home: React.FC<IHome> = () => {
             count: availableCount
         },
     ]
-  
+
 
     ////FIXME FIX DYNAMIC TABLE FIRELDS
     const [titles, setTitles] = useState<Array<string>>([])
@@ -145,7 +145,7 @@ const Home: React.FC<IHome> = () => {
     //     (
     //         async () => {
     //             const titlesData = localStorage.getItem('titles')
-                
+
     //                 const homeData = await homeAPI.getClientData({
     //                     titles: JSON.parse(titlesData),
     //                     showMore: countRef.current,
@@ -159,15 +159,15 @@ const Home: React.FC<IHome> = () => {
     //                     tripCount: homeData.tripCount,
     //                     availableCount: homeData.availableCount
     //                 }))
-               
+
     //         }
     //     )()
     //     /*FIXME commented this part avoiding unmount async error*/
     //     // return async () => await dispatch(actions.resetState())
-        // return () => {
-        //     dispatch(actions.resetState())
-        //     homeAPI.cancelRequest()
-        // }
+    // return () => {
+    //     dispatch(actions.resetState())
+    //     homeAPI.cancelRequest()
+    // }
     // }, [])
 
     const handlerGetClientData = async (event: any, id: number) => {
@@ -192,56 +192,56 @@ const Home: React.FC<IHome> = () => {
         (async () => {
             if ((inView || loading) && !open) {
                 const titlesData = localStorage.getItem('titles')
-                    const homeData = await homeAPI.getClientData({
-                        titles: titles ? titles : JSON.parse(titlesData),
-                        showMore: countRef.current,
-                        typeId: typeId
-                    })
-                    setDefaultData(homeData.titles)
-                    dispatch(actions.setTitles({
-                        titles: homeData.titles,
-                        selectedTitle: homeData.selectedFields,
-                        clients: homeData.clients,
-                        tripCount: homeData.tripCount,
-                        availableCount: homeData.availableCount
-                    }))
-                    countRef.current++;
-                    setLoading(false)
-               
+                const homeData = await homeAPI.getClientData({
+                    titles: titles ? titles : JSON.parse(titlesData),
+                    showMore: countRef.current,
+                    typeId: typeId
+                })
+                setDefaultData(homeData.titles)
+                dispatch(actions.setTitles({
+                    titles: homeData.titles,
+                    selectedTitle: homeData.selectedFields,
+                    clients: homeData.clients,
+                    tripCount: homeData.tripCount,
+                    availableCount: homeData.availableCount
+                }))
+                countRef.current++;
+                setLoading(false)
+
 
             }
-        })()   
-             return () => {
+        })()
+        return () => {
             ///dispatch(actions.resetState())
             homeAPI.cancelRequest()
         }
-    }, [inView, loading]);
+    }, [inView, loading, agreement]);
     ///FIXME  MISSING TYPE
 
     const onSearchInput = async (event: { search: string }) => {
         const titlesData = localStorage.getItem('titles')
-       /// if (titlesData.length > 0) {
-            const homeData = await homeAPI.getClientData({
-                titles: JSON.parse(titlesData),
-                showMore: countRef.current,
-                typeId: typeId,
-                queryData: event.search,
-            })
-            setDefaultData(homeData.titles)
-            dispatch(actions.setTitles({
-                titles: homeData.titles,
-                        selectedTitle: homeData.selectedFields,
-                        clients: homeData.clients,
-                        tripCount: homeData.tripCount,
-                        availableCount: homeData.availableCount
-            }))
-       // }
+        /// if (titlesData.length > 0) {
+        const homeData = await homeAPI.getClientData({
+            titles: JSON.parse(titlesData),
+            showMore: countRef.current,
+            typeId: typeId,
+            queryData: event.search,
+        })
+        setDefaultData(homeData.titles)
+        dispatch(actions.setTitles({
+            titles: homeData.titles,
+            selectedTitle: homeData.selectedFields,
+            clients: homeData.clients,
+            tripCount: homeData.tripCount,
+            availableCount: homeData.availableCount
+        }))
+        // }
     }
 
     const changeFields = async (options: Array<IOption>) => {
         let result = options.map(a => a.slug);
-        console.log(result,'result');
-        
+        console.log(result, 'result');
+
         let selectedTitleSlug = selectedTitle.map(a => a.slug);
         if (result.length > 0) {
 
@@ -272,163 +272,181 @@ const Home: React.FC<IHome> = () => {
         setLoading(true)
     }
 
+    const handleActionMiddleware = (status: number) => {
+        setIsOpen(true)
+        return handlerActionClient(status)
+    }
 
     const handlerActionClient = async (status: number) => {
-        const homeData = await homeAPI.changeClientsTypes({status, ids})
-        setIds([]);
-        setLoading(true)
+        if (agreement) {
+            // alert("agrred")
+            const homeData = await homeAPI.changeClientsTypes({status, ids})
+            setIds([]);
+            setLoading(true)
+            setAgreement(false)
+        } else {
+            return true
+        }
+
     }
+    const agreeWith = (callOrNot: boolean) => {
+        setAgreement(callOrNot)
+        setIsOpen(false)
+    }
+    const notAgreeWith = () => setIsOpen(false)
+
 
     const handlerCloseModal = () => {
         setIsModalOpen(false)
     }
     const handlerOpenModal = async (newData: any) => {
-        console.log(newData,'newDatanewData')
+        console.log(newData, 'newDatanewData')
         await calculateRoute(newData);
         setIsModalOpen(true)
     }
 
 
-
     return (
         clients && <>
-           <div className={s.panel}>
-           <div className={s.upload_panel}>
-                <div className={s.table_upper_tab}>
-                    {
-                        
-                        tabs && tabs.length >= 0 && tabs.map(tab => (
-                            <div
-                                className={s.table_upper_tab_item}
-                                key={tab.id}
-                                style={typeId == tab.id ? {
-                                    backgroundColor: '#6D9886',
-                                    color: "#393E46"
-                                } : {backgroundColor: '#F2E7D5', color: "#393E46"}}
-                                onClick={() => handlerChangeTabs(tab.id)}
-                            >
-                                {tab.name}{tab.count && <span className={s.bage_count}>{tab.count}</span>}
-                            </div>
-                        ))
-                    }
-                </div>
-                <div style={{display: "flex", gap: "10px"}}>
-                    <div className={s.upload_block}>
-                        <label htmlFor="uploadFile">
-                            <Upload/>
-                        </label>
-                        <input
-                            id="uploadFile"
-                            type="file"
-                            onChange={fileUploader}
-                            style={{display: "none"}}
-                            accept=".xls, .xlsx, .csv"
-                        />
+            <div className={s.panel}>
+                <div className={s.upload_panel}>
+                    <div className={s.table_upper_tab}>
+                        {
+
+                            tabs && tabs.length >= 0 && tabs.map(tab => (
+                                <div
+                                    className={s.table_upper_tab_item}
+                                    key={tab.id}
+                                    style={typeId == tab.id ? {
+                                        backgroundColor: '#6D9886',
+                                        color: "#393E46"
+                                    } : {backgroundColor: '#F2E7D5', color: "#393E46"}}
+                                    onClick={() => handlerChangeTabs(tab.id)}
+                                >
+                                    {tab.name}{tab.count && <span className={s.bage_count}>{tab.count}</span>}
+                                </div>
+                            ))
+                        }
                     </div>
-                    <div className={s.import_block}>
-                        <label>
-                            <Import/>
-                        </label>
-                    </div>
-                    <div className={s.import_block} onClick={() => {
-                        openSearch()
-                    }}>
-                        {open ? <Close/> : <Search/>}
-                    </div>
-                </div>
-                <div
-                    className={`${s.header_input_block} ${open ? s.active : s.passive}`}
-                >
-                    <BackDropSearch handlerCloseBackDropSearch={handlerCloseBackDropSearch}
-                                    handlerSubmit={onSearchInput}/>
-                </div>
-
-            </div>
-            {errorMessage && <div style={{color: "red"}}>{errorMessage}</div>}
-            {
-                show && clientById &&
-                <div>
-
-                    <InfoBlock clientById={clientById} calculateRoute={handlerOpenModal}/>
-
-                </div>
-            }
-            <Modal
-                isOpen={isModalOpen !== false}
-                style={customStyles}
-                onRequestClose={handlerCloseModal}
-            >
-                <div className={s.modalBody}>
-                    <div className={s.iconWrapper}>
-                        <i className='cancelicon-'
-                           onClick={handlerCloseModal}
-                        />
-                    </div>
-
-                    {isLoaded && <div className={s.googleMap}>
-                        <GoogleMap
-                            ///  center={center}
-                            zoom={15}
-                            mapContainerStyle={{width: '100%', height: '100%'}}
-                            options={{
-                                zoomControl: true,
-                                streetViewControl: false,
-                                mapTypeControl: false,
-                                fullscreenControl: false,
-                            }}
-                            onLoad={map => setMap(map)}
-                        >
-                            {/* <Marker position={center} /> */}
-                            {directionsResponse && (
-                                <DirectionsRenderer directions={directionsResponse}/>
-                            )}
-
-                        </GoogleMap>
-                        <div style={{border: "1px solid #ddd", padding: "5px", marginTop: "10px"}}>
-                            {steps && steps.map((el: any) => {
-                                return (
-                                    <div
-                                        className={s.directions}
-                                        dangerouslySetInnerHTML={{__html: el.instructions}}
-                                    />
-                                )
-                            })}
+                    <div style={{display: "flex", gap: "10px"}}>
+                        <div className={s.upload_block}>
+                            <label htmlFor="uploadFile">
+                                <Upload/>
+                            </label>
+                            <input
+                                id="uploadFile"
+                                type="file"
+                                onChange={fileUploader}
+                                style={{display: "none"}}
+                                accept=".xls, .xlsx, .csv"
+                            />
                         </div>
-                    </div>}
+                        <div className={s.import_block}>
+                            <label>
+                                <Import/>
+                            </label>
+                        </div>
+                        <div className={s.import_block} onClick={() => {
+                            openSearch()
+                        }}>
+                            {open ? <Close/> : <Search/>}
+                        </div>
+                    </div>
+                    <div
+                        className={`${s.header_input_block} ${open ? s.active : s.passive}`}
+                    >
+                        <BackDropSearch handlerCloseBackDropSearch={handlerCloseBackDropSearch}
+                                        handlerSubmit={onSearchInput}/>
+                    </div>
+
                 </div>
-            </Modal>
-            <div className={s.iconBlock}>
-                <Select
-                    isSearchable={true}
-                    placeholder={'title'}
-                    options={defaultData}
-                    onChange={(options: Array<IOption>) => {
-                        changeFields(options);
-                    }}
-                    getOptionValue={(option: IOption) => option.value}
-                    getOptionLabel={(option: IOption) => t(option.label)}
-                    value={selectedTitle}
-                    name={'filtre'}
-                    isMulti={true}
-                />
+                {errorMessage && <div style={{color: "red"}}>{errorMessage}</div>}
+                {
+                    show && clientById &&
+                    <div>
+
+                        <InfoBlock clientById={clientById} calculateRoute={handlerOpenModal}/>
+
+                    </div>
+                }
+                <Modal
+                    isOpen={isModalOpen !== false}
+                    style={customStyles}
+                    onRequestClose={handlerCloseModal}
+                >
+                    <div className={s.modalBody}>
+                        <div className={s.iconWrapper}>
+                            <i className='cancelicon-'
+                               onClick={handlerCloseModal}
+                            />
+                        </div>
+
+                        {isLoaded && <div className={s.googleMap}>
+                            <GoogleMap
+                                ///  center={center}
+                                zoom={15}
+                                mapContainerStyle={{width: '100%', height: '100%'}}
+                                options={{
+                                    zoomControl: true,
+                                    streetViewControl: false,
+                                    mapTypeControl: false,
+                                    fullscreenControl: false,
+                                }}
+                                onLoad={map => setMap(map)}
+                            >
+                                {/* <Marker position={center} /> */}
+                                {directionsResponse && (
+                                    <DirectionsRenderer directions={directionsResponse}/>
+                                )}
+
+                            </GoogleMap>
+                            <div style={{border: "1px solid #ddd", padding: "5px", marginTop: "10px"}}>
+                                {steps && steps.map((el: any) => {
+                                    return (
+                                        <div
+                                            className={s.directions}
+                                            dangerouslySetInnerHTML={{__html: el.instructions}}
+                                        />
+                                    )
+                                })}
+                            </div>
+                        </div>}
+                    </div>
+                </Modal>
+                <div className={s.iconBlock}>
+                    <Select
+                        isSearchable={true}
+                        placeholder={'title'}
+                        options={defaultData}
+                        onChange={(options: Array<IOption>) => {
+                            changeFields(options);
+                        }}
+                        getOptionValue={(option: IOption) => option.value}
+                        getOptionLabel={(option: IOption) => t(option.label)}
+                        value={selectedTitle}
+                        name={'filtre'}
+                        isMulti={true}
+                    />
+                </div>
+                <div className={s.upload_panel}>
+                    {/*<div className={s.actiona_block} onClick={() => handlerActionClient(1)}>*/}
+                    <div className={s.actiona_block} onClick={() => handleActionMiddleware(1)}>
+                        <label>
+                            Claim Trip
+                        </label>
+
+                    </div>
+                    {/*<div className={s.actiona_block} onClick={() => handlerActionClient(4)}>*/}
+                    <div className={s.actiona_block} onClick={() => handleActionMiddleware(4)}>
+                        <label>
+                            Cancel Trip
+                        </label>
+
+                    </div>
+                </div>
+
             </div>
-            <div className={s.upload_panel}>
-                <div className={s.actiona_block} onClick={() => handlerActionClient(1)}>
-                    <label>
-                        Claim Trip
-                    </label>
-
-                </div>
-                <div className={s.actiona_block} onClick={() => handlerActionClient(4)}>
-                    <label>
-                        Cancel Trip
-                    </label>
-
-                </div>
-            </div>
-
-           </div>
-
+            <PopupModal isOpen={isOpen} agreeWith={agreeWith} notAgreeWith={notAgreeWith}/>
             <div ref={contentRef} className={s.table_wrapper}>
                 <CrudTable
                     titles={selectedTitle}

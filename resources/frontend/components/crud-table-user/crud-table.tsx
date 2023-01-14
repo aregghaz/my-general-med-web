@@ -1,12 +1,11 @@
-import React, {useState} from 'react'
+import React, {useRef, useState} from 'react'
 import TableHead from './table-head/table-head'
 import TableBody from './table-body/table-body'
 import s from './crud-table.module.scss'
 import {ICount} from '../../types/admin';
 import {IOption} from '../select/select';
+import {DownloadTableExcel} from 'react-export-table-to-excel';
 
-///import ReactHTMLTableToExcel from 'react-html-table-to-excel';
-import Import from '-!svg-react-loader!../../images/Import.svg'
 
 const CrudTable: React.FC<ICrudTable> = (
     {
@@ -23,6 +22,7 @@ const CrudTable: React.FC<ICrudTable> = (
     const [filterTable, setFilterTable] = useState<string>("ASC")
     const [filteredData, setFilteredData] = useState<any[]>(null)
     const [titleName, setTitleName] = useState<string>("")
+    const tableRef = useRef(null);
 
     const titleSort = (name: string) => {
         if (filterTable === "ASC") {
@@ -38,16 +38,15 @@ const CrudTable: React.FC<ICrudTable> = (
 
     return (
         <>
-            {/* <ReactHTMLTableToExcel
-                id="test-table-xls-button"
-                className={s.download_btn}
-                table="download_table"
-                filename="table data"
-                sheet="table data"
-                buttonText="Download table to Excel file"
-            /> */}
+            <DownloadTableExcel
+                filename="users table"
+                sheet="users"
+                currentTableRef={tableRef.current}
+            >
+                <button className={s.download_btn}> Export excel</button>
+            </DownloadTableExcel>
 
-            <table className={s.table} id="download_table">
+            <table className={s.table} ref={tableRef}>
                 <TableHead titles={titles} titleSort={titleSort} filterTable={filterTable} titleName={titleName}/>
                 <TableBody
                     data={filteredData ? filteredData : data}
@@ -58,18 +57,6 @@ const CrudTable: React.FC<ICrudTable> = (
                 />
 
             </table>
-
-            {/* {
-                paginated && <TableFoot
-                    count={count}
-                    last_page={last_page}
-                    activeItem={activeItem}
-                    handlerChangeItem={HandlerPagination}
-                />
-
-            } */}
-
-
         </>
     )
 }

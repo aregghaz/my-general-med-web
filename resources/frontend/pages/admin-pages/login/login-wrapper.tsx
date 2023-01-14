@@ -61,6 +61,8 @@ const LoginWrapper: React.FC<ILoginWrapper> = () => {
                     password: ''
                 } as FormikValues}
                 onSubmit={submit}
+                validateOnChange={false}
+                validateOnBlur={false}
             >
                 {({values, handleSubmit, handleChange}) => (
                     <form id={'form'} onSubmit={handleSubmit} className={s.form}>

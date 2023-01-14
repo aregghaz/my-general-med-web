@@ -63,6 +63,8 @@ const SignIn: React.FC<ISignIn> = ({handlerRegister, handlerForgetPassword, hand
                         remember: false
                     } as FormikValues}
                     onSubmit={submit}
+                    validateOnChange={false}
+                    validateOnBlur={false}
                 >
                     {({
                           handleChange,
