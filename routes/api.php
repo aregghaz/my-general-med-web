@@ -32,7 +32,7 @@ Route::group([
 ], function () {
     Route::post('/clientData', [HomeController::class, 'clientData']);
     Route::post('/changeClientType', [HomeController::class, 'changeClientType']);
-    Route::get('/make/:slug', [CarsController::class, 'make']);
+    Route::get('/make/{id}', [CarsController::class, 'getModel']);
     Route::resources([
         'home-data' => HomeController::class,
         'vendorClients' => VendorUsersController::class,

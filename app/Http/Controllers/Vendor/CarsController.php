@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Vendor;
 use App\Http\Controllers\Controller;
 use App\Models\Cars;
+use App\Models\MakeModel;
 use App\Models\Year;
 use App\Models\Make;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ class CarsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
     {
@@ -27,7 +28,7 @@ class CarsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create()
     {
@@ -46,16 +47,16 @@ class CarsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
         $data = json_decode($request->value);
-       
+
         $cars =  new Cars();
-        $cars->make = $requestData->make;
-        $cars->model = $requestData->model;
-        $cars->year = $requestData->year;
+        $cars->make = $data->make;
+        $cars->model = $data->model;
+        $cars->year = $data->year;
 
         $inspection = $request->file('inspection');
         $inspection_name =
@@ -81,11 +82,11 @@ class CarsController extends Controller
         $vendor->motor_vehicle_record = $motor_vehicle_record;
 
         $cars->registration = $requestData->registration;
-       
-       
+
+
 
         $cars->liability = $requestData->liability;
-    
+
         if (!$cars->save()) {
             return response()->json(
                 [
@@ -105,8 +106,14 @@ class CarsController extends Controller
             201
         );
     }
-    public function make() {
-        
+    public function getModel($id) {
+        $Make = MakeModel::where('make_id', $id)->get();
+        return response()->json(
+            [
+                'make' => new StatusCollection($Make),
+            ],
+            200
+        );
     }
     /**
      * Display the specified resource.
