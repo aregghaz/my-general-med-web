@@ -29,6 +29,7 @@ const CarsCreate: React.FC<IUserCreate> = () => {
         { name: "registration", type: "input", label: "registration" },
         { name: "inspection", type: "file", label: "inspection" },
         { name: "insurance", type: "file", label: "insurance" },
+        { name: "liability", type: "file", label: "liability" },
         { name: "front", type: "file", label: "Front image" },
         { name: "rear", type: "file", label: "Rear" },
         { name: "right", type: "file", label: "Right Side" },
@@ -67,6 +68,15 @@ const CarsCreate: React.FC<IUserCreate> = () => {
     const create = async (values: FormikValues, { setSubmitting }: FormikHelpers<FormikValues>) => {
         setSubmitting(true);
         const formData: FormData = new FormData();
+        formData.append('inspection', values['inspection'])
+        formData.append('insurance', values['insurance'])
+        formData.append('liability', values['liability'])
+        formData.append('front', values['front'])
+        formData.append('rear', values['rear'])
+        formData.append('right', values['right'])
+        formData.append('left', values['left'])
+        formData.append('interior_1', values['interior_1'])
+        formData.append('interior_2', values['interior_2'])
         formData.append("value", JSON.stringify(values));
         const res: any = await AdminApi.store(formData, crudKey, false);
         if (Number(res.status === 200)) await navigate(`/${crudKey}`);

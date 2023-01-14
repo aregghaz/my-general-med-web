@@ -15,13 +15,13 @@ class CarsCollection extends ResourceCollection
     public function toArray($request)
     {
         return $this->map(function ($vendor) {
-        
+
             return [
                 'id' => $vendor->id,
                 ///'vendor_id' =>$vendor->vendor_id,
-                'make'=> $vendor->make,
-                'model'=> $vendor->model,
-                'year'=> $vendor->year,
+                'make'=> $vendor->make->name,
+                'model'=> $vendor->model->name,
+                'year'=> $vendor->year->name,
                 'registration'=> $vendor->registration,
                 'inspection'=> $vendor->inspection,
                 'insurance'=> $vendor->insurance,

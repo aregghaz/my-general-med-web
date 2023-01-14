@@ -16,9 +16,9 @@ class CreateCarsTable extends Migration
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('vendor_id');
-            $table->string('make');
-            $table->string('model');
-            $table->string('year');
+            $table->unsignedBigInteger('make_id');
+            $table->unsignedBigInteger('model_id');
+            $table->unsignedBigInteger('year_id');
             $table->string('registration');
             $table->string('inspection');
             $table->string('insurance');
@@ -26,7 +26,7 @@ class CreateCarsTable extends Migration
             $table->timestamps();
         });
     }
-   
+
     // Auto Insurance With expiration date
     // General and Professional Liability Insurance with expiration date
     // Inspection Form

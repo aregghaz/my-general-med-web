@@ -95,7 +95,7 @@ class ClientsController extends Controller
      * Display the specified resource.
      *
      * @param \App\Models\Clients $clients
-     * @return \Illuminate\Http\Response->json()
+     * @return \Illuminate\Http\JsonResponse>json()
      */
     public function show(Clients $clients, $id)
     {
@@ -117,7 +117,7 @@ class ClientsController extends Controller
 
 
         $clientdata = $this->convertSingleData($client);
-        
+
         return response()->json([
             'data' => $clientdata,
             'escortType'=> new StatusCollection($escort),
@@ -125,12 +125,12 @@ class ClientsController extends Controller
             'request_type'=> new StatusCollection($request_type),
             "type_of_trip" => new StatusCollection($typeOfTrip),
             'status' => new StatusCollection($clientStatus),
-            
+
         ], 200);
     }
 
 
-  
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -167,7 +167,7 @@ class ClientsController extends Controller
 
     public function convertSingleData($client)
     {
-      
+
 
       return [
             'id' => $client->id,
@@ -193,7 +193,7 @@ class ClientsController extends Controller
                 'value' => $client->requestType->slug,
             ],
             ///select
-            
+
             'status' =>  [
                 'id' => $client->clientStatus->id,
                 'label' => $client->clientStatus->name,

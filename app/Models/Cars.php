@@ -25,4 +25,15 @@ class Cars extends Model
         'insurance',
         'liability',
     ];
+    public function make()
+    {
+        return $this->hasOne(Make::class, 'id', 'make_id');
+    }  public function model()
+    {
+        return $this->hasOne(MakeMOdel::class, 'id', 'model_id');
+    }
+    public function year()
+    {
+        return $this->hasOne(Year::class, 'id', 'year_id');
+    }
 }

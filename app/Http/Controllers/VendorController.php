@@ -44,7 +44,7 @@ class VendorController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create()
     {
@@ -128,7 +128,7 @@ class VendorController extends Controller
      * Display the specified resource.
      *
      * @param \App\Models\Vendor $vendor
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(Vendor $vendor)
     {
@@ -150,7 +150,7 @@ class VendorController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param \App\Models\User $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function edit(Request $request)
     {

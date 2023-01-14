@@ -19,7 +19,7 @@ class CarsController extends Controller
      */
     public function index(Request $request)
     {
-        $cars =  Cars::where('vendor_id', $request->user()->vendor_id)->where('id','!=', $request->user()->id)->get();
+        $cars =  Cars::where('vendor_id', $request->user()->vendor_id)->with('make','year', 'model')->get();
         return response()->json([
             'cars' => new CarsCollection($cars),
         ], 200);
@@ -54,9 +54,12 @@ class CarsController extends Controller
         $data = json_decode($request->value);
 
         $cars =  new Cars();
-        $cars->make = $data->make;
-        $cars->model = $data->model;
-        $cars->year = $data->year;
+       // dd($data->make);
+        $cars->make_id =$data->make->id;
+        $cars->model_id = $data->model->id;
+        $cars->year_id = $data->year->id;
+        $cars->vendor_id = $request->user()->vendor_id;
+        $cars->registration = $data->registration;
 
         $inspection = $request->file('inspection');
         $inspection_name =
@@ -65,7 +68,7 @@ class CarsController extends Controller
             "uploads/$request->user()->vendor_id",
             $inspection_name
         );
-        $cars->inspection = $inspection;
+        $cars->inspection = $inspection_name;
 
 
         $insurance = $request->file('insurance');
@@ -75,17 +78,17 @@ class CarsController extends Controller
             "uploads/$request->user()->vendor_id",
             $insurance_name
         );
-
         $cars->insurance = $insurance_name;
 
+        $liability = $request->file('liability');
+        $liability_name =
+            time() + 4 . $liability->getClientOriginalName();
+        $liability->move(
+            "uploads/$request->user()->vendor_id",
+            $liability_name
+        );
+        $cars->liability = $liability_name;
 
-        $vendor->motor_vehicle_record = $motor_vehicle_record;
-
-        $cars->registration = $requestData->registration;
-
-
-
-        $cars->liability = $requestData->liability;
 
         if (!$cars->save()) {
             return response()->json(
@@ -96,6 +99,7 @@ class CarsController extends Controller
                 403
             );
         }
+
 
         return response()->json(
             [
