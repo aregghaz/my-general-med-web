@@ -59,11 +59,11 @@ const CarsCreate: React.FC<IUserCreate> = () => {
         'pass_bassic',
         'emt_1',
         'first_aid',
-        'company_training'       
+        'company_training'
     ]
 
     const navigate = useNavigate()
-    
+
     const validate = (values:FormikValues) => validationRules(values, requiredFields, fields, t)
 
     const create = async (values: FormikValues, {setSubmitting}: FormikHelpers<FormikValues>) => {
@@ -95,6 +95,8 @@ console.log(make,'aaa')
                 initialValues={populateCreateFormFields(fields, data)}
                 onSubmit={create}
                 validate={(values:FormikValues) => validate(values)}
+                validateOnChange={false}
+                validateOnBlur={false}
             >
                 {({
                       handleSubmit,

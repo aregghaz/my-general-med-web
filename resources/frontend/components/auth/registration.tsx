@@ -96,6 +96,8 @@ const Register: React.FC<IRegister> = ({handlerAlreadyRegistered, handlerSuccess
                         residence: []
                     } as FormikValues}
                     onSubmit={submit}
+                    validateOnChange={false}
+                    validateOnBlur={false}
                 >
                     {
                         ({

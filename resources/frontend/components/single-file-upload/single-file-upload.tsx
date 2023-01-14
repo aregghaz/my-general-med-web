@@ -4,6 +4,8 @@ import Button from '../button/button'
 import ButtonSVg from '-!svg-react-loader!../../images/button.svg'
 import s from './single-file-upload.module.scss'
 import PDFViewer from "../pdf-viewer/pdf-viewer";
+// import PDFViewer from "../pdf-viewer/pdf-viewer";
+// import ExamplePDFViewer from "../pdf-viewer/pdf-viewer";
 
 interface ISingleFileUpload {
     oldImage?: string | any
@@ -30,19 +32,19 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
         onChange
     }) => {
     const {t} = useTranslation()
-
+    console.log(error)
     const [viewPDF, setViewPDF] = useState<null | object>(null)
     const fileType = ["application/pdf"]
-    if (oldImage) {
-        if (oldImage && fileType.includes(oldImage.type)) {
-            let reader = new FileReader()
-            reader.readAsDataURL(oldImage)
-            // @ts-ignore
-            reader.onload = (e: ProgressEvent<FileReader>) => setViewPDF(e.target.result)
-        } else {
-            setViewPDF(null)
-        }
-    }
+    // if (oldImage) {
+    //     if (oldImage && fileType.includes(oldImage.type)) {
+    //         let reader = new FileReader()
+    //         reader.readAsDataURL(oldImage)
+    //
+    //         reader.onload = (e: ProgressEvent<FileReader>) => setViewPDF(e.target.result)
+    //     } else {
+    //         setViewPDF(null)
+    //     }
+    // }
     console.log(oldImage, "old image")
     return (
         <>
@@ -54,6 +56,7 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
             )}
             {/*FIXME this PDF viewer has some errors and doesn't run properly ???*/}
             {/*<PDFViewer viewPDF={viewPDF}/>*/}
+            {/*<ExamplePDFViewer/>*/}
             {
                 oldVideo &&
                 <div className={s.existingImageBlock}>

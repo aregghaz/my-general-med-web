@@ -56,10 +56,10 @@ const VendorDriverCreate: React.FC<IUserCreate> = () => {
         'motor_vehicle_record',
         'defensive_driving',
         'wheelchair_securement',
-        'pass_bassic',
+        'pass_basic',
         'emt_1',
         'first_aid',
-        'company_training'       
+        'company_training'
     ]
 
     return data && <Create

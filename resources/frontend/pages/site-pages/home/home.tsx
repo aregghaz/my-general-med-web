@@ -1,5 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react'
-import {Col, Row} from 'react-grid-system'
+import React, {useEffect, useRef, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {useDispatch, useSelector} from 'react-redux'
 import {actions} from '../../../store/home'
@@ -8,7 +7,6 @@ import {getClientData, getHomePageData} from '../../../store/selectors'
 import {homeAPI} from "../../../api/site-api/home-api";
 import s from './home.module.scss'
 import CrudTable from '../../../components/crud-table-user/crud-table'
-import Input from '../../../components/input/input'
 import Select, {IOption} from '../../../components/select/select'
 import {useInView} from 'react-intersection-observer'
 import InfoBlock from '../../../components/info-block/info-block'
@@ -18,8 +16,7 @@ import Search from '-!svg-react-loader!../../../images/Search.svg'
 import Close from '-!svg-react-loader!../../../images/Close.svg'
 import axios from 'axios'
 import BackDropSearch from '../../../components/backdrop-search/backdrop-search'
-import Button from "../../../components/button/button";
-import {DirectionsRenderer, GoogleMap, Marker, useJsApiLoader, Autocomplete,} from '@react-google-maps/api'
+import {DirectionsRenderer, GoogleMap, useJsApiLoader,} from '@react-google-maps/api'
 import Modal from 'react-modal'
 import PopupModal from "../../../components/popup-modal/popup-modal";
 
@@ -218,7 +215,7 @@ const Home: React.FC<IHome> = () => {
             ///dispatch(actions.resetState())
             homeAPI.cancelRequest()
         }
-    }, [inView, loading]);
+    }, [inView, loading, agreement]);
     ///FIXME  MISSING TYPE
 
     const onSearchInput = async (event: { search: string }) => {
@@ -275,14 +272,27 @@ const Home: React.FC<IHome> = () => {
         setLoading(true)
     }
 
-    const handleActionMiddleware = () => setIsOpen(true)
+    const handleActionMiddleware = (status: number) => {
+        setIsOpen(true)
+        return handlerActionClient(status)
+    }
 
     const handlerActionClient = async (status: number) => {
-        const homeData = await homeAPI.changeClientsTypes({status, ids})
-        setIds([]);
-        setLoading(true)
+        if (agreement) {
+            // alert("agrred")
+            const homeData = await homeAPI.changeClientsTypes({status, ids})
+            setIds([]);
+            setLoading(true)
+            setAgreement(false)
+        } else {
+            return true
+        }
+
     }
-    const agreeWith = (callOrNot: boolean) => setAgreement(callOrNot)
+    const agreeWith = (callOrNot: boolean) => {
+        setAgreement(callOrNot)
+        setIsOpen(false)
+    }
     const notAgreeWith = () => setIsOpen(false)
 
 
@@ -419,15 +429,15 @@ const Home: React.FC<IHome> = () => {
                     />
                 </div>
                 <div className={s.upload_panel}>
-                    <div className={s.actiona_block} onClick={() => handlerActionClient(1)}>
-                    {/*<div className={s.actiona_block} onClick={handleActionMiddleware}>*/}
+                    {/*<div className={s.actiona_block} onClick={() => handlerActionClient(1)}>*/}
+                    <div className={s.actiona_block} onClick={() => handleActionMiddleware(1)}>
                         <label>
                             Claim Trip
                         </label>
 
                     </div>
-                    <div className={s.actiona_block} onClick={() => handlerActionClient(4)}>
-                    {/*<div className={s.actiona_block} onClick={handleActionMiddleware}>*/}
+                    {/*<div className={s.actiona_block} onClick={() => handlerActionClient(4)}>*/}
+                    <div className={s.actiona_block} onClick={() => handleActionMiddleware(4)}>
                         <label>
                             Cancel Trip
                         </label>

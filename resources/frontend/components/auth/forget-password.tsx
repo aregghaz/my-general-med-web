@@ -22,6 +22,8 @@ const ForgetPassword = () => {
                     console.log(values)
                     console.log(actions)
                 }}
+                validateOnChange={false}
+                validateOnBlur={false}
             >
                 {
                     ({handleChange, values}) => (

@@ -14,7 +14,7 @@ interface ICreate {
     data?: { [key: string]: Object }
     fields: Array<IItem>
     crudKey?: string
-    isAdmin?:boolean 
+    isAdmin?:boolean
     title: string,
     requiredFields?:Array<string>
 }
@@ -31,7 +31,7 @@ const Create: React.FC<ICreate> = (
     }) => {
     const navigate = useNavigate()
     const {t} = useTranslation()
-   
+
     const validate = (values:FormikValues) => validationRules(values, requiredFields, fields, t)
 
     const create = async (values: FormikValues, {setSubmitting}: FormikHelpers<FormikValues>) => {
@@ -46,9 +46,9 @@ const Create: React.FC<ICreate> = (
             formData.append('emt_1', values['emt_1'])
             formData.append('first_aid', values['first_aid'])
             formData.append('company_training', values['company_training'])
-            formData.append('license', values['license']) 
+            formData.append('license', values['license'])
             formData.append('picture', values['picture'])
-        
+
         }
 
         formData.append('value', JSON.stringify(values))
@@ -64,6 +64,8 @@ const Create: React.FC<ICreate> = (
                 initialValues={populateCreateFormFields(fields, data)}
                 onSubmit={create}
                 validate={(values:FormikValues) => validate(values)}
+                validateOnChange={false}
+                validateOnBlur={false}
             >
                 {({
                       handleSubmit,

@@ -47,6 +47,8 @@ const Edit: React.FC<IEdit> = (
                 initialValues={populateEditFormFields(fields, data)}
                 onSubmit={submit}
                 validate={validate}
+                validateOnChange={false}
+                validateOnBlur={false}
             >
                 {({
                       handleSubmit,

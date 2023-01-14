@@ -66,6 +66,8 @@ const BackDropSearch: React.FC<IBackDropSearch> = ({handlerCloseBackDropSearch, 
                     search: ''
                 }}
                 onSubmit={handlerSubmit}
+                validateOnChange={false}
+                validateOnBlur={false}
             >
                 {
                     ({values, handleChange, handleSubmit}) => (
