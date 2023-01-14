@@ -42,6 +42,18 @@ mix.webpackConfig({
                 ]
             },
             {
+                test: /\/pdfjs-dist\//,
+                loader: require.resolve('babel-loader'),
+                options: {
+                    presets: [
+                        [
+                            // Latest stable ECMAScript features
+                            require('@babel/preset-env').default,
+                        ],
+                    ],
+                },
+            },
+            {
                 test: /\.css$/,
                 exclude: /node_modules/,
                 use: [
