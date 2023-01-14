@@ -1,11 +1,13 @@
 /node_modules
 /public/hot
 /public/storage
+/public/uploads
 /public/js
 /public/css
 /public/font
 /storage/*.key
 /vendor
+package-lock.json
 .env
 .env.backup
 .phpunit.result.cache
