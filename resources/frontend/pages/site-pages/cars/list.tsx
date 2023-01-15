@@ -75,7 +75,7 @@ const Cars: React.FC<Beneficiary> = () => {
         })
     }
 
-    // const handlerEditBeneficiaryItem = (id: number) => navigate(`/admin/${crudKey}/${id}`)
+     const handlerEditItem = (id: number) => navigate(`/${crudKey}/${id}`)
     // const HandlerGetProducts = (id: number) => navigate(`/admin/users-products/${id}`)
 
     const HandlerPagination = (activeItem: number) => {
@@ -88,7 +88,7 @@ const Cars: React.FC<Beneficiary> = () => {
 
     }
 
-   
+
     const customStyles: ReactModal.Styles = {
         content: {
             position: 'fixed',
@@ -119,7 +119,7 @@ const Cars: React.FC<Beneficiary> = () => {
                 titles={titles}
                 isDelete
                 isEdit
-            
+                handlerEditItem={handlerEditItem}
                 paginated={false}
                 isCreate
                 isGetItems

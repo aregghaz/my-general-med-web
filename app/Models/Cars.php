@@ -38,7 +38,7 @@ class Cars extends Model
     }
     public function driver()
     {
-        return $this->hasMany(Driver::class, 'id', 'car_id');
+        return $this->hasMany(Driver::class, 'car_id', 'id');
     }
 
     public function year()

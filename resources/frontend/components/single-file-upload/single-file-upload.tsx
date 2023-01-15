@@ -45,15 +45,15 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
     //         setViewPDF(null)
     //     }
     // }
-    console.log(oldImage, "old image")
+    console.log(error, "old image")
     return (
         <>
             {/* <Viewer fileUrl={url} /> */}
-            {oldImage && (
-                <div className={s.existingImageBlock}>
-                    <img className={s.existingImage} src={URL.createObjectURL(oldImage)} alt={oldName}/>
-                </div>
-            )}
+            {/*{oldImage && (*/}
+            {/*    <div className={s.existingImageBlock}>*/}
+            {/*        <img className={s.existingImage} src={URL.createObjectURL(oldImage)} alt={oldName}/>*/}
+            {/*    </div>*/}
+            {/*)}*/}
             {/*FIXME this PDF viewer has some errors and doesn't run properly ???*/}
             {/*<PDFViewer viewPDF={viewPDF}/>*/}
             {/*<ExamplePDFViewer/>*/}

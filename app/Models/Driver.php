@@ -22,6 +22,9 @@ class Driver extends Model
       'first_aid',
       'company_training',
       'drug_test'
-
     ];
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
 }

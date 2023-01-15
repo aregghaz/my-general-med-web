@@ -25,6 +25,10 @@ export const vendorAPI = {
     editUserData(crudKey: string, id: number) {
         return axios.get(`/api/${crudKey}/${id}/edit`).then(res => res.data)
     },
+    update(formData: FormData, crudKey: string, id: number){
+
+        return axios.post(`/api/${crudKey}/${id}`, formData).then(res => res.data)
+    },
     createUserData(crudKey: string) {
         return axios.get(`/api/${crudKey}/create`).then(res => res.data)
     },

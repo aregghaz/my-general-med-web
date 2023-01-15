@@ -39,6 +39,7 @@ import VendorDriverCreate from'./pages/site-pages/users/create/driver'
 import VendorDriverEdit from './pages/site-pages/users/edit/driver'
 import Cars from './pages/site-pages/cars/list'
 import CarsCreate from './pages/site-pages/cars/create'
+import CarsEdit from "./pages/site-pages/cars/edit";
 const App = (): JSX.Element => (
     <Provider store={store}>
         <Router>
@@ -50,6 +51,7 @@ const App = (): JSX.Element => (
                 <VendorDriverCreate path="/users/driver/create"/>
                 <Cars path="/cars" />
                 <CarsCreate path="/cars/create" />
+                <CarsEdit path="/cars/:id" />
                 {/* <Film path="/all/films"/> */}
                 {/* <Serial path="/all/serials"/>
                 <MovesItem path="/films/:slug"/>
