@@ -10,10 +10,10 @@
 }
 
 .root {
-    border: 1px solid $adminBgColor;
-    //padding: 110px 15px 30px;
+    //border: 1px solid $adminBgColor;
     background: $adminBgColor;
     min-height: calc(100vh - 300px);
+    padding: 0 15px;
 }
 
 .navigation {

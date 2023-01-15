@@ -13,7 +13,12 @@
     <link rel="local_logo" href="/local_logo.svg">
     <link rel="icon" href="/fav_icon.svg">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet">
+
     <link rel="preload" as="font" href="/font/ArTarumianHandes.woff" type="font/woff2" crossorigin="anonymous">
+
     <link href="{{asset('css/main.css')}}" rel="stylesheet">
     <link href="{{asset('css/fontello.css')}}" rel="stylesheet">
 
