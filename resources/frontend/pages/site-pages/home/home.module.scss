@@ -171,8 +171,8 @@ body {
 
 .upload_panel {
     padding: 10px 0;
-   /// border: 1px solid #ddd;
-   background-color:$whiteColor;
+    /// border: 1px solid #ddd;
+    background-color: $whiteColor;
     border-radius: 5px;
     width: 100%;
     min-height: 50px;
@@ -199,6 +199,7 @@ body {
     justify-content: center;
     cursor: pointer;
     transition: 0.2s ease-in-out;
+    background-color: white;
 
     label {
         cursor: pointer;
@@ -275,7 +276,11 @@ body {
     position: relative;
     padding: 20px;
     width: 33.3%;
+    cursor: pointer;
 
+    &:hover {
+        filter: brightness(90%);
+    }
 }
 
 .bage_count {
@@ -292,11 +297,12 @@ body {
 
 
 .actiona_block {
-display: inline-block;
-   border-radius: 10px;
-   padding: 10px 20px;
+    display: inline-block;
+    border-radius: 10px;
+    padding: 10px 20px;
     cursor: pointer;
     background-color: $menuColor;
+
     label {
         cursor: pointer;
     }

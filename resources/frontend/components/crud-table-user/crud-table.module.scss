@@ -16,7 +16,7 @@
 }
 
 .download_btn {
-    background-color: green;
+    background-color: #6D9886;
     border: none;
     padding: 5px 10px;
     border-radius: 5px;
@@ -25,7 +25,7 @@
     margin-bottom: 10px;
 
     &:hover {
-        background-color: darkgreen;
+        background-color: #2d705f;
     }
 }
 
@@ -34,7 +34,7 @@
     border-collapse: collapse;
     min-width: 100%;
     //display: grid;
- 
+
     tbody{
            max-height: 60vh;
     }
@@ -79,7 +79,7 @@
     display: table-row;
     outline: 0;
     vertical-align: middle;
-  
+
 }
 
 .tableTd {
@@ -89,7 +89,8 @@
     font-weight: bold;
     vertical-align: inherit;
    /// background: $whiteColor;
-    color: $thTextColor;
+   // color: $thTextColor;
+    color: #525252;
     //FIXME: Fix for large sizes & no support for vw
     font-size: min(max(16px, 1vw), 19px);
     @media only screen and (max-width: $mediumDisplay) {

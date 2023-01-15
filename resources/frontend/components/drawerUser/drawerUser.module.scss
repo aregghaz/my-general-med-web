@@ -62,11 +62,29 @@
     padding: 10px 12px;
     text-decoration: none;
     display: block;
+    align-items: center;
+    justify-content: center;
     transition: 0.3s;
     white-space: nowrap;
     //color: $thTextColor;
-    color: $headColor;
+    //color: $headColor;
+    color: #707980;
     font-size: 20px;
+}
+
+.link_block {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+}
+
+.side_icon {
+    width: 40px;
+}
+
+.side_text {
+    //margin-left: 10px;
 }
 
 .closeIcon {
@@ -107,23 +125,19 @@
     padding: 6px 16px;
 }
 
-
-//.headerNav {
-//    width: 100%;
-//    padding: 23px 40px;
-//    color: #fff;
-//    background-color:#ADA2FF;
-//    z-index: 999;
-//    height: 50px;
-//}
-
 .header_nav {
-    background-color: $headColor;
-    height: 50px;
+    //background-color: $headColor;
+    background-color: #FAFBFC;
+    position: sticky;
+    top: 0;
+    z-index: 111111;
+    box-shadow: 0 0 20px #ddd;
+    height: 60px;
     width: 100%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    color: #707980;
 }
 
 .navWrapper {
@@ -137,29 +151,6 @@
     align-items: center;
 }
 
-//.header_input_block {
-//    height: 30px;
-//    width: 0;
-//    overflow: hidden;
-//
-//    input {
-//        border: 1px solid #ddd;
-//        border-radius: 5px;
-//        height: 100%;
-//        margin: 0;
-//        color: black !important;
-//    }
-//}
-//
-//.header_input_block.active {
-//    min-width: 500px;
-//    width: 100%
-//}
-//
-//.header_input_block.passive {
-//    width: 0;
-//}
-
 .icon {
     width: 30px;
     height: 30px;
@@ -168,7 +159,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: #707980;
 }
 
 .home {
@@ -183,9 +174,22 @@
 }
 
 .iconBlock {
+    position: relative;
+
     & + & {
         margin-left: 20px;
     }
+}
+
+.account_drop_menu {
+    position: absolute;
+    //border: 1px solid red;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 4px #ddd;
+    top: 100%;
+    left: 0;
+    background-color: white;
 }
 
 .icons {
@@ -200,7 +204,6 @@
 }
 
 .logo {
-
     padding: 0;
     font-size: 30px;
     font-weight: bolder;
@@ -209,13 +212,39 @@
     font-family: TAHOMA;
 }
 
-.list {
+.main {
+    overflow: hidden;
+    background-color: white;
+    transition: width .2s ease-in-out;
+    position: fixed;
+    z-index: 11111;
+    height: 100%;
+    box-shadow: 0 0 20px #ddd;
+}
 
-    width: 40px;
-    float: left;
+.list {
+    margin-top: 10px;
+}
+
+.item {
+    &:hover {
+        background-color: #165f8d;
+
+        & > a {
+            color: white;
+        }
+    }
 
 }
 
 .content_part {
     width: 100%;
+    display: flex;
+}
+
+.main_content {
+    transition: .2s ease-in-out;
+    margin-left: auto;
+    width: 100%;
+    max-width: calc(100% - 50px);
 }

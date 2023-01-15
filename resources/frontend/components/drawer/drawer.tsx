@@ -11,7 +11,8 @@ import Clients from '-!svg-react-loader!../../images/Clients.svg'
 import Users from '-!svg-react-loader!../../images/Users.svg'
 import {useTranslation} from 'react-i18next'
 import {Link, useNavigate} from '@reach/router'
-import MenuBar from '-!svg-react-loader!../../svg/menuBar.svg';
+import Bars from '-!svg-react-loader!../../images/Bars.svg';
+import Close from '-!svg-react-loader!../../images/Close.svg';
 import s from './drawer.module.scss'
 import {setLogOut} from "../../store/auth";
 import ColumnsHideShow from "../columns-hide-show/columns-hide-show";
@@ -53,54 +54,70 @@ const menuItemsFirst = [
 
 ]
 
-const Drawer: React.FC = ({ children,isOpen, handleToggle }:any) => {
+const Drawer: React.FC = ({children, isOpen, handleToggle}: any) => {
     const {t} = useTranslation()
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    /// const [show, setShow] = useState(false)
+    const [show, setShow] = useState<boolean>(false)
     const handlerLogOut = () => dispatch(setLogOut());
     // const filterColumns = () => {
     //     setShow(!show)
     //     console.log(show)
     // }
 
+    const openSideBar = () => setShow(!show);
+
     return (
         <div style={{width: "100%"}}>
             <nav className={s.header_nav}>
-                <div className={s.iconBlock}>
+                <div
+                    className={`${s.iconBlock} ${s.bars_lock}`}
+                    onClick={openSideBar}
+                >
                     <Button type={'blank'}>
+                    <span className={s.icon}>
+                        {show ? <Close/> : <Bars/>}
+                    </span>
+                    </Button>
+                </div>
+                <div className={s.icon_left_block}>
+
+                    <div className={s.iconBlock}>
+                        <Button type={'blank'}>
                     <span className={s.icon}>
                         <Account/>
                     </span>
-                    </Button>
-                </div>
-                <div className={s.iconBlock}>
-                    <Button type={'blank'} onClick={() => {
-                        handlerLogOut()
-                        navigate('/')
-                    }}>
+                        </Button>
+                    </div>
+                    <div className={s.iconBlock}>
+                        <Button type={'blank'} onClick={() => {
+                            handlerLogOut()
+                            navigate('/')
+                        }}>
                     <span className={s.icon}>
                         <Logout/>
                     </span>
-                    </Button>
+                        </Button>
+                    </div>
                 </div>
             </nav>
             <div className={s.content_part}>
-                <nav className={s.main}>
-                    <div className={s.side_panel}></div>
+                <nav className={s.main} style={show ? {width: "200px"} : {width: "50px"}}>
                     <ul className={s.list}>
                         {
                             menuItemsFirst
                                 .map(li => (
                                         <li className={s.item} key={`first-${li.item}`}>
                                             <Link to={li.page} className={s.link}>
+                                                <span className={s.link_block}>
                                                 <span className={s.side_icon}>
                                                     {li.Icon}
                                                 </span>
-                                                <span>
+                                                <span className={s.side_text}>
                                                     {t(`${li.item}`)}
                                                 </span>
+                                                    </span>
                                             </Link>
                                         </li>
                                     )
@@ -108,7 +125,10 @@ const Drawer: React.FC = ({ children,isOpen, handleToggle }:any) => {
                         }
                     </ul>
                 </nav>
-                <div style={{width: "100%", maxWidth:"calc(100% - 290px)"}}>
+                <div
+                    className={s.main_content}
+                    style={!show ? {maxWidth: "calc(100% - 50px)"} : {maxWidth: "calc(100% - 200px)"}}
+                >
                     {children}
                 </div>
             </div>

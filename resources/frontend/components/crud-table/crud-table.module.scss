@@ -5,7 +5,7 @@ tbody {
     tr {
         background-color: $whiteColor;
         border: 0.5px dotted $headColor;
-        
+
         &:hover {
             background-color: $greyColor;
             cursor: pointer;
@@ -24,16 +24,16 @@ tbody {
 }
 
 .download_btn {
-    background-color: green;
+    background-color: #6D9886;
     border: none;
     padding: 5px 10px;
     border-radius: 5px;
     color: white;
     cursor: pointer;
-    margin-bottom: 10px;
+    margin: 10px 0;
 
     &:hover {
-        background-color: darkgreen;
+        background-color: #2D705FFF;
     }
 }
 
@@ -93,7 +93,8 @@ tbody {
     vertical-align: inherit;
     //background: $tdBgColor;
     background: transparent;
-    color: $thTextColor;
+    //color: $thTextColor;
+    color: #525252;
     //FIXME: Fix for large sizes & no support for vw
     font-size: min(max(16px, 1vw), 19px);
     @media only screen and (max-width: $mediumDisplay) {
@@ -164,6 +165,7 @@ tbody {
 
 .row {
     background-color: $tdBgColor;
+    border: 1px solid #6D9886
 }
 
 
