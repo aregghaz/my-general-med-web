@@ -17,11 +17,13 @@ const CrudTable: React.FC<ICrudTable> = (
         handlerGetClientData,
         paginated,
         selectedIds,
+        typeId,
     }) => {
 
     const [filterTable, setFilterTable] = useState<string>("ASC")
     const [filteredData, setFilteredData] = useState<any[]>(null)
     const [titleName, setTitleName] = useState<string>("")
+    const [defaultTypeId, _] = useState<number>(1)
     const tableRef = useRef(null);
 
     const titleSort = (name: string) => {
@@ -35,6 +37,8 @@ const CrudTable: React.FC<ICrudTable> = (
         }
         setTitleName(name)
     }
+    const whichData = filteredData ? filteredData : data;
+    const resetOrNotTable = defaultTypeId !== typeId ? data : whichData
 
     return (
         <>
@@ -49,7 +53,7 @@ const CrudTable: React.FC<ICrudTable> = (
             <table className={s.table} ref={tableRef}>
                 <TableHead titles={titles} titleSort={titleSort} filterTable={filterTable} titleName={titleName}/>
                 <TableBody
-                    data={filteredData ? filteredData : data}
+                    data={resetOrNotTable}
                     titles={titles}
                     handlerGetClientData={handlerGetClientData}
                     HandlerGetProducts={HandlerGetProducts}
@@ -72,6 +76,7 @@ interface ICrudTable {
     HandlerGetProducts?: (id: number) => void
     HandlerPagination?: (event: any, id: number) => void
     selectedIds: number[]
+    typeId: number
 
 }
 

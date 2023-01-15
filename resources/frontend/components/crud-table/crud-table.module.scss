@@ -88,7 +88,7 @@ tbody {
     display: table-cell;
     padding: 9px;
     text-align: center;
-
+    border: 1px solid #ddd;
     font-weight: 400;
     vertical-align: inherit;
     //background: $tdBgColor;
@@ -118,7 +118,8 @@ tbody {
 
 .tableTh {
     z-index: 2;
-    background-color: $menuColor;
+    //background-color: $menuColor;
+    color: #545cd8;
     font-weight: bold;
     //FIXME: Fix for large sizes & no support for vw
     white-space: nowrap;
@@ -175,7 +176,8 @@ tbody {
 
 .label_span {
     border: 1px solid $headColor;
-    color: $headColor;
+    //color: $headColor;
+    color: $whiteColor;
     font-size: 11px;
     padding: 0 2px;
     border-radius: 25px;

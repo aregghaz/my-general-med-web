@@ -13,6 +13,7 @@ import Settings from '-!svg-react-loader!../../images/Settings.svg'
 import Clients from '-!svg-react-loader!../../images/Clients.svg'
 import Users from '-!svg-react-loader!../../images/Users.svg'
 import Cars from '-!svg-react-loader!../../images/Car.svg'
+import ArrowDown from '-!svg-react-loader!../../svgs/arrow-down.svg'
 
 const DrawerUser: React.FC = ({children}) => {
     const {t} = useTranslation()
@@ -21,28 +22,32 @@ const DrawerUser: React.FC = ({children}) => {
 
     const [menuOpen, setMenuOpen] = useState<boolean>(false)
     const [isOpen, setIsOpen] = useState<boolean>(false)
+    const [activeIcon, setActiveIcon] = useState<number>(1)
     const handlerLogOut = () => dispatch(setLogOut());
     const openAccountMenu = () => setMenuOpen(!menuOpen);
     const openSideBar = () => setIsOpen(!isOpen);
 
     const menuItemsFirst = [
         {
+            id: 1,
             Icon: <Clients/>,
             item: 'clients',
             page: '/'
         },
         {
+            id: 2,
             Icon: <Users/>,
             item: 'Users',
             page: '/users'
         },
         {
+            id: 3,
             Icon: <Cars/>,
             item: 'Cars',
             page: '/cars'
         }
-
     ]
+
     return (
         <>
             <nav className={s.header_nav}>
@@ -66,7 +71,6 @@ const DrawerUser: React.FC = ({children}) => {
                         </div>
 
                         <div className={s.header_icons_block}>
-
                             <div className={s.iconBlock}>
                                 <Button type={'blank'}>
                                 <span className={s.icon}>
@@ -74,20 +78,20 @@ const DrawerUser: React.FC = ({children}) => {
                                 </span>
                                 </Button>
                             </div>
-                            <div className={`${s.account} ${s.iconBlock}`}>
+                            <div className={s.iconBlock}>
                                 <Button
                                     type={'blank'}
-                                    className={s.personalInfo}
                                     onClick={openAccountMenu}
                                 >
                                 <span className={s.icon}>
                                     <Account/>
                                 </span>
                                 </Button>
+                                <ArrowDown/>
                                 {
                                     menuOpen &&
                                     <div className={s.account_drop_menu}>
-                                        <div className={s.iconBlock}>
+                                        <div>
                                             <Button
                                                 type={'blank'}
                                                 onClick={() => {
@@ -98,25 +102,12 @@ const DrawerUser: React.FC = ({children}) => {
                                                 <span className={s.icon}>
                                                     <Logout/>
                                                 </span>
+
                                             </Button>
                                         </div>
                                     </div>
                                 }
                             </div>
-
-                            {/*<div className={s.iconBlock}>*/}
-                            {/*    <Button*/}
-                            {/*        type={'blank'}*/}
-                            {/*        onClick={() => {*/}
-                            {/*            handlerLogOut()*/}
-                            {/*            navigate('/')*/}
-                            {/*        }}*/}
-                            {/*    >*/}
-                            {/*        <span className={s.icon}>*/}
-                            {/*            <Logout/>*/}
-                            {/*        </span>*/}
-                            {/*    </Button>*/}
-                            {/*</div>*/}
                         </div>
                     </div>
 
@@ -129,7 +120,11 @@ const DrawerUser: React.FC = ({children}) => {
                             menuItemsFirst
                                 .map(li => (
                                         <li className={s.item} key={`first-${li.item}`}>
-                                            <Link to={li.page} className={s.link}>
+                                            <Link
+                                                to={li.page}
+                                                className={`${s.link} ${activeIcon === li.id ? s.active_icon : s.passive_icon}`}
+                                                onClick={() => setActiveIcon(li.id)}
+                                            >
                                                 <span className={s.link_block}>
                                                 <span className={s.side_icon}>
                                                     {li.Icon}

@@ -79,7 +79,7 @@
 
 .item {
     &:hover {
-        background-color: #165f8d;
+        background-color: #545cd8;
 
         & > a {
             color: white;
@@ -158,6 +158,8 @@
     transition: .2s ease-in-out;
     margin-left: auto;
     width: 100%;
+    background-color: white;
+    min-height: calc(100vh - 60px);
     max-width: calc(100% - 50px);
 }
 

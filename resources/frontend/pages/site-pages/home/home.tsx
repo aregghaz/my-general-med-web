@@ -272,20 +272,21 @@ const Home: React.FC<IHome> = () => {
         setLoading(true)
     }
 
-    const handleActionMiddleware = (status: number) => {
-        setIsOpen(true)
-        return handlerActionClient(status)
-    }
-
     const handlerActionClient = async (status: number) => {
         if (agreement) {
-            // alert("agrred")
             const homeData = await homeAPI.changeClientsTypes({status, ids})
             setIds([]);
             setLoading(true)
             setAgreement(false)
         } else {
             return true
+        }
+    }
+
+    const handleActionMiddleware =  (status: number) => {
+        if (ids.length > 0) {
+            setIsOpen(true)
+            return handlerActionClient(status)
         }
 
     }
@@ -318,9 +319,9 @@ const Home: React.FC<IHome> = () => {
                                     className={s.table_upper_tab_item}
                                     key={tab.id}
                                     style={typeId == tab.id ? {
-                                        backgroundColor: '#6D9886',
-                                        color: "#393E46"
-                                    } : {backgroundColor: '#F2E7D5', color: "#393E46"}}
+                                        backgroundColor: '#545cd8',
+                                        color: "#fff"
+                                    } : {backgroundColor: '#ffffff', color: "#393E46"}}
                                     onClick={() => handlerChangeTabs(tab.id)}
                                 >
                                     {tab.name}{tab.count && <span className={s.bage_count}>{tab.count}</span>}
@@ -364,9 +365,7 @@ const Home: React.FC<IHome> = () => {
                 {
                     show && clientById &&
                     <div>
-
                         <InfoBlock clientById={clientById} calculateRoute={handlerOpenModal}/>
-
                     </div>
                 }
                 <Modal
@@ -429,19 +428,17 @@ const Home: React.FC<IHome> = () => {
                     />
                 </div>
                 <div className={s.upload_panel}>
-                    {/*<div className={s.actiona_block} onClick={() => handlerActionClient(1)}>*/}
-                    <div className={s.actiona_block} onClick={() => handleActionMiddleware(1)}>
-                        <label>
-                            Claim Trip
-                        </label>
-
+                    <div
+                        className={`${s.action_block}  ${typeId === 1 || typeId === 4 ? s.disabled_action : s.enabled_action}`}
+                        onClick={() => handleActionMiddleware(1)}
+                    >
+                        Claim Trip
                     </div>
-                    {/*<div className={s.actiona_block} onClick={() => handlerActionClient(4)}>*/}
-                    <div className={s.actiona_block} onClick={() => handleActionMiddleware(4)}>
-                        <label>
-                            Cancel Trip
-                        </label>
-
+                    <div
+                        className={`${s.action_block} ${typeId === 2 || typeId === 4 ? s.disabled_action : s.enabled_action}`}
+                        onClick={() => handleActionMiddleware(4)}
+                    >
+                        Cancel Trip
                     </div>
                 </div>
 
@@ -455,6 +452,7 @@ const Home: React.FC<IHome> = () => {
                     className={'pagination'}
                     paginated={false}
                     selectedIds={ids}
+                    typeId={typeId}
                 />
                 <div className={s.detector} ref={ref}/>
             </div>
