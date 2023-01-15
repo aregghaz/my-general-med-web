@@ -117,9 +117,9 @@ const Select: React.FC<ISelect> = (
                     /////SENC DZELU ES TIKO
                     control: (baseStyles, state) => ({
                         ...baseStyles,
-                        borderColor: state.isFocused ?'#6D9886' : '#6D9886',
+                        borderColor: state.isFocused ? '#6D9886' : '#6D9886',
                         backgroundColor: '#6D9886',
-                        borderRadius:"15px"
+                        borderRadius: "15px"
                     }),
                     menu: base => ({
                         ...base,
@@ -128,13 +128,13 @@ const Select: React.FC<ISelect> = (
                         backgroundColor: '#6D9886',
                         // kill the gap
                         marginTop: 0
-                      }),
-                      menuList: base => ({
+                    }),
+                    menuList: base => ({
                         ...base,
                         // kill the white space on first and last option
                         padding: 0,
                         backgroundColor: '#6D9886',
-                      }),
+                    }),
                     multiValue: (baseStyles, state) => ({
                         ...baseStyles,
                         height: 30,
@@ -145,8 +145,8 @@ const Select: React.FC<ISelect> = (
                         fontWeight: "bold",
                         ///borderRadius: 10,
 
-                    backgroundColor: '#6D9886',
-                       /// padding: "0 8px"
+                        backgroundColor: '#6D9886',
+                        /// padding: "0 8px"
                     }),
                     multiValueLabel: (styles: any, {data}: any) => ({
                         ...styles,
@@ -172,8 +172,8 @@ const Select: React.FC<ISelect> = (
                 name={name}
                 isSearchable={isSearchable}
                 onChange={onChange}
-              ///FIXME: ADD THIS PART
-               /// isOptionDisabled={() => 5 >= 3}
+                ///FIXME: ADD THIS PART
+                /// isOptionDisabled={() => 5 >= 3}
                 getOptionLabel={getOptionLabel}
                 getOptionValue={getOptionValue}
                 value={value}
@@ -181,7 +181,6 @@ const Select: React.FC<ISelect> = (
                 onMenuOpen={handlerMenuOpen}
                 onMenuClose={handlerMenuClose}
                 hideSelectedOptions={hideSelectedOptions}
-
             />
 
         </>

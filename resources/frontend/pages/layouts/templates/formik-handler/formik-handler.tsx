@@ -47,8 +47,6 @@ const FormikHandler: React.FC<IFormikHandler> = (
 
     switch (item.type) {
         case 'input':
-            // console.log(errors,errors[item.name],'errors[item.name]');
-
             return (
                 <>
                     {/* {errors[item.name] && <div >{errors[item.name] }</div>} */}
