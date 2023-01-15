@@ -44,7 +44,7 @@ const VendorDriverEdit: React.FC<IUsersEditItem> = ({id}) => {
         (
             async () => {
                 console.log(id);
-                
+
                 const data = await homeAPI.editUserData(crudKey, id)
                 console.log(data)
                 setData(data)
@@ -61,10 +61,10 @@ const VendorDriverEdit: React.FC<IUsersEditItem> = ({id}) => {
         'motor_vehicle_record',
         'defensive_driving',
         'wheelchair_securement',
-        'pass_bassic',
+        'pass_basic',
         'emt_1',
         'first_aid',
-        'company_training'       
+        'company_training'
     ]
     return (
         data &&
