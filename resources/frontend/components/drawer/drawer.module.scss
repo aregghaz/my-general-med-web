@@ -77,16 +77,21 @@
     margin-left: auto;
 }
 
+.active_icon {
+    background-color: #545cd8;
+    color: $whiteColor !important;
+}
+
 .item {
     &:hover {
-        background-color: #545cd8;
+        background-color: rgba(109, 118, 253, 0.73);
 
         & > a {
             color: white;
         }
     }
-
 }
+
 
 .icon_item {
     display: flex;

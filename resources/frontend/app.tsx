@@ -35,11 +35,12 @@ import StatusCreate from './pages/admin-pages/status/create'
 import StatusEdit from './pages/admin-pages/status/edit'
 import VendorUsers from './pages/site-pages/users/list'
 import VendorUsersEdit from './pages/site-pages/users/edit'
-import VendorDriverCreate from'./pages/site-pages/users/create/driver'
+import VendorDriverCreate from './pages/site-pages/users/create/driver'
 import VendorDriverEdit from './pages/site-pages/users/edit/driver'
 import Cars from './pages/site-pages/cars/list'
 import CarsCreate from './pages/site-pages/cars/create'
 import CarsEdit from "./pages/site-pages/cars/edit";
+
 const App = (): JSX.Element => (
     <Provider store={store}>
         <Router>
@@ -49,9 +50,9 @@ const App = (): JSX.Element => (
                 <VendorUsers path="/users"/>
                 <VendorDriverEdit path="/users/driver/:id"/>
                 <VendorDriverCreate path="/users/driver/create"/>
-                <Cars path="/cars" />
-                <CarsCreate path="/cars/create" />
-                <CarsEdit path="/cars/:id" />
+                <Cars path="/cars"/>
+                <CarsCreate path="/cars/create"/>
+                <CarsEdit path="/cars/:id"/>
                 {/* <Film path="/all/films"/> */}
                 {/* <Serial path="/all/serials"/>
                 <MovesItem path="/films/:slug"/>
@@ -66,12 +67,12 @@ const App = (): JSX.Element => (
                 <Clients path="clients"/>
                 <ClientEdit path='clients/:id'/>
                 <ClientCreate path='clients/create'/>
-                <Vendors path="vendors" />
-                <VendorEdit path='vendors/:id' />
-                <VendorCreate path='vendors/create' />
-                <Status path='status' />
-                <StatusCreate path='status/create' />
-                <StatusEdit path='status/:id' />
+                <Vendors path="vendors"/>
+                <VendorEdit path='vendors/:id'/>
+                <VendorCreate path='vendors/create'/>
+                <Status path='status'/>
+                <StatusCreate path='status/create'/>
+                <StatusEdit path='changeStatus/:id'/>
                 <NotFound default/>
             </PrivateRoute>
 

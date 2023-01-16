@@ -102,7 +102,7 @@ export const login = (formData: FormData): ThunkType => {
                     localStorage.setItem('access_token', response.data.access_token)
 
                     try {
-                        console.log(response.data.access_token, '111')
+                        // console.log(response.data.access_token, ' ---- 111 token ')
                         const user = await authAPI.getUser()
                         dispatch(actions.setUser(user))
                     } catch (e) {

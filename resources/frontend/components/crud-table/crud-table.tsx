@@ -32,15 +32,18 @@ const CrudTable: React.FC<ICrudTable> = (
     const tableRef = useRef(null);
 
     const titleSort = (name: string) => {
-        if (filterTable === "ASC") {
-            setFilteredData(data.sort((a, b) => a[name].toLowerCase() > b[name].toLowerCase() ? 1 : -1))
-            setFilterTable("DSC")
+        if (name !== "action") {
+            if (filterTable === "ASC") {
+                setFilteredData(data.sort((a, b) => a[name]?.toLowerCase() > b[name]?.toLowerCase() ? 1 : -1))
+                setFilterTable("DSC")
+            }
+            if (filterTable === "DSC") {
+                setFilteredData(data.sort((a, b) => a[name]?.toLowerCase() < b[name]?.toLowerCase() ? 1 : -1))
+                setFilterTable("ASC")
+            }
+            setTitleName(name)
         }
-        if (filterTable === "DSC") {
-            setFilteredData(data.sort((a, b) => a[name].toLowerCase() < b[name].toLowerCase() ? 1 : -1))
-            setFilterTable("ASC")
-        }
-        setTitleName(name)
+
     }
     return (
         <>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {useDispatch} from 'react-redux'
 import Button from '../button/button'
 import {useTranslation} from 'react-i18next'
@@ -19,6 +19,7 @@ const DrawerUser: React.FC = ({children}) => {
     const {t} = useTranslation()
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const logoutRef = useRef(null)
 
     const [menuOpen, setMenuOpen] = useState<boolean>(false)
     const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -26,6 +27,18 @@ const DrawerUser: React.FC = ({children}) => {
     const handlerLogOut = () => dispatch(setLogOut());
     const openAccountMenu = () => setMenuOpen(!menuOpen);
     const openSideBar = () => setIsOpen(!isOpen);
+    const outsideClickHandler = (e: MouseEvent) => {
+        if (logoutRef.current && !logoutRef.current.contains(e.target)) {
+            setMenuOpen(false)
+        }
+    }
+    useEffect(() => {
+        document.addEventListener("mousedown", outsideClickHandler)
+
+        return () => {
+            document.removeEventListener("mousedown", outsideClickHandler)
+        }
+    }, [logoutRef])
 
     const menuItemsFirst = [
         {
@@ -90,7 +103,7 @@ const DrawerUser: React.FC = ({children}) => {
                                 <ArrowDown/>
                                 {
                                     menuOpen &&
-                                    <div className={s.account_drop_menu}>
+                                    <div className={s.account_drop_menu} ref={logoutRef}>
                                         <div>
                                             <Button
                                                 type={'blank'}

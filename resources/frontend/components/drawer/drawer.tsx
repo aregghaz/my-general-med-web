@@ -22,31 +22,37 @@ import Dropdown from '../dropdown/dropdown'
 const menuItemsFirst = [
 
     {
+        id: 1,
         Icon: <HomeIcon/>,
         item: 'Home',
         page: '/admin'
     },
     {
+        id: 2,
         Icon: <Users/>,
         item: 'vendors',
         page: '/admin/vendors'
     },
     // {
+    //     id: 3,
     //     Icon: <Users/>,
     //     item: 'adminBeneficiaries',
     //     page: '/admin/users'
     // },
     {
+        id: 4,
         Icon: <Clients/>,
         item: 'clients',
         page: '/admin/clients'
     },
     {
+        id: 5,
         Icon: <Status/>,
         item: 'status',
         page: '/admin/status'
     },
     {
+        id: 6,
         Icon: <UserRole/>,
         item: 'role',
         page: '/admin'
@@ -60,6 +66,7 @@ const Drawer: React.FC = ({children, isOpen, handleToggle}: any) => {
     const navigate = useNavigate()
 
     const [show, setShow] = useState<boolean>(false)
+    const [defaultChecked, setDefaultChecked] = useState<number>(menuItemsFirst[0].id)
     const handlerLogOut = () => dispatch(setLogOut());
     // const filterColumns = () => {
     //     setShow(!show)
@@ -67,6 +74,10 @@ const Drawer: React.FC = ({children, isOpen, handleToggle}: any) => {
     // }
 
     const openSideBar = () => setShow(!show);
+
+    const changeSideBar = (id: number) => {
+        setDefaultChecked(id)
+    }
 
     return (
         <div style={{width: "100%"}}>
@@ -109,7 +120,11 @@ const Drawer: React.FC = ({children, isOpen, handleToggle}: any) => {
                             menuItemsFirst
                                 .map(li => (
                                         <li className={s.item} key={`first-${li.item}`}>
-                                            <Link to={li.page} className={s.link}>
+                                            <Link
+                                                to={li.page}
+                                                className={`${s.link} ${defaultChecked === li.id ? s.active_icon : " "}`}
+                                                onClick={() => changeSideBar(li.id)}
+                                            >
                                                 <span className={s.link_block}>
                                                 <span className={s.side_icon}>
                                                     {li.Icon}

@@ -18,6 +18,7 @@ interface Beneficiary {
 const Status: React.FC<Beneficiary> = () => {
     const dispatch = useDispatch();
     const crudKey = 'changeStatus'
+    // const crudKey = 'status'
     const [data, setData] = useState([])
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [countPages, setCountPages] = useState(null)
@@ -49,7 +50,8 @@ const Status: React.FC<Beneficiary> = () => {
         'name',
         'slug'
     ]
-    const handlerAddBeneficiaryItem = () => navigate(`/admin/users/create`)
+    // const handlerAddBeneficiaryItem = () => navigate(`/admin/users/create`)
+    const handlerAddBeneficiaryItem = () => navigate(`/admin/status/create`)
 
 
     const handlerCloseModal = () => {
@@ -85,27 +87,27 @@ const Status: React.FC<Beneficiary> = () => {
         {
             id: 1,
             name: "gender",
-            count:0
+            count: 0
         },
         {
             id: 2,
             name: "escortType",
-            count:0
+            count: 0
         },
         {
             id: 3,
             name: "type_of_trip",
-            count:0
+            count: 0
         },
         {
             id: 4,
             name: "request_type",
-            count:0
+            count: 0
         },
         {
             id: 5,
             name: "status",
-            count:0
+            count: 0
         },
     ]
     const customStyles: ReactModal.Styles = {
@@ -147,7 +149,7 @@ const Status: React.FC<Beneficiary> = () => {
                 handlerEditItem={handlerEditBeneficiaryItem}
                 HandlerPagination={HandlerPagination}
                 HandlerGetProducts={HandlerGetProducts}
-             //   handlerGetClientData={handlerGetClientData}
+                //   handlerGetClientData={handlerGetClientData}
                 count={count}
                 activeItem={activeItem}
                 className={'pagination'}

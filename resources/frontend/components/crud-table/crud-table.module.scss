@@ -43,6 +43,10 @@ tbody {
     min-width: 100%;
 }
 
+.rotate_arrow {
+    transform: rotate(180deg);
+}
+
 .tableHead {
     display: table-header-group;
 }
