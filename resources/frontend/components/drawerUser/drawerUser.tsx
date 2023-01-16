@@ -23,7 +23,7 @@ const DrawerUser: React.FC = ({children}) => {
 
     const [menuOpen, setMenuOpen] = useState<boolean>(false)
     const [isOpen, setIsOpen] = useState<boolean>(false)
-    const [activeIcon, setActiveIcon] = useState<number>(1)
+
     const handlerLogOut = () => dispatch(setLogOut());
     const openAccountMenu = () => setMenuOpen(!menuOpen);
     const openSideBar = () => setIsOpen(!isOpen);
@@ -60,6 +60,7 @@ const DrawerUser: React.FC = ({children}) => {
             page: '/cars'
         }
     ]
+    const [activeIcon, setActiveIcon] = useState<number>(menuItemsFirst[0].id)
 
     return (
         <>
