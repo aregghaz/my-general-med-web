@@ -70,16 +70,16 @@ export const weekDay: Array<string> =
     ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
 export const months: Array<IOption> = [
-    {id: 1, value: 'January'},
-    {id: 2, value: 'February'},
-    {id: 3, value: 'March'},
-    {id: 4, value: 'April'},
-    {id: 5, value: 'May'},
-    {id: 6, value: 'June'},
-    {id: 7, value: 'July'},
-    {id: 8, value: 'August'},
-    {id: 9, value: 'September'},
-    {id: 10, value: 'October'},
-    {id: 11, value: 'November'},
-    {id: 12, value: 'December'}
+    {id: 1, value: 'January',label: 'January'},
+    {id: 2, value: 'February',label: 'January'},
+    {id: 3, value: 'March',label: 'January'},
+    {id: 4, value: 'April',label: 'January'},
+    {id: 5, value: 'May',label: 'January'},
+    {id: 6, value: 'June',label: 'January'},
+    {id: 7, value: 'July',label: 'January'},
+    {id: 8, value: 'August',label: 'January'},
+    {id: 9, value: 'September',label: 'January'},
+    {id: 10, value: 'October',label: 'January'},
+    {id: 11, value: 'November',label: 'January'},
+    {id: 12, value: 'December',label: 'January'}
 ]

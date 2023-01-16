@@ -15,7 +15,7 @@ class UserCollection extends ResourceCollection
     public function toArray($request)
     {
         return $this->map(function ($user) {
-         
+
             return [
                 'id' => $user->id,
                 // "client_id" => $user->client_id,
@@ -25,7 +25,7 @@ class UserCollection extends ResourceCollection
                 'address' => $user->address,
                 'phone_number' => $user->phone_number,
                 'birthday' => $user->birthday,
-                'role' => $user->role->name,
+               // 'role' => $user->role->name,
                 "image" => $user->image ? '/uploads/users/' . $user->image : null,
             ];
         });

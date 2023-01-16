@@ -21,6 +21,7 @@ const Cars: React.FC<Beneficiary> = () => {
     const dispatch = useDispatch();
     const crudKey = 'cars'
     const [data, setData] = useState([])
+    const [itemData, setItemData] = useState({})
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [countPages, setCountPages] = useState(null)
     const [deleteId, setDeleteId] = useState(null)
@@ -37,8 +38,6 @@ const Cars: React.FC<Beneficiary> = () => {
             async () => {
                 const data = await vendorAPI.getCarsData(crudKey)
                 setData(data.cars)
-             ///  setCount(data.count)
-
             }
         )()
         // dispatch(actions.setTitles(titles))
@@ -67,7 +66,6 @@ const Cars: React.FC<Beneficiary> = () => {
 
 
     const handlerDeleteItem = () => {
-
         AdminApi.delete(crudKey, deleteId).then(data => {
             setData(data.data.beneficiaries)
             setIsModalOpen(false)
@@ -75,15 +73,16 @@ const Cars: React.FC<Beneficiary> = () => {
     }
 
      const handlerEditItem = (id: number) => navigate(`/${crudKey}/${id}`)
-    // const HandlerGetProducts = (id: number) => navigate(`/admin/users-products/${id}`)
 
     const HandlerPagination = (activeItem: number) => {
         const role = localStorage.getItem('role');
         localStorage.setItem('page', activeItem.toString());
 
     }
-    const handlerGetItemData = (id: number) => {
-        console.log(id,'id');
+    const handlerGetItemData = async (id: number) => {
+        const data = await vendorAPI.getItemData(crudKey, id)
+        console.log(data);
+        setItemData(data)
         setDataID(id)
 
     }
@@ -113,7 +112,7 @@ const Cars: React.FC<Beneficiary> = () => {
     return (
         data &&
         <>
-             {/*<InfoBlockCar  data={data} />*/}
+            {Object.keys(itemData).length >0  && <InfoBlockCar  data={itemData} />}
             <List
                 data={data}
                 titles={titles}

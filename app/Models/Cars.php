@@ -40,7 +40,10 @@ class Cars extends Model
     {
         return $this->hasMany(Driver::class, 'car_id', 'id');
     }
-
+    public function images()
+    {
+        return $this->hasMany(CarImages::class, 'car_id', 'id');
+    }
     public function year()
     {
         return $this->hasOne(Year::class, 'id', 'year_id');

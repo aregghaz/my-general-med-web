@@ -1,5 +1,11 @@
 export type themesType = 'light' | 'dark'
 
+export interface IImages {
+    original: string,
+    thumbnail?: string,
+  ///  slug: string,
+}
+
 export interface IPartner {
     id: number
     name: string
@@ -49,7 +55,7 @@ export interface IClientsData {
     birthday:number}
 // export interface IClientsData {
 //     show:false,
-//             clientData :Array<any>    
+//             clientData :Array<any>
 // }
 
 

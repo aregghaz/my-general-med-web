@@ -19,10 +19,10 @@ class CreateCarsTable extends Migration
             $table->unsignedBigInteger('make_id');
             $table->unsignedBigInteger('model_id');
             $table->unsignedBigInteger('year_id');
-            $table->string('registration');
-            $table->string('inspection');
-            $table->string('insurance');
-            $table->string('liability');
+            $table->string('registration')->nullable();
+            $table->string('inspection')->nullable();
+            $table->string('insurance')->nullable();
+            $table->string('liability')->nullable();
             $table->timestamps();
         });
     }

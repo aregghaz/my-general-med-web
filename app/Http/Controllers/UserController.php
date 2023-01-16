@@ -29,9 +29,9 @@ class UserController extends Controller
         $users = new User;
         if ($request->input('tabId')) {
             $users = $users->where('role_id',$request->input('tabId'));
-        } 
+        }
         $roles = Role::withCount('users')->get();
-    
+
         $users = $users->get();
       ///  $users = User::get();
         return response()->json([
@@ -44,7 +44,7 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create()
     {

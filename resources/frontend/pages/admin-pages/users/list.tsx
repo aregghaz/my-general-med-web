@@ -29,18 +29,18 @@ const Users: React.FC<Beneficiary> = ({id}) => {
     const [count, setCount] = useState(0);
     const [activeItem, setActiveItem] = useState(null);
     const [tabId, setTabId] = useState(1);
-    const [tabIdSelected, setTabIdSelected] = useState(1);
+    const [tabIdSelected, setTabIdSelected] = useState(3);
     const [dataID, setDataID] = useState(null);
     const [tabs, setTabs] = useState([]);
-
+    const [typeName, setTypeName] = useState<string>('driver')
     const navigate = useNavigate();
     const { t } = useTranslation();
 
     useEffect(() => {
         (async () => {
-            const homeData = await AdminApi.getVendorUsers(id)
+            const homeData = await AdminApi.getVendorUsers(id,tabIdSelected)
             setData(homeData.data);
-           /// setTabs(data.roles)
+            setTabs(homeData.roles)
         })();
         // dispatch(actions.setTitles(titles))
         // dispatch(actions.clearData())
@@ -53,11 +53,11 @@ const Users: React.FC<Beneficiary> = ({id}) => {
         "address",
         "phone_number",
         "birthday",
-        "role",
+       ///"role",
         "image",
         "action",
     ];
-    
+
     const handlerAddBeneficiaryItem = () => navigate(`/admin/${crudKey}/create/${id}`);
 
     const handlerCloseModal = () => {
@@ -83,12 +83,10 @@ const Users: React.FC<Beneficiary> = ({id}) => {
         const role = localStorage.getItem("role");
         localStorage.setItem("page", activeItem.toString());
     };
-    const handlerGetClientData = (id: number) => {
-        setDataID(id);
-    };
-    const handlerChangeTabs = async (tabId: number) => {
+
+    const handlerChangeTabs = async (tabId: number, name:string) => {
+        setTypeName(name)
         setTabIdSelected(tabId);
-        // setLoading(true)
     };
 
     const customStyles: ReactModal.Styles = {

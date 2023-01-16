@@ -80,7 +80,7 @@ Route::group([
     Route::post('/vendors', [VendorController::class, 'store']);
     Route::get('/vendors/{id}', [VendorController::class, 'show']);
     Route::put('/vendors/{id}', [VendorController::class, 'update']);
-    Route::get('/getVendorUsers/{id}', [VendorController::class, 'getVendorUsers']);
+    Route::get('/getVendorUsers/{id}/{tabId}', [VendorController::class, 'getVendorUsers']);
     Route::get('/vendors/{id}/edit', [VendorController::class, 'edit']);
 
     Route::get('/changeStatus/{slug}', [AdminController::class, 'changeStatus']);

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\VendorRequest;
+use App\Http\Resources\RoleCollection;
+use App\Models\Role;
 use App\Models\Vendor;
 use App\Models\User;
 use App\Models\ClientTable;
@@ -243,23 +245,27 @@ class VendorController extends Controller
         //
     }
 
-    public function getVendorUsers($id)
+    public function getVendorUsers($id,$tabId)
     {
         $users = User::where('vendor_id', $id)->where(
         'id',
         '!=',
         $id
     );
-        // if ($request->input('tabId')) {
+         if ($tabId) {
 
-        //     $users = $users->where('role_id',$request->input('tabId'));
-        // }
+             $users = $users->where('role_id',$tabId);
+         }
 
         $users = $users->get();
+        $roles = Role::where('id', '>', 2)->withCount(['users' => function ($query) use ($id) {
+            $query->where('vendor_id', $id );
+        }])->get();;
 
         return response()->json(
             [
                 'data' => new UserCollection($users),
+                'roles' =>new RoleCollection($roles)
             ],
             200
         );

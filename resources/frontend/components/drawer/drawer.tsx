@@ -15,8 +15,6 @@ import Bars from '-!svg-react-loader!../../images/Bars.svg';
 import Close from '-!svg-react-loader!../../images/Close.svg';
 import s from './drawer.module.scss'
 import {setLogOut} from "../../store/auth";
-import ColumnsHideShow from "../columns-hide-show/columns-hide-show";
-import Dropdown from '../dropdown/dropdown'
 
 
 const menuItemsFirst = [

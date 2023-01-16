@@ -10,7 +10,7 @@ import s from './select.module.scss'
 export interface IOption {
     id: number
     value: string
-    label?: string
+    label: string
     slug?: string
 }
 

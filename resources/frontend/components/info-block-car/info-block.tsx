@@ -2,6 +2,8 @@ import React, {FC} from "react";
 import {useTranslation} from "react-i18next";
 import {IClientsData} from "../../types/home-types";
 import cls from './info-block.module.scss'
+import { IOption } from "../select/select";
+import ImageGallery from "../image-gallery-carousel/image-gallery-carousel";
 
 
 interface IProps {
@@ -11,7 +13,7 @@ interface IProps {
 
 const InfoBlockCar: FC<IProps> = ({data}) => {
     /// const infoData: any = items.find(item => item.id === idData);
-    const newData = data
+    const newData = data.data
     const {t} = useTranslation()
 
 
@@ -26,50 +28,30 @@ const InfoBlockCar: FC<IProps> = ({data}) => {
                     newData &&
                     <>
 
+                        <div className={cls.item}>
+                            <span className={cls.b_text}>{t('name')}: </span>
+                            {newData.make.name}
+                        </div>
+                        <div className={cls.item}>
+                            <span className={cls.b_text}>{t('name')}: </span>
+                            {newData.model.name}
+                        </div>
 
                         <div className={cls.item}>
                             <span className={cls.b_text}>{t('name')}: </span>
-                            {newData.name + ' ' + newData.surname}
-                        </div>
-
-
-                        <div className={cls.item}>
-                            <span className={cls.b_text}>{t('date_of_service')}: </span>
-                            {newData.date_of_service}
+                            {newData.year.name}
                         </div>
                         <div className={cls.item}>
-                            <span className={cls.b_text}>{t('appointment_time')}: </span>
-                            {newData.appointment_time}
+                            <span className={cls.b_text}>{t('name')}: </span>
+                            {newData.drivers.map((el:IOption) => {
+                                return <span>{el.label}</span>
+                            })}
                         </div>
                         <div className={cls.item}>
-                            <span className={cls.b_text}>{t('pick_up')}: </span>
-                            {newData.pick_up}
+                            <ImageGallery
+                                images={newData.images}
+                            />
                         </div>
-
-                        <div className={cls.item}>
-                            <span className={cls.b_text}>{t('drop_down')}: </span>
-                            {newData.drop_down}
-                        </div>
-
-                        <div className={cls.item}>
-                            <span className={cls.b_text}>{t('pick_up_address')}: </span>
-                            {newData.origin.city + ' ' + newData.origin.street + ' ' + newData.origin.suite}
-
-                        </div>
-                        <div className={cls.item}>
-                            <span className={cls.b_text}>{t('destination')}: </span>
-                            {newData.destination.city + ' ' + newData.destination.street + ' ' + newData.destination.suite}
-                        </div>
-
-                        <div className={cls.item}>
-                            <span className={cls.b_text}>{t('origin_comment')}: </span>
-                            {newData.origin_comment}
-                        </div>
-                        <div className={cls.item}>
-                            <span className={cls.b_text}>{t('destination_comments')}: </span>
-                            {newData.destination_comments}
-                        </div>
-
 
                     </>
                 }

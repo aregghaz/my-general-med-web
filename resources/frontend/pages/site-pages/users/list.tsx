@@ -55,11 +55,11 @@ const VendorUsers: React.FC<Beneficiary> = () => {
         "address",
         "phone_number",
         "birthday",
-        "role",
+        // "role",
         "image",
         "action",
     ];
-    
+
     const handlerAddBeneficiaryItem = () => navigate(`/users/${typeName}/create`);
 
     const handlerCloseModal = () => {
@@ -84,7 +84,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
         const role = localStorage.getItem("role");
         localStorage.setItem("page", activeItem.toString());
     };
-  
+
     const handlerChangeTabs = async (tabId: number, name:string) => {
         setTypeName(name)
         setTabIdSelected(tabId);
@@ -115,7 +115,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
     return (
         data && (
             <>
-                  
+
                 {/* <InfoBlock  items={data}/> */}
                 <List
                     data={data}

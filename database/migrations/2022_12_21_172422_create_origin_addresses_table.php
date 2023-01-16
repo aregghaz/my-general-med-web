@@ -17,7 +17,7 @@ class CreateOriginAddressesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('street');
-            $table->string('suite')->nulable();
+            $table->string('suite')->nullable();
             $table->string('city');
             $table->string('state');
             $table->string('postal');
