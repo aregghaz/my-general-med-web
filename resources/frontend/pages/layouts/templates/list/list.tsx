@@ -22,6 +22,7 @@ interface IList {
     ////FIXMECHANGE IT NORMA TYPR
     last_page?: number
     handlerChangeTabs?: (id: number,name:string) => void
+    handlerGetItemData?: (id:number) => void
     count?: any
     className?: string
     tabId?:number
@@ -44,6 +45,7 @@ const List: React.FC<IList> = (
         HandlerPagination,
         HandlerGetProducts,
         handlerGetVendorUsers,
+        handlerGetItemData,
         last_page,
         activeItem,
         tabId,
@@ -63,26 +65,26 @@ const List: React.FC<IList> = (
                     </Button>
                 }
             </div>
-            <div className={s.table_upper_tab_box}>
+            {tabs &&  <div className={s.table_upper_tab_box}>
                 <div className={s.table_upper_tab}>
                     {
-
-                        tabs && tabs.length>0 && tabs.map(tab => (
+                        tabs.length>0 && tabs.map(tab => (
                             <div
-                            className={s.table_upper_tab_item}
-                            key={tab.id}
-                            // style={tabId == tab.id ? {
-                            //     backgroundColor: '#165f8d',
-                            //     color: "white"
-                            // } : {backgroundColor: 'white'}}
-                            onClick={() => handlerChangeTabs(tab.id,tab.name)}
+                                className={s.table_upper_tab_item}
+                                key={tab.id}
+                                // style={tabId == tab.id ? {
+                                //     backgroundColor: '#165f8d',
+                                //     color: "white"
+                                // } : {backgroundColor: 'white'}}
+                                onClick={() => handlerChangeTabs(tab.id,tab.name)}
                             >
                                 {tab.name} {tab.count >=0 && <span className={s.bage_count}>{tab.count}</span>}
                             </div>
                         ))
                     }
                 </div>
-            </div>
+            </div>}
+
             <div className={s.table_wrapper}>
                 <CrudTable
                     titles={titles}
@@ -94,7 +96,7 @@ const List: React.FC<IList> = (
                     handlerEditItem={handlerEditItem}
                     handlerDeleteItem={handlerDeleteItem}
                     HandlerPagination={HandlerPagination}
-                    HandlerGetProducts={HandlerGetProducts}
+                    handlerGetItemData={handlerGetItemData}
                     handlerGetVendorUsers={handlerGetVendorUsers}
                     activeItem={activeItem}
                     count={count}

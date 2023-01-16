@@ -23,7 +23,7 @@ class CarsController extends Controller
      */
     public function index(Request $request)
     {
-        $cars =  Cars::where('vendor_id', $request->user()->vendor_id)->with('make','year', 'model')->get();
+        $cars =  Cars::where('vendor_id', $request->user()->vendor_id)->with('make','year', 'model','driver','driver.user')->get();
         return response()->json([
             'cars' => new CarsCollection($cars),
         ], 200);
@@ -39,7 +39,9 @@ class CarsController extends Controller
         $year = Year::get();
         $make = Make::get();
         $vendorId = $request->user()->vendor_id;
-        $drives = User::where(['role_id'=> 3, 'vendor_id' =>$vendorId])->whereHas('driver')->get();
+        $drives = User::where(['role_id'=> 3, 'vendor_id' =>$vendorId])->whereHas('driver', function ($query) {
+            $query->where('car_id', null);
+        })->get();
         return response()->json(
             [
                 'year' => new StatusCollection($year),
@@ -107,8 +109,7 @@ class CarsController extends Controller
             );
         }
         $ids = array_column($data->drivers, 'id');
-//        $cars->driver()->save($ids);
-     //   dd($ids);
+
        Driver::whereIn('id',$ids)->update(["car_id"=> $cars->id]);
 
         return response()->json(
@@ -152,7 +153,9 @@ class CarsController extends Controller
         $year = Year::get();
         $make = Make::get();
         $vendorId = $request->user()->vendor_id;
-        $drives = User::where(['role_id'=> 3, 'vendor_id' =>$vendorId])->whereHas('driver')->get();
+        $drives = User::where(['role_id'=> 3, 'vendor_id' =>$vendorId])->whereHas('driver', function ($query) {
+            $query->where('car_id', null);
+        })->get();
         return response()->json(
             [
                 'data' => $this->getCarData($cars),
@@ -224,11 +227,9 @@ class CarsController extends Controller
                 403
             );
         }
-        //$ids = array_column($data->drivers, 'id');
-//        $cars->driver()->save($ids);
-        //   dd($ids);
-       /// Driver::whereIn('id',$ids)->update(["car_id"=> $cars->id]);
+        $ids = array_column($data->drivers, 'id');
 
+        Driver::whereIn('id',$ids)->update(["car_id"=> $cars->id]);
         return response()->json(
             [
                 'success' => '1',

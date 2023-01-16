@@ -11,6 +11,7 @@ import InfoBlock from "../../../components/info-block/info-block";
 import {actions} from "../../../store/home";
 import {useDispatch} from "react-redux";
 import { vendorAPI } from '../../../api/site-api/vendor-api';
+import InfoBlockCar from "../../../components/info-block-car/info-block";
 
 interface Beneficiary {
     path: string
@@ -46,14 +47,12 @@ const Cars: React.FC<Beneficiary> = () => {
 
 
     const titles: Array<string> = [
-        'vendor_id',
+        'id',
+        'drivers',
         'make',
         'model',
         'year',
-        'registration',
-        'inspection',
-        'insurance',
-        'liability',
+        'action'
     ]
     const handlerAddBeneficiaryItem = () => navigate(`cars/create`)
 
@@ -83,7 +82,8 @@ const Cars: React.FC<Beneficiary> = () => {
         localStorage.setItem('page', activeItem.toString());
 
     }
-    const handlerGetClientData = (id: number) => {
+    const handlerGetItemData = (id: number) => {
+        console.log(id,'id');
         setDataID(id)
 
     }
@@ -113,7 +113,7 @@ const Cars: React.FC<Beneficiary> = () => {
     return (
         data &&
         <>
-            {/* <InfoBlock  items={data}/> */}
+             {/*<InfoBlockCar  data={data} />*/}
             <List
                 data={data}
                 titles={titles}
@@ -122,11 +122,10 @@ const Cars: React.FC<Beneficiary> = () => {
                 handlerEditItem={handlerEditItem}
                 paginated={false}
                 isCreate
-                isGetItems
                 handlerAddItem={handlerAddBeneficiaryItem}
                 handlerDeleteItem={handlerDeleteModal}
                 HandlerPagination={HandlerPagination}
-             //   handlerGetClientData={handlerGetClientData}
+                handlerGetItemData={handlerGetItemData}
                 count={count}
                 activeItem={activeItem}
                 className={'pagination'}

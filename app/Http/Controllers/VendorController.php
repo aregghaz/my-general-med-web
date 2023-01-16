@@ -49,7 +49,7 @@ class VendorController extends Controller
     public function create()
     {
         $clientTable = ClientTable::get();
-        $users = User::get();
+       /// $users = User::get();
         $status = ClientStatus::get();
         return response()->json(
             [
@@ -182,7 +182,7 @@ class VendorController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\Vendor $vendor
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, Vendor $vendor)
     {
@@ -245,7 +245,11 @@ class VendorController extends Controller
 
     public function getVendorUsers($id)
     {
-        $users = User::where('vendor_id', $id);
+        $users = User::where('vendor_id', $id)->where(
+        'id',
+        '!=',
+        $id
+    );
         // if ($request->input('tabId')) {
 
         //     $users = $users->where('role_id',$request->input('tabId'));

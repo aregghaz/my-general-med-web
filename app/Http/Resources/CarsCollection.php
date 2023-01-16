@@ -15,17 +15,24 @@ class CarsCollection extends ResourceCollection
     public function toArray($request)
     {
         return $this->map(function ($vendor) {
+            $users = [];
 
+            if(count($vendor->driver)){
+                for($i=0;$i< count($vendor->driver); $i++){
+                    $users[] = $vendor->driver[$i]->user->name .' '.$vendor->driver[$i]->user->surname;
+                }
+            }
             return [
                 'id' => $vendor->id,
+                "drivers" =>$users,
                 ///'vendor_id' =>$vendor->vendor_id,
                 'make'=> $vendor->make->name,
                 'model'=> $vendor->model->name,
                 'year'=> $vendor->year->name,
-                'registration'=> $vendor->registration,
-                'inspection'=> $vendor->inspection,
-                'insurance'=> $vendor->insurance,
-                'liability'=> $vendor->liability,
+//                'registration'=> $vendor->registration,
+//                'inspection'=> $vendor->inspection,
+//                'insurance'=> $vendor->insurance,
+//                'liability'=> $vendor->liability,
             ];
         });
     }

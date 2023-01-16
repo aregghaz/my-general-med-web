@@ -117,8 +117,8 @@ const Select: React.FC<ISelect> = (
                     /////SENC DZELU ES TIKO
                     control: (baseStyles, state) => ({
                         ...baseStyles,
-                        borderColor: state.isFocused ? '#6D9886' : '#6D9886',
-                        backgroundColor: '#6D9886',
+                        borderColor: state.isFocused ? '#545cd8' : '#545cd8',
+                        backgroundColor: '#545cd8',
                         borderRadius: "15px"
                     }),
                     menu: base => ({
@@ -133,7 +133,7 @@ const Select: React.FC<ISelect> = (
                         ...base,
                         // kill the white space on first and last option
                         padding: 0,
-                        backgroundColor: '#6D9886',
+                        backgroundColor: 'white',
                     }),
                     multiValue: (baseStyles, state) => ({
                         ...baseStyles,

@@ -13,7 +13,7 @@ interface ITableBody {
     isGetItems?: boolean
     handlerEditItem?: (id: number) => void
     handlerDeleteItem?: (id: number) => void
-    HandlerGetProducts?: (id: number) => void
+    handlerGetItemData?: (id: number) => void
     handlerGetVendorUsers?: (id: number) => void
 }
 
@@ -26,7 +26,7 @@ const TableBody: React.FC<ITableBody> = (
         handlerDeleteItem,
         handlerGetVendorUsers,
         handlerEditItem,
-        HandlerGetProducts
+        handlerGetItemData
     }) => {
 
 
@@ -47,7 +47,7 @@ const TableBody: React.FC<ITableBody> = (
                                                 if (key == 'fields') {
                                                     return i != 0 && (
                                                         <TableData data={item.id} key={i}
-                                                            ///  handlerGetClientData={handlerGetClientData}
+                                                                   handlerGetItemData={handlerGetItemData}
                                                         >
                                                             {item[key].map((e: string, ind: number) => {
                                                                 return <span key={ind} className={s.label_span}>{e}</span>
@@ -57,7 +57,7 @@ const TableBody: React.FC<ITableBody> = (
                                                 } else {
                                                     return i != 0 && (
                                                         <TableData data={item.id} key={i}
-                                                            ///  handlerGetClientData={handlerGetClientData}
+                                                                   handlerGetItemData={handlerGetItemData}
                                                         >
                                                             {item[key]}
                                                         </TableData>

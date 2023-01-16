@@ -12,13 +12,15 @@ use App\Http\Resources\RoleCollection;
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\StatusCollection;
 use App\Models\Driver;
+use Illuminate\Support\Facades\DB;
 use Validator;
 
 class VendorUsersController extends Controller
 {
     public function index(Request $request)
     {
-        $users = User::where('vendor_id', $request->user()->vendor_id)->where(
+        $vendorId = $request->user()->vendor_id;
+        $users = User::where('vendor_id', $vendorId)->where(
             'id',
             '!=',
             $request->user()->id
@@ -27,13 +29,15 @@ class VendorUsersController extends Controller
             $users = $users->where('role_id', $request->input('tabId'));
         }
         $users = $users->get();
-        $roles = Role::where('id', '>', $request->user()->role_id)
-            ->withCount('users')
+        $roles = Role::where('id', '>', $request->user()->role_id)->withCount(['users' => function ($query) use ($vendorId) {
+             $query->where('vendor_id', $vendorId );
+        }])
+           /// ->withCount('users')
             ->get();
         return response()->json(
             [
                 'data' => new UserCollection($users),
-                'roles' => new RoleCollection($roles),
+                'roles' =>new RoleCollection($roles)
             ],
             200
         );
