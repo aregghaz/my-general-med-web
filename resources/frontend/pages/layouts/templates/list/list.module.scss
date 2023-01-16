@@ -29,11 +29,12 @@
 }
 
 .table_upper_tab_item {
-    border: 1px solid $iconColor;
+    //border: 1px solid $iconColor;
     border-radius: $borderRadius;
     padding: 10px;
-    background:$menuColor;
+    background: $menuColor;
     cursor: pointer;
+    color: $whiteColor;
 
     &:hover {
         background-color: $menuColor
@@ -148,14 +149,15 @@
 
 .table_upper_tab_item {
     //height: 100px;
-    background-color:$menuColor;
-    color:$headColor;
+    background-color: $menuColor;
+    //color: $headColor;
+    color: $whiteColor;
     transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     background-image: none;
     overflow: hidden;
     box-shadow: none;
     border: 1px solid $iconColor;
-    border-radius:$borderRadius;
+    border-radius: $borderRadius;
     padding: 0.5rem 1.5rem;
     display: flex;
     -webkit-box-align: center;
@@ -176,7 +178,6 @@
 }
 
 
-
-.activeTab{
-    background-color:$menuColor
+.activeTab {
+    background-color: $menuColor
 }

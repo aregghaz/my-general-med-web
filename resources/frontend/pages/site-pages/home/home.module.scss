@@ -206,7 +206,7 @@ body {
     }
 
     &:hover {
-        background-color: #165f8d;
+        background-color: #545cd8;
         color: white;
         border-color: transparent;
     }
@@ -283,6 +283,15 @@ body {
     }
 }
 
+.disabled_action {
+    pointer-events: none;
+    opacity: .3;
+    user-select: none;
+}
+
+.enabled_action {
+}
+
 .bage_count {
     color: white;
     background-color: red;
@@ -296,7 +305,7 @@ body {
 }
 
 
-.actiona_block {
+.action_block {
     display: inline-block;
     border-radius: 10px;
     padding: 10px 20px;

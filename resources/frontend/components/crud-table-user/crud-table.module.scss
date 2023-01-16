@@ -35,8 +35,8 @@
     min-width: 100%;
     //display: grid;
 
-    tbody{
-           max-height: 60vh;
+    tbody {
+        max-height: 60vh;
     }
 }
 
@@ -88,8 +88,9 @@
     text-align: center;
     font-weight: bold;
     vertical-align: inherit;
-   /// background: $whiteColor;
-   // color: $thTextColor;
+    border: 1px solid #ddd;
+    /// background: $whiteColor;
+    // color: $thTextColor;
     color: #525252;
     //FIXME: Fix for large sizes & no support for vw
     font-size: min(max(16px, 1vw), 19px);
@@ -114,7 +115,8 @@
 
 .tableTh {
     z-index: 2;
-    background-color: $menuColor;
+    //background-color: $menuColor;
+    color: #545cd8;
     font-weight: bold;
     //FIXME: Fix for large sizes & no support for vw
     white-space: nowrap;
@@ -161,7 +163,16 @@
 
 .row {
     background: $whiteColor;
-    border: 0.5px solid $menuColor;
+    //border: 0.5px solid $menuColor;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+
+    &:nth-child(even) {
+        background-color: #f7f7f7;
+    }
+
+    &:nth-child(odd) {
+        background-color: #fff;
+    }
 }
 
 .chosen {
