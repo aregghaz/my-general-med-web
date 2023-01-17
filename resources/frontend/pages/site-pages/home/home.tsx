@@ -86,6 +86,7 @@ const Home: React.FC<IHome> = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const [agreement, setAgreement] = useState<boolean>(false)
+    const [status, setStatus] = useState<number | null>(null)
 
     async function calculateRoute(newData: any) {
         const directionsService = new google.maps.DirectionsService()
@@ -134,41 +135,11 @@ const Home: React.FC<IHome> = () => {
 
 
     ////FIXME FIX DYNAMIC TABLE FIELDS
-    const [titles, setTitles] = useState<Array<string>>([])
+    const [titles, setTitles] = useState<string[]>([])
 
     const openSearch = () => {
         setOpen(!open)
     }
-
-
-    // useEffect(() => {
-    //     (
-    //         async () => {
-    //             const titlesData = localStorage.getItem('titles')
-
-    //                 const homeData = await homeAPI.getClientData({
-    //                     titles: JSON.parse(titlesData),
-    //                     showMore: countRef.current,
-    //                     typeId: typeId
-    //                 })
-    //                 setDefaultData(homeData.titles)
-    //                 dispatch(actions.setTitles({
-    //                     titles: homeData.titles,
-    //                     selectedTitle: homeData.selectedFields,
-    //                     clients: homeData.clients,
-    //                     tripCount: homeData.tripCount,
-    //                     availableCount: homeData.availableCount
-    //                 }))
-
-    //         }
-    //     )()
-    //     /*FIXME commented this part avoiding unmount async error*/
-    //     // return async () => await dispatch(actions.resetState())
-    // return () => {
-    //     dispatch(actions.resetState())
-    //     homeAPI.cancelRequest()
-    // }
-    // }, [])
 
     const handlerGetClientData = async (event: any, id: number) => {
         if (event.ctrlKey || event.shiftKey) {
@@ -211,7 +182,6 @@ const Home: React.FC<IHome> = () => {
 
             }
         })()
-        console.log(agreement, "agreement")
         return () => {
             homeAPI.cancelRequest()
         }
@@ -221,7 +191,7 @@ const Home: React.FC<IHome> = () => {
 
     const onSearchInput = async (event: { search: string }) => {
         const titlesData = localStorage.getItem('titles')
-        /// if (titlesData.length > 0) {
+
         const homeData = await homeAPI.getClientData({
             titles: JSON.parse(titlesData),
             showMore: countRef.current,
@@ -271,15 +241,17 @@ const Home: React.FC<IHome> = () => {
     const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
     if (agreement) {
         delay(200).then(async () => {
+            await homeAPI.changeClientsTypes({status, ids})
             setIds([]);
             setLoading(true)
             setAgreement(false)
         })
     }
 
-    const handleActionMiddleware = () => {
+    const handleActionMiddleware = (status: number) => {
         if (ids.length > 0) {
             setIsOpen(true)
+            setStatus(status)
         }
 
     }
@@ -421,13 +393,13 @@ const Home: React.FC<IHome> = () => {
                 <div className={s.upload_panel}>
                     <div
                         className={`${s.action_block}  ${typeId === 1 || typeId === 4 ? s.disabled_action : s.enabled_action}`}
-                        onClick={handleActionMiddleware}
+                        onClick={() => handleActionMiddleware(1)}
                     >
                         Claim Trip
                     </div>
                     <div
                         className={`${s.action_block} ${typeId === 2 || typeId === 4 ? s.disabled_action : s.enabled_action}`}
-                        onClick={handleActionMiddleware}
+                        onClick={() => handleActionMiddleware(4)}
                     >
                         Cancel Trip
                     </div>
