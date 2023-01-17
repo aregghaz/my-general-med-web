@@ -133,7 +133,7 @@ const Home: React.FC<IHome> = () => {
     ]
 
 
-    ////FIXME FIX DYNAMIC TABLE FIRELDS
+    ////FIXME FIX DYNAMIC TABLE FIELDS
     const [titles, setTitles] = useState<Array<string>>([])
 
     const openSearch = () => {
@@ -211,10 +211,11 @@ const Home: React.FC<IHome> = () => {
 
             }
         })()
+        console.log(agreement, "agreement")
         return () => {
-            ///dispatch(actions.resetState())
             homeAPI.cancelRequest()
         }
+
     }, [inView, loading, agreement]);
     ///FIXME  MISSING TYPE
 
@@ -238,24 +239,19 @@ const Home: React.FC<IHome> = () => {
         // }
     }
 
-    const changeFields = async (options: Array<IOption>) => {
+    const changeFields = (options: Array<IOption>) => {
         let result = options.map(a => a.slug);
-        console.log(result, 'result');
-
-        let selectedTitleSlug = selectedTitle.map(a => a.slug);
         if (result.length > 0) {
-
             setTitles(result)
             setLoading(true)
         }
-
     }
 
     const fileUploader = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const validValues = ["text/csv", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"]
         if (e.target.files) {
             if (validValues?.includes(e.target.files[0].type)) {
-                setLoadFile(e.target.files[0])
+                // setLoadFile(e.target.files[0])
                 const data = new FormData()
                 data.append('file', e.target.files[0])
                 await axios.post("/api/test", data)
@@ -272,21 +268,18 @@ const Home: React.FC<IHome> = () => {
         setLoading(true)
     }
 
-    const handlerActionClient = async (status: number) => {
-        if (agreement) {
-            const homeData = await homeAPI.changeClientsTypes({status, ids})
+    const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+    if (agreement) {
+        delay(200).then(async () => {
             setIds([]);
             setLoading(true)
             setAgreement(false)
-        } else {
-            return true
-        }
+        })
     }
 
-    const handleActionMiddleware =  (status: number) => {
+    const handleActionMiddleware = () => {
         if (ids.length > 0) {
             setIsOpen(true)
-            return handlerActionClient(status)
         }
 
     }
@@ -301,7 +294,6 @@ const Home: React.FC<IHome> = () => {
         setIsModalOpen(false)
     }
     const handlerOpenModal = async (newData: any) => {
-        console.log(newData, 'newDatanewData')
         await calculateRoute(newData);
         setIsModalOpen(true)
     }
@@ -313,7 +305,6 @@ const Home: React.FC<IHome> = () => {
                 <div className={s.upload_panel}>
                     <div className={s.table_upper_tab}>
                         {
-
                             tabs && tabs.length >= 0 && tabs.map(tab => (
                                 <div
                                     className={s.table_upper_tab_item}
@@ -430,13 +421,13 @@ const Home: React.FC<IHome> = () => {
                 <div className={s.upload_panel}>
                     <div
                         className={`${s.action_block}  ${typeId === 1 || typeId === 4 ? s.disabled_action : s.enabled_action}`}
-                        onClick={() => handleActionMiddleware(1)}
+                        onClick={handleActionMiddleware}
                     >
                         Claim Trip
                     </div>
                     <div
                         className={`${s.action_block} ${typeId === 2 || typeId === 4 ? s.disabled_action : s.enabled_action}`}
-                        onClick={() => handleActionMiddleware(4)}
+                        onClick={handleActionMiddleware}
                     >
                         Cancel Trip
                     </div>
