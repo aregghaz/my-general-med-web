@@ -29,7 +29,6 @@ const TableBody: React.FC<ITableBody> = (
         handlerGetItemData
     }) => {
 
-
     return (
         <tbody>
         {

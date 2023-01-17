@@ -38,7 +38,7 @@ const StatusCreate: React.FC<IUserCreate> = () => {
         (
             async () => {
                 const data = await AdminApi.createItem(crudKey)
-
+                console.log(data, "data in status create")
                 setData(data)
             }
         )()

@@ -25,7 +25,17 @@ const TableHead: React.FC<ITableHead> = (
         titleName,
     }) => {
     const {t} = useTranslation()
-    //@ts-ignore
+
+    const classes = (name: string) => filterTable === "ASC" && name === titleName ? s.rotate_arrow : " "
+    const isNotActions = (title: string) => {
+        if (title === "action" || title === "fields") {
+            return null
+        } else {
+            return <ArrowDown
+                className={classes(title)}
+            />
+        }
+    }
     return (
         <thead className={s.tableHead}>
         <TableRow>
@@ -43,9 +53,7 @@ const TableHead: React.FC<ITableHead> = (
                                 >
                                     {t(title)}
                                     {
-                                        filterTable === "ASC" && title === titleName
-                                            ? <span> <ArrowDown style={{transform: "rotate(180deg)"}}/></span>
-                                            : <span> <ArrowDown/></span>
+                                        isNotActions(title)
                                     }
                                 </th>
                             )

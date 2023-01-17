@@ -82,6 +82,10 @@
 
 }
 
+.rotate_arrow {
+    transform: rotate(180deg);
+}
+
 .tableTd {
     display: table-cell;
     padding: 9px;
@@ -176,7 +180,7 @@
 }
 
 .chosen {
-    background-color: $asteriskColor;
+    background-color: $asteriskColor !important;
 }
 
 // .unChosen {

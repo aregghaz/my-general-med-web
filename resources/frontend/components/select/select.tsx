@@ -125,7 +125,8 @@ const Select: React.FC<ISelect> = (
                         ...base,
                         // override border radius to match the box
                         borderRadius: 0,
-                        backgroundColor: '#6D9886',
+                        // backgroundColor: '#6D9886',
+                        backgroundColor: 'white',
                         // kill the gap
                         marginTop: 0
                     }),
@@ -145,12 +146,14 @@ const Select: React.FC<ISelect> = (
                         fontWeight: "bold",
                         ///borderRadius: 10,
 
-                        backgroundColor: '#6D9886',
+                        // backgroundColor: '#6D9886',
+                        backgroundColor: 'white',
                         /// padding: "0 8px"
                     }),
                     multiValueLabel: (styles: any, {data}: any) => ({
                         ...styles,
-                        backgroundColor: '#6D9886',
+                        // backgroundColor: '#6D9886',
+                        backgroundColor: 'white',
                         color: data.color,
                     }),
                 }}
