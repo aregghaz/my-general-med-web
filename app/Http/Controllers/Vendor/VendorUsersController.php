@@ -53,9 +53,12 @@ class VendorUsersController extends Controller
             [
                 'data' => [
                     'id' => $vendorData->id,
-                    'companyName' => $vendorData->name,
+                    'name' => $vendorData->name,
+                    'surname' => $vendorData->surname,
                     'email' => $vendorData->email,
                     'address' => $vendorData->address,
+                    'birthday' => $vendorData->birthday,
+                    'password' => $vendorData->password,
                     'phone_number' => $vendorData->phone_number,
                     'fields' => new StatusCollection($vendorData->fields),
                 ],
