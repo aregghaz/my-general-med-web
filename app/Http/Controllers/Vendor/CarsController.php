@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Vendor;
+
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CarImageCollection;
 use App\Http\Resources\DriverUserCollection;
@@ -25,7 +26,7 @@ class CarsController extends Controller
      */
     public function index(Request $request)
     {
-        $cars =  Cars::where('vendor_id', $request->user()->vendor_id)->with('make','year', 'model','driver','driver.user')->get();
+        $cars = Cars::where('vendor_id', $request->user()->vendor_id)->with('make', 'year', 'model', 'driver', 'driver.user')->get();
         return response()->json([
             'cars' => new CarsCollection($cars),
         ], 200);
@@ -41,7 +42,7 @@ class CarsController extends Controller
         $year = Year::get();
         $make = Make::get();
         $vendorId = $request->user()->vendor_id;
-        $drives = User::where(['role_id'=> 3, 'vendor_id' =>$vendorId])->whereHas('driver', function ($query) {
+        $drives = User::where(['role_id' => 3, 'vendor_id' => $vendorId])->whereHas('driver', function ($query) {
             $query->where('car_id', null);
         })->get();
         return response()->json(
@@ -57,16 +58,16 @@ class CarsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
         $data = json_decode($request->value);
 
-        $cars =  new Cars();
-       // dd($data->make);
-        $cars->make_id =$data->make->id;
+        $cars = new Cars();
+        // dd($data->make);
+        $cars->make_id = $data->make->id;
         $cars->model_id = $data->model->id;
         $cars->year_id = $data->year->id;
         $cars->vendor_id = $request->user()->vendor_id;
@@ -84,37 +85,40 @@ class CarsController extends Controller
         $carId = $cars->id;
         if ($request->hasFile('inspection')) {
             $inspection = $request->file('inspection');
-            $cars->inspection = $this->getPdfFile($inspection,$vendorId,$carId);
+            $cars->inspection = $this->getPdfFile($inspection, $vendorId, $carId);
         }
         if ($request->hasFile('insurance')) {
             $insurance = $request->file('insurance');
-            $cars->insurance = $this->getPdfFile($insurance,$vendorId,$carId);
+            $cars->insurance = $this->getPdfFile($insurance, $vendorId, $carId);
         }
         if ($request->hasFile('liability')) {
             $liability = $request->file('liability');
-            $cars->liability = $this->getPdfFile($liability,$vendorId,$carId);
+            $cars->liability = $this->getPdfFile($liability, $vendorId, $carId);
         }
         if ($request->hasFile('front')) {
-            $carsImage =  $request->file('front');
-            $this->getImage($carsImage,$vendorId,$carId,'front');
+            $carsImage = $request->file('front');
+            $this->getImage($carsImage, $vendorId, $carId, 'front');
         }
         if ($request->hasFile('rear')) {
             $rear = $request->file('rear');
-            $this->getImage($rear,$vendorId,$carId,'rear');
+            $this->getImage($rear, $vendorId, $carId, 'rear');
         }
         if ($request->hasFile('right')) {
             $right = $request->file('right');
-            $this->getImage($right,$vendorId,$carId,'right');
+            $this->getImage($right, $vendorId, $carId, 'right');
         }
         if ($request->hasFile('left')) {
             $left = $request->file('left');
-            $this->getImage($left,$vendorId,$carId,'left');
+            $this->getImage($left, $vendorId, $carId, 'left');
         }
-//        if ($request->hasFile('right')) {
-//            $right = $request->file('right');
-//            $this->getImage($right,$vendorId,$carId,'right');
-//        }
-
+        if ($request->hasFile('interior_1')) {
+            $interior1 = $request->file('interior_1');
+            $this->getImage($interior1, $vendorId, $carId, 'interior_1');
+        }
+        if ($request->hasFile('interior_2')) {
+            $interior2 = $request->file('interior_2');
+            $this->getImage($interior2, $vendorId, $carId, 'interior_2');
+        }
 
         if (!$cars->save()) {
             return response()->json(
@@ -125,10 +129,10 @@ class CarsController extends Controller
                 403
             );
         }
-        if(isset($data->drivers)){
+        if (isset($data->drivers)) {
             $ids = array_column($data->drivers, 'id');
 
-            Driver::whereIn('id',$ids)->update(["car_id"=> $cars->id]);
+            Driver::whereIn('id', $ids)->update(["car_id" => $cars->id]);
 
         }
 
@@ -142,57 +146,8 @@ class CarsController extends Controller
         );
     }
 
-
-
-    protected function getPdfFile($file,$vendorId,$carId): string
+    public function getModel($id)
     {
-        $fileData = $file;
-        $file_name =
-            time() + Rand(1,700). $file->getClientOriginalName();
-        $fileData->move(
-            public_path() . "/uploads/$vendorId/file/$carId/",
-            $file_name
-        );
-        return "/uploads/$vendorId/file/$carId/$file_name";
-    }
-    protected function getImage($file,$vendorId,$carId,$key): bool
- {
-     $oldData = CarImages::where('car_id', $carId)->where('key', $key)->first();
-
-     if(isset($oldData)){
-         if(is_file(public_path($oldData->value))) {
-             $oldImage = public_path($oldData->value);
-             if (file_exists($oldImage)) {
-                 unlink($oldImage);
-             }
-         }
-         $front_name =
-             time() + 7 . $file->getClientOriginalName();
-         $file->move(
-             public_path() ."/uploads/$vendorId/car/$carId/",
-             $front_name
-         );
-         $oldData->value = "/uploads/$vendorId/car/$carId/$front_name";
-
-         return $oldData->update();
-     }else{
-         $carsImage = new CarImages();
-
-         $front_name =
-             time() + 7 . $file->getClientOriginalName();
-         $file->move(
-             public_path() ."/uploads/$vendorId/car/$carId/",
-             $front_name
-         );
-         $carsImage->car_id = $carId;
-         $carsImage->key = $key;
-         $carsImage->value = "/uploads/$vendorId/car/$carId/$front_name";
-         return $carsImage->save();
-     }
- }
-
-
-    public function getModel($id) {
         $Make = MakeModel::where('make_id', $id)->get();
         return response()->json(
             [
@@ -201,15 +156,16 @@ class CarsController extends Controller
             200
         );
     }
+
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Cars  $cars
+     * @param \App\Models\Cars $cars
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(Cars $cars, $id)
     {
-        $car  = Cars::with('images')->find($id);
+        $car = Cars::with('images')->find($id);
 
         return response()->json(
             [
@@ -222,16 +178,16 @@ class CarsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Cars  $cars
+     * @param \App\Models\Cars $cars
      * @return \Illuminate\Http\JsonResponse
      */
-    public function edit($id,Request $request)
+    public function edit($id, Request $request)
     {
-         $cars = Cars::with('make','year', 'model', 'driver','driver.user')->find((int)$id);
+        $cars = Cars::with('make', 'year', 'model', 'driver', 'driver.user')->find((int)$id);
         $year = Year::get();
         $make = Make::get();
         $vendorId = $request->user()->vendor_id;
-        $drives = User::where(['role_id'=> 3, 'vendor_id' =>$vendorId])->whereHas('driver', function ($query) {
+        $drives = User::where(['role_id' => 3, 'vendor_id' => $vendorId])->whereHas('driver', function ($query) {
             $query->where('car_id', null);
         })->get();
         return response()->json(
@@ -248,17 +204,17 @@ class CarsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Cars  $cars
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Cars $cars
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request,$id, Cars $cars)
+    public function update(Request $request, $id, Cars $cars)
     {
         $data = json_decode($request->value);
-        $cars = Cars::with('make','year', 'model')->find((int)$id);
+        $cars = Cars::with('make', 'year', 'model')->find((int)$id);
         $vendorId = $request->user()->vendor_id;
-       // dd($request);
-        $cars->make_id =$data->make->id;
+        // dd($request);
+        $cars->make_id = $data->make->id;
         $cars->model_id = $data->model->id;
         $cars->year_id = $data->year->id;
         $cars->vendor_id = $vendorId;
@@ -266,55 +222,59 @@ class CarsController extends Controller
 
         $carId = $id;
         if ($request->hasFile('inspection')) {
-            if(is_file(public_path($cars->inspection))) {
+            if (is_file(public_path($cars->inspection))) {
                 $oldImage = public_path($cars->inspection);
                 if (file_exists($oldImage)) {
                     unlink($oldImage);
                 }
             }
             $inspection = $request->file('inspection');
-            $cars->inspection = $this->getPdfFile($inspection,$vendorId,$carId);
+            $cars->inspection = $this->getPdfFile($inspection, $vendorId, $carId);
         }
         if ($request->hasFile('insurance')) {
-            if(is_file(public_path($cars->insurance))) {
+            if (is_file(public_path($cars->insurance))) {
                 $oldImage = public_path($cars->insurance);
                 if (file_exists($oldImage)) {
                     unlink($oldImage);
                 }
             }
             $insurance = $request->file('insurance');
-            $cars->insurance = $this->getPdfFile($insurance,$vendorId,$carId);
+            $cars->insurance = $this->getPdfFile($insurance, $vendorId, $carId);
         }
         if ($request->hasFile('liability')) {
-            if(is_file(public_path($cars->liability))) {
+            if (is_file(public_path($cars->liability))) {
                 $oldImage = public_path($cars->liability);
                 if (file_exists($oldImage)) {
                     unlink($oldImage);
                 }
             }
             $liability = $request->file('liability');
-            $cars->liability = $this->getPdfFile($liability,$vendorId,$carId);
+            $cars->liability = $this->getPdfFile($liability, $vendorId, $carId);
         }
         if ($request->hasFile('front')) {
-            $carsImage =  $request->file('front');
-            $this->getImage($carsImage,$vendorId,$carId,'front');
+            $carsImage = $request->file('front');
+            $this->getImage($carsImage, $vendorId, $carId, 'front');
         }
         if ($request->hasFile('rear')) {
             $rear = $request->file('rear');
-            $this->getImage($rear,$vendorId,$carId,'rear');
+            $this->getImage($rear, $vendorId, $carId, 'rear');
         }
         if ($request->hasFile('right')) {
             $right = $request->file('right');
-            $this->getImage($right,$vendorId,$carId,'right');
+            $this->getImage($right, $vendorId, $carId, 'right');
         }
         if ($request->hasFile('left')) {
             $left = $request->file('left');
-            $this->getImage($left,$vendorId,$carId,'left');
+            $this->getImage($left, $vendorId, $carId, 'left');
         }
-//        if ($request->hasFile('right')) {
-//            $right = $request->file('right');
-//            $this->getImage($right,$vendorId,$carId,'right');
-//        }
+        if ($request->hasFile('interior_1')) {
+            $interior1 = $request->file('interior_1');
+            $this->getImage($interior1, $vendorId, $carId, 'interior_1');
+        }
+        if ($request->hasFile('interior_2')) {
+            $interior2 = $request->file('interior_2');
+            $this->getImage($interior2, $vendorId, $carId, 'interior_2');
+        }
 
         if (!$cars->update()) {
             return response()->json(
@@ -327,7 +287,7 @@ class CarsController extends Controller
         }
         $ids = array_column($data->drivers, 'id');
 
-        Driver::whereIn('id',$ids)->update(["car_id"=> $cars->id]);
+        Driver::whereIn('id', $ids)->update(["car_id" => $cars->id]);
         return response()->json(
             [
                 'success' => '1',
@@ -341,7 +301,7 @@ class CarsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Cars  $cars
+     * @param \App\Models\Cars $cars
      * @return \Illuminate\Http\Response
      */
     public function destroy(Cars $cars)
@@ -349,38 +309,89 @@ class CarsController extends Controller
         //
     }
 
-    public function getCarData($car){
+    public function getCarData($car)
+    {
 //      dd($car->images);
         return [
             'id' => $car->id,
             ///'vendor_id' =>$vendor->vendor_id,
-            'make'=> [
+            'make' => [
                 'id' => $car->make->id,
                 'label' => $car->make->name,
                 'name' => $car->make->name,
-                "value"=> $car->make->name,
+                "value" => $car->make->name,
 
             ],
-            'model'=>[
-                    'id' => $car->model->id,
-                    'label' => $car->model->name,
-                    'name' => $car->model->name,
-                    "value"=> $car->model->name,
+            'model' => [
+                'id' => $car->model->id,
+                'label' => $car->model->name,
+                'name' => $car->model->name,
+                "value" => $car->model->name,
 
-                ],
-            'year'=>[
+            ],
+            'year' => [
                 'id' => $car->year->id,
                 'label' => $car->year->name,
                 'name' => $car->year->name,
-                "value"=> $car->year->name,
+                "value" => $car->year->name,
 
             ],
             "drivers" => new DriverUserCollection($car->driver),
-            'registration'=> $car->registration,
-            'inspection'=>$car->inspection,
-            'insurance'=> $car->insurance,
-            'liability'=> $car->liability,
+            'registration' => $car->registration,
+            'inspection' => $car->inspection,
+            'insurance' => $car->insurance,
+            'liability' => $car->liability,
             'images' => new CarImageCollection($car->images),
         ];
     }
+
+    protected function getPdfFile($file, $vendorId, $carId): string
+    {
+        $fileData = $file;
+        $file_name =
+            time() + Rand(1, 700) . $file->getClientOriginalName();
+        $fileData->move(
+            public_path() . "/uploads/$vendorId/file/$carId/",
+            $file_name
+        );
+        return "/uploads/$vendorId/file/$carId/$file_name";
+    }
+
+    protected function getImage($file, $vendorId, $carId, $key): bool
+    {
+        $oldData = CarImages::where('car_id', $carId)->where('key', $key)->first();
+
+        if (isset($oldData)) {
+            if (is_file(public_path($oldData->value))) {
+                $oldImage = public_path($oldData->value);
+                if (file_exists($oldImage)) {
+                    unlink($oldImage);
+                }
+            }
+            $front_name =
+                time() + 7 . $file->getClientOriginalName();
+            $file->move(
+                public_path() . "/uploads/$vendorId/car/$carId/",
+                $front_name
+            );
+            $oldData->value = "/uploads/$vendorId/car/$carId/$front_name";
+
+            return $oldData->update();
+        } else {
+            $carsImage = new CarImages();
+
+            $front_name =
+                time() + 7 . $file->getClientOriginalName();
+            $file->move(
+                public_path() . "/uploads/$vendorId/car/$carId/",
+                $front_name
+            );
+            $carsImage->car_id = $carId;
+            $carsImage->key = $key;
+            $carsImage->value = "/uploads/$vendorId/car/$carId/$front_name";
+            return $carsImage->save();
+        }
+    }
+
+
 }
