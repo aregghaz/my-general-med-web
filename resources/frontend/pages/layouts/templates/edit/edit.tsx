@@ -35,12 +35,23 @@ const Edit: React.FC<IEdit> = (
     const submit = async (values: FormikValues, {setSubmitting}: FormikHelpers<FormikValues>) => {
         setSubmitting(true)
         const formData: FormData = new FormData()
+        if(crudKey == 'vendorClients'){
+            formData.append('sex_offender_check', values['license'])
+            formData.append('motor_vehicle_record', values['license'])
+            formData.append('defensive_driving', values['license'])
+            formData.append('wheelchair_securement', values['license'])
+            formData.append('pass_basic', values['license'])
+            formData.append('emt_1', values['license'])
+            formData.append('first_aid', values['license'])
+            formData.append('company_training', values['license'])
+            formData.append('license', values['license'])
+            formData.append('picture', values['picture'])
+            formData.append('drug_test', values['license'])
+        }
         formData.append('_method', 'put');
         formData.append('value', JSON.stringify(values))
         const res: any = await AdminApi.update(formData, crudKey, values.id)
-        if (Number(res.status === 200)) await navigate(`/admin/${crudKey}`)
-        console.log(values, "values in submit")
-
+        if (Number(res.status === 200)) await navigate(`/${crudKey}`)
     }
 
 

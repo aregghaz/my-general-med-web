@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ClientFieldCollection;
+use App\Http\Resources\StatusTableCollection;
 use App\Http\Resources\UserCollection;
 use App\Models\ClientStatus;
 use App\Models\Escort;
@@ -34,7 +35,7 @@ class AdminController extends Controller
         }
         $table = $table->get();
         return response()->json([
-            'table' =>  $table,
+            'table' => new StatusTableCollection($table),
             "count" => count($table)
         ], 200);
     }

@@ -352,6 +352,7 @@
 .image-gallery-thumbnails .image-gallery-thumbnails-container {
     cursor: pointer;
     text-align: center;
+    display: block;
     transition: transform .45s ease-out;
     white-space: nowrap;
 }
@@ -361,6 +362,7 @@
     border: 4px solid transparent;
     transition: border .3s ease-out;
     width: 100px;
+    float: left;
     background: transparent;
     padding: 0;
 }

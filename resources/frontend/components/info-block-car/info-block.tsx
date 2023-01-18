@@ -29,25 +29,43 @@ const InfoBlockCar: FC<IProps> = ({data}) => {
                     <>
 
                         <div className={cls.item}>
-                            <span className={cls.b_text}>{t('name')}: </span>
+                            <span className={cls.b_text}>{t('make')}: </span>
                             {newData.make.name}
                         </div>
                         <div className={cls.item}>
-                            <span className={cls.b_text}>{t('name')}: </span>
+                            <span className={cls.b_text}>{t('model')}: </span>
                             {newData.model.name}
                         </div>
 
                         <div className={cls.item}>
-                            <span className={cls.b_text}>{t('name')}: </span>
+                            <span className={cls.b_text}>{t('year')}: </span>
                             {newData.year.name}
                         </div>
                         <div className={cls.item}>
-                            <span className={cls.b_text}>{t('name')}: </span>
+                            <span className={cls.b_text}>{t('registration')}: </span>
+                            {newData.registration}
+                        </div>
+                        <div className={cls.item}>
+                            <span className={cls.b_text}>{t('inspection')}: </span>
+                            <a href = {newData.inspection} target = "_blank">Download inspection form pdf</a>
+                        </div>
+                        <div className={cls.item}>
+                            <span className={cls.b_text}>{t('insurance')}: </span>
+                            <a href = {newData.insurance} target = "_blank">Download auto insurance pdf</a>
+                        </div>
+                        <div className={cls.item}>
+                            <span className={cls.b_text}>{t('liability')}: </span>
+                            <a href = {newData.liability} target = "_blank">Download general and professional liability insurance pdf</a>
+                        </div>
+                        <div className={cls.item}>
+                            <span className={cls.b_text}>{t('drivers')}: </span>
                             {newData.drivers.map((el:IOption) => {
                                 return <span>{el.label}</span>
                             })}
                         </div>
-                        <div className={cls.item}>
+
+                        <div className={cls.image_block}>
+                            <hr/>
                             <ImageGallery
                                 images={newData.images}
                             />

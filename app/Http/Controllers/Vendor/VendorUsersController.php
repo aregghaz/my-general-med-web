@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Vendor;
 
 use App\Http\Controllers\Controller;
+use App\Models\CarImages;
+use App\Models\Cars;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -30,14 +32,14 @@ class VendorUsersController extends Controller
         }
         $users = $users->get();
         $roles = Role::where('id', '>', $request->user()->role_id)->withCount(['users' => function ($query) use ($vendorId) {
-             $query->where('vendor_id', $vendorId );
+            $query->where('vendor_id', $vendorId);
         }])
-           /// ->withCount('users')
+            /// ->withCount('users')
             ->get();
         return response()->json(
             [
                 'data' => new UserCollection($users),
-                'roles' =>new RoleCollection($roles)
+                'roles' => new RoleCollection($roles)
             ],
             200
         );
@@ -45,18 +47,33 @@ class VendorUsersController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $vendorData = User::with('fields')
+        $vendorData = User::with('fields',"driver")
             ->where('id', $id)
             ->first();
+
         $clientTable = ClientTable::get();
         return response()->json(
             [
                 'data' => [
                     'id' => $vendorData->id,
-                    'companyName' => $vendorData->name,
+                    'name' => $vendorData->name,
+                    'surname' => $vendorData->surname,
                     'email' => $vendorData->email,
                     'address' => $vendorData->address,
+                    'birthday' => $vendorData->birthday,
+                    'password' => $vendorData->password,
                     'phone_number' => $vendorData->phone_number,
+                    'license' => $vendorData->driver->license,
+                    'picture' => $vendorData->driver->picture,
+                    'sex_offender_check' => $vendorData->driver->sex_offender_check,
+                    'motor_vehicle_record' => $vendorData->driver->motor_vehicle_record,
+                    'defensive_driving' => $vendorData->driver->defensive_driving,
+                    'wheelchair_securement' => $vendorData->driver->wheelchair_securement,
+                    'pass_basic' => $vendorData->driver->pass_basic,
+                    'emt_1' => $vendorData->driver->emt_1,
+                    'first_aid' => $vendorData->driver->first_aid,
+                    'company_training' => $vendorData->driver->company_training,
+                    'drug_test' => $vendorData->driver->drug_test,
                     'fields' => new StatusCollection($vendorData->fields),
                 ],
                 'fields' => new StatusCollection($clientTable),
@@ -64,6 +81,7 @@ class VendorUsersController extends Controller
             200
         );
     }
+
     public function create(Request $request)
     {
         $roles = Role::where('id', '>', $request->user()->role_id)->get();
@@ -74,10 +92,11 @@ class VendorUsersController extends Controller
             200
         );
     }
+
     public function store(Request $request)
     {
         $data = json_decode($request->value);
-        $validator = Validator::make((array) $data, [
+        $validator = Validator::make((array)$data, [
             'name' => 'required|string',
             'surname' => 'string',
             'email' => 'required|string|email|unique:users',
@@ -117,8 +136,10 @@ class VendorUsersController extends Controller
             'password' => bcrypt($requestData['password']),
             'birthday' => date('Y-m-d', strtotime($requestData['birthday'])),
             'address' => $requestData['address'],
-            'phone_number' => '12313',
+            'phone_number' => $requestData['phone_number'],
         ]);
+
+
         if (!$user->save()) {
             return response()->json(
                 [
@@ -129,102 +150,52 @@ class VendorUsersController extends Controller
             );
         } else {
             $vendor = new Driver();
-
             $vendor->user_id = $user->id;
+            if (!$vendor->save()) {
+                return response()->json(
+                    [
+                        'success' => '0',
+                        'type' => 'forbidden',
+                    ],
+                    403
+                );
+            }
+
+            $userId = $vendor->id;
+            $vendorId = $request->user()->vendor_id;
+
             $license = $request->file('license');
-            $license_name = time() + 1 . $license->getClientOriginalName();
-            $license->move(
-                "uploads/$user->vendor_id/$user->id",
-                $license_name
-            );
+            $vendor->license = $this->getPdfFile($license, $vendorId, $userId);
 
-            $vendor->license = $license_name;
             $picture = $request->file('picture');
-            $picture_name = time() + 2 . $picture->getClientOriginalName();
-            $picture->move(
-                "uploads/$user->vendor_id/$user->id",
-                $picture_name
-            );
+            $vendor->picture = $this->getPdfFile($picture, $vendorId, $userId);
 
-            $vendor->picture = $picture_name;
             $sex_offender_check = $request->file('sex_offender_check');
-            $sex_offender_check_name =
-                time() + 3 . $sex_offender_check->getClientOriginalName();
-            $sex_offender_check->move(
-                "uploads/$user->vendor_id/$user->id",
-                $sex_offender_check_name
-            );
+            $vendor->sex_offender_check = $this->getPdfFile($sex_offender_check, $vendorId, $userId);
 
-            $vendor->sex_offender_check = $sex_offender_check_name;
             $motor_vehicle_record = $request->file('motor_vehicle_record');
-            $motor_vehicle_record_name =
-                time() + 4 . $motor_vehicle_record->getClientOriginalName();
-            $motor_vehicle_record->move(
-                "uploads/$user->vendor_id/$user->id",
-                $motor_vehicle_record_name
-            );
-            $vendor->motor_vehicle_record = $motor_vehicle_record;
+            $vendor->motor_vehicle_record = $this->getPdfFile($motor_vehicle_record, $vendorId, $userId);
 
             $defensive_driving = $request->file('defensive_driving');
-            $defensive_driving_name =
-                time() + 5 . $defensive_driving->getClientOriginalName();
-            $defensive_driving->move(
-                "uploads/$user->vendor_id/$user->id",
-                $defensive_driving_name
-            );
-            $vendor->defensive_driving = $defensive_driving_name;
+            $vendor->defensive_driving = $this->getPdfFile($defensive_driving, $vendorId, $userId);
 
             $wheelchair_securement = $request->file('wheelchair_securement');
-            $wheelchair_securement_name =
-                time() + 6 . $wheelchair_securement->getClientOriginalName();
-            $wheelchair_securement->move(
-                "uploads/$user->vendor_id/$user->id",
-                $wheelchair_securement_name
-            );
-            $vendor->wheelchair_securement = $defensive_driving_name;
+            $vendor->wheelchair_securement = $this->getPdfFile($wheelchair_securement, $vendorId, $userId);
 
             $pass_basic = $request->file('pass_basic');
-            $pass_basic_name =
-                time() + 7 . $pass_basic->getClientOriginalName();
-            $pass_basic->move(
-                "uploads/$user->vendor_id/$user->id",
-                $pass_basic_name
-            );
-            $vendor->pass_basic = $pass_basic_name;
+            $vendor->pass_basic = $this->getPdfFile($pass_basic, $vendorId, $userId);
 
             $emt_1 = $request->file('emt_1');
-            $emt_1_name = time() + 8 . $emt_1->getClientOriginalName();
-            $emt_1->move(
-                "uploads/$user->vendor_id/$user->id",
-                $emt_1_name
-            );
-            $vendor->emt_1 = $emt_1_name;
+            $vendor->emt_1 = $this->getPdfFile($emt_1, $vendorId, $userId);
 
             $first_aid = $request->file('first_aid');
-            $first_aid_name = time() + 9 . $first_aid->getClientOriginalName();
-            $first_aid->move(
-                "uploads/$user->vendor_id/$user->id",
-                $first_aid_name
-            );
-            $vendor->first_aid = $first_aid_name;
+            $vendor->first_aid = $this->getPdfFile($first_aid, $vendorId, $userId);
 
             $company_training = $request->file('company_training');
-            $company_training_name =
-                time() + 10 . $company_training->getClientOriginalName();
-            $company_training->move(
-                "uploads/$user->vendor_id/$user->id",
-                $company_training_name
-            );
-            $vendor->company_training = $company_training_name;
+            $vendor->company_training = $this->getPdfFile($company_training, $vendorId, $userId);
 
             $drug_test = $request->file('drug_test');
-            $drug_test_name =
-                time() + 10 . $drug_test->getClientOriginalName();
-            $drug_test->move(
-                "uploads/$user->vendor_id/$user->id",
-                $drug_test_name
-            );
-            $vendor->drug_test = $drug_test_name;
+            $vendor->drug_test = $this->getPdfFile($drug_test, $vendorId, $userId);
 
             $vendor->save();
         }
@@ -238,6 +209,206 @@ class VendorUsersController extends Controller
                 'status' => 200,
             ],
             201
+        );
+    }
+
+    public function update(Request $request, $id): \Illuminate\Http\JsonResponse
+    {
+        $requestData = json_decode($request->value);
+
+        $user = User::find((int)$id);
+        $user->name = $requestData->name;
+        $user->surname = $requestData->surname;
+        $user->email = $requestData->email;
+        $user->password = bcrypt($requestData->password);
+        $user->birthday = date('Y-m-d', strtotime($requestData->birthday));
+        $user->address = $requestData->address;
+        $user->phone_number = $requestData->phone_number;
+
+
+        $carId = $id;
+
+        if (!$user->save()) {
+            return response()->json(
+                [
+                    'success' => '0',
+                    'type' => 'forbidden',
+                ],
+                403
+            );
+        }
+        $vendor = Driver::where('user_id', $id)->first();
+        $userId = $id;
+        $vendorId = $request->user()->vendor_id;
+        if($request->hasFile('license')){
+            if (is_file(public_path($vendor->license))) {
+                $oldImage = public_path($vendor->license);
+                if (file_exists($oldImage)) {
+                    unlink($oldImage);
+                }
+            }
+            $license = $request->file('license');
+            $vendor->license = $this->getPdfFile($license, $vendorId, $userId);
+
+        }
+        if($request->hasFile('picture')) {
+            if (is_file(public_path($vendor->picture))) {
+                $oldImage = public_path($vendor->picture);
+                if (file_exists($oldImage)) {
+                    unlink($oldImage);
+                }
+            }
+            $picture = $request->file('picture');
+            $vendor->picture = $this->getPdfFile($picture, $vendorId, $userId);
+        }
+        if($request->hasFile('sex_offender_check')) {
+            if (is_file(public_path($vendor->sex_offender_check))) {
+                $oldImage = public_path($vendor->sex_offender_check);
+                if (file_exists($oldImage)) {
+                    unlink($oldImage);
+                }
+            }
+            $sex_offender_check = $request->file('sex_offender_check');
+            $vendor->sex_offender_check = $this->getPdfFile($sex_offender_check, $vendorId, $userId);
+        }
+        if($request->hasFile('motor_vehicle_record')) {
+            if (is_file(public_path($vendor->motor_vehicle_record))) {
+                $oldImage = public_path($vendor->motor_vehicle_record);
+                if (file_exists($oldImage)) {
+                    unlink($oldImage);
+                }
+            }
+            $motor_vehicle_record = $request->file('motor_vehicle_record');
+            $vendor->motor_vehicle_record = $this->getPdfFile($motor_vehicle_record, $vendorId, $userId);
+        }
+
+        if($request->hasFile('defensive_driving')) {
+            if (is_file(public_path($vendor->defensive_driving))) {
+                $oldImage = public_path($vendor->defensive_driving);
+                if (file_exists($oldImage)) {
+                    unlink($oldImage);
+                }
+            }
+            $defensive_driving = $request->file('defensive_driving');
+            $vendor->defensive_driving = $this->getPdfFile($defensive_driving, $vendorId, $userId);
+        }
+        if($request->hasFile('wheelchair_securement')) {
+            if (is_file(public_path($vendor->wheelchair_securement))) {
+                $oldImage = public_path($vendor->wheelchair_securement);
+                if (file_exists($oldImage)) {
+                    unlink($oldImage);
+                }
+            }
+            $wheelchair_securement = $request->file('wheelchair_securement');
+            $vendor->wheelchair_securement = $this->getPdfFile($wheelchair_securement, $vendorId, $userId);
+        }
+
+        if($request->hasFile('pass_basic')) {
+            if (is_file(public_path($vendor->pass_basic))) {
+                $oldImage = public_path($vendor->pass_basic);
+                if (file_exists($oldImage)) {
+                    unlink($oldImage);
+                }
+            }
+            $pass_basic = $request->file('pass_basic');
+            $vendor->pass_basic = $this->getPdfFile($pass_basic, $vendorId, $userId);
+        }
+        if($request->hasFile('emt_1')) {
+            if (is_file(public_path($vendor->emt_1))) {
+                $oldImage = public_path($vendor->emt_1);
+                if (file_exists($oldImage)) {
+                    unlink($oldImage);
+                }
+            }
+            $emt_1 = $request->file('emt_1');
+            $vendor->emt_1 = $this->getPdfFile($emt_1, $vendorId, $userId);
+        }
+
+        if($request->hasFile('first_aid')) {
+            if (is_file(public_path($vendor->first_aid))) {
+                $oldImage = public_path($vendor->first_aid);
+                if (file_exists($oldImage)) {
+                    unlink($oldImage);
+                }
+            }
+            $first_aid = $request->file('first_aid');
+            $vendor->first_aid = $this->getPdfFile($first_aid, $vendorId, $userId);
+        }
+
+
+        if($request->hasFile('company_training')) {
+            if (is_file(public_path($vendor->company_training))) {
+                $oldImage = public_path($vendor->company_training);
+                if (file_exists($oldImage)) {
+                    unlink($oldImage);
+                }
+            }
+            $company_training = $request->file('company_training');
+            $vendor->company_training = $this->getPdfFile($company_training, $vendorId, $userId);
+        }
+
+        if($request->hasFile('drug_test')) {
+            if (is_file(public_path($vendor->drug_test))) {
+                $oldImage = public_path($vendor->drug_test);
+                if (file_exists($oldImage)) {
+                    unlink($oldImage);
+                }
+            }
+            $drug_test = $request->file('drug_test');
+            $vendor->drug_test = $this->getPdfFile($drug_test, $vendorId, $userId);
+        }
+        $vendor->update();
+
+        return response()->json(
+            [
+                'success' => '1',
+                'type' => 'success',
+                'status' => 200,
+            ],
+            201
+        );
+    }
+
+    protected function getPdfFile($file, $vendorId, $userId): string
+    {
+        $fileData = $file;
+        $file_name =
+            time() + Rand(1, 700) . $file->getClientOriginalName();
+        $fileData->move(
+            public_path() . "/uploads/$vendorId/drivers/$userId/",
+            $file_name
+        );
+        return "/uploads/$vendorId/drivers/$userId/$file_name";
+    }
+
+    public function show($id){
+        $vendorData = User::with('fields',"driver")
+            ->where('id', $id)
+            ->first();
+
+        return response()->json(
+            [
+                    'id' => $vendorData->id,
+                    'fullname' => $vendorData->name . ' ' .$vendorData->surname,
+                    'email' => $vendorData->email,
+                    'address' => $vendorData->address,
+                    'birthday' => $vendorData->birthday,
+                   /// 'password' => $vendorData->password,
+                    'phone_number' => $vendorData->phone_number,
+                    'license' => $vendorData->driver->license,
+                    'picture' => $vendorData->driver->picture,
+                    'sex_offender_check' => $vendorData->driver->sex_offender_check,
+                    'motor_vehicle_record' => $vendorData->driver->motor_vehicle_record,
+                    'defensive_driving' => $vendorData->driver->defensive_driving,
+                    'wheelchair_securement' => $vendorData->driver->wheelchair_securement,
+                    'pass_basic' => $vendorData->driver->pass_basic,
+                    'emt_1' => $vendorData->driver->emt_1,
+                    'first_aid' => $vendorData->driver->first_aid,
+                    'company_training' => $vendorData->driver->company_training,
+                    'drug_test' => $vendorData->driver->drug_test,
+                    'fields' => new StatusCollection($vendorData->fields),
+                ],
+            200
         );
     }
 }

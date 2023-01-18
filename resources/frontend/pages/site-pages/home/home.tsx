@@ -67,14 +67,11 @@ const Home: React.FC<IHome> = () => {
     const handlerCloseBackDropSearch = () => setBackdropSearch(false)
     const contentRef = useRef();
     const countRef = useRef(2);
-    ///const [data, setData] = useState([])
     const homeData = useSelector(getHomePageData)
     const clientData = useSelector(getClientData)
     const dispatch = useDispatch()
-
     const {selectedTitle, titles: allTiles, clients, tripCount, availableCount} = homeData
     const {clientById} = clientData
-    console.log(homeData, "iiiiiiiiiiiiii")
 
     const {isLoaded} = useJsApiLoader({
         googleMapsApiKey: 'AIzaSyBKkr76ZgeVEhZLj-ZT5u8XQBbT4SUQI5E',
@@ -97,7 +94,6 @@ const Home: React.FC<IHome> = () => {
             destination: newData.destination.city + ' ' + newData.destination.street + ' ' + newData.destination.suite,
             travelMode: google.maps.TravelMode.DRIVING,
         })
-
         setDirectionsResponse(results)
         setDistance(results.routes[0].legs[0].distance.text)
         setDuration(results.routes[0].legs[0].duration.text)
@@ -292,7 +288,7 @@ const Home: React.FC<IHome> = () => {
                                     } : {backgroundColor: '#ffffff', color: "#393E46"}}
                                     onClick={() => handlerChangeTabs(tab.id)}
                                 >
-                                    {tab.name}{tab.count && <span className={s.bage_count}>{tab.count}</span>}
+                                    {t(tab.name)}{tab.count && <span className={s.bage_count}>{tab.count}</span>}
                                 </div>
                             ))
                         }

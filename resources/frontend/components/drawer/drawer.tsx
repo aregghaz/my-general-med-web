@@ -1,35 +1,33 @@
-import React, {useState} from 'react'
-import {useDispatch} from 'react-redux'
-import Button from '../button/button'
-import HomeIcon from '-!svg-react-loader!../../images/home.svg'
-import Account from '-!svg-react-loader!../../images/User.svg'
-import Logout from '-!svg-react-loader!../../images/SignOut.svg'
-import Status from '-!svg-react-loader!../../images/Status.svg'
-import UserRole from '-!svg-react-loader!../../images/UserRole.svg'
-import Actions from '-!svg-react-loader!../../images/Actions.svg'
-import Clients from '-!svg-react-loader!../../images/Clients.svg'
-import Users from '-!svg-react-loader!../../images/Users.svg'
-import {useTranslation} from 'react-i18next'
-import {Link, useNavigate} from '@reach/router'
-import Bars from '-!svg-react-loader!../../images/Bars.svg';
-import Close from '-!svg-react-loader!../../images/Close.svg';
-import s from './drawer.module.scss'
-import {setLogOut} from "../../store/auth";
-
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import Button from "../button/button";
+import HomeIcon from "-!svg-react-loader!../../images/home.svg";
+import Account from "-!svg-react-loader!../../images/User.svg";
+import Logout from "-!svg-react-loader!../../images/SignOut.svg";
+import Status from "-!svg-react-loader!../../images/Status.svg";
+import UserRole from "-!svg-react-loader!../../images/UserRole.svg";
+import Clients from "-!svg-react-loader!../../images/Clients.svg";
+import Users from "-!svg-react-loader!../../images/Users.svg";
+import { useTranslation } from "react-i18next";
+import { Link, useNavigate } from "@reach/router";
+import Bars from "-!svg-react-loader!../../images/Bars.svg";
+import Close from "-!svg-react-loader!../../images/Close.svg";
+import s from "./drawer.module.scss";
+import { setLogOut } from "../../store/auth";
 
 const menuItemsFirst = [
 
     {
         id: 1,
-        Icon: <HomeIcon/>,
-        item: 'Home',
-        page: '/admin'
+        Icon: <HomeIcon />,
+        item: "Home",
+        page: "/admin"
     },
     {
         id: 2,
-        Icon: <Users/>,
-        item: 'vendors',
-        page: '/admin/vendors'
+        Icon: <Users />,
+        item: "vendors",
+        page: "/admin/vendors"
     },
     // {
     //     id: 3,
@@ -39,32 +37,32 @@ const menuItemsFirst = [
     // },
     {
         id: 4,
-        Icon: <Clients/>,
-        item: 'clients',
-        page: '/admin/clients'
+        Icon: <Clients />,
+        item: "clients",
+        page: "/admin/clients"
     },
     {
         id: 5,
-        Icon: <Status/>,
-        item: 'status',
-        page: '/admin/status'
+        Icon: <Status />,
+        item: "status",
+        page: "/admin/status"
     },
     {
         id: 6,
-        Icon: <UserRole/>,
-        item: 'role',
-        page: '/admin'
-    },
+        Icon: <UserRole />,
+        item: "role",
+        page: "/admin"
+    }
 
-]
+];
 
-const Drawer: React.FC = ({children, isOpen, handleToggle}: any) => {
-    const {t} = useTranslation()
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
+const Drawer: React.FC = ({ children, isOpen, handleToggle }: any) => {
+    const { t } = useTranslation();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const [show, setShow] = useState<boolean>(false)
-    const [defaultChecked, setDefaultChecked] = useState<number>(menuItemsFirst[0].id)
+    const [show, setShow] = useState<boolean>(false);
+    const [defaultChecked, setDefaultChecked] = useState<number>(menuItemsFirst[0].id);
     const handlerLogOut = () => dispatch(setLogOut());
     // const filterColumns = () => {
     //     setShow(!show)
@@ -74,45 +72,44 @@ const Drawer: React.FC = ({children, isOpen, handleToggle}: any) => {
     const openSideBar = () => setShow(!show);
 
     const changeSideBar = (id: number) => {
-        setDefaultChecked(id)
-    }
+        setDefaultChecked(id);
+    };
 
     return (
-        <div style={{width: "100%"}}>
+        <div style={{ width: "100%" }}>
             <nav className={s.header_nav}>
                 <div
                     className={`${s.iconBlock} ${s.bars_lock}`}
                     onClick={openSideBar}
                 >
-                    <Button type={'blank'}>
+                    <Button type={"blank"}>
                     <span className={s.icon}>
-                        {show ? <Close/> : <Bars/>}
+                        {show ? <Close /> : <Bars />}
                     </span>
                     </Button>
                 </div>
                 <div className={s.icon_left_block}>
-
                     <div className={s.iconBlock}>
-                        <Button type={'blank'}>
+                        <Button type={"blank"}>
                     <span className={s.icon}>
-                        <Account/>
+                        <Account />
                     </span>
                         </Button>
                     </div>
                     <div className={s.iconBlock}>
-                        <Button type={'blank'} onClick={() => {
-                            handlerLogOut()
-                            navigate('/')
+                        <Button type={"blank"} onClick={() => {
+                            handlerLogOut();
+                            navigate("/");
                         }}>
                     <span className={s.icon}>
-                        <Logout/>
+                        <Logout />
                     </span>
                         </Button>
                     </div>
                 </div>
             </nav>
             <div className={s.content_part}>
-                <nav className={s.main} style={show ? {width: "200px"} : {width: "50px"}}>
+                <nav className={s.main} style={show ? { width: "200px" } : { width: "50px" }}>
                     <ul className={s.list}>
                         {
                             menuItemsFirst
@@ -124,13 +121,13 @@ const Drawer: React.FC = ({children, isOpen, handleToggle}: any) => {
                                                 onClick={() => changeSideBar(li.id)}
                                             >
                                                 <span className={s.link_block}>
-                                                <span className={s.side_icon}>
-                                                    {li.Icon}
-                                                </span>
-                                                <span className={s.side_text}>
-                                                    {t(`${li.item}`)}
-                                                </span>
+                                                    <span className={s.side_icon}>
+                                                        {li.Icon}
                                                     </span>
+                                                    <span className={s.side_text}>
+                                                        {t(`${li.item}`)}
+                                                    </span>
+                                                </span>
                                             </Link>
                                         </li>
                                     )
@@ -140,14 +137,14 @@ const Drawer: React.FC = ({children, isOpen, handleToggle}: any) => {
                 </nav>
                 <div
                     className={s.main_content}
-                    style={!show ? {maxWidth: "calc(100% - 50px)"} : {maxWidth: "calc(100% - 200px)"}}
+                    style={!show ? { maxWidth: "calc(100% - 50px)" } : { maxWidth: "calc(100% - 200px)" }}
                 >
                     {children}
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 
-export default Drawer
+export default Drawer;

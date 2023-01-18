@@ -38,6 +38,7 @@ const Create: React.FC<ICreate> = (
         setSubmitting(true)
         const formData: FormData = new FormData()
         if(crudKey == 'vendorClients'){
+            formData.append('picture', values['license'])
             formData.append('sex_offender_check', values['license'])
             formData.append('motor_vehicle_record', values['license'])
             formData.append('defensive_driving', values['license'])
@@ -47,7 +48,6 @@ const Create: React.FC<ICreate> = (
             formData.append('first_aid', values['license'])
             formData.append('company_training', values['license'])
             formData.append('license', values['license'])
-            formData.append('picture', values['license'])
             formData.append('drug_test', values['license'])
 
         }

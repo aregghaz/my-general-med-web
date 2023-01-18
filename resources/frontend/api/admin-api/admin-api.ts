@@ -31,7 +31,7 @@ export const AdminApi = {
     },
     update(formData: FormData, crudKey: string, id: number){
 
-        return axios.post(`/api/admin/${crudKey}/${id}`, formData).then(res => res.data)
+        return axios.post(`/api/${crudKey}/${id}`, formData).then(res => res.data)
     },
     //////////
     create(crudKey: string) {

@@ -117,15 +117,16 @@ const Select: React.FC<ISelect> = (
                     control: (baseStyles, state) => ({
                         ...baseStyles,
                         borderColor: state.isFocused ? '#545cd8' : '#545cd8',
-                        backgroundColor: '#545cd8',
+                       /// backgroundColor: '#545cd8',
                         borderRadius: "15px"
                     }),
                     menu: base => ({
                         ...base,
                         // override border radius to match the box
-                        borderRadius: 0,
+                        ///borderRadius: 0,
                         // backgroundColor: '#6D9886',
                         backgroundColor: 'white',
+                        borderRadius: "15px",
                         // kill the gap
                         marginTop: 0
                     }),
@@ -133,12 +134,14 @@ const Select: React.FC<ISelect> = (
                         ...base,
                         // kill the white space on first and last option
                         padding: 0,
+                        borderRadius: "15px",
                         backgroundColor: 'white',
                     }),
                     multiValue: (baseStyles, state) => ({
                         ...baseStyles,
                         height: 30,
                         fontSize: 20,
+                        borderRadius: "15px",
                         lineHeight: 1.5,
                         // color: "black",
                         color: "#393E46",

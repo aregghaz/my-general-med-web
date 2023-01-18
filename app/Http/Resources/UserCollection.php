@@ -18,15 +18,12 @@ class UserCollection extends ResourceCollection
 
             return [
                 'id' => $user->id,
-                // "client_id" => $user->client_id,
-                // $user->name'driver_id'=> $user->client_id,
                 'fullName' => $user->name.' ' .$user->surname,
                 'email' => $user->email,
                 'address' => $user->address,
                 'phone_number' => $user->phone_number,
                 'birthday' => $user->birthday,
-               // 'role' => $user->role->name,
-                "image" => $user->image ? '/uploads/users/' . $user->image : null,
+//                "image" => $user->picture ?? null,
             ];
         });
 

@@ -84,14 +84,14 @@ const CarsEdit: React.FC<IUsersEditItem> = ({id}) => {
         setSubmitting(true);
         const formData: FormData = new FormData();
         formData.append('inspection', values['inspection'])
-        formData.append('insurance', values['inspection'])
-        formData.append('liability', values['inspection'])
+        formData.append('insurance', values['insurance'])
+        formData.append('liability', values['liability'])
         formData.append('front', values['front'])
         formData.append('rear', values['rear'])
         formData.append('right', values['right'])
         formData.append('left', values['left'])
-        formData.append('interior_1', values['inspection'])
-        formData.append('interior_2', values['inspection'])
+        formData.append('interior_1', values['interior_1'])
+        formData.append('interior_2', values['interior_2'])
         formData.append("value", JSON.stringify(values));
         formData.append('_method', 'put');
         const res: any = await vendorAPI.update(formData, crudKey, id);

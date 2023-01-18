@@ -53,6 +53,14 @@ const TableBody: React.FC<ITableBody> = (
                                                             })}
                                                         </TableData>
                                                     )
+                                                } else if (key == 'image') {
+                                                    return i != 0 && (
+                                                        <TableData data={item.id} key={i}
+                                                                   handlerGetItemData={handlerGetItemData}
+                                                        >
+                                                            <img src={item[key]} alt="" />
+                                                        </TableData>
+                                                    )
                                                 } else {
                                                     return i != 0 && (
                                                         <TableData data={item.id} key={i}

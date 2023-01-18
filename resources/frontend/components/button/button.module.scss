@@ -37,7 +37,7 @@
 
 
 .green {
-  background-color: $greenColor;
+  background-color: $menuColor;
   @include themify($themes) {
     color: themed('modalBgColor')
   }
