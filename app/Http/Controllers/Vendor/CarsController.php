@@ -148,7 +148,7 @@ class CarsController extends Controller
     {
         $fileData = $file;
         $file_name =
-            time() + Rand(1,700);
+            time() + Rand(1,700). $file->getClientOriginalName();
         $fileData->move(
             public_path() . "/uploads/$vendorId/file/$carId/",
             $file_name
@@ -157,18 +157,38 @@ class CarsController extends Controller
     }
     protected function getImage($file,$vendorId,$carId,$key): bool
  {
-     $carsImage = new CarImages();
+     $oldData = CarImages::where('car_id', $carId)->where('key', $key)->first();
 
-     $front_name =
-         time() + 7 . $file->getClientOriginalName();
-     $file->move(
-         public_path() ."/uploads/$vendorId/car/$carId/",
-         $front_name
-     );
-     $carsImage->car_id = $carId;
-     $carsImage->key = $key;
-     $carsImage->value = "/uploads/$vendorId/car/$carId/$front_name";
-     return $carsImage->save();
+     if(isset($oldData)){
+         if(is_file(public_path($oldData->value))) {
+             $oldImage = public_path($oldData->value);
+             if (file_exists($oldImage)) {
+                 unlink($oldImage);
+             }
+         }
+         $front_name =
+             time() + 7 . $file->getClientOriginalName();
+         $file->move(
+             public_path() ."/uploads/$vendorId/car/$carId/",
+             $front_name
+         );
+         $oldData->value = "/uploads/$vendorId/car/$carId/$front_name";
+
+         return $oldData->update();
+     }else{
+         $carsImage = new CarImages();
+
+         $front_name =
+             time() + 7 . $file->getClientOriginalName();
+         $file->move(
+             public_path() ."/uploads/$vendorId/car/$carId/",
+             $front_name
+         );
+         $carsImage->car_id = $carId;
+         $carsImage->key = $key;
+         $carsImage->value = "/uploads/$vendorId/car/$carId/$front_name";
+         return $carsImage->save();
+     }
  }
 
 
@@ -246,14 +266,32 @@ class CarsController extends Controller
 
         $carId = $id;
         if ($request->hasFile('inspection')) {
+            if(is_file(public_path($cars->inspection))) {
+                $oldImage = public_path($cars->inspection);
+                if (file_exists($oldImage)) {
+                    unlink($oldImage);
+                }
+            }
             $inspection = $request->file('inspection');
             $cars->inspection = $this->getPdfFile($inspection,$vendorId,$carId);
         }
         if ($request->hasFile('insurance')) {
+            if(is_file(public_path($cars->insurance))) {
+                $oldImage = public_path($cars->insurance);
+                if (file_exists($oldImage)) {
+                    unlink($oldImage);
+                }
+            }
             $insurance = $request->file('insurance');
             $cars->insurance = $this->getPdfFile($insurance,$vendorId,$carId);
         }
         if ($request->hasFile('liability')) {
+            if(is_file(public_path($cars->liability))) {
+                $oldImage = public_path($cars->liability);
+                if (file_exists($oldImage)) {
+                    unlink($oldImage);
+                }
+            }
             $liability = $request->file('liability');
             $cars->liability = $this->getPdfFile($liability,$vendorId,$carId);
         }
@@ -338,10 +376,10 @@ class CarsController extends Controller
 
             ],
             "drivers" => new DriverUserCollection($car->driver),
-            'registration'=> "$car->vendor_id/$car->id/$car->registration",
-            'inspection'=>"$car->vendor_id/$car->id/$car->inspection",
-            'insurance'=> "$car->vendor_id/$car->id/$car->insurance",
-            'liability'=> "$car->vendor_id/$car->id/$car->liability",
+            'registration'=> $car->registration,
+            'inspection'=>$car->inspection,
+            'insurance'=> $car->insurance,
+            'liability'=> $car->liability,
             'images' => new CarImageCollection($car->images),
         ];
     }
