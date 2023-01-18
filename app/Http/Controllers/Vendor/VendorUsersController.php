@@ -179,7 +179,6 @@ class VendorUsersController extends Controller
             $defensive_driving = $request->file('defensive_driving');
             $vendor->defensive_driving = $this->getPdfFile($defensive_driving, $vendorId, $userId);
 
-
             $wheelchair_securement = $request->file('wheelchair_securement');
             $vendor->wheelchair_securement = $this->getPdfFile($wheelchair_securement, $vendorId, $userId);
 
@@ -382,41 +381,34 @@ class VendorUsersController extends Controller
         return "/uploads/$vendorId/drivers/$userId/$file_name";
     }
 
-    protected function getImage($file, $vendorId, $carId, $key): bool
-    {
-        $oldData = CarImages::where('car_id', $carId)->where('key', $key)->first();
+    public function show($id){
+        $vendorData = User::with('fields',"driver")
+            ->where('id', $id)
+            ->first();
 
-        if (isset($oldData)) {
-            if (is_file(public_path($oldData->value))) {
-                $oldImage = public_path($oldData->value);
-                if (file_exists($oldImage)) {
-                    unlink($oldImage);
-                }
-            }
-            $front_name =
-                time() + 7 . $file->getClientOriginalName();
-            $file->move(
-                public_path() . "/uploads/$vendorId/car/$carId/",
-                $front_name
-            );
-            $oldData->value = "/uploads/$vendorId/car/$carId/$front_name";
-
-            return $oldData->update();
-        } else {
-            $carsImage = new CarImages();
-
-            $front_name =
-                time() + 7 . $file->getClientOriginalName();
-            $file->move(
-                public_path() . "/uploads/$vendorId/car/$carId/",
-                $front_name
-            );
-            $carsImage->car_id = $carId;
-            $carsImage->key = $key;
-            $carsImage->value = "/uploads/$vendorId/car/$carId/$front_name";
-            return $carsImage->save();
-        }
+        return response()->json(
+            [
+                    'id' => $vendorData->id,
+                    'fullname' => $vendorData->name . ' ' .$vendorData->surname,
+                    'email' => $vendorData->email,
+                    'address' => $vendorData->address,
+                    'birthday' => $vendorData->birthday,
+                   /// 'password' => $vendorData->password,
+                    'phone_number' => $vendorData->phone_number,
+                    'license' => $vendorData->driver->license,
+                    'picture' => $vendorData->driver->picture,
+                    'sex_offender_check' => $vendorData->driver->sex_offender_check,
+                    'motor_vehicle_record' => $vendorData->driver->motor_vehicle_record,
+                    'defensive_driving' => $vendorData->driver->defensive_driving,
+                    'wheelchair_securement' => $vendorData->driver->wheelchair_securement,
+                    'pass_basic' => $vendorData->driver->pass_basic,
+                    'emt_1' => $vendorData->driver->emt_1,
+                    'first_aid' => $vendorData->driver->first_aid,
+                    'company_training' => $vendorData->driver->company_training,
+                    'drug_test' => $vendorData->driver->drug_test,
+                    'fields' => new StatusCollection($vendorData->fields),
+                ],
+            200
+        );
     }
-
-
 }

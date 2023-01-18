@@ -14,6 +14,8 @@ import InfoBlock from "../../../components/info-block/info-block";
 import { actions } from "../../../store/home";
 import { useDispatch } from "react-redux";
 import { homeAPI } from "../../../api/site-api/home-api";
+import InfoBlockDriver from "../../../components/info-block-driver/info-block";
+import { vendorAPI } from "../../../api/site-api/vendor-api";
 
 interface Beneficiary {
     path: string;
@@ -31,6 +33,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
     const [tabId, setTabId] = useState(1);
     const [tabIdSelected, setTabIdSelected] = useState(3);
     const [dataID, setDataID] = useState(null);
+    const [itemData, setItemData] = useState({});
     const [tabs, setTabs] = useState([]);
     const [typeName, setTypeName] = useState<string>('driver')
     const navigate = useNavigate();
@@ -55,8 +58,6 @@ const VendorUsers: React.FC<Beneficiary> = () => {
         "address",
         "phone_number",
         "birthday",
-        // "role",
-        "image",
         "action",
     ];
 
@@ -90,7 +91,11 @@ const VendorUsers: React.FC<Beneficiary> = () => {
         setTabIdSelected(tabId);
         // setLoading(true)
     };
+    const handlerGetItemData = async (id:number) => {
+        const data = await  vendorAPI.getItemData('vendorClients', id)
 
+        setItemData(data);
+    }
     const customStyles: ReactModal.Styles = {
         content: {
             position: "fixed",
@@ -116,7 +121,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
         data && (
             <>
 
-                {/* <InfoBlock  items={data}/> */}
+                {Object.keys(itemData).length >0  && <InfoBlockDriver  data={itemData}/> }
                 <List
                     data={data}
                     titles={titles}
@@ -130,8 +135,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
                     handlerDeleteItem={handlerDeleteModal}
                     handlerEditItem={handlerEditItem}
                     HandlerPagination={HandlerPagination}
-                  //  HandlerGetProducts={HandlerGetProducts}
-                    ///handlerGetClientData={handlerGetClientData}
+                    handlerGetItemData={handlerGetItemData}
                     count={count}
                     handlerChangeTabs={handlerChangeTabs}
                     activeItem={activeItem}

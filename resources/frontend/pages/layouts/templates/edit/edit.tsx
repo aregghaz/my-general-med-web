@@ -45,7 +45,7 @@ const Edit: React.FC<IEdit> = (
             formData.append('first_aid', values['license'])
             formData.append('company_training', values['license'])
             formData.append('license', values['license'])
-            formData.append('picture', values['license'])
+            formData.append('picture', values['picture'])
             formData.append('drug_test', values['license'])
         }
         formData.append('_method', 'put');

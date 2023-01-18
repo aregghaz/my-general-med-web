@@ -81,7 +81,6 @@ const Cars: React.FC<Beneficiary> = () => {
     }
     const handlerGetItemData = async (id: number) => {
         const data = await vendorAPI.getItemData(crudKey, id)
-        console.log(data);
         setItemData(data)
         setDataID(id)
 

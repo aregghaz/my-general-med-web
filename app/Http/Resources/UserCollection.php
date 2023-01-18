@@ -23,7 +23,7 @@ class UserCollection extends ResourceCollection
                 'address' => $user->address,
                 'phone_number' => $user->phone_number,
                 'birthday' => $user->birthday,
-                "image" => $user->image ?? null,
+//                "image" => $user->picture ?? null,
             ];
         });
 
