@@ -25,7 +25,7 @@ const CrudTable: React.FC<ICrudTable> = (
     const [titleName, setTitleName] = useState<string>("")
     const [defaultTypeId, _] = useState<number>(1)
     const tableRef = useRef(null);
-
+    console.log(titles, "ioioioioioioi")
     const titleSort = (name: string) => {
         if (name !== "action") {
             if (filterTable === "ASC") {

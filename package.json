@@ -76,14 +76,15 @@
     },
     "dependencies": {
         "@react-google-maps/api": "^2.17.1",
-        "node-sass": "^8.0.0",
         "@react-pdf-viewer/core": "^3.7.0",
         "@react-pdf-viewer/default-layout": "^3.10.0",
         "@types/pdf-viewer-reactjs": "^2.2.2",
+        "node-sass": "^8.0.0",
         "pdf-viewer-reactjs": "^2.2.3",
         "pdfjs-dist": "^2.15.349",
         "react-export-table-to-excel": "^1.0.6",
         "react-iframe": "^1.8.0",
-        "react-intersection-observer": "^8.32.0"
+        "react-intersection-observer": "^8.32.0",
+        "react-sortable-hoc": "^2.0.0"
     }
 }

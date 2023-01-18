@@ -7,7 +7,7 @@ import {getClientData, getHomePageData} from '../../../store/selectors'
 import {homeAPI} from "../../../api/site-api/home-api";
 import s from './home.module.scss'
 import CrudTable from '../../../components/crud-table-user/crud-table'
-import Select, {IOption} from '../../../components/select/select'
+import {IOption} from '../../../components/select/select'
 import {useInView} from 'react-intersection-observer'
 import InfoBlock from '../../../components/info-block/info-block'
 import Upload from '-!svg-react-loader!../../../images/Upload.svg'
@@ -19,6 +19,7 @@ import BackDropSearch from '../../../components/backdrop-search/backdrop-search'
 import {DirectionsRenderer, GoogleMap, useJsApiLoader,} from '@react-google-maps/api'
 import Modal from 'react-modal'
 import PopupModal from "../../../components/popup-modal/popup-modal";
+import MultiSelectSort from "../../../components/select/sort-select";
 
 const center = {lat: 48.8584, lng: 2.2945}
 
@@ -73,7 +74,7 @@ const Home: React.FC<IHome> = () => {
 
     const {selectedTitle, titles: allTiles, clients, tripCount, availableCount} = homeData
     const {clientById} = clientData
-
+    console.log(homeData, "iiiiiiiiiiiiii")
 
     const {isLoaded} = useJsApiLoader({
         googleMapsApiKey: 'AIzaSyBKkr76ZgeVEhZLj-ZT5u8XQBbT4SUQI5E',
@@ -87,6 +88,7 @@ const Home: React.FC<IHome> = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const [agreement, setAgreement] = useState<boolean>(false)
     const [status, setStatus] = useState<number | null>(null)
+    const [changePosition, setChangePosition] = useState<any[]>(selectedTitle)
 
     async function calculateRoute(newData: any) {
         const directionsService = new google.maps.DirectionsService()
@@ -178,15 +180,13 @@ const Home: React.FC<IHome> = () => {
                 }))
                 countRef.current++;
                 setLoading(false)
-
-
             }
         })()
         return () => {
             homeAPI.cancelRequest()
         }
 
-    }, [inView, loading, agreement]);
+    }, [inView, loading, agreement, changePosition]);
     ///FIXME  MISSING TYPE
 
     const onSearchInput = async (event: { search: string }) => {
@@ -270,6 +270,11 @@ const Home: React.FC<IHome> = () => {
         setIsModalOpen(true)
     }
 
+    const changeSortPosition = (arr: any) => {
+        setChangePosition(arr)
+    }
+
+    console.log(changePosition, "change posiition")
 
     return (
         clients && <>
@@ -376,18 +381,19 @@ const Home: React.FC<IHome> = () => {
                     </div>
                 </Modal>
                 <div className={s.iconBlock}>
-                    <Select
+                    <MultiSelectSort
                         isSearchable={true}
                         placeholder={'title'}
                         options={defaultData}
-                        onChange={(options: Array<IOption>) => {
-                            changeFields(options);
-                        }}
+                        onChange={(options: Array<IOption>) => changeFields(options)}
                         getOptionValue={(option: IOption) => option.value}
                         getOptionLabel={(option: IOption) => t(option.label)}
-                        value={selectedTitle}
+                        // value={changePosition.length > 0 ? changePosition : selectedTitle}
+                        value={changePosition}
+                        // value={selectedTitle}
                         name={'filtre'}
                         isMulti={true}
+                        onChangePosition={changeSortPosition}
                     />
                 </div>
                 <div className={s.upload_panel}>
@@ -409,7 +415,8 @@ const Home: React.FC<IHome> = () => {
             <PopupModal isOpen={isOpen} agreeWith={agreeWith} notAgreeWith={notAgreeWith}/>
             <div ref={contentRef} className={s.table_wrapper}>
                 <CrudTable
-                    titles={selectedTitle}
+                    // titles={selectedTitle}
+                    titles={changePosition}
                     data={clients}
                     handlerGetClientData={handlerGetClientData}
                     className={'pagination'}
