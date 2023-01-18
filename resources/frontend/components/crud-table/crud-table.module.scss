@@ -24,7 +24,7 @@ tbody {
 }
 
 .download_btn {
-    background-color: #6D9886;
+    background-color: $menuColor;
     border: none;
     padding: 5px 10px;
     border-radius: 5px;
@@ -64,7 +64,7 @@ tbody {
 .iconsWrapper {
     display: flex;
     justify-content: space-around;
-    color: #35bcbf;
+    color: $menuColor;
 
     .editIcon {
         width: 25px;

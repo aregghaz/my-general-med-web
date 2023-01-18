@@ -44,11 +44,11 @@ const Status: React.FC<Beneficiary> = () => {
         // dispatch(actions.clearData())
     }, [])
 
-
     const titles: Array<string> = [
         'id',
         'name',
-        'slug'
+        'slug',
+        'action'
     ]
     // const handlerAddBeneficiaryItem = () => navigate(`/admin/users/create`)
     const handlerAddBeneficiaryItem = () => navigate(`/admin/status/create`)

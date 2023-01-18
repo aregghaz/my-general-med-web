@@ -3,6 +3,7 @@ import Button from '../../../../components/button/button'
 import CrudTable from '../../../../components/crud-table/crud-table'
 
 import s from './list.module.scss'
+import { useTranslation } from "react-i18next";
 
 interface IList {
     data: Array<any>
@@ -55,6 +56,7 @@ const List: React.FC<IList> = (
         className,
         paginated
     }) => {
+    const {t} = useTranslation()
     return (
         <>
             <div className={s.addBtnWrapper}>
@@ -78,7 +80,7 @@ const List: React.FC<IList> = (
                                 // } : {backgroundColor: 'white'}}
                                 onClick={() => handlerChangeTabs(tab.id,tab.name)}
                             >
-                                {tab.name} {tab.count >=0 && <span className={s.bage_count}>{tab.count}</span>}
+                                {t(tab.name)} {tab.count >=0 && <span className={s.bage_count}>{tab.count}</span>}
                             </div>
                         ))
                     }
