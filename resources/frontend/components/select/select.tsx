@@ -114,7 +114,6 @@ const Select: React.FC<ISelect> = (
             <ReactSelect
                 isMulti={isMulti}
                 styles={{
-                    /////SENC DZELU ES TIKO
                     control: (baseStyles, state) => ({
                         ...baseStyles,
                         borderColor: state.isFocused ? '#545cd8' : '#545cd8',
