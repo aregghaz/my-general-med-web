@@ -55,6 +55,7 @@ return [
     'fields' => 'Table fields',
     'vendors' => 'Vendors',
     'slug' => 'Slug',
+    'destination' => 'Destination',
 
 
     'ru' => 'Русский',
@@ -66,7 +67,7 @@ return [
     'news-items' => 'Նորություններ',
     'masters' => 'Վարպետներ',
     'operators' => 'Օպերատորներ',
-    "fullName" =>'aaaaaaaaaaaa',
+
     'orders' => 'Պատվերներ',
     'title' => 'Վերնագիր',
     'description' => 'Նկարագրություն',

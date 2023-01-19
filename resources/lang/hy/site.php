@@ -55,6 +55,7 @@ return [
     'fields' => 'Table fields',
     'vendors' => 'Vendors',
     'slug' => 'Slug',
+    'destination' => 'Destination',
 
     'seeMore' => 'Home number',
     'adminBeneficiaries' => "Users",

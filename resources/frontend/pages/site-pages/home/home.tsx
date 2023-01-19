@@ -182,7 +182,7 @@ const Home: React.FC<IHome> = () => {
             homeAPI.cancelRequest()
         }
 
-    }, [inView, loading, agreement, changePosition]);
+    }, [inView, loading, agreement]);
     ///FIXME  MISSING TYPE
 
     const onSearchInput = async (event: { search: string }) => {
@@ -207,6 +207,7 @@ const Home: React.FC<IHome> = () => {
 
     const changeFields = (options: Array<IOption>) => {
         let result = options.map(a => a.slug);
+        localStorage.setItem('titles',JSON.stringify(result))
         if (result.length > 0) {
             setTitles(result)
             setLoading(true)
@@ -266,11 +267,14 @@ const Home: React.FC<IHome> = () => {
         setIsModalOpen(true)
     }
 
-    const changeSortPosition = (arr: any) => {
+    const changeSortPosition = (arr: Array<IOption>) => {
         setChangePosition(arr)
+        let result = arr.map(a => a.slug);
+        localStorage.setItem('titles',JSON.stringify(result))
+        setTitles(result)
+        setLoading(true)
     }
 
-    console.log(changePosition, "change posiition")
 
     return (
         clients && <>
@@ -377,20 +381,20 @@ const Home: React.FC<IHome> = () => {
                     </div>
                 </Modal>
                 <div className={s.iconBlock}>
-                    <MultiSelectSort
+                    {Object.values(selectedTitle).length > 0 && <MultiSelectSort
                         isSearchable={true}
-                        placeholder={'title'}
+                        placeholder={"title"}
                         options={defaultData}
                         onChange={(options: Array<IOption>) => changeFields(options)}
                         getOptionValue={(option: IOption) => option.value}
                         getOptionLabel={(option: IOption) => t(option.label)}
                         // value={changePosition.length > 0 ? changePosition : selectedTitle}
-                        value={changePosition}
+                        value={selectedTitle}
                         // value={selectedTitle}
-                        name={'filtre'}
+                        name={"filtre"}
                         isMulti={true}
                         onChangePosition={changeSortPosition}
-                    />
+                    />}
                 </div>
                 <div className={s.upload_panel}>
                     <div
@@ -411,8 +415,8 @@ const Home: React.FC<IHome> = () => {
             <PopupModal isOpen={isOpen} agreeWith={agreeWith} notAgreeWith={notAgreeWith}/>
             <div ref={contentRef} className={s.table_wrapper}>
                 <CrudTable
-                    // titles={selectedTitle}
-                    titles={changePosition}
+                     titles={selectedTitle}
+                    //titles={changePosition}
                     data={clients}
                     handlerGetClientData={handlerGetClientData}
                     className={'pagination'}

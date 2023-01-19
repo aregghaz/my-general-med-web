@@ -152,18 +152,13 @@ const MultiSelectSort: React.FC<ISelect> = (
     const onHandleChange = (selectedOptions: any) => setSelected(selectedOptions)
 
     const onSortEnd: SortEndHandler = ({oldIndex, newIndex}) => {
-        console.log(selected, "sel")
-        console.log(oldIndex, "oldIndex")
-        console.log(newIndex, "newIndex")
         const newValue = arrayMove(selected, oldIndex, newIndex);
-        console.log(newValue, "newValue")
-
         setSelected(newValue);
         onChangePosition(newValue)
     };
     const [themeType] = useLocalStorage('theme', 'light')
-    console.log(value, "value")
-    console.log(selected, "selected")
+
+
     return (
         <>
             <label className={`${s.label} ${labelStyle} `} htmlFor={name}>{label}</label>
