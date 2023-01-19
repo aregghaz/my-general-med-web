@@ -14,7 +14,7 @@ import Clients from '-!svg-react-loader!../../images/Clients.svg'
 import Users from '-!svg-react-loader!../../images/Users.svg'
 import Cars from '-!svg-react-loader!../../images/Car.svg'
 import ArrowDown from '-!svg-react-loader!../../svgs/arrow-down.svg'
-
+import Logo from '../../images/logo.png'
 const DrawerUser: React.FC = ({children}) => {
     const {t} = useTranslation()
     const dispatch = useDispatch()
@@ -67,7 +67,11 @@ const DrawerUser: React.FC = ({children}) => {
             <nav className={s.header_nav}>
                 <div className={s.navWrapper}>
                     <div className={s.icons}>
-                        <div>
+                        <div className={s.logoSection}>
+                            <div className={s.logoDiv}>
+                                <img src={`../../images/logo.png`} alt="logo" />
+                            </div>
+
                             <div
                                 key={'home'}
                                 className={s.iconBlock}

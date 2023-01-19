@@ -212,20 +212,23 @@ const MultiSelectSort: React.FC<ISelect> = (
                 styles={{
                     control: (baseStyles: any, state: any) => ({
                         ...baseStyles,
-                        borderColor: state.isFocused ? '#545cd8' : '#545cd8',
-                        backgroundColor: '#545cd8',
-                        borderRadius: "15px"
+                       // borderColor: state.isFocused ? '#545cd8' : '#545cd8',
+                       /// backgroundColor: '#545cd8',
+                        borderRadius: "15px",
+                        color: "#707980",
                     }),
                     menu: (base: any) => ({
                         ...base,
-                        borderRadius: 0,
+                        borderRadius: 15,
                         backgroundColor: 'white',
-                        marginTop: 0
+                        marginTop: 0,
+                        color: "#707980",
                     }),
                     menuList: (base: any) => ({
                         ...base,
                         // kill the white space on first and last option
                         padding: 0,
+                        color: "#707980",
                         backgroundColor: 'white',
                     }),
                     multiValue: (baseStyles: any, state: any) => ({
@@ -233,7 +236,7 @@ const MultiSelectSort: React.FC<ISelect> = (
                         height: 30,
                         fontSize: 20,
                         lineHeight: 1.5,
-                        color: "#393E46",
+                        color: "#707980",
                         fontWeight: "bold",
                         backgroundColor: 'white',
                     }),

@@ -206,7 +206,7 @@ body {
     }
 
     &:hover {
-        background-color: #545cd8;
+        background-color: $menuColor;
         color: white;
         border-color: transparent;
     }

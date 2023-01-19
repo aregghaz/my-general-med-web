@@ -95,7 +95,7 @@
     border: 1px solid #ddd;
     /// background: $whiteColor;
     // color: $thTextColor;
-    color: #525252;
+    color: $fontColor;
     //FIXME: Fix for large sizes & no support for vw
     font-size: min(max(16px, 1vw), 19px);
     @media only screen and (max-width: $mediumDisplay) {
@@ -120,7 +120,7 @@
 .tableTh {
     z-index: 2;
     //background-color: $menuColor;
-    color: #545cd8;
+    color: $menuColor;
     font-weight: bold;
     //FIXME: Fix for large sizes & no support for vw
     white-space: nowrap;

@@ -78,16 +78,28 @@ const Drawer: React.FC = ({ children, isOpen, handleToggle }: any) => {
     return (
         <div style={{ width: "100%" }}>
             <nav className={s.header_nav}>
-                <div
-                    className={`${s.iconBlock} ${s.bars_lock}`}
-                    onClick={openSideBar}
-                >
-                    <Button type={"blank"}>
-                    <span className={s.icon}>
-                        {show ? <Close /> : <Bars />}
-                    </span>
-                    </Button>
+                <div className={s.logoSection}>
+                    <div className={s.logoDiv}>
+                        <img src={`../../images/logo.png`} alt="logo" />
+                    </div>
+
+                    <div
+                        key={'home'}
+                        className={s.iconBlock}
+                        style={{paddingLeft: "30px"}}
+                    >
+                        <Button
+                            type={'blank'}
+                            onClick={openSideBar}
+                        >
+                                <span className={s.icon}>
+                                    {isOpen ? <Close/> : <Bars/>}
+                                </span>
+                        </Button>
+                    </div>
                 </div>
+
+
                 <div className={s.icon_left_block}>
                     <div className={s.iconBlock}>
                         <Button type={"blank"}>

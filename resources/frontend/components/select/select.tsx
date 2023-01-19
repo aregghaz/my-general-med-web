@@ -116,7 +116,7 @@ const Select: React.FC<ISelect> = (
                 styles={{
                     control: (baseStyles, state) => ({
                         ...baseStyles,
-                        borderColor: state.isFocused ? '#545cd8' : '#545cd8',
+                        // borderColor: state.isFocused ? '#545cd8' : '#545cd8',
                        /// backgroundColor: '#545cd8',
                         borderRadius: "15px"
                     }),

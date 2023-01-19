@@ -287,9 +287,9 @@ const Home: React.FC<IHome> = () => {
                                     className={s.table_upper_tab_item}
                                     key={tab.id}
                                     style={typeId == tab.id ? {
-                                        backgroundColor: '#545cd8',
+                                        backgroundColor: '#4466b0',
                                         color: "#fff"
-                                    } : {backgroundColor: '#ffffff', color: "#393E46"}}
+                                    } : {backgroundColor: '#ffffff', color: "#4466b0"}}
                                     onClick={() => handlerChangeTabs(tab.id)}
                                 >
                                     {t(tab.name)}{tab.count && <span className={s.bage_count}>{tab.count}</span>}

@@ -173,13 +173,6 @@
     letter-spacing: 15px;
 }
 
-.iconBlock {
-    position: relative;
-    margin-right: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
 .account_drop_menu {
     position: absolute;
@@ -227,13 +220,13 @@
 }
 
 .active_icon {
-    background-color: #545cd8;
+    background-color: $menuColor;
     color: $whiteColor;
 }
 
 .item {
     &:hover {
-        background-color: rgba(109, 118, 253, 0.73);
+        background-color: $menuColor;
 
         & > a {
             color: white;
@@ -254,4 +247,23 @@
     max-width: calc(100% - 50px);
     background-color: white;
     min-height: calc(100vh - 60px);
+}
+.logoDiv {
+    display: flex;
+    float: left;
+    margin-left: 30px;
+    img {
+        width: 70px;
+        height: 50px;
+    }
+}
+
+.logoSection{
+    display: table;
+}
+.iconBlock {
+    position: relative;
+    margin-right: 30px;
+    display: table-cell;
+   vertical-align: middle;
 }
