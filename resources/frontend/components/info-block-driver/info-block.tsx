@@ -27,7 +27,10 @@ const InfoBlockDriver: FC<IProps> = ({data}) => {
                 {
                     newData &&
                     <>
-
+                        <div className={cls.item}>
+                            {/*<span className={cls.b_text}>{t('picture')}: </span>*/}
+                            <img src={newData.picture} alt="" />
+                        </div>
                         <div className={cls.item}>
                             <span className={cls.b_text}>{t('fullname')}: </span>
                             {newData.fullname}
@@ -95,10 +98,7 @@ const InfoBlockDriver: FC<IProps> = ({data}) => {
                                 return <span>{el.label}</span>
                             })}
                         </div>
-                        <div className={cls.item}>
-                            <span className={cls.b_text}>{t('picture')}: </span>
-                            <img src={newData.picture} alt="" />
-                        </div>
+
                         {/*<div className={cls.image_block}>*/}
                         {/*    <hr/>*/}
                         {/*    <ImageGallery*/}

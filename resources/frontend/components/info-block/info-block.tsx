@@ -30,7 +30,7 @@ const InfoBlock: FC<IProps> = ({clientById, calculateRoute}) => {
 
 
                         <div className={cls.item}>
-                            <span className={cls.b_text}>{t('name')}: </span>
+                            <span className={cls.b_text}>{t('fullName')}: </span>
                             {newData.name + ' ' + newData.surname}
                         </div>
 
