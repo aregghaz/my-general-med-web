@@ -7,7 +7,7 @@ import {getClientData, getHomePageData} from '../../../store/selectors'
 import {homeAPI} from "../../../api/site-api/home-api";
 import s from './home.module.scss'
 import CrudTable from '../../../components/crud-table-user/crud-table'
-import {IOption} from '../../../components/select/select'
+import Select, {IOption} from '../../../components/select/select'
 import {useInView} from 'react-intersection-observer'
 import InfoBlock from '../../../components/info-block/info-block'
 import Upload from '-!svg-react-loader!../../../images/Upload.svg'
@@ -19,7 +19,6 @@ import BackDropSearch from '../../../components/backdrop-search/backdrop-search'
 import {DirectionsRenderer, GoogleMap, useJsApiLoader,} from '@react-google-maps/api'
 import Modal from 'react-modal'
 import PopupModal from "../../../components/popup-modal/popup-modal";
-import MultiSelectSort from "../../../components/select/sort-select";
 
 const center = {lat: 48.8584, lng: 2.2945}
 
@@ -84,8 +83,6 @@ const Home: React.FC<IHome> = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const [agreement, setAgreement] = useState<boolean>(false)
-    const [status, setStatus] = useState<number | null>(null)
-    const [changePosition, setChangePosition] = useState<any[]>(selectedTitle)
 
     async function calculateRoute(newData: any) {
         const directionsService = new google.maps.DirectionsService()
@@ -132,12 +129,42 @@ const Home: React.FC<IHome> = () => {
     ]
 
 
-    ////FIXME FIX DYNAMIC TABLE FIELDS
-    const [titles, setTitles] = useState<string[]>([])
+    ////FIXME FIX DYNAMIC TABLE FIRELDS
+    const [titles, setTitles] = useState<Array<string>>([])
 
     const openSearch = () => {
         setOpen(!open)
     }
+
+
+    // useEffect(() => {
+    //     (
+    //         async () => {
+    //             const titlesData = localStorage.getItem('titles')
+
+    //                 const homeData = await homeAPI.getClientData({
+    //                     titles: JSON.parse(titlesData),
+    //                     showMore: countRef.current,
+    //                     typeId: typeId
+    //                 })
+    //                 setDefaultData(homeData.titles)
+    //                 dispatch(actions.setTitles({
+    //                     titles: homeData.titles,
+    //                     selectedTitle: homeData.selectedFields,
+    //                     clients: homeData.clients,
+    //                     tripCount: homeData.tripCount,
+    //                     availableCount: homeData.availableCount
+    //                 }))
+
+    //         }
+    //     )()
+    //     /*FIXME commented this part avoiding unmount async error*/
+    //     // return async () => await dispatch(actions.resetState())
+    // return () => {
+    //     dispatch(actions.resetState())
+    //     homeAPI.cancelRequest()
+    // }
+    // }, [])
 
     const handlerGetClientData = async (event: any, id: number) => {
         if (event.ctrlKey || event.shiftKey) {
@@ -176,18 +203,20 @@ const Home: React.FC<IHome> = () => {
                 }))
                 countRef.current++;
                 setLoading(false)
+
+
             }
         })()
         return () => {
+            ///dispatch(actions.resetState())
             homeAPI.cancelRequest()
         }
-
-    }, [inView, loading, agreement, changePosition]);
+    }, [inView, loading, agreement]);
     ///FIXME  MISSING TYPE
 
     const onSearchInput = async (event: { search: string }) => {
         const titlesData = localStorage.getItem('titles')
-
+        /// if (titlesData.length > 0) {
         const homeData = await homeAPI.getClientData({
             titles: JSON.parse(titlesData),
             showMore: countRef.current,
@@ -205,19 +234,24 @@ const Home: React.FC<IHome> = () => {
         // }
     }
 
-    const changeFields = (options: Array<IOption>) => {
+    const changeFields = async (options: Array<IOption>) => {
         let result = options.map(a => a.slug);
+        console.log(result, 'result');
+
+        let selectedTitleSlug = selectedTitle.map(a => a.slug);
         if (result.length > 0) {
+
             setTitles(result)
             setLoading(true)
         }
+
     }
 
     const fileUploader = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const validValues = ["text/csv", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"]
         if (e.target.files) {
             if (validValues?.includes(e.target.files[0].type)) {
-                // setLoadFile(e.target.files[0])
+                setLoadFile(e.target.files[0])
                 const data = new FormData()
                 data.append('file', e.target.files[0])
                 await axios.post("/api/test", data)
@@ -234,20 +268,21 @@ const Home: React.FC<IHome> = () => {
         setLoading(true)
     }
 
-    const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
-    if (agreement) {
-        delay(200).then(async () => {
-            await homeAPI.changeClientsTypes({status, ids})
+    const handlerActionClient = async (status: number) => {
+        if (agreement) {
+            const homeData = await homeAPI.changeClientsTypes({status, ids})
             setIds([]);
             setLoading(true)
             setAgreement(false)
-        })
+        } else {
+            return true
+        }
     }
 
-    const handleActionMiddleware = (status: number) => {
+    const handleActionMiddleware =  (status: number) => {
         if (ids.length > 0) {
             setIsOpen(true)
-            setStatus(status)
+            return handlerActionClient(status)
         }
 
     }
@@ -262,15 +297,11 @@ const Home: React.FC<IHome> = () => {
         setIsModalOpen(false)
     }
     const handlerOpenModal = async (newData: any) => {
+        console.log(newData, 'newDatanewData')
         await calculateRoute(newData);
         setIsModalOpen(true)
     }
 
-    const changeSortPosition = (arr: any) => {
-        setChangePosition(arr)
-    }
-
-    console.log(changePosition, "change posiition")
 
     return (
         clients && <>
@@ -278,6 +309,7 @@ const Home: React.FC<IHome> = () => {
                 <div className={s.upload_panel}>
                     <div className={s.table_upper_tab}>
                         {
+
                             tabs && tabs.length >= 0 && tabs.map(tab => (
                                 <div
                                     className={s.table_upper_tab_item}
@@ -377,19 +409,18 @@ const Home: React.FC<IHome> = () => {
                     </div>
                 </Modal>
                 <div className={s.iconBlock}>
-                    <MultiSelectSort
+                    <Select
                         isSearchable={true}
                         placeholder={'title'}
                         options={defaultData}
-                        onChange={(options: Array<IOption>) => changeFields(options)}
+                        onChange={(options: Array<IOption>) => {
+                            changeFields(options);
+                        }}
                         getOptionValue={(option: IOption) => option.value}
                         getOptionLabel={(option: IOption) => t(option.label)}
-                        // value={changePosition.length > 0 ? changePosition : selectedTitle}
-                        value={changePosition}
-                        // value={selectedTitle}
+                        value={selectedTitle}
                         name={'filtre'}
                         isMulti={true}
-                        onChangePosition={changeSortPosition}
                     />
                 </div>
                 <div className={s.upload_panel}>
@@ -411,8 +442,7 @@ const Home: React.FC<IHome> = () => {
             <PopupModal isOpen={isOpen} agreeWith={agreeWith} notAgreeWith={notAgreeWith}/>
             <div ref={contentRef} className={s.table_wrapper}>
                 <CrudTable
-                    // titles={selectedTitle}
-                    titles={changePosition}
+                    titles={selectedTitle}
                     data={clients}
                     handlerGetClientData={handlerGetClientData}
                     className={'pagination'}
