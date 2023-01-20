@@ -299,4 +299,10 @@ class HomeController extends Controller
             );
         }
     }
+
+    public function getClientDataDriver(Request $request){
+        return response()->json([
+            'success' => 1,
+        ], 200);
+    }
 }
