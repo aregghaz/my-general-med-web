@@ -33,6 +33,7 @@ Route::group([
     Route::get('/car-data-for-select', [HomeController::class, 'carDataForSelect']);
     Route::post('/clientData', [HomeController::class, 'clientData']);
     Route::post('/changeClientType', [HomeController::class, 'changeClientType']);
+    Route::post('/assign-car-client', [HomeController::class, 'assignCarDriver']);
     Route::get('/make/{id}', [CarsController::class, 'getModel']);
     Route::resources([
         'home-data' => HomeController::class,

@@ -7,6 +7,7 @@ use App\Http\Resources\ClientCollection;
 use App\Http\Resources\ClientFieldCollection;
 use App\Models\Cars;
 use App\Models\Clients;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -222,9 +223,13 @@ class HomeController extends Controller
             //    "count"=> (Clients::count() / 20)
         ], 200);
     }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function changeClientType(Request $request)
     {
-
         $ids = $request->ids;
         Clients::whereIn('id', $ids)->update(['type_id' =>  $request->status, 'vendor_id' => $request->user()->id]);
 
@@ -235,7 +240,6 @@ class HomeController extends Controller
 
     protected function convertQuery($queryData, $title, $clients)
     {
-
         $clients = $clients->where(function ($query) use ($title, $queryData) {
             // $clients =  $this->convertQuery($request->queryData, $vendorFields, $clients);
 
@@ -256,12 +260,43 @@ class HomeController extends Controller
         return $clients;
     }
 
-    public function carDataForSelect(Request $request){
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function carDataForSelect(Request $request)
+    {
         $vendorId = $request->user()->vendor_id;
         $cars = Cars::with('driver')->where('vendor_id', $vendorId)->get();
 
         return response()->json([
             "cars" => new CarsSelectCollection($cars)
         ], 200);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function assignCarDriver(Request $request): JsonResponse
+    {
+        $clientsIds = $request->ids;
+        $carId = $request->carId;
+        $clients = Clients::whereIn('car_id', $clientsIds)->update(["car_id" => $carId]);
+        if($clients){
+            //dd($request->ids);
+            return response()->json([
+                'success' => 1,
+            ], 200);
+        }else{
+            return response()->json(
+                [
+                    'success' => 0,
+                    //'type' => 'validation_filed',
+                    'error' => 'something wrong with your reqeuest',
+                ],
+                200
+            );
+        }
     }
 }

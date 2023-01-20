@@ -54,6 +54,13 @@ const customStyles: ReactModal.Styles = {
 
 const Home: React.FC<IHome> = () => {
     const { t } = useTranslation();
+    const contentRef = useRef();
+    const countRef = useRef(2);
+    const homeData = useSelector(getHomePageData);
+    const clientData = useSelector(getClientData);
+    const dispatch = useDispatch();
+    const { selectedTitle, titles: allTiles, clients, tripCount, availableCount } = homeData;
+    const { clientById } = clientData;
     const [defaultData, setDefaultData] = useState([]);
     const [show, setShow] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
@@ -62,13 +69,6 @@ const Home: React.FC<IHome> = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [typeId, setTypeId] = useState<number>(1);
     const [steps, setSteps] = useState<Array<any>>([]);
-    const contentRef = useRef();
-    const countRef = useRef(2);
-    const homeData = useSelector(getHomePageData);
-    const clientData = useSelector(getClientData);
-    const dispatch = useDispatch();
-    const { selectedTitle, titles: allTiles, clients, tripCount, availableCount } = homeData;
-    const { clientById } = clientData;
     const [map, setMap] = useState(/** @type google.maps.Map */(null));
     const [directionsResponse, setDirectionsResponse] = useState(null);
     const [distance, setDistance] = useState("");
@@ -78,8 +78,8 @@ const Home: React.FC<IHome> = () => {
     const [agreement, setAgreement] = useState<boolean>(false);
     const [status, setStatus] = useState<number | null>(null);
     const [carData, setCarData] = useState<Array<any>>([]);
-    ////TODO: FIX TYPE OF SELECT ICAR
     const [car, setCar] = useState<IOption>(null);
+
 
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: "AIzaSyBKkr76ZgeVEhZLj-ZT5u8XQBbT4SUQI5E",
@@ -279,7 +279,20 @@ const Home: React.FC<IHome> = () => {
 
     const handlerSetCar = async () => {
         console.log(ids,car);
+        const getCarData = await vendorAPI.assignCarToClient({
+            ids:ids,
+            carId: parseFloat(car.value)
+        });
 
+        if(getCarData.success){
+            handlerCloseModal()
+        }else{
+            setIsModalOpen(false);
+            setErrorMessage(getCarData.error)
+            delay(2000).then(async () => {
+                setErrorMessage('')
+            });
+        }
     };
     return (
         clients && <>
@@ -338,18 +351,20 @@ const Home: React.FC<IHome> = () => {
                         </div>
                         {
                             carData.length > 0 && <>
-                                <Select
-                                    getOptionValue={(option: IOption) => option.value}
-                                    getOptionLabel={(option: IOption) => t(option.label)}
-                                    onChange={(options: IOption) => setCar(options)}
-                                   /// onChange={handlerSetCar}
-                                    options={carData}
-                                    // value={selectedTitle}
-                                    name={"Cars"}
-                                    isMulti={false}
-                                />
+                              <div className={s.selectDiv}>
+                                  <Select
+                                      getOptionValue={(option: IOption) => option.value}
+                                      getOptionLabel={(option: IOption) => t(option.label)}
+                                      onChange={(options: IOption) => setCar(options)}
+                                      /// onChange={handlerSetCar}
+                                      options={carData}
+                                      // value={selectedTitle}
+                                      name={"Cars"}
+                                      isMulti={false}
+                                  />
 
-                                <Button type={'primary'} onClick={handlerSetCar}> {t('assign')}</Button>
+                                  <Button isSubmit={true} type={'adminUpdate'} onClick={handlerSetCar}> {t('assign')}</Button>
+                              </div>
                             </>
                         }
                         {isLoaded && directionsResponse && <div className={s.googleMap}>

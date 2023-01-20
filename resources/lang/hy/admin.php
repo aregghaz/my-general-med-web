@@ -56,6 +56,7 @@ return [
     'vendors' => 'Vendors',
     'slug' => 'Slug',
     'destination' => 'Destination',
+    'assign' => 'Assign',
 
 
     'ru' => 'Русский',
