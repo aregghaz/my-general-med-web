@@ -47,8 +47,9 @@ const VendorUsers: React.FC<Beneficiary> = () => {
             setData(data.data);
             setTabs(data.roles)
         })();
-        // dispatch(actions.setTitles(titles))
-        // dispatch(actions.clearData())
+        return () => {
+            homeAPI.cancelRequest();
+        };
     }, [tabIdSelected]);
 
     const titles: Array<string> = [

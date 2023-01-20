@@ -71,6 +71,14 @@ const InfoBlock: FC<IProps> = ({clientById, calculateRoute}) => {
                             <span className={cls.b_text}>{t('destination_comments')}: </span>
                             {newData.destination_comments}
                         </div>
+                        <div className={cls.item}>
+                            <span className={cls.b_text}>{t('weight')}: </span>
+                            {newData.weight}
+                        </div>
+                        <div className={cls.item}>
+                            <span className={cls.b_text}>{t('height')}: </span>
+                            {newData.height}
+                        </div>
 
                         <div className={cls.item}>
                             <div className={cls.showBtn} onClick={() => calculateRoute(newData)}> Show map</div>

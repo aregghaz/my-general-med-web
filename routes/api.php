@@ -30,6 +30,7 @@ Route::post('/test', [\App\Http\Controllers\TestController::class, 'index']);
 Route::group([
     'middleware' => 'auth:api'
 ], function () {
+    Route::get('/car-data-for-select', [HomeController::class, 'carDataForSelect']);
     Route::post('/clientData', [HomeController::class, 'clientData']);
     Route::post('/changeClientType', [HomeController::class, 'changeClientType']);
     Route::get('/make/{id}', [CarsController::class, 'getModel']);

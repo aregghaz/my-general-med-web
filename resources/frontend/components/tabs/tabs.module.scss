@@ -1,0 +1,33 @@
+@import "../../styles/variables";
+.bage_count {
+    color: white;
+    background-color: red;
+    padding: 3px 6px 3px 6px;
+    font-size: 12px;
+    margin-left: 10px;
+    /* border: 85px; */
+    /* width: 50px; */
+    /* min-height: 147px; */
+    border-radius: 10px;
+}
+.table_upper_tab_item {
+    //height: 100px;
+    background: #ffffff;
+    border: 1px solid rgba(162, 162, 162, 0.2);
+    box-shadow: 0 5px 10px 2px rgb(162 162 162 / 20%);
+    border-radius: $borderRadius;
+    position: relative;
+    padding: 20px;
+    width: 33.3%;
+    cursor: pointer;
+
+    &:hover {
+        filter: brightness(90%);
+    }
+}
+.table_upper_tab {
+     display: flex;
+     align-items: center;
+     gap: 10px;
+     width: 100%;
+ }

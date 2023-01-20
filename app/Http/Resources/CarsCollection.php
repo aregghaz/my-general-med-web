@@ -14,25 +14,25 @@ class CarsCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return $this->map(function ($vendor) {
+        return $this->map(function ($cars) {
             $users = [];
 
-            if(count($vendor->driver)){
-                for($i=0;$i< count($vendor->driver); $i++){
-                    $users[] = $vendor->driver[$i]->user->name .' '.$vendor->driver[$i]->user->surname;
+            if(count($cars->driver)){
+                for($i=0;$i< count($cars->driver); $i++){
+                    $users[] = $cars->driver[$i]->user->name .' '.$cars->driver[$i]->user->surname;
                 }
             }
             return [
-                'id' => $vendor->id,
+                'id' => $cars->id,
                 "drivers" =>$users,
-                ///'vendor_id' =>$vendor->vendor_id,
-                'make'=> $vendor->make->name,
-                'model'=> $vendor->model->name,
-                'year'=> $vendor->year->name,
-//                'registration'=> $vendor->registration,
-//                'inspection'=> $vendor->inspection,
-//                'insurance'=> $vendor->insurance,
-//                'liability'=> $vendor->liability,
+                ///'vendor_id' =>$cars->vendor_id,
+                'make'=> $cars->make->name,
+                'model'=> $cars->model->name,
+                'year'=> $cars->year->name,
+//                'registration'=> $cars->registration,
+//                'inspection'=> $cars->inspection,
+//                'insurance'=> $cars->insurance,
+//                'liability'=> $cars->liability,
             ];
         });
     }

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CarsSelectCollection;
 use App\Http\Resources\ClientCollection;
 use App\Http\Resources\ClientFieldCollection;
+use App\Models\Cars;
 use App\Models\Clients;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -150,7 +152,6 @@ class HomeController extends Controller
         ], 200);
     }
 
-
     public function show($id)
     {
         $client = Clients::where('id', $id)->with([
@@ -165,7 +166,6 @@ class HomeController extends Controller
             'client' => $client
         ], 200);
     }
-
 
     public function index(Request $request)
     {
@@ -256,4 +256,12 @@ class HomeController extends Controller
         return $clients;
     }
 
+    public function carDataForSelect(Request $request){
+        $vendorId = $request->user()->vendor_id;
+        $cars = Cars::with('driver')->where('vendor_id', $vendorId)->get();
+
+        return response()->json([
+            "cars" => new CarsSelectCollection($cars)
+        ], 200);
+    }
 }
