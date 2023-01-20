@@ -282,7 +282,7 @@ class HomeController extends Controller
     {
         $clientsIds = $request->ids;
         $carId = $request->carId;
-        $clients = Clients::whereIn('car_id', $clientsIds)->update(["car_id" => $carId]);
+        $clients = Clients::whereIn('id', $clientsIds)->update(["car_id" => $carId]);
         if($clients){
             //dd($request->ids);
             return response()->json([
