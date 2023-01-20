@@ -4,6 +4,10 @@
     padding: 25px;
     box-shadow: 0 5px 25px rgba(34, 41, 97, 0.08);
     background: $formBgColor;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1700px;
+    margin: auto;
 }
 
 .title {
@@ -13,28 +17,30 @@
 
 
 .item {
-    margin-bottom: 15px;
-    width: 30%;
-    float: left;
-    margin:10px;
-    svg{
+    //margin-bottom: 15px;
+    //width: 30%;
+    //width: 100%;
+    margin: 10px 10px 15px;
+
+    svg {
         width: 20px;
     }
 }
 
-.button{
+.button {
     padding: 0 32px;
 }
 
-.label{
+.label {
     margin-bottom: 10px;
 }
 
-.actionButtons{
+.actionButtons {
     display: flex;
     justify-content: space-between;
 }
 
-.buttonDiv{
+.buttonDiv {
+    grid-column: 1/4;
     text-align: end;
 }

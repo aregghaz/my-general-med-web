@@ -8,15 +8,15 @@ import {useNavigate} from '@reach/router'
 import populateCreateFormFields from "../../../../constants/populateCreateFormFields";
 import {AdminApi} from '../../../../api/admin-api/admin-api';
 import validationRules from '../../../../utils/validationRule';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
 interface ICreate {
     data?: { [key: string]: Object }
     fields: Array<IItem>
     crudKey?: string
-    isAdmin?:boolean
+    isAdmin?: boolean
     title: string,
-    requiredFields?:Array<string>
+    requiredFields?: Array<string>
 }
 
 
@@ -32,12 +32,12 @@ const Create: React.FC<ICreate> = (
     const navigate = useNavigate()
     const {t} = useTranslation()
 
-    const validate = (values:FormikValues) => validationRules(values, requiredFields, fields, t)
+    const validate = (values: FormikValues) => validationRules(values, requiredFields, fields, t)
 
     const create = async (values: FormikValues, {setSubmitting}: FormikHelpers<FormikValues>) => {
         setSubmitting(true)
         const formData: FormData = new FormData()
-        if(crudKey == 'vendorClients'){
+        if (crudKey == 'vendorClients') {
             formData.append('picture', values['license'])
             formData.append('sex_offender_check', values['license'])
             formData.append('motor_vehicle_record', values['license'])
@@ -53,7 +53,7 @@ const Create: React.FC<ICreate> = (
         }
 
         formData.append('value', JSON.stringify(values))
-        const res: any = await AdminApi.store(formData, crudKey,isAdmin)
+        const res: any = await AdminApi.store(formData, crudKey, isAdmin)
         if (Number(res.status === 200)) await navigate(`/${isAdmin ? 'admin/' : ''}${crudKey}`)
     }
 
@@ -64,7 +64,7 @@ const Create: React.FC<ICreate> = (
                 selectOptions={data || {}}
                 initialValues={populateCreateFormFields(fields, data)}
                 onSubmit={create}
-                validate={(values:FormikValues) => validate(values)}
+                validate={(values: FormikValues) => validate(values)}
                 validateOnChange={false}
                 validateOnBlur={false}
             >
@@ -79,10 +79,14 @@ const Create: React.FC<ICreate> = (
                         <>
                             <form className={s.form}>
                                 {
-                                 fields
+                                    fields
                                         .map((field, index) => {
-                                                if (  data && data[field.name]) {
-                                                    return <div key={index} className={s.item}>
+                                                if (data && data[field.name]) {
+                                                    return <div
+                                                        key={index}
+                                                        className={s.item}
+                                                        style={field.type == 'hidden' ? {display: "none"} : {}}
+                                                    >
                                                         <FormikHandler
                                                             item={field}
                                                             handleChange={handleChange}
@@ -94,7 +98,11 @@ const Create: React.FC<ICreate> = (
                                                         />
                                                     </div>
                                                 } else {
-                                                    return <div key={index} className={s.item}>
+                                                    return <div
+                                                        key={index}
+                                                        className={s.item}
+                                                        style={field.type == 'hidden' ? {display: "none"} : {}}
+                                                    >
                                                         <FormikHandler
                                                             item={field}
                                                             handleChange={handleChange}

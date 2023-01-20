@@ -1,0 +1,25 @@
+@import "../../../styles/variables";
+
+.form {
+    padding: 25px;
+    box-shadow: 0 5px 25px rgba(34, 41, 97, 0.08);
+    background: $formBgColor;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1700px;
+    margin: auto;
+}
+
+.buttonDiv {
+    grid-column: 1/4;
+    text-align: right;
+}
+
+.item {
+    margin: 10px 10px 15px;
+    position: relative;
+
+    svg {
+        width: 30px;
+    }
+}

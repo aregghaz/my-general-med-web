@@ -65,15 +65,21 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
             }
 
             <div className={s.uploadButtonWrapper}>
-                {error && <div className={s.error}>{error}</div>}
-                <Button type={'blank'}>
+                <span style={{display: "block", fontWeight: "normal"}}>{label}</span>
+                {
+                    error &&
+                    <div className={s.error}>{error}</div>
+                }
+                <label className={s.upload_label}>
                     <span className={s.uploadFileText}>
-                        {label}
                         <ButtonSVg/>
                     </span>
-                    {value && <span className={s.uploadedImage}>{value.name}</span>}
-                </Button>
-                <input name={name} type="file" className={s.fileInput} onChange={onChange}/>
+                    {
+                        value &&
+                        <span className={s.uploadedImage}>{value.name}</span>
+                    }
+                    <input name={name} type="file" className={s.fileInput} onChange={onChange}/>
+                </label>
             </div>
         </>
     )
