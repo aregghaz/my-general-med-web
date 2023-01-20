@@ -53,7 +53,6 @@ const Home: React.FC<IHome> = () => {
     const {t} = useTranslation()
     const [defaultData, setDefaultData] = useState([])
     const [show, setShow] = useState(false)
-    const [loadFile, setLoadFile] = useState<any>(false)
     const [errorMessage, setErrorMessage] = useState<string>("")
     const [ids, setIds] = useState([])
     const [open, setOpen] = useState<boolean>(false)
@@ -63,8 +62,7 @@ const Home: React.FC<IHome> = () => {
     const [ref, inView] = useInView({
         threshold: 1,
     });
-    const [isBackDropSearch, setBackdropSearch] = useState<boolean>(false)
-    const handlerCloseBackDropSearch = () => setBackdropSearch(false)
+
     const contentRef = useRef();
     const countRef = useRef(2);
     const homeData = useSelector(getHomePageData)
@@ -85,7 +83,6 @@ const Home: React.FC<IHome> = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const [agreement, setAgreement] = useState<boolean>(false)
     const [status, setStatus] = useState<number | null>(null)
-    const [changePosition, setChangePosition] = useState<any[]>(selectedTitle)
 
     async function calculateRoute(newData: any) {
         const directionsService = new google.maps.DirectionsService()
@@ -98,14 +95,6 @@ const Home: React.FC<IHome> = () => {
         setDistance(results.routes[0].legs[0].distance.text)
         setDuration(results.routes[0].legs[0].duration.text)
         setSteps(results.routes[0].legs[0].steps)
-    }
-
-    function clearRoute() {
-        setDirectionsResponse(null)
-        setDistance('')
-        setDuration('')
-        setSteps([])
-
     }
 
     const tabs = [
@@ -131,8 +120,6 @@ const Home: React.FC<IHome> = () => {
         },
     ]
 
-
-    ////FIXME FIX DYNAMIC TABLE FIELDS
     const [titles, setTitles] = useState<string[]>([])
 
     const openSearch = () => {
@@ -236,6 +223,7 @@ const Home: React.FC<IHome> = () => {
     }
 
     const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+
     if (agreement) {
         delay(200).then(async () => {
             await homeAPI.changeClientsTypes({status, ids})
@@ -260,6 +248,10 @@ const Home: React.FC<IHome> = () => {
 
 
     const handlerCloseModal = () => {
+        setDirectionsResponse(null)
+        setDistance('')
+        setDuration('')
+        setSteps([])
         setIsModalOpen(false)
     }
     const handlerOpenModal = async (newData: any) => {
@@ -268,14 +260,16 @@ const Home: React.FC<IHome> = () => {
     }
 
     const changeSortPosition = (arr: Array<IOption>) => {
-        setChangePosition(arr)
         let result = arr.map(a => a.slug);
         localStorage.setItem('titles',JSON.stringify(result))
         setTitles(result)
         setLoading(true)
     }
 
-
+     const handlerActionCars = async () => {
+         console.log(ids);
+         setIsModalOpen(true)
+     }
     return (
         clients && <>
             <div className={s.panel}>
@@ -324,8 +318,7 @@ const Home: React.FC<IHome> = () => {
                     <div
                         className={`${s.header_input_block} ${open ? s.active : s.passive}`}
                     >
-                        <BackDropSearch handlerCloseBackDropSearch={handlerCloseBackDropSearch}
-                                        handlerSubmit={onSearchInput}/>
+                        <BackDropSearch handlerSubmit={onSearchInput}/>
                     </div>
 
                 </div>
@@ -339,6 +332,7 @@ const Home: React.FC<IHome> = () => {
                 <Modal
                     isOpen={isModalOpen !== false}
                     style={customStyles}
+                    ariaHideApp={false}
                     onRequestClose={handlerCloseModal}
                 >
                     <div className={s.modalBody}>
@@ -348,7 +342,7 @@ const Home: React.FC<IHome> = () => {
                             />
                         </div>
 
-                        {isLoaded && <div className={s.googleMap}>
+                        {isLoaded && directionsResponse && <div className={s.googleMap}>
                             <GoogleMap
                                 ///  center={center}
                                 zoom={15}
@@ -408,6 +402,12 @@ const Home: React.FC<IHome> = () => {
                         onClick={() => handleActionMiddleware(4)}
                     >
                         Cancel Trip
+                    </div>
+                    <div
+                        className={`${s.action_block} ${typeId === 2 || typeId === 4 ? s.disabled_action : s.enabled_action}`}
+                        onClick={() => handlerActionCars()}
+                    >
+                        Assign to car
                     </div>
                 </div>
 
