@@ -134,7 +134,6 @@ const Home: React.FC<IHome> = () => {
                     id
                 ]
             })
-            console.debug("Ctrl+click has just happened!", id);
         } else {
             const homeData = await homeAPI.getCLientById(id)
             dispatch(clientAction.fetching({clientById: homeData.client}))
@@ -170,7 +169,6 @@ const Home: React.FC<IHome> = () => {
         }
 
     }, [inView, loading, agreement]);
-    ///FIXME  MISSING TYPE
 
     const onSearchInput = async (event: { search: string }) => {
         const titlesData = localStorage.getItem('titles')
