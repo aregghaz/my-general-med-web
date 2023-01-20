@@ -31,6 +31,7 @@ Route::group([
     'middleware' => 'auth:api'
 ], function () {
     Route::get('/car-data-for-select', [HomeController::class, 'carDataForSelect']);
+    Route::get('/client-data-driver', [HomeController::class, 'getClientDataDriver']);
     Route::post('/clientData', [HomeController::class, 'clientData']);
     Route::post('/changeClientType', [HomeController::class, 'changeClientType']);
     Route::post('/assign-car-client', [HomeController::class, 'assignCarDriver']);
