@@ -41,7 +41,7 @@ const VendorEdit: React.FC<IVendorEditItem> = ({id}) => {
     return (
         data &&
         <Edit
-            crudKey={crudKey}
+            crudKey={`admin/${crudKey}`}
             data={data}
             requiredFields={requiredFields}
             fields={fields}
