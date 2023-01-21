@@ -1,39 +1,47 @@
 @import "../../styles/variables";
 
 .uploadButtonWrapper {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-  margin-top: 20px;
-  cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    //cursor: pointer;
 }
 
 .fileInput {
-  font-size: 100px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
+    display: none;
+}
+
+.upload_label {
+    display: flex;
+    border: 1px solid #727272;
+    align-items: center;
+    margin-top: 10px;
+    height: 50px;
+    gap: 10px;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+    padding: 0 10px;
+    border-radius: 2px;
+
+    &:hover {
+        background-color: $menuColor;
+        color: $whiteColor;
+    }
 }
 
 .uploadFileText {
-  margin: 0 32px;
-}
-
-.uploadedImage {
-  font-size: 9px;
+    pointer-events: none;
 }
 
 .existingImageBlock {
-  width: 300px;
-  margin-top: 20px;
+    width: 300px;
+    margin-top: 20px;
 }
 
 .existingImage {
-  width: 100%;
+    width: 100%;
 }
 
 .error {
-  margin-bottom: 10px;
-  color: #8B0000;
+    margin-bottom: 10px;
+    color: #8B0000;
 }

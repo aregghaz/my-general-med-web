@@ -11,7 +11,7 @@
     <meta property="og:type" content="website"/>
 
     <link rel="local_logo" href="/local_logo.svg">
-    <link rel="icon" href="/fav_icon.svg">
+    <link rel="icon" href="/images/logo.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +24,7 @@
 
     <link href="{{asset('css/image-gallery.css')}}" rel="stylesheet">
 
-    <title>Application</title>
+    <title>General Medical</title>
 
 </head>
 <body>

@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
-import { actions } from "../../../store/home";
-import { clientAction } from "../../../store/client";
-import { getClientData, getHomePageData } from "../../../store/selectors";
-import { homeAPI } from "../../../api/site-api/home-api";
+import React, {useEffect, useRef, useState} from "react";
+import {useTranslation} from "react-i18next";
+import {useDispatch, useSelector} from "react-redux";
+import {actions} from "../../../store/home";
+import {clientAction} from "../../../store/client";
+import {getClientData, getHomePageData} from "../../../store/selectors";
+import {homeAPI} from "../../../api/site-api/home-api";
 import s from "./home.module.scss";
 import CrudTable from "../../../components/crud-table-user/crud-table";
-import Select, { IOption } from "../../../components/select/select";
-import { useInView } from "react-intersection-observer";
+import Select, {IOption} from "../../../components/select/select";
+import {useInView} from "react-intersection-observer";
 import InfoBlock from "../../../components/info-block/info-block";
 import Upload from "-!svg-react-loader!../../../images/Upload.svg";
 import Import from "-!svg-react-loader!../../../images/Import.svg";
@@ -16,15 +16,15 @@ import Search from "-!svg-react-loader!../../../images/Search.svg";
 import Close from "-!svg-react-loader!../../../images/Close.svg";
 import axios from "axios";
 import BackDropSearch from "../../../components/backdrop-search/backdrop-search";
-import { DirectionsRenderer, GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import {DirectionsRenderer, GoogleMap, useJsApiLoader} from "@react-google-maps/api";
 import Modal from "react-modal";
 import PopupModal from "../../../components/popup-modal/popup-modal";
 import MultiSelectSort from "../../../components/select/sort-select";
-import { vendorAPI } from "../../../api/site-api/vendor-api";
+import {vendorAPI} from "../../../api/site-api/vendor-api";
 import Tabs from "../../../components/tabs/tabs";
 import Button from "../../../components/button/button";
 
-const center = { lat: 48.8584, lng: 2.2945 };
+const center = {lat: 48.8584, lng: 2.2945};
 
 interface IHome {
     path: string;
@@ -53,14 +53,14 @@ const customStyles: ReactModal.Styles = {
 };
 
 const Home: React.FC<IHome> = () => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const contentRef = useRef();
     const countRef = useRef(2);
     const homeData = useSelector(getHomePageData);
     const clientData = useSelector(getClientData);
     const dispatch = useDispatch();
-    const { selectedTitle, titles: allTiles, clients, tripCount, availableCount } = homeData;
-    const { clientById } = clientData;
+    const {selectedTitle, titles: allTiles, clients, tripCount, availableCount} = homeData;
+    const {clientById} = clientData;
     const [defaultData, setDefaultData] = useState([]);
     const [show, setShow] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
@@ -81,7 +81,7 @@ const Home: React.FC<IHome> = () => {
     const [car, setCar] = useState<IOption>(null);
 
 
-    const { isLoaded } = useJsApiLoader({
+    const {isLoaded} = useJsApiLoader({
         googleMapsApiKey: "AIzaSyBKkr76ZgeVEhZLj-ZT5u8XQBbT4SUQI5E",
         libraries: ["geometry", "drawing", "places"]
     });
@@ -141,7 +141,7 @@ const Home: React.FC<IHome> = () => {
             });
         } else {
             const homeData = await homeAPI.getCLientById(id);
-            dispatch(clientAction.fetching({ clientById: homeData.client }));
+            dispatch(clientAction.fetching({clientById: homeData.client}));
             setShow(true);
         }
 
@@ -230,7 +230,7 @@ const Home: React.FC<IHome> = () => {
 
     if (agreement) {
         delay(200).then(async () => {
-            await homeAPI.changeClientsTypes({ status, ids });
+            await homeAPI.changeClientsTypes({status, ids});
             setIds([]);
             setLoading(true);
             setAgreement(false);
@@ -278,15 +278,15 @@ const Home: React.FC<IHome> = () => {
 
 
     const handlerSetCar = async () => {
-        console.log(ids,car);
+        console.log(ids, car);
         const getCarData = await vendorAPI.assignCarToClient({
-            ids:ids,
+            ids: ids,
             carId: parseFloat(car.value)
         });
 
-        if(getCarData.success){
+        if (getCarData.success) {
             handlerCloseModal()
-        }else{
+        } else {
             setIsModalOpen(false);
             setErrorMessage(getCarData.error)
             delay(2000).then(async () => {
@@ -298,43 +298,43 @@ const Home: React.FC<IHome> = () => {
         clients && <>
             <div className={s.panel}>
                 <div className={s.upload_panel}>
-                    <Tabs typeId={typeId} tabs={tabs} handlerChangeTabs={handlerChangeTabs} />
-                    <div style={{ display: "flex", gap: "10px" }}>
+                    <Tabs typeId={typeId} tabs={tabs} handlerChangeTabs={handlerChangeTabs}/>
+                    <div style={{display: "flex", gap: "10px"}}>
                         <div className={s.upload_block}>
                             <label htmlFor="uploadFile">
-                                <Upload />
+                                <Upload/>
                             </label>
                             <input
                                 id="uploadFile"
                                 type="file"
                                 onChange={fileUploader}
-                                style={{ display: "none" }}
+                                style={{display: "none"}}
                                 accept=".xls, .xlsx, .csv"
                             />
                         </div>
                         <div className={s.import_block}>
                             <label>
-                                <Import />
+                                <Import/>
                             </label>
                         </div>
                         <div className={s.import_block} onClick={() => {
                             openSearch();
                         }}>
-                            {open ? <Close /> : <Search />}
+                            {open ? <Close/> : <Search/>}
                         </div>
                     </div>
                     <div
                         className={`${s.header_input_block} ${open ? s.active : s.passive}`}
                     >
-                        <BackDropSearch handlerSubmit={onSearchInput} />
+                        <BackDropSearch handlerSubmit={onSearchInput}/>
                     </div>
 
                 </div>
-                {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
+                {errorMessage && <div style={{color: "red"}}>{errorMessage}</div>}
                 {
                     show && clientById &&
                     <div>
-                        <InfoBlock clientById={clientById} calculateRoute={handlerOpenModal} />
+                        <InfoBlock clientById={clientById} calculateRoute={handlerOpenModal}/>
                     </div>
                 }
                 <Modal
@@ -351,27 +351,28 @@ const Home: React.FC<IHome> = () => {
                         </div>
                         {
                             carData.length > 0 && <>
-                              <div className={s.selectDiv}>
-                                  <Select
-                                      getOptionValue={(option: IOption) => option.value}
-                                      getOptionLabel={(option: IOption) => t(option.label)}
-                                      onChange={(options: IOption) => setCar(options)}
-                                      /// onChange={handlerSetCar}
-                                      options={carData}
-                                      // value={selectedTitle}
-                                      name={"Cars"}
-                                      isMulti={false}
-                                  />
+                                <div className={s.selectDiv}>
+                                    <Select
+                                        getOptionValue={(option: IOption) => option.value}
+                                        getOptionLabel={(option: IOption) => t(option.label)}
+                                        onChange={(options: IOption) => setCar(options)}
+                                        /// onChange={handlerSetCar}
+                                        options={carData}
+                                        // value={selectedTitle}
+                                        name={"Cars"}
+                                        isMulti={false}
+                                    />
 
-                                  <Button isSubmit={true} type={'adminUpdate'} onClick={handlerSetCar}> {t('assign')}</Button>
-                              </div>
+                                    <Button isSubmit={true} type={'adminUpdate'}
+                                            onClick={handlerSetCar}> {t('assign')}</Button>
+                                </div>
                             </>
                         }
                         {isLoaded && directionsResponse && <div className={s.googleMap}>
                             <GoogleMap
                                 ///  center={center}
                                 zoom={15}
-                                mapContainerStyle={{ width: "100%", height: "100%" }}
+                                mapContainerStyle={{width: "100%", height: "100%"}}
                                 options={{
                                     zoomControl: true,
                                     streetViewControl: false,
@@ -382,16 +383,16 @@ const Home: React.FC<IHome> = () => {
                             >
                                 {/* <Marker position={center} /> */}
                                 {directionsResponse && (
-                                    <DirectionsRenderer directions={directionsResponse} />
+                                    <DirectionsRenderer directions={directionsResponse}/>
                                 )}
 
                             </GoogleMap>
-                            <div style={{ border: "1px solid #ddd", padding: "5px", marginTop: "10px" }}>
+                            <div style={{border: "1px solid #ddd", padding: "5px", marginTop: "10px"}}>
                                 {steps && steps.map((el: any) => {
                                     return (
                                         <div
                                             className={s.directions}
-                                            dangerouslySetInnerHTML={{ __html: el.instructions }}
+                                            dangerouslySetInnerHTML={{__html: el.instructions}}
                                         />
                                     );
                                 })}
@@ -407,9 +408,7 @@ const Home: React.FC<IHome> = () => {
                         onChange={(options: Array<IOption>) => changeFields(options)}
                         getOptionValue={(option: IOption) => option.value}
                         getOptionLabel={(option: IOption) => t(option.label)}
-                        // value={changePosition.length > 0 ? changePosition : selectedTitle}
                         value={selectedTitle}
-                        // value={selectedTitle}
                         name={"filtre"}
                         isMulti={true}
                         onChangePosition={changeSortPosition}
@@ -437,7 +436,7 @@ const Home: React.FC<IHome> = () => {
                 </div>
 
             </div>
-            <PopupModal isOpen={isOpen} agreeWith={agreeWith} notAgreeWith={notAgreeWith} />
+            <PopupModal isOpen={isOpen} agreeWith={agreeWith} notAgreeWith={notAgreeWith}/>
             <div ref={contentRef} className={s.table_wrapper}>
                 <CrudTable
                     titles={selectedTitle}
@@ -448,7 +447,7 @@ const Home: React.FC<IHome> = () => {
                     selectedIds={ids}
                     typeId={typeId}
                 />
-                <div className={s.detector} ref={ref} />
+                <div className={s.detector} ref={ref}/>
             </div>
 
         </>
