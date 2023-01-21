@@ -301,7 +301,11 @@ class HomeController extends Controller
     }
 
     public function getClientDataDriver(Request $request){
+        $vendorId = $request->user()->vendor_id;
+        $carId = $request->user()->car_id;
+        $clients = Clients::where(['vendor_id'=> $vendorId, 'car_id' =>$carId ])->get();
         return response()->json([
+            'clients' =>$clients,
             'success' => 1,
         ], 200);
     }
