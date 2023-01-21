@@ -6,7 +6,7 @@ import {AdminApi} from '../../../api/admin-api/admin-api'
 
 interface IUserCreate {
     path: string
-    id:number
+    id: number
 }
 
 
@@ -30,7 +30,6 @@ const UserCreate: React.FC<IUserCreate> = ({id}) => {
         (
             async () => {
                 const data = await AdminApi.createItem(crudKey)
-                console.log(data,'datadata')
                 setData(data)
             }
         )()

@@ -44,7 +44,6 @@ const FormikHandler: React.FC<IFormikHandler> = (
     }) => {
     const {t} = useTranslation()
 
-
     switch (item.type) {
         case 'input':
             return (
@@ -92,7 +91,6 @@ const FormikHandler: React.FC<IFormikHandler> = (
                 />
             )
         case 'select':
-            console.log(selectOptions, item, '111')
             return (
                 <Select
                     value={values[item.name]}
@@ -155,7 +153,7 @@ const FormikHandler: React.FC<IFormikHandler> = (
                     name={item.name}
                     setFieldValue={setFieldValue}
                     handleChange={handleChange}
-                    label={item.placeholder}
+                    label={item.label}
                     value={values[item.name]}
                 />
             )
