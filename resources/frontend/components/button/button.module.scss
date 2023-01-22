@@ -19,7 +19,24 @@
     box-shadow: none
   }
 }
+.selectButton {
+    padding: 8px 15px;
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 3px;
 
+    &:not(.blank,.round){
+        box-shadow: $buttonBoxShadow;
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: none
+    }
+}
 
 .primary {
 

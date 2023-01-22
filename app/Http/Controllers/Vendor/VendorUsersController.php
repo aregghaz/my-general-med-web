@@ -103,6 +103,7 @@ class VendorUsersController extends Controller
             'password' => 'required|string',
             'birthday' => 'string',
             'address' => 'string',
+            'phone_number' => 'string',
         ]);
         // $validator2 = Validator::make($request, [
         //     'license'=> 'required|mimes:doc,pdf,docx,zip',

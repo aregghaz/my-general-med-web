@@ -6,6 +6,7 @@ import {getStyles} from './common'
 import {useTranslation} from 'react-i18next'
 
 import s from './select.module.scss'
+import Button from "../button/button";
 
 export interface IOption {
     id: number
@@ -106,11 +107,38 @@ const Select: React.FC<ISelect> = (
         handlerAdd
     }
 ) => {
+    const {t} = useTranslation()
     const [themeType] = useLocalStorage('theme', 'light')
+    const markAll = () => {
+        onChange(options);
+    };
+
+    const unMarkAll = () => {
+        onChange([]);
+    };
 
     return (
         <>
             <label className={`${s.label} ${labelStyle} `} htmlFor={name}>{label}</label>
+            <div className={s.buttonsSelect}>
+            <Button
+                type={'green'}
+                onClick={markAll}
+                key={'one'}
+                className={s.selectButton}
+            >
+
+                {t(`admin:mark_all`)}
+            </Button>
+            <Button
+                type={'green'}
+                onClick={unMarkAll}
+                key={'two'}
+                className={s.selectButton}
+            >
+                {t(`admin:remove_all`)}
+            </Button>
+            </div>
             <ReactSelect
                 isMulti={isMulti}
                 styles={{

@@ -34,7 +34,7 @@ class Cars extends Model
 
     public function model()
     {
-        return $this->hasOne(MakeMOdel::class, 'id', 'model_id');
+        return $this->hasOne(MakeModel::class, 'id', 'model_id');
     }
     public function driver()
     {
