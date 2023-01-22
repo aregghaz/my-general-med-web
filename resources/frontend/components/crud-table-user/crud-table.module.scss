@@ -25,7 +25,7 @@
     margin-bottom: 10px;
 
     &:hover {
-        background-color: #2d705f;
+        background-color: $menuHoverColor;
     }
 }
 
@@ -85,7 +85,6 @@
 .rotate_arrow {
     transform: rotate(180deg);
 }
-
 
 
 .tableTd {
@@ -169,7 +168,6 @@
 
 .row {
     background: $whiteColor;
-    //border: 0.5px solid $menuColor;
     border: 1px solid rgba(0, 0, 0, 0.12);
 
     &:nth-child(even) {
@@ -183,8 +181,8 @@
 
 .chosen {
     background-color: $asteriskColor !important;
-}
 
-// .unChosen {
-//     //background-color: green;
-// }
+    td {
+        color: $whiteColor;
+    }
+}

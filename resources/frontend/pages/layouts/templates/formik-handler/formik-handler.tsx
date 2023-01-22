@@ -108,17 +108,19 @@ const FormikHandler: React.FC<IFormikHandler> = (
             )
         case 'file':
             return (
-                <SingleFileUpload
-                    name={item.name}
-                    oldImage={values[item.name]}
-                    onChange={(event) => {
-                        setFieldValue(item.name, event.currentTarget.files[0])
-                    }}
-                    label={item.label}
-                    media={'image'}
-                    value={values[item.name]}
-                    error={errors[item.name]}
-                />
+                <div style={{width: "100%"}}>
+                    <SingleFileUpload
+                        name={item.name}
+                        oldImage={values[item.name]}
+                        onChange={(event) => {
+                            setFieldValue(item.name, event.currentTarget.files[0])
+                        }}
+                        label={item.label}
+                        media={'image'}
+                        value={values[item.name]}
+                        error={errors[item.name]}
+                    />
+                </div>
             )
         case 'textField':
             return (

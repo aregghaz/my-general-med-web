@@ -4,96 +4,96 @@
 
 
 .dataPicker {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  @media only screen and (max-width: $smallDisplay) {
-    flex-wrap: wrap;
-    justify-content: unset;
-    width: calc(100% - 50px);
-  }
-
-  .day {
-    width: 20%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
     @media only screen and (max-width: $smallDisplay) {
-      width: 25%;
-      margin-right: 15px;
+        flex-wrap: wrap;
+        justify-content: unset;
+        width: calc(100% - 50px);
     }
-    @media only screen and (max-width: $extraSmallDisplay) {
-      width: 45%;
-      margin-right: 5px;
-    }
-  }
 
-  .month {
-    width: 27%;
-    @media only screen and (max-width: $smallDisplay) {
-      width: 60%;
+    .day {
+        width: 20%;
+        @media only screen and (max-width: $smallDisplay) {
+            width: 25%;
+            margin-right: 15px;
+        }
+        @media only screen and (max-width: $extraSmallDisplay) {
+            width: 45%;
+            margin-right: 5px;
+        }
     }
-    @media only screen and (max-width: $extraSmallDisplay) {
-      width: 45%;
+
+    .month {
+        width: 27%;
+        @media only screen and (max-width: $smallDisplay) {
+            width: 60%;
+        }
+        @media only screen and (max-width: $extraSmallDisplay) {
+            width: 45%;
+        }
     }
-  }
 }
 
 .label {
-  font-size: 15px;
-  @include themify($themes) {
-    color: themed('modalTitleColor');
-  }
-  margin-bottom: 10px;
+    font-size: 15px;
+    @include themify($themes) {
+        color: themed('modalTitleColor');
+    }
+    margin-bottom: 10px;
 
 
-  @media only screen and (max-width: $smallDisplay) {
-    font-size: 12px;
-  }
+    @media only screen and (max-width: $smallDisplay) {
+        font-size: 12px;
+    }
 }
 
 :global {
-  // React Select custom style
-  .css-1extzgd-option,
-  .css-1fma7qu-option,
-  .css-1eqxr4i-option,
-  .css-iw3lq0-option,
-  .css-dmx9m0-placeholder {
-    margin-bottom: 15px;
-    cursor: pointer;
-    color: #757575;
+    // React Select custom style
+    .css-1extzgd-option,
+    .css-1fma7qu-option,
+    .css-1eqxr4i-option,
+    .css-iw3lq0-option,
+    .css-dmx9m0-placeholder {
+        margin-bottom: 15px;
+        cursor: pointer;
+        color: #757575;
 
-    @media only screen and (max-width: $smallDisplay) {
-      // Mobile Change Select Option styles
-      margin-bottom: 7px;
-      font-size: 12px !important;
+        @media only screen and (max-width: $smallDisplay) {
+            // Mobile Change Select Option styles
+            margin-bottom: 7px;
+            font-size: 12px !important;
+        }
     }
-  }
 }
 
 .wrap {
-  flex-wrap: wrap;
-  justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: space-between;
 
-  .day {
-    width: calc(23% - 10px);
-    @media only screen and (max-width: $smallDisplay) {
-      width: calc(50% - 10px);
+    .day {
+        width: calc(23% - 10px);
+        @media only screen and (max-width: $smallDisplay) {
+            width: calc(50% - 10px);
+        }
     }
-  }
 
-  .month {
-    width: calc(33% - 10px);
-    @media only screen and (max-width: $smallDisplay) {
-      width: calc(50% - 10px);
-      margin: 0;
+    .month {
+        width: calc(33% - 10px);
+        @media only screen and (max-width: $smallDisplay) {
+            width: calc(50% - 10px);
+            margin: 0;
+        }
     }
-  }
 }
 
 .fromTo {
-  margin-bottom: -10px;
-  @include themify($themes) {
-    color: themed('inputBorderColor');
-  }
-  @media only screen and (max-width: $smallDisplay) {
-    display: none;
-  }
+    margin-bottom: -10px;
+    @include themify($themes) {
+        color: themed('inputBorderColor');
+    }
+    @media only screen and (max-width: $smallDisplay) {
+        display: none;
+    }
 }

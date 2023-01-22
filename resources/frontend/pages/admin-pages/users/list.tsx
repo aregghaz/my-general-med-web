@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { AdminApi } from "../../../api/admin-api/admin-api";
+import React, {useEffect, useState} from "react";
+import {AdminApi} from "../../../api/admin-api/admin-api";
 import List from "../../layouts/templates/list/list";
-import { useNavigate } from "@reach/router";
+import {useNavigate} from "@reach/router";
 import Button from "../../../components/button/button";
 import s from "../../layouts/templates/list/list.module.scss";
 import Select, {
     IOption,
     IOptionMultiselect,
 } from "../../../components/select/select";
-import { useTranslation } from "react-i18next";
+import {useTranslation} from "react-i18next";
 import Modal from "react-modal";
 import InfoBlock from "../../../components/info-block/info-block";
-import { actions } from "../../../store/home";
-import { useDispatch } from "react-redux";
+import {actions} from "../../../store/home";
+import {useDispatch} from "react-redux";
 
 interface Beneficiary {
     path: string;
-    id?:number
+    id?: number
 }
 
 const Users: React.FC<Beneficiary> = ({id}) => {
@@ -28,17 +28,17 @@ const Users: React.FC<Beneficiary> = ({id}) => {
     const [deleteId, setDeleteId] = useState(null);
     const [count, setCount] = useState(0);
     const [activeItem, setActiveItem] = useState(null);
-    const [tabId, setTabId] = useState(1);
+    const [tabId, setTabId] = useState();
     const [tabIdSelected, setTabIdSelected] = useState(3);
     const [dataID, setDataID] = useState(null);
     const [tabs, setTabs] = useState([]);
     const [typeName, setTypeName] = useState<string>('driver')
     const navigate = useNavigate();
-    const { t } = useTranslation();
+    const {t} = useTranslation();
 
     useEffect(() => {
         (async () => {
-            const homeData = await AdminApi.getVendorUsers(id,tabIdSelected)
+            const homeData = await AdminApi.getVendorUsers(id, tabIdSelected)
             setData(homeData.data);
             setTabs(homeData.roles)
         })();
@@ -53,7 +53,7 @@ const Users: React.FC<Beneficiary> = ({id}) => {
         "address",
         "phone_number",
         "birthday",
-       ///"role",
+        ///"role",
         "image",
         "action",
     ];
@@ -84,7 +84,8 @@ const Users: React.FC<Beneficiary> = ({id}) => {
         localStorage.setItem("page", activeItem.toString());
     };
 
-    const handlerChangeTabs = async (tabId: number, name:string) => {
+    const handlerChangeTabs = (tabId: number, name: string) => {
+        alert(tabId + " __ " + name)
         setTypeName(name)
         setTabIdSelected(tabId);
     };
@@ -110,6 +111,7 @@ const Users: React.FC<Beneficiary> = ({id}) => {
         },
     };
 
+
     return (
         data && (
             <>
@@ -122,7 +124,7 @@ const Users: React.FC<Beneficiary> = ({id}) => {
                     paginated={false}
                     isCreate
                     tabs={tabs}
-                    tabId={tabId}
+                    tabId={tabIdSelected}
                     handlerAddItem={handlerAddBeneficiaryItem}
                     handlerDeleteItem={handlerDeleteModal}
                     handlerEditItem={handlerEditBeneficiaryItem}
@@ -147,7 +149,7 @@ const Users: React.FC<Beneficiary> = ({id}) => {
                             />
                         </div>
 
-                        <i className={`binicon- ${s.icon}`} />
+                        <i className={`binicon- ${s.icon}`}/>
                         <p className={s.text}>
                             {t("admin.do_you_want_to_delete")}
                         </p>

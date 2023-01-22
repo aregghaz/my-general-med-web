@@ -56,6 +56,14 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
         <>
             <label className={`${s.label} ${labelStyle} `} htmlFor={name}>{label}</label>
             <Select
+                // styles={{
+                //     control: (baseStyles: any) => ({
+                //         ...baseStyles,
+                //         border: "1px solid #727272",
+                //         height: 50,
+                //         outline: "none",
+                //     }),
+                // }}
                 isMulti={isMulti}
                 name={name}
                 styles={getStyles(themeType)}

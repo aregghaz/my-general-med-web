@@ -24,6 +24,7 @@ const TableFildsList: React.FC<ITableFilds> = () => {
     const [deleteId, setDeleteId] = useState(null)
     const [count, setCount] = useState(0)
     const [activeItem, setActiveItem] = useState(null)
+    const [tabId, setTabId] = useState<number>(1)
 
     const [dataID, setDataID] = useState(null)
 
@@ -81,33 +82,39 @@ const TableFildsList: React.FC<ITableFilds> = () => {
 
     }
 
+    const handlerChangeTabs = (tabId: number) => {
+        setTabId(tabId);
+    };
+
     const tabs = [
         {
             id: 1,
             name: "gender",
-            count:0
+            count: 0
         },
         {
             id: 2,
             name: "escortType",
-            count:0
+            count: 0
         },
         {
             id: 3,
             name: "type_of_trip",
-            count:0
+            count: 0
         },
         {
             id: 4,
             name: "request_type",
-            count:0
+            count: 0
         },
         {
             id: 5,
             name: "status",
-            count:0
+            count: 0
         },
     ]
+
+    console.log(tabId, "tab id in table fields!!!!")
     const customStyles: ReactModal.Styles = {
         content: {
             position: 'fixed',
@@ -129,7 +136,6 @@ const TableFildsList: React.FC<ITableFilds> = () => {
         }
     }
 
-
     return (
         data &&
         <>
@@ -140,9 +146,11 @@ const TableFildsList: React.FC<ITableFilds> = () => {
                 isDelete
                 isEdit
                 tabs={tabs}
+                tabId={tabId}
                 paginated={false}
                 isCreate
                 isGetItems
+                handlerChangeTabs={handlerChangeTabs}
                 handlerAddItem={handlerAddBeneficiaryItem}
                 handlerDeleteItem={handlerDeleteModal}
                 handlerEditItem={handlerEditBeneficiaryItem}

@@ -131,7 +131,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
                     paginated={false}
                     isCreate
                     tabs={tabs}
-                    tabId={tabId}
+                    tabId={tabIdSelected}
                     handlerAddItem={handlerAddBeneficiaryItem}
                     handlerDeleteItem={handlerDeleteModal}
                     handlerEditItem={handlerEditItem}

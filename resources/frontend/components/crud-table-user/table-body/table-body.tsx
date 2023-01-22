@@ -33,7 +33,7 @@ const TableBody: React.FC<ITableBody> = (
                     const keys = Object.keys(item)
                     return keys.length > 0 && (
                         <TableRow key={index} data-rowid={item['id']}
-                                  className={selectedIds?.includes(item['id']) ? `${s.chosen}` : `${s.unChosen}`}>
+                                  className={selectedIds?.includes(item['id']) ? `${s.chosen}` : ""}>
                             {
                                 keys.map((key: any, i: number) => {
                                         return i !== 0 && (
