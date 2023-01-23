@@ -25,6 +25,7 @@ const Status: React.FC<Beneficiary> = () => {
     const [deleteId, setDeleteId] = useState(null)
     const [count, setCount] = useState(0)
     const [activeItem, setActiveItem] = useState(null)
+    const [tabId, setTabId] = useState<number>(1)
 
     const [dataID, setDataID] = useState(null)
 
@@ -131,6 +132,10 @@ const Status: React.FC<Beneficiary> = () => {
         }
     }
 
+    const handlerChangeTabs = (tabId: number) => {
+        setTabId(tabId);
+    };
+
     return (
         data &&
         <>
@@ -141,9 +146,11 @@ const Status: React.FC<Beneficiary> = () => {
                 isDelete
                 isEdit
                 tabs={tabs}
+                tabId={tabId}
                 paginated={false}
                 isCreate
                 isGetItems
+                handlerChangeTabs={handlerChangeTabs}
                 handlerAddItem={handlerAddBeneficiaryItem}
                 handlerDeleteItem={handlerDeleteModal}
                 handlerEditItem={handlerEditBeneficiaryItem}

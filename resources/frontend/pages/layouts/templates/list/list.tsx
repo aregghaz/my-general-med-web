@@ -3,7 +3,7 @@ import Button from '../../../../components/button/button'
 import CrudTable from '../../../../components/crud-table/crud-table'
 
 import s from './list.module.scss'
-import { useTranslation } from "react-i18next";
+import {useTranslation} from "react-i18next";
 
 interface IList {
     data: Array<any>
@@ -22,14 +22,13 @@ interface IList {
     activeItem?: number
     ////FIXMECHANGE IT NORMA TYPR
     last_page?: number
-    handlerChangeTabs?: (id: number,name:string) => void
-    handlerGetItemData?: (id:number) => void
+    handlerChangeTabs?: (id: number, name: string) => void
+    handlerGetItemData?: (id: number) => void
     count?: any
     className?: string
-    tabId?:number
-    tabs?:Array<{id:number, name:string, count:number,slug?:string}>
+    tabId?: number
+    tabs?: Array<{ id: number, name: string, count: number, slug?: string }>
 }
-
 
 
 const List: React.FC<IList> = (
@@ -56,6 +55,8 @@ const List: React.FC<IList> = (
         className,
         paginated
     }) => {
+    console.log(tabId, "tab id")
+    console.log(tabs, "tabs!!!")
     const {t} = useTranslation()
     return (
         <>
@@ -67,20 +68,16 @@ const List: React.FC<IList> = (
                     </Button>
                 }
             </div>
-            {tabs &&  <div className={s.table_upper_tab_box}>
+            {tabs && <div className={s.table_upper_tab_box}>
                 <div className={s.table_upper_tab}>
                     {
-                        tabs.length>0 && tabs.map(tab => (
+                        tabs.length > 0 && tabs.map(tab => (
                             <div
-                                className={s.table_upper_tab_item}
+                                className={`${s.table_upper_tab_item} ${tabId == tab.id ? s.activeTab : ""}`}
                                 key={tab.id}
-                                // style={tabId == tab.id ? {
-                                //     backgroundColor: '#165f8d',
-                                //     color: "white"
-                                // } : {backgroundColor: 'white'}}
-                                onClick={() => handlerChangeTabs(tab.id,tab.name)}
+                                onClick={() => handlerChangeTabs(tab.id, tab.name)}
                             >
-                                {t(tab.name)} {tab.count >=0 && <span className={s.bage_count}>{tab.count}</span>}
+                                {t(tab.name)} {tab.count >= 0 && <span className={s.bage_count}>{tab.count}</span>}
                             </div>
                         ))
                     }

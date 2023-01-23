@@ -145,8 +145,11 @@ const Select: React.FC<ISelect> = (
                     control: (baseStyles, state) => ({
                         ...baseStyles,
                         // borderColor: state.isFocused ? '#545cd8' : '#545cd8',
-                       /// backgroundColor: '#545cd8',
-                        borderRadius: "15px"
+                        /// backgroundColor: '#545cd8',
+                        //  borderRadius: "15px"
+                        border: "1px solid #727272",
+                        height: 50,
+                        outline: "none",
                     }),
                     menu: base => ({
                         ...base,
@@ -154,7 +157,7 @@ const Select: React.FC<ISelect> = (
                         ///borderRadius: 0,
                         // backgroundColor: '#6D9886',
                         backgroundColor: 'white',
-                        borderRadius: "15px",
+                        // borderRadius: "15px",
                         // kill the gap
                         marginTop: 0
                     }),
@@ -162,19 +165,19 @@ const Select: React.FC<ISelect> = (
                         ...base,
                         // kill the white space on first and last option
                         padding: 0,
-                        borderRadius: "15px",
+                        // borderRadius: "15px",
                         backgroundColor: 'white',
                     }),
                     multiValue: (baseStyles, state) => ({
                         ...baseStyles,
-                        height: 30,
                         fontSize: 20,
-                        borderRadius: "15px",
+                        // borderRadius: "15px",
                         lineHeight: 1.5,
                         // color: "black",
                         color: "#393E46",
                         fontWeight: "bold",
                         ///borderRadius: 10,
+                        border: "1px solid #727272",
 
                         // backgroundColor: '#6D9886',
                         backgroundColor: 'white',

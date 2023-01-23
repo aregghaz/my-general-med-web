@@ -86,6 +86,8 @@ export const getStyles = (divider: themesType) => {
                 backgroundColor: '#FFFFFF',
                 boxShadow: 'none',
                 borderRadius: 0,
+                height: 50,
+                border: "1px solid #727272",
                 '&:hover': {
                     border: '1px solid #BDBFC1'
                 }

@@ -33,7 +33,6 @@ const Create: React.FC<ICreate> = (
     const {t} = useTranslation()
 
     const validate = (values: FormikValues) => validationRules(values, requiredFields, fields, t)
-
     const create = async (values: FormikValues, {setSubmitting}: FormikHelpers<FormikValues>) => {
         setSubmitting(true)
         const formData: FormData = new FormData()

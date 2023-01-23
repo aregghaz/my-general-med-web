@@ -90,5 +90,4 @@ const InfoBlock: FC<IProps> = ({clientById, calculateRoute}) => {
     )
 }
 
-// @ts-ignore
 export default InfoBlock;

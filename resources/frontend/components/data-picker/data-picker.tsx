@@ -16,7 +16,7 @@ interface IDataPicker {
     label: string
     name: string
     time?: string
-    value:any
+    value: any
     handleChange: (event: ChangeEvent<HTMLInputElement>) => void
     ///  onChange: (event: ChangeEvent<HTMLInputElement>) => void
     doubleTimeInput?: boolean
@@ -35,7 +35,6 @@ const DataPicker: React.FC<IDataPicker> = (
         doubleTimeInput = false,
     }) => {
     const {t} = useTranslation()
-console.log(value,'valuevaluevalue');
 
     return (
         <>

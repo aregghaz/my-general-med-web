@@ -52,7 +52,7 @@ const Clients: React.FC<IClients> = () => {
         'trip_id',
         'name',
         'surname',
-        
+
         'los',
         'gender',
         'phone_number',

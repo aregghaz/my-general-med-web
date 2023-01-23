@@ -4,50 +4,54 @@
 
 
 .select {
-  margin: 10px 0;
+    margin-top: 10px;
 }
-.react-select-container{
-  background-color: black;
+
+.react-select-container {
+    background-color: black;
 }
 
 .e-multiselect.e-input-group .e-multi-select-wrapper {
-  background-color: red;
+    background-color: red;
 }
+
 .label {
-  font-size: 15px;
-  @include themify($themes) {
-    color: themed('modalTitleColor');
-  }
-  font-weight: normal;
-  margin-bottom: 10px;
+    font-size: 15px;
+    @include themify($themes) {
+        color: themed('modalTitleColor');
+    }
+    font-weight: normal;
+    margin-bottom: 10px;
 
-  @media only screen and (max-width: $smallDisplay) {
-    font-size: 12px;
-  }
+    @media only screen and (max-width: $smallDisplay) {
+        font-size: 12px;
+    }
 
-  span {
-    color: $asteriskColor;
-  }
+    span {
+        color: $asteriskColor;
+    }
 }
 
 .customMenuList {
-  list-style: none;
+    list-style: none;
 
-  li {
-    margin-bottom: 10px;
-  }
+    li {
+        margin-bottom: 10px;
+    }
 }
 
 .addBtn {
-  text-align: center;
-  font-size: 16px;
-  color: #1d1c1c;
-  font-weight: bold;
+    text-align: center;
+    font-size: 16px;
+    color: #1d1c1c;
+    font-weight: bold;
 }
+
 .buttonsSelect {
     display: flex;
     justify-content: space-between;
 }
+
 .selectButton {
     padding: 8px 15px;
     text-decoration: none;
@@ -56,6 +60,7 @@
     font-size: 15px;
     cursor: pointer;
     border-radius: 3px;
+    color: $whiteColor;
 
     //&:not(.blank,.round){
     //    box-shadow: $buttonBoxShadow;

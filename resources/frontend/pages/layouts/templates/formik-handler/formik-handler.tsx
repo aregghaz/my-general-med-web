@@ -44,7 +44,6 @@ const FormikHandler: React.FC<IFormikHandler> = (
     }) => {
     const {t} = useTranslation()
 
-
     switch (item.type) {
         case 'input':
             return (
@@ -92,7 +91,6 @@ const FormikHandler: React.FC<IFormikHandler> = (
                 />
             )
         case 'select':
-            console.log(selectOptions, item, '111')
             return (
                 <Select
                     value={values[item.name]}
@@ -110,17 +108,19 @@ const FormikHandler: React.FC<IFormikHandler> = (
             )
         case 'file':
             return (
-                <SingleFileUpload
-                    name={item.name}
-                    oldImage={values[item.name]}
-                    onChange={(event) => {
-                        setFieldValue(item.name, event.currentTarget.files[0])
-                    }}
-                    label={item.label}
-                    media={'image'}
-                    value={values[item.name]}
-                    error={errors[item.name]}
-                />
+                <div style={{width: "100%"}}>
+                    <SingleFileUpload
+                        name={item.name}
+                        oldImage={values[item.name]}
+                        onChange={(event) => {
+                            setFieldValue(item.name, event.currentTarget.files[0])
+                        }}
+                        label={item.label}
+                        media={'image'}
+                        value={values[item.name]}
+                        error={errors[item.name]}
+                    />
+                </div>
             )
         case 'textField':
             return (
@@ -155,7 +155,7 @@ const FormikHandler: React.FC<IFormikHandler> = (
                     name={item.name}
                     setFieldValue={setFieldValue}
                     handleChange={handleChange}
-                    label={item.placeholder}
+                    label={item.label}
                     value={values[item.name]}
                 />
             )
