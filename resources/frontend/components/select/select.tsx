@@ -121,23 +121,23 @@ const Select: React.FC<ISelect> = (
         <>
             <label className={`${s.label} ${labelStyle} `} htmlFor={name}>{label}</label>
             <div className={s.buttonsSelect}>
-            <Button
-                type={'green'}
-                onClick={markAll}
-                key={'one'}
-                className={s.selectButton}
-            >
+                {isMulti && <><Button
+                    type={"green"}
+                    onClick={markAll}
+                    key={"one"}
+                    className={s.selectButton}
+                >
 
-                {t(`admin:mark_all`)}
-            </Button>
-            <Button
-                type={'green'}
-                onClick={unMarkAll}
-                key={'two'}
-                className={s.selectButton}
-            >
-                {t(`admin:remove_all`)}
-            </Button>
+                    {t(`admin:mark_all`)}
+                </Button>
+                    <Button
+                        type={"green"}
+                        onClick={unMarkAll}
+                        key={"two"}
+                        className={s.selectButton}
+                    >
+                        {t(`admin:remove_all`)}
+                    </Button></>}
             </div>
             <ReactSelect
                 isMulti={isMulti}
