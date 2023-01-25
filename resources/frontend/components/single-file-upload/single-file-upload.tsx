@@ -57,32 +57,32 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
             {/*FIXME this PDF viewer has some errors and doesn't run properly ???*/}
             {/*<PDFViewer viewPDF={viewPDF}/>*/}
             {/*<ExamplePDFViewer/>*/}
-            {
-                oldVideo &&
-                <div className={s.existingImageBlock}>
-                    <video controls className={s.existingImage} src={oldVideo}/>
-                </div>
-            }
+            {/*{*/}
+            {/*    oldVideo &&*/}
+            {/*    <div className={s.existingImageBlock}>*/}
+            {/*        <video controls className={s.existingImage} src={oldVideo}/>*/}
+            {/*    </div>*/}
+            {/*}*/}
             <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-                {
-                    oldImage &&
-                    <div style={{
-                        width: "200px",
-                        height: "260px",
-                        // border: "1px solid #ddd",
-                        boxShadow: "0 0 4px #ddd",
-                        borderRadius: "10px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        marginBottom: "10px",
-                        padding: "5px",
-                    }}>
+                {/*{*/}
+                {/*    oldImage &&*/}
+                {/*    <div style={{*/}
+                {/*        width: "200px",*/}
+                {/*        height: "260px",*/}
+                {/*        // border: "1px solid #ddd",*/}
+                {/*        boxShadow: "0 0 4px #ddd",*/}
+                {/*        borderRadius: "10px",*/}
+                {/*        display: "flex",*/}
+                {/*        alignItems: "center",*/}
+                {/*        justifyContent: "center",*/}
+                {/*        marginBottom: "10px",*/}
+                {/*        padding: "5px",*/}
+                {/*    }}>*/}
 
-                        <img className={s.existingImage} src={URL.createObjectURL(oldImage)} alt={oldName}/>
+                {/*        <img className={s.existingImage} src={URL.createObjectURL(oldImage)} alt={oldName}/>*/}
 
-                    </div>
-                }
+                {/*    </div>*/}
+                {/*}*/}
                 <div className={s.uploadButtonWrapper}>
                     <span style={{display: "block", fontWeight: "normal"}}>{label}</span>
                     {
