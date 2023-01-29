@@ -69,7 +69,6 @@ Route::group([
     'prefix' => 'admin', 'middleware' => 'auth:api'
 ], function () {
     Route::resources([
-        'clients' => ClientsController::class,
         'users'=> UserController::class,
     ]);
     Route::resources([
@@ -79,6 +78,7 @@ Route::group([
         ///'vendors' => \App\Http\Controllers\VendorController::class,
 
     ]);
+    Route::post('/clientsData', [\App\Http\Controllers\Admin\ClientsController::class, 'clientsData']);
     Route::get('/vendors', [VendorController::class, 'index']);
     Route::get('/vendors/create', [VendorController::class, 'create']);
     Route::get('/vendors/create', [VendorController::class, 'create']);

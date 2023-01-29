@@ -11,9 +11,10 @@ import {useTranslation} from 'react-i18next'
 import DataPicker from '../../../../components/data-picker/data-picker'
 import SingleFileUpload from '../../../../components/single-file-upload/single-file-upload'
 import getFieldLabel from '../../../../utils/getFieldLabel'
+import { Autocomplete } from "@react-google-maps/api";
 
 export interface IItem {
-    type?: 'input' | 'checkbox' | 'richText' | 'textarea' | 'select' | 'file' | 'textField' | 'radio' | 'datepicker' | 'multiSelect' | "hidden"
+    type?: 'input' |'autocomplete'| 'checkbox' | 'richText' | 'textarea' | 'select' | 'file' | 'textField' | 'radio' | 'datepicker' | 'multiSelect' | "hidden"
     inputType?: string
     name: string
     value?: string | boolean | File | IOption
@@ -30,6 +31,7 @@ interface IFormikHandler {
     selectOptions?: any
     requiredFields?: Array<string>
     errors?: any
+    autoCompleteRef?: any
 }
 
 const FormikHandler: React.FC<IFormikHandler> = (
@@ -40,6 +42,7 @@ const FormikHandler: React.FC<IFormikHandler> = (
         handleChange,
         setFieldValue,
         selectOptions,
+        autoCompleteRef,
         requiredFields
     }) => {
     const {t} = useTranslation()
@@ -55,7 +58,7 @@ const FormikHandler: React.FC<IFormikHandler> = (
                         value={values[item.name]}
                         type={item.inputType}
                         onChange={handleChange}
-                        placeholder={item.placeholder}
+                        placeholder={t(item.placeholder)}
                         label={getFieldLabel(t, item.label, item.name, requiredFields)}
                         error={errors[item.name]}
                     />
@@ -95,15 +98,14 @@ const FormikHandler: React.FC<IFormikHandler> = (
                 <Select
                     value={values[item.name]}
                     getOptionValue={(option: IOption) => option.value}
-                    getOptionLabel={(option: IOption) => option.label}
-                    ///
+                    getOptionLabel={(option: IOption) => t(option.label)}
                     options={selectOptions ? selectOptions[item.name] : selectOptions}
                     /// options={selectOptions}
                     onChange={(option: IOption) => setFieldValue(item.name, option)}
-                    label={item.label}
+                    label={t(item.label)}
                     isSearchable={false}
                     name={item.name}
-                    placeholder={item.placeholder}
+                    placeholder={t(item.placeholder)}
                 />
             )
         case 'file':
@@ -115,7 +117,7 @@ const FormikHandler: React.FC<IFormikHandler> = (
                         onChange={(event) => {
                             setFieldValue(item.name, event.currentTarget.files[0])
                         }}
-                        label={item.label}
+                        label={t(item.label)}
                         media={'image'}
                         value={values[item.name]}
                         error={errors[item.name]}
@@ -138,15 +140,15 @@ const FormikHandler: React.FC<IFormikHandler> = (
             return (
                 <Select
                     value={values[item.name]}
-                    getOptionValue={(option: IOption) => option.label}
-                    getOptionLabel={(option: IOption) => option.label}
+                    getOptionValue={(option: IOption) => option.value}
+                    getOptionLabel={(option: IOption) => t(option.label)}
                     options={values.selectOptions ? values.selectOptions[item.name] : selectOptions[item.name]}
                     onChange={(option: IOption) => setFieldValue(item.name, option)}
-                    label={item.label}
+                    label={t(item.label)}
                     isSearchable={true}
                     name={item.name}
                     isMulti={true}
-                    placeholder={item.placeholder}
+                    placeholder={t(item.placeholder)}
                 />
             )
         case 'datepicker':
@@ -155,10 +157,20 @@ const FormikHandler: React.FC<IFormikHandler> = (
                     name={item.name}
                     setFieldValue={setFieldValue}
                     handleChange={handleChange}
-                    label={item.label}
+                    label={t(item.label)}
                     value={values[item.name]}
                 />
             )
+        // case 'autocomplete':
+        //     return (
+        //         <Autocomplete >
+        //             <input
+        //                 type='text'
+        //                 placeholder={t(item.placeholder)}
+        //                 ref={values[item.name]}
+        //             />
+        //         </Autocomplete>
+        //     )
         default:
             return (
                 <Input

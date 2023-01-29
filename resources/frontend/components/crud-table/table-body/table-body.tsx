@@ -5,6 +5,7 @@ import TrashIcon from '-!svg-react-loader!../../../images/trash.svg'
 import EditIcon from '-!svg-react-loader!../../../images/edit.svg'
 import UsersIcon from '-!svg-react-loader!../../../images/Users.svg'
 import s from '../crud-table.module.scss'
+import { useTranslation } from "react-i18next";
 
 interface ITableBody {
     data: Array<any>
@@ -28,6 +29,7 @@ const TableBody: React.FC<ITableBody> = (
         handlerEditItem,
         handlerGetItemData
     }) => {
+    const {t} = useTranslation()
 
     return (
         <tbody>
@@ -49,7 +51,7 @@ const TableBody: React.FC<ITableBody> = (
                                                                    handlerGetItemData={handlerGetItemData}
                                                         >
                                                             {item[key].map((e: string, ind: number) => {
-                                                                return <span key={ind} className={s.label_span}>{e}</span>
+                                                                return <span key={ind} className={s.label_span}>{t(e)}</span>
                                                             })}
                                                         </TableData>
                                                     )
@@ -78,7 +80,7 @@ const TableBody: React.FC<ITableBody> = (
 
                             {
                                 (isEdit || isDelete || isGetItems) &&
-                                <TableData>
+                                <TableData >
                                     <div className={s.iconsWrapper}>
                                         {
                                             isEdit &&

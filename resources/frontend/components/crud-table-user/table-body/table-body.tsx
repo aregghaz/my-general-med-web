@@ -10,9 +10,15 @@ import {IOption} from '../../select/select'
 
 interface ITableBody {
     data: Array<any>
-    titles: Array<IOption>
+    titles: Array<IOption>,
+    isEdit?: boolean
+    isDelete?: boolean
+    isGetItems?: boolean
     HandlerGetProducts?: (id: number) => void
     handlerGetClientData?: (event: any, data: number) => void,
+    handlerEditItem?: (id: number) => void
+    handlerDeleteItem?: (id: number) => void
+    handlerGetItemData?: (id: number) => void
     selectedIds: number[]
 
 }
@@ -21,7 +27,13 @@ const TableBody: React.FC<ITableBody> = (
     {
         data,
         titles,
+        isEdit,
+        isDelete,
+        isGetItems,
         handlerGetClientData,
+        handlerDeleteItem,
+        ///handlerGetVendorUsers,
+        handlerEditItem,
         selectedIds,
     }) => {
 
@@ -44,6 +56,27 @@ const TableBody: React.FC<ITableBody> = (
                                         )
                                     }
                                 )
+                            }
+                            {
+                                (isEdit || isDelete ) &&
+                                <TableData  item={99999} key={999999}>
+                                    <div className={s.iconsWrapper}>
+                                        {
+                                            isEdit &&
+                                            <EditIcon
+                                                className={s.editIcon}
+                                                onClick={() => handlerEditItem(item.id)}
+                                            />
+                                        }
+                                        {
+                                            isDelete &&
+                                            <TrashIcon
+                                                className={s.trashIcon}
+                                                onClick={() => handlerDeleteItem(item.id)}
+                                            />
+                                        }
+                                    </div>
+                                </TableData>
                             }
                         </TableRow>
                     )

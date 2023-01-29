@@ -1,194 +1,451 @@
-import React, {useEffect, useState} from 'react'
-import {AdminApi} from '../../../api/admin-api/admin-api'
-import List from '../../layouts/templates/list/list'
-import {useNavigate} from '@reach/router'
-import Button from "../../../components/button/button";
-import s from "../../layouts/templates/list/list.module.scss";
-import Select, {IOption, IOptionMultiselect} from '../../../components/select/select'
-import {useTranslation} from 'react-i18next'
-import Modal from 'react-modal'
-import numberFormatting from '../../../constants/utils';
+import React, {useEffect, useRef, useState} from "react";
+import {useTranslation} from "react-i18next";
+import {useDispatch, useSelector} from "react-redux";
 import {actions} from "../../../store/home";
-import {useDispatch} from "react-redux";
+import {clientAction} from "../../../store/client";
+import {getClientData, getHomePageData} from "../../../store/selectors";
+import {homeAPI} from "../../../api/site-api/home-api";
+import s from "./home.module.scss";
+import CrudTable from "../../../components/crud-table-user/crud-table";
+import Select, {IOption} from "../../../components/select/select";
+import {useInView} from "react-intersection-observer";
+import InfoBlock from "../../../components/info-block/info-block";
+import Upload from "-!svg-react-loader!../../../images/Upload.svg";
+import Import from "-!svg-react-loader!../../../images/Import.svg";
+import Search from "-!svg-react-loader!../../../images/Search.svg";
+import Close from "-!svg-react-loader!../../../images/Close.svg";
+import axios from "axios";
+import BackDropSearch from "../../../components/backdrop-search/backdrop-search";
+import {DirectionsRenderer, GoogleMap, useJsApiLoader} from "@react-google-maps/api";
+import Modal from "react-modal";
+import PopupModal from "../../../components/popup-modal/popup-modal";
+import MultiSelectSort from "../../../components/select/sort-select";
+import {vendorAPI} from "../../../api/site-api/vendor-api";
+import Tabs from "../../../components/tabs/tabs";
+import Button from "../../../components/button/button";
+import { AdminApi } from "../../../api/admin-api/admin-api";
+import { GOOGLE_API_KEY } from "../../../environments";
+import { navigate } from "@reach/router";
+
+const center = {lat: 48.8584, lng: 2.2945};
 
 interface IClients {
-    path: string
+    path: string;
 }
 
+const customStyles: ReactModal.Styles = {
+    content: {
+        position: "fixed",
+        border: "none",
+        overflowY: "unset",
+        outline: "none",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50% , -50%)",
+
+        /// display: 'flex',
+        justifyContent: "center",
+        ///  alignItems: "center",
+        height: "fit-content"
+    },
+    overlay: {
+        zIndex: 400,
+        background: "rgba(0, 0, 0, 0.35)",
+        backdropFilter: "blur(5px)"
+    }
+};
+
 const Clients: React.FC<IClients> = () => {
-    const dispatch = useDispatch();
     const crudKey = 'clients'
-    const [data, setData] = useState([])
-    const [isModalOpen, setIsModalOpen] = useState(false)
-    const [countPages, setCountPages] = useState(null)
-    const [deleteId, setDeleteId] = useState(null)
-    const [count, setCount] = useState({from: 0, to: 10})
-    const [activeItem, setActiveItem] = useState(null)
+    const {t} = useTranslation();
+    const contentRef = useRef();
+    const countRef = useRef(2);
+    const homeData = useSelector(getHomePageData);
+    const clientData = useSelector(getClientData);
+    const dispatch = useDispatch();
+    const {selectedTitle, titles: allTiles, clients, tripCount, availableCount} = homeData;
+    const {clientById} = clientData;
+    const [defaultData, setDefaultData] = useState([]);
+    const [show, setShow] = useState(false);
+    const [errorMessage, setErrorMessage] = useState<string>("");
+    const [ids, setIds] = useState([]);
+    const [open, setOpen] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [typeId, setTypeId] = useState<number>(1);
+    const [steps, setSteps] = useState<Array<any>>([]);
+    const [map, setMap] = useState(/** @type google.maps.Map */(null));
+    const [directionsResponse, setDirectionsResponse] = useState(null);
+    const [distance, setDistance] = useState("");
+    const [duration, setDuration] = useState("");
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [agreement, setAgreement] = useState<boolean>(false);
+    const [status, setStatus] = useState<number | null>(null);
+    const [carData, setCarData] = useState<Array<any>>([]);
+    const [car, setCar] = useState<IOption>(null);
 
 
-    const navigate = useNavigate()
-    const {t} = useTranslation()
+    const {isLoaded} = useJsApiLoader({
+        googleMapsApiKey: GOOGLE_API_KEY,
+        libraries: ["geometry", "drawing", "places"]
+    });
+    const [ref, inView] = useInView({
+        threshold: 1
+    });
+
+    async function calculateRoute(newData: any) {
+        const directionsService = new google.maps.DirectionsService();
+        const results = await directionsService.route({
+            origin: newData.origin.city + " " + newData.origin.street + " " + newData.origin.suite,
+            destination: newData.destination.city + " " + newData.destination.street + " " + newData.destination.suite,
+            travelMode: google.maps.TravelMode.DRIVING
+        });
+        setDirectionsResponse(results);
+        setDistance(results.routes[0].legs[0].distance.text);
+        setDuration(results.routes[0].legs[0].duration.text);
+        setSteps(results.routes[0].legs[0].steps);
+    }
+
+    const tabs = [
+        {
+            id: 1,
+            name: "Trips",
+            count: tripCount
+        },
+        {
+            id: 4,
+            name: "Close Outs"
+            // count:45
+        },
+        // {
+        //     id: 3,
+        //     name: "Download History",
+        //     //count:38
+        // },
+        {
+            id: 2,
+            name: "Available Trips",
+            count: availableCount
+        }
+    ];
+
+    const [titles, setTitles] = useState<string[]>([]);
+
+    const openSearch = () => {
+        setOpen(!open);
+    };
+
+    const handlerGetClientData = async (event: any, id: number) => {
+        if (event.ctrlKey || event.shiftKey) {
+            setIds((state) => {
+                return [
+                    ...state,
+                    id
+                ];
+            });
+        } else {
+            const homeData = await homeAPI.getCLientById(id);
+            dispatch(clientAction.fetching({clientById: homeData.client}));
+            setShow(true);
+        }
+
+    };
+
+
     useEffect(() => {
-        (
-            async () => {
-                const data = await AdminApi.getAllData(crudKey, 1, '')
-                data.to
-                setCount({from: data.to - 3, to: data.to + 5})
-                setData(data)
+        (async () => {
+            if ((inView || loading) && !open) {
 
-
+                const homeData = await AdminApi.getAllData({
+                    titles: titles ? titles : [],
+                    showMore: countRef.current,
+                    typeId: typeId
+                });
+                setDefaultData(homeData.titles);
+                dispatch(actions.setTitles({
+                    titles: homeData.titles,
+                    selectedTitle: homeData.selectedFields,
+                    clients: homeData.clients,
+                    tripCount: homeData.tripCount,
+                    availableCount: homeData.availableCount
+                }));
+                countRef.current++;
+                setLoading(false);
             }
-        )()
-        // dispatch(actions.setTitles(titles))
-        // dispatch(actions.clearData())
-    }, [])
+        })();
+        return () => {
+            homeAPI.cancelRequest();
+        };
 
+    }, [inView, loading, agreement]);
 
-    const titles: Array<string> = [
-        // 'id',
-        // "client_id",
-        // 'car_id',
-        // 'vendor_id',
-        'trip_id',
-        'name',
-        'surname',
+    const onSearchInput = async (event: { search: string }) => {
+        const titlesData = localStorage.getItem("titles");
 
-        'los',
-        'gender',
-        'phone_number',
-        'date_of_service',
-        'appointment_time',
-        'pick_up',
-        'drop_down',
-        'request_type', ///seect
-        'status',///seect
-        // 'origin_id',
-        // "destination_id",
-        "origin_name",
-        "origin_street",
-        "origin_suite",
-        "origin_city",
-        "origin_state",
-        "origin_postal",
-        "origin_country",
-        "origin_phone",
-        "origin_comment",
-        "destination_name",
-        "destination_street",
-        "destination_suite",
-        "destination_city",
-        "destination_state",
-        "destination_postal",
-        "destination_country",
-        "destination_phone",
-        "destination_comments",
+        const homeData = await homeAPI.getClientData({
+            titles: JSON.parse(titlesData),
+            showMore: countRef.current,
+            typeId: typeId,
+            queryData: event.search
+        });
+        setDefaultData(homeData.titles);
+        dispatch(actions.setTitles({
+            titles: homeData.titles,
+            selectedTitle: homeData.selectedFields,
+            clients: homeData.clients,
+            tripCount: homeData.tripCount,
+            availableCount: homeData.availableCount
+        }));
+        // }
+    };
 
-        'escortType',//select
-        'type_of_trip',//select
-        'miles',
-        'member_uniqie_identifer',
-        'birthday',
-    ]
+    const changeFields = (options: Array<IOption>) => {
+        let result = options.map(a => a.slug);
+        localStorage.setItem("titles", JSON.stringify(result));
+        if (result.length > 0) {
+            setTitles(result);
+            setLoading(true);
+        }
+    };
 
-    const handlerAddClientItem = () => navigate(`/admin/${crudKey}/create`)
+    const fileUploader = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const validValues = ["text/csv", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"];
+        if (e.target.files) {
+            if (validValues?.includes(e.target.files[0].type)) {
+                // setLoadFile(e.target.files[0])
+                const data = new FormData();
+                data.append("file", e.target.files[0]);
+                await axios.post("/api/test", data);
+                setLoading(true);
+            } else {
+                setErrorMessage("please upload valid type!");
+            }
+
+        }
+    };
+
+    const handlerChangeTabs = async (tabId: number) => {
+        setIds([]);
+        setTypeId(tabId);
+        setLoading(true);
+    };
+
+    const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+    const handlerEditItem = (id:number) => navigate(`/admin/clients/${id}`)
+    if (agreement) {
+        delay(200).then(async () => {
+            await homeAPI.changeClientsTypes({status, ids});
+            setIds([]);
+            setLoading(true);
+            setAgreement(false);
+        });
+    }
+
+    const handleActionMiddleware = async (status: number) => {
+        if (ids.length > 0 && status !== 99) {
+            setIsOpen(true);
+            setStatus(status);
+        } else if (status == 99) {
+            const getCarData = await vendorAPI.getCarsDataForSelect("cars");
+            setCarData(getCarData.cars);
+            console.log(carData, "1111");
+            setIsModalOpen(true);
+        }
+
+    };
+    const agreeWith = (callOrNot: boolean) => {
+        setAgreement(callOrNot);
+        setIsOpen(false);
+    };
+    const notAgreeWith = () => setIsOpen(false);
 
 
     const handlerCloseModal = () => {
-        setIsModalOpen(false)
-    }
-    const handlerDeleteModal = (id: number) => {
-        setDeleteId(id)
-        setIsModalOpen(true)
-    }
+        setCar(null)
+        setDirectionsResponse(null);
+        setDistance("");
+        setDuration("");
+        setSteps([]);
+        setIsModalOpen(false);
+    };
+    const handlerOpenModal = async (newData: any) => {
+        await calculateRoute(newData);
+        setIsModalOpen(true);
+    };
+
+    const changeSortPosition = (arr: Array<IOption>) => {
+        let result = arr.map(a => a.slug);
+        localStorage.setItem("titles", JSON.stringify(result));
+        setTitles(result);
+        setLoading(true);
+    };
 
 
-    const handlerDeleteItem = () => {
+    const handlerSetCar = async () => {
+        console.log(ids, car);
+        const getCarData = await vendorAPI.assignCarToClient({
+            ids: ids,
+            carId: parseFloat(car.value)
+        });
 
-        AdminApi.delete(crudKey, deleteId).then(data => {
-            setData(data.data.beneficiaries)
-            setIsModalOpen(false)
-        })
-    }
-    const handlerEditItem = (id: number) => navigate(`/admin/${crudKey}/${id}`)
-    const HandlerGetProducts = (id: number) => navigate(`/admin/users-products/${id}`)
-
-    const HandlerPagination = async (activeItem: number) => {
-        const query = localStorage.getItem('query')
-        const homeData = await AdminApi.getAllData(crudKey, activeItem + 1, query ? query : '')
-        setCount({from: homeData.current_page, to: homeData.current_page + 5})
-        setData(homeData)
-        const role = localStorage.getItem('role');
-        localStorage.setItem('page', activeItem.toString());
-
-    }
-
-    const customStyles: ReactModal.Styles = {
-        content: {
-            position: 'fixed',
-            border: 'none',
-            overflowY: 'unset',
-            outline: 'none',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50% , -50%)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '290px'
-        },
-        overlay: {
-            zIndex: 400,
-            background: 'rgba(0, 0, 0, 0.35)',
-            backdropFilter: 'blur(5px)'
+        if (getCarData.success) {
+            handlerCloseModal()
+        } else {
+            setIsModalOpen(false);
+            setErrorMessage(getCarData.error)
+            delay(2000).then(async () => {
+                setErrorMessage('')
+            });
         }
-    }
-
+    };
     return (
-        data &&
-        <>
-            <List
-                data={data}
-                titles={titles}
-                isDelete
-                isEdit
-                isCreate
-                isGetItems
-                handlerAddItem={handlerAddClientItem}
-                handlerDeleteItem={handlerDeleteModal}
-                handlerEditItem={handlerEditItem}
-                HandlerPagination={HandlerPagination}
-                HandlerGetProducts={HandlerGetProducts}
-                count={count}
-                paginated={true}
-                activeItem={activeItem}
-                className={'pagination'}
-            />
-            <Modal
-                isOpen={isModalOpen !== false}
-                style={customStyles}
-                onRequestClose={handlerCloseModal}
-            >
-                <div className={s.modalBody}>
-                    <div className={s.iconWrapper}>
-                        <i className='cancelicon-'
-                           onClick={handlerCloseModal}
-                        />
+        clients && <>
+            <div className={s.panel}>
+                <div className={s.upload_panel}>
+                    <Tabs typeId={typeId} tabs={tabs} handlerChangeTabs={handlerChangeTabs}/>
+                    <div style={{display: "flex", gap: "10px"}}>
+                        <div className={s.upload_block}>
+                            <label htmlFor="uploadFile">
+                                <Upload/>
+                            </label>
+                            <input
+                                id="uploadFile"
+                                type="file"
+                                onChange={fileUploader}
+                                style={{display: "none"}}
+                                accept=".xls, .xlsx, .csv"
+                            />
+                        </div>
+                        <div className={s.import_block}>
+                            <label>
+                                <Import/>
+                            </label>
+                        </div>
+                        <div className={s.import_block} onClick={() => {
+                            openSearch();
+                        }}>
+                            {open ? <Close/> : <Search/>}
+                        </div>
+                    </div>
+                    <div
+                        className={`${s.header_input_block} ${open ? s.active : s.passive}`}
+                    >
+                        <BackDropSearch handlerSubmit={onSearchInput}/>
                     </div>
 
-                    <i className={`binicon- ${s.icon}`}/>
-                    <p className={s.text}>{t('admin.do_you_want_to_delete')}</p>
-                    <div className={s.buttons}>
-                        <Button type={'green'} onClick={handlerDeleteItem}
-                                className={s.button}>{t('admin.yes')}</Button>
-                        <Button type={'transparent'} onClick={handlerCloseModal}
-                                className={s.button}>{t('admin.no')}</Button>
+                </div>
+                {errorMessage && <div style={{color: "red"}}>{errorMessage}</div>}
+                {
+                    show && clientById &&
+                    <div>
+                        <InfoBlock clientById={clientById} calculateRoute={handlerOpenModal}/>
+                    </div>
+                }
+                <Modal
+                    isOpen={isModalOpen !== false}
+                    style={customStyles}
+                    ariaHideApp={false}
+                    onRequestClose={handlerCloseModal}
+                >
+                    <div className={s.modalBody}>
+                        <div className={s.iconWrapper}>
+                            <i className="cancelicon-"
+                               onClick={handlerCloseModal}
+                            />
+                        </div>
+                        {
+                            carData.length > 0 && <>
+                                <div className={s.selectDiv}>
+                                    <Select
+                                        getOptionValue={(option: IOption) => option.value}
+                                        getOptionLabel={(option: IOption) => t(option.label)}
+                                        onChange={(options: IOption) => setCar(options)}
+                                        /// onChange={handlerSetCar}
+                                        options={carData}
+                                        // value={selectedTitle}
+                                        name={"Cars"}
+                                        isMulti={false}
+                                    />
+
+                                    <Button isSubmit={true} type={'adminUpdate'}
+                                            onClick={handlerSetCar}> {t('assign')}</Button>
+                                </div>
+                            </>
+                        }
+                        {isLoaded && directionsResponse && <div className={s.googleMap}>
+                            <GoogleMap
+                                ///  center={center}
+                                zoom={15}
+                                mapContainerStyle={{width: "100%", height: "100%"}}
+                                options={{
+                                    zoomControl: true,
+                                    streetViewControl: false,
+                                    mapTypeControl: false,
+                                    fullscreenControl: false
+                                }}
+                                onLoad={map => setMap(map)}
+                            >
+                                {/* <Marker position={center} /> */}
+                                {directionsResponse && (
+                                    <DirectionsRenderer directions={directionsResponse}/>
+                                )}
+
+                            </GoogleMap>
+                            <div style={{border: "1px solid #ddd", padding: "5px", marginTop: "10px"}}>
+                                {steps && steps.map((el: any) => {
+                                    return (
+                                        <div
+                                            className={s.directions}
+                                            dangerouslySetInnerHTML={{__html: el.instructions}}
+                                        />
+                                    );
+                                })}
+                            </div>
+                        </div>}
+                    </div>
+                </Modal>
+                <div className={s.iconBlock}>
+                    {Object.values(selectedTitle).length > 0 && <MultiSelectSort
+                        isSearchable={true}
+                        placeholder={"title"}
+                        options={defaultData}
+                        onChange={(options: Array<IOption>) => changeFields(options)}
+                        getOptionValue={(option: IOption) => option.value}
+                        getOptionLabel={(option: IOption) => t(option.label)}
+                        value={selectedTitle}
+                        name={"filtre"}
+                        isMulti={true}
+                        onChangePosition={changeSortPosition}
+                    />}
+                </div>
+                <div className={s.upload_panel}>
+                    <div
+                        className={`${s.action_block} ${typeId === 2 || typeId === 4 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
+                        onClick={() => handleActionMiddleware(99)}
+                    >
+                        Assign to Vendor
                     </div>
                 </div>
-            </Modal>
+
+            </div>
+            <PopupModal isOpen={isOpen} agreeWith={agreeWith} notAgreeWith={notAgreeWith}/>
+            <div ref={contentRef} className={s.table_wrapper}>
+                <CrudTable
+                    titles={selectedTitle}
+                    data={clients}
+                    handlerGetClientData={handlerGetClientData}
+                    handlerEditItem={handlerEditItem}
+                    className={"pagination"}
+                    paginated={false}
+                    isEdit
+                    isDelete
+                    selectedIds={ids}
+                    typeId={typeId}
+                />
+                <div className={s.detector} ref={ref}/>
+            </div>
 
         </>
-    )
-}
-
-
-export default Clients
+    );
+};
+export default Clients;

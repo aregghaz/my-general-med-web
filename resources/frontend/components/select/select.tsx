@@ -1,30 +1,29 @@
-import React from 'react'
-import useLocalStorage from '../../hooks/use-local-storage'
-import Checkbox from '../checkbox/checkbox'
-import ReactSelect, {components, MenuProps, OptionProps, OptionTypeBase} from 'react-select'
-import {getStyles} from './common'
-import {useTranslation} from 'react-i18next'
+import React from "react";
+import useLocalStorage from "../../hooks/use-local-storage";
+import Checkbox from "../checkbox/checkbox";
+import ReactSelect, { components, MenuProps, OptionProps, OptionTypeBase } from "react-select";
+import { useTranslation } from "react-i18next";
 
-import s from './select.module.scss'
+import s from "./select.module.scss";
 import Button from "../button/button";
 
 export interface IOption {
-    id: number
-    value: string
-    label: string
-    slug?: string
+    id: number;
+    value: string;
+    label: string;
+    slug?: string;
 }
 
 export interface IOptionMultiselect {
-    id: number
-    value: string
-    label?: string
-    slug?: string
+    id: number;
+    value: string;
+    label?: string;
+    slug?: string;
 }
 
 interface IMenu {
-    props: MenuProps<OptionTypeBase>
-    handlerAdd: () => void
+    props: MenuProps<OptionTypeBase>;
+    handlerAdd: () => void;
 }
 
 interface ISelect {
@@ -48,18 +47,20 @@ interface ISelect {
     handlerAdd?: () => void
 }
 
-const Option = (props: OptionProps<OptionTypeBase>) => (
-    <components.Option {...props}>
+
+const Option = (props: OptionProps<OptionTypeBase>) => {
+    const { t } = useTranslation();
+    return (<components.Option {...props}>
         <Checkbox
-            label={props.label}
+            label={t(props.label)}
             checked={props.isSelected}
             labelStyle={props.selectProps.authCheckboxLabelStyle}
         />
-    </components.Option>
-)
+    </components.Option>);
+};
 
-const Menu: React.FC<IMenu> = ({props, handlerAdd}) => {
-    const {t} = useTranslation()
+const Menu: React.FC<IMenu> = ({ props, handlerAdd }) => {
+    const { t } = useTranslation();
     return (
         <components.Menu {...props} >
             <>
@@ -71,25 +72,25 @@ const Menu: React.FC<IMenu> = ({props, handlerAdd}) => {
                                         key={index}
                                         onClick={() => props.selectOption(item)}
                                     >
-                                        {item.value}
+                                        {t(item.label)}
                                     </li>
                                 )
                             )
                     }
                 </ul>
                 <div className={s.addBtn} onClick={handlerAdd}>
-                    {t('add_new_type')} +
+                    {t("add_new_type")} +
                 </div>
             </>
         </components.Menu>
-    )
-}
+    );
+};
 
 const Select: React.FC<ISelect> = (
     {
         isCheckbox = false,
         isSearchable = false,
-        placeholder = '',
+        placeholder = "",
         options,
         onChange,
         getOptionLabel,
@@ -107,8 +108,8 @@ const Select: React.FC<ISelect> = (
         handlerAdd
     }
 ) => {
-    const {t} = useTranslation()
-    const [themeType] = useLocalStorage('theme', 'light')
+    const { t } = useTranslation();
+    const [themeType] = useLocalStorage("theme", "light");
     const markAll = () => {
         onChange(options);
     };
@@ -149,14 +150,14 @@ const Select: React.FC<ISelect> = (
                         //  borderRadius: "15px"
                         border: "1px solid #727272",
                         height: 50,
-                        outline: "none",
+                        outline: "none"
                     }),
                     menu: base => ({
                         ...base,
                         // override border radius to match the box
                         ///borderRadius: 0,
                         // backgroundColor: '#6D9886',
-                        backgroundColor: 'white',
+                        backgroundColor: "white",
                         // borderRadius: "15px",
                         // kill the gap
                         marginTop: 0
@@ -166,7 +167,7 @@ const Select: React.FC<ISelect> = (
                         // kill the white space on first and last option
                         padding: 0,
                         // borderRadius: "15px",
-                        backgroundColor: 'white',
+                        backgroundColor: "white"
                     }),
                     multiValue: (baseStyles, state) => ({
                         ...baseStyles,
@@ -180,15 +181,15 @@ const Select: React.FC<ISelect> = (
                         border: "1px solid #727272",
 
                         // backgroundColor: '#6D9886',
-                        backgroundColor: 'white',
+                        backgroundColor: "white"
                         /// padding: "0 8px"
                     }),
-                    multiValueLabel: (styles: any, {data}: any) => ({
+                    multiValueLabel: (styles: any, { data }: any) => ({
                         ...styles,
                         // backgroundColor: '#6D9886',
-                        backgroundColor: 'white',
-                        color: data.color,
-                    }),
+                        backgroundColor: "white",
+                        color: data.color
+                    })
                 }}
                 className={s.select}
                 placeholder={placeholder}
@@ -199,11 +200,11 @@ const Select: React.FC<ISelect> = (
                     :
                     isMenuAdd ?
                         {
-                            Menu: (props) => <Menu props={props} handlerAdd={handlerAdd}/>,
+                            Menu: (props) => <Menu props={props} handlerAdd={handlerAdd} />,
                             IndicatorSeparator: () => null
                         }
                         :
-                        {IndicatorSeparator: () => null}}
+                        { IndicatorSeparator: () => null }}
                 options={options}
                 name={name}
                 isSearchable={isSearchable}
@@ -220,7 +221,7 @@ const Select: React.FC<ISelect> = (
             />
 
         </>
-    )
-}
+    );
+};
 
-export default Select
+export default Select;

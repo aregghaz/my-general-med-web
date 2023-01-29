@@ -18,6 +18,7 @@ return [
     'request_type' => 'Request Type',
     'status' => 'Status',
     'origin_name' => 'Origin Name',
+    'pick_up_address' => 'Pick up address',
     'origin_street' => 'Origin Street',
     'origin_suite' => 'Origin Suite',
     'origin_city' => 'Origin City',

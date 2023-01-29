@@ -17,6 +17,10 @@ return [
     'drop_down' => 'Date of Service',
     'request_type' => 'Request Type',
     'status' => 'Status',
+    'pick_up_address' => 'Pick up address',
+    'mark_all' => 'Mark all',
+    'remove_all' => 'Remove all',
+
     'origin_name' => 'Origin Name',
     'origin_street' => 'Origin Street',
     'origin_suite' => 'Origin Suite',

@@ -17,8 +17,9 @@ export const AdminApi = {
         return axios.get(`/api/admin/${crudKey}/${id}/edit`).then(res => res.data)
     },
 
-    getAllData(crudKey: string, page: number, query: string,tabId?:number) {
-        return axios.get(`/api/admin/${crudKey}?page=${page}&query=${query}&tabId=${tabId}`).then(res => res.data)
+    getAllData(options: IClintSendData) {
+        return axios.post(`/api/admin/clientsData`, options, {
+        }).then(res => res.data)
     },
     getAllStatusData(crudKey: string) {
         return axios.get(`/api/admin/${crudKey}/escortType`).then(res => res.data)

@@ -55,8 +55,7 @@ const List: React.FC<IList> = (
         className,
         paginated
     }) => {
-    console.log(tabId, "tab id")
-    console.log(tabs, "tabs!!!")
+
     const {t} = useTranslation()
     return (
         <>

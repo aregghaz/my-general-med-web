@@ -16,6 +16,7 @@ interface IInput {
     isAsterisk?: boolean
     className?: string
     labelStyle?: string
+    ref?:string
 }
 
 const Input: React.FC<IInput> = (
@@ -32,7 +33,8 @@ const Input: React.FC<IInput> = (
         type = 'text',
         isAsterisk,
         className,
-        labelStyle
+        labelStyle,
+        ref
     }) => (
     <>
         {error && <div className={s.error}>{error}</div>}
@@ -51,6 +53,7 @@ const Input: React.FC<IInput> = (
             type={type}
             placeholder={placeholder}
             value={value}
+            ref={ref}
             onBlur={onChange}
             onChange={onChange}
             autoComplete={autoComplete}

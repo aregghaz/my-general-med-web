@@ -179,12 +179,12 @@ tbody {
 
 
 .label_span {
-    border: 1px solid $headColor;
-    //color: $headColor;
-    color: $whiteColor;
+    border: 1px solid #393E46;
+    color: #F7F7F7;
     font-size: 11px;
-    padding: 0 2px;
+    padding: 5px;
     border-radius: 25px;
-    margin-left: 2px;
-    background-color: $iconColor;
+    margin: 2px;
+    background-color: #4466b0;
+    display: inline-block;
 }

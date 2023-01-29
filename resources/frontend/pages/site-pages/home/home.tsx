@@ -81,10 +81,6 @@ const Home: React.FC<IHome> = () => {
     const [car, setCar] = useState<IOption>(null);
 
 
-    const {isLoaded} = useJsApiLoader({
-        googleMapsApiKey: "AIzaSyBKkr76ZgeVEhZLj-ZT5u8XQBbT4SUQI5E",
-        libraries: ["geometry", "drawing", "places"]
-    });
     const [ref, inView] = useInView({
         threshold: 1
     });
