@@ -45,3 +45,13 @@
     grid-column: 1/4;
     text-align: end;
 }
+.googleMap {
+    position: relative;
+    margin-top: 20px;
+    aspect-ratio: 2/1;
+    overflow: visible;
+
+    & > div:first-child {
+
+    }
+}

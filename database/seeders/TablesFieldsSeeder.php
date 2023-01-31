@@ -18,40 +18,28 @@ class TablesFieldsSeeder extends Seeder
         $fields = [
             'id',
             'trip_id',
-            'name',
-            'surname',
+            'fullName',
             'gender',
             'los',
             'phone_number',
             'date_of_service',
-            'appointment_time',
             'pick_up',
             'drop_down',
             'request_type', ///seect
             'status', ///seect
-            'origin_name',
-            'origin_street',
-            'origin_suite',
-            'origin_city',
-            'origin_state',
-            'origin_postal',
-            'origin_country',
+            'origin',
+          ///  'origin_id',
             'origin_phone',
             'origin_comment',
-            'destination_name',
-            'destination_street',
-            'destination_suite',
-            'destination_city',
-            'destination_state',
-            'destination_postal',
-            'destination_country',
+            'destination',
+            ///'destination_id',
             'destination_phone',
             'destination_comments',
-            'escortType', //select
-            'type_of_trip', //select
             'miles',
             'member_uniqie_identifer',
             'birthday',
+            'weight',
+            'height',
         ];
 
         foreach ($fields as $field) {

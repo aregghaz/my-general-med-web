@@ -23,35 +23,34 @@ class Clients extends Model
     //enable this if you want use methods that gets information about creating
     protected $revisionCreationsEnabled = true;
     protected $fillable  =  [
-       "id",
-        'car_id',
-        'vendor_id',
-        'type_id' ,   
+        'id',
         'trip_id',
-        'name',
-        'surname',
-        'gender',///seect
+        'fullName',
+        'gender',
         'los',
         'phone_number',
         'date_of_service',
-        'appointment_time',
         'pick_up',
         'drop_down',
         'request_type', ///seect
-        'status',///seect
+        'status', ///seect
+        'origin',
         'origin_id',
-        "destination_id",
+        'origin_phone',
         'origin_comment',
+        'destination',
+        'destination_id',
+        'destination_phone',
         'destination_comments',
-        'escortType',//select
-        'type_of_trip',//select
+        'escortType', //select
+        'type_of_trip', //select
         'miles',
         'member_uniqie_identifer',
         'birthday',
         'weight',
-        'height',
-        
-    ];	
+        'type_id',
+
+    ];
     public function origin()
     {
         return $this->hasOne(OriginAddress::class, 'id', 'origin_id');
@@ -60,12 +59,12 @@ class Clients extends Model
     {
         return $this->hasOne(DestinationAddress::class, 'id', 'destination_id');
     }
-    
+
     public function typeOfTrip()
     {
         return $this->hasOne(TypeOfTrip::class, 'id', 'type_of_trip');
     }
-    
+
     public function escortType()
     {
         return $this->hasOne(Escort::class, 'id', 'escortType');

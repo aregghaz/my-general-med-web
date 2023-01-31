@@ -15,6 +15,7 @@ interface IEdit {
     data: { [key: string]: { [key: string]: Object } }
     fields: Array<IItem>
     crudKey?: string
+    handleDrawMap?:any,
     title: string,
     requiredFields?: Array<string>
 }
@@ -25,6 +26,7 @@ const Edit: React.FC<IEdit> = (
         crudKey,
         data,
         children,
+        handleDrawMap,
         requiredFields,
     }) => {
     const {t} = useTranslation()
@@ -83,6 +85,7 @@ const Edit: React.FC<IEdit> = (
                                                  style={field.type == 'hidden' ? {display: "none"} : {}}>
                                                 <FormikHandler
                                                     item={field}
+                                                    handleDrawMap={handleDrawMap}
                                                     handleChange={handleChange}
                                                     values={values}
                                                     requiredFields={requiredFields}

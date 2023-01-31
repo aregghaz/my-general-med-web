@@ -26,11 +26,12 @@ use App\Http\Controllers\Admin\AdminController;
 */
 
 
-Route::post('/test', [\App\Http\Controllers\TestController::class, 'index']);
 
 Route::group([
     'middleware' => 'auth:api'
 ], function () {
+    Route::post('/test', [\App\Http\Controllers\TestController::class, 'index']);
+
     Route::get('/car-data-for-select', [HomeController::class, 'carDataForSelect']);
     Route::get('/clients-data-driver', [ApiController::class, 'getClientsDataForDriver']);
     Route::get('/client-data-driver/{id}', [ApiController::class, 'getClientDataForDriver']);

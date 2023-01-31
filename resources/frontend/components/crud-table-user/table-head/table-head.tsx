@@ -44,19 +44,18 @@ const TableHead: React.FC<ITableHead> = (
         <TableRow>
             {
                 titles && titles
-                    .map((title, index) => (
+                    .map((title, index) => title.label !=='id' && (
                             <th
-                                // @ts-ignore
-                                onClick={() => titleSort(title?.label)}
+                                onClick={() => titleSort(title.label)}
                                 className={` ${s.tableTd} ${s.tableTh}`}
                                 key={index}
                                 colSpan={colspan || 1}
                                 rowSpan={rowspan || 1}
                                 style={{cursor: "pointer"}}
                             >
-                                {t(title?.label)}
+                                {t(title.label)}
                                 {
-                                    isNotActions(title?.label)
+                                    isNotActions(title.label)
                                 }
                             </th>
                         )

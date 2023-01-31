@@ -64,8 +64,8 @@ class HomeController extends Controller
         $showMore = $request->showMore;
         $clientsData = [];
         $selectedFieldsTitle = [];
-
-        $tripCount = Clients::where(['vendor_id' => $request->user()->id, 'type_id' => 1])->count();
+        $vendorId = $request->user()->vendor_id;
+        $tripCount = Clients::where(['vendor_id' => $vendorId, 'type_id' => 1])->count();
         $available = Clients::where('type_id', 2)->count();
 
         $clients = DB::table('clients')->where('type_id', $request->typeId);
@@ -79,37 +79,7 @@ class HomeController extends Controller
         $clientsDataWith = [];
         for ($i = 0; $i < count($vendorFields); $i++) {
             $selectedFieldsTitle[] = $vendorFields[$i];
-            $explodeRelation = explode("_", $vendorFields[$i]);
-            //////origin_address reletion cheking and add to title
-            if ($explodeRelation[0]  === 'origin') {
-                if (!in_array($explodeRelation[0], $clientsDataWith) and $explodeRelation[1] !== 'comment') {
-                    $clientsDataWith[] = $explodeRelation[0];
-                    $clients = $clients->join('origin_addresses', 'clients.origin_id', '=', 'origin_addresses.id');
-                    $clientsData[] = "origin_addresses." . $explodeRelation[1] . " as origin_" . $explodeRelation[1];
-                } elseif (in_array($explodeRelation[0], $clientsDataWith) and $explodeRelation[1] !== 'comment') {
-                    $clientsData[] = "origin_addresses." . $explodeRelation[1] . " as origin_" . $explodeRelation[1];
-                } elseif ($explodeRelation[1] == 'comment') {
-                    $clientsData[] =  'clients.' . $vendorFields[$i];
-                }
-                //////destination reletion cheking and add to title
-            } else if ($explodeRelation[0] === 'destination') {
-                if (!in_array($explodeRelation[0], $clientsDataWith)) {
-                    $clientsDataWith[] = $explodeRelation[0];
-                    $clients = $clients->join('destination_addresses', 'clients.origin_id', '=', 'destination_addresses.id');
-                    $clientsData[] = "destination_addresses." . $explodeRelation[1] . " as destination_" . $explodeRelation[1];;
-                } elseif (in_array($explodeRelation[0], $clientsDataWith) and $explodeRelation[1] !== 'comments') {
-                    $clientsData[] = "destination_addresses." . $explodeRelation[1] . " as destination_" . $explodeRelation[1];;
-                } elseif ($explodeRelation[1] == 'comments') {
-                    $clientsData[] =  'clients.' . $selectedFieldsTitle[$i];
-                }
-                //////type_of_trip reletion cheking and add to title
-            }
-            else if ($vendorFields[$i] == 'type_of_trip') {
-                $clients = $clients->join('type_of_trips', 'clients.type_of_trip', '=', 'type_of_trips.id');
-                $clientsData[] = "type_of_trips.name as type_of_trip";
-                //////request_type reletion cheking and add to title
-           }
-            else if ($vendorFields[$i] == 'request_type') {
+         if ($vendorFields[$i] == 'request_type') {
                 $clients = $clients->join('request_types', 'clients.request_type', '=', 'request_types.id');
                 $clientsData[] = "request_types.name as request_type";
                 //////status reletion cheking and add to title
@@ -156,10 +126,8 @@ class HomeController extends Controller
     public function show($id)
     {
         $client = Clients::where('id', $id)->with([
-            'origin',
-            'destination',
-            'typeOfTrip',
-            'escortType',
+           /// 'origin',
+            /// 'destination',
             'clientStatus',
             'requestType'
         ])->limit(1)->get();
@@ -180,10 +148,6 @@ class HomeController extends Controller
             $clients = Clients::where('vendor_id', $vendorID)->where('client_id', 'LIKE', '%' . $request->querySearch . '%')->orWhere('driver_id', 'LIKE', '%' . $request->querySearch . '%')->paginate(20);
         } else {
             $clients = Clients::with([
-                'origin',
-                'destination',
-                'typeOfTrip',
-                'escortType',
                 'genderType',
                 'clientStatus',
                 'requestType'
@@ -203,8 +167,12 @@ class HomeController extends Controller
                 'drop_down',
                 'request_type', ///seect
                 'status', ///seect
+                'origin',
                 'origin_id',
+                'origin_phone',
                 "destination_id",
+                "destination_phone",
+                "destination",
                 'origin_comment',
                 'destination_comments',
                 'escortType', //select

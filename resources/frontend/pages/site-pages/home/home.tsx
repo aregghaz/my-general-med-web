@@ -23,6 +23,7 @@ import MultiSelectSort from "../../../components/select/sort-select";
 import {vendorAPI} from "../../../api/site-api/vendor-api";
 import Tabs from "../../../components/tabs/tabs";
 import Button from "../../../components/button/button";
+import { GOOGLE_API_KEY } from "../../../environments";
 
 const center = {lat: 48.8584, lng: 2.2945};
 
@@ -81,6 +82,10 @@ const Home: React.FC<IHome> = () => {
     const [car, setCar] = useState<IOption>(null);
 
 
+    const {isLoaded} = useJsApiLoader({
+        googleMapsApiKey: GOOGLE_API_KEY,
+        libraries: ["geometry", "drawing", "places"]
+    });
     const [ref, inView] = useInView({
         threshold: 1
     });
