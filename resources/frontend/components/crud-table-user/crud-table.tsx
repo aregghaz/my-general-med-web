@@ -16,6 +16,7 @@ const CrudTable: React.FC<ICrudTable> = (
         isEdit,
         isDelete,
         handlerEditItem,
+        tableRef,
         HandlerPagination,
         handlerGetClientData,
         paginated,
@@ -27,7 +28,7 @@ const CrudTable: React.FC<ICrudTable> = (
     const [filteredData, setFilteredData] = useState<any[]>(null)
     const [titleName, setTitleName] = useState<string>("")
     const [defaultTypeId, _] = useState<number>(1)
-    const tableRef = useRef(null);
+
     const titleSort = (name: string) => {
         if (name !== "action") {
             if (filterTable === "ASC") {
@@ -46,14 +47,6 @@ const CrudTable: React.FC<ICrudTable> = (
 
     return (
         <>
-            <DownloadTableExcel
-                filename="users table"
-                sheet="users"
-                currentTableRef={tableRef.current}
-            >
-                <button className={s.download_btn}> Export excel</button>
-            </DownloadTableExcel>
-
             <table className={s.table} ref={tableRef}>
                 <TableHead titles={titles} titleSort={titleSort} filterTable={filterTable} titleName={titleName}/>
                 <TableBody
@@ -86,7 +79,8 @@ interface ICrudTable {
     handlerEditItem?: (id: number) => void
     HandlerPagination?: (event: any, id: number) => void
     selectedIds: number[]
-    typeId: number
+    typeId: number,
+    tableRef?:any
 
 }
 

@@ -43,6 +43,7 @@
 
 .tableHead {
     display: table-header-group;
+    border-bottom: 1px solid black;
 }
 
 .tableBody {
@@ -173,19 +174,6 @@
     }
 }
 
-.row {
-    background: $whiteColor;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    margin-bottom: 20px;
-    &:nth-child(even) {
-        background-color: #f7f7f7;
-    }
-
-    &:nth-child(odd) {
-        background-color: #fff;
-    }
-}
-
 .chosen {
     background-color: $asteriskColor !important;
 
@@ -194,3 +182,6 @@
     }
 }
 
+.arrowSpan{
+    margin: 0 5px;
+}

@@ -38,7 +38,6 @@ const TableHead: React.FC<ITableHead> = (
             />
         }
     }
-
     return (
         <thead className={s.tableHead}>
         <TableRow>
@@ -57,9 +56,9 @@ const TableHead: React.FC<ITableHead> = (
                                 style={{cursor: "pointer"}}
                             >
                                 {t(title.label)}
-                                {
-                                    isNotActions(title.label)
-                                }
+
+                                    <span className={s.arrowSpan}>{isNotActions(title.label)}</span>
+
                             </th>
                         )
                     )

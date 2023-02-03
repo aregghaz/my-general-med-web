@@ -32,14 +32,15 @@
 
 .items {
     padding: 5px;
-    display: grid;
     grid-gap: 10px;
+    display: block;
     background-color: $whiteColor;
     grid-template-columns: repeat(3, 1fr);
 }
 
 .item {
     padding: 5px;
+
 }
 
 .showBtn {
@@ -50,7 +51,6 @@
     padding: 5px;
     background-color: $menuColor;
     color: $whiteColor;
-
     &:hover {
         background-color: #1a1a1a;
         color: white;

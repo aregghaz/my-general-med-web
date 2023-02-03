@@ -13,14 +13,13 @@
 .table_upper_tab_item {
     //height: 100px;
     background: #ffffff;
-    border: 1px solid rgba(162, 162, 162, 0.2);
-    box-shadow: 0 5px 10px 2px rgb(162 162 162 / 20%);
-    border-radius: $borderRadius;
+    border-bottom: 1px solid rgba(162, 162, 162, 0.2);
+   /// box-shadow: 0 5px 10px 2px rgb(162 162 162 / 20%);
+   /// border-radius: $borderRadius;
     position: relative;
-    padding: 20px;
-    width: 33.3%;
+    padding: 10px 30px;
+   /// width: 33.3%;
     cursor: pointer;
-
     &:hover {
         filter: brightness(90%);
     }
@@ -31,3 +30,27 @@
      gap: 10px;
      width: 100%;
  }
+.action_block {
+    display: inline-block;
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    background-color: $menuColor;
+    color: $whiteColor;
+
+    label {
+        cursor: pointer;
+    }
+
+    &:hover {
+        background-color: $asteriskColor;
+        color: white;
+    }
+}
+
+.disabled_action {
+    pointer-events: none;
+    opacity: .3;
+    user-select: none;
+}

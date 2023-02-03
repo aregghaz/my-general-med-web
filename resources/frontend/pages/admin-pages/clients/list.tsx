@@ -302,7 +302,7 @@ const Clients: React.FC<IClients> = () => {
         clients && <>
             <div className={s.panel}>
                 <div className={s.upload_panel}>
-                    <Tabs typeId={typeId} tabs={tabs} handlerChangeTabs={handlerChangeTabs}/>
+                    <Tabs  typeId={typeId} tabs={tabs} handlerChangeTabs={handlerChangeTabs}/>
                     <div style={{display: "flex", gap: "10px"}}>
                         <div className={s.upload_block}>
                             <label htmlFor="uploadFile">

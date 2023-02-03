@@ -12,6 +12,7 @@ import {useInView} from "react-intersection-observer";
 import InfoBlock from "../../../components/info-block/info-block";
 import Upload from "-!svg-react-loader!../../../images/Upload.svg";
 import Import from "-!svg-react-loader!../../../images/Import.svg";
+import Filters from "-!svg-react-loader!../../../images/filters.svg";
 import Search from "-!svg-react-loader!../../../images/Search.svg";
 import Close from "-!svg-react-loader!../../../images/Close.svg";
 import axios from "axios";
@@ -24,6 +25,7 @@ import {vendorAPI} from "../../../api/site-api/vendor-api";
 import Tabs from "../../../components/tabs/tabs";
 import Button from "../../../components/button/button";
 import { GOOGLE_API_KEY } from "../../../environments";
+import { DownloadTableExcel } from "react-export-table-to-excel";
 
 const center = {lat: 48.8584, lng: 2.2945};
 
@@ -75,6 +77,7 @@ const Home: React.FC<IHome> = () => {
     const [map, setMap] = useState(/** @type google.maps.Map */(null));
     const [directionsResponse, setDirectionsResponse] = useState(null);
     const [distance, setDistance] = useState("");
+    const [filtre, setfiltre] = useState(false);
     const [duration, setDuration] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -82,7 +85,7 @@ const Home: React.FC<IHome> = () => {
     const [status, setStatus] = useState<number | null>(null);
     const [carData, setCarData] = useState<Array<any>>(null);
     const [car, setCar] = useState<IOption>(null);
-
+    const tableRef = useRef(null);
 
     const {isLoaded} = useJsApiLoader({
         googleMapsApiKey: GOOGLE_API_KEY,
@@ -136,12 +139,20 @@ const Home: React.FC<IHome> = () => {
 
     const handlerGetClientData = async (event: any, id: number) => {
         if (event.ctrlKey || event.shiftKey) {
-            setIds((state) => {
-                return [
-                    ...state,
-                    id
-                ];
-            });
+            const objWithIdIndex = ids.findIndex((value) => value === id);
+            if(objWithIdIndex > -1){
+                setIds((state) => {
+                    return state.filter((value) => value !== id)
+                });
+            }else{
+                setIds((state) => {
+                    return [
+                        ...state,
+                        id
+                    ];
+                });
+            }
+
         } else {
             const homeData = await homeAPI.getCLientById(id);
             dispatch(clientAction.fetching({clientById: homeData.client}));
@@ -310,15 +321,29 @@ const Home: React.FC<IHome> = () => {
         }
 
     }, [isModalOpen])
+
+    const showFilter = () =>{
+        setfiltre(!filtre)
+    }
     return (
         clients && <>
             <div className={s.panel}>
                 <div className={s.upload_panel}>
-                    <Tabs typeId={typeId} tabs={tabs} handlerChangeTabs={handlerChangeTabs}/>
+                    <Tabs handleActionMiddleware={handleActionMiddleware} ids={ids} typeId={typeId} tabs={tabs} handlerChangeTabs={handlerChangeTabs}/>
                     <div style={{display: "flex", gap: "10px"}}>
+                        <div  className={s.import_block}>
+                            <Filters height="24px"  onClick={showFilter}/>
+                        </div>
                         <div className={s.upload_block}>
                             <label htmlFor="uploadFile">
-                                <Upload/>
+                                <DownloadTableExcel
+                                    filename="users table"
+                                    sheet="users"
+                                    currentTableRef={tableRef.current}
+                                >
+                                    <Upload/>
+                                </DownloadTableExcel>
+
                             </label>
                             <input
                                 id="uploadFile"
@@ -419,7 +444,7 @@ const Home: React.FC<IHome> = () => {
                     </div>
                 </Modal>
                 <div className={s.iconBlock}>
-                    {Object.values(selectedTitle).length > 0 && <MultiSelectSort
+                    {filtre && Object.values(selectedTitle).length > 0 && <MultiSelectSort
                         isSearchable={true}
                         placeholder={"title"}
                         options={defaultData}
@@ -432,26 +457,7 @@ const Home: React.FC<IHome> = () => {
                         onChangePosition={changeSortPosition}
                     />}
                 </div>
-                <div className={s.upload_panel}>
-                    <div
-                        className={`${s.action_block}  ${typeId === 1 || typeId === 4 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
-                        onClick={() => handleActionMiddleware(1)}
-                    >
-                        Claim Trip
-                    </div>
-                    <div
-                        className={`${s.action_block} ${typeId === 2 || typeId === 4 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
-                        onClick={() => handleActionMiddleware(4)}
-                    >
-                        Cancel Trip
-                    </div>
-                    <div
-                        className={`${s.action_block} ${typeId === 2 || typeId === 4 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
-                        onClick={() => handleActionMiddleware(99)}
-                    >
-                        Assign to car
-                    </div>
-                </div>
+
 
             </div>
             <PopupModal isOpen={isOpen} agreeWith={agreeWith} notAgreeWith={notAgreeWith}/>
@@ -459,6 +465,7 @@ const Home: React.FC<IHome> = () => {
                 <CrudTable
                     titles={selectedTitle}
                     data={clients}
+                    tableRef={tableRef}
                     handlerGetClientData={handlerGetClientData}
                     className={"pagination"}
                     paginated={false}

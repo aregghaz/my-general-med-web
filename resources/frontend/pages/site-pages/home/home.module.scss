@@ -24,31 +24,15 @@ body {
 
 
 
-.rightThin {
-    margin-left: 10px;
-    font-size: 14px;
-
-    // fontello set fixed width element
-    &:before {
-        width: auto !important;
-    }
-}
 
 
-.imageGroup {
-    margin-right: 0 !important;
-}
 
-.table_wrapper {
-    margin-top: 10px;
-    overflow: auto;
-    //border: 1px solid #ddd;
-}
 .selectDiv{
     display: flex;
     flex: 1;
     flex-direction: row;
 }
+
 .detector {
     width: 100%;
     height: 1px;
@@ -120,34 +104,6 @@ body {
 
 
 ///////Areg
-
-
-
-.disabled_action {
-    pointer-events: none;
-    opacity: .3;
-    user-select: none;
-}
-
-
-
-.action_block {
-    display: inline-block;
-    border-radius: 10px;
-    padding: 10px 20px;
-    cursor: pointer;
-    background-color: $menuColor;
-    color: $whiteColor;
-
-    label {
-        cursor: pointer;
-    }
-
-    &:hover {
-        background-color: $asteriskColor;
-        color: white;
-    }
-}
 
 .iconWrapper {
     i {
