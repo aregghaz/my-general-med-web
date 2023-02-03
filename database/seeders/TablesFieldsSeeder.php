@@ -21,7 +21,7 @@ class TablesFieldsSeeder extends Seeder
             'fullName',
             'gender',
             'los',
-            'phone_number',
+           /// 'phone_number',
             'date_of_service',
             'pick_up',
             'drop_down',

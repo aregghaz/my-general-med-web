@@ -15,7 +15,7 @@ class ClientFieldCollection extends ResourceCollection
     public function toArray($request)
     {
         return $this->map(function ($title) {
-          
+
             return [
                 'id' => $title,
                 'label' => $title,

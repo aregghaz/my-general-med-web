@@ -125,14 +125,14 @@ class HomeController extends Controller
 
     public function show($id)
     {
-        $client = Clients::where('id', $id)->with([
+        $client = Clients::with([
            /// 'origin',
             /// 'destination',
             'clientStatus',
             'requestType'
-        ])->limit(1)->get();
+        ])->find($id);
         return response()->json([
-            'client' => $client
+            'client' => $this->convertSingleDataForInfo($client)
         ], 200);
     }
 

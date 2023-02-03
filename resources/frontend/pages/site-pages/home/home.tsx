@@ -39,6 +39,7 @@ const customStyles: ReactModal.Styles = {
         outline: "none",
         top: "50%",
         left: "50%",
+        overflow: "hidden",
         transform: "translate(-50% , -50%)",
 
         /// display: 'flex',
@@ -48,6 +49,7 @@ const customStyles: ReactModal.Styles = {
     },
     overlay: {
         zIndex: 400,
+        overflow: "hidden",
         background: "rgba(0, 0, 0, 0.35)",
         backdropFilter: "blur(5px)"
     }
@@ -78,7 +80,7 @@ const Home: React.FC<IHome> = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [agreement, setAgreement] = useState<boolean>(false);
     const [status, setStatus] = useState<number | null>(null);
-    const [carData, setCarData] = useState<Array<any>>([]);
+    const [carData, setCarData] = useState<Array<any>>(null);
     const [car, setCar] = useState<IOption>(null);
 
 
@@ -93,8 +95,8 @@ const Home: React.FC<IHome> = () => {
     async function calculateRoute(newData: any) {
         const directionsService = new google.maps.DirectionsService();
         const results = await directionsService.route({
-            origin: newData.origin.city + " " + newData.origin.street + " " + newData.origin.suite,
-            destination: newData.destination.city + " " + newData.destination.street + " " + newData.destination.suite,
+            origin: newData.origin,
+            destination: newData.destination,
             travelMode: google.maps.TravelMode.DRIVING
         });
         setDirectionsResponse(results);
@@ -143,6 +145,7 @@ const Home: React.FC<IHome> = () => {
         } else {
             const homeData = await homeAPI.getCLientById(id);
             dispatch(clientAction.fetching({clientById: homeData.client}));
+            setIsModalOpen(true);
             setShow(true);
         }
 
@@ -197,6 +200,7 @@ const Home: React.FC<IHome> = () => {
     };
 
     const changeFields = (options: Array<IOption>) => {
+        console.log(options,'options');
         let result = options.map(a => a.slug);
         localStorage.setItem("titles", JSON.stringify(result));
         if (result.length > 0) {
@@ -258,7 +262,9 @@ const Home: React.FC<IHome> = () => {
 
 
     const handlerCloseModal = () => {
+        dispatch(clientAction.fetching({clientById: null}));
         setCar(null)
+        setCarData(null)
         setDirectionsResponse(null);
         setDistance("");
         setDuration("");
@@ -295,6 +301,15 @@ const Home: React.FC<IHome> = () => {
             });
         }
     };
+
+    useEffect(() => {
+        if (isModalOpen) {
+            document.body.style.overflow = 'hidden'
+        }else{
+            document.body.style.overflow = 'unset';
+        }
+
+    }, [isModalOpen])
     return (
         clients && <>
             <div className={s.panel}>
@@ -332,12 +347,7 @@ const Home: React.FC<IHome> = () => {
 
                 </div>
                 {errorMessage && <div style={{color: "red"}}>{errorMessage}</div>}
-                {
-                    show && clientById &&
-                    <div>
-                        <InfoBlock clientById={clientById} calculateRoute={handlerOpenModal}/>
-                    </div>
-                }
+
                 <Modal
                     isOpen={isModalOpen !== false}
                     style={customStyles}
@@ -351,7 +361,13 @@ const Home: React.FC<IHome> = () => {
                             />
                         </div>
                         {
-                            carData.length > 0 && <>
+                            show && clientById &&
+                            <div className={s.modalDiv}>
+                                <InfoBlock clientById={clientById} calculateRoute={handlerOpenModal}/>
+                            </div>
+                        }
+                        {
+                            carData  && <div className={s.modalDiv}>
                                 <div className={s.selectDiv}>
                                     <Select
                                         getOptionValue={(option: IOption) => option.value}
@@ -367,9 +383,10 @@ const Home: React.FC<IHome> = () => {
                                     <Button isSubmit={true} type={'adminUpdate'}
                                             onClick={handlerSetCar}> {t('assign')}</Button>
                                 </div>
-                            </>
+                            </div>
                         }
-                        {isLoaded && directionsResponse && <div className={s.googleMap}>
+                        {isLoaded && directionsResponse && <div className={s.selectDiv}>
+
                             <GoogleMap
                                 ///  center={center}
                                 zoom={15}
@@ -407,10 +424,10 @@ const Home: React.FC<IHome> = () => {
                         placeholder={"title"}
                         options={defaultData}
                         onChange={(options: Array<IOption>) => changeFields(options)}
-                        getOptionValue={(option: IOption) => option.value}
+                        getOptionValue={(option: IOption) => option.slug}
                         getOptionLabel={(option: IOption) => t(option.label)}
                         value={selectedTitle}
-                        name={"filtre"}
+                        name={"filter"}
                         isMulti={true}
                         onChangePosition={changeSortPosition}
                     />}
