@@ -104,7 +104,11 @@ body {
 
 
 ///////Areg
-
+.table_wrapper {
+    margin-top: 10px;
+    overflow: auto;
+    //border: 1px solid #ddd;
+}
 .iconWrapper {
     i {
         border: 1px solid #ddd;

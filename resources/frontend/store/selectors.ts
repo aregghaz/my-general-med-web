@@ -7,6 +7,12 @@ export const getHomePageData = (state: AppStateType) => ({
     availableCount:state.homeReducer.availableCount,
     tripCount:state.homeReducer.tripCount
 })
+export const getAdminUsersData = (state: AppStateType) => ({
+    userdata:state.adminUsersReducer.userdata,
+    vendorCount:state.adminUsersReducer.vendorCount,
+    operatorCount:state.adminUsersReducer.operatorCount,
+
+})
 export const getClientData = (state:AppStateType)=>({
     clientById:state.clientReducer.clientById,
 })

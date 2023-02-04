@@ -13,6 +13,7 @@ import Modal from "react-modal";
 import InfoBlock from "../../../components/info-block/info-block";
 import {actions} from "../../../store/home";
 import {useDispatch} from "react-redux";
+import Tabs from "../../../components/tabs/tabs";
 
 interface Beneficiary {
     path: string;
@@ -31,7 +32,6 @@ const Users: React.FC<Beneficiary> = ({id}) => {
     const [tabId, setTabId] = useState();
     const [tabIdSelected, setTabIdSelected] = useState(3);
     const [dataID, setDataID] = useState(null);
-    const [tabs, setTabs] = useState([]);
     const [typeName, setTypeName] = useState<string>('driver')
     const navigate = useNavigate();
     const {t} = useTranslation();
@@ -40,7 +40,7 @@ const Users: React.FC<Beneficiary> = ({id}) => {
         (async () => {
             const homeData = await AdminApi.getVendorUsers(id, tabIdSelected)
             setData(homeData.data);
-            setTabs(homeData.roles)
+            //setTabs(homeData.roles)
         })();
         // dispatch(actions.setTitles(titles))
         // dispatch(actions.clearData())
@@ -84,12 +84,8 @@ const Users: React.FC<Beneficiary> = ({id}) => {
         localStorage.setItem("page", activeItem.toString());
     };
 
-    const handlerChangeTabs = (tabId: number, name: string) => {
-        alert(tabId + " __ " + name)
-        setTypeName(name)
-        setTabIdSelected(tabId);
-    };
 
+    const [typeId, setTypeId] = useState<number>(1);
     const customStyles: ReactModal.Styles = {
         content: {
             position: "fixed",
@@ -110,12 +106,43 @@ const Users: React.FC<Beneficiary> = ({id}) => {
             backdropFilter: "blur(5px)",
         },
     };
+    const tabs = [
+        {
+            id: 1,
+            name: "Operator",
+           // count: tripCount
+        },
+        {
+            id: 4,
+            name: "Vendor"
+            // count:45
+        },
+        // {
+        //     id: 3,
+        //     name: "Download History",
+        //     //count:38
+        // },
+        {
+            id: 2,
+            name: "Available Trips",
+         //   count: availableCount
+        }
+    ];
+    const handleActionMiddleware = () => {
 
+    }
+    const handlerChangeTabs = async (tabId: number) => {
+       /// setIds([]);
+        setTypeId(tabId);
+      ///  setLoading(true);
+    };
 
     return (
         data && (
             <>
                 {/* <InfoBlock  items={data}/> */}
+                <Tabs  typeId={typeId} tabs={tabs} handlerChangeTabs={handlerChangeTabs}/>
+
                 <List
                     data={data}
                     titles={titles}
@@ -123,7 +150,6 @@ const Users: React.FC<Beneficiary> = ({id}) => {
                     isEdit
                     paginated={false}
                     isCreate
-                    tabs={tabs}
                     tabId={tabIdSelected}
                     handlerAddItem={handlerAddBeneficiaryItem}
                     handlerDeleteItem={handlerDeleteModal}

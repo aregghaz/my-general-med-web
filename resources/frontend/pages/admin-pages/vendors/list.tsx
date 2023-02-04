@@ -1,123 +1,173 @@
-import React, {useEffect, useState} from 'react'
-import {AdminApi} from '../../../api/admin-api/admin-api'
-import List from '../../layouts/templates/list/list'
-import {useNavigate} from '@reach/router'
+import React, { useEffect, useRef, useState } from "react";
+import { AdminApi } from "../../../api/admin-api/admin-api";
+import List from "../../layouts/templates/list/list";
+import { useNavigate } from "@reach/router";
 import Button from "../../../components/button/button";
 import s from "../../layouts/templates/list/list.module.scss";
-import Select, {IOption, IOptionMultiselect} from '../../../components/select/select'
-import {useTranslation} from 'react-i18next'
-import Modal from 'react-modal'
-import numberFormatting from '../../../constants/utils';
-import BackDropSearch from '../../../components/backdrop-search/backdrop-search';
-import {useDispatch} from "react-redux";
-import {actions} from "../../../store/home";
-import PopupModal from "../../../components/popup-modal/popup-modal";
+import { useTranslation } from "react-i18next";
+import Modal from "react-modal";
+import { useDispatch, useSelector } from "react-redux";
+import { actions } from "../../../store/adminUser";
+import Tabs from "../../../components/tabs/tabs";
+import { getAdminUsersData } from "../../../store/selectors";
+import { homeAPI } from "../../../api/site-api/home-api";
+import { useInView } from "react-intersection-observer";
+import { useJsApiLoader } from "@react-google-maps/api";
+import { GOOGLE_API_KEY } from "../../../environments";
 
 interface IVendors {
-    path: string
+    path: string;
 }
 
 const Vendors: React.FC<IVendors> = () => {
     const dispatch = useDispatch();
-    const crudKey = 'vendors'
-    const [data, setData] = useState([])
-    const [isModalOpen, setIsModalOpen] = useState(false)
-    const [countPages, setCountPages] = useState(null)
-    const [deleteId, setDeleteId] = useState(null)
-    const [count, setCount] = useState({from: 0, to: 10})
-    const [activeItem, setActiveItem] = useState(null)
+    const crudKey = "vendors";
+    const countRef = useRef(2);
 
+    const [data, setData] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [countPages, setCountPages] = useState(null);
+    const [deleteId, setDeleteId] = useState(null);
+    const [count, setCount] = useState({ from: 0, to: 10 });
+    const [activeItem, setActiveItem] = useState(null);
+    const [typeId, setTypeId] = useState<number>(1);
+    const adminUsersData = useSelector(getAdminUsersData);
+    const { userdata, operatorCount, vendorCount } = adminUsersData;
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState<boolean>(false);
+    const [agreement, setAgreement] = useState<boolean>(false);
 
-    const navigate = useNavigate()
-    const {t} = useTranslation()
+    const { t } = useTranslation();
+    const [ref, inView] = useInView({
+        threshold: 1
+    });
+    const {isLoaded} = useJsApiLoader({
+        googleMapsApiKey: GOOGLE_API_KEY,
+        libraries: ["geometry", "drawing", "places"]
+    });
     useEffect(() => {
-        (
-            async () => {
-                const data = await AdminApi.getAllVendorData(crudKey, 1, '')
-                data.to
-                setCount({from: data.to - 3, to: data.to + 5})
-                setData(data.vendors)
-
-
+        (async () => {
+            if ((inView || loading) && !open) {
+                const data = await AdminApi.getAllVendorData(crudKey, 1, "");
+                data.to;
+                setCount({ from: data.to - 3, to: data.to + 5 });
+                dispatch(actions.fetching(
+                    {
+                        userdata: data.data,
+                        operatorCount: data.operators,
+                        vendorCount: data.vendors
+                    }
+                ));
+                countRef.current++;
+                setLoading(false);
             }
-        )()
-        ///  dispatch(actions.setTitles(titles))
-        //// dispatch(actions.clearData())
-    }, [])
+        })();
+        return () => {
+            homeAPI.cancelRequest();
+        };
 
+    }, [inView, loading, agreement]);
 
+    const tabs = [
+        {
+            id: 1,
+            name: "Vendor",
+            count: vendorCount
+        },
+        {
+            id: 2,
+            name: "Operator",
+            count: operatorCount
+        }
+    ];
+    const handlerChangeTabs = async (tabId: number) => {
+        /// setIds([]);
+        setTypeId(tabId);
+        ///  setLoading(true);
+    };
     const titles: Array<string> = [
-        'id',
-        'companyName',
-        'email',
-        'address',
-        'phone_number',
-        'fields',
-        'action',
-    ]
-    const handlerAddBeneficiaryItem = () => navigate(`/admin/${crudKey}/create`)
+        "id",
+        "companyName",
+        "email",
+        "address",
+        "phone_number",
+        "fields",
+        "action"
+    ];
+    const handlerAddBeneficiaryItem = () => navigate(`/admin/${crudKey}/create`);
 
 
     const handlerCloseModal = () => {
-        setIsModalOpen(false)
-    }
+        setIsModalOpen(false);
+    };
     const handlerDeleteModal = (id: number) => {
-        setDeleteId(id)
-        setIsModalOpen(true)
-    }
+        setDeleteId(id);
+        setIsModalOpen(true);
+    };
 
 
     const handlerDeleteItem = () => {
 
         AdminApi.delete(crudKey, deleteId).then(data => {
-            setData(data.data.beneficiaries)
-            setIsModalOpen(false)
-        })
-    }
-    const handlerEditBeneficiaryItem = (id: number) => navigate(`/admin/${crudKey}/${id}`)
-    const HandlerGetProducts = (id: number) => navigate(`/admin/users-products/${id}`)
+            setData(data.data.beneficiaries);
+            setIsModalOpen(false);
+        });
+    };
+    const handlerEditBeneficiaryItem = (id: number) => navigate(`/admin/${crudKey}/${id}`);
+    const HandlerGetProducts = (id: number) => navigate(`/admin/users-products/${id}`);
 
     const HandlerPagination = async (activeItem: number) => {
-        const query = localStorage.getItem('query')
-     ///   const homeData = await AdminApi.getAllData(crudKey, activeItem + 1, query ? query : '')
-     //    setCount({from: homeData.current_page, to: homeData.current_page + 5})
-     //    setData(homeData.data)
+        const query = localStorage.getItem("query");
+        ///   const homeData = await AdminApi.getAllData(crudKey, activeItem + 1, query ? query : '')
+        //    setCount({from: homeData.current_page, to: homeData.current_page + 5})
+        //    setData(homeData.data)
         ///  const role = localStorage.getItem('role');
-        localStorage.setItem('page', activeItem.toString());
+        localStorage.setItem("page", activeItem.toString());
 
-    }
+    };
 
 
     const handlerGetVendorUsers = async (id: number) => {
-        navigate(`/admin/users/${id}`)
-    }
+        navigate(`/admin/users/${id}`);
+    };
     const customStyles: ReactModal.Styles = {
         content: {
-            position: 'fixed',
-            border: 'none',
-            overflowY: 'unset',
-            outline: 'none',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50% , -50%)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '290px'
+            position: "fixed",
+            border: "none",
+            overflowY: "unset",
+            outline: "none",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50% , -50%)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "290px"
         },
         overlay: {
             zIndex: 400,
-            background: 'rgba(0, 0, 0, 0.35)',
-            backdropFilter: 'blur(5px)'
+            background: "rgba(0, 0, 0, 0.35)",
+            backdropFilter: "blur(5px)"
         }
-    }
+    };
 
 
     return (
-        data &&
+        userdata &&
         <>
+            <div style={{
+                padding: 10
+                /// border: 1px solid #ddd;
+                ///  background-color: $whiteColor;
+
+            }}>
+                <Tabs typeId={typeId} tabs={tabs} handlerChangeTabs={handlerChangeTabs} />
+
+            </div>
+
+
             <List
-                data={data}
+                data={userdata}
                 titles={titles}
                 isDelete
                 isEdit
@@ -132,7 +182,7 @@ const Vendors: React.FC<IVendors> = () => {
                 count={count}
                 paginated={true}
                 activeItem={activeItem}
-                className={'pagination'}
+                className={"pagination"}
             />
             <Modal
                 isOpen={isModalOpen !== false}
@@ -141,24 +191,24 @@ const Vendors: React.FC<IVendors> = () => {
             >
                 <div className={s.modalBody}>
                     <div className={s.iconWrapper}>
-                        <i className='cancelicon-'
+                        <i className="cancelicon-"
                            onClick={handlerCloseModal}
                         />
                     </div>
 
-                    <i className={`binicon- ${s.icon}`}/>
-                    <p className={s.text}>{t('do_you_want_to_delete')}</p>
+                    <i className={`binicon- ${s.icon}`} />
+                    <p className={s.text}>{t("do_you_want_to_delete")}</p>
                     <div className={s.buttons}>
-                        <Button type={'green'} onClick={handlerDeleteItem}
-                                className={s.button}>{t('yes')}</Button>
-                        <Button type={'transparent'} onClick={handlerCloseModal} className={s.button}>{t('no')}</Button>
+                        <Button type={"green"} onClick={handlerDeleteItem}
+                                className={s.button}>{t("yes")}</Button>
+                        <Button type={"transparent"} onClick={handlerCloseModal} className={s.button}>{t("no")}</Button>
                     </div>
                 </div>
             </Modal>
 
         </>
-    )
-}
+    );
+};
 
 
-export default Vendors
+export default Vendors;

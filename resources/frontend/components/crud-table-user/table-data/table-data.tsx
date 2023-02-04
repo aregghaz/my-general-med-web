@@ -1,6 +1,5 @@
-import React from 'react'
-import {IClientsData} from '../../../types/home-types'
-import s from '../crud-table.module.scss'
+import React from "react";
+import s from "../crud-table.module.scss";
 
 
 interface ITableData {
@@ -10,7 +9,7 @@ interface ITableData {
     field?: string,
     item: any,
 
-    handlerGetClientData?: (event:any,id: number) => void
+    handlerGetClientData?: (event: any, id: number) => void
     handlerOnClick?: (event: any) => void
 }
 
@@ -23,21 +22,22 @@ const TableData: React.FC<ITableData> = (
         children,
         item,
         field,
-       handlerGetClientData
+        handlerGetClientData
     }
 ) => {
+
     return (
         <td
-            className={((field=== 'origin' || field === 'destination') ? `${s.tableTd} ${s.address}`: `${s.tableTd}` )}
-            colSpan={colspan||1}
+            className={s.classNameField}
+            colSpan={colspan || 1}
 
             rowSpan={rowspan || 1}
-            onClick={(event) => handlerGetClientData(event, item['id'])}
+            onClick={(event) => handlerGetClientData(event, item["id"])}
         >
             {children}
         </td>
-    )
-}
+    );
+};
 
 
-export default TableData
+export default TableData;

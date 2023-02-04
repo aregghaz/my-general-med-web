@@ -98,7 +98,7 @@
     ///border-bottom: 1px solid #ddd;
     ////margin-bottom: 10px;
     color: $fontColor;
-    min-width: 150px;
+    min-width: 190px;
     //FIXME: Fix for large sizes & no support for vw
     font-size: min(max(16px, 1vw), 19px);
     @media only screen and (max-width: $mediumDisplay) {
@@ -129,8 +129,8 @@
     white-space: nowrap;
     font-size: min(max(16px, 1vw), 25px);
    //// margin-bottom: 10px;
-    min-width: 150px;
-
+    min-width: 170px;
+    text-align: center;
     @media only screen and (max-width: $mediumDisplay) {
         font-size: min(max(12px, 1vw), 25px);
     }
@@ -143,8 +143,21 @@
         width: 40px;
     }
 }
+.classNameField {
+    display: table-cell;
+    /// padding: 9px;
+    text-align: center;
+    /// font-weight: bold;
+    vertical-align: inherit;
+    //// margin-bottom: 10px;
+    color: $fontColor;
+}
 .address {
     min-width: 350px;
+    width: 100%;
+}
+.gender {
+    max-width: 50px;
     width: 100%;
 }
 .inputWrapper {

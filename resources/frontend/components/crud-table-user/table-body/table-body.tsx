@@ -46,24 +46,6 @@ const TableBody: React.FC<ITableBody> = (
                     return keys.length > 0 && (
                         <TableRow key={index} data-rowid={item['id']}
                                   className={selectedIds?.includes(item['id']) ? `${s.chosen}` : ""}>
-                            <TableData  item={99999} key={999999}>
-                                <div className={s.iconsWrapper}>
-                                    {
-
-                                        <EditIcon
-                                            className={s.editIcon}
-                                            onClick={() => handlerEditItem(item.id)}
-                                        />
-                                    }
-                                    {
-
-                                        <TrashIcon
-                                            className={s.trashIcon}
-                                            onClick={() => handlerDeleteItem(item.id)}
-                                        />
-                                    }
-                                </div>
-                            </TableData>
                             {
                                 keys.map((key: any, i: number) => {
                                         return i !== 0 && (

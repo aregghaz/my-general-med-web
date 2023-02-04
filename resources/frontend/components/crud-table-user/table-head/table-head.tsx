@@ -38,18 +38,26 @@ const TableHead: React.FC<ITableHead> = (
             />
         }
     }
+    var classNameField;
+
     return (
         <thead className={s.tableHead}>
         <TableRow>
-            <th>
-                {t('action')}
-            </th>
             {
                 titles && titles
-                    .map((title, index) => title.label !=='id' && (
+                    .map((title, index) => {
+                        var classNameField;
+                        if (title.label === "origin" || title.label === "destination") {
+                            classNameField = `${s.tableTd} ${s.address}`;
+                        } else if(title.label === 'gender') {
+                            classNameField = `${s.tableTd}  ${s.gender}`;
+                        }else {
+                            classNameField = `${s.tableTd}`;
+                        }
+                        return  title.label !=='id' && (
                             <th
                                 onClick={() => titleSort(title.label)}
-                                className={` ${s.tableTd} ${s.tableTh}`}
+                                 className={classNameField}
                                 key={index}
                                 colSpan={colspan ||1}
                                 rowSpan={rowspan || 1}
@@ -57,10 +65,11 @@ const TableHead: React.FC<ITableHead> = (
                             >
                                 {t(title.label)}
 
-                                    <span className={s.arrowSpan}>{isNotActions(title.label)}</span>
+                                <span className={s.arrowSpan}>{isNotActions(title.label)}</span>
 
                             </th>
                         )
+                        }
                     )
             }
         </TableRow>

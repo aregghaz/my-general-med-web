@@ -1,21 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\VendorRequest;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\RoleCollection;
-use App\Models\Role;
-use App\Models\Vendor;
-use App\Models\User;
-use App\Models\ClientTable;
-use App\Models\ClientStatus;
-use Illuminate\Http\Request;
-use App\Http\Resources\VendorsCollection;
-use App\Http\Resources\UserCollection;
-
 use App\Http\Resources\StatusCollection;
+use App\Http\Resources\UserCollection;
+use App\Http\Resources\VendorsCollection;
+use App\Models\ClientStatus;
+use App\Models\ClientTable;
+use App\Models\Role;
+use App\Models\User;
+use App\Models\Vendor;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use \Validator;
+use Validator;
 
 class VendorController extends Controller
 {
@@ -26,7 +25,8 @@ class VendorController extends Controller
      */
     public function index(Request $request)
     {
-        /// $vendorData = Vendor::paginate(20);
+        $vendorCount = User::where('role_id', 2)->count();;
+        $operatorCount = User::where(['role_id'=> 4, "vendor_id" => 1])->count();;
         if (isset($request->querySearch)) {
             $vendorData = User::where('role_id', 2)->get();
         } else {
@@ -37,7 +37,9 @@ class VendorController extends Controller
 
         return response()->json(
             [
-                'vendors' => new VendorsCollection($vendorData),
+                'data' => new VendorsCollection($vendorData),
+                'operators' => $operatorCount,
+                'vendors' => $vendorCount,
             ],
             200
         );

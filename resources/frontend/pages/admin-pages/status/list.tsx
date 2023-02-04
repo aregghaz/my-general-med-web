@@ -10,6 +10,7 @@ import Modal from 'react-modal'
 import InfoBlock from "../../../components/info-block/info-block";
 import {actions} from "../../../store/home";
 import {useDispatch} from "react-redux";
+import Tabs from "../../../components/tabs/tabs";
 
 interface Beneficiary {
     path: string
@@ -96,11 +97,6 @@ const Status: React.FC<Beneficiary> = () => {
             count: 0
         },
         {
-            id: 3,
-            name: "type_of_trip",
-            count: 0
-        },
-        {
             id: 4,
             name: "request_type",
             count: 0
@@ -140,13 +136,21 @@ const Status: React.FC<Beneficiary> = () => {
         data &&
         <>
             {/* <InfoBlock  items={data}/> */}
+            <div style={{
+                padding: 10
+                /// border: 1px solid #ddd;
+                ///  background-color: $whiteColor;
+
+            }}>
+                <Tabs typeId={tabId} tabs={tabs} handlerChangeTabs={handlerChangeTabs} />
+
+            </div>
+
             <List
                 data={data}
                 titles={titles}
                 isDelete
                 isEdit
-                tabs={tabs}
-                tabId={tabId}
                 paginated={false}
                 isCreate
                 isGetItems

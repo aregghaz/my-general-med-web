@@ -12,6 +12,7 @@ import {useInView} from "react-intersection-observer";
 import InfoBlock from "../../../components/info-block/info-block";
 import Upload from "-!svg-react-loader!../../../images/Upload.svg";
 import Import from "-!svg-react-loader!../../../images/Import.svg";
+import Filters from "-!svg-react-loader!../../../images/filters.svg";
 import Search from "-!svg-react-loader!../../../images/Search.svg";
 import Close from "-!svg-react-loader!../../../images/Close.svg";
 import axios from "axios";
@@ -23,13 +24,13 @@ import MultiSelectSort from "../../../components/select/sort-select";
 import {vendorAPI} from "../../../api/site-api/vendor-api";
 import Tabs from "../../../components/tabs/tabs";
 import Button from "../../../components/button/button";
-import { AdminApi } from "../../../api/admin-api/admin-api";
 import { GOOGLE_API_KEY } from "../../../environments";
-import { navigate } from "@reach/router";
+import { DownloadTableExcel } from "react-export-table-to-excel";
+import { AdminApi } from "../../../api/admin-api/admin-api";
 
 const center = {lat: 48.8584, lng: 2.2945};
 
-interface IClients {
+interface IHome {
     path: string;
 }
 
@@ -41,6 +42,7 @@ const customStyles: ReactModal.Styles = {
         outline: "none",
         top: "50%",
         left: "50%",
+        overflow: "hidden",
         transform: "translate(-50% , -50%)",
 
         /// display: 'flex',
@@ -50,13 +52,13 @@ const customStyles: ReactModal.Styles = {
     },
     overlay: {
         zIndex: 400,
+        overflow: "hidden",
         background: "rgba(0, 0, 0, 0.35)",
         backdropFilter: "blur(5px)"
     }
 };
 
-const Clients: React.FC<IClients> = () => {
-    const crudKey = 'clients'
+const Home: React.FC<IHome> = () => {
     const {t} = useTranslation();
     const contentRef = useRef();
     const countRef = useRef(2);
@@ -76,14 +78,15 @@ const Clients: React.FC<IClients> = () => {
     const [map, setMap] = useState(/** @type google.maps.Map */(null));
     const [directionsResponse, setDirectionsResponse] = useState(null);
     const [distance, setDistance] = useState("");
+    const [filtre, setfiltre] = useState(false);
     const [duration, setDuration] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [agreement, setAgreement] = useState<boolean>(false);
     const [status, setStatus] = useState<number | null>(null);
-    const [carData, setCarData] = useState<Array<any>>([]);
+    const [carData, setCarData] = useState<Array<any>>(null);
     const [car, setCar] = useState<IOption>(null);
-
+    const tableRef = useRef(null);
 
     const {isLoaded} = useJsApiLoader({
         googleMapsApiKey: GOOGLE_API_KEY,
@@ -96,8 +99,8 @@ const Clients: React.FC<IClients> = () => {
     async function calculateRoute(newData: any) {
         const directionsService = new google.maps.DirectionsService();
         const results = await directionsService.route({
-            origin: newData.origin.city + " " + newData.origin.street + " " + newData.origin.suite,
-            destination: newData.destination.city + " " + newData.destination.street + " " + newData.destination.suite,
+            origin: newData.origin,
+            destination: newData.destination,
             travelMode: google.maps.TravelMode.DRIVING
         });
         setDirectionsResponse(results);
@@ -137,15 +140,24 @@ const Clients: React.FC<IClients> = () => {
 
     const handlerGetClientData = async (event: any, id: number) => {
         if (event.ctrlKey || event.shiftKey) {
-            setIds((state) => {
-                return [
-                    ...state,
-                    id
-                ];
-            });
+            const objWithIdIndex = ids.findIndex((value) => value === id);
+            if(objWithIdIndex > -1){
+                setIds((state) => {
+                    return state.filter((value) => value !== id)
+                });
+            }else{
+                setIds((state) => {
+                    return [
+                        ...state,
+                        id
+                    ];
+                });
+            }
+
         } else {
             const homeData = await homeAPI.getCLientById(id);
             dispatch(clientAction.fetching({clientById: homeData.client}));
+            setIsModalOpen(true);
             setShow(true);
         }
 
@@ -155,7 +167,7 @@ const Clients: React.FC<IClients> = () => {
     useEffect(() => {
         (async () => {
             if ((inView || loading) && !open) {
-
+                const titlesData = localStorage.getItem("titles");
                 const homeData = await AdminApi.getAllData({
                     titles: titles ? titles : [],
                     showMore: countRef.current,
@@ -200,6 +212,7 @@ const Clients: React.FC<IClients> = () => {
     };
 
     const changeFields = (options: Array<IOption>) => {
+        console.log(options,'options');
         let result = options.map(a => a.slug);
         localStorage.setItem("titles", JSON.stringify(result));
         if (result.length > 0) {
@@ -231,7 +244,7 @@ const Clients: React.FC<IClients> = () => {
     };
 
     const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-    const handlerEditItem = (id:number) => navigate(`/admin/clients/${id}`)
+
     if (agreement) {
         delay(200).then(async () => {
             await homeAPI.changeClientsTypes({status, ids});
@@ -261,7 +274,9 @@ const Clients: React.FC<IClients> = () => {
 
 
     const handlerCloseModal = () => {
+        dispatch(clientAction.fetching({clientById: null}));
         setCar(null)
+        setCarData(null)
         setDirectionsResponse(null);
         setDistance("");
         setDuration("");
@@ -298,15 +313,38 @@ const Clients: React.FC<IClients> = () => {
             });
         }
     };
+
+    useEffect(() => {
+        if (isModalOpen) {
+            document.body.style.overflow = 'hidden'
+        }else{
+            document.body.style.overflow = 'unset';
+        }
+
+    }, [isModalOpen])
+
+    const showFilter = () =>{
+        setfiltre(!filtre)
+    }
     return (
         clients && <>
             <div className={s.panel}>
                 <div className={s.upload_panel}>
-                    <Tabs  typeId={typeId} tabs={tabs} handlerChangeTabs={handlerChangeTabs}/>
+                    <Tabs isAdmin handleActionMiddleware={handleActionMiddleware} ids={ids} typeId={typeId} tabs={tabs} handlerChangeTabs={handlerChangeTabs}/>
                     <div style={{display: "flex", gap: "10px"}}>
+                        <div  className={s.import_block}>
+                            <Filters height="24px"  onClick={showFilter}/>
+                        </div>
                         <div className={s.upload_block}>
                             <label htmlFor="uploadFile">
-                                <Upload/>
+                                <DownloadTableExcel
+                                    filename="users table"
+                                    sheet="users"
+                                    currentTableRef={tableRef.current}
+                                >
+                                    <Upload/>
+                                </DownloadTableExcel>
+
                             </label>
                             <input
                                 id="uploadFile"
@@ -335,12 +373,7 @@ const Clients: React.FC<IClients> = () => {
 
                 </div>
                 {errorMessage && <div style={{color: "red"}}>{errorMessage}</div>}
-                {
-                    show && clientById &&
-                    <div>
-                        <InfoBlock clientById={clientById} calculateRoute={handlerOpenModal}/>
-                    </div>
-                }
+
                 <Modal
                     isOpen={isModalOpen !== false}
                     style={customStyles}
@@ -354,7 +387,13 @@ const Clients: React.FC<IClients> = () => {
                             />
                         </div>
                         {
-                            carData.length > 0 && <>
+                            show && clientById &&
+                            <div className={s.modalDiv}>
+                                <InfoBlock clientById={clientById} calculateRoute={handlerOpenModal}/>
+                            </div>
+                        }
+                        {
+                            carData  && <div className={s.modalDiv}>
                                 <div className={s.selectDiv}>
                                     <Select
                                         getOptionValue={(option: IOption) => option.value}
@@ -370,9 +409,10 @@ const Clients: React.FC<IClients> = () => {
                                     <Button isSubmit={true} type={'adminUpdate'}
                                             onClick={handlerSetCar}> {t('assign')}</Button>
                                 </div>
-                            </>
+                            </div>
                         }
-                        {isLoaded && directionsResponse && <div className={s.googleMap}>
+                        {isLoaded && directionsResponse && <div className={s.selectDiv}>
+
                             <GoogleMap
                                 ///  center={center}
                                 zoom={15}
@@ -405,27 +445,20 @@ const Clients: React.FC<IClients> = () => {
                     </div>
                 </Modal>
                 <div className={s.iconBlock}>
-                    {Object.values(selectedTitle).length > 0 && <MultiSelectSort
+                    {filtre && Object.values(selectedTitle).length > 0 && <MultiSelectSort
                         isSearchable={true}
                         placeholder={"title"}
                         options={defaultData}
                         onChange={(options: Array<IOption>) => changeFields(options)}
-                        getOptionValue={(option: IOption) => option.value}
+                        getOptionValue={(option: IOption) => option.slug}
                         getOptionLabel={(option: IOption) => t(option.label)}
                         value={selectedTitle}
-                        name={"filtre"}
+                        name={"filter"}
                         isMulti={true}
                         onChangePosition={changeSortPosition}
                     />}
                 </div>
-                <div className={s.upload_panel}>
-                    <div
-                        className={`${s.action_block} ${typeId === 2 || typeId === 4 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
-                        onClick={() => handleActionMiddleware(99)}
-                    >
-                        Assign to Vendor
-                    </div>
-                </div>
+
 
             </div>
             <PopupModal isOpen={isOpen} agreeWith={agreeWith} notAgreeWith={notAgreeWith}/>
@@ -433,12 +466,10 @@ const Clients: React.FC<IClients> = () => {
                 <CrudTable
                     titles={selectedTitle}
                     data={clients}
+                    tableRef={tableRef}
                     handlerGetClientData={handlerGetClientData}
-                    handlerEditItem={handlerEditItem}
                     className={"pagination"}
                     paginated={false}
-                    isEdit
-                    isDelete
                     selectedIds={ids}
                     typeId={typeId}
                 />
@@ -448,4 +479,4 @@ const Clients: React.FC<IClients> = () => {
         </>
     );
 };
-export default Clients;
+export default Home;

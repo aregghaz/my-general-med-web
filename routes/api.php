@@ -1,18 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\VendorController;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\VendorController;
 use App\Http\Controllers\Vendor\CarsController;
 use App\Http\Controllers\Vendor\VendorUsersController;
-
-use App\Http\Controllers\WeatherApiController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\AdminController;
 
 /*
 |--------------------------------------------------------------------------
