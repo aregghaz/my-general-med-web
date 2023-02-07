@@ -5,7 +5,7 @@ import {actions} from "../../../store/home";
 import {clientAction} from "../../../store/client";
 import {getClientData, getHomePageData} from "../../../store/selectors";
 import {homeAPI} from "../../../api/site-api/home-api";
-import s from "./home.module.scss";
+import s from "../../../styles/home.module.scss";
 import CrudTable from "../../../components/crud-table-user/crud-table";
 import Select, {IOption} from "../../../components/select/select";
 import {useInView} from "react-intersection-observer";
@@ -56,6 +56,7 @@ const customStyles: ReactModal.Styles = {
         backdropFilter: "blur(5px)"
     }
 };
+
 
 const Home: React.FC<IHome> = () => {
     const {t} = useTranslation();

@@ -22,20 +22,21 @@ class Clients extends Model
         'vendor_id',
         'type_id',
         'trip_id',
-        'name',
-        'surname',
+        'fullName',
         'gender',///seect
         'los',
-        'phone_number',
         'date_of_service',
-        'appointment_time',
         'pick_up',
         'drop_down',
         'request_type', ///seect
         'status',///seect
+        'origin',
+        'originorigin_phone',
         'origin_id',
-        "destination_id",
         'origin_comment',
+        "destination_id",
+        "destination",
+        "destination_phone",
         'destination_comments',
         'miles',
         'member_uniqie_identifer',
@@ -45,15 +46,15 @@ class Clients extends Model
 
     ];
 
-    public function origin()
-    {
-        return $this->hasOne(OriginAddress::class, 'id', 'origin_id');
-    }
-
-    public function destination()
-    {
-        return $this->hasOne(DestinationAddress::class, 'id', 'destination_id');
-    }
+//    public function origin()
+//    {
+//        return $this->hasOne(OriginAddress::class, 'id', 'origin_id');
+//    }
+//
+//    public function destination()
+//    {
+//        return $this->hasOne(DestinationAddress::class, 'id', 'destination_id');
+//    }
 
     public function typeOfTrip()
     {

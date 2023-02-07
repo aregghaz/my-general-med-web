@@ -138,49 +138,47 @@ class TestController extends Controller
 //            }
 
             //////Clinet originData
-            $destinetionDataCheck = DestinationAddress::where('street', $data[$destinetionData[1]])->first();
-            $destinetionDataId = 0;
-            if (isset($destinetionDataCheck)) {
-                $destinetionDataId = $destinetionDataCheck->id;
-            } else {
-                //   dd(count($destinetionData), $data, $data[17]);
-                $desData = DestinationAddress::create([
-                    'name' => $data[$destinetionData[0]],
-                    'street' => $data[$destinetionData[1]],
-                    'suite' => $data[$destinetionData[2]],
-                    'city' => $data[$destinetionData[3]],
-                    'state' => $data[$destinetionData[4]],
-                    'postal' => $data[$destinetionData[5]],
-                    'country' => $data[$destinetionData[6]],
-                    'phone' => $data[$destinetionData[7]],
-
-                ]);
-                $destinetionDataId = $desData->id;
-            }
+//            $destinetionDataCheck = DestinationAddress::where('street', $data[$destinetionData[1]])->first();
+//            $destinetionDataId = 0;
+//            if (isset($destinetionDataCheck)) {
+//                $destinetionDataId = $destinetionDataCheck->id;
+//            } else {
+//                //   dd(count($destinetionData), $data, $data[17]);
+//                $desData = DestinationAddress::create([
+//                    'name' => $data[$destinetionData[0]],
+//                    'street' => $data[$destinetionData[1]],
+//                    'suite' => $data[$destinetionData[2]],
+//                    'city' => $data[$destinetionData[3]],
+//                    'state' => $data[$destinetionData[4]],
+//                    'postal' => $data[$destinetionData[5]],
+//                    'country' => $data[$destinetionData[6]],
+//                    'phone' => $data[$destinetionData[7]],
+//
+//                ]);
+//                $destinetionDataId = $desData->id;
+//            }
 
             //////Clinet destination
-            $originDa = OriginAddress::where('street', $data[$originData[1]])->first();
-            $originDataId = 0;
-            if (isset($originDa)) {
-                $originDataId = $originDa->id;
-            } else {
-                $OriginAddressData = OriginAddress::create([
-                    'name' => $data[$originData[0]],
-                    'street' => $data[$originData[1]],
-                    'suite' => $data[$originData[2]],
-                    'city' => $data[$originData[3]],
-                    'state' => $data[$originData[4]],
-                    'postal' => $data[$originData[5]],
-                    'country' => $data[$originData[6]],
-                    'phone' => $data[$originData[7]]
+//            $originDa = OriginAddress::where('street', $data[$originData[1]])->first();
+//            $originDataId = 0;
+//            if (isset($originDa)) {
+//                $originDataId = $originDa->id;
+//            } else {
+//                $OriginAddressData = OriginAddress::create([
+//                    'name' => $data[$originData[0]],
+//                    'street' => $data[$originData[1]],
+//                    'suite' => $data[$originData[2]],
+//                    'city' => $data[$originData[3]],
+//                    'state' => $data[$originData[4]],
+//                    'postal' => $data[$originData[5]],
+//                    'country' => $data[$originData[6]],
+//                    'phone' => $data[$originData[7]]
+//
+//                ]);
+//
+//                $originDataId = $OriginAddressData->id;
+//            }
 
-                ]);
-
-                $originDataId = $OriginAddressData->id;
-            }
-            // dd(111111);
-            ///    dd( (int)rand(1,4));
-            // dd(  ['client_id' => (int)rand(1,4)]);
             $clients = Clients::create(
                 [
                     'vendor_id' => $vendorId,
@@ -190,7 +188,7 @@ class TestController extends Controller
                     'fullName' => $data[$name] . ' '.  $data[$surname],
                     'gender' => $genderType,
                     'los' => $data[$los],
-                    'phone_number' => $data[$phone_number],
+                   /// 'phone_number' => $data[$phone_number],
                     'date_of_service' => $data[$date_of_service],
                     ///'appointment_time' => $data[$appointment_time],
                     'pick_up' => $data[$pick_up],
@@ -201,6 +199,7 @@ class TestController extends Controller
                     'origin_phone' => $data[$originData[7]],
                     ///'origin_id' => $originDataId,
                     'origin_comment' => $data[$origin_comment],
+                    'destination_phone' => $data[$destinetionData[7]],
                     "destination" => $data[$destinetionData[0]] . ' ' . $data[$destinetionData[1]] . ' ' . $data[$destinetionData[2]] . ' ' . $data[$destinetionData[3]],
                    /// "destination_id" => $destinetionDataId,
                     'destination_comments' => $data[$destination_comments],

@@ -29,7 +29,7 @@ import ClientEdit from './pages/admin-pages/clients/edit'
 import ClientCreate from './pages/admin-pages/clients/create'
 import Vendors from './pages/admin-pages/vendors/list'
 import VendorEdit from './pages/admin-pages/vendors/edit'
-import VendorCreate from './pages/admin-pages/vendors/create'
+import VendorCreate from './pages/admin-pages/vendors/create/vendor'
 import Status from './pages/admin-pages/status/list'
 import StatusCreate from './pages/admin-pages/status/create'
 import StatusEdit from './pages/admin-pages/status/edit'
@@ -40,6 +40,7 @@ import VendorDriverEdit from './pages/site-pages/users/edit/driver'
 import Cars from './pages/site-pages/cars/list'
 import CarsCreate from './pages/site-pages/cars/create'
 import CarsEdit from "./pages/site-pages/cars/edit";
+import OperatorCreate from "./pages/admin-pages/vendors/create/operator";
 
 const App = (): JSX.Element => (
     <Provider store={store}>
@@ -59,7 +60,7 @@ const App = (): JSX.Element => (
                 <SerialItem path="/serials/:slug"/> */}
                 <NotFound default/>
             </Site>
-            <PrivateRoute path="/admin">
+            <Site path="/admin">
                 <Dashboard path="/"/>
                 <Users path="/users/:id"/>
                 {/* <UserEdit path="/users/:id"/> */}
@@ -69,12 +70,13 @@ const App = (): JSX.Element => (
                 <ClientCreate path='clients/create'/>
                 <Vendors path="vendors"/>
                 <VendorEdit path='vendors/:id'/>
-                <VendorCreate path='vendors/create'/>
+                <VendorCreate path='vendors/create/2'/>
+                <OperatorCreate path='vendors/create/4'/>
                 <Status path='status'/>
                 <StatusCreate path='status/create'/>
                 <StatusEdit path='changeStatus/:id'/>
                 <NotFound default/>
-            </PrivateRoute>
+            </Site>
 
         </Router>
     </Provider>

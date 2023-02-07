@@ -23,14 +23,12 @@ class ClientsController extends Controller
     public function index(Request $request)
     {
 
-
+dd('clients');
 
         if (isset($request->querySearch)) {
             $clients = Clients::where('member_uniqie_identifer', 'LIKE', '%' . $request->querySearch . '%')->orWhere('car_id', 'LIKE', '%' . $request->querySearch . '%')->paginate(20);
         } else {
             $clients = Clients::with([
-                'origin',
-                'destination',
                 'typeOfTrip',
                 'escortType',
                 'genderType',
@@ -51,7 +49,6 @@ class ClientsController extends Controller
                 'appointment_time',
                 'pick_up',
                 'drop_down',
-
                 'request_type', ///seect
                 'status', ///seect
                 'origin_id',

@@ -15,6 +15,7 @@ interface ICreate {
     fields: Array<IItem>
     crudKey?: string
     isAdmin?: boolean
+    redirectKey?: string
     title: string,
     requiredFields?: Array<string>
 }
@@ -27,6 +28,7 @@ const Create: React.FC<ICreate> = (
         data,
         isAdmin = true,
         children,
+        redirectKey,
         requiredFields
     }) => {
     const navigate = useNavigate()
@@ -53,7 +55,7 @@ const Create: React.FC<ICreate> = (
 
         formData.append('value', JSON.stringify(values))
         const res: any = await AdminApi.store(formData, crudKey, isAdmin)
-        if (Number(res.status === 200)) await navigate(`/${isAdmin ? 'admin/' : ''}${crudKey}`)
+        if (Number(res.status === 200)) await navigate(`/${isAdmin ? 'admin/' : ''}${redirectKey ?? crudKey}`)
     }
 
     return (

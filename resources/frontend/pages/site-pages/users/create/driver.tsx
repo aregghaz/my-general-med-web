@@ -12,8 +12,9 @@ interface IUserCreate {
 
 const VendorDriverCreate: React.FC<IUserCreate> = () => {
     const {t} = useTranslation()
-    const crudKey = 'vendorClients'
-    const [data, setData] = useState(null)
+    const crudKey = 'vendorClients';
+    const redirectKey = 'users';
+    const [data, setData] = useState(null);
     const fields: Array<IItem> = [
         // {name: 'image', type: 'file', label: 'image'},
         {name: 'name', type: 'input', label: 'name'},
@@ -64,7 +65,7 @@ const VendorDriverCreate: React.FC<IUserCreate> = () => {
 
     return data && <Create
         crudKey={crudKey}
-        ////TODO FIX THIS MISSING DATA FOR CREATE USER
+        redirectKey={redirectKey}
         data={data}
         fields={fields}
         isAdmin={false}

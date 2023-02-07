@@ -12,8 +12,6 @@ import Tabs from "../../../components/tabs/tabs";
 import { getAdminUsersData } from "../../../store/selectors";
 import { homeAPI } from "../../../api/site-api/home-api";
 import { useInView } from "react-intersection-observer";
-import { useJsApiLoader } from "@react-google-maps/api";
-import { GOOGLE_API_KEY } from "../../../environments";
 
 interface IVendors {
     path: string;
@@ -30,25 +28,23 @@ const Vendors: React.FC<IVendors> = () => {
     const [deleteId, setDeleteId] = useState(null);
     const [count, setCount] = useState({ from: 0, to: 10 });
     const [activeItem, setActiveItem] = useState(null);
-    const [typeId, setTypeId] = useState<number>(1);
+    const [typeId, setTypeId] = useState<number>(2);
     const adminUsersData = useSelector(getAdminUsersData);
     const { userdata, operatorCount, vendorCount } = adminUsersData;
     const navigate = useNavigate();
     const [loading, setLoading] = useState<boolean>(false);
     const [agreement, setAgreement] = useState<boolean>(false);
-
+    const [open, setOpen] = useState<boolean>(false);
     const { t } = useTranslation();
+    const contentRef = useRef();
     const [ref, inView] = useInView({
         threshold: 1
     });
-    const {isLoaded} = useJsApiLoader({
-        googleMapsApiKey: GOOGLE_API_KEY,
-        libraries: ["geometry", "drawing", "places"]
-    });
+
     useEffect(() => {
         (async () => {
             if ((inView || loading) && !open) {
-                const data = await AdminApi.getAllVendorData(crudKey, 1, "");
+                const data = await AdminApi.getAllVendorData(crudKey, typeId, "");
                 data.to;
                 setCount({ from: data.to - 3, to: data.to + 5 });
                 dispatch(actions.fetching(
@@ -70,12 +66,12 @@ const Vendors: React.FC<IVendors> = () => {
 
     const tabs = [
         {
-            id: 1,
+            id: 2,
             name: "Vendor",
             count: vendorCount
         },
         {
-            id: 2,
+            id: 4,
             name: "Operator",
             count: operatorCount
         }
@@ -83,7 +79,7 @@ const Vendors: React.FC<IVendors> = () => {
     const handlerChangeTabs = async (tabId: number) => {
         /// setIds([]);
         setTypeId(tabId);
-        ///  setLoading(true);
+        setLoading(true);
     };
     const titles: Array<string> = [
         "id",
@@ -94,7 +90,7 @@ const Vendors: React.FC<IVendors> = () => {
         "fields",
         "action"
     ];
-    const handlerAddBeneficiaryItem = () => navigate(`/admin/${crudKey}/create`);
+    const handlerAddItem = () => navigate(`/admin/${crudKey}/create/${typeId}`);
 
 
     const handlerCloseModal = () => {
@@ -165,7 +161,7 @@ const Vendors: React.FC<IVendors> = () => {
 
             </div>
 
-
+            <div ref={contentRef} className={s.table_wrapper}>
             <List
                 data={userdata}
                 titles={titles}
@@ -173,7 +169,7 @@ const Vendors: React.FC<IVendors> = () => {
                 isEdit
                 isCreate
                 isGetItems
-                handlerAddItem={handlerAddBeneficiaryItem}
+                handlerAddItem={handlerAddItem}
                 handlerDeleteItem={handlerDeleteModal}
                 handlerEditItem={handlerEditBeneficiaryItem}
                 HandlerPagination={HandlerPagination}
@@ -184,6 +180,8 @@ const Vendors: React.FC<IVendors> = () => {
                 activeItem={activeItem}
                 className={"pagination"}
             />
+            </div>
+            <div className={s.detector} ref={ref}/>
             <Modal
                 isOpen={isModalOpen !== false}
                 style={customStyles}

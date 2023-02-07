@@ -30,7 +30,7 @@ class VendorController extends Controller
         if (isset($request->querySearch)) {
             $vendorData = User::where('role_id', 2)->get();
         } else {
-            $vendorData = User::where('role_id', 2)
+            $vendorData = User::where('role_id', $request->typeId)
                 ->with('fields')
                 ->get();
         }
@@ -75,7 +75,7 @@ class VendorController extends Controller
         $validator = Validator::make((array) json_decode($request->value), [
             'companyName' => 'required|string',
             'phone_number' => 'required|string',
-            'email' => 'required|string|email|unique:vendors',
+            'email' => 'required|string|email|unique:users',
             'password' => 'string',
             //  'status' => 'required',
             'address' => 'string',

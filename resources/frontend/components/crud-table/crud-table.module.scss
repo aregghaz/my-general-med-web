@@ -1,18 +1,5 @@
 @import "../../styles/variables";
 
-
-tbody {
-    tr {
-        background-color: $whiteColor;
-        border: 0.5px dotted $headColor;
-
-        &:hover {
-            background-color: $greyColor;
-            cursor: pointer;
-        }
-    }
-}
-
 .root {
     width: 100%;
     overflow-x: auto;
@@ -23,6 +10,11 @@ tbody {
     }
 }
 
+.detector {
+    width: 1px;
+    height: 1px;
+}
+
 .download_btn {
     background-color: $menuColor;
     border: none;
@@ -30,7 +22,7 @@ tbody {
     border-radius: 5px;
     color: white;
     cursor: pointer;
-    margin: 10px 0;
+    margin-bottom: 10px;
 
     &:hover {
         background-color: $menuHoverColor;
@@ -39,21 +31,24 @@ tbody {
 
 .table {
     table-layout: fixed;
-    border-collapse: collapse;
+    border-collapse: inherit;
+    border-spacing: 10px;
     min-width: 100%;
-    margin-top: 20px;
-}
+    //display: grid;
 
-.rotate_arrow {
-    transform: rotate(180deg);
+    //tbody {
+    //    max-height: 60vh;
+    //}
 }
 
 .tableHead {
     display: table-header-group;
+    border-bottom: 1px solid black;
 }
 
 .tableBody {
     display: table-row-group;
+    ///  max-height: 60vh;
 }
 
 
@@ -64,8 +59,7 @@ tbody {
 
 .iconsWrapper {
     display: flex;
-    justify-content: space-around;
-    color: $menuColor;
+    flex-direction: row;
 
     .editIcon {
         width: 25px;
@@ -87,19 +81,24 @@ tbody {
     display: table-row;
     outline: 0;
     vertical-align: middle;
+
 }
+
+.rotate_arrow {
+    transform: rotate(180deg);
+}
+
 
 .tableTd {
     display: table-cell;
-    padding: 9px;
+    /// padding: 9px;
     text-align: center;
-    border: 1px solid #ddd;
-    font-weight: 400;
+    /// font-weight: bold;
     vertical-align: inherit;
-    //background: $tdBgColor;
-    background: transparent;
-    //color: $thTextColor;
+    ///border-bottom: 1px solid #ddd;
+    ////margin-bottom: 10px;
     color: $fontColor;
+    min-width: 190px;
     //FIXME: Fix for large sizes & no support for vw
     font-size: min(max(16px, 1vw), 19px);
     @media only screen and (max-width: $mediumDisplay) {
@@ -129,6 +128,9 @@ tbody {
     //FIXME: Fix for large sizes & no support for vw
     white-space: nowrap;
     font-size: min(max(16px, 1vw), 25px);
+    //// margin-bottom: 10px;
+    min-width: 170px;
+    text-align: center;
     @media only screen and (max-width: $mediumDisplay) {
         font-size: min(max(12px, 1vw), 25px);
     }
@@ -141,7 +143,23 @@ tbody {
         width: 40px;
     }
 }
-
+.classNameField {
+    display: table-cell;
+    /// padding: 9px;
+    text-align: center;
+    /// font-weight: bold;
+    vertical-align: inherit;
+    //// margin-bottom: 10px;
+    color: $fontColor;
+}
+.address {
+    min-width: 350px;
+    width: 100%;
+}
+.gender {
+    max-width: 50px;
+    width: 100%;
+}
 .inputWrapper {
     margin-top: 10px;
 }
@@ -169,16 +187,17 @@ tbody {
     }
 }
 
-.row {
-    background-color: $tdBgColor;
-    //border: 1px solid #6D9886
+.chosen {
+    background-color: $asteriskColor !important;
+
+    td {
+        color: $whiteColor;
+    }
 }
 
-
-////Areg
-///
-
-
+.arrowSpan{
+    margin: 0 5px;
+}
 .label_span {
     border: 1px solid #393E46;
     color: #F7F7F7;
@@ -186,6 +205,6 @@ tbody {
     padding: 5px;
     border-radius: 25px;
     margin: 2px;
-    background-color: #4466b0;
+    background-color: $asteriskColor !important;
     display: inline-block;
 }

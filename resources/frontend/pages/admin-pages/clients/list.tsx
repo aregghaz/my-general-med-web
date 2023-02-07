@@ -5,7 +5,7 @@ import {actions} from "../../../store/home";
 import {clientAction} from "../../../store/client";
 import {getClientData, getHomePageData} from "../../../store/selectors";
 import {homeAPI} from "../../../api/site-api/home-api";
-import s from "./home.module.scss";
+import s from "../../../styles/home.module.scss";
 import CrudTable from "../../../components/crud-table-user/crud-table";
 import Select, {IOption} from "../../../components/select/select";
 import {useInView} from "react-intersection-observer";
@@ -27,6 +27,7 @@ import Button from "../../../components/button/button";
 import { GOOGLE_API_KEY } from "../../../environments";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 import { AdminApi } from "../../../api/admin-api/admin-api";
+import { navigate } from "@reach/router";
 
 const center = {lat: 48.8584, lng: 2.2945};
 
@@ -186,7 +187,7 @@ const Home: React.FC<IHome> = () => {
             }
         })();
         return () => {
-            homeAPI.cancelRequest();
+         ///   homeAPI.cancelRequest();
         };
 
     }, [inView, loading, agreement]);
@@ -326,8 +327,10 @@ const Home: React.FC<IHome> = () => {
     const showFilter = () =>{
         setfiltre(!filtre)
     }
+    const handlerAddItem = () => navigate('/admin/clients/create')
     return (
         clients && <>
+
             <div className={s.panel}>
                 <div className={s.upload_panel}>
                     <Tabs isAdmin handleActionMiddleware={handleActionMiddleware} ids={ids} typeId={typeId} tabs={tabs} handlerChangeTabs={handlerChangeTabs}/>
@@ -462,6 +465,13 @@ const Home: React.FC<IHome> = () => {
 
             </div>
             <PopupModal isOpen={isOpen} agreeWith={agreeWith} notAgreeWith={notAgreeWith}/>
+            <div className={s.addBtnWrapper}>
+                {
+                    <Button type='green' className={s.add} onClick={handlerAddItem}>
+                        <span>+</span>
+                    </Button>
+                }
+            </div>
             <div ref={contentRef} className={s.table_wrapper}>
                 <CrudTable
                     titles={selectedTitle}

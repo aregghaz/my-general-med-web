@@ -30,7 +30,7 @@ const Users: React.FC<Beneficiary> = ({id}) => {
     const [count, setCount] = useState(0);
     const [activeItem, setActiveItem] = useState(null);
     const [tabId, setTabId] = useState();
-    const [tabIdSelected, setTabIdSelected] = useState(3);
+    const [tabIdSelected, setTabIdSelected] = useState(2);
     const [dataID, setDataID] = useState(null);
     const [typeName, setTypeName] = useState<string>('driver')
     const navigate = useNavigate();

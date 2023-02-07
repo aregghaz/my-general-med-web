@@ -3,18 +3,14 @@
 namespace App\Http\Controllers\Vendor;
 
 use App\Http\Controllers\Controller;
-use App\Models\CarImages;
-use App\Models\Cars;
-use App\Models\Vendor;
-use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Role;
-use App\Models\ClientTable;
 use App\Http\Resources\RoleCollection;
-use App\Http\Resources\UserCollection;
 use App\Http\Resources\StatusCollection;
+use App\Http\Resources\UserCollection;
+use App\Models\ClientTable;
 use App\Models\Driver;
-use Illuminate\Support\Facades\DB;
+use App\Models\Role;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Validator;
 
 class VendorUsersController extends Controller
@@ -47,7 +43,7 @@ class VendorUsersController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $vendorData = User::with('fields',"driver")
+        $vendorData = User::with('fields', "driver")
             ->where('id', $id)
             ->first();
 
@@ -241,7 +237,7 @@ class VendorUsersController extends Controller
         $vendor = Driver::where('user_id', $id)->first();
         $userId = $id;
         $vendorId = $request->user()->vendor_id;
-        if($request->hasFile('license')){
+        if ($request->hasFile('license')) {
             if (is_file(public_path($vendor->license))) {
                 $oldImage = public_path($vendor->license);
                 if (file_exists($oldImage)) {
@@ -252,7 +248,7 @@ class VendorUsersController extends Controller
             $vendor->license = $this->getPdfFile($license, $vendorId, $userId);
 
         }
-        if($request->hasFile('picture')) {
+        if ($request->hasFile('picture')) {
             if (is_file(public_path($vendor->picture))) {
                 $oldImage = public_path($vendor->picture);
                 if (file_exists($oldImage)) {
@@ -262,7 +258,7 @@ class VendorUsersController extends Controller
             $picture = $request->file('picture');
             $vendor->picture = $this->getPdfFile($picture, $vendorId, $userId);
         }
-        if($request->hasFile('sex_offender_check')) {
+        if ($request->hasFile('sex_offender_check')) {
             if (is_file(public_path($vendor->sex_offender_check))) {
                 $oldImage = public_path($vendor->sex_offender_check);
                 if (file_exists($oldImage)) {
@@ -272,7 +268,7 @@ class VendorUsersController extends Controller
             $sex_offender_check = $request->file('sex_offender_check');
             $vendor->sex_offender_check = $this->getPdfFile($sex_offender_check, $vendorId, $userId);
         }
-        if($request->hasFile('motor_vehicle_record')) {
+        if ($request->hasFile('motor_vehicle_record')) {
             if (is_file(public_path($vendor->motor_vehicle_record))) {
                 $oldImage = public_path($vendor->motor_vehicle_record);
                 if (file_exists($oldImage)) {
@@ -283,7 +279,7 @@ class VendorUsersController extends Controller
             $vendor->motor_vehicle_record = $this->getPdfFile($motor_vehicle_record, $vendorId, $userId);
         }
 
-        if($request->hasFile('defensive_driving')) {
+        if ($request->hasFile('defensive_driving')) {
             if (is_file(public_path($vendor->defensive_driving))) {
                 $oldImage = public_path($vendor->defensive_driving);
                 if (file_exists($oldImage)) {
@@ -293,7 +289,7 @@ class VendorUsersController extends Controller
             $defensive_driving = $request->file('defensive_driving');
             $vendor->defensive_driving = $this->getPdfFile($defensive_driving, $vendorId, $userId);
         }
-        if($request->hasFile('wheelchair_securement')) {
+        if ($request->hasFile('wheelchair_securement')) {
             if (is_file(public_path($vendor->wheelchair_securement))) {
                 $oldImage = public_path($vendor->wheelchair_securement);
                 if (file_exists($oldImage)) {
@@ -304,7 +300,7 @@ class VendorUsersController extends Controller
             $vendor->wheelchair_securement = $this->getPdfFile($wheelchair_securement, $vendorId, $userId);
         }
 
-        if($request->hasFile('pass_basic')) {
+        if ($request->hasFile('pass_basic')) {
             if (is_file(public_path($vendor->pass_basic))) {
                 $oldImage = public_path($vendor->pass_basic);
                 if (file_exists($oldImage)) {
@@ -314,7 +310,7 @@ class VendorUsersController extends Controller
             $pass_basic = $request->file('pass_basic');
             $vendor->pass_basic = $this->getPdfFile($pass_basic, $vendorId, $userId);
         }
-        if($request->hasFile('emt_1')) {
+        if ($request->hasFile('emt_1')) {
             if (is_file(public_path($vendor->emt_1))) {
                 $oldImage = public_path($vendor->emt_1);
                 if (file_exists($oldImage)) {
@@ -325,7 +321,7 @@ class VendorUsersController extends Controller
             $vendor->emt_1 = $this->getPdfFile($emt_1, $vendorId, $userId);
         }
 
-        if($request->hasFile('first_aid')) {
+        if ($request->hasFile('first_aid')) {
             if (is_file(public_path($vendor->first_aid))) {
                 $oldImage = public_path($vendor->first_aid);
                 if (file_exists($oldImage)) {
@@ -337,7 +333,7 @@ class VendorUsersController extends Controller
         }
 
 
-        if($request->hasFile('company_training')) {
+        if ($request->hasFile('company_training')) {
             if (is_file(public_path($vendor->company_training))) {
                 $oldImage = public_path($vendor->company_training);
                 if (file_exists($oldImage)) {
@@ -348,7 +344,7 @@ class VendorUsersController extends Controller
             $vendor->company_training = $this->getPdfFile($company_training, $vendorId, $userId);
         }
 
-        if($request->hasFile('drug_test')) {
+        if ($request->hasFile('drug_test')) {
             if (is_file(public_path($vendor->drug_test))) {
                 $oldImage = public_path($vendor->drug_test);
                 if (file_exists($oldImage)) {
@@ -382,33 +378,34 @@ class VendorUsersController extends Controller
         return "/uploads/$vendorId/drivers/$userId/$file_name";
     }
 
-    public function show($id){
-        $vendorData = User::with('fields',"driver")
+    public function show($id)
+    {
+        $vendorData = User::with('fields', "driver")
             ->where('id', $id)
             ->first();
 
         return response()->json(
             [
-                    'id' => $vendorData->id,
-                    'fullname' => $vendorData->name . ' ' .$vendorData->surname,
-                    'email' => $vendorData->email,
-                    'address' => $vendorData->address,
-                    'birthday' => $vendorData->birthday,
-                   /// 'password' => $vendorData->password,
-                    'phone_number' => $vendorData->phone_number,
-                    'license' => $vendorData->driver->license,
-                    'picture' => $vendorData->driver->picture,
-                    'sex_offender_check' => $vendorData->driver->sex_offender_check,
-                    'motor_vehicle_record' => $vendorData->driver->motor_vehicle_record,
-                    'defensive_driving' => $vendorData->driver->defensive_driving,
-                    'wheelchair_securement' => $vendorData->driver->wheelchair_securement,
-                    'pass_basic' => $vendorData->driver->pass_basic,
-                    'emt_1' => $vendorData->driver->emt_1,
-                    'first_aid' => $vendorData->driver->first_aid,
-                    'company_training' => $vendorData->driver->company_training,
-                    'drug_test' => $vendorData->driver->drug_test,
-                    'fields' => new StatusCollection($vendorData->fields),
-                ],
+                'id' => $vendorData->id,
+                'fullname' => $vendorData->name . ' ' . $vendorData->surname,
+                'email' => $vendorData->email,
+                'address' => $vendorData->address,
+                'birthday' => $vendorData->birthday,
+                /// 'password' => $vendorData->password,
+                'phone_number' => $vendorData->phone_number,
+                'license' => $vendorData->driver->license,
+                'picture' => $vendorData->driver->picture,
+                'sex_offender_check' => $vendorData->driver->sex_offender_check,
+                'motor_vehicle_record' => $vendorData->driver->motor_vehicle_record,
+                'defensive_driving' => $vendorData->driver->defensive_driving,
+                'wheelchair_securement' => $vendorData->driver->wheelchair_securement,
+                'pass_basic' => $vendorData->driver->pass_basic,
+                'emt_1' => $vendorData->driver->emt_1,
+                'first_aid' => $vendorData->driver->first_aid,
+                'company_training' => $vendorData->driver->company_training,
+                'drug_test' => $vendorData->driver->drug_test,
+                'fields' => new StatusCollection($vendorData->fields),
+            ],
             200
         );
     }

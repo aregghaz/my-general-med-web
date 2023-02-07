@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import { AdminApi } from "../../../api/admin-api/admin-api";
 import { geocodeByPlaceId } from "react-google-places-autocomplete";
 import { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete';
-import s from "../../site-pages/home/home.module.scss";
 import { DirectionsRenderer, GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { GOOGLE_API_KEY } from "../../../environments";
 
@@ -99,7 +98,7 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
     return (
         data &&
             <>
-                {isLoaded && directionsResponse && <div className={s.googleMap}>
+                {isLoaded && directionsResponse && <div >
                     <GoogleMap
                         ///  center={center}
                         zoom={15}
@@ -122,7 +121,7 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
                         {steps && steps.map((el: any) => {
                             return (
                                 <div
-                                    className={s.directions}
+                                    // className={s.directions}
                                     dangerouslySetInnerHTML={{__html: el.instructions}}
                                 />
                             );

@@ -45,25 +45,5 @@ class UserSeeder extends Seeder
             'role_id'=> 2,
             'vendor_id' => 3,
         ]);
-        DB::table('users')->insert([
-            'name' => 'operator',
-            'surname' => 'operator',
-            'phone_number' => '+37494806080',
-            'email' => 'operator@admin.com',
-            "address" => 'test operator address',
-            'password' => bcrypt('admin'),
-            'role_id'=> 3,
-            'vendor_id' =>2,
-        ]);
-        DB::table('users')->insert([
-            'name' => 'operator1',
-            'surname' => 'operator1',
-            'phone_number' => '+37494806080',
-            'email' => 'operator1@admin.com',
-            "address" => 'test operator1 address',
-            'password' => bcrypt('admin'),
-            'role_id'=> 3,
-            'vendor_id' =>2,
-        ]);
     }
 }

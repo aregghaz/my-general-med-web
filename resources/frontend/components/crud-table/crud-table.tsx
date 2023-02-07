@@ -68,15 +68,15 @@ const CrudTable: React.FC<ICrudTable> = (
                     handlerEditItem={handlerEditItem}
                 />
             </table>
-            {
-                paginated && <TableFoot
-                    count={count}
-                    last_page={last_page}
-                    activeItem={activeItem}
-                    handlerChangeItem={HandlerPagination}
-                />
+            {/*{*/}
+            {/*    paginated && <TableFoot*/}
+            {/*        count={count}*/}
+            {/*        last_page={last_page}*/}
+            {/*        activeItem={activeItem}*/}
+            {/*        handlerChangeItem={HandlerPagination}*/}
+            {/*    />*/}
 
-            }
+            {/*}*/}
         </>
     )
 }

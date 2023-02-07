@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\OperatorController;
 use App\Http\Controllers\Admin\VendorController;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\HomeController;
@@ -71,12 +72,11 @@ Route::group([
         ///'home-data' => HomeController::class,
         'users' => \App\Http\Controllers\UserController::class,
         'clients' => \App\Http\Controllers\ClientsController::class,
-        ///'vendors' => \App\Http\Controllers\VendorController::class,
+        'operators' => OperatorController::class,
 
     ]);
     Route::post('/clientsData', [\App\Http\Controllers\Admin\ClientsController::class, 'clientsData']);
     Route::get('/vendors', [VendorController::class, 'index']);
-    Route::get('/vendors/create', [VendorController::class, 'create']);
     Route::get('/vendors/create', [VendorController::class, 'create']);
     Route::post('/vendors', [VendorController::class, 'store']);
     Route::get('/vendors/{id}', [VendorController::class, 'show']);
