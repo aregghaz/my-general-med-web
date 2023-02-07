@@ -5,7 +5,7 @@ import {Formik, FormikHelpers, FormikValues} from 'formik'
 import Input from '../../../components/input/input'
 import {login} from '../../../store/auth'
 import {useDispatch, useSelector} from 'react-redux'
-import {getAdminData, getUserData} from '../../../store/selectors'
+import { getUserData} from '../../../store/selectors'
 import {useNavigate} from '@reach/router'
 
 import s from './login-wrapper.module.scss'
@@ -20,16 +20,11 @@ const LoginWrapper: React.FC<ILoginWrapper> = () => {
 
     const {t} = useTranslation()
     const dispatch = useDispatch()
-    const {loggedIn} = useSelector(getAdminData)
     const navigate = useNavigate()
-
     const {user} = useSelector(getUserData)
     const [isLoading, setLoading] = useState(false);
-
     const submit = async (values: FormikValues, {setSubmitting}: FormikHelpers<FormikValues>) => {
-
         setSubmitting(true)
-
         const formData: FormData = new FormData()
         formData.append('email', values.email)
         formData.append('password', values.password)

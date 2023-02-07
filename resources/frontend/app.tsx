@@ -8,10 +8,7 @@ import 'react-app-polyfill/ie9'
 import 'react-app-polyfill/ie11'
 import 'react-app-polyfill/stable'
 
-import PrivateRoute from './pages/layouts/private-route/private-route'
-
 import Site from './pages/layouts/site/site'
-
 
 // Site Pages
 import Home from './pages/site-pages/home/home'
@@ -54,10 +51,6 @@ const App = (): JSX.Element => (
                 <Cars path="/cars"/>
                 <CarsCreate path="/cars/create"/>
                 <CarsEdit path="/cars/:id"/>
-                {/* <Film path="/all/films"/> */}
-                {/* <Serial path="/all/serials"/>
-                <MovesItem path="/films/:slug"/>
-                <SerialItem path="/serials/:slug"/> */}
                 <NotFound default/>
             </Site>
             <Site path="/admin">

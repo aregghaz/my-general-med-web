@@ -3,7 +3,7 @@ import {checkLoggedIn} from '../../../store/auth'
 import {useDispatch, useSelector} from 'react-redux'
 import s from './site.module.scss'
 import {Col, Row} from 'react-grid-system'
-import {getAdminData, getUserData} from '../../../store/selectors'
+import { getUserData} from '../../../store/selectors'
 import {navigate} from '@reach/router'
 import Drawer from "../../../components/drawer/drawer";
 
@@ -16,8 +16,7 @@ const Site: React.FC<ISite> = ({children}) => {
 
     const dispatch = useDispatch()
 
-    const {loggedIn} = useSelector(getAdminData)
-    const {user} = useSelector(getUserData)
+    const {user,loggedIn} = useSelector(getUserData)
     const [isLoading, setLoading] = useState(true);
     //
     // useEffect(() => {
@@ -25,18 +24,15 @@ const Site: React.FC<ISite> = ({children}) => {
     // }, [])
 
     useEffect(() => {
-        dispatch(checkLoggedIn())
-        if (loggedIn) {
-            if (user && user.role == 'driver') {
-                navigate('/')
+        (async () =>{
+          ///  console.log(loggedIn,'loggedIn');
+            console.log(user,'jlkjkl');
+            await  dispatch(checkLoggedIn())
+            if (!loggedIn) {
+                navigate('/login')
             }
-            if (user && user.role !== 'driver') {
-                setLoading(false)
-            }
-        } else {
-            navigate('/login')
-        }
-    }, [isLoading, loggedIn])
+        })()
+    }, [ loggedIn])
     return (
         <Row className={s.mainRow}>
             <Drawer>

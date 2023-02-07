@@ -32,8 +32,6 @@ const authReducer = (state = initialState, action: Actions): InitialState => {
                 ...state,
                 user: {
                     ...action.payload,
-                    ///    languages: [...action.payload.languages],
-                    ///  description: [...action.payload.description]
                 },
                 loggedIn: 1,
                 error: null
