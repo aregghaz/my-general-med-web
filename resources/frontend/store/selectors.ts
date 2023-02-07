@@ -18,9 +18,14 @@ export const getClientData = (state:AppStateType)=>({
 })
 export const getUserData = (state: AppStateType) => ({
     user: state.authReducer.user,
-    loggedIn: state.authReducer.loggedIn})
+    loggedIn: state.authReducer.loggedIn
+})
 
-
+export const adminVendorUsers = (state:AppStateType) =>({
+    userdata: state.adminVendorUsersReducer.userdata,
+    operatorsCount:state.adminVendorUsersReducer.operatorsCount,
+    driversCount:state.adminVendorUsersReducer.driversCount
+})
 
 export const getLoginError = (state: AppStateType) => ({error: state.authReducer.error})
 

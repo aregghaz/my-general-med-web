@@ -5,6 +5,7 @@ import serialsReducer from './moves'
 import itemReducer from "./item";
 import clientReducer from './client';
 import adminUsersReducer from "./adminUser";
+import adminVendorUsersReducer from "./vendorUsers";
 
 
 const reducers = combineReducers({
@@ -14,6 +15,7 @@ const reducers = combineReducers({
     itemReducer,
     clientReducer,
     adminUsersReducer,
+    adminVendorUsersReducer,
 })
 export type ReducerType = typeof reducers
 

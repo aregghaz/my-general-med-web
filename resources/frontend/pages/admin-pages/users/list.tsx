@@ -1,50 +1,56 @@
-import React, {useEffect, useState} from "react";
-import {AdminApi} from "../../../api/admin-api/admin-api";
+import React, { useEffect, useState } from "react";
+import { AdminApi } from "../../../api/admin-api/admin-api";
 import List from "../../layouts/templates/list/list";
-import {useNavigate} from "@reach/router";
+import { useNavigate } from "@reach/router";
 import Button from "../../../components/button/button";
 import s from "../../layouts/templates/list/list.module.scss";
-import Select, {
-    IOption,
-    IOptionMultiselect,
-} from "../../../components/select/select";
-import {useTranslation} from "react-i18next";
+
+import { useTranslation } from "react-i18next";
 import Modal from "react-modal";
-import InfoBlock from "../../../components/info-block/info-block";
-import {actions} from "../../../store/home";
-import {useDispatch} from "react-redux";
+import { actions } from "../../../store/vendorUsers";
+import { useDispatch, useSelector } from "react-redux";
 import Tabs from "../../../components/tabs/tabs";
+import { adminVendorUsers } from "../../../store/selectors";
 
 interface Beneficiary {
     path: string;
-    id?: number
+    id?: number;
 }
 
-const Users: React.FC<Beneficiary> = ({id}) => {
+const Users: React.FC<Beneficiary> = ({ id }) => {
     const dispatch = useDispatch();
     const crudKey = "users";
-    const [data, setData] = useState([]);
+    const { userdata, driversCount, operatorsCount } = useSelector(adminVendorUsers);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [countPages, setCountPages] = useState(null);
     const [deleteId, setDeleteId] = useState(null);
     const [count, setCount] = useState(0);
     const [activeItem, setActiveItem] = useState(null);
     const [tabId, setTabId] = useState();
-    const [tabIdSelected, setTabIdSelected] = useState(2);
+    const [tabIdSelected, setTabIdSelected] = useState(3);
     const [dataID, setDataID] = useState(null);
-    const [typeName, setTypeName] = useState<string>('driver')
+    const [typeName, setTypeName] = useState<string>("driver");
     const navigate = useNavigate();
-    const {t} = useTranslation();
+    const { t } = useTranslation();
+    const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
         (async () => {
-            const homeData = await AdminApi.getVendorUsers(id, tabIdSelected)
-            setData(homeData.data);
-            //setTabs(homeData.roles)
+            if(isLoading){
+                const data = await AdminApi.getVendorUsers(id, tabIdSelected);
+                dispatch(actions.fetching(
+                    {
+                        userdata: data.data,
+                        driversCount: data.drivers,
+                        operatorsCount: data.operators
+                    }
+                ));
+                setLoading(false);
+            }
+
         })();
-        // dispatch(actions.setTitles(titles))
         // dispatch(actions.clearData())
-    }, [tabIdSelected]);
+    }, [tabIdSelected, isLoading]);
 
     const titles: Array<string> = [
         "id",
@@ -52,10 +58,9 @@ const Users: React.FC<Beneficiary> = ({id}) => {
         "email",
         "address",
         "phone_number",
-        "birthday",
+        ///"birthday",
         ///"role",
-        "image",
-        "action",
+       /// "image",
     ];
 
     const handlerAddBeneficiaryItem = () => navigate(`/admin/${crudKey}/create/${id}`);
@@ -69,20 +74,14 @@ const Users: React.FC<Beneficiary> = ({id}) => {
     };
 
     const handlerDeleteItem = () => {
-        AdminApi.delete(crudKey, deleteId).then((data) => {
-            setData(data.data.beneficiaries);
-            setIsModalOpen(false);
-        });
+
     };
     const handlerEditBeneficiaryItem = (id: number) =>
         navigate(`/admin/${crudKey}/${id}`);
     const HandlerGetProducts = (id: number) =>
         navigate(`/admin/users-products/${id}`);
 
-    const HandlerPagination = (activeItem: number) => {
-        const role = localStorage.getItem("role");
-        localStorage.setItem("page", activeItem.toString());
-    };
+
 
 
     const [typeId, setTypeId] = useState<number>(1);
@@ -98,69 +97,49 @@ const Users: React.FC<Beneficiary> = ({id}) => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            height: "290px",
+            height: "290px"
         },
         overlay: {
             zIndex: 400,
             background: "rgba(0, 0, 0, 0.35)",
-            backdropFilter: "blur(5px)",
-        },
+            backdropFilter: "blur(5px)"
+        }
     };
     const tabs = [
         {
-            id: 1,
-            name: "Operator",
-           // count: tripCount
+            id: 3,
+            name: "Drivers",
+            count: driversCount
         },
         {
             id: 4,
-            name: "Vendor"
-            // count:45
-        },
-        // {
-        //     id: 3,
-        //     name: "Download History",
-        //     //count:38
-        // },
-        {
-            id: 2,
-            name: "Available Trips",
-         //   count: availableCount
+            name: "Operators",
+            count: operatorsCount
         }
     ];
     const handleActionMiddleware = () => {
 
-    }
+    };
     const handlerChangeTabs = async (tabId: number) => {
-       /// setIds([]);
-        setTypeId(tabId);
-      ///  setLoading(true);
+        setTabIdSelected(tabId);
+        setLoading(true);
     };
 
     return (
-        data && (
+        userdata && (
             <>
                 {/* <InfoBlock  items={data}/> */}
-                <Tabs  typeId={typeId} tabs={tabs} handlerChangeTabs={handlerChangeTabs}/>
+                <Tabs typeId={typeId} tabs={tabs} handlerChangeTabs={handlerChangeTabs} />
 
                 <List
-                    data={data}
+                    data={userdata}
                     titles={titles}
-                    isDelete
-                    isEdit
                     paginated={false}
-                    isCreate
                     tabId={tabIdSelected}
                     handlerAddItem={handlerAddBeneficiaryItem}
                     handlerDeleteItem={handlerDeleteModal}
                     handlerEditItem={handlerEditBeneficiaryItem}
-                    HandlerPagination={HandlerPagination}
                     HandlerGetProducts={HandlerGetProducts}
-                    //handlerGetClientData={handlerGetClientData}
-                    count={count}
-                    handlerChangeTabs={handlerChangeTabs}
-                    activeItem={activeItem}
-                    className={"pagination"}
                 />
                 <Modal
                     isOpen={isModalOpen !== false}
@@ -175,7 +154,7 @@ const Users: React.FC<Beneficiary> = ({id}) => {
                             />
                         </div>
 
-                        <i className={`binicon- ${s.icon}`}/>
+                        <i className={`binicon- ${s.icon}`} />
                         <p className={s.text}>
                             {t("admin.do_you_want_to_delete")}
                         </p>

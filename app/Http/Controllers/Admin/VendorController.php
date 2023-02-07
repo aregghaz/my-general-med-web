@@ -249,25 +249,21 @@ class VendorController extends Controller
 
     public function getVendorUsers($id,$tabId)
     {
-        $users = User::where('vendor_id', $id)->where(
-        'id',
-        '!=',
-        $id
-    );
-         if ($tabId) {
 
-             $users = $users->where('role_id',$tabId);
-         }
-
-        $users = $users->get();
-        $roles = Role::where('id', '>', 2)->withCount(['users' => function ($query) use ($id) {
-            $query->where('vendor_id', $id );
-        }])->get();;
-
+        $operatorsCount = User::where(['role_id'=> 4,"vendor_id" => $id])->count();;
+        $driverCount = User::where(['role_id'=> 3, "vendor_id" => $id])->count();;
+        if (isset($request->querySearch)) {
+            $vendorData = User::where(['role_id'=>$tabId, "vendor_id" => $id]);
+        } else {
+            $vendorData = User::where(['role_id'=>$tabId, "vendor_id" => $id])
+                ->with('fields');
+        }
+        $vendorData = $vendorData->get();
         return response()->json(
             [
-                'data' => new UserCollection($users),
-                'roles' =>new RoleCollection($roles)
+                'data' => new VendorsCollection($vendorData),
+                'operators' => $operatorsCount,
+                'drivers' => $driverCount,
             ],
             200
         );

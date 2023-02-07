@@ -45,7 +45,6 @@ const Vendors: React.FC<IVendors> = () => {
         (async () => {
             if ((inView || loading) && !open) {
                 const data = await AdminApi.getAllVendorData(crudKey, typeId, "");
-                data.to;
                 setCount({ from: data.to - 3, to: data.to + 5 });
                 dispatch(actions.fetching(
                     {
