@@ -33,7 +33,6 @@ const LoginWrapper: React.FC<ILoginWrapper> = () => {
         setLoading(true)
     }
 
-
     useEffect(() => {
         if (user) {
             if (user && user.role == 'vendor') {

@@ -11,33 +11,30 @@ import 'react-app-polyfill/stable'
 import Site from './pages/layouts/site/site'
 
 // Site Pages
-import Home from './pages/site-pages/home/home'
-import NotFound from './pages/site-pages/not-found/not-found'
-import LoginWrapper from './pages/admin-pages/login/login-wrapper'
+import Home from './pages/vendor/home/home'
+import NotFound from './pages/vendor/not-found/not-found'
+import LoginWrapper from './pages/admin/login/login-wrapper'
 
 
 // Admin Pages
-import Dashboard from './pages/admin-pages/dashbord/dashboard'
-import Users from './pages/admin-pages/users/list'
-import UserEdit from './pages/admin-pages/users/edit'
-import UserCreate from './pages/admin-pages/users/create'
-import Clients from './pages/admin-pages/clients/list'
-import ClientEdit from './pages/admin-pages/clients/edit'
-import ClientCreate from './pages/admin-pages/clients/create'
-import Vendors from './pages/admin-pages/vendors/list'
-import VendorEdit from './pages/admin-pages/vendors/edit'
-import VendorCreate from './pages/admin-pages/vendors/create/vendor'
-import Status from './pages/admin-pages/status/list'
-import StatusCreate from './pages/admin-pages/status/create'
-import StatusEdit from './pages/admin-pages/status/edit'
-import VendorUsers from './pages/site-pages/users/list'
-import VendorUsersEdit from './pages/site-pages/users/edit'
-import VendorDriverCreate from './pages/site-pages/users/create/driver'
-import VendorDriverEdit from './pages/site-pages/users/edit/driver'
-import Cars from './pages/site-pages/cars/list'
-import CarsCreate from './pages/site-pages/cars/create'
-import CarsEdit from "./pages/site-pages/cars/edit";
-import OperatorCreate from "./pages/admin-pages/vendors/create/operator";
+import Dashboard from './pages/admin/dashbord/dashboard'
+import Users from './pages/admin/users/list'
+import Clients from './pages/admin/clients/list'
+import ClientEdit from './pages/admin/clients/edit'
+import ClientCreate from './pages/admin/clients/create'
+import Vendors from './pages/admin/vendors/list'
+import VendorEdit from './pages/admin/vendors/edit'
+import VendorCreate from './pages/admin/vendors/create/vendor'
+import Status from './pages/admin/status/list'
+import StatusCreate from './pages/admin/status/create'
+import StatusEdit from './pages/admin/status/edit'
+import VendorUsers from './pages/vendor/users/list'
+import VendorDriverCreate from './pages/vendor/users/create/driver'
+import VendorDriverEdit from './pages/vendor/users/edit/driver'
+import Cars from './pages/vendor/cars/list'
+import CarsCreate from './pages/vendor/cars/create'
+import CarsEdit from "./pages/vendor/cars/edit";
+import OperatorCreate from "./pages/admin/vendors/create/operator";
 
 const App = (): JSX.Element => (
     <Provider store={store}>
@@ -56,8 +53,6 @@ const App = (): JSX.Element => (
             <Site path="/admin">
                 <Dashboard path="/"/>
                 <Users path="/users/:id"/>
-                {/* <UserEdit path="/users/:id"/> */}
-                {/* <UserCreate path="/users/create/:id"/>  */}
                 <Clients path="clients"/>
                 <ClientEdit path='clients/:id'/>
                 <ClientCreate path='clients/create'/>
