@@ -49,6 +49,7 @@ class ClientsController extends Controller
 
         $tripCount = Clients::where(['type_id' => 1])->count();
         $available = Clients::where('type_id', 2)->count();
+        $cancelCount = Clients::where('type_id', 4)->count();
 
         $clients = DB::table('clients')->where('type_id', $request->typeId);
         if ($request->typeId != 2) {
@@ -103,6 +104,7 @@ class ClientsController extends Controller
             "titles" => new ClientFieldCollection($result),
             'tripCount' => $tripCount,
             'availableCount' => $available,
+            'cancelCount' => $cancelCount,
 
         ], 200);
     }

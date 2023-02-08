@@ -128,7 +128,7 @@
 .header_nav {
     //background-color: $headColor;
     background-color: #FAFBFC;
-    position: sticky;
+   /// position: sticky;
     top: 0;
     z-index: 111111;
     box-shadow: 0 0 20px #ddd;
@@ -209,7 +209,7 @@
     overflow: hidden;
     background-color: white;
     transition: width .2s ease-in-out;
-    position: fixed;
+   /// position: fixed;
     z-index: 11111;
     height: 100%;
     box-shadow: 0 0 20px #ddd;

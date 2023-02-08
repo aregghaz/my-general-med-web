@@ -67,22 +67,6 @@ const List: React.FC<IList> = (
                     </Button>
                 }
             </div>
-            {tabs && <div className={s.table_upper_tab_box}>
-                <div className={s.table_upper_tab}>
-                    {
-                        tabs.length > 0 && tabs.map(tab => (
-                            <div
-                                className={`${s.table_upper_tab_item} ${tabId == tab.id ? s.activeTab : ""}`}
-                                key={tab.id}
-                                onClick={() => handlerChangeTabs(tab.id, tab.name)}
-                            >
-                                {t(tab.name)} {tab.count >= 0 && <span className={s.bage_count}>{tab.count}</span>}
-                            </div>
-                        ))
-                    }
-                </div>
-            </div>}
-
             <div className={s.table_wrapper}>
                 <CrudTable
                     titles={titles}

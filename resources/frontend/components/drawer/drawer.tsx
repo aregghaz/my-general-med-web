@@ -49,7 +49,7 @@ const Drawer: React.FC = ({ children }) => {
         item: string,
         page: string
     }> = [];
-    if (userData.user && userData.user.role == "vendor") {
+    if (userData.user && (userData.user.role == "vendor" )) {
         menuItemsFirst = [
             {
                 id: 1,
@@ -72,7 +72,6 @@ const Drawer: React.FC = ({ children }) => {
         ];
     } else if (userData.user && userData.user.role == "admin") {
         menuItemsFirst = [
-
             {
                 id: 1,
                 Icon: <HomeIcon />,
@@ -106,6 +105,29 @@ const Drawer: React.FC = ({ children }) => {
 
         ];
 
+    }else if(userData.user && userData.user.role == "operator"){
+        menuItemsFirst = [
+            {
+                id: 1,
+                Icon: <HomeIcon />,
+                item: "Home",
+                page: "/operators"
+            },
+            {
+                id: 2,
+                Icon: <Users />,
+                item: "vendors",
+                page: "/operators/vendors"
+            },
+            {
+                id: 4,
+                Icon: <Clients />,
+                item: "clients",
+                page: "/operators/clients"
+            },
+
+
+        ];
     }
 
     const [activeIcon, setActiveIcon] = useState<number>(1);
@@ -120,20 +142,7 @@ const Drawer: React.FC = ({ children }) => {
                                 <img src={`../../images/logo.png`} alt="logo" />
                             </div>
 
-                            <div
-                                key={"home"}
-                                className={s.iconBlock}
-                                style={{ paddingLeft: "30px" }}
-                            >
-                                <Button
-                                    type={"blank"}
-                                    onClick={openSideBar}
-                                >
-                                <span className={s.icon}>
-                                    {isOpen ? <Close /> : <Bars />}
-                                </span>
-                                </Button>
-                            </div>
+
                         </div>
 
                         <div className={s.header_icons_block}>
@@ -180,7 +189,22 @@ const Drawer: React.FC = ({ children }) => {
                 </div>
             </nav>
             <div className={s.content_part}>
+
                 <nav className={s.main} style={isOpen ? { width: "200px" } : { width: "50px" }}>
+                    <div
+                        key={"home"}
+                        className={s.iconBlock}
+                        style={{ padding: "10px 12px" }}
+                    >
+                        <Button
+                            type={"blank"}
+                            onClick={openSideBar}
+                        >
+                                <span className={s.icon}>
+                                    {isOpen ? <Close /> : <Bars />}
+                                </span>
+                        </Button>
+                    </div>
                     <ul className={s.list}>
                         {
                             menuItemsFirst

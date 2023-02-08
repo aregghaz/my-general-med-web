@@ -50,6 +50,11 @@ const App = (): JSX.Element => (
                 <CarsEdit path="/cars/:id"/>
                 <NotFound default/>
             </Site>
+            <Site path="/operators">
+                <Clients path="clients"/>
+                <ClientEdit path='clients/:id'/>
+                <ClientCreate path='clients/create'/>
+            </Site>
             <Site path="/admin">
                 <Dashboard path="/"/>
                 <Users path="/users/:id"/>

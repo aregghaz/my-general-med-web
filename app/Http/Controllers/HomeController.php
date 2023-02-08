@@ -67,6 +67,10 @@ class HomeController extends Controller
         $vendorId = $request->user()->vendor_id;
         $tripCount = Clients::where(['vendor_id' => $vendorId, 'type_id' => 1])->count();
         $available = Clients::where('type_id', 2)->count();
+        $cancelCount = Clients::where('type_id', 4)->count();
+        $progressCount = Clients::where('type_id', 5)->count();
+        $doneCount = Clients::where('type_id', 6)->count();
+
 
         $clients = DB::table('clients')->where('type_id', $request->typeId);
         if ($request->typeId != 2) {
@@ -101,24 +105,22 @@ class HomeController extends Controller
         $result = array_diff( $allFields, $selectedFieldsTitle);
         $selectedFields = count($clientsData) > 0 ? $clientsData : $clientData;
         array_unshift($selectedFields, 'clients.id as id');
-      ///dd( $selectedFields);
-
         $clients = $clients->select($selectedFields);
-
         $clients =  $clients->take(15 * $showMore)->get();
-        // // dd($clients);
-        // // dd( $clients->get());
+
         // if(count($selectedFieldsTitle) > 1){
         //  array_shift($selectedFieldsTitle);
         // }
 
-        //   dd($selectedFieldsTitle);
         return response()->json([
             'clients' => $clients,
             'selectedFields' =>  new ClientFieldCollection($selectedFieldsTitle),
             "titles" => new ClientFieldCollection($result),
             'tripCount' => $tripCount,
             'availableCount' => $available,
+            'cancelCount' => $cancelCount,
+            'progressCount' => $progressCount,
+            'doneCount' => $doneCount,
 
         ], 200);
     }

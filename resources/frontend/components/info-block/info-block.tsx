@@ -53,7 +53,7 @@ const InfoBlock: FC<IProps> = ({clientById, calculateRoute}) => {
                             {newData.origin_comment}
                         </div>
                         <div className={cls.item}>
-                            <span className={cls.b_text}>{t('origin_comment')}: </span>
+                            <span className={cls.b_text}>{t('origin_phone')}: </span>
                             {newData.origin_phone}
                         </div>
                         <div className={cls.item}>
@@ -66,7 +66,7 @@ const InfoBlock: FC<IProps> = ({clientById, calculateRoute}) => {
                             {newData.destination_comments}
                         </div>
                         <div className={cls.item}>
-                            <span className={cls.b_text}>{t('destination_comments')}: </span>
+                            <span className={cls.b_text}>{t('destination_phone')}: </span>
                             {newData.destination_phone}
                         </div>
                         <div className={cls.item}>

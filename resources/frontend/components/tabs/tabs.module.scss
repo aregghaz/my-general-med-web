@@ -1,28 +1,28 @@
 @import "../../styles/variables";
 .bage_count {
-    color: white;
-    background-color: red;
     padding: 3px 6px 3px 6px;
-    font-size: 12px;
-    margin-left: 10px;
-    /* border: 85px; */
-    /* width: 50px; */
-    /* min-height: 147px; */
+    font-size: 20px;
     border-radius: 10px;
+    display: block;
+    text-align: center;
+
 }
 .table_upper_tab_item {
-    //height: 100px;
     background: #ffffff;
     border-bottom: 1px solid rgba(162, 162, 162, 0.2);
-   /// box-shadow: 0 5px 10px 2px rgb(162 162 162 / 20%);
-   /// border-radius: $borderRadius;
     position: relative;
     padding: 10px 30px;
-   /// width: 33.3%;
     cursor: pointer;
     &:hover {
-        filter: brightness(90%);
+        span{
+            color: $asteriskColor;
+        }
+        color: $asteriskColor;
+        border-bottom-color: $asteriskColor;
     }
+}
+.tab_text{
+    font-size: 13px;
 }
 .table_upper_tab {
      display: flex;
@@ -38,11 +38,9 @@
     cursor: pointer;
     background-color: $menuColor;
     color: $whiteColor;
-
     label {
         cursor: pointer;
     }
-
     &:hover {
         background-color: $asteriskColor;
         color: white;

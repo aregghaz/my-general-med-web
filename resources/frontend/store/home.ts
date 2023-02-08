@@ -10,7 +10,10 @@ const initialState = {
     selectedTitle: [] as Array<IOption>,
     clients: [] as Array<IClientsData>,
     tripCount:0 as number,
-    availableCount:0 as number
+    availableCount:0 as number,
+    cancelCount:0 as number,
+    progressCount:0 as number,
+    doneCount:0 as number,
 
 }
 
@@ -54,7 +57,10 @@ const homeReducer = (state = initialState, action: Actions): InitialState => {
                 selectedTitle: action.payload.selectedTitle,
                 clients: action.payload.clients,
                 tripCount:action.payload.tripCount,
-                availableCount:action.payload.availableCount
+                availableCount:action.payload.availableCount,
+                cancelCount:action.payload.cancelCount,
+                progressCount:action.payload.progressCount,
+                doneCount:action.payload.doneCount
             }
 
 

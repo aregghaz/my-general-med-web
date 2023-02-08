@@ -31,7 +31,8 @@ const Tabs: FC<IProps> = ({ tabs, handlerChangeTabs, typeId, handleActionMiddlew
                         key={tab.id}
                         onClick={() => handlerChangeTabs(tab.id)}
                     >
-                        {t(tab.name)}{tab.count >=0 && <span className={s.bage_count}>{tab.count}</span>}
+                        {tab.count >=0 && <span className={s.bage_count}>{tab.count}</span>}
+                        <span className={s.tab_text}>{t(tab.name)}</span>
                     </div>
                 ))
             }

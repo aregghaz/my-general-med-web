@@ -5,7 +5,10 @@ export const getHomePageData = (state: AppStateType) => ({
     selectedTitle:state.homeReducer.selectedTitle,
     clients: state.homeReducer.clients,
     availableCount:state.homeReducer.availableCount,
-    tripCount:state.homeReducer.tripCount
+    tripCount:state.homeReducer.tripCount,
+    cancelCount:state.homeReducer.cancelCount,
+    doneCount:state.homeReducer.doneCount,
+    progressCount:state.homeReducer.progressCount,
 })
 export const getAdminUsersData = (state: AppStateType) => ({
     userdata:state.adminUsersReducer.userdata,
