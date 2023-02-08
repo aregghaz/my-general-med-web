@@ -28,13 +28,17 @@ class VendorController extends Controller
         $vendorCount = User::where('role_id', 2)->count();;
         $operatorCount = User::where(['role_id'=> 4, "vendor_id" => 1])->count();;
         if (isset($request->querySearch)) {
-            $vendorData = User::where('role_id', 2)->get();
+            $vendorData = User::where(['role_id'=> 2,"vendor_id" => 1]);
         } else {
-            $vendorData = User::where('role_id', $request->typeId)
-                ->with('fields')
-                ->get();
-        }
+            if((int)$request->typeId !== 2){
+                $vendorData = User::where(['role_id'=> $request->typeId, "vendor_id" => 1 ]);
 
+            }else{
+                $vendorData = User::where(['role_id'=> $request->typeId]);
+            }
+        }
+        $vendorData = $vendorData->with('fields')
+            ->get();
         return response()->json(
             [
                 'data' => new VendorsCollection($vendorData),
