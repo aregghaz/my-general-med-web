@@ -26,10 +26,7 @@ import Tabs from "../../../components/tabs/tabs";
 import Button from "../../../components/button/button";
 import { GOOGLE_API_KEY } from "../../../environments";
 import { DownloadTableExcel } from "react-export-table-to-excel";
-import { AdminApi } from "../../../api/admin-api/admin-api";
-import { navigate } from "@reach/router";
-
-const center = {lat: 48.8584, lng: 2.2945};
+import DataPickerFromTo from "../../../components/date-picker-from-to/date-picker-from-to";
 
 interface IHome {
     path: string;
@@ -59,14 +56,23 @@ const customStyles: ReactModal.Styles = {
     }
 };
 
+
 const Home: React.FC<IHome> = () => {
     const {t} = useTranslation();
-    const contentRef = useRef();
     const countRef = useRef(2);
     const homeData = useSelector(getHomePageData);
     const clientData = useSelector(getClientData);
     const dispatch = useDispatch();
-    const {selectedTitle, titles: allTiles, clients, tripCount, availableCount} = homeData;
+    const {
+        selectedTitle,
+        titles: allTiles,
+        clients,
+        cancelCount,
+        tripCount,
+        availableCount,
+        progressCount,
+        doneCount
+    } = homeData;
     const {clientById} = clientData;
     const [defaultData, setDefaultData] = useState([]);
     const [show, setShow] = useState(false);
@@ -111,6 +117,11 @@ const Home: React.FC<IHome> = () => {
     }
 
     const tabs = [
+        // {
+        //     id: 1,
+        //     name: "All",
+        //     count: tripCount+cancelCount+progressCount+doneCount+availableCount,
+        // },
         {
             id: 1,
             name: "Trips",
@@ -118,14 +129,24 @@ const Home: React.FC<IHome> = () => {
         },
         {
             id: 4,
-            name: "Close Outs"
-            // count:45
+            name: "Cancelled Trips",
+            count:cancelCount
+        },
+        {
+            id: 5,
+            name: "Trips in Progress",
+            count:progressCount
+        },
+        {
+            id: 6,
+            name: "Completed Trips",
+            count:doneCount
         },
         {
             id: 2,
             name: "Available Trips",
             count: availableCount
-        }
+        },
     ];
 
     const [titles, setTitles] = useState<string[]>([]);
@@ -164,8 +185,8 @@ const Home: React.FC<IHome> = () => {
         (async () => {
             if ((inView || loading) && !open) {
                 const titlesData = localStorage.getItem("titles");
-                const homeData = await AdminApi.getAllData({
-                    titles: titles ? titles : [],
+                const homeData = await homeAPI.getClientData({
+                    titles: titles ? titles : JSON.parse(titlesData),
                     showMore: countRef.current,
                     typeId: typeId
                 });
@@ -175,17 +196,23 @@ const Home: React.FC<IHome> = () => {
                     selectedTitle: homeData.selectedFields,
                     clients: homeData.clients,
                     tripCount: homeData.tripCount,
-                    availableCount: homeData.availableCount
+                    availableCount: homeData.availableCount,
+                    cancelCount: homeData.cancelCount,
+                    doneCount: homeData.doneCount,
+                    progressCount: homeData.progressCount
+
                 }));
+
                 countRef.current++;
                 setLoading(false);
             }
         })();
         return () => {
-         ///   homeAPI.cancelRequest();
+            homeAPI.cancelRequest();
         };
 
     }, [inView, loading, agreement]);
+
 
     const onSearchInput = async (event: { search: string }) => {
         const titlesData = localStorage.getItem("titles");
@@ -202,7 +229,10 @@ const Home: React.FC<IHome> = () => {
             selectedTitle: homeData.selectedFields,
             clients: homeData.clients,
             tripCount: homeData.tripCount,
-            availableCount: homeData.availableCount
+            availableCount: homeData.availableCount,
+            cancelCount: homeData.cancelCount,
+            doneCount: homeData.doneCount,
+            progressCount: homeData.progressCount
         }));
         // }
     };
@@ -234,6 +264,7 @@ const Home: React.FC<IHome> = () => {
     };
 
     const handlerChangeTabs = async (tabId: number) => {
+        countRef.current = 1;
         setIds([]);
         setTypeId(tabId);
         setLoading(true);
@@ -257,7 +288,6 @@ const Home: React.FC<IHome> = () => {
         } else if (status == 99) {
             const getCarData = await vendorAPI.getCarsDataForSelect("cars");
             setCarData(getCarData.cars);
-            console.log(carData, "1111");
             setIsModalOpen(true);
         }
 
@@ -301,6 +331,7 @@ const Home: React.FC<IHome> = () => {
 
         if (getCarData.success) {
             handlerCloseModal()
+            setIds([]);
         } else {
             setIsModalOpen(false);
             setErrorMessage(getCarData.error)
@@ -322,13 +353,14 @@ const Home: React.FC<IHome> = () => {
     const showFilter = () =>{
         setfiltre(!filtre)
     }
-    const handlerAddItem = () => navigate('/admin/clients/create')
     return (
         clients && <>
-
             <div className={s.panel}>
                 <div className={s.upload_panel}>
-                    <Tabs isAdmin handleActionMiddleware={handleActionMiddleware} ids={ids} typeId={typeId} tabs={tabs} handlerChangeTabs={handlerChangeTabs}/>
+                    {/*<DataPickerFromTo */}
+                    {/* dates={}*/}
+                    {/* dayFrom={} dayTo={} index={} monthFrom={} monthTo={} setFieldValue={}/>*/}
+                    <Tabs handleActionMiddleware={handleActionMiddleware} ids={ids} typeId={typeId} tabs={tabs} handlerChangeTabs={handlerChangeTabs}/>
                     <div style={{display: "flex", gap: "10px"}}>
                         <div  className={s.import_block}>
                             <Filters height="24px"  onClick={showFilter}/>
@@ -460,14 +492,7 @@ const Home: React.FC<IHome> = () => {
 
             </div>
             <PopupModal isOpen={isOpen} agreeWith={agreeWith} notAgreeWith={notAgreeWith}/>
-            <div className={s.addBtnWrapper}>
-                {
-                    <Button type='green' className={s.add} onClick={handlerAddItem}>
-                        <span>+</span>
-                    </Button>
-                }
-            </div>
-            <div ref={contentRef} className={s.table_wrapper}>
+            <div  className={s.table_wrapper}>
                 <CrudTable
                     titles={selectedTitle}
                     data={clients}

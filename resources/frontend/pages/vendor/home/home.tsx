@@ -59,7 +59,6 @@ const customStyles: ReactModal.Styles = {
 
 const Home: React.FC<IHome> = () => {
     const {t} = useTranslation();
-    const contentRef = useRef();
     const countRef = useRef(2);
     const homeData = useSelector(getHomePageData);
     const clientData = useSelector(getClientData);
@@ -203,6 +202,7 @@ const Home: React.FC<IHome> = () => {
                     progressCount: homeData.progressCount
 
                 }));
+
                 countRef.current++;
                 setLoading(false);
             }
@@ -263,6 +263,7 @@ const Home: React.FC<IHome> = () => {
     };
 
     const handlerChangeTabs = async (tabId: number) => {
+        countRef.current = 1;
         setIds([]);
         setTypeId(tabId);
         setLoading(true);
@@ -490,7 +491,7 @@ const Home: React.FC<IHome> = () => {
 
             </div>
             <PopupModal isOpen={isOpen} agreeWith={agreeWith} notAgreeWith={notAgreeWith}/>
-            <div ref={contentRef} className={s.table_wrapper}>
+            <div  className={s.table_wrapper}>
                 <CrudTable
                     titles={selectedTitle}
                     data={clients}
