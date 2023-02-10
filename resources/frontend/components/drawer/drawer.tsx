@@ -210,12 +210,10 @@ const Drawer: React.FC = ({ children }) => {
                             menuItemsFirst
                                 .map(li => (
                                         <li className={s.item} key={`first-${li.item}`}>
-                                            <a
-                                                href={li.page}
-                                                target={"_blank"}
-                                                rel='noopener noreferrer'
+                                            <Link
+                                                to={li.page}
                                                 className={`${s.link} ${activeIcon === li.id ? s.active_icon : s.passive_icon}`}
-                                              ///  onClick={() => setActiveIcon(li.id)}
+                                                onClick={() => setActiveIcon(li.id)}
                                             >
                                                 <span className={s.link_block}>
                                                 <span className={s.side_icon}>
@@ -226,7 +224,7 @@ const Drawer: React.FC = ({ children }) => {
                                                 </span>
                                                 </span>
 
-                                            </a>
+                                            </Link>
                                         </li>
                                     )
                                 )
