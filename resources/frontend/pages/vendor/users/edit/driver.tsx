@@ -13,6 +13,8 @@ interface IUsersEditItem {
 const VendorDriverEdit: React.FC<IUsersEditItem> = ({id}) => {
     const {t} = useTranslation()
     const crudKey = 'vendorClients';
+    const redirectKey = 'users';
+
     const [data, setData] = useState(null)
     const fields: Array<IItem> = [
         // {name: 'image', type: 'file', label: 'image'},
@@ -71,6 +73,7 @@ const VendorDriverEdit: React.FC<IUsersEditItem> = ({id}) => {
         <Edit
             crudKey={crudKey}
             data={data}
+            redirectKey={redirectKey}
             requiredFields={requiredFields}
             fields={fields}
             title={''}

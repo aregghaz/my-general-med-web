@@ -17,6 +17,7 @@ interface IEdit {
     crudKey?: string
     handleDrawMap?:any,
     title: string,
+    redirectKey?: string,
     requiredFields?: Array<string>
 }
 
@@ -26,6 +27,7 @@ const Edit: React.FC<IEdit> = (
         crudKey,
         data,
         children,
+        redirectKey,
         handleDrawMap,
         requiredFields,
     }) => {
@@ -53,7 +55,7 @@ const Edit: React.FC<IEdit> = (
         formData.append('_method', 'put');
         formData.append('value', JSON.stringify(values))
         const res: any = await AdminApi.update(formData, crudKey, values.id)
-        if (Number(res.status === 200)) await navigate(`/${crudKey}`)
+        if (Number(res.status === 200)) await navigate(`/${redirectKey ?? crudKey}`)
     }
 
 

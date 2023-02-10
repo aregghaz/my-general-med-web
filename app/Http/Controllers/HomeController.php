@@ -201,7 +201,13 @@ class HomeController extends Controller
     public function changeClientType(Request $request)
     {
         $ids = $request->ids;
-        Clients::whereIn('id', $ids)->update(['type_id' =>  $request->status, 'vendor_id' => $request->user()->id]);
+        if((int)$request->status === 2){
+            Clients::whereIn('id', $ids)->update(['type_id' =>  $request->status, 'vendor_id' => null]);
+
+        }else{
+            Clients::whereIn('id', $ids)->update(['type_id' =>  $request->status, 'vendor_id' => $request->user()->id]);
+
+        }
 
         return response()->json([
             'status' => 200

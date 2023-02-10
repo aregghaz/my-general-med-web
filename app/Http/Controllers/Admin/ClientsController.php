@@ -50,6 +50,8 @@ class ClientsController extends Controller
         $tripCount = Clients::where(['type_id' => 1])->count();
         $available = Clients::where('type_id', 2)->count();
         $cancelCount = Clients::where('type_id', 4)->count();
+        $progressCount = Clients::where('type_id', 5)->count();
+        $doneCount = Clients::where('type_id', 6)->count();
 
         $clients = DB::table('clients')->where('type_id', $request->typeId);
         if ($request->typeId != 2) {
@@ -96,7 +98,7 @@ class ClientsController extends Controller
         // if(count($selectedFieldsTitle) > 1){
         //  array_shift($selectedFieldsTitle);
         // }
-        $selectedFieldsTitle[] = 'action';
+      ////  $selectedFieldsTitle[] = 'action';
         //   dd($selectedFieldsTitle);
         return response()->json([
             'clients' => $clients,
@@ -105,6 +107,8 @@ class ClientsController extends Controller
             'tripCount' => $tripCount,
             'availableCount' => $available,
             'cancelCount' => $cancelCount,
+            'progressCount' => $progressCount,
+            'doneCount' => $doneCount,
 
         ], 200);
     }

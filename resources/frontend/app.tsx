@@ -23,7 +23,7 @@ import Clients from './pages/admin/clients/list'
 import ClientEdit from './pages/admin/clients/edit'
 import ClientCreate from './pages/admin/clients/create'
 import Vendors from './pages/admin/vendors/list'
-import VendorEdit from './pages/admin/vendors/edit'
+import VendorEdit from './pages/admin/vendors/edit/vendor'
 import VendorCreate from './pages/admin/vendors/create/vendor'
 import Status from './pages/admin/status/list'
 import StatusCreate from './pages/admin/status/create'
@@ -35,6 +35,7 @@ import Cars from './pages/vendor/cars/list'
 import CarsCreate from './pages/vendor/cars/create'
 import CarsEdit from "./pages/vendor/cars/edit";
 import OperatorCreate from "./pages/admin/vendors/create/operator";
+import OperatorEdit from "./pages/admin/vendors/edit/operator";
 
 const App = (): JSX.Element => (
     <Provider store={store}>
@@ -62,7 +63,8 @@ const App = (): JSX.Element => (
                 <ClientEdit path='clients/:id'/>
                 <ClientCreate path='clients/create'/>
                 <Vendors path="vendors"/>
-                <VendorEdit path='vendors/:id'/>
+                <VendorEdit path='vendors/:id/2'/>
+                <OperatorEdit path='vendors/:id/4'/>
                 <VendorCreate path='vendors/create/2'/>
                 <OperatorCreate path='vendors/create/4'/>
                 <Status path='status'/>

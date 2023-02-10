@@ -82,7 +82,7 @@ const Vendors: React.FC<IVendors> = () => {
     };
     const titles: Array<string> = [
         "id",
-        "companyName",
+        typeId == 2  ? "companyName" : "fullName",
         "email",
         "address",
         "phone_number",
@@ -108,18 +108,8 @@ const Vendors: React.FC<IVendors> = () => {
             setIsModalOpen(false);
         });
     };
-    const handlerEditBeneficiaryItem = (id: number) => navigate(`/admin/${crudKey}/${id}`);
-    const HandlerGetProducts = (id: number) => navigate(`/admin/users-products/${id}`);
 
-    const HandlerPagination = async (activeItem: number) => {
-        const query = localStorage.getItem("query");
-        ///   const homeData = await AdminApi.getAllData(crudKey, activeItem + 1, query ? query : '')
-        //    setCount({from: homeData.current_page, to: homeData.current_page + 5})
-        //    setData(homeData.data)
-        ///  const role = localStorage.getItem('role');
-        localStorage.setItem("page", activeItem.toString());
-
-    };
+    const handlerEditItem = (id: number) => navigate(`/admin/${crudKey}/${id}/${typeId}`);
 
 
     const handlerGetVendorUsers = async (id: number) => {
@@ -170,12 +160,9 @@ const Vendors: React.FC<IVendors> = () => {
                 isGetItems
                 handlerAddItem={handlerAddItem}
                 handlerDeleteItem={handlerDeleteModal}
-                handlerEditItem={handlerEditBeneficiaryItem}
-                HandlerPagination={HandlerPagination}
-                HandlerGetProducts={HandlerGetProducts}
+                handlerEditItem={handlerEditItem}
                 handlerGetVendorUsers={handlerGetVendorUsers}
-                count={count}
-                paginated={true}
+                paginated={false}
                 activeItem={activeItem}
                 className={"pagination"}
             />

@@ -222,7 +222,7 @@ class VendorController extends Controller
             /// 'status' => json_decode($request->value)->status->id,
             'address' => $requestData['address'],
             ///'password' =>  bcrypt($requestData['password']),
-            'role_id' => 2,
+           /// 'role_id' => 2,
         ]);
         $idCats = array_column($requestData['fields'], 'id');
 

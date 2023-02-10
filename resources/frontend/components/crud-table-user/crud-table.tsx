@@ -17,6 +17,7 @@ const CrudTable: React.FC<ICrudTable> = (
         isDelete,
         handlerEditItem,
         tableRef,
+        action,
         HandlerPagination,
         handlerGetClientData,
         paginated,
@@ -48,7 +49,7 @@ const CrudTable: React.FC<ICrudTable> = (
     return (
         <>
             <table className={s.table} ref={tableRef}>
-                <TableHead titles={titles} titleSort={titleSort} filterTable={filterTable} titleName={titleName}/>
+                <TableHead action={action} titles={titles} titleSort={titleSort} filterTable={filterTable} titleName={titleName}/>
                 <TableBody
                     data={resetOrNotTable}
                     titles={titles}
@@ -72,6 +73,7 @@ interface ICrudTable {
     paginated?: boolean
     isDelete?: boolean
     isEdit?: boolean
+    action?: boolean
     count?: ICount
     className: string
     handlerGetClientData?: (event: any, data: number) => void

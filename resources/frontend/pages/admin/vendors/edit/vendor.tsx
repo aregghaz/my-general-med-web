@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react'
-import Edit from '../../layouts/templates/edit/edit'
-import {IItem} from '../../layouts/templates/formik-handler/formik-handler'
+import Edit from '../../../layouts/templates/edit/edit'
+import {IItem} from '../../../layouts/templates/formik-handler/formik-handler'
 import {useTranslation} from 'react-i18next'
-import { AdminApi } from '../../../api/admin-api/admin-api'
+import { AdminApi } from '../../../../api/admin-api/admin-api'
 interface IVendorEditItem {
     path: string
     id?: number

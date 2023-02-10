@@ -353,6 +353,7 @@ const Home: React.FC<IHome> = () => {
     const showFilter = () => {
         setfiltre(!filtre);
     };
+    const handlerEditItem = (id:number) => navigate(`/admin/clients/${id}`)
     const handlerAddItem = () => navigate("/admin/clients/create");
     return (
         clients && <>
@@ -503,6 +504,9 @@ const Home: React.FC<IHome> = () => {
                 <CrudTable
                     titles={selectedTitle}
                     data={clients}
+                    isEdit
+                    action
+                    handlerEditItem={handlerEditItem}
                     tableRef={tableRef}
                     handlerGetClientData={handlerGetClientData}
                     className={"pagination"}

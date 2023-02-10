@@ -18,6 +18,8 @@ class TablesFieldsSeeder extends Seeder
         $fields = [
             'id',
             'trip_id',
+            'car_id',
+            'vendor_id',
             'fullName',
             'gender',
             'los',

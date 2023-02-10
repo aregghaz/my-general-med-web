@@ -27,6 +27,7 @@ import Button from "../../../components/button/button";
 import { GOOGLE_API_KEY } from "../../../environments";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 import DataPickerFromTo from "../../../components/date-picker-from-to/date-picker-from-to";
+import {OperatorApi} from "../../../api/admin-api/operator-api";
 
 interface IHome {
     path: string;
@@ -185,7 +186,7 @@ const Home: React.FC<IHome> = () => {
         (async () => {
             if ((inView || loading) && !open) {
                 const titlesData = localStorage.getItem("titles");
-                const homeData = await homeAPI.getClientData({
+                const homeData = await OperatorApi.getClientData({
                     titles: titles ? titles : JSON.parse(titlesData),
                     showMore: countRef.current,
                     typeId: typeId

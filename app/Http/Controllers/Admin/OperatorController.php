@@ -7,6 +7,7 @@ use App\Http\Resources\StatusCollection;
 use App\Models\ClientStatus;
 use App\Models\ClientTable;
 use App\Models\User;
+use App\Models\Vendor;
 use Validator;
 use Illuminate\Http\Request;
 
@@ -93,6 +94,95 @@ class OperatorController extends Controller
             ],
             201
         );
+    }
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param \App\Models\User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function edit(Request $request, $id)
+    {
+        $vendorData = User::with('fields')
+            ->find($id);
+         //   ->first();
+        $clientTable = ClientTable::get();
+///dd($id);
+        return response()->json(
+            [
+                'data' => [
+                    'id' => $vendorData->id,
+                    'name' => $vendorData->name,
+                    'surname' => $vendorData->surname,
+                    'email' => $vendorData->email,
+                    'address' => $vendorData->address,
+                    'phone_number' => $vendorData->phone_number,
+                    'fields' => new StatusCollection($vendorData->fields),
+                ], ///  new VendorsCollection($vendor),
+                'fields' => new StatusCollection($clientTable),
+                ///   'users' => new StatusCollection($users),
+                ///    'status' => new StatusCollection($status)
+            ],
+            200
+        );
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Vendor $vendor
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make((array) json_decode($request->value), [
+            'name' => 'required|string',
+            'surname' => 'required|string',
+            'phone_number' => 'required|string',
+            'email' => 'required|string|email',
+            ///  'status' => 'required',
+            'address' => 'string',
+            'password' => 'string',
+            'fields' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(
+                [
+                    'success' => 0,
+                    'type' => 'validation_filed',
+                    'error' => $validator->messages(),
+                ],
+                422
+            );
+        }
+
+        $requestData = $validator->validated();
+
+        $vendor = User::find($id)->update([
+            'name' => $requestData['name'],
+            'surname' => $requestData['surname'],
+            'phone_number' => $requestData['phone_number'],
+            'email' => $requestData['email'],
+            'address' => $requestData['address'],
+        ]);
+        if( isset($requestData['password'])){
+            $vendor = User::find($id)->update(['password' =>  bcrypt($requestData['password'])]);
+        }
+        $idCats = array_column($requestData['fields'], 'id');
+
+        User::find($id)
+            ->fields()
+            ->sync($idCats);
+
+        return response()->json(
+            [
+                'success' => '1',
+                'type' => 'success',
+                'status' => 200,
+            ],
+            201
+        ); //
     }
 
 }

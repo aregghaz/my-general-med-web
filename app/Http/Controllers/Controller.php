@@ -91,7 +91,7 @@ class Controller extends BaseController
             'id' => $client->id,
             'trip_id' => $client->trip_id,
             'fullName' => $client->fullName,
-            'surname' => $client->surname,
+           /// 'surname' => $client->surname,
             'gender' => $client->genderType->name,
             'los' => $client->los,
             ///'phone_number' => $client->phone_number,

@@ -39,24 +39,15 @@ const TableBody: React.FC<ITableBody> = (
 
     return (
         <tbody>
+
         {
             data
                 .map((item, index) => {
                     const keys = Object.keys(item)
                     return keys.length > 0 && (
+
                         <TableRow key={index} data-rowid={item['id']}
                                   className={selectedIds?.includes(item['id']) ? `${s.chosen}` : ""}>
-                            {
-                                keys.map((key: any, i: number) => {
-                                        return i !== 0 && (
-                                            <TableData key={key} field={key} item={item} className={key}
-                                                       handlerGetClientData={handlerGetClientData}>
-                                                {item[key]}
-                                            </TableData>
-                                        )
-                                    }
-                                )
-                            }
                             {
                                 (isEdit || isDelete ) &&
                                 <TableData  item={99999} key={999999}>
@@ -78,6 +69,18 @@ const TableBody: React.FC<ITableBody> = (
                                     </div>
                                 </TableData>
                             }
+                            {
+                                keys.map((key: any, i: number) => {
+                                        return i !== 0 && (
+                                            <TableData key={key} field={key} item={item} className={key}
+                                                       handlerGetClientData={handlerGetClientData}>
+                                                {item[key]}
+                                            </TableData>
+                                        )
+                                    }
+                                )
+                            }
+
                         </TableRow>
                     )
                 })

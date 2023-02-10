@@ -67,10 +67,6 @@ Route::group([
 ], function () {
     Route::resources([
         'users'=> UserController::class,
-    ]);
-    Route::resources([
-        ///'home-data' => HomeController::class,
-        'users' => \App\Http\Controllers\UserController::class,
         'clients' => \App\Http\Controllers\ClientsController::class,
         'operators' => OperatorController::class,
 
@@ -87,4 +83,10 @@ Route::group([
     Route::get('/changeStatus/{slug}', [AdminController::class, 'changeStatus']);
     Route::get('/changeStatus/{slug}/{id}', [AdminController::class, 'getStatusById']);
     Route::post('/changeStatus/{slug}', [AdminController::class, 'createStatus']);
+});
+Route::group([
+    'prefix' => 'operators', 'middleware' => 'auth:api'
+], function () {
+    Route::post('/getClients', [OperatorController::class, 'getClients']);
+
 });
