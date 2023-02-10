@@ -16,6 +16,9 @@ export const AdminApi = {
     editUserData(crudKey: string, id: number) {
         return axios.get(`/api/admin/${crudKey}/${id}/edit`).then(res => res.data)
     },
+    audit() {
+        return axios.get(`/api/admin/audit`).then(res => res.data)
+    },
 
     getAllData(options: IClintSendData) {
         return axios.post(`/api/admin/clientsData`, options, {

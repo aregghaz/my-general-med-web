@@ -76,9 +76,13 @@ class ClientsController extends Controller
                 $clients = $clients->join('genders', 'clients.gender', '=', 'genders.id');
                 $clientsData[] = "genders.name as gender";
             } else if ($vendorFields[$i] == 'car_id' and ((int)$request->typeId !== 2 and (int)$request->typeId !== 4)) {
-                $clients = $clients->join('cars', 'clients.car_id', '=', 'cars.id');
-                $clients = $clients->join('makes', 'makes.id', '=', 'cars.make_id');
-                $clientsData[] = "makes.name as " . $selectedFieldsTitle[$i];
+                $clients = $clients->join('cars',function($query) {
+                    $query->on('cars.id', '=', 'clients.car_id')->orWhereNull('clients.car_id');;
+                });
+               // $clients = $clients->join('cars', 'clients.car_id', '=', 'cars.id');
+              $clients = $clients->join('makes', 'makes.id', '=', 'cars.make_id');
+               $clientsData[] = "clients.car_id as " . $selectedFieldsTitle[$i];
+               $clientsData[] = "makes.name as car_name";
             } else if ($vendorFields[$i] == 'vendor_id' and ((int)$request->typeId !== 2 and (int)$request->typeId !== 4)) {
                 $clients = $clients->join('users', 'clients.vendor_id', '=', 'users.id');
                 $clientsData[] = "users.name as " . $selectedFieldsTitle[$i];

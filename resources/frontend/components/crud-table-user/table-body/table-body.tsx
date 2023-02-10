@@ -71,10 +71,10 @@ const TableBody: React.FC<ITableBody> = (
                             }
                             {
                                 keys.map((key: any, i: number) => {
-                                        return i !== 0 && (
+                                        return i !== 0 && key !== 'car_name' && (
                                             <TableData key={key} field={key} item={item} className={key}
                                                        handlerGetClientData={handlerGetClientData}>
-                                                {item[key]}
+                                                {(key !== 'car_id' ?item[key] : item['car_id'] != null ? item['car_name'] : '')}
                                             </TableData>
                                         )
                                     }

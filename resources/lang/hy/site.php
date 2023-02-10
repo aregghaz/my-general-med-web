@@ -60,6 +60,7 @@ return [
     'assign' => 'Assign',
     'car_id' => 'Car',
     'vendor_id' => 'Vendor',
+    'operator_id' => 'Operator',
 
     'seeMore' => 'Home number',
     'adminBeneficiaries' => "Users",

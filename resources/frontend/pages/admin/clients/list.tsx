@@ -317,7 +317,6 @@ const Home: React.FC<IHome> = () => {
 
 
     const handlerSetVendor = async () => {
-        console.log(selectedVendor,'selectedVendor');
         const getCarData = await vendorAPI.assignVendorToClient({
             ids: ids,
             vendorId: selectedVendor.id

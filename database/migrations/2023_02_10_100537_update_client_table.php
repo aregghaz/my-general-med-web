@@ -13,9 +13,9 @@ class UpdateClientTable extends Migration
      */
     public function up()
     {
-//        Schema::table('clients', function(Blueprint $table){
-//            $table->text('video_source')->nullable()->after('video');
-//        });
+        Schema::table('clients', function(Blueprint $table){
+            $table->unsignedBigInteger('operator_id')->nullable()->after('vendor_id');
+        });
     }
 
     /**

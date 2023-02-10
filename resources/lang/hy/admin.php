@@ -22,6 +22,7 @@ return [
     'remove_all' => 'Remove all',
     'car_id' => 'Car',
     'vendor_id' => 'Vendor',
+    'operator_id' => 'Operator',
     'origin_name' => 'Origin Name',
     'origin_street' => 'Origin Street',
     'origin_suite' => 'Origin Suite',
