@@ -284,7 +284,8 @@ class VendorController extends Controller
     {
         $clientsIds = $request->ids;
         $vendorId = $request->vendorId;
-        $clients = Clients::whereIn('id', $clientsIds)->update(["vendor_id" => $vendorId, 'type_id' => 1]);
+        $operatorId = $request->user()->id;
+        $clients = Clients::whereIn('id', $clientsIds)->update(["vendor_id" => $vendorId, 'type_id' => 1, 'operator_id' => $operatorId]);
         if($clients){
             //dd($request->ids);
             return response()->json([

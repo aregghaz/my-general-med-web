@@ -1,14 +1,14 @@
-import React, {useEffect, useRef, useState} from "react";
-import {useTranslation} from "react-i18next";
-import {useDispatch, useSelector} from "react-redux";
-import {actions} from "../../../store/home";
-import {clientAction} from "../../../store/client";
-import {getClientData, getHomePageData} from "../../../store/selectors";
-import {homeAPI} from "../../../api/site-api/home-api";
+import React, { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { actions } from "../../../store/home";
+import { clientAction } from "../../../store/client";
+import { getClientData, getHomePageData } from "../../../store/selectors";
+import { homeAPI } from "../../../api/site-api/home-api";
 import s from "../../../styles/home.module.scss";
 import CrudTable from "../../../components/crud-table-user/crud-table";
-import Select, {IOption} from "../../../components/select/select";
-import {useInView} from "react-intersection-observer";
+import Select, { IOption } from "../../../components/select/select";
+import { useInView } from "react-intersection-observer";
 import InfoBlock from "../../../components/info-block/info-block";
 import Upload from "-!svg-react-loader!../../../images/Upload.svg";
 import Import from "-!svg-react-loader!../../../images/Import.svg";
@@ -17,17 +17,19 @@ import Search from "-!svg-react-loader!../../../images/Search.svg";
 import Close from "-!svg-react-loader!../../../images/Close.svg";
 import axios from "axios";
 import BackDropSearch from "../../../components/backdrop-search/backdrop-search";
-import {DirectionsRenderer, GoogleMap, useJsApiLoader} from "@react-google-maps/api";
+import { DirectionsRenderer, GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import Modal from "react-modal";
 import PopupModal from "../../../components/popup-modal/popup-modal";
 import MultiSelectSort from "../../../components/select/sort-select";
-import {vendorAPI} from "../../../api/site-api/vendor-api";
+import { vendorAPI } from "../../../api/site-api/vendor-api";
 import Tabs from "../../../components/tabs/tabs";
 import Button from "../../../components/button/button";
 import { GOOGLE_API_KEY } from "../../../environments";
 import { DownloadTableExcel } from "react-export-table-to-excel";
-import DataPickerFromTo from "../../../components/date-picker-from-to/date-picker-from-to";
-import {OperatorApi} from "../../../api/admin-api/operator-api";
+import { AdminApi } from "../../../api/admin-api/admin-api";
+import { navigate } from "@reach/router";
+
+const center = { lat: 48.8584, lng: 2.2945 };
 
 interface IHome {
     path: string;
@@ -57,9 +59,9 @@ const customStyles: ReactModal.Styles = {
     }
 };
 
-
 const Home: React.FC<IHome> = () => {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
+    const contentRef = useRef();
     const countRef = useRef(2);
     const homeData = useSelector(getHomePageData);
     const clientData = useSelector(getClientData);
@@ -74,7 +76,7 @@ const Home: React.FC<IHome> = () => {
         progressCount,
         doneCount
     } = homeData;
-    const {clientById} = clientData;
+    const { clientById } = clientData;
     const [defaultData, setDefaultData] = useState([]);
     const [show, setShow] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
@@ -92,11 +94,11 @@ const Home: React.FC<IHome> = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [agreement, setAgreement] = useState<boolean>(false);
     const [status, setStatus] = useState<number | null>(null);
-    const [carData, setCarData] = useState<Array<any>>(null);
-    const [car, setCar] = useState<IOption>(null);
+    const [vendorData, setVendorData] = useState<Array<any>>(null);
+    const [selectedVendor, setSelectedVendor] = useState<IOption>(null);
     const tableRef = useRef(null);
 
-    const {isLoaded} = useJsApiLoader({
+    const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: GOOGLE_API_KEY,
         libraries: ["geometry", "drawing", "places"]
     });
@@ -150,6 +152,7 @@ const Home: React.FC<IHome> = () => {
         },
     ];
 
+
     const [titles, setTitles] = useState<string[]>([]);
 
     const openSearch = () => {
@@ -159,11 +162,11 @@ const Home: React.FC<IHome> = () => {
     const handlerGetClientData = async (event: any, id: number) => {
         if (event.ctrlKey || event.shiftKey) {
             const objWithIdIndex = ids.findIndex((value) => value === id);
-            if(objWithIdIndex > -1){
+            if (objWithIdIndex > -1) {
                 setIds((state) => {
-                    return state.filter((value) => value !== id)
+                    return state.filter((value) => value !== id);
                 });
-            }else{
+            } else {
                 setIds((state) => {
                     return [
                         ...state,
@@ -174,7 +177,7 @@ const Home: React.FC<IHome> = () => {
 
         } else {
             const homeData = await homeAPI.getCLientById(id);
-            dispatch(clientAction.fetching({clientById: homeData.client}));
+            dispatch(clientAction.fetching({ clientById: homeData.client }));
             setIsModalOpen(true);
             setShow(true);
         }
@@ -186,8 +189,8 @@ const Home: React.FC<IHome> = () => {
         (async () => {
             if ((inView || loading) && !open) {
                 const titlesData = localStorage.getItem("titles");
-                const homeData = await OperatorApi.getClientData({
-                    titles: titles ? titles : JSON.parse(titlesData),
+                const homeData = await AdminApi.getAllData({
+                    titles: titles ? titles : [],
                     showMore: countRef.current,
                     typeId: typeId
                 });
@@ -201,19 +204,16 @@ const Home: React.FC<IHome> = () => {
                     cancelCount: homeData.cancelCount,
                     doneCount: homeData.doneCount,
                     progressCount: homeData.progressCount
-
                 }));
-
                 countRef.current++;
                 setLoading(false);
             }
         })();
         return () => {
-            homeAPI.cancelRequest();
+            ///   homeAPI.cancelRequest();
         };
 
     }, [inView, loading, agreement]);
-
 
     const onSearchInput = async (event: { search: string }) => {
         const titlesData = localStorage.getItem("titles");
@@ -239,7 +239,7 @@ const Home: React.FC<IHome> = () => {
     };
 
     const changeFields = (options: Array<IOption>) => {
-        console.log(options,'options');
+        console.log(options, "options");
         let result = options.map(a => a.slug);
         localStorage.setItem("titles", JSON.stringify(result));
         if (result.length > 0) {
@@ -265,7 +265,6 @@ const Home: React.FC<IHome> = () => {
     };
 
     const handlerChangeTabs = async (tabId: number) => {
-        countRef.current = 1;
         setIds([]);
         setTypeId(tabId);
         setLoading(true);
@@ -275,7 +274,7 @@ const Home: React.FC<IHome> = () => {
 
     if (agreement) {
         delay(200).then(async () => {
-            await homeAPI.changeClientsTypes({status, ids});
+            await homeAPI.changeClientsTypes({ status, ids });
             setIds([]);
             setLoading(true);
             setAgreement(false);
@@ -283,15 +282,9 @@ const Home: React.FC<IHome> = () => {
     }
 
     const handleActionMiddleware = async (status: number) => {
-        if (ids.length > 0 && status !== 99) {
-            setIsOpen(true);
-            setStatus(status);
-        } else if (status == 99) {
-            const getCarData = await vendorAPI.getCarsDataForSelect("cars");
-            setCarData(getCarData.cars);
-            setIsModalOpen(true);
-        }
-
+        const getData = await vendorAPI.getVendorsDataForSelect();
+        setVendorData(getData.data);
+        setIsModalOpen(true);
     };
     const agreeWith = (callOrNot: boolean) => {
         setAgreement(callOrNot);
@@ -301,9 +294,9 @@ const Home: React.FC<IHome> = () => {
 
 
     const handlerCloseModal = () => {
-        dispatch(clientAction.fetching({clientById: null}));
-        setCar(null)
-        setCarData(null)
+        dispatch(clientAction.fetching({ clientById: null }));
+        setSelectedVendor(null);
+        setVendorData(null);
         setDirectionsResponse(null);
         setDistance("");
         setDuration("");
@@ -323,48 +316,49 @@ const Home: React.FC<IHome> = () => {
     };
 
 
-    const handlerSetCar = async () => {
-        console.log(ids, car);
-        const getCarData = await vendorAPI.assignCarToClient({
+    const handlerSetVendor = async () => {
+        const getCarData = await vendorAPI.assignVendorToClient({
             ids: ids,
-            carId: parseFloat(car.value)
+            vendorId: selectedVendor.id
         });
 
         if (getCarData.success) {
-            handlerCloseModal()
-            setIds([]);
+            setIds([])
+            handlerCloseModal();
+            setLoading(true);
         } else {
             setIsModalOpen(false);
-            setErrorMessage(getCarData.error)
+            setErrorMessage(getCarData.error);
             delay(2000).then(async () => {
-                setErrorMessage('')
+                setErrorMessage("");
             });
         }
     };
 
     useEffect(() => {
         if (isModalOpen) {
-            document.body.style.overflow = 'hidden'
-        }else{
-            document.body.style.overflow = 'unset';
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "unset";
         }
 
-    }, [isModalOpen])
+    }, [isModalOpen]);
 
-    const showFilter = () =>{
-        setfiltre(!filtre)
-    }
+    const showFilter = () => {
+        setfiltre(!filtre);
+    };
+    const handlerEditItem = (id:number) => navigate(`/admin/clients/${id}`)
+    const handlerAddItem = () => navigate("/admin/clients/create");
     return (
         clients && <>
+
             <div className={s.panel}>
                 <div className={s.upload_panel}>
-                    {/*<DataPickerFromTo */}
-                    {/* dates={}*/}
-                    {/* dayFrom={} dayTo={} index={} monthFrom={} monthTo={} setFieldValue={}/>*/}
-                    <Tabs handleActionMiddleware={handleActionMiddleware} ids={ids} typeId={typeId} tabs={tabs} handlerChangeTabs={handlerChangeTabs}/>
-                    <div style={{display: "flex", gap: "10px"}}>
-                        <div  className={s.import_block}>
-                            <Filters height="24px"  onClick={showFilter}/>
+                    <Tabs isAdmin handleActionMiddleware={handleActionMiddleware} ids={ids} typeId={typeId} tabs={tabs}
+                          handlerChangeTabs={handlerChangeTabs} />
+                    <div style={{ display: "flex", gap: "10px" }}>
+                        <div className={s.import_block}>
+                            <Filters height="24px" onClick={showFilter} />
                         </div>
                         <div className={s.upload_block}>
                             <label htmlFor="uploadFile">
@@ -373,7 +367,7 @@ const Home: React.FC<IHome> = () => {
                                     sheet="users"
                                     currentTableRef={tableRef.current}
                                 >
-                                    <Upload/>
+                                    <Upload />
                                 </DownloadTableExcel>
 
                             </label>
@@ -381,29 +375,29 @@ const Home: React.FC<IHome> = () => {
                                 id="uploadFile"
                                 type="file"
                                 onChange={fileUploader}
-                                style={{display: "none"}}
+                                style={{ display: "none" }}
                                 accept=".xls, .xlsx, .csv"
                             />
                         </div>
                         <div className={s.import_block}>
                             <label>
-                                <Import/>
+                                <Import />
                             </label>
                         </div>
                         <div className={s.import_block} onClick={() => {
                             openSearch();
                         }}>
-                            {open ? <Close/> : <Search/>}
+                            {open ? <Close /> : <Search />}
                         </div>
                     </div>
                     <div
                         className={`${s.header_input_block} ${open ? s.active : s.passive}`}
                     >
-                        <BackDropSearch handlerSubmit={onSearchInput}/>
+                        <BackDropSearch handlerSubmit={onSearchInput} />
                     </div>
 
                 </div>
-                {errorMessage && <div style={{color: "red"}}>{errorMessage}</div>}
+                {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
 
                 <Modal
                     isOpen={isModalOpen !== false}
@@ -420,25 +414,25 @@ const Home: React.FC<IHome> = () => {
                         {
                             show && clientById &&
                             <div className={s.modalDiv}>
-                                <InfoBlock clientById={clientById} calculateRoute={handlerOpenModal}/>
+                                <InfoBlock clientById={clientById} calculateRoute={handlerOpenModal} />
                             </div>
                         }
                         {
-                            carData  && <div className={s.modalDiv}>
+                            vendorData && <div className={s.modalDiv}>
                                 <div className={s.selectDiv}>
                                     <Select
                                         getOptionValue={(option: IOption) => option.value}
                                         getOptionLabel={(option: IOption) => t(option.label)}
-                                        onChange={(options: IOption) => setCar(options)}
-                                        /// onChange={handlerSetCar}
-                                        options={carData}
+                                        onChange={(options: IOption) => setSelectedVendor(options)}
+                                        /// onChange={handlerSetVendor}
+                                        options={vendorData}
                                         // value={selectedTitle}
                                         name={"Cars"}
                                         isMulti={false}
                                     />
 
-                                    <Button isSubmit={true} type={'adminUpdate'}
-                                            onClick={handlerSetCar}> {t('assign')}</Button>
+                                    <Button isSubmit={true} type={"adminUpdate"}
+                                            onClick={handlerSetVendor}> {t("assign")}</Button>
                                 </div>
                             </div>
                         }
@@ -447,7 +441,7 @@ const Home: React.FC<IHome> = () => {
                             <GoogleMap
                                 ///  center={center}
                                 zoom={15}
-                                mapContainerStyle={{width: "100%", height: "100%"}}
+                                mapContainerStyle={{ width: "100%", height: "100%" }}
                                 options={{
                                     zoomControl: true,
                                     streetViewControl: false,
@@ -458,16 +452,16 @@ const Home: React.FC<IHome> = () => {
                             >
                                 {/* <Marker position={center} /> */}
                                 {directionsResponse && (
-                                    <DirectionsRenderer directions={directionsResponse}/>
+                                    <DirectionsRenderer directions={directionsResponse} />
                                 )}
 
                             </GoogleMap>
-                            <div style={{border: "1px solid #ddd", padding: "5px", marginTop: "10px"}}>
+                            <div style={{ border: "1px solid #ddd", padding: "5px", marginTop: "10px" }}>
                                 {steps && steps.map((el: any) => {
                                     return (
                                         <div
                                             className={s.directions}
-                                            dangerouslySetInnerHTML={{__html: el.instructions}}
+                                            dangerouslySetInnerHTML={{ __html: el.instructions }}
                                         />
                                     );
                                 })}
@@ -489,14 +483,22 @@ const Home: React.FC<IHome> = () => {
                         onChangePosition={changeSortPosition}
                     />}
                 </div>
-
-
             </div>
-            <PopupModal isOpen={isOpen} agreeWith={agreeWith} notAgreeWith={notAgreeWith}/>
-            <div  className={s.table_wrapper}>
+            <PopupModal isOpen={isOpen} agreeWith={agreeWith} notAgreeWith={notAgreeWith} />
+            <div className={s.addBtnWrapper}>
+                {
+                    <Button type="green" className={s.add} onClick={handlerAddItem}>
+                        <span>+</span>
+                    </Button>
+                }
+            </div>
+            <div ref={contentRef} className={s.table_wrapper}>
                 <CrudTable
                     titles={selectedTitle}
                     data={clients}
+                    isEdit
+                    action
+                    handlerEditItem={handlerEditItem}
                     tableRef={tableRef}
                     handlerGetClientData={handlerGetClientData}
                     className={"pagination"}
@@ -504,7 +506,7 @@ const Home: React.FC<IHome> = () => {
                     selectedIds={ids}
                     typeId={typeId}
                 />
-                <div className={s.detector} ref={ref}/>
+                <div className={s.detector} ref={ref} />
             </div>
 
         </>
