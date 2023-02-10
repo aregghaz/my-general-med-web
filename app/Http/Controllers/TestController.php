@@ -181,7 +181,7 @@ class TestController extends Controller
 
             $clients = Clients::create(
                 [
-                    'vendor_id' => $vendorId,
+                    'vendor_id' => null,
                     ////'car_id' => 2,
                     'type_id' => 2,
                     'trip_id' => $data[$trip_id],

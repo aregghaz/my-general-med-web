@@ -58,6 +58,8 @@ return [
     'slug' => 'Slug',
   ///  'destination' => 'Destination',
     'assign' => 'Assign',
+    'car_id' => 'Car',
+    'vendor_id' => 'Vendor',
 
     'seeMore' => 'Home number',
     'adminBeneficiaries' => "Users",

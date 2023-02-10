@@ -79,6 +79,8 @@ Route::group([
     Route::put('/vendors/{id}', [VendorController::class, 'update']);
     Route::get('/getVendorUsers/{id}/{tabId}', [VendorController::class, 'getVendorUsers']);
     Route::get('/vendors/{id}/edit', [VendorController::class, 'edit']);
+    Route::get('/vendor-data-for-select', [VendorController::class, 'getVendorDataSelect']);
+    Route::post('/assign-vendor-client', [VendorController::class, 'setVendorTtoClient']);
 
     Route::get('/changeStatus/{slug}', [AdminController::class, 'changeStatus']);
     Route::get('/changeStatus/{slug}/{id}', [AdminController::class, 'getStatusById']);

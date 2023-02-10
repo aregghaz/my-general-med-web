@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\RoleCollection;
 use App\Http\Resources\StatusCollection;
-use App\Http\Resources\UserCollection;
 use App\Http\Resources\VendorsCollection;
+use App\Models\Clients;
 use App\Models\ClientStatus;
 use App\Models\ClientTable;
-use App\Models\Role;
 use App\Models\User;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
@@ -26,15 +24,15 @@ class VendorController extends Controller
     public function index(Request $request)
     {
         $vendorCount = User::where('role_id', 2)->count();;
-        $operatorCount = User::where(['role_id'=> 4, "vendor_id" => 1])->count();;
+        $operatorCount = User::where(['role_id' => 4, "vendor_id" => 1])->count();;
         if (isset($request->querySearch)) {
-            $vendorData = User::where(['role_id'=> 2,"vendor_id" => 1]);
+            $vendorData = User::where(['role_id' => 2, "vendor_id" => 1]);
         } else {
-            if((int)$request->typeId !== 2){
-                $vendorData = User::where(['role_id'=> $request->typeId, "vendor_id" => 1 ]);
+            if ((int)$request->typeId !== 2) {
+                $vendorData = User::where(['role_id' => $request->typeId, "vendor_id" => 1]);
 
-            }else{
-                $vendorData = User::where(['role_id'=> $request->typeId]);
+            } else {
+                $vendorData = User::where(['role_id' => $request->typeId]);
             }
         }
         $vendorData = $vendorData->with('fields')
@@ -57,7 +55,7 @@ class VendorController extends Controller
     public function create()
     {
         $clientTable = ClientTable::get();
-       /// $users = User::get();
+        /// $users = User::get();
         $status = ClientStatus::get();
         return response()->json(
             [
@@ -76,7 +74,7 @@ class VendorController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make((array) json_decode($request->value), [
+        $validator = Validator::make((array)json_decode($request->value), [
             'companyName' => 'required|string',
             'phone_number' => 'required|string',
             'email' => 'required|string|email|unique:users',
@@ -194,7 +192,7 @@ class VendorController extends Controller
      */
     public function update(Request $request, Vendor $vendor)
     {
-        $validator = Validator::make((array) json_decode($request->value), [
+        $validator = Validator::make((array)json_decode($request->value), [
             'companyName' => 'required|string',
             'phone_number' => 'required|string',
             'email' => 'required|string|email',
@@ -212,17 +210,15 @@ class VendorController extends Controller
                 422
             );
         }
-
         $requestData = $validator->validated();
-
-        $vendor = User::find($request->id)->update([
+        User::find($request->id)->update([
             'name' => $requestData['companyName'],
             'phone_number' => $requestData['phone_number'],
             'email' => $requestData['email'],
             /// 'status' => json_decode($request->value)->status->id,
             'address' => $requestData['address'],
             ///'password' =>  bcrypt($requestData['password']),
-           /// 'role_id' => 2,
+            /// 'role_id' => 2,
         ]);
         $idCats = array_column($requestData['fields'], 'id');
 
@@ -251,15 +247,14 @@ class VendorController extends Controller
         //
     }
 
-    public function getVendorUsers($id,$tabId)
+    public function getVendorUsers($id, $tabId)
     {
-
-        $operatorsCount = User::where(['role_id'=> 4,"vendor_id" => $id])->count();;
-        $driverCount = User::where(['role_id'=> 3, "vendor_id" => $id])->count();;
+        $operatorsCount = User::where(['role_id' => 4, "vendor_id" => $id])->count();;
+        $driverCount = User::where(['role_id' => 3, "vendor_id" => $id])->count();;
         if (isset($request->querySearch)) {
-            $vendorData = User::where(['role_id'=>$tabId, "vendor_id" => $id]);
+            $vendorData = User::where(['role_id' => $tabId, "vendor_id" => $id]);
         } else {
-            $vendorData = User::where(['role_id'=>$tabId, "vendor_id" => $id])
+            $vendorData = User::where(['role_id' => $tabId, "vendor_id" => $id])
                 ->with('fields');
         }
         $vendorData = $vendorData->get();
@@ -271,5 +266,39 @@ class VendorController extends Controller
             ],
             200
         );
+    }
+
+    public function getVendorDataSelect()
+    {
+        $vendorData = User::where('role_id', 2)->get();
+        return response()->json(
+            [
+                'data' => new StatusCollection($vendorData),
+            ],
+            200
+        );
+    }
+
+    public function setVendorTtoClient(Request $request)
+    {
+        $clientsIds = $request->ids;
+        $vendorId = $request->vendorId;
+        $clients = Clients::whereIn('id', $clientsIds)->update(["vendor_id" => $vendorId, 'type_id' => 1]);
+        if($clients){
+            //dd($request->ids);
+            return response()->json([
+                'success' => 1,
+            ], 200);
+        }else{
+            return response()->json(
+                [
+                    'success' => 0,
+                    //'type' => 'validation_filed',
+                    'error' => 'something wrong with your reqeuest',
+                ],
+                200
+            );
+        }
+
     }
 }

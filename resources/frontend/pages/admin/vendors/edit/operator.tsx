@@ -43,7 +43,7 @@ const OperatorEdit: React.FC<IVendorEditItem> = ({id}) => {
         <Edit
             crudKey={`admin/${crudKey}`}
             data={data}
-            redirectKey={redirectKey}
+            redirectKey={`admin/${redirectKey}`}
             requiredFields={requiredFields}
             fields={fields}
             title={''}

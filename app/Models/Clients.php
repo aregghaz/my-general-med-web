@@ -46,15 +46,7 @@ class Clients extends Model
 
     ];
 
-//    public function origin()
-//    {
-//        return $this->hasOne(OriginAddress::class, 'id', 'origin_id');
-//    }
-//
-//    public function destination()
-//    {
-//        return $this->hasOne(DestinationAddress::class, 'id', 'destination_id');
-//    }
+
 
     public function typeOfTrip()
     {

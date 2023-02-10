@@ -202,7 +202,7 @@ class HomeController extends Controller
     {
         $ids = $request->ids;
         if((int)$request->status === 2){
-            Clients::whereIn('id', $ids)->update(['type_id' =>  $request->status, 'vendor_id' => null]);
+            Clients::whereIn('id', $ids)->update(['type_id' =>  $request->status, 'vendor_id' => null, "car_id" =>null]);
 
         }else{
             Clients::whereIn('id', $ids)->update(['type_id' =>  $request->status, 'vendor_id' => $request->user()->id]);

@@ -58,7 +58,7 @@ const Tabs: FC<IProps> = ({ tabs, handlerChangeTabs, typeId, handleActionMiddlew
             </div>)}
             {isAdmin && ((<div className={s.upload_panel}>
                 <div
-                    className={`${s.action_block} ${typeId === 2 || typeId === 4 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
+                    className={`${s.action_block} ${typeId === 2 ? s.enabled_action : s.disabled_action}`}
                     onClick={() => handleActionMiddleware(99)}
                 >
                     Assign to Vendor

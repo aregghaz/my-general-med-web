@@ -94,8 +94,8 @@ const Home: React.FC<IHome> = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [agreement, setAgreement] = useState<boolean>(false);
     const [status, setStatus] = useState<number | null>(null);
-    const [carData, setCarData] = useState<Array<any>>(null);
-    const [car, setCar] = useState<IOption>(null);
+    const [vendorData, setVendorData] = useState<Array<any>>(null);
+    const [selectedVendor, setSelectedVendor] = useState<IOption>(null);
     const tableRef = useRef(null);
 
     const { isLoaded } = useJsApiLoader({
@@ -282,16 +282,9 @@ const Home: React.FC<IHome> = () => {
     }
 
     const handleActionMiddleware = async (status: number) => {
-        if (ids.length > 0 && status !== 99) {
-            setIsOpen(true);
-            setStatus(status);
-        } else if (status == 99) {
-            const getCarData = await vendorAPI.getCarsDataForSelect("cars");
-            setCarData(getCarData.cars);
-            console.log(carData, "1111");
-            setIsModalOpen(true);
-        }
-
+        const getData = await vendorAPI.getVendorsDataForSelect();
+        setVendorData(getData.data);
+        setIsModalOpen(true);
     };
     const agreeWith = (callOrNot: boolean) => {
         setAgreement(callOrNot);
@@ -302,8 +295,8 @@ const Home: React.FC<IHome> = () => {
 
     const handlerCloseModal = () => {
         dispatch(clientAction.fetching({ clientById: null }));
-        setCar(null);
-        setCarData(null);
+        setSelectedVendor(null);
+        setVendorData(null);
         setDirectionsResponse(null);
         setDistance("");
         setDuration("");
@@ -323,15 +316,17 @@ const Home: React.FC<IHome> = () => {
     };
 
 
-    const handlerSetCar = async () => {
-        console.log(ids, car);
-        const getCarData = await vendorAPI.assignCarToClient({
+    const handlerSetVendor = async () => {
+        console.log(selectedVendor,'selectedVendor');
+        const getCarData = await vendorAPI.assignVendorToClient({
             ids: ids,
-            carId: parseFloat(car.value)
+            vendorId: selectedVendor.id
         });
 
         if (getCarData.success) {
+            setIds([])
             handlerCloseModal();
+            setLoading(true);
         } else {
             setIsModalOpen(false);
             setErrorMessage(getCarData.error);
@@ -424,21 +419,21 @@ const Home: React.FC<IHome> = () => {
                             </div>
                         }
                         {
-                            carData && <div className={s.modalDiv}>
+                            vendorData && <div className={s.modalDiv}>
                                 <div className={s.selectDiv}>
                                     <Select
                                         getOptionValue={(option: IOption) => option.value}
                                         getOptionLabel={(option: IOption) => t(option.label)}
-                                        onChange={(options: IOption) => setCar(options)}
-                                        /// onChange={handlerSetCar}
-                                        options={carData}
+                                        onChange={(options: IOption) => setSelectedVendor(options)}
+                                        /// onChange={handlerSetVendor}
+                                        options={vendorData}
                                         // value={selectedTitle}
                                         name={"Cars"}
                                         isMulti={false}
                                     />
 
                                     <Button isSubmit={true} type={"adminUpdate"}
-                                            onClick={handlerSetCar}> {t("assign")}</Button>
+                                            onClick={handlerSetVendor}> {t("assign")}</Button>
                                 </div>
                             </div>
                         }
@@ -489,8 +484,6 @@ const Home: React.FC<IHome> = () => {
                         onChangePosition={changeSortPosition}
                     />}
                 </div>
-
-
             </div>
             <PopupModal isOpen={isOpen} agreeWith={agreeWith} notAgreeWith={notAgreeWith} />
             <div className={s.addBtnWrapper}>

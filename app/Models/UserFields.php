@@ -11,6 +11,5 @@ class UserFields extends Model
     protected $fillable  =  [
         'user_id',
         'field_id',
-       
     ];
 }
