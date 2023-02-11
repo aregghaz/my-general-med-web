@@ -157,7 +157,7 @@ const Home: React.FC<IHome> = () => {
             if ((inView || loading) && !open) {
                 const titlesData = localStorage.getItem("titles");
                 const homeData = await homeAPI.getClientData({
-                    titles: titles ? titles : JSON.parse(titlesData),
+                    titles: titles.length  ? titles : JSON.parse(titlesData),
                     showMore: countRef.current,
                     typeId: typeId
                 });
@@ -186,9 +186,8 @@ const Home: React.FC<IHome> = () => {
 
     const onSearchInput = async (event: { search: string }) => {
         const titlesData = localStorage.getItem("titles");
-
         const homeData = await homeAPI.getClientData({
-            titles: JSON.parse(titlesData),
+            titles: titles.length  ? titles : JSON.parse(titlesData),
             showMore: countRef.current,
             typeId: typeId,
             queryData: event.search

@@ -91,14 +91,7 @@ const Home: React.FC<IHome> = () => {
         threshold: 1
     });
 
-
-
     const tabs = [
-        // {
-        //     id: 1,
-        //     name: "All",
-        //     count: tripCount+cancelCount+progressCount+doneCount+availableCount,
-        // },
         {
             id: 1,
             name: "Trips",
@@ -161,7 +154,7 @@ const Home: React.FC<IHome> = () => {
             if ((inView || loading) && !open) {
                 const titlesData = localStorage.getItem("titles");
                 const homeData = await AdminApi.getAllData({
-                    titles: titles ? titles : [],
+                    titles: titles.length  ? titles : JSON.parse(titlesData),
                     showMore: countRef.current,
                     typeId: typeId
                 });
@@ -190,7 +183,7 @@ const Home: React.FC<IHome> = () => {
         const titlesData = localStorage.getItem("titles");
 
         const homeData = await homeAPI.getClientData({
-            titles: JSON.parse(titlesData),
+            titles: titles.length  ? titles : JSON.parse(titlesData),
             showMore: countRef.current,
             typeId: typeId,
             queryData: event.search
