@@ -21,6 +21,7 @@ type ThunkType = BaseThunkType<Actions>
 const authReducer = (state = initialState, action: Actions): InitialState => {
     switch (action.type) {
         case 'SET_LOGGED_IN_AND_TOKEN': {
+            console.log(action.payload,'action.payload');
             return {
                 ...state,
                 token: action.payload,
@@ -64,6 +65,7 @@ export const checkLoggedIn = (): ThunkType => async (dispatch) => {
     try {
         const token = localStorage.getItem('access_token') || ''
         if (token) {
+            console.log(token,'tokentoken');
             dispatch(actions.setLoggedIn(token))
             await dispatch(getUserData())
         }
@@ -76,6 +78,7 @@ export const checkAdminLoggedIn = (): ThunkType => async (dispatch) => {
     try {
         const token = localStorage.getItem('access_token') || ''
         if (token) {
+            console.log(token,'tokentoken');
             dispatch(actions.setLoggedIn(token))
             await dispatch(getUserData())
         } else {
@@ -101,7 +104,7 @@ export const login = (formData: FormData): ThunkType => {
 
                     try {
                         // console.log(response.data.access_token, ' ---- 111 token ')
-                        const user = await authAPI.getUser()
+                        const user = await authAPI.getUser(response.data.access_token)
                         dispatch(actions.setUser(user))
                     } catch (e) {
                         console.error(e)
@@ -120,7 +123,8 @@ export const login = (formData: FormData): ThunkType => {
 
 export const getUserData = (): ThunkType => async (dispatch) => {
     try {
-        const user = await authAPI.getUser()
+        const token = localStorage.getItem('access_token') || ''
+        const user = await authAPI.getUser(token)
         dispatch(actions.setUser(user))
     } catch (e) {
         console.error(e)

@@ -10,7 +10,9 @@ export const authAPI = {
         return axios.post('/api/auth/login', formData).then(res => res)
     },
 
-    getUser() {
+    getUser(access_token:string) {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token
+
         return axios.get('/api/auth/user').then(res => res.data)
     },
 
