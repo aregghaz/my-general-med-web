@@ -70,7 +70,6 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
         setDistance(results.routes[0].legs[0].distance.text);
         setDuration(results.routes[0].legs[0].duration.text);
         setSteps(results.routes[0].legs[0].steps);
-        console.log(results,'results');
     }
 
     useEffect(() => {

@@ -39,9 +39,6 @@ const homeReducer = (state = initialState, action: Actions): InitialState => {
             }
 
         case 'FILTER_COLUMNS_DATA':
-
-            console.log(action.payload, 'action.payloadaction.payload');
-
             return {
                 ...state,
                 titles: [...action.payload.titles],

@@ -25,8 +25,6 @@ const Site: React.FC<ISite> = ({children}) => {
 
     useEffect(() => {
         (async () =>{
-          ///  console.log(loggedIn,'loggedIn');
-            console.log(user,'jlkjkl');
             await  dispatch(checkLoggedIn())
             if (!loggedIn) {
                 navigate('/login')

@@ -21,7 +21,6 @@ type ThunkType = BaseThunkType<Actions>
 const authReducer = (state = initialState, action: Actions): InitialState => {
     switch (action.type) {
         case 'SET_LOGGED_IN_AND_TOKEN': {
-            console.log(action.payload,'action.payload');
             return {
                 ...state,
                 token: action.payload,
@@ -65,7 +64,6 @@ export const checkLoggedIn = (): ThunkType => async (dispatch) => {
     try {
         const token = localStorage.getItem('access_token') || ''
         if (token) {
-            console.log(token,'tokentoken');
             dispatch(actions.setLoggedIn(token))
             await dispatch(getUserData())
         }
@@ -78,7 +76,6 @@ export const checkAdminLoggedIn = (): ThunkType => async (dispatch) => {
     try {
         const token = localStorage.getItem('access_token') || ''
         if (token) {
-            console.log(token,'tokentoken');
             dispatch(actions.setLoggedIn(token))
             await dispatch(getUserData())
         } else {

@@ -45,7 +45,6 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
     //         setViewPDF(null)
     //     }
     // }
-    console.log(error, "old image")
     return (
         <>
             {/* <Viewer fileUrl={url} /> */}

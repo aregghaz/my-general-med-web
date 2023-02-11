@@ -32,7 +32,6 @@ const UserEdit: React.FC<IUsersEditItem> = ({id}) => {
         (
             async () => {
                 const data = await AdminApi.getUserData(crudKey, id)
-                console.log(data)
                 setData(data)
 
             }
