@@ -62,6 +62,8 @@ const App = (): JSX.Element => (
                 <Dashboard path="/"/>
                 <Users path="/users/:id"/>
                 <Clients path="clients"/>
+                <Show path="/client/:id"/>
+
                 <ClientEdit path='clients/:id'/>
                 <ClientCreate path='clients/create'/>
                 <Vendors path="vendors"/>
