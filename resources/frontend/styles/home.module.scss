@@ -291,17 +291,6 @@ body {
     }
 }
 
-
-.googleMap {
-    position: relative;
-    margin-top: 20px;
-    aspect-ratio: 2/1;
-    overflow: visible;
-
-    & > div:first-child {
-
-    }
-}
 .addBtnWrapper {
     display: flex;
     justify-content: flex-end;
@@ -311,12 +300,6 @@ body {
     z-index: 1111111111;
 }
 
-.directions {
-    margin-top: 10px;
-}
-.selectDiv{
-    height: 300px;
-}
 .add {
     border-radius: 50%;
 

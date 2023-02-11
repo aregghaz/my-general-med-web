@@ -43,6 +43,7 @@ const Drawer: React.FC = ({ children }) => {
             document.removeEventListener("mousedown", outsideClickHandler);
         };
     }, [logoutRef]);
+
     var menuItemsFirst: Array<{
         id: number,
         Icon: any,

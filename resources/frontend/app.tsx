@@ -36,6 +36,7 @@ import CarsCreate from './pages/vendor/cars/create'
 import CarsEdit from "./pages/vendor/cars/edit";
 import OperatorCreate from "./pages/admin/vendors/create/operator";
 import OperatorEdit from "./pages/admin/vendors/edit/operator";
+import Show from "./pages/vendor/home/show";
 
 const App = (): JSX.Element => (
     <Provider store={store}>
@@ -43,6 +44,7 @@ const App = (): JSX.Element => (
             <LoginWrapper path="/login"/>
             <Site path="/">
                 <Home path="/"/>
+                <Show path="/client/:id"/>
                 <VendorUsers path="/users"/>
                 <VendorDriverEdit path="/users/driver/:id"/>
                 <VendorDriverCreate path="/users/driver/create"/>

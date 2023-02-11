@@ -3,13 +3,12 @@ import {ISerialCard} from "../types/serial";
 import { IClientsData } from '../types/home-types';
 import {ICount} from '../types/admin'
 const defaultDat ={
-    
+
     // client_id:0,
     // car_id:0,
     // vendor_id:0,
     trip_id:0,
-    name:"",
-    surname:'',
+    fullName:'',
     gender:"",
     pick_up_address:"",
     los:"",
@@ -20,24 +19,16 @@ const defaultDat ={
     drop_down:"",
     request_type: 0,
     status:0,
-    origin_name:"",
-    origin_stree:"",
-    origin_suite:"",
-    origin_city:"",
-    origin_state:"",
-    origin_postal:"",
-    origin_country:"",
+    origin:"",
+    origin_id:"",
     origin_phone:"",
     origin_comment:'',
-    destination_name:'',
-    destination_street:'',
-    destination_suite:'',
-    destination_city:'',
-    destination_state:'',
-    destination_postal:'',
-    destination_country:'',
+    destination:'',
+    destination_id:'',
     destination_phone:'',
     destination_comment:'',
+    height:0,
+    weight:0,
     escortType:0,
     type_of_trip:0,
     miles:0,
@@ -46,7 +37,7 @@ const defaultDat ={
 }
 
 const initialState = {
-    clientById: [typeof defaultDat]
+    clientById: defaultDat
 }
 
 
@@ -65,8 +56,8 @@ const clientReducer = (state = initialState, action: clientAction): InitialState
         case 'RESET_HOME_PAGE_STATE':
             return {
                 ...state,
-                clientById:[],
-            
+                clientById:defaultDat,
+
             }
         default:
             return state

@@ -19,19 +19,19 @@ const Site: React.FC<ISite> = ({children}) => {
     const {user,loggedIn} = useSelector(getUserData)
     const [isLoading, setLoading] = useState(true);
     //
-    // useEffect(() => {
-    //     dispatch(checkLoggedIn())
-    // }, [])
-
     useEffect(() => {
-        (async () =>{
-            await  dispatch(checkLoggedIn())
-            if (!loggedIn) {
-                navigate('/login')
-            }
-        })()
-    }, [ loggedIn])
-    return (
+        dispatch(checkLoggedIn())
+    }, [])
+
+    // useEffect(() => {
+    //     (async () =>{
+    //         await  dispatch(checkLoggedIn())
+    //         // if (!loggedIn) {
+    //         //     navigate('/login')
+    //         // }
+    //     })()
+    // }, [])
+    return loggedIn && (
         <Row className={s.mainRow}>
             <Drawer>
             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className={s.mainContainer}>

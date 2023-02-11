@@ -9,7 +9,6 @@ import s from "../../../styles/home.module.scss";
 import CrudTable from "../../../components/crud-table-user/crud-table";
 import Select, {IOption} from "../../../components/select/select";
 import {useInView} from "react-intersection-observer";
-import InfoBlock from "../../../components/info-block/info-block";
 import Upload from "-!svg-react-loader!../../../images/Upload.svg";
 import Import from "-!svg-react-loader!../../../images/Import.svg";
 import Filters from "-!svg-react-loader!../../../images/filters.svg";
@@ -17,16 +16,13 @@ import Search from "-!svg-react-loader!../../../images/Search.svg";
 import Close from "-!svg-react-loader!../../../images/Close.svg";
 import axios from "axios";
 import BackDropSearch from "../../../components/backdrop-search/backdrop-search";
-import {DirectionsRenderer, GoogleMap, useJsApiLoader} from "@react-google-maps/api";
 import Modal from "react-modal";
 import PopupModal from "../../../components/popup-modal/popup-modal";
 import MultiSelectSort from "../../../components/select/sort-select";
 import {vendorAPI} from "../../../api/site-api/vendor-api";
 import Tabs from "../../../components/tabs/tabs";
 import Button from "../../../components/button/button";
-import { GOOGLE_API_KEY } from "../../../environments";
 import { DownloadTableExcel } from "react-export-table-to-excel";
-import DataPickerFromTo from "../../../components/date-picker-from-to/date-picker-from-to";
 
 interface IHome {
     path: string;
@@ -61,7 +57,6 @@ const Home: React.FC<IHome> = () => {
     const {t} = useTranslation();
     const countRef = useRef(2);
     const homeData = useSelector(getHomePageData);
-    const clientData = useSelector(getClientData);
     const dispatch = useDispatch();
     const {
         selectedTitle,
@@ -73,20 +68,13 @@ const Home: React.FC<IHome> = () => {
         progressCount,
         doneCount
     } = homeData;
-    const {clientById} = clientData;
     const [defaultData, setDefaultData] = useState([]);
-    const [show, setShow] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [ids, setIds] = useState([]);
     const [open, setOpen] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
     const [typeId, setTypeId] = useState<number>(1);
-    const [steps, setSteps] = useState<Array<any>>([]);
-    const [map, setMap] = useState(/** @type google.maps.Map */(null));
-    const [directionsResponse, setDirectionsResponse] = useState(null);
-    const [distance, setDistance] = useState("");
     const [filtre, setfiltre] = useState(false);
-    const [duration, setDuration] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [agreement, setAgreement] = useState<boolean>(false);
@@ -95,26 +83,11 @@ const Home: React.FC<IHome> = () => {
     const [car, setCar] = useState<IOption>(null);
     const tableRef = useRef(null);
 
-    const {isLoaded} = useJsApiLoader({
-        googleMapsApiKey: GOOGLE_API_KEY,
-        libraries: ["geometry", "drawing", "places"]
-    });
     const [ref, inView] = useInView({
         threshold: 1
     });
 
-    async function calculateRoute(newData: any) {
-        const directionsService = new google.maps.DirectionsService();
-        const results = await directionsService.route({
-            origin: newData.origin,
-            destination: newData.destination,
-            travelMode: google.maps.TravelMode.DRIVING
-        });
-        setDirectionsResponse(results);
-        setDistance(results.routes[0].legs[0].distance.text);
-        setDuration(results.routes[0].legs[0].duration.text);
-        setSteps(results.routes[0].legs[0].steps);
-    }
+
 
     const tabs = [
         // {
@@ -172,10 +145,8 @@ const Home: React.FC<IHome> = () => {
             }
 
         } else {
-            const homeData = await homeAPI.getCLientById(id);
-            dispatch(clientAction.fetching({clientById: homeData.client}));
-            setIsModalOpen(true);
-            setShow(true);
+            window.open(`/client/${id}`, '_blank', 'noreferrer');
+
         }
 
     };
@@ -302,15 +273,7 @@ const Home: React.FC<IHome> = () => {
         dispatch(clientAction.fetching({clientById: null}));
         setCar(null)
         setCarData(null)
-        setDirectionsResponse(null);
-        setDistance("");
-        setDuration("");
-        setSteps([]);
         setIsModalOpen(false);
-    };
-    const handlerOpenModal = async (newData: any) => {
-        await calculateRoute(newData);
-        setIsModalOpen(true);
     };
 
     const changeSortPosition = (arr: Array<IOption>) => {
@@ -415,12 +378,7 @@ const Home: React.FC<IHome> = () => {
                                onClick={handlerCloseModal}
                             />
                         </div>
-                        {
-                            show && clientById &&
-                            <div className={s.modalDiv}>
-                                <InfoBlock clientById={clientById} calculateRoute={handlerOpenModal}/>
-                            </div>
-                        }
+                ]
                         {
                             carData  && <div className={s.modalDiv}>
                                 <div className={s.selectDiv}>
@@ -440,37 +398,6 @@ const Home: React.FC<IHome> = () => {
                                 </div>
                             </div>
                         }
-                        {isLoaded && directionsResponse && <div className={s.selectDiv}>
-
-                            <GoogleMap
-                                ///  center={center}
-                                zoom={15}
-                                mapContainerStyle={{width: "100%", height: "100%"}}
-                                options={{
-                                    zoomControl: true,
-                                    streetViewControl: false,
-                                    mapTypeControl: false,
-                                    fullscreenControl: false
-                                }}
-                                onLoad={map => setMap(map)}
-                            >
-                                {/* <Marker position={center} /> */}
-                                {directionsResponse && (
-                                    <DirectionsRenderer directions={directionsResponse}/>
-                                )}
-
-                            </GoogleMap>
-                            <div style={{border: "1px solid #ddd", padding: "5px", marginTop: "10px"}}>
-                                {steps && steps.map((el: any) => {
-                                    return (
-                                        <div
-                                            className={s.directions}
-                                            dangerouslySetInnerHTML={{__html: el.instructions}}
-                                        />
-                                    );
-                                })}
-                            </div>
-                        </div>}
                     </div>
                 </Modal>
                 <div className={s.iconBlock}>
