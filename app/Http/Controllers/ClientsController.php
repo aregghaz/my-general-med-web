@@ -109,7 +109,7 @@ dd('clients');
         ])->find($id);
 
 
-        $clientdata = $this->convertSingleDataForInfo($client);
+        $clientdata = $this->convertSingleData($client);
 
         return response()->json([
             'data' => $clientdata,

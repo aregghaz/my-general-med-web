@@ -30,10 +30,8 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
         libraries: ["geometry", "drawing", "places"]
     });
     const fields: Array<IItem> = [
-
         { name: "trip_id", type: "input", label: "trip_id" },
-        { name: "name", type: "input", label: "name" },
-        { name: "surname", type: "input", label: "surName" },
+        { name: "fullName", type: "input", label: "fullName" },
         { name: "gender", type: "select", label: "gender" },
         { name: "los", type: "input", label: "los" },
         { name: "phone_number", type: "datepicker", label: "phone_number" },
@@ -47,8 +45,6 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
         { name: "origin_comment", type: "input", label: "origin_comment" },
         { name: "destination_phone", type: "input", label: "destination_phone" },
         { name: "destination_comments", type: "input", label: "destination_comments" },
-        { name: "escortType", type: "select", label: "escortType" },
-        { name: "type_of_trip", type: "select", label: "type_of_trip" },
         { name: "status", type: "select", label: "status" },
         { name: "member_uniqie_identifer", type: "input", label: "member_uniqie_identifer" },
         { name: "birthday", type: "datepicker", label: "birthday" },
