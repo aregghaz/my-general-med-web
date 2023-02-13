@@ -5,7 +5,8 @@ interface IButton {
     type?: 'primary' | 'secondary' | 'blank' | 'green' | 'transparent' | 'adminUpdate'
     isSubmit?: boolean
     onClick?: () => void
-    className?: string
+    className?: string,
+    children:any
 }
 
 const Button: React.FC<IButton> = (

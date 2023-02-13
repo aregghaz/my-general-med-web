@@ -7,15 +7,16 @@ import Input from "../../../../components/input/input";
 import Checkbox from "../../../../components/checkbox/checkbox";
 import RichText from "../../../../components/rich-text/rich-text";
 import { useTranslation } from "react-i18next";
-import DataPicker from "../../../../components/data-picker/data-picker";
+///import DataPicker from "../../../../components/data-picker/data-picker";
 import SingleFileUpload from "../../../../components/single-file-upload/single-file-upload";
 import getFieldLabel from "../../../../utils/getFieldLabel";
 import GooglePlacesAutocomplete, { geocodeByPlaceId } from "react-google-places-autocomplete";
 import Button from "../../../../components/button/button";
 import { GOOGLE_API_KEY } from "../../../../environments";
+import TimePickers from "../../../../components/time-picker/timepicker";
 
 export interface IItem {
-    type?: "input" | "autocomplete" | "checkbox" | "richText" | "textarea" | "select" | "file" | "textField" | "radio" | "datepicker" | "multiSelect" | "hidden";
+    type?: "input" | "autocomplete" | "timePicker" |"checkbox" | "richText" | "textarea" | "select" | "file" | "textField" | "radio" | "datepicker" | "multiSelect" | "hidden";
     inputType?: string;
     name: string;
     value?: string | boolean | File | IOption;
@@ -154,13 +155,23 @@ const FormikHandler: React.FC<IFormikHandler> = (
                     placeholder={t(item.placeholder)}
                 />
             );
-        case "datepicker":
+        // case "datepicker":
+        //     return (
+        //         <DataPicker
+        //             name={item.name}
+        //             setFieldValue={setFieldValue}
+        //             handleChange={handleChange}
+        //             label={t(item.label)}
+        //             value={values[item.name]}
+        //         />
+        //     );
+        case "timePicker":
             return (
-                <DataPicker
+                <TimePickers
+                    label={getFieldLabel(t, item.label, item.name, requiredFields)}
+                    error={errors[item.name]}
                     name={item.name}
                     setFieldValue={setFieldValue}
-                    handleChange={handleChange}
-                    label={t(item.label)}
                     value={values[item.name]}
                 />
             );

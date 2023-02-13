@@ -1,14 +1,14 @@
-import React, {useEffect, useRef, useState} from "react";
-import {useTranslation} from "react-i18next";
-import {useDispatch, useSelector} from "react-redux";
-import {actions} from "../../../store/home";
-import {clientAction} from "../../../store/client";
-import {getClientData, getHomePageData} from "../../../store/selectors";
-import {homeAPI} from "../../../api/site-api/home-api";
+import React, { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { actions } from "../../../store/home";
+import { clientAction } from "../../../store/client";
+import { getHomePageData } from "../../../store/selectors";
+import { homeAPI } from "../../../api/site-api/home-api";
 import s from "../../../styles/home.module.scss";
 import CrudTable from "../../../components/crud-table-user/crud-table";
-import Select, {IOption} from "../../../components/select/select";
-import {useInView} from "react-intersection-observer";
+import Select, { IOption } from "../../../components/select/select";
+import { useInView } from "react-intersection-observer";
 import Upload from "-!svg-react-loader!../../../images/Upload.svg";
 import Import from "-!svg-react-loader!../../../images/Import.svg";
 import Filters from "-!svg-react-loader!../../../images/filters.svg";
@@ -19,7 +19,7 @@ import BackDropSearch from "../../../components/backdrop-search/backdrop-search"
 import Modal from "react-modal";
 import PopupModal from "../../../components/popup-modal/popup-modal";
 import MultiSelectSort from "../../../components/select/sort-select";
-import {vendorAPI} from "../../../api/site-api/vendor-api";
+import { vendorAPI } from "../../../api/site-api/vendor-api";
 import Tabs from "../../../components/tabs/tabs";
 import Button from "../../../components/button/button";
 import { DownloadTableExcel } from "react-export-table-to-excel";
@@ -54,7 +54,7 @@ const customStyles: ReactModal.Styles = {
 
 
 const Home: React.FC<IHome> = () => {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const countRef = useRef(2);
     const homeData = useSelector(getHomePageData);
     const dispatch = useDispatch();
@@ -88,7 +88,6 @@ const Home: React.FC<IHome> = () => {
     });
 
 
-
     const tabs = [
         // {
         //     id: 1,
@@ -103,23 +102,23 @@ const Home: React.FC<IHome> = () => {
         {
             id: 4,
             name: "Cancelled Trips",
-            count:cancelCount
+            count: cancelCount
         },
         {
             id: 5,
             name: "Trips in Progress",
-            count:progressCount
+            count: progressCount
         },
         {
             id: 6,
             name: "Completed Trips",
-            count:doneCount
+            count: doneCount
         },
         {
             id: 2,
             name: "Available Trips",
             count: availableCount
-        },
+        }
     ];
 
     const [titles, setTitles] = useState<string[]>([]);
@@ -131,11 +130,11 @@ const Home: React.FC<IHome> = () => {
     const handlerGetClientData = async (event: any, id: number) => {
         if (event.ctrlKey || event.shiftKey) {
             const objWithIdIndex = ids.findIndex((value) => value === id);
-            if(objWithIdIndex > -1){
+            if (objWithIdIndex > -1) {
                 setIds((state) => {
-                    return state.filter((value) => value !== id)
+                    return state.filter((value) => value !== id);
                 });
-            }else{
+            } else {
                 setIds((state) => {
                     return [
                         ...state,
@@ -145,7 +144,7 @@ const Home: React.FC<IHome> = () => {
             }
 
         } else {
-            window.open(`/client/${id}`, '_blank', 'noreferrer');
+            window.open(`/client/${id}`, "_blank", "noreferrer");
 
         }
 
@@ -157,7 +156,7 @@ const Home: React.FC<IHome> = () => {
             if ((inView || loading) && !open) {
                 const titlesData = localStorage.getItem("titles");
                 const homeData = await homeAPI.getClientData({
-                    titles: titles.length  ? titles : JSON.parse(titlesData),
+                    titles: titles.length ? titles : JSON.parse(titlesData),
                     showMore: countRef.current,
                     typeId: typeId
                 });
@@ -187,7 +186,7 @@ const Home: React.FC<IHome> = () => {
     const onSearchInput = async (event: { search: string }) => {
         const titlesData = localStorage.getItem("titles");
         const homeData = await homeAPI.getClientData({
-            titles: titles.length  ? titles : JSON.parse(titlesData),
+            titles: titles.length ? titles : JSON.parse(titlesData),
             showMore: countRef.current,
             typeId: typeId,
             queryData: event.search
@@ -207,7 +206,7 @@ const Home: React.FC<IHome> = () => {
     };
 
     const changeFields = (options: Array<IOption>) => {
-        console.log(options,'options');
+        console.log(options, "options");
         let result = options.map(a => a.slug);
         localStorage.setItem("titles", JSON.stringify(result));
         if (result.length > 0) {
@@ -243,7 +242,7 @@ const Home: React.FC<IHome> = () => {
 
     if (agreement) {
         delay(200).then(async () => {
-            await homeAPI.changeClientsTypes({status, ids});
+            await homeAPI.changeClientsTypes({ status, ids });
             setIds([]);
             setLoading(true);
             setAgreement(false);
@@ -269,9 +268,9 @@ const Home: React.FC<IHome> = () => {
 
 
     const handlerCloseModal = () => {
-        dispatch(clientAction.fetching({clientById: null}));
-        setCar(null)
-        setCarData(null)
+        dispatch(clientAction.fetching({ clientById: null }));
+        setCar(null);
+        setCarData(null);
         setIsModalOpen(false);
     };
 
@@ -291,29 +290,29 @@ const Home: React.FC<IHome> = () => {
         });
 
         if (getCarData.success) {
-            handlerCloseModal()
+            handlerCloseModal();
             setIds([]);
         } else {
             setIsModalOpen(false);
-            setErrorMessage(getCarData.error)
+            setErrorMessage(getCarData.error);
             delay(2000).then(async () => {
-                setErrorMessage('')
+                setErrorMessage("");
             });
         }
     };
 
     useEffect(() => {
         if (isModalOpen) {
-            document.body.style.overflow = 'hidden'
-        }else{
-            document.body.style.overflow = 'unset';
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "unset";
         }
 
-    }, [isModalOpen])
+    }, [isModalOpen]);
 
-    const showFilter = () =>{
-        setfiltre(!filtre)
-    }
+    const showFilter = () => {
+        setfiltre(!filtre);
+    };
     return (
         clients && <>
             <div className={s.panel}>
@@ -321,10 +320,11 @@ const Home: React.FC<IHome> = () => {
                     {/*<DataPickerFromTo */}
                     {/* dates={}*/}
                     {/* dayFrom={} dayTo={} index={} monthFrom={} monthTo={} setFieldValue={}/>*/}
-                    <Tabs handleActionMiddleware={handleActionMiddleware} ids={ids} typeId={typeId} tabs={tabs} handlerChangeTabs={handlerChangeTabs}/>
-                    <div style={{display: "flex", gap: "10px"}}>
-                        <div  className={s.import_block}>
-                            <Filters height="24px"  onClick={showFilter}/>
+                    <Tabs handleActionMiddleware={handleActionMiddleware} ids={ids} typeId={typeId} tabs={tabs}
+                          handlerChangeTabs={handlerChangeTabs} />
+                    <div style={{ display: "flex", gap: "10px" }}>
+                        <div className={s.import_block}>
+                            <Filters height="24px" onClick={showFilter} />
                         </div>
                         <div className={s.upload_block}>
                             <label htmlFor="uploadFile">
@@ -333,7 +333,7 @@ const Home: React.FC<IHome> = () => {
                                     sheet="users"
                                     currentTableRef={tableRef.current}
                                 >
-                                    <Upload/>
+                                    <Upload />
                                 </DownloadTableExcel>
 
                             </label>
@@ -341,29 +341,29 @@ const Home: React.FC<IHome> = () => {
                                 id="uploadFile"
                                 type="file"
                                 onChange={fileUploader}
-                                style={{display: "none"}}
+                                style={{ display: "none" }}
                                 accept=".xls, .xlsx, .csv"
                             />
                         </div>
                         <div className={s.import_block}>
                             <label>
-                                <Import/>
+                                <Import />
                             </label>
                         </div>
                         <div className={s.import_block} onClick={() => {
                             openSearch();
                         }}>
-                            {open ? <Close/> : <Search/>}
+                            {open ? <Close /> : <Search />}
                         </div>
                     </div>
                     <div
                         className={`${s.header_input_block} ${open ? s.active : s.passive}`}
                     >
-                        <BackDropSearch handlerSubmit={onSearchInput}/>
+                        <BackDropSearch handlerSubmit={onSearchInput} />
                     </div>
 
                 </div>
-                {errorMessage && <div style={{color: "red"}}>{errorMessage}</div>}
+                {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
 
                 <Modal
                     isOpen={isModalOpen !== false}
@@ -377,9 +377,9 @@ const Home: React.FC<IHome> = () => {
                                onClick={handlerCloseModal}
                             />
                         </div>
-                ]
+                        ]
                         {
-                            carData  && <div className={s.modalDiv}>
+                            carData && <div className={s.modalDiv}>
                                 <div className={s.selectDiv}>
                                     <Select
                                         getOptionValue={(option: IOption) => option.value}
@@ -391,9 +391,12 @@ const Home: React.FC<IHome> = () => {
                                         name={"Cars"}
                                         isMulti={false}
                                     />
-
-                                    <Button isSubmit={true} type={'adminUpdate'}
-                                            onClick={handlerSetCar}> {t('assign')}</Button>
+                                    <Button
+                                        isSubmit={true}
+                                        type={"adminUpdate"}
+                                        onClick={handlerSetCar}>
+                                        {t("assign")}
+                                    </Button>
                                 </div>
                             </div>
                         }
@@ -416,8 +419,8 @@ const Home: React.FC<IHome> = () => {
 
 
             </div>
-            <PopupModal isOpen={isOpen} agreeWith={agreeWith} notAgreeWith={notAgreeWith}/>
-            <div  className={s.table_wrapper}>
+            <PopupModal isOpen={isOpen} agreeWith={agreeWith} notAgreeWith={notAgreeWith} />
+            <div className={s.table_wrapper}>
                 <CrudTable
                     titles={selectedTitle}
                     data={clients}
@@ -428,7 +431,7 @@ const Home: React.FC<IHome> = () => {
                     selectedIds={ids}
                     typeId={typeId}
                 />
-                <div className={s.detector} ref={ref}/>
+                <div className={s.detector} ref={ref} />
             </div>
 
         </>
