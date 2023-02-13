@@ -10,13 +10,12 @@ import { useTranslation } from "react-i18next";
 ///import DataPicker from "../../../../components/data-picker/data-picker";
 import SingleFileUpload from "../../../../components/single-file-upload/single-file-upload";
 import getFieldLabel from "../../../../utils/getFieldLabel";
-import GooglePlacesAutocomplete, { geocodeByPlaceId } from "react-google-places-autocomplete";
-import Button from "../../../../components/button/button";
-import { GOOGLE_API_KEY } from "../../../../environments";
 import TimePickers from "../../../../components/time-picker/timepicker";
+import DataPicker from "../../../../components/data-picker/data-picker";
+import Autocomplete from "../../../../components/autocomplate/autocomplete";
 
 export interface IItem {
-    type?: "input" | "autocomplete" | "timePicker" |"checkbox" | "richText" | "textarea" | "select" | "file" | "textField" | "radio" | "datepicker" | "multiSelect" | "hidden";
+    type?: "input" | "autocomplete" | "timePicker" | "checkbox" | "richText" | "textarea" | "select" | "file" | "textField" | "radio" | "datepicker" | "multiSelect" | "hidden";
     inputType?: string;
     name: string;
     value?: string | boolean | File | IOption;
@@ -155,16 +154,16 @@ const FormikHandler: React.FC<IFormikHandler> = (
                     placeholder={t(item.placeholder)}
                 />
             );
-        // case "datepicker":
-        //     return (
-        //         <DataPicker
-        //             name={item.name}
-        //             setFieldValue={setFieldValue}
-        //             handleChange={handleChange}
-        //             label={t(item.label)}
-        //             value={values[item.name]}
-        //         />
-        //     );
+        case "datepicker":
+            return (
+                <DataPicker
+                    name={item.name}
+                    setFieldValue={setFieldValue}
+                    ///  handleChange={handleChange}
+                    label={t(item.label)}
+                    value={values[item.name]}
+                />
+            );
         case "timePicker":
             return (
                 <TimePickers
@@ -177,44 +176,12 @@ const FormikHandler: React.FC<IFormikHandler> = (
             );
         case "autocomplete":
             return (
-                <div>
-                    <GooglePlacesAutocomplete
-                        apiKey={GOOGLE_API_KEY}
-                        selectProps={{
-                            name: "origin",
-                            values: values["origin"],
-                            onChange: (async (originValue: any) => {
-                                const originData = await geocodeByPlaceId(originValue.value.place_id);
-                                setFieldValue("origin", {
-                                    address: originData[0].formatted_address,
-                                    id: originValue.value.place_id
-                                });
-                            }),
-                            placeholder: item.placeholder
-                        }}
-                    />
-                    <GooglePlacesAutocomplete
-                        apiKey={GOOGLE_API_KEY}
-                        selectProps={{
-                            name: "destination",
-                            values: values["destination"],
-                            onChange: (async (destination: any) => {
-                                const destinationData = await geocodeByPlaceId(destination.value.place_id);
-                                setFieldValue("destination", {
-                                    address: destinationData[0].formatted_address,
-                                    id: destination.value.place_id
-                                });
-                            }),
-                            placeholder: item.placeholder
-                        }}
-                    />
-                    <Button
-                        type={"primary"}
-                        onClick={() => handleDrawMap(values["origin"], values["destination"])}
-                    >
-                        Show on map
-                    </Button>
-                </div>
+                <Autocomplete
+                    name={item.name}
+                    setFieldValue={setFieldValue}
+                    values={values}
+                    handleDrawMap={handleDrawMap}
+                />
             );
         default:
             return (

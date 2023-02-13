@@ -17,8 +17,7 @@ class Controller extends BaseController
         return [
             'id' => $client->id,
             'trip_id' => $client->trip_id,
-            'name' => $client->fullName,
-            'surname' => $client->surname,
+            'fullName' => $client->fullName,
             'gender' => [
                 'id' => $client->genderType->id,
                 'label' => $client->genderType->name,
@@ -26,7 +25,6 @@ class Controller extends BaseController
                 'value' => $client->genderType->slug,
             ],
             'los' => $client->los,
-            'phone_number' => $client->phone_number,
             'date_of_service' => $client->date_of_service,
             'appointment_time' => $client->appointment_time,
             'pick_up' => $client->pick_up,
@@ -51,7 +49,7 @@ class Controller extends BaseController
             'origin_comment' => $client->origin_comment,
             'destination' => $client->destination,
             'destination_phone' => $client->destination_phone,
-            'destination_comment' => $client->destination_comment,
+            'destination_comments' => $client->destination_comments,
 //            'escortType' =>   [
 //                'id' => $client->escort->id,
 //                'label' => $client->escort->name,

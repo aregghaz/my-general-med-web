@@ -31,7 +31,7 @@ class Clients extends Model
         'request_type', ///seect
         'status',///seect
         'origin',
-        'originorigin_phone',
+        'origin_phone',
         'origin_id',
         'origin_comment',
         "destination_id",

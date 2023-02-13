@@ -15,30 +15,23 @@ const ClientCreate: React.FC<IClientCreate> = () => {
     const [data, setData] = useState(null)
     const fields: Array<IItem> = [
         { name: "trip_id", type: "input", label: "trip_id" },
-        { name: "name", type: "input", label: "name" },
-        { name: "surname", type: "input", label: "surName" },
+        { name: "fullName", type: "input", label: "fullName" },
         { name: "gender", type: "select", label: "gender" },
         { name: "los", type: "input", label: "los" },
-        { name: "phone_number", type: "datepicker", label: "phone_number" },
-        { name: "date_of_service", type: "datepicker", label: "date_of_service" },
-        { name: "appointment_time", type: "datepicker", label: "appointment_time" },
-        { name: "pick_up", type: "datepicker", label: "pick_up" },
-        { name: "drop_down", type: "datepicker", label: "drop_down" },
+        { name: "member_uniqie_identifer", type: "input", label: "member_uniqie_identifer" },
         { name: "request_type", type: "select", label: "request_type" },
-        { name: "id", type: "hidden", inputType: "hidden" },
-        { name: "location", type: "autocomplete", label: "location" },
+        { name: "status", type: "select", label: "status" },
         { name: "origin_phone", type: "input", label: "origin_phone" },
         { name: "origin_comment", type: "input", label: "origin_comment" },
         { name: "destination_phone", type: "input", label: "destination_phone" },
         { name: "destination_comments", type: "input", label: "destination_comments" },
-        { name: "escortType", type: "select", label: "escortType" },
-        { name: "type_of_trip", type: "select", label: "type_of_trip" },
-        { name: "status", type: "select", label: "status" },
-        { name: "member_uniqie_identifer", type: "input", label: "member_uniqie_identifer" },
         { name: "birthday", type: "datepicker", label: "birthday" },
-        { name: "miles", type: "input", label: "miles" }
-
-
+        { name: "date_of_service", type: "datepicker", label: "date_of_service" },
+        { name: "miles", type: "input", label: "miles" },
+        { name: "pick_up", type: "timePicker", label: "pick_up" },
+        { name: "drop_down", type: "timePicker", label: "drop_down" },
+        { name: "id", type: "hidden", inputType: "hidden" },
+        { name: "location", type: "autocomplete", label: "location" }
     ]
 
 

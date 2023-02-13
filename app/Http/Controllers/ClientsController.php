@@ -3,15 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ClientCollection;
-use App\Http\Resources\ClientFieldCollection;
 use App\Http\Resources\StatusCollection;
 use App\Models\Clients;
 use App\Models\ClientStatus;
-use App\Models\Escort;
 use App\Models\Gender;
 use App\Models\RequestType;
-use App\Models\TypeOfTrip;
 use Illuminate\Http\Request;
+use Validator;
 
 class ClientsController extends Controller
 {
@@ -20,13 +18,13 @@ class ClientsController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(Request $request)
+    public function index(Request $requestData)
     {
 
-dd('clients');
+        dd('clients');
 
-        if (isset($request->querySearch)) {
-            $clients = Clients::where('member_uniqie_identifer', 'LIKE', '%' . $request->querySearch . '%')->orWhere('car_id', 'LIKE', '%' . $request->querySearch . '%')->paginate(20);
+        if (isset($requestData->querySearch)) {
+            $clients = Clients::where('member_uniqie_identifer', 'LIKE', '%' . $requestData->querySearch . '%')->orWhere('car_id', 'LIKE', '%' . $requestData->querySearch . '%')->paginate(20);
         } else {
             $clients = Clients::with([
                 'typeOfTrip',
@@ -35,9 +33,9 @@ dd('clients');
                 'clientStatus',
                 'requestType'
             ])->select(
-                // "client_id",
-                // 'car_id',
-                // 'vendor_id',
+            // "client_id",
+            // 'car_id',
+            // 'vendor_id',
                 'id',
                 'trip_id',
                 'name',
@@ -80,10 +78,10 @@ dd('clients');
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $requestData
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $requestData)
     {
         //
     }
@@ -100,12 +98,12 @@ dd('clients');
         $request_type = RequestType::get();
         $clientStatus = ClientStatus::get();
         $gender = Gender::get();
-        $client =  Clients::with([
-           /// 'typeOfTrip',
-           /// 'escort',
+        $client = Clients::with([
+            /// 'typeOfTrip',
+            /// 'escort',
             'genderType',
             'clientStatus',
-           /// 'requestType'
+            /// 'requestType'
         ])->find($id);
 
 
@@ -113,15 +111,14 @@ dd('clients');
 
         return response()->json([
             'data' => $clientdata,
-         ///   'escortType'=> new StatusCollection($escort),
-            "gender"=> new StatusCollection($gender),
-           /// 'request_type'=> new StatusCollection($request_type),
-          ///  "type_of_trip" => new StatusCollection($typeOfTrip),
+            ///   'escortType'=> new StatusCollection($escort),
+            "gender" => new StatusCollection($gender),
+            'request_type' => new StatusCollection($request_type),
+            ///  "type_of_trip" => new StatusCollection($typeOfTrip),
             'status' => new StatusCollection($clientStatus),
 
         ], 200);
     }
-
 
 
     /**
@@ -138,13 +135,72 @@ dd('clients');
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $requestData
      * @param \App\Models\Clients $clients
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, Clients $clients)
+    public function update(Request $requestData, $id, Clients $clients)
     {
-        //
+//       /// dd((array)json_decode($requestData->value));
+//        $validator = Validator::make((array)json_decode($requestData->value), [
+//            'trip_id' => 'required|string',
+//            'fullName' => 'required|string',
+//            'los' => 'required|string',
+//            'date_of_service' => 'required|string',
+//            'pick_up' => 'string',
+//            'drop_down' => 'string',
+//            'origin' => 'string',
+//            'origin_phone' => 'string|nullable',
+//            'origin_comment' => 'string|nullable',
+//            'destination_phone' => 'string|nullable',
+//            'destination' => 'string',
+//            'destination_comments' => 'string|nullable',
+//            'miles' => 'numeric',
+//            'member_uniqie_identifer' => 'string',
+//            'birthday' => 'string',
+//        ]);
+//        if ($validator->fails()) {
+//            return response()->json(
+//                [
+//                    'success' => 0,
+//                    'type' => 'validation_filed',
+//                    'error' => $validator->messages(),
+//                ],
+//                422
+//            );
+//        }
+
+        $requestData = json_decode($requestData->value);
+
+        $client = Clients::find($id);
+///dd($requestData->gender);
+        $client = $client->update([
+            'trip_id' => $requestData->trip_id,
+            'fullName' => $requestData->fullName,
+            'gender' => $requestData->gender->id,
+            'los' => $requestData->los,
+            'date_of_service' => $requestData->date_of_service,
+            ///'appointment_time' => $requestData->appointment_time,
+            'pick_up' => $requestData->pick_up,
+            'drop_down' => $requestData->drop_down,
+            //  'request_type' => $requestTypeId, ///seect
+            /// 'status' => $statusId, ///seect
+            'origin' => $requestData->origin,
+            'origin_phone' => $requestData->origin_phone,
+            ///'origin_id' => $originDataId,
+            'origin_comment' => $requestData->origin_comment,
+            'destination_phone' => $requestData->destination_phone,
+            "destination" => $requestData->destination,
+            /// "destination_id" => $destinetionDataId,
+            'destination_comments' => $requestData->destination_comments,
+            'miles' => (int)$requestData->miles,
+            'member_uniqie_identifer' => $requestData->member_uniqie_identifer,
+            'birthday' => $requestData->birthday,
+        ]);
+
+        return response()->json([
+            'users' => $client
+        ], 200);
     }
 
     /**

@@ -21,6 +21,10 @@ const populateEditFormFields = (fields: Array<IItem>, data: { [key: string] : { 
                 case 'datepicker':
                     values[field.name] = data.data[field.name]
                     break
+                case 'autocomplete':
+                    values['origin'] = data.data["origin"]
+                    values['destination'] = data.data["destination"]
+                    break
                 // case 'province':
                 //     values[`${field.name}_province`] = data[`${field.name}_province`]
                 //     break

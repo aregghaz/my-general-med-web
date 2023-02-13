@@ -83,6 +83,7 @@
         "node-sass": "^8.0.0",
         "pdf-viewer-reactjs": "^2.2.3",
         "pdfjs-dist": "^2.15.349",
+        "react-calendar": "^4.0.0",
         "react-export-table-to-excel": "^1.0.6",
         "react-google-places-autocomplete": "^3.4.0",
         "react-iframe": "^1.8.0",

@@ -2022,7 +2022,7 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@wojtekmaj/date-utils@^1.0.0", "@wojtekmaj/date-utils@^1.1.2":
+"@wojtekmaj/date-utils@^1.0.0", "@wojtekmaj/date-utils@^1.0.2", "@wojtekmaj/date-utils@^1.1.2":
   "integrity" "sha512-06PQad/6pyYDjInBW2ih4Oy30EAg0mtXTCz+b/fGwzN2JB2X2Zsa4QtHl4I8M+IaCKN8bwj61OW3XAWxh+D9hA=="
   "resolved" "https://registry.npmjs.org/@wojtekmaj/date-utils/-/date-utils-1.1.2.tgz"
   "version" "1.1.2"
@@ -9770,6 +9770,16 @@
     "raf" "^3.4.1"
     "regenerator-runtime" "^0.13.3"
     "whatwg-fetch" "^3.0.0"
+
+"react-calendar@^4.0.0":
+  "integrity" "sha512-y9Q5Oo3Mq869KExbOCP3aJ3hEnRZKZ0TqUa9QU1wJGgDZFrW1qTaWp5v52oZpmxTTrpAMTUcUGaC0QJcO1f8Nw=="
+  "resolved" "https://registry.npmjs.org/react-calendar/-/react-calendar-4.0.0.tgz"
+  "version" "4.0.0"
+  dependencies:
+    "@wojtekmaj/date-utils" "^1.0.2"
+    "clsx" "^1.2.1"
+    "get-user-locale" "^1.2.0"
+    "prop-types" "^15.6.0"
 
 "react-clock@^4.0.0":
   "integrity" "sha512-1BxIDxH8PcEBEUZDIXXS2njK5Gb84U5egTKXZDimF4aKO1bq+/bdX+chMNouLmaOSYB1of3DriLb0WhLOr8lAA=="
