@@ -34,6 +34,7 @@ class Clients extends Model
         'origin_phone',
         'origin_id',
         'origin_comment',
+        'origin_phone',
         "destination_id",
         "destination",
         "destination_phone",

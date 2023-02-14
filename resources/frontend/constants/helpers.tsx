@@ -1,13 +1,6 @@
 import React from 'react'
 
 import {IOption} from '../components/select/select'
-import WeatherSunny from '-!svg-react-loader!../images/weather_sunny.svg'
-import WeatherSun from '-!svg-react-loader!../images/weather_sun.svg'
-import WeatherFlash from '-!svg-react-loader!../images/weather_flash.svg'
-import WeatherNeutral from '-!svg-react-loader!../images/weather_neutral.svg'
-import WeatherRain from '-!svg-react-loader!../images/weather_rain.svg'
-import WeatherSunnySnow from '-!svg-react-loader!../images/weather_sunny_snow.svg'
-import WeatherSunnyRain from '-!svg-react-loader!../images/weather_sunny_rain.svg'
 
 export enum Links {
     traditionalCrafts = 'traditional-handicrafts',
@@ -55,16 +48,7 @@ export enum RadioType {
     Highest_price = ''
 }
 
-// TODO: Weather Sunny Snow
-export const WeatherIconType: { [key: string]: JSX.Element } = {
-    weather_sunny: <WeatherSunny/>,
-    weather_sun: <WeatherSun/>,
-    weather_neutral: <WeatherNeutral/>,
-    weather_sunny_rain: <WeatherSunnyRain/>,
-    weather_rain: <WeatherRain/>,
-    weather_flash: <WeatherFlash/>,
-    weather_sunny_snow: <WeatherSunnySnow/>
-}
+
 
 export const weekDay: Array<string> =
     ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']

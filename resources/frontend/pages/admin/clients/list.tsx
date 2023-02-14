@@ -2,14 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../../../store/home";
-import { clientAction } from "../../../store/client";
-import { getClientData, getHomePageData } from "../../../store/selectors";
+import { getHomePageData } from "../../../store/selectors";
 import { homeAPI } from "../../../api/site-api/home-api";
 import s from "../../../styles/home.module.scss";
 import CrudTable from "../../../components/crud-table-user/crud-table";
 import Select, { IOption } from "../../../components/select/select";
 import { useInView } from "react-intersection-observer";
-import InfoBlock from "../../../components/info-block/info-block";
 import Upload from "-!svg-react-loader!../../../images/Upload.svg";
 import Import from "-!svg-react-loader!../../../images/Import.svg";
 import Filters from "-!svg-react-loader!../../../images/filters.svg";
@@ -100,23 +98,23 @@ const Home: React.FC<IHome> = () => {
         {
             id: 4,
             name: "Cancelled Trips",
-            count:cancelCount
+            count: cancelCount
         },
         {
             id: 5,
             name: "Trips in Progress",
-            count:progressCount
+            count: progressCount
         },
         {
             id: 6,
             name: "Completed Trips",
-            count:doneCount
+            count: doneCount
         },
         {
             id: 2,
             name: "Available Trips",
             count: availableCount
-        },
+        }
     ];
 
 
@@ -126,26 +124,38 @@ const Home: React.FC<IHome> = () => {
         setOpen(!open);
     };
 
-    const handlerGetClientData = async (event: any, id: number) => {
-        if (event.ctrlKey || event.shiftKey) {
-            const objWithIdIndex = ids.findIndex((value) => value === id);
-            if (objWithIdIndex > -1) {
-                setIds((state) => {
-                    return state.filter((value) => value !== id);
-                });
-            } else {
-                setIds((state) => {
-                    return [
-                        ...state,
-                        id
-                    ];
-                });
-            }
-
+    const handlerGetClientData = async (id: number) => {
+        ///  if (event.ctrlKey || event.shiftKey) {
+        const objWithIdIndex = ids.findIndex((value) => value === id);
+        if (objWithIdIndex > -1) {
+            setIds((state) => {
+                return state.filter((value) => value !== id);
+            });
         } else {
-            window.open(`/admin/client/${id}`, '_blank', 'noreferrer');
+            setIds((state) => {
+                return [
+                    ...state,
+                    id
+                ];
+            });
         }
-
+    };
+    const handlerInfo = (id: number) => {
+        window.open(`/client/${id}`, "_blank", "noreferrer");
+        s;
+    };
+    const handlerAction = async (id: number, action: string) => {
+        switch (action) {
+            case "get":
+                await handlerGetClientData(id);
+                break;
+            case "info":
+                await handlerInfo(id);
+                break;
+            case "edit":
+                await handlerEditItem(id);
+                break;
+        }
     };
 
 
@@ -154,7 +164,7 @@ const Home: React.FC<IHome> = () => {
             if ((inView || loading) && !open) {
                 const titlesData = localStorage.getItem("titles");
                 const homeData = await AdminApi.getAllData({
-                    titles: titles.length  ? titles : JSON.parse(titlesData),
+                    titles: titles.length ? titles : JSON.parse(titlesData),
                     showMore: countRef.current,
                     typeId: typeId
                 });
@@ -183,7 +193,7 @@ const Home: React.FC<IHome> = () => {
         const titlesData = localStorage.getItem("titles");
 
         const homeData = await homeAPI.getClientData({
-            titles: titles.length  ? titles : JSON.parse(titlesData),
+            titles: titles.length ? titles : JSON.parse(titlesData),
             showMore: countRef.current,
             typeId: typeId,
             queryData: event.search
@@ -279,7 +289,7 @@ const Home: React.FC<IHome> = () => {
         });
 
         if (getCarData.success) {
-            setIds([])
+            setIds([]);
             handlerCloseModal();
             setLoading(true);
         } else {
@@ -303,7 +313,7 @@ const Home: React.FC<IHome> = () => {
     const showFilter = () => {
         setfiltre(!filtre);
     };
-    const handlerEditItem = (id:number) => navigate(`/admin/clients/${id}`)
+    const handlerEditItem = (id: number) => navigate(`/admin/clients/${id}`);
     const handlerAddItem = () => navigate("/admin/clients/create");
     return (
         clients && <>
@@ -419,13 +429,14 @@ const Home: React.FC<IHome> = () => {
                     data={clients}
                     isEdit
                     action
-                    handlerEditItem={handlerEditItem}
+                    isInfo
+                    handlerAction={handlerAction}
                     tableRef={tableRef}
-                    handlerGetClientData={handlerGetClientData}
                     className={"pagination"}
-                    paginated={false}
                     selectedIds={ids}
                     typeId={typeId}
+                    isAssign={false}
+                    isDelete
                 />
                 <div className={s.detector} ref={ref} />
             </div>

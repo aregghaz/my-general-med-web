@@ -11,16 +11,13 @@ const CrudTable: React.FC<ICrudTable> = (
     {
         data,
         titles,
-        HandlerGetProducts,
-        className,
+        isAssign,
         isEdit,
         isDelete,
-        handlerEditItem,
+        isInfo,
         tableRef,
+        handlerAction,
         action,
-        HandlerPagination,
-        handlerGetClientData,
-        paginated,
         selectedIds,
         typeId,
     }) => {
@@ -52,12 +49,11 @@ const CrudTable: React.FC<ICrudTable> = (
                 <TableHead action={action} titles={titles} titleSort={titleSort} filterTable={filterTable} titleName={titleName}/>
                 <TableBody
                     data={resetOrNotTable}
-                    titles={titles}
                     isEdit={isEdit}
-                    handlerEditItem={handlerEditItem}
+                    isInfo={isInfo}
+                    isAssign={isAssign}
                     isDelete={isDelete}
-                    handlerGetClientData={handlerGetClientData}
-                    HandlerGetProducts={HandlerGetProducts}
+                    handlerAction={handlerAction}
                     selectedIds={selectedIds}
                 />
 
@@ -70,19 +66,16 @@ interface ICrudTable {
     ////FIXME SHOULD ADD TYPE DATA
     data: Array<any>
     titles: Array<IOption>
-    paginated?: boolean
-    isDelete?: boolean
-    isEdit?: boolean
-    action?: boolean
-    count?: ICount
+    isDelete: boolean
+    isEdit: boolean
+    isAssign: boolean
+    isInfo: boolean
+    action: boolean
     className: string
-    handlerGetClientData?: (event: any, data: number) => void
-    HandlerGetProducts?: (id: number) => void
-    handlerEditItem?: (id: number) => void
-    HandlerPagination?: (event: any, id: number) => void
+    handlerAction: (id: number, action: string) => void
     selectedIds: number[]
     typeId: number,
-    tableRef?:any
+    tableRef:any
 
 }
 

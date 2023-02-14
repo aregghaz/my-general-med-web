@@ -11,7 +11,7 @@ interface IClientCreate {
 
 const ClientCreate: React.FC<IClientCreate> = () => {
     const {t} = useTranslation()
-    const crudKey = 'users'
+    const crudKey = 'clients'
     const [data, setData] = useState(null)
     const fields: Array<IItem> = [
         { name: "trip_id", type: "input", label: "trip_id" },
@@ -46,11 +46,13 @@ const ClientCreate: React.FC<IClientCreate> = () => {
 
     }, [])
 
-
+    const requiredFields = [
+        "fullName"
+    ];
     return data && <Create
         crudKey={crudKey}
-        ////TODO FIX THIS MISSING DATA FOR CREATE USER
         data={data}
+        requiredFields={requiredFields}
         fields={fields}
         title={''}
         children={t('create')}

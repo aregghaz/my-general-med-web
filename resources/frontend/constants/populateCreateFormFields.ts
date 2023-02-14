@@ -33,7 +33,6 @@ const populateCreateFormFields = (fields: Array<IItem>, data: { [key: string]: O
                     break
             }
         })
-    console.log(values)
     return values
 }
 

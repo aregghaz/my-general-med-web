@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\OperatorController;
 use App\Http\Controllers\Admin\VendorController;
+use App\Http\Controllers\Admin\ClientsController;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
@@ -67,11 +68,11 @@ Route::group([
 ], function () {
     Route::resources([
         'users'=> UserController::class,
-        'clients' => \App\Http\Controllers\ClientsController::class,
+        'clients' => ClientsController::class,
         'operators' => OperatorController::class,
 
     ]);
-    Route::post('/clientsData', [\App\Http\Controllers\Admin\ClientsController::class, 'clientsData']);
+    Route::post('/clientsData', [ClientsController::class, 'clientsData']);
     Route::get('/vendors', [VendorController::class, 'index']);
     Route::get('/vendors/create', [VendorController::class, 'create']);
     Route::post('/vendors', [VendorController::class, 'store']);

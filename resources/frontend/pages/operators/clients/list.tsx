@@ -133,23 +133,23 @@ const Home: React.FC<IHome> = () => {
         {
             id: 4,
             name: "Cancelled Trips",
-            count:cancelCount
+            count: cancelCount
         },
         {
             id: 5,
             name: "Trips in Progress",
-            count:progressCount
+            count: progressCount
         },
         {
             id: 6,
             name: "Completed Trips",
-            count:doneCount
+            count: doneCount
         },
         {
             id: 2,
             name: "Available Trips",
             count: availableCount
-        },
+        }
     ];
 
 
@@ -159,32 +159,39 @@ const Home: React.FC<IHome> = () => {
         setOpen(!open);
     };
 
-    const handlerGetClientData = async (event: any, id: number) => {
-        if (event.ctrlKey || event.shiftKey) {
-            const objWithIdIndex = ids.findIndex((value) => value === id);
-            if (objWithIdIndex > -1) {
-                setIds((state) => {
-                    return state.filter((value) => value !== id);
-                });
-            } else {
-                setIds((state) => {
-                    return [
-                        ...state,
-                        id
-                    ];
-                });
-            }
-
+    const handlerGetClientData = async (id: number) => {
+        ///  if (event.ctrlKey || event.shiftKey) {
+        const objWithIdIndex = ids.findIndex((value) => value === id);
+        if (objWithIdIndex > -1) {
+            setIds((state) => {
+                return state.filter((value) => value !== id);
+            });
         } else {
-            const homeData = await homeAPI.getCLientById(id);
-            dispatch(clientAction.fetching({ clientById: homeData.client }));
-            setIsModalOpen(true);
-            setShow(true);
+            setIds((state) => {
+                return [
+                    ...state,
+                    id
+                ];
+            });
         }
-
+    };
+    const handlerInfo = (id: number) => {
+        window.open(`/client/${id}`, "_blank", "noreferrer");
     };
 
-
+    const handlerAction = async (id: number, action: string) => {
+        switch (action) {
+            case "get":
+                await handlerGetClientData(id);
+                break;
+            case "edit":
+                await handlerEditItem(id);
+                break;
+            case "assign":
+                await handlerInfo(id);
+                break;
+        }
+    };
     useEffect(() => {
         (async () => {
             if ((inView || loading) && !open) {
@@ -323,7 +330,7 @@ const Home: React.FC<IHome> = () => {
         });
 
         if (getCarData.success) {
-            setIds([])
+            setIds([]);
             handlerCloseModal();
             setLoading(true);
         } else {
@@ -347,8 +354,11 @@ const Home: React.FC<IHome> = () => {
     const showFilter = () => {
         setfiltre(!filtre);
     };
-    const handlerEditItem = (id:number) => navigate(`/admin/clients/${id}`)
+    const handlerEditItem = (id: number) => navigate(`/admin/clients/${id}`);
     const handlerAddItem = () => navigate("/admin/clients/create");
+
+
+
     return (
         clients && <>
 
@@ -412,12 +422,6 @@ const Home: React.FC<IHome> = () => {
                             />
                         </div>
                         {
-                            show && clientById &&
-                            <div className={s.modalDiv}>
-                                <InfoBlock clientById={clientById} calculateRoute={handlerOpenModal} />
-                            </div>
-                        }
-                        {
                             vendorData && <div className={s.modalDiv}>
                                 <div className={s.selectDiv}>
                                     <Select
@@ -436,37 +440,6 @@ const Home: React.FC<IHome> = () => {
                                 </div>
                             </div>
                         }
-                        {isLoaded && directionsResponse && <div className={s.selectDiv}>
-
-                            <GoogleMap
-                                ///  center={center}
-                                zoom={15}
-                                mapContainerStyle={{ width: "100%", height: "100%" }}
-                                options={{
-                                    zoomControl: true,
-                                    streetViewControl: false,
-                                    mapTypeControl: false,
-                                    fullscreenControl: false
-                                }}
-                                onLoad={map => setMap(map)}
-                            >
-                                {/* <Marker position={center} /> */}
-                                {directionsResponse && (
-                                    <DirectionsRenderer directions={directionsResponse} />
-                                )}
-
-                            </GoogleMap>
-                            <div style={{ border: "1px solid #ddd", padding: "5px", marginTop: "10px" }}>
-                                {steps && steps.map((el: any) => {
-                                    return (
-                                        <div
-                                            className={s.directions}
-                                            dangerouslySetInnerHTML={{ __html: el.instructions }}
-                                        />
-                                    );
-                                })}
-                            </div>
-                        </div>}
                     </div>
                 </Modal>
                 <div className={s.iconBlock}>
@@ -498,13 +471,14 @@ const Home: React.FC<IHome> = () => {
                     data={clients}
                     isEdit
                     action
-                    handlerEditItem={handlerEditItem}
+                    handlerAction={handlerAction}
                     tableRef={tableRef}
-                    handlerGetClientData={handlerGetClientData}
                     className={"pagination"}
-                    paginated={false}
                     selectedIds={ids}
                     typeId={typeId}
+                    isAssign={false}
+                    isDelete
+                    isInfo
                 />
                 <div className={s.detector} ref={ref} />
             </div>

@@ -11,7 +11,7 @@ import Select, { IOption } from "../../../components/select/select";
 import { useInView } from "react-intersection-observer";
 import Upload from "-!svg-react-loader!../../../images/Upload.svg";
 import Import from "-!svg-react-loader!../../../images/Import.svg";
-import Filters from "-!svg-react-loader!../../../images/filters.svg";
+import Filters from "-!svg-react-loader!../../../images/column.svg";
 import Search from "-!svg-react-loader!../../../images/Search.svg";
 import Close from "-!svg-react-loader!../../../images/Close.svg";
 import axios from "axios";
@@ -127,29 +127,40 @@ const Home: React.FC<IHome> = () => {
         setOpen(!open);
     };
 
-    const handlerGetClientData = async (event: any, id: number) => {
-        if (event.ctrlKey || event.shiftKey) {
-            const objWithIdIndex = ids.findIndex((value) => value === id);
-            if (objWithIdIndex > -1) {
-                setIds((state) => {
-                    return state.filter((value) => value !== id);
-                });
-            } else {
-                setIds((state) => {
-                    return [
-                        ...state,
-                        id
-                    ];
-                });
-            }
 
+    const handlerGetClientData = async (id: number) => {
+        ///  if (event.ctrlKey || event.shiftKey) {
+        const objWithIdIndex = ids.findIndex((value) => value === id);
+        if (objWithIdIndex > -1) {
+            setIds((state) => {
+                return state.filter((value) => value !== id);
+            });
         } else {
-            window.open(`/client/${id}`, "_blank", "noreferrer");
-
+            setIds((state) => {
+                return [
+                    ...state,
+                    id
+                ];
+            });
         }
-
     };
-
+    const handlerInfo = (id: number) => {
+        window.open(`/client/${id}`, "_blank", "noreferrer");
+        s;
+    };
+    const handlerAction = async (id: number, action: string) => {
+        switch (action) {
+            case "get":
+                await handlerGetClientData(id);
+                break;
+            case "info":
+                await handlerInfo(id);
+                break;
+            case "assign":
+                await handlerInfo(id);
+                break;
+        }
+    };
 
     useEffect(() => {
         (async () => {
@@ -283,7 +294,6 @@ const Home: React.FC<IHome> = () => {
 
 
     const handlerSetCar = async () => {
-        console.log(ids, car);
         const getCarData = await vendorAPI.assignCarToClient({
             ids: ids,
             carId: parseFloat(car.value)
@@ -317,9 +327,6 @@ const Home: React.FC<IHome> = () => {
         clients && <>
             <div className={s.panel}>
                 <div className={s.upload_panel}>
-                    {/*<DataPickerFromTo */}
-                    {/* dates={}*/}
-                    {/* dayFrom={} dayTo={} index={} monthFrom={} monthTo={} setFieldValue={}/>*/}
                     <Tabs handleActionMiddleware={handleActionMiddleware} ids={ids} typeId={typeId} tabs={tabs}
                           handlerChangeTabs={handlerChangeTabs} />
                     <div style={{ display: "flex", gap: "10px" }}>
@@ -424,12 +431,16 @@ const Home: React.FC<IHome> = () => {
                 <CrudTable
                     titles={selectedTitle}
                     data={clients}
+                    action
+                    isInfo
+                    isAssign
                     tableRef={tableRef}
-                    handlerGetClientData={handlerGetClientData}
+                    handlerAction={handlerAction}
                     className={"pagination"}
-                    paginated={false}
                     selectedIds={ids}
                     typeId={typeId}
+                    isDelete={false}
+                    isEdit={false}
                 />
                 <div className={s.detector} ref={ref} />
             </div>

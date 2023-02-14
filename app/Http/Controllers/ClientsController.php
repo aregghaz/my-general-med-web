@@ -68,11 +68,22 @@ class ClientsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create()
     {
-        //
+        $request_type = RequestType::get();
+        $clientStatus = ClientStatus::get();
+        $gender = Gender::get();
+
+        return response()->json([
+            ///   'escortType'=> new StatusCollection($escort),
+            "gender" => new StatusCollection($gender),
+            'request_type' => new StatusCollection($request_type),
+            ///  "type_of_trip" => new StatusCollection($typeOfTrip),
+            'status' => new StatusCollection($clientStatus),
+
+        ], 200);
     }
 
     /**
@@ -103,7 +114,7 @@ class ClientsController extends Controller
             /// 'escort',
             'genderType',
             'clientStatus',
-            /// 'requestType'
+            'requestType'
         ])->find($id);
 
 
