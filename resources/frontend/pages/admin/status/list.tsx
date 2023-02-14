@@ -142,7 +142,7 @@ const Status: React.FC<Beneficiary> = () => {
                 ///  background-color: $whiteColor;
 
             }}>
-                <Tabs typeId={tabId} tabs={tabs} handlerChangeTabs={handlerChangeTabs} />
+                <Tabs tabs={tabs} handlerChangeTabs={handlerChangeTabs} />
 
             </div>
 

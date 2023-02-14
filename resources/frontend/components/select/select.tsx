@@ -145,10 +145,10 @@ const Select: React.FC<ISelect> = (
                 styles={{
                     control: (baseStyles, state) => ({
                         ...baseStyles,
-                        // borderColor: state.isFocused ? '#545cd8' : '#545cd8',
+                        borderColor: '#D63D3D',
                         /// backgroundColor: '#545cd8',
                         //  borderRadius: "15px"
-                        border: "1px solid #727272",
+                        borderButton: "1px solid #D63D3D",
                         height: 50,
                         outline: "none"
                     }),
@@ -178,8 +178,11 @@ const Select: React.FC<ISelect> = (
                         color: "#393E46",
                         fontWeight: "bold",
                         ///borderRadius: 10,
-                        border: "1px solid #727272",
+                     //   border: "1px solid #D63D3D",
 
+                        /// backgroundColor: '#545cd8',
+                        //  borderRadius: "15px"
+                        borderButton: "1px solid #D63D3D",
                         // backgroundColor: '#6D9886',
                         backgroundColor: "white"
                         /// padding: "0 8px"

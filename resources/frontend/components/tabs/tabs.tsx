@@ -11,16 +11,10 @@ interface ITabs {
 
 interface IProps {
     tabs: Array<ITabs>,
-    idData?: number,
     handlerChangeTabs: (id: number) => void,
-    typeId: number,
-    handleActionMiddleware?: (id: number) => void,
-    ids?: Array<number>,
-    isAdmin?:boolean
 }
 
-
-const Tabs: FC<IProps> = ({ tabs, handlerChangeTabs, typeId, handleActionMiddleware, ids, isAdmin=false }) => {
+const Tabs: FC<IProps> = ({ tabs, handlerChangeTabs,   }) => {
     const { t } = useTranslation();
     return (
         <div className={s.table_upper_tab}>
@@ -36,34 +30,7 @@ const Tabs: FC<IProps> = ({ tabs, handlerChangeTabs, typeId, handleActionMiddlew
                     </div>
                 ))
             }
-            {!isAdmin && ids && (<div className={s.upload_panel}>
-                <div
-                    className={`${s.action_block}  ${typeId === 1 || typeId === 4 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
-                    onClick={() => handleActionMiddleware(1)}
-                >
-                    Claim Trips
-                </div>
-                <div
-                    className={`${s.action_block} ${typeId === 2 || typeId === 4 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
-                    onClick={() => handleActionMiddleware(4)}
-                >
-                    Cancel Trips
-                </div>
-                <div
-                    className={`${s.action_block} ${typeId === 2 || typeId === 4 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
-                    onClick={() => handleActionMiddleware(99)}
-                >
-                    Assign to car
-                </div>
-            </div>)}
-            {isAdmin && ((<div className={s.upload_panel}>
-                <div
-                    className={`${s.action_block} ${typeId === 2 ? s.enabled_action : s.disabled_action}`}
-                    onClick={() => handleActionMiddleware(99)}
-                >
-                    Assign to Vendor
-                </div>
-            </div>))}
+
         </div>
     );
 };

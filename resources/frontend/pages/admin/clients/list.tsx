@@ -24,6 +24,7 @@ import Button from "../../../components/button/button";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 import { AdminApi } from "../../../api/admin-api/admin-api";
 import { navigate } from "@reach/router";
+import AssignVendorIcon from '-!svg-react-loader!../../../images/add-company-icon.svg'
 
 
 interface IHome {
@@ -40,11 +41,9 @@ const customStyles: ReactModal.Styles = {
         left: "50%",
         overflow: "hidden",
         transform: "translate(-50% , -50%)",
-
         /// display: 'flex',
         justifyContent: "center",
         ///  alignItems: "center",
-        height: "fit-content"
     },
     overlay: {
         zIndex: 400,
@@ -124,7 +123,7 @@ const Home: React.FC<IHome> = () => {
         setOpen(!open);
     };
 
-    const handlerGetClientData = async (id: number) => {
+    const handlerSelectClient = async (id: number) => {
         ///  if (event.ctrlKey || event.shiftKey) {
         const objWithIdIndex = ids.findIndex((value) => value === id);
         if (objWithIdIndex > -1) {
@@ -147,13 +146,16 @@ const Home: React.FC<IHome> = () => {
     const handlerAction = async (id: number, action: string) => {
         switch (action) {
             case "get":
-                await handlerGetClientData(id);
+                await handlerSelectClient(id);
                 break;
             case "info":
                 await handlerInfo(id);
                 break;
             case "edit":
                 await handlerEditItem(id);
+                break;
+            case "assignVendor":
+                await handleActionMiddleware(id);
                 break;
         }
     };
@@ -255,7 +257,10 @@ const Home: React.FC<IHome> = () => {
         // });
     }
 
-    const handleActionMiddleware = async (status: number) => {
+    const handleActionMiddleware = async (id?: number) => {
+        if (typeof id === "number") {
+            setIds([id]);
+        }
         const getData = await vendorAPI.getVendorsDataForSelect();
         setVendorData(getData.data);
         setIsModalOpen(true);
@@ -320,9 +325,16 @@ const Home: React.FC<IHome> = () => {
 
             <div className={s.panel}>
                 <div className={s.upload_panel}>
-                    <Tabs isAdmin handleActionMiddleware={handleActionMiddleware} ids={ids} typeId={typeId} tabs={tabs}
+                    <Tabs tabs={tabs}
                           handlerChangeTabs={handlerChangeTabs} />
                     <div style={{ display: "flex", gap: "10px" }}>
+                        <div className={s.import_block}>
+                            <AssignVendorIcon
+                                className={`${s.icon} ${ids.length == 0 ? s.disabled_action : s.enabled_action}`}
+                                onClick={() => handleActionMiddleware()}
+                            />
+
+                        </div>
                         <div className={s.import_block}>
                             <Filters height="24px" onClick={showFilter} />
                         </div>
@@ -385,15 +397,15 @@ const Home: React.FC<IHome> = () => {
                                         getOptionValue={(option: IOption) => option.value}
                                         getOptionLabel={(option: IOption) => t(option.label)}
                                         onChange={(options: IOption) => setSelectedVendor(options)}
-                                        /// onChange={handlerSetVendor}
                                         options={vendorData}
                                         // value={selectedTitle}
                                         name={"Cars"}
                                         isMulti={false}
                                     />
-
-                                    <Button isSubmit={true} type={"adminUpdate"}
-                                            onClick={handlerSetVendor}> {t("assign")}</Button>
+                                    <div className={s.assign}>
+                                        <Button isSubmit={true} type={"adminUpdate"}
+                                                onClick={handlerSetVendor}> {t("assign")}</Button>
+                                    </div>
                                 </div>
                             </div>
                         }
@@ -430,12 +442,15 @@ const Home: React.FC<IHome> = () => {
                     isEdit
                     action
                     isInfo
+                    isAssignVendor
                     handlerAction={handlerAction}
                     tableRef={tableRef}
                     className={"pagination"}
                     selectedIds={ids}
                     typeId={typeId}
                     isAssign={false}
+                    isClaim={false}
+                    isRemove={false}
                     isDelete
                 />
                 <div className={s.detector} ref={ref} />

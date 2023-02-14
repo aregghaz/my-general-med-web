@@ -243,6 +243,9 @@ body {
     pointer-events: none;
     opacity: .3;
     user-select: none;
+    &:hover {
+        fill: white;
+    }
 }
 
 
@@ -267,7 +270,7 @@ body {
 
 .iconWrapper {
     i {
-        border: 1px solid #ddd;
+        border: 1px solid $asteriskColor;
         border-radius: 5px;
         padding: 5px;
         display: flex;
@@ -281,7 +284,7 @@ body {
         top: 5px;
 
         &:hover {
-            background-color: darkred;
+            background-color: $asteriskColor;
             border: none;
         }
 
@@ -293,7 +296,7 @@ body {
 
 .addBtnWrapper {
     display: flex;
-    justify-content: flex-end;
+    align-self: center;
     position: fixed;
     bottom: 30px;
     right: 30px;
@@ -314,4 +317,17 @@ body {
         font-size: 24px;
         box-shadow: 0 0 4px $menuColor;
     }
+}
+.assign{
+    display: flex;
+    text-align: center;
+    margin-top: 20px;
+    flex-direction: row-reverse;
+}
+.selectDiv{
+    display: flex;
+    /* flex: 1; */
+    flex-direction: column;
+    width: 100%;
+    margin-top: 20px;
 }

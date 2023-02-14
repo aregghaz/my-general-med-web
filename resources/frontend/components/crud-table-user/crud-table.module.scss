@@ -60,20 +60,12 @@
 .iconsWrapper {
     display: flex;
     flex-direction: row;
-
-    .editIcon {
+    .icon{
         width: 25px;
         height: 25px;
         cursor: pointer;
-
+        margin: 0 3px;
     }
-
-    .trashIcon {
-        width: 25px;
-        height: 25px;
-        cursor: pointer;
-    }
-
 }
 
 .tableRow {

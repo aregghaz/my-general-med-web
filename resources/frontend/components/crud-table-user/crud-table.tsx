@@ -1,8 +1,7 @@
-import React, {useRef, useState} from 'react'
+import React, { useState} from 'react'
 import TableHead from './table-head/table-head'
 import TableBody from './table-body/table-body'
 import s from './crud-table.module.scss'
-import {ICount} from '../../types/admin';
 import {IOption} from '../select/select';
 import {DownloadTableExcel} from 'react-export-table-to-excel';
 
@@ -14,6 +13,9 @@ const CrudTable: React.FC<ICrudTable> = (
         isAssign,
         isEdit,
         isDelete,
+        isClaim,
+        isRemove,
+        isAssignVendor,
         isInfo,
         tableRef,
         handlerAction,
@@ -53,6 +55,10 @@ const CrudTable: React.FC<ICrudTable> = (
                     isInfo={isInfo}
                     isAssign={isAssign}
                     isDelete={isDelete}
+                    isClaim={isClaim}
+                    isRemove={isRemove}
+                    typeId={typeId}
+                    isAssignVendor={isAssignVendor}
                     handlerAction={handlerAction}
                     selectedIds={selectedIds}
                 />
@@ -68,9 +74,12 @@ interface ICrudTable {
     titles: Array<IOption>
     isDelete: boolean
     isEdit: boolean
+    isRemove: boolean
     isAssign: boolean
+    isClaim: boolean
     isInfo: boolean
     action: boolean
+    isAssignVendor: boolean
     className: string
     handlerAction: (id: number, action: string) => void
     selectedIds: number[]

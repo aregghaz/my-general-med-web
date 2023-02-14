@@ -23,6 +23,9 @@ import { vendorAPI } from "../../../api/site-api/vendor-api";
 import Tabs from "../../../components/tabs/tabs";
 import Button from "../../../components/button/button";
 import { DownloadTableExcel } from "react-export-table-to-excel";
+import AssignIcon from "-!svg-react-loader!../../../images/add-car-icon.svg";
+import ClaimTrip from "-!svg-react-loader!../../../images/deal-icon.svg";
+import RemoveIcon from "-!svg-react-loader!../../../images/remove-from-trolley-icon.svg";
 
 interface IHome {
     path: string;
@@ -159,6 +162,16 @@ const Home: React.FC<IHome> = () => {
             case "assign":
                 await handlerInfo(id);
                 break;
+            case "claim":
+                setIds([id]);
+                setStatus(1);
+                setIsOpen(true);
+                break;
+            case "remove":
+                setIds([id]);
+                setStatus(4);
+                setIsOpen(true);
+                break;
         }
     };
 
@@ -260,15 +273,26 @@ const Home: React.FC<IHome> = () => {
         });
     }
 
-    const handleActionMiddleware = async (status: number) => {
-        if (ids.length > 0 && status !== 99) {
-            setIsOpen(true);
-            setStatus(status);
-        } else if (status == 99) {
-            const getCarData = await vendorAPI.getCarsDataForSelect("cars");
-            setCarData(getCarData.cars);
-            setIsModalOpen(true);
+    const handleActionMiddleware = async (status: number, action: string) => {
+        switch (action) {
+            case "assign":
+                const getCarData = await vendorAPI.getCarsDataForSelect("cars");
+                setCarData(getCarData.cars);
+                setIsModalOpen(true);
+                break;
+            case "default":
+                setIsOpen(true);
+                setStatus(status);
+                break;
         }
+        // if (ids.length > 0 && status !== 99) {
+        //     setIsOpen(true);
+        //     setStatus(status);
+        // } else if (status == 99) {
+        //     const getCarData = await vendorAPI.getCarsDataForSelect("cars");
+        //     setCarData(getCarData.cars);
+        //     setIsModalOpen(true);
+        // }
 
     };
     const agreeWith = (callOrNot: boolean) => {
@@ -327,9 +351,27 @@ const Home: React.FC<IHome> = () => {
         clients && <>
             <div className={s.panel}>
                 <div className={s.upload_panel}>
-                    <Tabs handleActionMiddleware={handleActionMiddleware} ids={ids} typeId={typeId} tabs={tabs}
+                    <Tabs tabs={tabs}
                           handlerChangeTabs={handlerChangeTabs} />
                     <div style={{ display: "flex", gap: "10px" }}>
+                        <div className={s.import_block}>
+                            <ClaimTrip
+                                className={`${s.icon} ${typeId === 1 || typeId === 4 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
+                                onClick={() => handleActionMiddleware(1, "default")}
+                            />
+                        </div>
+                        <div className={s.import_block}>
+                            <RemoveIcon
+                                className={`${s.icon} ${typeId === 2 || typeId === 4 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
+                                onClick={() => handleActionMiddleware(4, "default")}
+                            />
+                        </div>
+                        <div className={s.import_block}>
+                            <AssignIcon
+                                className={`${s.icon} ${typeId === 2 || typeId === 4 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
+                                onClick={() => handleActionMiddleware(99, "assign")}
+                            />
+                        </div>
                         <div className={s.import_block}>
                             <Filters height="24px" onClick={showFilter} />
                         </div>
@@ -384,7 +426,6 @@ const Home: React.FC<IHome> = () => {
                                onClick={handlerCloseModal}
                             />
                         </div>
-                        ]
                         {
                             carData && <div className={s.modalDiv}>
                                 <div className={s.selectDiv}>
@@ -398,12 +439,14 @@ const Home: React.FC<IHome> = () => {
                                         name={"Cars"}
                                         isMulti={false}
                                     />
-                                    <Button
-                                        isSubmit={true}
-                                        type={"adminUpdate"}
-                                        onClick={handlerSetCar}>
-                                        {t("assign")}
-                                    </Button>
+                                    <div className={s.assign}>
+                                        <Button
+                                            isSubmit={true}
+                                            type={"adminUpdate"}
+                                            onClick={handlerSetCar}>
+                                            {t("assign")}
+                                        </Button>
+                                    </div>
                                 </div>
                             </div>
                         }
@@ -434,12 +477,15 @@ const Home: React.FC<IHome> = () => {
                     action
                     isInfo
                     isAssign
+                    isClaim
+                    isRemove
                     tableRef={tableRef}
                     handlerAction={handlerAction}
                     className={"pagination"}
                     selectedIds={ids}
                     typeId={typeId}
                     isDelete={false}
+                    isAssignVendor={false}
                     isEdit={false}
                 />
                 <div className={s.detector} ref={ref} />

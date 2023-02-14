@@ -5,19 +5,26 @@ import TrashIcon from '-!svg-react-loader!../../../images/trash.svg'
 import EditIcon from '-!svg-react-loader!../../../images/edit.svg'
 import InfoIcon from '-!svg-react-loader!../../../images/paper.svg'
 import AssignIcon from '-!svg-react-loader!../../../images/add-car-icon.svg'
+import AssignVendorIcon from '-!svg-react-loader!../../../images/add-company-icon.svg'
+import RemoveIcon from '-!svg-react-loader!../../../images/remove-from-trolley-icon.svg'
 import OrdersIcon from '-!svg-react-loader!../../../images/my-orders.svg'
 import s from '../crud-table.module.scss'
 import {IClientsData} from '../../../types/home-types'
 import {IOption} from '../../select/select'
+import ClaimTrip from '-!svg-react-loader!../../../images/deal-icon.svg'
 
 interface ITableBody {
     data: Array<any>
-    isEdit?: boolean
-    isDelete?: boolean
-    isInfo?: boolean,
-    isAssign?: boolean,
+    isEdit: boolean
+    isDelete: boolean
+    isInfo: boolean,
+    isClaim: boolean,
+    isAssign: boolean,
+    isAssignVendor: boolean,
+    isRemove: boolean,
     handlerAction: (id: number, action:string) => void
     selectedIds: number[]
+    typeId: number
 
 }
 
@@ -27,9 +34,13 @@ const TableBody: React.FC<ITableBody> = (
         isEdit,
         isAssign,
         isDelete,
+        isClaim,
         isInfo,
+        isRemove,
+        isAssignVendor,
         handlerAction,
         selectedIds,
+        typeId,
     }) => {
 
     return (
@@ -48,31 +59,50 @@ const TableBody: React.FC<ITableBody> = (
                                 <TableData  item={99999} key={999999}>
                                     <div className={s.iconsWrapper}>
                                         {
-                                            isEdit &&
-                                            <EditIcon
-                                                className={s.editIcon}
-                                                onClick={() => handlerAction(item.id,'edit')}
+                                            isDelete &&
+                                            <TrashIcon
+                                                className={s.icon}
+                                                onClick={() => handlerAction(item.id, 'delete')}
                                             />
                                         }
                                         {
-                                            isDelete &&
-                                            <TrashIcon
-                                                className={s.trashIcon}
-                                                onClick={() => handlerAction(item.id, 'delete')}
+                                            isEdit &&
+                                            <EditIcon
+                                                className={s.icon}
+                                                onClick={() => handlerAction(item.id,'edit')}
                                             />
                                         }
                                         {
                                             isInfo &&
                                             <InfoIcon
-                                                className={s.editIcon}
+                                                className={s.icon}
                                                 onClick={() => handlerAction(item.id, 'info')}
                                             />
                                         }
+                                        { isClaim && typeId===2 &&
+                                            <ClaimTrip
+                                                className={s.icon}
+                                                onClick={() => handlerAction(item.id, 'claim')}
+                                            />
+                                        }
+                                        { isRemove && typeId===1 &&
+                                            <RemoveIcon
+                                                className={s.icon}
+                                                onClick={() => handlerAction(item.id, 'remove')}
+                                            />
+                                        }
+
                                         {
-                                            isAssign &&
+                                            isAssign && typeId===1 &&
                                             <AssignIcon
-                                                className={s.editIcon}
+                                                className={s.icon}
                                                 onClick={() => handlerAction(item.id, 'assign')}
+                                            />
+                                        }{
+                                            isAssignVendor &&
+                                            <AssignVendorIcon
+                                                className={s.icon}
+                                                onClick={() => handlerAction(item.id, 'assignVendor')}
                                             />
                                         }
                                     </div>

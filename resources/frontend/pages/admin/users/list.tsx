@@ -129,7 +129,7 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
         userdata && (
             <>
                 {/* <InfoBlock  items={data}/> */}
-                <Tabs typeId={typeId} tabs={tabs} handlerChangeTabs={handlerChangeTabs} />
+                <Tabs tabs={tabs} handlerChangeTabs={handlerChangeTabs} />
 
                 <List
                     data={userdata}

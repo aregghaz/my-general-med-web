@@ -146,7 +146,7 @@ const Vendors: React.FC<IVendors> = () => {
                 ///  background-color: $whiteColor;
 
             }}>
-                <Tabs typeId={typeId} tabs={tabs} handlerChangeTabs={handlerChangeTabs} />
+                <Tabs  tabs={tabs} handlerChangeTabs={handlerChangeTabs} />
 
             </div>
 
