@@ -127,6 +127,8 @@ const Cars: React.FC<Beneficiary> = () => {
                 count={count}
                 activeItem={activeItem}
                 className={'pagination'}
+                isGetHistory={false}
+             isGetItems={false}
             />
 
             <Modal

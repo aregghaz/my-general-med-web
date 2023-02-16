@@ -2,11 +2,8 @@ import React, { useEffect, useState } from "react";
 import { AdminApi } from "../../../api/admin-api/admin-api";
 import List from "../../layouts/templates/list/list";
 import { useNavigate } from "@reach/router";
-import Button from "../../../components/button/button";
-import s from "../../layouts/templates/list/list.module.scss";
 
 import { useTranslation } from "react-i18next";
-import Modal from "react-modal";
 import { actions } from "../../../store/vendorUsers";
 import { useDispatch, useSelector } from "react-redux";
 import Tabs from "../../../components/tabs/tabs";
@@ -17,19 +14,12 @@ interface Beneficiary {
     id?: number;
 }
 
-const Users: React.FC<Beneficiary> = ({ id }) => {
+const Activity: React.FC<Beneficiary> = ({ id }) => {
     const dispatch = useDispatch();
-    const crudKey = "users";
+    const crudKey = "activity";
     const { userdata, driversCount, operatorsCount } = useSelector(adminVendorUsers);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [countPages, setCountPages] = useState(null);
-    const [deleteId, setDeleteId] = useState(null);
-    const [count, setCount] = useState(0);
-    const [activeItem, setActiveItem] = useState(null);
-    const [tabId, setTabId] = useState();
     const [tabIdSelected, setTabIdSelected] = useState(3);
-    const [dataID, setDataID] = useState(null);
-    const [typeName, setTypeName] = useState<string>("driver");
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [isLoading, setLoading] = useState(true);
@@ -68,14 +58,8 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
     const handlerCloseModal = () => {
         setIsModalOpen(false);
     };
-    const handlerDeleteModal = (id: number) => {
-        setDeleteId(id);
-        setIsModalOpen(true);
-    };
 
-    const handlerDeleteItem = () => {
 
-    };
     const handlerEditBeneficiaryItem = (id: number) =>
         navigate(`/admin/${crudKey}/${id}`);
     const HandlerGetProducts = (id: number) =>
@@ -133,54 +117,15 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
                     titles={titles}
                     paginated={false}
                     tabId={tabIdSelected}
-                    handlerAddItem={handlerAddBeneficiaryItem}
-                    handlerDeleteItem={handlerDeleteModal}
-                    handlerEditItem={handlerEditBeneficiaryItem}
-                    HandlerGetProducts={HandlerGetProducts}
                     isDelete={true}
-                    isEdit
-                    isGetHistory
-                 isCreate={false}
+                    isEdit={false}
+                    isGetHistory={false}
+                    isCreate={false}
                     isGetItems={false}
                 />
-                <Modal
-                    isOpen={isModalOpen !== false}
-                    style={customStyles}
-                    onRequestClose={handlerCloseModal}
-                >
-                    <div className={s.modalBody}>
-                        <div className={s.iconWrapper}>
-                            <i
-                                className="cancelicon-"
-                                onClick={handlerCloseModal}
-                            />
-                        </div>
-
-                        <i className={`binicon- ${s.icon}`} />
-                        <p className={s.text}>
-                            {t("admin.do_you_want_to_delete")}
-                        </p>
-                        <div className={s.buttons}>
-                            <Button
-                                type={"green"}
-                                onClick={handlerDeleteItem}
-                                className={s.button}
-                            >
-                                {t("admin.yes")}
-                            </Button>
-                            <Button
-                                type={"transparent"}
-                                onClick={handlerCloseModal}
-                                className={s.button}
-                            >
-                                {t("admin.no")}
-                            </Button>
-                        </div>
-                    </div>
-                </Modal>
             </>
         )
     );
 };
 
-export default Users;
+export default Activity;

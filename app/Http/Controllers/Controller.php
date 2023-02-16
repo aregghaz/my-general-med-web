@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Actions;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -10,10 +11,9 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
     protected function convertSingleData($client)
     {
-
-
         return [
             'id' => $client->id,
             'trip_id' => $client->trip_id,
@@ -21,7 +21,7 @@ class Controller extends BaseController
             'gender' => [
                 'id' => $client->genderType->id,
                 'label' => $client->genderType->name,
-                'slug' =>  $client->genderType->slug,
+                'slug' => $client->genderType->slug,
                 'value' => $client->genderType->slug,
             ],
             'los' => $client->los,
@@ -32,15 +32,15 @@ class Controller extends BaseController
             'request_type' => [
                 'id' => $client->requestType->id,
                 'label' => $client->requestType->name,
-                'slug' =>  $client->requestType->slug,
+                'slug' => $client->requestType->slug,
                 'value' => $client->requestType->slug,
             ],
             ///select
 
-            'status' =>  [
+            'status' => [
                 'id' => $client->clientStatus->id,
                 'label' => $client->clientStatus->name,
-                'slug' =>  $client->clientStatus->slug,
+                'slug' => $client->clientStatus->slug,
                 'value' => $client->clientStatus->slug,
             ],
             ///select
@@ -71,13 +71,14 @@ class Controller extends BaseController
             'weight' => $client->weight,
         ];
     }
-   protected function convertSingleDataForInfo($client)
+
+    protected function convertSingleDataForInfo($client)
     {
         return [
             'id' => $client->id,
             'trip_id' => $client->trip_id,
             'fullName' => $client->fullName,
-           /// 'surname' => $client->surname,
+            /// 'surname' => $client->surname,
             'gender' => $client->genderType->name,
             'los' => $client->los,
             ///'phone_number' => $client->phone_number,
@@ -85,7 +86,7 @@ class Controller extends BaseController
             'pick_up' => $client->pick_up,
             'drop_down' => $client->drop_down,
             'request_type' => $client->requestType->name,
-            'status' =>  $client->clientStatus->name,
+            'status' => $client->clientStatus->name,
             'origin' => $client->origin,
             'origin_phone' => $client->origin_phone,
             'origin_comment' => $client->origin_comment,
@@ -100,4 +101,14 @@ class Controller extends BaseController
         ];
     }
 
+    protected function createAction($userId, $clientId, $action, $vendorId = 1): bool
+    {
+        Actions::create([
+            'vendor_id' => $vendorId,
+            'action' => $action,
+            'user_id' => $userId,
+            'client_id' => $clientId,
+        ]);
+        return true;
+    }
 }

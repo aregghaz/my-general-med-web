@@ -21,13 +21,8 @@ const Vendors: React.FC<IVendors> = () => {
     const dispatch = useDispatch();
     const crudKey = "vendors";
     const countRef = useRef(2);
-
-    const [data, setData] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [countPages, setCountPages] = useState(null);
     const [deleteId, setDeleteId] = useState(null);
-    const [count, setCount] = useState({ from: 0, to: 10 });
-    const [activeItem, setActiveItem] = useState(null);
     const [typeId, setTypeId] = useState<number>(2);
     const adminUsersData = useSelector(getAdminUsersData);
     const { userdata, operatorCount, vendorCount } = adminUsersData;
@@ -45,7 +40,6 @@ const Vendors: React.FC<IVendors> = () => {
         (async () => {
             if ((inView || loading) && !open) {
                 const data = await AdminApi.getAllVendorData(crudKey, typeId, "");
-                setCount({ from: data.to - 3, to: data.to + 5 });
                 dispatch(actions.fetching(
                     {
                         userdata: data.data,
@@ -82,7 +76,7 @@ const Vendors: React.FC<IVendors> = () => {
     };
     const titles: Array<string> = [
         "id",
-        typeId == 2  ? "companyName" : "fullName",
+        typeId == 2 ? "companyName" : "fullName",
         "email",
         "address",
         "phone_number",
@@ -104,7 +98,7 @@ const Vendors: React.FC<IVendors> = () => {
     const handlerDeleteItem = () => {
 
         AdminApi.delete(crudKey, deleteId).then(data => {
-            setData(data.data.beneficiaries);
+            ///    setData(data.data.beneficiaries);
             setIsModalOpen(false);
         });
     };
@@ -146,28 +140,28 @@ const Vendors: React.FC<IVendors> = () => {
                 ///  background-color: $whiteColor;
 
             }}>
-                <Tabs  tabs={tabs} handlerChangeTabs={handlerChangeTabs} />
+                <Tabs tabs={tabs} handlerChangeTabs={handlerChangeTabs} />
 
             </div>
 
             <div ref={contentRef} className={s.table_wrapper}>
-            <List
-                data={userdata}
-                titles={titles}
-                isDelete
-                isEdit
-                isCreate
-                isGetItems
-                handlerAddItem={handlerAddItem}
-                handlerDeleteItem={handlerDeleteModal}
-                handlerEditItem={handlerEditItem}
-                handlerGetVendorUsers={handlerGetVendorUsers}
-                paginated={false}
-                activeItem={activeItem}
-                className={"pagination"}
-            />
+                <List
+                    data={userdata}
+                    titles={titles}
+                    isDelete
+                    isEdit
+                    isCreate
+                    isGetItems={typeId === 2}
+                    handlerAddItem={handlerAddItem}
+                    handlerDeleteItem={handlerDeleteModal}
+                    handlerEditItem={handlerEditItem}
+                    handlerGetVendorUsers={handlerGetVendorUsers}
+                    paginated={false}
+                    className={"pagination"}
+                    isGetHistory={typeId === 4}
+                />
             </div>
-            <div className={s.detector} ref={ref}/>
+            <div className={s.detector} ref={ref} />
             <Modal
                 isOpen={isModalOpen !== false}
                 style={customStyles}

@@ -152,6 +152,7 @@ const Status: React.FC<Beneficiary> = () => {
                 isDelete
                 isEdit
                 paginated={false}
+                isGetHistory={false}
                 isCreate
                 isGetItems
                 handlerChangeTabs={handlerChangeTabs}

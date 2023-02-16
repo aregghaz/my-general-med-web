@@ -11,7 +11,6 @@ use App\Models\ClientTable;
 use App\Models\User;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Validator;
 
@@ -196,7 +195,7 @@ class VendorController extends Controller
         $validator = Validator::make((array)json_decode($request->value), [
             'companyName' => 'required|string',
             'phone_number' => 'required|string',
-            'email' => 'required|string|unique:users,email,'.$request->id,
+            'email' => 'required|string|unique:users,email,' . $request->id,
             ///  'status' => 'required',
             'address' => 'string',
             'fields' => 'array',
@@ -286,12 +285,16 @@ class VendorController extends Controller
         $vendorId = $request->vendorId;
         $operatorId = $request->user()->id;
         $clients = Clients::whereIn('id', $clientsIds)->update(["vendor_id" => $vendorId, 'type_id' => 1, 'operator_id' => $operatorId]);
-        if($clients){
-            //dd($request->ids);
+        if ($clients) {
+            foreach ($clientsIds as $id) {
+                $this->createAction($operatorId, $id, 2, $vendorId);
+
+            }
+
             return response()->json([
                 'success' => 1,
             ], 200);
-        }else{
+        } else {
             return response()->json(
                 [
                     'success' => 0,
@@ -303,7 +306,9 @@ class VendorController extends Controller
         }
 
     }
-    public function audit(Request $request) {
+
+    public function audit(Request $request)
+    {
         $user = User::find(4);
         return response()->json(
             [

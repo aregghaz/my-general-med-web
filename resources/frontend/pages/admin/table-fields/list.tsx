@@ -143,13 +143,14 @@ const TableFildsList: React.FC<ITableFilds> = () => {
             <List
                 data={data}
                 titles={titles}
-                isDelete
-                isEdit
+                isDelete={false}
+                isEdit={false}
                 tabs={tabs}
                 tabId={tabId}
                 paginated={false}
-                isCreate
-                isGetItems
+                isCreate={false}
+                isGetItems={false}
+                isGetHistory={false}
                 handlerChangeTabs={handlerChangeTabs}
                 handlerAddItem={handlerAddBeneficiaryItem}
                 handlerDeleteItem={handlerDeleteModal}

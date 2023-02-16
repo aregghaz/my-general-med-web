@@ -14,16 +14,12 @@ const CrudTable: React.FC<ICrudTable> = (
         isDelete,
         isEdit,
         isGetItems,
+        isGetHistory,
         handlerEditItem,
         handlerDeleteItem,
         handlerGetItemData,
         handlerGetVendorUsers,
-        count,
-        last_page,
-        activeItem,
         className,
-        HandlerPagination,
-        paginated
     }) => {
 
     const [filterTable, setFilterTable] = useState<string>("ASC")
@@ -61,6 +57,7 @@ const CrudTable: React.FC<ICrudTable> = (
                     data={filteredData ? filteredData : data}
                     isDelete={isDelete}
                     isEdit={isEdit}
+                    isGetHistory={isGetHistory}
                     handlerGetItemData={handlerGetItemData}
                     isGetItems={isGetItems}
                     handlerDeleteItem={handlerDeleteItem}
@@ -85,9 +82,10 @@ interface ICrudTable {
     ////FIXME SHOULD ADD TYPE DATA
     data: Array<any>
     titles: Array<string>
-    isEdit?: boolean
-    isDelete?: boolean
-    paginated?: boolean
+    isEdit: boolean
+    isDelete: boolean
+    isGetHistory: boolean
+    paginated:boolean,
     isGetItems?: boolean
     count?: ICount
     activeItem?: number

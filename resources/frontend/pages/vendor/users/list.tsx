@@ -141,7 +141,8 @@ const VendorUsers: React.FC<Beneficiary> = () => {
                     handlerChangeTabs={handlerChangeTabs}
                     activeItem={activeItem}
                     className={"pagination"}
-                />
+                    isGetHistory={false}
+                 isGetItems={false}/>
                 <Modal
                     isOpen={isModalOpen !== false}
                     style={customStyles}

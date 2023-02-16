@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ClientFieldCollection;
 use App\Http\Resources\StatusCollection;
+use App\Models\Actions;
 use App\Models\Clients;
 use App\Models\ClientStatus;
 use App\Models\ClientTable;
@@ -199,6 +200,7 @@ class ClientsController extends Controller
                 200
             );
         }
+        $this->createAction($request->user()->id, $client->id, 1, 1);
         return response()->json(
             [
                 'success' => '1',
@@ -328,6 +330,7 @@ class ClientsController extends Controller
 
         $client->update();
 
+        $this->createAction($request->user()->id,$id , 3, 1);
 
         return response()->json(
             [

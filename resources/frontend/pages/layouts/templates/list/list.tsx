@@ -1,33 +1,34 @@
-import React from 'react'
-import Button from '../../../../components/button/button'
-import CrudTable from '../../../../components/crud-table/crud-table'
+import React from "react";
+import Button from "../../../../components/button/button";
+import CrudTable from "../../../../components/crud-table/crud-table";
 
-import s from './list.module.scss'
-import {useTranslation} from "react-i18next";
+import s from "./list.module.scss";
+import { useTranslation } from "react-i18next";
 
 interface IList {
-    data: Array<any>
-    titles: Array<string>
-    isEdit?: boolean
-    isDelete?: boolean
-    isCreate?: boolean
-    isGetItems?: boolean
-    handlerAddItem?: () => void
-    handlerEditItem?: (id: number) => void
-    handlerDeleteItem?: (id: number) => void
-    HandlerPagination?: (id: number) => void
-    HandlerGetProducts?: (id: number) => void
-    handlerGetVendorUsers?: (id: any) => void
-    paginated: boolean
-    activeItem?: number
+    data: Array<any>;
+    titles: Array<string>;
+    isEdit: boolean;
+    isDelete: boolean;
+    isGetHistory: boolean;
+    isCreate: boolean;
+    isGetItems: boolean;
+    handlerAddItem?: () => void;
+    handlerEditItem?: (id: number) => void;
+    handlerDeleteItem?: (id: number) => void;
+    HandlerPagination?: (id: number) => void;
+    HandlerGetProducts?: (id: number) => void;
+    handlerGetVendorUsers?: (id: any) => void;
+    paginated: boolean;
+    activeItem?: number;
     ////FIXMECHANGE IT NORMA TYPR
-    last_page?: number
-    handlerChangeTabs?: (id: number, name: string) => void
-    handlerGetItemData?: (id: number) => void
-    count?: any
-    className?: string
-    tabId?: number
-    tabs?: Array<{ id: number, name: string, count: number, slug?: string }>
+    last_page?: number;
+    handlerChangeTabs?: (id: number, name: string) => void;
+    handlerGetItemData?: (id: number) => void;
+    count?: any;
+    className?: string;
+    tabId?: number;
+    tabs?: Array<{ id: number, name: string, count: number, slug?: string }>;
 }
 
 
@@ -43,6 +44,7 @@ const List: React.FC<IList> = (
         handlerDeleteItem,
         handlerEditItem,
         HandlerPagination,
+        isGetHistory=false,
         HandlerGetProducts,
         handlerGetVendorUsers,
         handlerGetItemData,
@@ -56,13 +58,13 @@ const List: React.FC<IList> = (
         paginated
     }) => {
 
-    const {t} = useTranslation()
+    const { t } = useTranslation();
     return (
         <>
             <div className={s.addBtnWrapper}>
                 {
                     isCreate &&
-                    <Button type='green' className={s.add} onClick={handlerAddItem}>
+                    <Button type="green" className={s.add} onClick={handlerAddItem}>
                         <span>+</span>
                     </Button>
                 }
@@ -84,11 +86,12 @@ const List: React.FC<IList> = (
                     count={count}
                     className={className}
                     paginated={paginated}
+                    isGetHistory={isGetHistory}
                 />
             </div>
         </>
-    )
-}
+    );
+};
 
 
-export default List
+export default List;
