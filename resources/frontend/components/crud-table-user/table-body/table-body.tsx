@@ -4,14 +4,14 @@ import TableData from '../table-data/table-data'
 import TrashIcon from '-!svg-react-loader!../../../images/trash.svg'
 import EditIcon from '-!svg-react-loader!../../../images/edit.svg'
 import InfoIcon from '-!svg-react-loader!../../../images/paper.svg'
-import AssignIcon from '-!svg-react-loader!../../../images/add-car-icon.svg'
+import AssignIcon from '-!svg-react-loader!../../../images/car-travel-plus-add-svgrepo-com.svg'
 import AssignVendorIcon from '-!svg-react-loader!../../../images/add-company-icon.svg'
-import RemoveIcon from '-!svg-react-loader!../../../images/remove-from-trolley-icon.svg'
+import RemoveIcon from '-!svg-react-loader!../../../images/briefcase-work-business-delete-svgrepo-com.svg'
 import OrdersIcon from '-!svg-react-loader!../../../images/my-orders.svg'
 import s from '../crud-table.module.scss'
 import {IClientsData} from '../../../types/home-types'
 import {IOption} from '../../select/select'
-import ClaimTrip from '-!svg-react-loader!../../../images/deal-icon.svg'
+import ClaimTrip from '-!svg-react-loader!../../../images/briefcase-work-business-add-svgrepo-com.svg'
 
 interface ITableBody {
     data: Array<any>

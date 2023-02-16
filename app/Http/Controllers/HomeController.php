@@ -59,7 +59,13 @@ class HomeController extends Controller
     {
         $allFields  =  $request->user()->fields()->get()->pluck('name')->toArray();
         $vendorFields = $request->titles ?$request->titles :  $allFields;
+        if ((int)$request->typeId === 2 || (int)$request->typeId === 3 || (int)$request->typeId === 4) {
+            if (($key = array_search('car_id', $vendorFields)) !== false) {
+                array_splice($vendorFields, $key, 1);
 
+            }
+        }
+       // dd($vendorFields);
         $clientData = new ClientFieldCollection($vendorFields);
         $showMore = $request->showMore;
         $clientsData = [];
@@ -73,13 +79,10 @@ class HomeController extends Controller
 
 
         $clients = DB::table('clients')->where('type_id', $request->typeId);
-        if ($request->typeId != 2) {
-            $clients = $clients->where('vendor_id', $request->user()->id);
-        }
+
         if (isset($request->queryData)) {
               $this->convertQuery($request->queryData, $vendorFields, $clients);
         }
-
         $clientsDataWith = [];
         for ($i = 0; $i < count($vendorFields); $i++) {
             $selectedFieldsTitle[] = $vendorFields[$i];
@@ -97,17 +100,30 @@ class HomeController extends Controller
                 $clients = $clients->join('genders', 'clients.gender', '=', 'genders.id');
                 $clientsData[] = "genders.name as gender";
                 //////adding default fields in to select
-            }  else {
+            }  else if ($vendorFields[$i] == 'car_id' and ((int)$request->typeId !== 2)) {
+                $clients = $clients->join('cars', function ($query) {
+                    $query->on('cars.id', '=', 'clients.car_id')->orWhereNull('clients.car_id');;
+                });
+                $clients = $clients->join('makes', 'makes.id', '=', 'cars.make_id');
+                $clientsData[] = "clients.car_id as " . $selectedFieldsTitle[$i];
+                $clientsData[] = "makes.name as car_name";
+            } else if($vendorFields[$i] !== 'car_id'){
                 $clientsData[] =  'clients.' . $selectedFieldsTitle[$i] . " as " . $selectedFieldsTitle[$i];
             }
         }
 
         $result = array_diff( $allFields, $selectedFieldsTitle);
+
         $selectedFields = count($clientsData) > 0 ? $clientsData : $clientData;
+
+        if(((int)$request->typeId == 2)){
+
+        }
         array_unshift($selectedFields, 'clients.id as id');
         $clients = $clients->select($selectedFields);
-        $clients =  $clients->take(15 * $showMore)->get();
 
+        $clients =  $clients->take(15 * $showMore)->get();
+       /// dd($selectedFields);
         // if(count($selectedFieldsTitle) > 1){
         //  array_shift($selectedFieldsTitle);
         // }

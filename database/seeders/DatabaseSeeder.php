@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
 //            StatusSeeder::class,
            // ClientSeeder::class,
            /// VendorSeeder::class,
-            TablesFieldsSeeder::class,
+           /// TablesFieldsSeeder::class,
+            ActionsSeeder::class,
 //            MakeSeeder::class,
 //            YearSeeder::class,
 //            MakeModelSeeder::class

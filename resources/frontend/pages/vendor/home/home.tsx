@@ -11,7 +11,7 @@ import Select, { IOption } from "../../../components/select/select";
 import { useInView } from "react-intersection-observer";
 import Upload from "-!svg-react-loader!../../../images/Upload.svg";
 import Import from "-!svg-react-loader!../../../images/Import.svg";
-import Filters from "-!svg-react-loader!../../../images/column.svg";
+import Filters from "-!svg-react-loader!../../../images/database-svgrepo-com.svg";
 import Search from "-!svg-react-loader!../../../images/Search.svg";
 import Close from "-!svg-react-loader!../../../images/Close.svg";
 import axios from "axios";
@@ -23,9 +23,9 @@ import { vendorAPI } from "../../../api/site-api/vendor-api";
 import Tabs from "../../../components/tabs/tabs";
 import Button from "../../../components/button/button";
 import { DownloadTableExcel } from "react-export-table-to-excel";
-import AssignIcon from "-!svg-react-loader!../../../images/add-car-icon.svg";
-import ClaimTrip from "-!svg-react-loader!../../../images/deal-icon.svg";
-import RemoveIcon from "-!svg-react-loader!../../../images/remove-from-trolley-icon.svg";
+import AssignIcon from "-!svg-react-loader!../../../images/car-travel-plus-add-svgrepo-com.svg";
+import ClaimTrip from "-!svg-react-loader!../../../images/briefcase-work-business-add-svgrepo-com.svg";
+import RemoveIcon from "-!svg-react-loader!../../../images/briefcase-work-business-delete-svgrepo-com.svg";
 
 interface IHome {
     path: string;
@@ -160,7 +160,8 @@ const Home: React.FC<IHome> = () => {
                 await handlerInfo(id);
                 break;
             case "assign":
-                await handlerInfo(id);
+                await handlerGetClientData(id);
+                await handleActionMiddleware(id, 'assign');
                 break;
             case "claim":
                 setIds([id]);

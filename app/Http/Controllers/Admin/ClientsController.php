@@ -51,7 +51,12 @@ class ClientsController extends Controller
         $showMore = $request->showMore;
         $clientsData = [];
         $selectedFieldsTitle = [];
+        if ((int)$request->typeId === 2 || (int)$request->typeId === 3 || (int)$request->typeId === 4) {
+            if (($key = array_search('car_id', $vendorFields)) !== false) {
+                array_splice($vendorFields, $key, 1);
 
+            }
+        }
         $tripCount = Clients::where(['type_id' => 1])->count();
         $available = Clients::where('type_id', 2)->count();
         $cancelCount = Clients::where('type_id', 4)->count();
@@ -59,9 +64,7 @@ class ClientsController extends Controller
         $doneCount = Clients::where('type_id', 6)->count();
 
         $clients = DB::table('clients')->where('type_id', $request->typeId);
-        if ($request->typeId != 2) {
-            $clients = $clients->where('type_id', $request->typeId);
-        }
+
         if (isset($request->queryData)) {
             $this->convertQuery($request->queryData, $vendorFields, $clients);
         }
