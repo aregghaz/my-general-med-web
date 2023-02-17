@@ -63,7 +63,7 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
         /// "image",
     ];
 
-    const handlerAddBeneficiaryItem = () => navigate(`/admin/${crudKey}/create/${id}`);
+    const handlerAddItem = () => navigate(`/admin/${crudKey}/create/${id}`);
 
     const handlerCloseModal = () => {
         setIsModalOpen(false);
@@ -76,7 +76,7 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
     const handlerDeleteItem = () => {
 
     };
-    const handlerEditBeneficiaryItem = (id: number) =>
+    const handlerEditItem = (id: number) =>
         navigate(`/admin/${crudKey}/${id}`);
     const HandlerGetProducts = (id: number) =>
         navigate(`/admin/users-products/${id}`);
@@ -122,7 +122,17 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
         setTabIdSelected(tabId);
         setLoading(true);
     };
+    const handlerAction = async (action: string, id: number) => {
+        switch (action) {
+            case "add":
+                await handlerAddItem();
+                break;
+            case "edit":
+                await handlerEditItem(id);
+                break;
 
+        }
+    };
     return (
         userdata && (
             <>
@@ -131,17 +141,13 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
                 <List
                     data={userdata}
                     titles={titles}
-                    paginated={false}
-                    tabId={tabIdSelected}
-                    handlerAddItem={handlerAddBeneficiaryItem}
-                    handlerDeleteItem={handlerDeleteModal}
-                    handlerEditItem={handlerEditBeneficiaryItem}
-                    HandlerGetProducts={HandlerGetProducts}
+                    handlerAction={handlerAction}
                     isDelete={true}
                     isEdit
                     isGetHistory
-                 isCreate={false}
+                    isCreate={false}
                     isGetItems={false}
+                    paginated={false}
                 />
                 <Modal
                     isOpen={isModalOpen !== false}

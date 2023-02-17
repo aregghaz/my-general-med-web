@@ -57,6 +57,23 @@ const Vendors: React.FC<IVendors> = () => {
 
     }, [inView, loading, agreement]);
 
+    const handlerAction = async (action: string, id: number) => {
+        switch (action) {
+            case "history":
+                 await handlerGetActivityOperator(id);
+                break;
+            case "add":
+                await handlerAddItem();
+                break;
+            case "edit":
+                await handlerEditItem(id);
+                break;
+            case "getVendorUser":
+                await handlerGetVendorUsers(id);
+                break;
+        }
+    };
+
     const tabs = [
         {
             id: 2,
@@ -84,31 +101,11 @@ const Vendors: React.FC<IVendors> = () => {
         "action"
     ];
     const handlerAddItem = () => navigate(`/admin/${crudKey}/create/${typeId}`);
-
-
-    const handlerCloseModal = () => {
-        setIsModalOpen(false);
-    };
-    const handlerDeleteModal = (id: number) => {
-        setDeleteId(id);
-        setIsModalOpen(true);
-    };
-
-
-    const handlerDeleteItem = () => {
-
-        AdminApi.delete(crudKey, deleteId).then(data => {
-            ///    setData(data.data.beneficiaries);
-            setIsModalOpen(false);
-        });
-    };
-
+    const handlerCloseModal = () => setIsModalOpen(false);
     const handlerEditItem = (id: number) => navigate(`/admin/${crudKey}/${id}/${typeId}`);
+    const handlerGetVendorUsers = async (id: number) => navigate(`/admin/users/${id}`);
+    const handlerGetActivityOperator = async (id: number) => navigate(`/admin/activity/${id}`);
 
-
-    const handlerGetVendorUsers = async (id: number) => {
-        navigate(`/admin/users/${id}`);
-    };
     const customStyles: ReactModal.Styles = {
         content: {
             position: "fixed",
@@ -136,12 +133,8 @@ const Vendors: React.FC<IVendors> = () => {
         <>
             <div style={{
                 padding: 10
-                /// border: 1px solid #ddd;
-                ///  background-color: $whiteColor;
-
             }}>
                 <Tabs tabs={tabs} handlerChangeTabs={handlerChangeTabs} />
-
             </div>
 
             <div ref={contentRef} className={s.table_wrapper}>
@@ -152,10 +145,7 @@ const Vendors: React.FC<IVendors> = () => {
                     isEdit
                     isCreate
                     isGetItems={typeId === 2}
-                    handlerAddItem={handlerAddItem}
-                    handlerDeleteItem={handlerDeleteModal}
-                    handlerEditItem={handlerEditItem}
-                    handlerGetVendorUsers={handlerGetVendorUsers}
+                    handlerAction={handlerAction}
                     paginated={false}
                     className={"pagination"}
                     isGetHistory={typeId === 4}
@@ -177,7 +167,7 @@ const Vendors: React.FC<IVendors> = () => {
                     <i className={`binicon- ${s.icon}`} />
                     <p className={s.text}>{t("do_you_want_to_delete")}</p>
                     <div className={s.buttons}>
-                        <Button type={"green"} onClick={handlerDeleteItem}
+                        <Button type={"green"}
                                 className={s.button}>{t("yes")}</Button>
                         <Button type={"transparent"} onClick={handlerCloseModal} className={s.button}>{t("no")}</Button>
                     </div>

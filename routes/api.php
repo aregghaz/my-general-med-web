@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ActionsController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\OperatorController;
 use App\Http\Controllers\Admin\VendorController;
@@ -81,6 +82,7 @@ Route::group([
     Route::get('/getVendorUsers/{id}/{tabId}', [VendorController::class, 'getVendorUsers']);
     Route::get('/vendors/{id}/edit', [VendorController::class, 'edit']);
     Route::get('/vendor-data-for-select', [VendorController::class, 'getVendorDataSelect']);
+    Route::get('/getActivityOperator/{id}', [ActionsController::class, 'getVendorDataSelect']);
     Route::post('/assign-vendor-client', [VendorController::class, 'setVendorTtoClient']);
 
     Route::get('/audit', [VendorController::class, 'audit']);

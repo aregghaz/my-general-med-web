@@ -131,7 +131,20 @@ const Status: React.FC<Beneficiary> = () => {
     const handlerChangeTabs = (tabId: number) => {
         setTabId(tabId);
     };
+    const handlerAction = async (action: string, id: number) => {
+        switch (action) {
+            case "history":
+                /// await handlerSelectClient(id);
+                break;
+            case "add":
+              ///  await handlerAddItem();
+                break;
+            case "edit":
+             ///   await handlerEditItem(id);
+                break;
 
+        }
+    };
     return (
         data &&
         <>
@@ -155,15 +168,8 @@ const Status: React.FC<Beneficiary> = () => {
                 isGetHistory={false}
                 isCreate
                 isGetItems
-                handlerChangeTabs={handlerChangeTabs}
-                handlerAddItem={handlerAddBeneficiaryItem}
-                handlerDeleteItem={handlerDeleteModal}
-                handlerEditItem={handlerEditBeneficiaryItem}
-                HandlerPagination={HandlerPagination}
-                HandlerGetProducts={HandlerGetProducts}
+                handlerAction={handlerAction}
                 //   handlerGetClientData={handlerGetClientData}
-                count={count}
-                activeItem={activeItem}
                 className={'pagination'}
             />
 

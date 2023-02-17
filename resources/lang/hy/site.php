@@ -14,7 +14,7 @@ return [
     'date_of_service' => 'Date of Service',
     'appointment_time' => 'Appointment Time',
     'pick_up' => 'Pickup Time',
-    'drop_down' => 'Date of Service',
+    'drop_down' => 'Drop down time',
     'request_type' => 'Request Type',
     'status' => 'Status',
     'origin' => 'Pick up address',
@@ -61,6 +61,11 @@ return [
     'car_id' => 'Car',
     'vendor_id' => 'Vendor',
     'operator_id' => 'Operator',
+    'vendor' => 'Company',
+    'created_at' => 'Date',
+    'assignVendor' => 'Assign Company',
+    'operatorAction' => 'Action',
+
 
     'seeMore' => 'Home number',
     'adminBeneficiaries' => "Users",

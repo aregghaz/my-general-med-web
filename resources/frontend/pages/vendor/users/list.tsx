@@ -62,7 +62,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
         "action",
     ];
 
-    const handlerAddBeneficiaryItem = () => navigate(`/users/${typeName}/create`);
+    const handlerAddItem = () => navigate(`/users/${typeName}/create`);
 
     const handlerCloseModal = () => {
         setIsModalOpen(false);
@@ -117,7 +117,20 @@ const VendorUsers: React.FC<Beneficiary> = () => {
             backdropFilter: "blur(5px)",
         },
     };
+    const handlerAction = async (action: string, id: number) => {
+        switch (action) {
+            case "history":
+                /// await handlerSelectClient(id);
+                break;
+            case "add":
+                await handlerAddItem();
+                break;
+            case "edit":
+                await handlerEditItem(id);
+                break;
 
+        }
+    };
     return (
         data && (
             <>
@@ -130,16 +143,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
                     isEdit
                     paginated={false}
                     isCreate
-                    tabs={tabs}
-                    tabId={tabIdSelected}
-                    handlerAddItem={handlerAddBeneficiaryItem}
-                    handlerDeleteItem={handlerDeleteModal}
-                    handlerEditItem={handlerEditItem}
-                    HandlerPagination={HandlerPagination}
-                    handlerGetItemData={handlerGetItemData}
-                    count={count}
-                    handlerChangeTabs={handlerChangeTabs}
-                    activeItem={activeItem}
+                    handlerAction={handlerAction}
                     className={"pagination"}
                     isGetHistory={false}
                  isGetItems={false}/>

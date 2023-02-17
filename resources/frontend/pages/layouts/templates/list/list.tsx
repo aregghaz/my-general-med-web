@@ -13,22 +13,12 @@ interface IList {
     isGetHistory: boolean;
     isCreate: boolean;
     isGetItems: boolean;
-    handlerAddItem?: () => void;
-    handlerEditItem?: (id: number) => void;
-    handlerDeleteItem?: (id: number) => void;
-    HandlerPagination?: (id: number) => void;
-    HandlerGetProducts?: (id: number) => void;
-    handlerGetVendorUsers?: (id: any) => void;
     paginated: boolean;
     activeItem?: number;
     ////FIXMECHANGE IT NORMA TYPR
     last_page?: number;
-    handlerChangeTabs?: (id: number, name: string) => void;
-    handlerGetItemData?: (id: number) => void;
-    count?: any;
+    handlerAction?: (action:string,id: number) => void;
     className?: string;
-    tabId?: number;
-    tabs?: Array<{ id: number, name: string, count: number, slug?: string }>;
 }
 
 
@@ -40,20 +30,8 @@ const List: React.FC<IList> = (
         data,
         titles,
         isCreate = false,
-        handlerAddItem,
-        handlerDeleteItem,
-        handlerEditItem,
-        HandlerPagination,
         isGetHistory=false,
-        HandlerGetProducts,
-        handlerGetVendorUsers,
-        handlerGetItemData,
-        last_page,
-        activeItem,
-        tabId,
-        handlerChangeTabs,
-        count,
-        tabs,
+        handlerAction,
         className,
         paginated
     }) => {
@@ -64,7 +42,7 @@ const List: React.FC<IList> = (
             <div className={s.addBtnWrapper}>
                 {
                     isCreate &&
-                    <Button type="green" className={s.add} onClick={handlerAddItem}>
+                    <Button type="green" className={s.add} onClick={() => handlerAction( 'add', 0)}>
                         <span>+</span>
                     </Button>
                 }
@@ -74,18 +52,10 @@ const List: React.FC<IList> = (
                     titles={titles}
                     data={data}
                     isEdit={isEdit}
-                    last_page={last_page}
                     isDelete={isDelete}
                     isGetItems={isGetItems}
-                    handlerEditItem={handlerEditItem}
-                    handlerDeleteItem={handlerDeleteItem}
-                    HandlerPagination={HandlerPagination}
-                    handlerGetItemData={handlerGetItemData}
-                    handlerGetVendorUsers={handlerGetVendorUsers}
-                    activeItem={activeItem}
-                    count={count}
+                    handlerAction={handlerAction}
                     className={className}
-                    paginated={paginated}
                     isGetHistory={isGetHistory}
                 />
             </div>

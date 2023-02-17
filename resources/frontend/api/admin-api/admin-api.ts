@@ -47,5 +47,8 @@ export const AdminApi = {
     },
     getVendorUsers(id:number,tabIdSelected:number) {
         return axios.get(`/api/admin/getVendorUsers/${id}/${tabIdSelected}`).then(res => res.data)
+    },
+    getActivityOperator(id:number) {
+        return axios.get(`/api/admin/getActivityOperator/${id}`).then(res => res.data)
     }
 }

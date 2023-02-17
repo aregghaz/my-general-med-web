@@ -37,6 +37,7 @@ import CarsEdit from "./pages/vendor/cars/edit";
 import OperatorCreate from "./pages/admin/vendors/create/operator";
 import OperatorEdit from "./pages/admin/vendors/edit/operator";
 import Show from "./pages/vendor/home/show";
+import Activity from "./pages/admin/users/activity";
 
 const App = (): JSX.Element => (
     <Provider store={store}>
@@ -65,6 +66,7 @@ const App = (): JSX.Element => (
                 <Show path="/client/:id"/>
                 <ClientEdit path='clients/:id'/>
                 <ClientCreate path='clients/create'/>
+                <Activity path='activity/:id'/>
                 <Vendors path="vendors"/>
                 <VendorEdit path='vendors/:id/2'/>
                 <OperatorEdit path='vendors/:id/4'/>

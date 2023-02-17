@@ -1,12 +1,24 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\Http\Resources\OperatorActionCollection;
 use App\Models\Actions;
 use Illuminate\Http\Request;
 
 class ActionsController extends Controller
 {
+
+
+
+    public function getVendorDataSelect($id){
+
+      $actions = Actions::where('user_id', $id)->with(['getClient','getOperator','getVendor','getAction'])->get();
+        return response()->json([
+            'actions' => new OperatorActionCollection($actions),
+        ], 200);
+    }
     /**
      * Display a listing of the resource.
      *
