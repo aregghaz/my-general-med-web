@@ -57,10 +57,14 @@ class ClientsController extends Controller
                 array_splice($vendorFields, $key, 1);
 
             }
+            if (($key = array_search('vendor_id', $vendorFields)) !== false) {
+                array_splice($vendorFields, $key, 1);
+
+            }
         }
         $tripCount = Clients::where(['type_id' => 1])->count();
-        $available = Clients::where('type_id', 2)->count();
-        $cancelCount = Clients::where('type_id', 4)->count();
+        $available = Clients::where('type_id', 2)->where('vendor_id', '=', null)->count();
+        $cancelCount = Clients::where('type_id', 2)->where('vendor_id','!=', null)->count();
         $progressCount = Clients::where('type_id', 5)->count();
         $doneCount = Clients::where('type_id', 6)->count();
 
@@ -69,8 +73,6 @@ class ClientsController extends Controller
         if (isset($request->queryData)) {
             $this->convertQuery($request->queryData, $vendorFields, $clients);
         }
-
-        $clientsDataWith = [];
 
         for ($i = 0; $i < count($vendorFields); $i++) {
             $selectedFieldsTitle[] = $vendorFields[$i];
@@ -83,17 +85,17 @@ class ClientsController extends Controller
             } else if ($vendorFields[$i] == 'gender') {
                 $clients = $clients->join('genders', 'clients.gender', '=', 'genders.id');
                 $clientsData[] = "genders.name as gender";
-            } else if ($vendorFields[$i] == 'car_id' and ((int)$request->typeId !== 2 and (int)$request->typeId !== 4)) {
+            } else if ($vendorFields[$i] == 'car_id' ) {
                 $clients = $clients->join('cars', function ($query) {
                     $query->on('cars.id', '=', 'clients.car_id')->orWhereNull('clients.car_id');;
                 });
                 $clients = $clients->join('makes', 'makes.id', '=', 'cars.make_id');
                 $clientsData[] = "clients.car_id as " . $selectedFieldsTitle[$i];
                 $clientsData[] = "makes.name as car_name";
-            } else if ($vendorFields[$i] == 'vendor_id' and ((int)$request->typeId !== 2 and (int)$request->typeId !== 4)) {
+            } else if ($vendorFields[$i] == 'vendor_id' ) {
                 $clients = $clients->join('users as u2', 'clients.vendor_id', '=', 'u2.id');
                 $clientsData[] = "u2.name as " . $selectedFieldsTitle[$i];
-            } else if ($vendorFields[$i] == 'operator_id' and ((int)$request->typeId !== 2 and (int)$request->typeId !== 4)) {
+            } else if ($vendorFields[$i] == 'operator_id' ) {
                 $clients = $clients->join('users AS u1', 'clients.operator_id', '=', 'u1.id');
                 $clientsData[] = "u1.name as " . $selectedFieldsTitle[$i];
             } else if ($vendorFields[$i] !== 'action') {

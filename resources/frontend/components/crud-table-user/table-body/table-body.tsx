@@ -99,7 +99,7 @@ const TableBody: React.FC<ITableBody> = (
                                                 onClick={() => handlerAction(item.id, 'assign')}
                                             />
                                         }{
-                                            isAssignVendor  && typeId===2 &&
+                                            isAssignVendor  && (typeId===2 || typeId===1) &&
                                             <AssignVendorIcon
                                                 className={s.icon}
                                                 onClick={() => handlerAction(item.id, 'assignVendor')}

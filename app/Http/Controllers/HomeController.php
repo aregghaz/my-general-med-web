@@ -72,8 +72,8 @@ class HomeController extends Controller
         $selectedFieldsTitle = [];
         $vendorId = $request->user()->vendor_id;
         $tripCount = Clients::where(['vendor_id' => $vendorId, 'type_id' => 1])->count();
-        $available = Clients::where('type_id', 2)->count();
-        $cancelCount = Clients::where('type_id', 4)->count();
+        $available = Clients::where('type_id', 2)->where('vendor_id', '<>',  $vendorId)->orWhereNull('vendor_id')->count();
+        $cancelCount = Clients::where(['type_id'=> 2,'vendor_id' => $vendorId])->count();
         $progressCount = Clients::where('type_id', 5)->count();
         $doneCount = Clients::where('type_id', 6)->count();
 
@@ -220,8 +220,11 @@ class HomeController extends Controller
         if((int)$request->status === 2){
             Clients::whereIn('id', $ids)->update(['type_id' =>  $request->status, 'vendor_id' => null, "car_id" =>null]);
 
+        }if((int)$request->status === 4){
+            Clients::whereIn('id', $ids)->update(['type_id' =>  2, 'vendor_id' => $request->user()->vendor_id, "car_id" =>null]);
+
         }else{
-            Clients::whereIn('id', $ids)->update(['type_id' =>  $request->status, 'vendor_id' => $request->user()->id]);
+            Clients::whereIn('id', $ids)->update(['type_id' =>  $request->status, 'vendor_id' => $request->user()->vendor_id]);
 
         }
 
