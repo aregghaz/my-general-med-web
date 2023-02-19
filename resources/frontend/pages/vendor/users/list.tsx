@@ -119,8 +119,8 @@ const VendorUsers: React.FC<Beneficiary> = () => {
     };
     const handlerAction = async (action: string, id: number) => {
         switch (action) {
-            case "history":
-                /// await handlerSelectClient(id);
+            case "get":
+                await handlerGetItemData(id);
                 break;
             case "add":
                 await handlerAddItem();

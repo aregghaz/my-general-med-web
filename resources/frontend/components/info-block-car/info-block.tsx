@@ -7,7 +7,9 @@ import ImageGallery from "../image-gallery-carousel/image-gallery-carousel";
 
 
 interface IProps {
-    data:any
+    data:any,
+
+
 }
 
 
@@ -20,8 +22,7 @@ const InfoBlockCar: FC<IProps> = ({data}) => {
     return (
         <div className={cls.block}>
             <div className={cls.panel}>
-                <span className={`${cls.menu} ${cls.menu_active}`}>Trip Detail</span>
-                <span className={cls.menu}>Notes</span>
+                <span className={`${cls.menu} ${cls.menu_active}`}>Car Detail</span>
             </div>
             <div className={cls.items}>
                 {

@@ -106,6 +106,9 @@ const Cars: React.FC<Beneficiary> = () => {
     };
     const handlerAction = async (action: string, id: number) => {
         switch (action) {
+            case "get":
+                await handlerGetItemData(id);
+                break;
             case "add":
                 await handlerAddItem();
                 break;
@@ -117,7 +120,7 @@ const Cars: React.FC<Beneficiary> = () => {
     return (
         data &&
         <>
-            {Object.keys(itemData).length > 0 && <InfoBlockCar data={itemData} />}
+            {Object.keys(itemData).length > 0 && <InfoBlockCar  data={itemData} />}
             <List
                 data={data}
                 titles={titles}
