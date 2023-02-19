@@ -212,7 +212,7 @@ const MultiSelectSort: React.FC<ISelect> = (
                 styles={{
                     control: (baseStyles: any, state: any) => ({
                         ...baseStyles,
-                       // borderColor: state.isFocused ? '#545cd8' : '#545cd8',
+                        borderColor: '#D63D3D',
                        /// backgroundColor: '#545cd8',
                         borderRadius: "15px",
                         color: "#707980",

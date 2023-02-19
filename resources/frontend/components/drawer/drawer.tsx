@@ -172,7 +172,7 @@ const Drawer: React.FC = ({ children }) => {
                                                 type={"blank"}
                                                 onClick={() => {
                                                     handlerLogOut();
-                                                    navigate("/");
+                                                    navigate("/login");
                                                 }}
                                             >
                                                 <span className={s.icon}>

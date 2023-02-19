@@ -132,7 +132,7 @@ export const setLogOut = () => async (dispatch: Dispatch) => {
     localStorage.removeItem('access_token')
     dispatch(actions.logOut())
     await authAPI.logout()
-    await navigate('/login')
+    /// await navigate('/login')
 
 }
 

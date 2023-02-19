@@ -21,7 +21,6 @@ const InfoBlockDriver: FC<IProps> = ({data}) => {
         <div className={cls.block}>
             <div className={cls.panel}>
                 <span className={`${cls.menu} ${cls.menu_active}`}>Driver Detail</span>
-                <span className={cls.menu}>Notes</span>
             </div>
             <div className={cls.items}>
                 {

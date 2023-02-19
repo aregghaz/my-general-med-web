@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { homeAPI } from "../../../api/site-api/home-api";
 import InfoBlockDriver from "../../../components/info-block-driver/info-block";
 import { vendorAPI } from "../../../api/site-api/vendor-api";
+import Tabs from "../../../components/tabs/tabs";
 
 interface Beneficiary {
     path: string;
@@ -26,13 +27,8 @@ const VendorUsers: React.FC<Beneficiary> = () => {
     const crudKey = "users";
     const [data, setData] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [countPages, setCountPages] = useState(null);
     const [deleteId, setDeleteId] = useState(null);
-    const [count, setCount] = useState(0);
-    const [activeItem, setActiveItem] = useState(null);
-    const [tabId, setTabId] = useState(1);
     const [tabIdSelected, setTabIdSelected] = useState(3);
-    const [dataID, setDataID] = useState(null);
     const [itemData, setItemData] = useState({});
     const [tabs, setTabs] = useState([]);
     const [typeName, setTypeName] = useState<string>('driver')
@@ -87,8 +83,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
         localStorage.setItem("page", activeItem.toString());
     };
 
-    const handlerChangeTabs = async (tabId: number, name:string) => {
-        setTypeName(name)
+    const handlerChangeTabs = async (tabId: number) => {
         setTabIdSelected(tabId);
         // setLoading(true)
     };
@@ -131,10 +126,12 @@ const VendorUsers: React.FC<Beneficiary> = () => {
 
         }
     };
+
     return (
         data && (
             <>
-
+                <Tabs tabs={tabs}
+                      handlerChangeTabs={handlerChangeTabs} />
                 {Object.keys(itemData).length >0  && <InfoBlockDriver  data={itemData}/> }
                 <List
                     data={data}

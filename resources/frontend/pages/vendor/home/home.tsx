@@ -104,7 +104,7 @@ const Home: React.FC<IHome> = () => {
         },
         {
             id: 4,
-            name: "Cancelled Trips",
+            name: "Reroute trips",
             count: cancelCount
         },
         {
