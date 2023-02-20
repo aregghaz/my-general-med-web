@@ -17,7 +17,7 @@ class ActionsSeeder extends Seeder
     public function run()
     {
         ActionStatus::truncate();
-        $roles= ['create', 'assignVendor', 'edit', 'assignCar', 'delete','status', 'reRoute'];
+        $roles= ['create', 'assignVendor', 'edit', 'assignCar', 'delete','status', 'reRoute','claimTrip'];
         foreach($roles as $role){
             DB::table('action_statuses')->insert([
                 'name' =>$role,

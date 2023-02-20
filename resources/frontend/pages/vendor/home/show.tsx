@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { GOOGLE_API_KEY } from "../../../environments";
 import { getClientData } from "../../../store/selectors";
 import { useTranslation } from "react-i18next";
+import TimePickers from "../../../components/time-picker/timepicker";
+import getFieldLabel from "../../../utils/getFieldLabel";
 
 interface IShow {
     path: string;
@@ -41,7 +43,7 @@ const Show: React.FC<IShow> = ({ id }) => {
         setDuration(results.routes[0].legs[0].duration.text);
         setSteps(results.routes[0].legs[0].steps);
     }
-
+    const [values, setFieldValue] = useState(null);
     useEffect(() => {
         (async () => {
             const homeData = await homeAPI.getCLientById(id);
@@ -64,13 +66,23 @@ const Show: React.FC<IShow> = ({ id }) => {
                 {clientById.date_of_service}
             </div>
             <div className={cls.item}>
-                <span className={cls.b_text}>{t("pick_up")}: </span>
-                {clientById.pick_up}
+                <TimePickers
+                    label={t("pick_up")}
+                   //// error={errors[item.name]}
+                    name={'pick_up'}
+                    setFieldValue={setFieldValue}
+                    value={clientById.pick_up}
+                />
             </div>
 
             <div className={cls.item}>
-                <span className={cls.b_text}>{t("drop_down")}: </span>
-                {clientById.drop_down}
+                <TimePickers
+                    label={t("drop_down")}
+                    //// error={errors[item.name]}
+                    name={'drop_down'}
+                    setFieldValue={setFieldValue}
+                    value={clientById.drop_down}
+                />
             </div>
 
             <div className={cls.item}>

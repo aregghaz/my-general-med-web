@@ -222,20 +222,22 @@ class HomeController extends Controller
     public function changeClientType(Request $request)
     {
         $ids = $request->ids;
+        $vendorId = $request->user()->vendor_id;
         if ((int)$request->status === 2) {
             Clients::whereIn('id', $ids)->update(['type_id' => $request->status, 'vendor_id' => null, "car_id" => null]);
 
-        }
-        if ((int)$request->status === 4) {
-            Clients::whereIn('id', $ids)->update(['type_id' => 2, 'vendor_id' => $request->user()->vendor_id, "car_id" => null]);
-            //// $this->createAction($request->user()->id, $id, 3, 1);
+        } else if ((int)$request->status === 4) {
+            Clients::whereIn('id', $ids)->update(['type_id' => 2, "car_id" => null]);
             foreach ($ids as $id) {
-                $this->createAction($request->user()->vendor_id, $id, 7, 1);
-
+                $this->createAction($vendorId, $id,7, 1);
+            }
+        } else if ((int)$request->status === 1) {
+            Clients::whereIn('id', $ids)->update(['type_id' => 1, 'vendor_id' => $vendorId, "car_id" => null]);
+            foreach ($ids as $id) {
+                $this->createAction($vendorId, $id, 8, 1);
             }
         } else {
-            Clients::whereIn('id', $ids)->update(['type_id' => $request->status, 'vendor_id' => $request->user()->vendor_id]);
-
+            Clients::whereIn('id', $ids)->update(['type_id' => $request->status, 'vendor_id' => $vendorId]);
         }
 
         return response()->json([
