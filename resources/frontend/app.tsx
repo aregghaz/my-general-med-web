@@ -38,6 +38,7 @@ import OperatorCreate from "./pages/admin/vendors/create/operator";
 import OperatorEdit from "./pages/admin/vendors/edit/operator";
 import Show from "./pages/vendor/home/show";
 import Activity from "./pages/admin/users/activity";
+import ActivityClient from "./pages/admin/clients/activity";
 
 const App = (): JSX.Element => (
     <Provider store={store}>
@@ -67,6 +68,7 @@ const App = (): JSX.Element => (
                 <ClientEdit path='clients/:id'/>
                 <ClientCreate path='clients/create'/>
                 <Activity path='activity/:id'/>
+                <ActivityClient path='activity-client/:clientId'/>
                 <Vendors path="vendors"/>
                 <VendorEdit path='vendors/:id/2'/>
                 <OperatorEdit path='vendors/:id/4'/>

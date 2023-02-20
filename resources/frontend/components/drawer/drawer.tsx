@@ -91,12 +91,12 @@ const Drawer: React.FC = ({ children }) => {
                 item: "clients",
                 page: "/admin/clients"
             },
-            // {
-            //     id: 5,
-            //     Icon: <Status />,
-            //     item: "status",
-            //     page: "/admin/status"
-            // },
+            {
+                id: 5,
+                Icon: <Status />,
+                item: "status",
+                page: "/admin/status"
+            },
             // {
             //     id: 6,
             //     Icon: <UserRole />,

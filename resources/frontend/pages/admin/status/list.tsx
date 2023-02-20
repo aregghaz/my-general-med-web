@@ -100,6 +100,10 @@ const Status: React.FC<Beneficiary> = () => {
             id: 4,
             name: "request_type",
             count: 0
+        },    {
+            id: 3,
+            name: "los",
+            count: 0
         },
         {
             id: 5,

@@ -7,6 +7,7 @@ use App\Models\ClientStatus;
 use App\Models\DestinationAddress;
 use App\Models\Escort;
 use App\Models\Gender;
+use App\Models\Los;
 use App\Models\OriginAddress;
 use App\Models\RequestType;
 use App\Models\TypeOfTrip;
@@ -111,6 +112,18 @@ class TestController extends Controller
                 $genderType = $dataCreate->id;
             }
 
+            $losData = Los::where('name', $data[$los])->first();
+            $losType = 0;
+            if (isset($losData)) {
+                $losType = $losData->id;
+            } else {
+                $dataCreate = Los::create([
+                    'name' => $data[$los],
+                    "slug" => $data[$los]
+                ]);
+                $losType = $dataCreate->id;
+            }
+
 //            //////Clinet escortType
 //            $escortTypeData = Escort::where('name', (int)$data[$escortType] ? 'yes' : "no")->first();
 //            $escortTypeId = 0;
@@ -184,10 +197,11 @@ class TestController extends Controller
                     'vendor_id' => null,
                     ////'car_id' => 2,
                     'type_id' => 2,
+                    'operator_id' => 1,
                     'trip_id' => $data[$trip_id],
                     'fullName' => $data[$name] . ' '.  $data[$surname],
                     'gender' => $genderType,
-                    'los' => $data[$los],
+                    'los_id' => $losType,
                    /// 'phone_number' => $data[$phone_number],
                     'date_of_service' => $data[$date_of_service],
                     ///'appointment_time' => $data[$appointment_time],

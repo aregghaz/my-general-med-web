@@ -20,11 +20,12 @@ class Clients extends Model
         "id",
         'car_id',
         'vendor_id',
+        'operator_id',
         'type_id',
         'trip_id',
         'fullName',
         'gender',///seect
-        'los',
+        'los_id',
         'date_of_service',
         'pick_up',
         'drop_down',
@@ -77,5 +78,9 @@ class Clients extends Model
     public function requestType()
     {
         return $this->hasOne(RequestType::class, 'id', 'request_type');
+    }
+    public function los()
+    {
+        return $this->hasOne(Los::class, 'id', 'los_id');
     }
 }

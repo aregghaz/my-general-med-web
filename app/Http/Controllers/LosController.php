@@ -1,32 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\ClientActivityCollection;
-use App\Http\Resources\OperatorActionCollection;
-use App\Models\Actions;
+use App\Models\Los;
 use Illuminate\Http\Request;
 
-class ActionsController extends Controller
+class LosController extends Controller
 {
-
-
-
-    public function getVendorDataSelect($id){
-
-      $actions = Actions::where('user_id', $id)->with(['getClient','getOperator','getVendor','getAction'])->get();
-        return response()->json([
-            'actions' => new OperatorActionCollection($actions),
-        ], 200);
-    }
-    public function getActivityClient($id){
-
-      $actions = Actions::where('client_id', $id)->with(['getClient','getOperator','getVendor','getAction'])->get();
-        return response()->json([
-            'actions' => new ClientActivityCollection($actions),
-        ], 200);
-    }
     /**
      * Display a listing of the resource.
      *
@@ -61,10 +41,10 @@ class ActionsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Actions  $actions
+     * @param  \App\Models\Los  $los
      * @return \Illuminate\Http\Response
      */
-    public function show(Actions $actions)
+    public function show(Los $los)
     {
         //
     }
@@ -72,10 +52,10 @@ class ActionsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Actions  $actions
+     * @param  \App\Models\Los  $los
      * @return \Illuminate\Http\Response
      */
-    public function edit(Actions $actions)
+    public function edit(Los $los)
     {
         //
     }
@@ -84,10 +64,10 @@ class ActionsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Actions  $actions
+     * @param  \App\Models\Los  $los
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Actions $actions)
+    public function update(Request $request, Los $los)
     {
         //
     }
@@ -95,10 +75,10 @@ class ActionsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Actions  $actions
+     * @param  \App\Models\Los  $los
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Actions $actions)
+    public function destroy(Los $los)
     {
         //
     }

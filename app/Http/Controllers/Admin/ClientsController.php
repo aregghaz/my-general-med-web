@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ClientFieldCollection;
 use App\Http\Resources\StatusCollection;
-use App\Models\Actions;
 use App\Models\Clients;
 use App\Models\ClientStatus;
 use App\Models\ClientTable;
@@ -18,29 +17,34 @@ class ClientsController extends Controller
 {
 
     protected $title = [
-        'id',
+        "id",
+        'car_id',
+        'vendor_id',
+        'type_id',
         'trip_id',
+        'operator_id',
         'fullName',
-        'gender',
-        'los',
+        'gender',///seect
+        'los_id',
         'date_of_service',
         'pick_up',
         'drop_down',
         'request_type', ///seect
-        'status', ///seect
+        'status',///seect
         'origin',
-        /// 'origin_id',
         'origin_phone',
+        'origin_id',
         'origin_comment',
-        'destination',
-        //  'destination_id',
-        'destination_phone',
+        'origin_phone',
+        "destination_id",
+        "destination",
+        "destination_phone",
         'destination_comments',
         'miles',
         'member_uniqie_identifer',
         'birthday',
         'weight',
-
+        'height',
     ];
 
     public function clientsData(Request $request)
@@ -52,7 +56,17 @@ class ClientsController extends Controller
         $showMore = $request->showMore;
         $clientsData = [];
         $selectedFieldsTitle = [];
-        if ((int)$request->typeId === 2 || (int)$request->typeId === 3 || (int)$request->typeId === 4) {
+        $typeId = (int)$request->typeId;
+        $tripCount = Clients::where(['type_id' => 1])->count();
+        $available = Clients::where('type_id', 2)
+            ////->where('vendor_id', '=', null)
+            ->count();
+        $cancelCount = Clients::where('type_id', 2)->where('vendor_id', '!=', null)->count();
+        $progressCount = Clients::where('type_id', 5)->count();
+        $doneCount = Clients::where('type_id', 6)->count();
+
+
+        if ($typeId === 2 || $typeId === 3 || $typeId === 4) {
             if (($key = array_search('car_id', $vendorFields)) !== false) {
                 array_splice($vendorFields, $key, 1);
 
@@ -61,15 +75,16 @@ class ClientsController extends Controller
                 array_splice($vendorFields, $key, 1);
 
             }
+            if ($typeId == 4) {
+                $clients = DB::table('clients')->where('type_id', 2)->where('clients.vendor_id', '!=', null);
+
+            } else if ($typeId == 2) {
+                $clients = DB::table('clients')->where('type_id', 2);
+            }
+        } else {
+            $clients = DB::table('clients')->where('type_id', $request->typeId);
         }
-        $tripCount = Clients::where(['type_id' => 1])->count();
-        $available = Clients::where('type_id', 2)->where('vendor_id', '=', null)->count();
-        $cancelCount = Clients::where('type_id', 2)->where('vendor_id','!=', null)->count();
-        $progressCount = Clients::where('type_id', 5)->count();
-        $doneCount = Clients::where('type_id', 6)->count();
-
-        $clients = DB::table('clients')->where('type_id', $request->typeId);
-
+      ///  $clients = DB::table('clients')->where('type_id', $request->typeId);
         if (isset($request->queryData)) {
             $this->convertQuery($request->queryData, $vendorFields, $clients);
         }
@@ -82,20 +97,24 @@ class ClientsController extends Controller
             } else if ($vendorFields[$i] == 'status') {
                 $clients = $clients->join('client_statuses', 'clients.status', '=', 'client_statuses.id');
                 $clientsData[] = "client_statuses.name as status";
-            } else if ($vendorFields[$i] == 'gender') {
+            } else if ($vendorFields[$i] == 'los_id') {
+                $clients = $clients->join('los', 'clients.los_id', '=', 'los.id');
+                $clientsData[] = "los.name as los_id";
+                //////gender reletion cheking and add to title
+            }else if ($vendorFields[$i] == 'gender') {
                 $clients = $clients->join('genders', 'clients.gender', '=', 'genders.id');
                 $clientsData[] = "genders.name as gender";
-            } else if ($vendorFields[$i] == 'car_id' ) {
-                $clients = $clients->join('cars', function ($query) {
+            } else if ($vendorFields[$i] == 'car_id') {
+                $clients = $clients->leftJoin('cars', function ($query) {
                     $query->on('cars.id', '=', 'clients.car_id')->orWhereNull('clients.car_id');;
                 });
-                $clients = $clients->join('makes', 'makes.id', '=', 'cars.make_id');
+                $clients = $clients->leftJoin('makes', 'makes.id', '=', 'cars.make_id');
                 $clientsData[] = "clients.car_id as " . $selectedFieldsTitle[$i];
                 $clientsData[] = "makes.name as car_name";
-            } else if ($vendorFields[$i] == 'vendor_id' ) {
+            } else if ($vendorFields[$i] == 'vendor_id') {
                 $clients = $clients->join('users as u2', 'clients.vendor_id', '=', 'u2.id');
                 $clientsData[] = "u2.name as " . $selectedFieldsTitle[$i];
-            } else if ($vendorFields[$i] == 'operator_id' ) {
+            } else if ($vendorFields[$i] == 'operator_id') {
                 $clients = $clients->join('users AS u1', 'clients.operator_id', '=', 'u1.id');
                 $clientsData[] = "u1.name as " . $selectedFieldsTitle[$i];
             } else if ($vendorFields[$i] !== 'action') {
@@ -332,7 +351,7 @@ class ClientsController extends Controller
 
         $client->update();
 
-        $this->createAction($request->user()->id,$id , 3, 1);
+        $this->createAction($request->user()->id, $id, 3, 1);
 
         return response()->json(
             [

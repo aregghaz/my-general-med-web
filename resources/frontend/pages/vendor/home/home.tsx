@@ -104,7 +104,7 @@ const Home: React.FC<IHome> = () => {
         },
         {
             id: 4,
-            name: "Reroute trips",
+            name: "Rerouted trips",
             count: cancelCount
         },
         {
@@ -149,7 +149,6 @@ const Home: React.FC<IHome> = () => {
     };
     const handlerInfo = (id: number) => {
         window.open(`/client/${id}`, "_blank", "noreferrer");
-        s;
     };
     const handlerAction = async (id: number, action: string) => {
         switch (action) {
@@ -206,7 +205,7 @@ const Home: React.FC<IHome> = () => {
             homeAPI.cancelRequest();
         };
 
-    }, [inView, loading, agreement]);
+    }, [inView, loading]);
 
     const onSearchInput = async (event: { search: string }) => {
         const titlesData = localStorage.getItem("titles");
@@ -265,7 +264,7 @@ const Home: React.FC<IHome> = () => {
 
     const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-    if (agreement) {
+    if (agreement && ids.length >0) {
         delay(200).then(async () => {
             await homeAPI.changeClientsTypes({ status, ids });
             setIds([]);
@@ -323,7 +322,6 @@ const Home: React.FC<IHome> = () => {
             ids: ids,
             carId: parseFloat(car.value)
         });
-
         if (getCarData.success) {
             handlerCloseModal();
             setIds([]);
@@ -488,6 +486,7 @@ const Home: React.FC<IHome> = () => {
                     isDelete={false}
                     isAssignVendor={false}
                     isEdit={false}
+                    isGetHistory={false}
                 />
                 <div className={s.detector} ref={ref} />
             </div>

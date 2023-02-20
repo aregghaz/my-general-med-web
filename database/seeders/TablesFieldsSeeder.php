@@ -22,7 +22,7 @@ class TablesFieldsSeeder extends Seeder
             'vendor_id',
             'fullName',
             'gender',
-            'los',
+            'los_id',
            /// 'phone_number',
             'date_of_service',
             'pick_up',

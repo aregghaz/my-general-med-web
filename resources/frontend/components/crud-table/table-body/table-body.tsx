@@ -13,8 +13,8 @@ interface ITableBody {
     isEdit: boolean
     isDelete: boolean,
     isGetHistory: boolean
-    isGetItems?: boolean
-    handlerAction?: (action: string, id: number) => void
+    isGetItems: boolean
+    handlerAction: (action: string, id: number) => void
 }
 
 const TableBody: React.FC<ITableBody> = (
@@ -27,7 +27,6 @@ const TableBody: React.FC<ITableBody> = (
         handlerAction
     }) => {
     const { t } = useTranslation();
-
     return (
         <tbody>
         {

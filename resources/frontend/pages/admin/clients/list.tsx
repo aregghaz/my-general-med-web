@@ -24,7 +24,7 @@ import Button from "../../../components/button/button";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 import { AdminApi } from "../../../api/admin-api/admin-api";
 import { navigate } from "@reach/router";
-import AssignVendorIcon from '-!svg-react-loader!../../../images/add-company-icon.svg'
+import AssignVendorIcon from "-!svg-react-loader!../../../images/add-company-icon.svg";
 
 
 interface IHome {
@@ -42,7 +42,7 @@ const customStyles: ReactModal.Styles = {
         overflow: "hidden",
         transform: "translate(-50% , -50%)",
         /// display: 'flex',
-        justifyContent: "center",
+        justifyContent: "center"
         ///  alignItems: "center",
     },
     overlay: {
@@ -96,7 +96,7 @@ const Home: React.FC<IHome> = () => {
         },
         {
             id: 4,
-            name: "Cancelled Trips",
+            name: "Rerouted trips",
             count: cancelCount
         },
         {
@@ -156,6 +156,9 @@ const Home: React.FC<IHome> = () => {
                 break;
             case "assignVendor":
                 await handleActionMiddleware(id);
+                break;
+            case "history":
+                await handleGetHistory(id);
                 break;
         }
     };
@@ -278,6 +281,10 @@ const Home: React.FC<IHome> = () => {
         setIsModalOpen(false);
     };
 
+    const handleGetHistory = (id:number) => {
+            navigate(`/admin/activity-client/${id}`)
+    };
+
 
     const changeSortPosition = (arr: Array<IOption>) => {
         let result = arr.map(a => a.slug);
@@ -395,7 +402,7 @@ const Home: React.FC<IHome> = () => {
                                 <div className={s.selectDiv}>
                                     <Select
                                         getOptionValue={(option: IOption) => option.value}
-                                        getOptionLabel={(option: IOption) => t(option.label)}
+                                        getOptionLabel={(option: IOption) => option.label}
                                         onChange={(options: IOption) => setSelectedVendor(options)}
                                         options={vendorData}
                                         // value={selectedTitle}
@@ -442,6 +449,7 @@ const Home: React.FC<IHome> = () => {
                     isEdit
                     action
                     isInfo
+                    isGetHistory
                     isAssignVendor
                     handlerAction={handlerAction}
                     tableRef={tableRef}

@@ -83,6 +83,7 @@ Route::group([
     Route::get('/vendors/{id}/edit', [VendorController::class, 'edit']);
     Route::get('/vendor-data-for-select', [VendorController::class, 'getVendorDataSelect']);
     Route::get('/getActivityOperator/{id}', [ActionsController::class, 'getVendorDataSelect']);
+    Route::get('/getActivityClient/{id}', [ActionsController::class, 'getActivityClient']);
     Route::post('/assign-vendor-client', [VendorController::class, 'setVendorTtoClient']);
 
     Route::get('/audit', [VendorController::class, 'audit']);

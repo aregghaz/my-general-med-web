@@ -22,7 +22,7 @@ class HomeController extends Controller
         'name',
         'surname',
         'gender',
-        'los',
+        'los_id',
         'phone_number',
         'date_of_service',
         'appointment_time',
@@ -57,80 +57,86 @@ class HomeController extends Controller
 
     public function clientData(Request $request)
     {
-        $allFields  =  $request->user()->fields()->get()->pluck('name')->toArray();
-        $vendorFields = $request->titles ?$request->titles :  $allFields;
-        if ((int)$request->typeId === 2 || (int)$request->typeId === 3 || (int)$request->typeId === 4) {
+        $allFields = $request->user()->fields()->get()->pluck('name')->toArray();
+        $vendorFields = $request->titles ? $request->titles : $allFields;
+
+        // dd($vendorFields);
+        $clientData = new ClientFieldCollection($vendorFields);
+        $showMore = $request->showMore;
+        $clientsData = [];
+        $typeId = (int)$request->typeId;
+        $selectedFieldsTitle = [];
+        $vendorId = $request->user()->vendor_id;
+        $tripCount = Clients::where(['vendor_id' => $vendorId, 'type_id' => 1])->count();
+        $available = Clients::where('type_id', 2)->where('vendor_id', '<>', $vendorId)->orWhereNull('vendor_id')->count();
+        $cancelCount = Clients::where(['type_id' => 2, 'vendor_id' => $vendorId])->count();
+        $progressCount = Clients::where('type_id', 5)->count();
+        $doneCount = Clients::where('type_id', 6)->count();
+
+        if ($typeId === 2 || $typeId === 3 || $typeId === 4) {
             if (($key = array_search('car_id', $vendorFields)) !== false) {
                 array_splice($vendorFields, $key, 1);
 
             }
+            if ($typeId == 4) {
+                $clients = DB::table('clients')->where(['type_id' => 2, 'clients.vendor_id' => $vendorId]);
+
+            } else if ($typeId == 2) {
+                $clients = DB::table('clients')->where('type_id', 2)->where('vendor_id', '<>', $vendorId)->orWhereNull('vendor_id');
+            }
+        } else {
+            $clients = DB::table('clients')->where(['type_id' => $request->typeId, 'clients.vendor_id' => $vendorId]);
         }
-       // dd($vendorFields);
-        $clientData = new ClientFieldCollection($vendorFields);
-        $showMore = $request->showMore;
-        $clientsData = [];
-        $selectedFieldsTitle = [];
-        $vendorId = $request->user()->vendor_id;
-        $tripCount = Clients::where(['vendor_id' => $vendorId, 'type_id' => 1])->count();
-        $available = Clients::where('type_id', 2)->where('vendor_id', '<>',  $vendorId)->orWhereNull('vendor_id')->count();
-        $cancelCount = Clients::where(['type_id'=> 2,'vendor_id' => $vendorId])->count();
-        $progressCount = Clients::where('type_id', 5)->count();
-        $doneCount = Clients::where('type_id', 6)->count();
-
-
-        $clients = DB::table('clients')->where('type_id', $request->typeId);
 
         if (isset($request->queryData)) {
-              $this->convertQuery($request->queryData, $vendorFields, $clients);
+            $this->convertQuery($request->queryData, $vendorFields, $clients);
         }
         $clientsDataWith = [];
         for ($i = 0; $i < count($vendorFields); $i++) {
             $selectedFieldsTitle[] = $vendorFields[$i];
-         if ($vendorFields[$i] == 'request_type') {
+            if ($vendorFields[$i] == 'request_type') {
                 $clients = $clients->join('request_types', 'clients.request_type', '=', 'request_types.id');
                 $clientsData[] = "request_types.name as request_type";
                 //////status reletion cheking and add to title
-            }
-            else if ($vendorFields[$i] == 'status') {
+            } else if ($vendorFields[$i] == 'status') {
                 $clients = $clients->join('client_statuses', 'clients.status', '=', 'client_statuses.id');
                 $clientsData[] = "client_statuses.name as status";
                 //////gender reletion cheking and add to title
-            }
-            else if ($vendorFields[$i] == 'gender') {
+            } else if ($vendorFields[$i] == 'los_id') {
+                $clients = $clients->join('los', 'clients.los_id', '=', 'los.id');
+                $clientsData[] = "los.name as los_id";
+                //////gender reletion cheking and add to title
+            } else if ($vendorFields[$i] == 'gender') {
                 $clients = $clients->join('genders', 'clients.gender', '=', 'genders.id');
                 $clientsData[] = "genders.name as gender";
                 //////adding default fields in to select
-            }  else if ($vendorFields[$i] == 'car_id' and ((int)$request->typeId !== 2)) {
-                $clients = $clients->join('cars', function ($query) {
+            } else if ($vendorFields[$i] == 'car_id' and ($typeId !== 2)) {
+                $clients = $clients->leftJoin('cars', function ($query) {
                     $query->on('cars.id', '=', 'clients.car_id')->orWhereNull('clients.car_id');;
                 });
-                $clients = $clients->join('makes', 'makes.id', '=', 'cars.make_id');
+                $clients = $clients->leftJoin('makes', 'makes.id', '=', 'cars.make_id');
                 $clientsData[] = "clients.car_id as " . $selectedFieldsTitle[$i];
                 $clientsData[] = "makes.name as car_name";
-            } else if($vendorFields[$i] !== 'car_id'){
-                $clientsData[] =  'clients.' . $selectedFieldsTitle[$i] . " as " . $selectedFieldsTitle[$i];
+            } else if ($vendorFields[$i] !== 'action') {
+                $clientsData[] = 'clients.' . $selectedFieldsTitle[$i] . " as " . $selectedFieldsTitle[$i];
             }
         }
-
-        $result = array_diff( $allFields, $selectedFieldsTitle);
+        $result = array_diff($allFields, $selectedFieldsTitle);
 
         $selectedFields = count($clientsData) > 0 ? $clientsData : $clientData;
 
-        if(((int)$request->typeId == 2)){
-
-        }
         array_unshift($selectedFields, 'clients.id as id');
         $clients = $clients->select($selectedFields);
 
-        $clients =  $clients->take(15 * $showMore)->get();
-       /// dd($selectedFields);
+        $clients = $clients->take(15 * $showMore)->get();
+        /// dd($selectedFields);
         // if(count($selectedFieldsTitle) > 1){
         //  array_shift($selectedFieldsTitle);
         // }
 
         return response()->json([
             'clients' => $clients,
-            'selectedFields' =>  new ClientFieldCollection($selectedFieldsTitle),
+            'selectedFields' => new ClientFieldCollection($selectedFieldsTitle),
             "titles" => new ClientFieldCollection($result),
             'tripCount' => $tripCount,
             'availableCount' => $available,
@@ -144,7 +150,7 @@ class HomeController extends Controller
     public function show($id)
     {
         $client = Clients::with([
-           /// 'origin',
+            /// 'origin',
             /// 'destination',
             'clientStatus',
             'requestType'
@@ -202,7 +208,6 @@ class HomeController extends Controller
         }
 
 
-
         return response()->json([
             'clients' => new ClientCollection($clients),
             "titles" => new ClientFieldCollection($this->title)
@@ -217,14 +222,19 @@ class HomeController extends Controller
     public function changeClientType(Request $request)
     {
         $ids = $request->ids;
-        if((int)$request->status === 2){
-            Clients::whereIn('id', $ids)->update(['type_id' =>  $request->status, 'vendor_id' => null, "car_id" =>null]);
+        if ((int)$request->status === 2) {
+            Clients::whereIn('id', $ids)->update(['type_id' => $request->status, 'vendor_id' => null, "car_id" => null]);
 
-        }if((int)$request->status === 4){
-            Clients::whereIn('id', $ids)->update(['type_id' =>  2, 'vendor_id' => $request->user()->vendor_id, "car_id" =>null]);
+        }
+        if ((int)$request->status === 4) {
+            Clients::whereIn('id', $ids)->update(['type_id' => 2, 'vendor_id' => $request->user()->vendor_id, "car_id" => null]);
+            //// $this->createAction($request->user()->id, $id, 3, 1);
+            foreach ($ids as $id) {
+                $this->createAction($request->user()->vendor_id, $id, 7, 1);
 
-        }else{
-            Clients::whereIn('id', $ids)->update(['type_id' =>  $request->status, 'vendor_id' => $request->user()->vendor_id]);
+            }
+        } else {
+            Clients::whereIn('id', $ids)->update(['type_id' => $request->status, 'vendor_id' => $request->user()->vendor_id]);
 
         }
 
@@ -237,18 +247,9 @@ class HomeController extends Controller
     {
         $clients = $clients->where(function ($query) use ($title, $queryData) {
             // $clients =  $this->convertQuery($request->queryData, $vendorFields, $clients);
-
             for ($i = 0; $i < count($title); $i++) {
                 if ($title[$i] !== 'name' && $title[$i] !== 'id') {
-                    $explodeRelation = explode("_", $title[$i]);
-                    //////origin_address reletion cheking and add to title
-///FIIME THIS PART
-                    if (($explodeRelation[0] === 'origin' || $explodeRelation[0] === 'destination') and $explodeRelation[1] !== 'comment') {
-                        //   $clients = $clients->orWhere($explodeRelation[1], 'LIKE', '%' . $query . '%');
-                    } else {
-
-                         $query->orWhere($title[$i], 'LIKE', '%' . $queryData . '%');
-                    }
+                    $query->orWhere($title[$i], 'LIKE', '%' . $queryData . '%');
                 }
             }
         });
@@ -278,12 +279,15 @@ class HomeController extends Controller
         $clientsIds = $request->ids;
         $carId = $request->carId;
         $clients = Clients::whereIn('id', $clientsIds)->update(["car_id" => $carId]);
-        if($clients){
-            //dd($request->ids);
+        if ($clients) {
+            foreach ($clientsIds as $id) {
+                $this->createAction($request->user()->vendor_id, $id, 4, 1);
+
+            }
             return response()->json([
                 'success' => 1,
             ], 200);
-        }else{
+        } else {
             return response()->json(
                 [
                     'success' => 0,
@@ -295,12 +299,13 @@ class HomeController extends Controller
         }
     }
 
-    public function getClientDataDriver(Request $request){
+    public function getClientDataDriver(Request $request)
+    {
         $vendorId = $request->user()->vendor_id;
         $carId = $request->user()->driver->car_id;
-        $clients = Clients::where(['vendor_id'=> $vendorId, 'car_id' =>$carId ])->get();
+        $clients = Clients::where(['vendor_id' => $vendorId, 'car_id' => $carId])->get();
         return response()->json([
-            'clients' =>$clients,
+            'clients' => $clients,
             'success' => 1,
         ], 200);
     }

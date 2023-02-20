@@ -50,5 +50,8 @@ export const AdminApi = {
     },
     getActivityOperator(id:number) {
         return axios.get(`/api/admin/getActivityOperator/${id}`).then(res => res.data)
+    },
+    getActivityClient(id:number) {
+        return axios.get(`/api/admin/getActivityClient/${id}`).then(res => res.data)
     }
 }
