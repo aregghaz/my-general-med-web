@@ -10,6 +10,7 @@ return [
     'surname' => 'Last Name',
     'gender' => 'Gender',
     'los_id' => 'LOS',
+    'los' => 'LOS',
     'phone_number' => 'Home Number',
     'date_of_service' => 'Date of Service',
     'appointment_time' => 'Appointment Time',

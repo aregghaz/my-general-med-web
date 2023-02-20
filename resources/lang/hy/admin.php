@@ -14,7 +14,7 @@ return [
     'date_of_service' => 'Date of Service',
     'appointment_time' => 'Appointment Time',
     'pick_up' => 'Pickup Time',
-    'drop_down' => 'Date of Service',
+    'drop_down' => 'Drop down time',
     'request_type' => 'Request Type',
     'status' => 'Status',
     'pick_up_address' => 'Pick up address',

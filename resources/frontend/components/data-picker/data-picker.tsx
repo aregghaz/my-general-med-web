@@ -27,7 +27,6 @@ const DataPicker: React.FC<IDataPicker> = (
                    readOnly={true} />
             {show && <div className={s.dataPicker}><Calendar
                 formats="MM/dd/yyyy"
-
                 selected={value ? new Date(getDateValue) : new Date().toLocaleDateString()}
                 /// className={s.dataPicker}
                 aria-label={false}
@@ -35,7 +34,7 @@ const DataPicker: React.FC<IDataPicker> = (
                     e.preventDefault();
                 }}
                 onChange={(date: any) => {
-                    setFieldValue(name, date);
+                    setFieldValue(name, new Date(date).toLocaleDateString());
                     setShow(!show);
                 }}
             /></div>}

@@ -9,6 +9,7 @@ use App\Models\Clients;
 use App\Models\ClientStatus;
 use App\Models\ClientTable;
 use App\Models\Gender;
+use App\Models\Los;
 use App\Models\RequestType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -84,7 +85,7 @@ class ClientsController extends Controller
         } else {
             $clients = DB::table('clients')->where('type_id', $request->typeId);
         }
-      ///  $clients = DB::table('clients')->where('type_id', $request->typeId);
+        ///  $clients = DB::table('clients')->where('type_id', $request->typeId);
         if (isset($request->queryData)) {
             $this->convertQuery($request->queryData, $vendorFields, $clients);
         }
@@ -101,7 +102,7 @@ class ClientsController extends Controller
                 $clients = $clients->join('los', 'clients.los_id', '=', 'los.id');
                 $clientsData[] = "los.name as los_id";
                 //////gender reletion cheking and add to title
-            }else if ($vendorFields[$i] == 'gender') {
+            } else if ($vendorFields[$i] == 'gender') {
                 $clients = $clients->join('genders', 'clients.gender', '=', 'genders.id');
                 $clientsData[] = "genders.name as gender";
             } else if ($vendorFields[$i] == 'car_id') {
@@ -160,12 +161,13 @@ class ClientsController extends Controller
         $request_type = RequestType::get();
         $clientStatus = ClientStatus::get();
         $gender = Gender::get();
+        $los = Los::get();
 
         return response()->json([
             ///   'escortType'=> new StatusCollection($escort),
             "gender" => new StatusCollection($gender),
             'request_type' => new StatusCollection($request_type),
-            ///  "type_of_trip" => new StatusCollection($typeOfTrip),
+            "los" => new StatusCollection($los),
             'status' => new StatusCollection($clientStatus),
 
         ], 200);
@@ -180,18 +182,19 @@ class ClientsController extends Controller
     public function store(Request $request)
     {
         $requestData = json_decode($request->value);
-
+        $userId = $request->user()->id;
         $client = new Clients();
         $client->type_id = 2;
         $client->trip_id = $requestData->trip_id;
         $client->fullName = $requestData->fullName;
         $client->gender = $requestData->gender->id;
-        $client->los = $requestData->los;
+        $client->los_id = $requestData->los->id;
         $client->date_of_service = $requestData->date_of_service;
         $client->pick_up = $requestData->pick_up;
         $client->drop_down = $requestData->drop_down;
         $client->request_type = $requestData->request_type->id;
         $client->status = $requestData->status->id;
+        $client->operator_id = $userId;
         if (isset($requestData->origin->address)) {
             $client->origin = $requestData->origin->address;
             $client->origin_id = $requestData->origin->id;
@@ -221,7 +224,8 @@ class ClientsController extends Controller
                 200
             );
         }
-        $this->createAction($request->user()->id, $client->id, 1, 1);
+
+        $this->createAction($userId, $client->id, 1, 1);
         return response()->json(
             [
                 'success' => '1',
@@ -245,6 +249,7 @@ class ClientsController extends Controller
         $request_type = RequestType::get();
         $clientStatus = ClientStatus::get();
         $gender = Gender::get();
+        $los = Los::get();
         $client = Clients::with([
             /// 'typeOfTrip',
             /// 'escort',
@@ -261,6 +266,7 @@ class ClientsController extends Controller
             ///   'escortType'=> new StatusCollection($escort),
             "gender" => new StatusCollection($gender),
             'request_type' => new StatusCollection($request_type),
+            'los' => new StatusCollection($los),
             ///  "type_of_trip" => new StatusCollection($typeOfTrip),
             'status' => new StatusCollection($clientStatus),
 
@@ -316,19 +322,20 @@ class ClientsController extends Controller
 //                422
 //            );
 //        }
-
+        $userId = $request->user()->id;
         $requestData = json_decode($request->value);
-
         $client = Clients::find($id);
+
         $client->trip_id = $requestData->trip_id;
         $client->fullName = $requestData->fullName;
         $client->gender = $requestData->gender->id;
-        $client->los = $requestData->los;
+        $client->los_id = $requestData->los->id;
         $client->date_of_service = $requestData->date_of_service;
         $client->pick_up = $requestData->pick_up;
         $client->drop_down = $requestData->drop_down;
         $client->request_type = $requestData->request_type->id;
         $client->status = $requestData->status->id;
+        $client->operator_id = $userId;
         if (isset($requestData->origin->address)) {
             $client->origin = $requestData->origin->address;
             $client->origin_id = $requestData->origin->id;
@@ -348,11 +355,10 @@ class ClientsController extends Controller
         $client->member_uniqie_identifer = $requestData->member_uniqie_identifer;
         $client->birthday = $requestData->birthday;
         $client->miles = (int)$requestData->miles;
-
+        $client->height = (float)$requestData->height;
+        $client->weight = (float)$requestData->weight;
         $client->update();
-
-        $this->createAction($request->user()->id, $id, 3, 1);
-
+        $this->createAction($userId, $id, 3, 1);
         return response()->json(
             [
                 'success' => '1',

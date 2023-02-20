@@ -17,7 +17,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         { name: "trip_id", type: "input", label: "trip_id" },
         { name: "fullName", type: "input", label: "fullName" },
         { name: "gender", type: "select", label: "gender" },
-        { name: "los", type: "input", label: "los" },
+        { name: "los", type: "select", label: "los" },
         { name: "member_uniqie_identifer", type: "input", label: "member_uniqie_identifer" },
         { name: "request_type", type: "select", label: "request_type" },
         { name: "status", type: "select", label: "status" },
@@ -28,12 +28,13 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         { name: "birthday", type: "datepicker", label: "birthday" },
         { name: "date_of_service", type: "datepicker", label: "date_of_service" },
         { name: "miles", type: "input", label: "miles" },
+        { name: "id", type: "hidden", inputType: "hidden" },
+        { name: "height", type: "input", label: "height" },
+        { name: "weight", type: "input", label: "weight" },
         { name: "pick_up", type: "timePicker", label: "pick_up" },
         { name: "drop_down", type: "timePicker", label: "drop_down" },
-        { name: "id", type: "hidden", inputType: "hidden" },
-        { name: "location", type: "autocomplete", label: "location" }
+        { name: "location", type: "autocomplete", label: "location" },
     ]
-
 
     useEffect(() => {
         (
