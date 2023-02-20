@@ -152,6 +152,7 @@ class ClientsController extends Controller
      */
     public function update(Request $requestData, $id, Clients $clients)
     {
+        dd('222');
 //       /// dd((array)json_decode($requestData->value));
 //        $validator = Validator::make((array)json_decode($requestData->value), [
 //            'trip_id' => 'required|string',
@@ -223,6 +224,16 @@ class ClientsController extends Controller
     public function destroy(Clients $clients)
     {
         //
+    }
+
+    public function updateClient(Request $request,$id){
+        Clients::find($id)->update([
+            "pick_up" => $request->pick_up,
+            "drop_down"=>$request->drop_down,
+            "additionalNote"=>$request->additionalNote,
+        ]);
+        return response()->json([
+        ], 200);
     }
 
 }

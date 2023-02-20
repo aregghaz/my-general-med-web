@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ClientFieldCollection;
 use App\Http\Resources\StatusTableCollection;
+use App\Models\Clients;
 use App\Models\ClientStatus;
 use App\Models\Escort;
 use App\Models\Los;
@@ -108,6 +109,16 @@ class AdminController extends Controller
         return response()->json([
             'table' => new ClientFieldCollection($table),
             "count" => count($table)
+        ], 200);
+    }
+    public function updateClient(Request $request,$id){
+        Clients::find($id)->update([
+            "pick_up" => $request->pick_up,
+            "drop_down"=>$request->drop_down,
+            ///"additionalNote"=>$request->additionalNote,
+            "operator_note"=>$request->operator_note,
+        ]);
+        return response()->json([
         ], 200);
     }
 }

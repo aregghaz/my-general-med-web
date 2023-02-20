@@ -74,6 +74,7 @@ class Controller extends BaseController
             'birthday' => $client->birthday,
             'height' => $client->height,
             'weight' => $client->weight,
+          ///  'additionalNote' => $client->additionalNote,
         ];
     }
 
@@ -103,6 +104,8 @@ class Controller extends BaseController
             'birthday' => $client->birthday,
             'height' => $client->height,
             'weight' => $client->weight,
+            'additionalNote' => $client->additionalNote,
+            'operator_note' => $client->operator_note,
         ];
     }
 

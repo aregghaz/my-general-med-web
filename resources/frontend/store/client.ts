@@ -33,7 +33,9 @@ const defaultDat ={
     type_of_trip:0,
     miles:0,
     member_uniqie_identifer:0,
-    birthday:0
+    birthday:0,
+    additionalNote:'',
+    operator_note:''
 }
 
 const initialState = {

@@ -45,7 +45,7 @@ return [
     'height' => 'Height',
     'driver' => 'Drivers',
     'drivers' => 'Drivers',
-    'operator' => 'Operators',
+    'operator' => 'Dispatcher',
     'password' => 'Password',
     'login' => 'Login',
     'address' => 'Address',
@@ -61,11 +61,13 @@ return [
     'assign' => 'Assign',
     'car_id' => 'Car',
     'vendor_id' => 'Vendor',
-    'operator_id' => 'Operator',
+    'operator_id' => 'Dispatcher',
     'vendor' => 'Company',
     'created_at' => 'Date',
     'assignVendor' => 'Assign Company',
     'operatorAction' => 'Action',
+    'additionalNote' => 'Additional note',
+    'operator_note' => 'Dispatcher note',
 
 
     'seeMore' => 'Home number',

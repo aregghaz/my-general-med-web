@@ -45,6 +45,8 @@ class Clients extends Model
         'birthday',
         'weight',
         'height',
+        'additionalNote',
+        'operator_note',
 
     ];
 

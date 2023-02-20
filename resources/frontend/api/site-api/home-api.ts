@@ -32,6 +32,10 @@ export const homeAPI = {
             // })
         }).then(res => res.data)
     },
+    updateClient(data: {pick_up:string, drop_down:string, additionalNote:string},id:number) {
+        return axios.post(`/api/updateClient/${id}`, data, {
+        }).then(res => res.data)
+    },
     getVendorData(tabId:number) {
         return axios.get(`/api/vendorClients?tabId=${tabId}`).then(res => res.data)
     },

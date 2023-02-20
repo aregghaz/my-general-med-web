@@ -13,10 +13,6 @@ class ApiController extends Controller
         $vendorId = $request->user()->vendor_id;
         $carId = $request->user()->driver->car_id;
         $clients = Clients::with([
-            'origin',
-            'destination',
-            'typeOfTrip',
-            'escortType',
             'genderType',
             'clientStatus',
             'requestType'

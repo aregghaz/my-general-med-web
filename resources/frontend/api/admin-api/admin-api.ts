@@ -53,5 +53,9 @@ export const AdminApi = {
     },
     getActivityClient(id:number) {
         return axios.get(`/api/admin/getActivityClient/${id}`).then(res => res.data)
-    }
+    },
+    updateClient(data: {pick_up:string, drop_down:string, additionalNote:string},id:number) {
+        return axios.post(`/api/admin/updateClient/${id}`, data, {
+        }).then(res => res.data)
+    },
 }

@@ -14,6 +14,7 @@ import s from "../../../components/time-picker/timepicker.module.scss";
 import TextField from "../../../components/text-field/text-field";
 import Textarea from "../../../components/textarea/textarea";
 import Button from "../../../components/button/button";
+import { AdminApi } from "../../../api/admin-api/admin-api";
 
 interface IShow {
     path: string;
@@ -51,7 +52,8 @@ const Show: React.FC<IShow> = ({ id }) => {
     const [values, setFieldValue] = useState({
         pick_up : clientById.pick_up,
         drop_down: clientById.drop_down,
-        additionalNote: clientById.additionalNote
+        additionalNote: clientById.additionalNote,
+        operator_note: clientById.operator_note
 
     });
     useEffect(() => {
@@ -61,7 +63,8 @@ const Show: React.FC<IShow> = ({ id }) => {
             setFieldValue({
                 pick_up : homeData.client.pick_up,
                 drop_down: homeData.client.drop_down,
-                additionalNote: homeData.client.additionalNote
+                additionalNote: homeData.client.additionalNote,
+                operator_note: homeData.client.operator_note
 
             })
             await calculateRoute(homeData.client);
@@ -72,8 +75,10 @@ const Show: React.FC<IShow> = ({ id }) => {
 
     }, []);
 
+
+
     const handlerUpdate = async () => {
-        const homeData = await homeAPI.updateClient(values,id);
+        await AdminApi.updateClient(values,id);
     }
 
 
@@ -154,6 +159,24 @@ const Show: React.FC<IShow> = ({ id }) => {
                         });
                     } }
                     label={t('additionalNote')}
+                />
+            </div>
+
+          <div className={cls.item}>
+                <Textarea
+                    name={'operator_note'}
+                    value={values.operator_note}
+                    placeholder={t('operator_note')}
+                    onChange={(event:any) => {
+                        event.persist();
+                        return setFieldValue((state: any) => {
+                            return {
+                                ...state,
+                                operator_note: event.target.value
+                            };
+                        });
+                    } }
+                    label={t('operator_note')}
                 />
             </div>
 

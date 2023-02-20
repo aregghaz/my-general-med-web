@@ -140,7 +140,7 @@ const Home: React.FC<IHome> = () => {
         }
     };
     const handlerInfo = (id: number) => {
-        window.open(`/client/${id}`, "_blank", "noreferrer");
+        window.open(`/admin/client/${id}`, "_blank", "noreferrer");
         s;
     };
     const handlerAction = async (id: number, action: string) => {

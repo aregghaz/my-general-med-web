@@ -43,6 +43,8 @@ class TablesFieldsSeeder extends Seeder
             'weight',
             'height',
             'operator_id',
+            'additionalNote',
+            'operator_note',
         ];
 
         foreach ($fields as $field) {

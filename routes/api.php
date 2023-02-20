@@ -36,6 +36,7 @@ Route::group([
     Route::post('/clientData', [HomeController::class, 'clientData']);
     Route::post('/changeClientType', [HomeController::class, 'changeClientType']);
     Route::post('/assign-car-client', [HomeController::class, 'assignCarDriver']);
+    Route::post('/updateClient/{id}', [App\Http\Controllers\ClientsController::class, 'updateClient']);
     Route::get('/make/{id}', [CarsController::class, 'getModel']);
     Route::resources([
         'home-data' => HomeController::class,
@@ -85,6 +86,7 @@ Route::group([
     Route::get('/getActivityOperator/{id}', [ActionsController::class, 'getVendorDataSelect']);
     Route::get('/getActivityClient/{id}', [ActionsController::class, 'getActivityClient']);
     Route::post('/assign-vendor-client', [VendorController::class, 'setVendorTtoClient']);
+    Route::post('/updateClient/{id}', [AdminController::class, 'updateClient']);
 
     Route::get('/audit', [VendorController::class, 'audit']);
     Route::get('/changeStatus/{slug}', [AdminController::class, 'changeStatus']);

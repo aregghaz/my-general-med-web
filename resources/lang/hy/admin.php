@@ -65,6 +65,9 @@ return [
     'slug' => 'Slug',
     'destination' => 'Destination',
     'assign' => 'Assign',
+    'additionalNote' => 'Additional note',
+    'operator_note' => 'Dispatcher note',
+
 
 
     'ru' => 'Русский',
