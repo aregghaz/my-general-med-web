@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import s from "./data-picker.module.scss";
-import Calendar from 'react-calendar';
+import Calendar from "react-calendar";
 import timestampToDate from "../../utils/timestampToDate";
 
 interface IDataPicker {
@@ -19,25 +19,26 @@ const DataPicker: React.FC<IDataPicker> = (
         value
     }) => {
     const [show, setShow] = useState<boolean>(false);
-
+    const getDateValue =value ? new Date(value) : new Date().toLocaleDateString();
     return (
         <>
             <label className={s.label}>{label}</label>
-            <input type="text" className={s.input} value={timestampToDate(value)}  onClick={() => setShow(!show)} readOnly={true}/>
-                {show &&  <div className={s.dataPicker}> <Calendar
-                    formats="MM/dd/yyyy"
+            <input type="text" className={s.input} value={timestampToDate(getDateValue)} onClick={() => setShow(!show)}
+                   readOnly={true} />
+            {show && <div className={s.dataPicker}><Calendar
+                formats="MM/dd/yyyy"
 
-                    selected={new Date(value)}
-                   /// className={s.dataPicker}
-                    aria-label={false}
-                    onKeyDown={(e: any) => {
-                        e.preventDefault();
-                    }}
-                    onChange={(date: any) => {
-                        setFieldValue(name, date)
-                        setShow(!show)
-                    }}
-                /> </div>}
+                selected={value ? new Date(getDateValue) : new Date().toLocaleDateString()}
+                /// className={s.dataPicker}
+                aria-label={false}
+                onKeyDown={(e: any) => {
+                    e.preventDefault();
+                }}
+                onChange={(date: any) => {
+                    setFieldValue(name, date);
+                    setShow(!show);
+                }}
+            /></div>}
 
         </>
     );

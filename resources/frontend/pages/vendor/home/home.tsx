@@ -324,6 +324,7 @@ const Home: React.FC<IHome> = () => {
         });
         if (getCarData.success) {
             handlerCloseModal();
+            setLoading(true);
             setIds([]);
         } else {
             setIsModalOpen(false);
