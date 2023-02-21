@@ -132,7 +132,7 @@ const CarsEdit: React.FC<IUsersEditItem> = ({id}) => {
                     return (
                         <>
                             <form className={s.form}>
-
+                                <div className={s.item}>
                                 {
                                     <AsyncSelect
                                         loadOptions={loadOptions3}
@@ -152,6 +152,8 @@ const CarsEdit: React.FC<IUsersEditItem> = ({id}) => {
                                         placeholder={"make"}
                                     />
                                 }
+                                </div>
+                                <div className={s.item}>
                                 {
                                     <Select
                                         value={values['model']}
@@ -168,6 +170,8 @@ const CarsEdit: React.FC<IUsersEditItem> = ({id}) => {
                                         placeholder={"model"}
                                     />
                                 }
+                                </div>
+                                <div className={s.item}>
                                 {
                                     <Select
                                         value={values['drivers']}
@@ -185,6 +189,7 @@ const CarsEdit: React.FC<IUsersEditItem> = ({id}) => {
                                         placeholder={"drivers"}
                                     />
                                 }
+                                </div>
                                 {
                                     fields
                                         .map((field, index) => {
