@@ -25,10 +25,7 @@ class ApiController extends Controller
 
     public function getClientDataForDriver($id){
         $client = Clients::find($id)->with([
-            'origin',
-            'destination',
-            'typeOfTrip',
-            'escortType',
+            'genderType',
             'clientStatus',
             'requestType'
         ])->first();
