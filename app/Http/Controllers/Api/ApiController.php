@@ -30,7 +30,7 @@ class ApiController extends Controller
             'requestType'
         ])->first();
         return response()->json([
-            'client' =>  $this->convertSingleData($client),
+            'client' =>  $this->convertSingleDataForInfo($client),
         ], 200);
     }
 }
