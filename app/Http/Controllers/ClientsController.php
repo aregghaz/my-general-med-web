@@ -226,13 +226,17 @@ class ClientsController extends Controller
         //
     }
 
-    public function updateClient(Request $request,$id){
+    public function updateClient(Request $request, $id)
+    {
         Clients::find($id)->update([
             "pick_up" => $request->pick_up,
-            "drop_down"=>$request->drop_down,
-            "additionalNote"=>$request->additionalNote,
-            "type_id"=>$request->status['id'],
+            "drop_down" => $request->drop_down,
+            "additionalNote" => $request->additionalNote,
+            "type_id" => $request->status['id'],
         ]);
+        $vendorId = $request->user()->vendor_id;
+        /////TODO SHOULD ADD IF CHANGE STATUS
+        $this->createAction($vendorId, $id, $request->status['id'], 1);
         return response()->json([
         ], 200);
     }

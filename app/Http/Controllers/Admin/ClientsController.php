@@ -159,7 +159,7 @@ class ClientsController extends Controller
     public function create()
     {
         $request_type = RequestType::get();
-        $clientStatus = ClientStatus::get();
+      ///  $clientStatus = ClientStatus::get();
         $gender = Gender::get();
         $los = Los::get();
 
@@ -168,7 +168,7 @@ class ClientsController extends Controller
             "gender" => new StatusCollection($gender),
             'request_type' => new StatusCollection($request_type),
             "los" => new StatusCollection($los),
-            'status' => new StatusCollection($clientStatus),
+            ///'status' => new StatusCollection($clientStatus),
 
         ], 200);
     }
@@ -225,7 +225,7 @@ class ClientsController extends Controller
             );
         }
 
-        $this->createAction($userId, $client->id, 1, 1);
+        $this->createAction($userId, $client->id, 7, 1);
         return response()->json(
             [
                 'success' => '1',
@@ -334,7 +334,7 @@ class ClientsController extends Controller
         $client->pick_up = $requestData->pick_up;
         $client->drop_down = $requestData->drop_down;
         $client->request_type = $requestData->request_type->id;
-        $client->status = $requestData->status->id;
+      ////  $client->status = $requestData->status->id;
         $client->operator_id = $userId;
         if (isset($requestData->origin->address)) {
             $client->origin = $requestData->origin->address;
@@ -358,7 +358,7 @@ class ClientsController extends Controller
         $client->height = (float)$requestData->height;
         $client->weight = (float)$requestData->weight;
         $client->update();
-        $this->createAction($userId, $id, 3, 1);
+        $this->createAction($userId, $id, 9, 1);
         return response()->json(
             [
                 'success' => '1',

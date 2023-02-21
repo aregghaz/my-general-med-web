@@ -287,7 +287,7 @@ class VendorController extends Controller
         $clients = Clients::whereIn('id', $clientsIds)->update(["vendor_id" => $vendorId, 'type_id' => 1, 'operator_id' => $operatorId]);
         if ($clients) {
             foreach ($clientsIds as $id) {
-                $this->createAction($operatorId, $id, 2, $vendorId);
+                $this->createAction($operatorId, $id, 8, $vendorId);
 
             }
 

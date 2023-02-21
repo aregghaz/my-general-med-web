@@ -232,18 +232,14 @@ class HomeController extends Controller
 
         } else if ((int)$request->status === 4) {
             Clients::whereIn('id', $ids)->update(['type_id' => 2, "car_id" => null]);
-            foreach ($ids as $id) {
-                $this->createAction($vendorId, $id,7, 1);
-            }
         } else if ((int)$request->status === 1) {
             Clients::whereIn('id', $ids)->update(['type_id' => 1, 'vendor_id' => $vendorId, "car_id" => null]);
-            foreach ($ids as $id) {
-                $this->createAction($vendorId, $id, 8, 1);
-            }
         } else {
             Clients::whereIn('id', $ids)->update(['type_id' => $request->status, 'vendor_id' => $vendorId]);
         }
-
+        foreach ($ids as $id) {
+            $this->createAction($vendorId, $id,(int)$request->status, 1);
+        }
         return response()->json([
             'status' => 200
         ], 200);
@@ -287,7 +283,7 @@ class HomeController extends Controller
         $clients = Clients::whereIn('id', $clientsIds)->update(["car_id" => $carId]);
         if ($clients) {
             foreach ($clientsIds as $id) {
-                $this->createAction($request->user()->vendor_id, $id, 4, 1);
+                $this->createAction($request->user()->vendor_id, $id, 10, 1);
 
             }
             return response()->json([

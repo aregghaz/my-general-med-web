@@ -34,7 +34,7 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
         { name: "los", type: "select", label: "los" },
         { name: "member_uniqie_identifer", type: "input", label: "member_uniqie_identifer" },
         { name: "request_type", type: "select", label: "request_type" },
-        { name: "status", type: "select", label: "status" },
+       /// { name: "status", type: "select", label: "status" },
         { name: "origin_phone", type: "input", label: "origin_phone" },
         { name: "origin_comment", type: "input", label: "origin_comment" },
         { name: "destination_phone", type: "input", label: "destination_phone" },
