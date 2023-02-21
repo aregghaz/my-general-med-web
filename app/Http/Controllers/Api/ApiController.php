@@ -24,11 +24,11 @@ class ApiController extends Controller
     }
 
     public function getClientDataForDriver($id){
-        $client = Clients::find($id)->with([
+        $client = Clients::with([
             'genderType',
             'clientStatus',
             'requestType'
-        ])->first();
+        ])->find($id);
         return response()->json([
             'client' =>  $this->convertSingleDataForInfo($client),
         ], 200);
