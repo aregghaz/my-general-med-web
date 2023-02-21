@@ -30,7 +30,7 @@ class Clients extends Model
         'pick_up',
         'drop_down',
         'request_type', ///seect
-        'status',///seect
+      ///  'status',///seect
         'origin',
         'origin_phone',
         'origin_id',
@@ -74,7 +74,7 @@ class Clients extends Model
 
     public function clientStatus()
     {
-        return $this->hasOne(ClientStatus::class, 'id', 'status');
+        return $this->hasOne(ClientStatus::class, 'id', 'type_id');
     }
 
     public function requestType()

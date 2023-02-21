@@ -42,7 +42,7 @@ class Controller extends BaseController
             ],
             ///select
 
-            'status' => [
+            'type_id' => [
                 'id' => $client->clientStatus->id,
                 'label' => $client->clientStatus->name,
                 'slug' => $client->clientStatus->slug,
@@ -74,7 +74,7 @@ class Controller extends BaseController
             'birthday' => $client->birthday,
             'height' => $client->height,
             'weight' => $client->weight,
-          ///  'additionalNote' => $client->additionalNote,
+            ///  'additionalNote' => $client->additionalNote,
         ];
     }
 
@@ -92,7 +92,12 @@ class Controller extends BaseController
             'pick_up' => $client->pick_up,
             'drop_down' => $client->drop_down,
             'request_type' => $client->requestType->name,
-            'status' => $client->clientStatus->name,
+            'type_id' => [
+                'id' => $client->clientStatus->id,
+                'label' => $client->clientStatus->name,
+                'slug' => $client->clientStatus->slug,
+                'value' => $client->clientStatus->slug,
+            ],
             'origin' => $client->origin,
             'origin_phone' => $client->origin_phone,
             'origin_comment' => $client->origin_comment,
@@ -118,5 +123,39 @@ class Controller extends BaseController
             'client_id' => $clientId,
         ]);
         return true;
+    }
+
+
+    protected function clientTypes(): array
+    {
+        return [
+            [
+                'id' => 1,
+                'label' => 'Scheduled',
+                'slug' => 'Scheduled',
+                'value' => 'Scheduled',
+            ],  [
+                'id' => 2,
+                'label' => 'reRoute',
+                'slug' => 'reRoute',
+                'value' => 'reRoute',
+            ],  [
+                'id' => 3,
+                'label' => 'hold',
+                'slug' => 'hold',
+                'value' => 'hold',
+            ], [
+                'id' => 5,
+                'label' => 'inProgress',
+                'slug' => 'inProgress',
+                'value' => 'inProgress',
+            ],
+            [
+                'id' => 6,
+                'label' => 'done',
+                'slug' => 'done',
+                'value' => 'done',
+            ],
+        ];
     }
 }

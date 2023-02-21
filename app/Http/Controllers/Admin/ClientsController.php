@@ -96,7 +96,7 @@ class ClientsController extends Controller
                 $clients = $clients->join('request_types', 'clients.request_type', '=', 'request_types.id');
                 $clientsData[] = "request_types.name as request_type";
             } else if ($vendorFields[$i] == 'status') {
-                $clients = $clients->join('client_statuses', 'clients.status', '=', 'client_statuses.id');
+                $clients = $clients->join('client_statuses', 'clients.type_id', '=', 'client_statuses.id');
                 $clientsData[] = "client_statuses.name as status";
             } else if ($vendorFields[$i] == 'los_id') {
                 $clients = $clients->join('los', 'clients.los_id', '=', 'los.id');
@@ -193,7 +193,7 @@ class ClientsController extends Controller
         $client->pick_up = $requestData->pick_up;
         $client->drop_down = $requestData->drop_down;
         $client->request_type = $requestData->request_type->id;
-        $client->status = $requestData->status->id;
+       /// $client->status = $requestData->status->id;
         $client->operator_id = $userId;
         if (isset($requestData->origin->address)) {
             $client->origin = $requestData->origin->address;

@@ -231,6 +231,7 @@ class ClientsController extends Controller
             "pick_up" => $request->pick_up,
             "drop_down"=>$request->drop_down,
             "additionalNote"=>$request->additionalNote,
+            "type_id"=>$request->status['id'],
         ]);
         return response()->json([
         ], 200);

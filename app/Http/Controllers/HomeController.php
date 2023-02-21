@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Resources\CarsSelectCollection;
 use App\Http\Resources\ClientCollection;
 use App\Http\Resources\ClientFieldCollection;
+use App\Http\Resources\StatusCollection;
 use App\Models\Cars;
 use App\Models\Clients;
+use App\Models\ClientStatus;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -99,7 +101,7 @@ class HomeController extends Controller
                 $clientsData[] = "request_types.name as request_type";
                 //////status reletion cheking and add to title
             } else if ($vendorFields[$i] == 'status') {
-                $clients = $clients->join('client_statuses', 'clients.status', '=', 'client_statuses.id');
+                $clients = $clients->join('client_statuses', 'clients.type_id', '=', 'client_statuses.id');
                 $clientsData[] = "client_statuses.name as status";
                 //////gender reletion cheking and add to title
             } else if ($vendorFields[$i] == 'los_id') {
@@ -155,8 +157,10 @@ class HomeController extends Controller
             'clientStatus',
             'requestType'
         ])->find($id);
+        $status = $this->clientTypes();
         return response()->json([
-            'client' => $this->convertSingleDataForInfo($client)
+            'client' => $this->convertSingleDataForInfo($client),
+            'status' =>$status,
         ], 200);
     }
 

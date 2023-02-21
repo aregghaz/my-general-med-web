@@ -14,6 +14,7 @@ import s from "../../../components/time-picker/timepicker.module.scss";
 import TextField from "../../../components/text-field/text-field";
 import Textarea from "../../../components/textarea/textarea";
 import Button from "../../../components/button/button";
+import Select, { IOption } from "../../../components/select/select";
 
 interface IShow {
     path: string;
@@ -26,6 +27,7 @@ const Show: React.FC<IShow> = ({ id }) => {
     const [map, setMap] = useState(/** @type google.maps.Map */(null));
     const [directionsResponse, setDirectionsResponse] = useState(null);
     const [distance, setDistance] = useState("");
+    const [statuses, setStatuses] = useState([]);
     const dispatch = useDispatch();
     const clientData = useSelector(getClientData);
     const { clientById } = clientData;
@@ -51,17 +53,20 @@ const Show: React.FC<IShow> = ({ id }) => {
     const [values, setFieldValue] = useState({
         pick_up : clientById.pick_up,
         drop_down: clientById.drop_down,
-        additionalNote: clientById.additionalNote
+        additionalNote: clientById.additionalNote,
+        status: clientById.type_id
 
     });
     useEffect(() => {
         (async () => {
             const homeData = await homeAPI.getCLientById(id);
+            setStatuses(homeData.status)
             dispatch(clientAction.fetching({ clientById: homeData.client }));
             setFieldValue({
                 pick_up : homeData.client.pick_up,
                 drop_down: homeData.client.drop_down,
-                additionalNote: homeData.client.additionalNote
+                additionalNote: homeData.client.additionalNote,
+                status: homeData.client.type_id
 
             })
             await calculateRoute(homeData.client);
@@ -138,6 +143,27 @@ const Show: React.FC<IShow> = ({ id }) => {
             <div className={cls.item}>
                 <span className={cls.b_text}>{t("height")}: </span>
                 {clientById.height}
+            </div>
+            <div className={cls.item}>
+                <span className={cls.b_text}>{t("status")}: </span>
+                <Select
+                    getOptionValue={(option: IOption) => option.value}
+                    getOptionLabel={(option: IOption) => t(option.label)}
+                    onChange={(options:IOption) => {
+                        return setFieldValue((state: any) => {
+                            return {
+                                ...state,
+                                status:options
+                            };
+                        });
+                    } }
+
+                    options={statuses}
+                    value={values.status}
+                    name={"Cars"}
+                    isMulti={false}
+                />
+                {/*{clientById.status}*/}
             </div>
             <div className={cls.item}>
                 <Textarea

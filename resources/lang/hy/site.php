@@ -70,6 +70,12 @@ return [
     'operator_note' => 'Dispatcher note',
     'nameStatus' => 'Label',
     'statusName' => 'Label',
+    'trip' => 'Scheduled',
+    'availableTrip' => 'Available Trip',
+    'hold' => 'On hold',
+    'reRoute' => 'Rerouted trip',
+    'inProgress' => 'In progress',
+    'done' => 'Done trip',
 
 
     'seeMore' => 'Home number',

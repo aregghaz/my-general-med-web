@@ -73,31 +73,31 @@ class TestController extends Controller
                 $requestTypeId = $dataCreateRequest->id;
             }
 
-            //////Clinet Status
-            $checkStatus = ClientStatus::where('name', $data[$status])->first();
-            $statusId = 0;
-            if (isset($checkStatus)) {
-                $statusId = $checkStatus->id;
-            } else {
-                $dataCreate = ClientStatus::create([
-                    'name' => $data[$status],
-                    "slug" => $data[$status]
-                ]);
-                $statusId = $dataCreate->id;
-            }
+//            //////Clinet Status
+//            $checkStatus = ClientStatus::where('name', $data[$status])->first();
+//            $statusId = 0;
+//            if (isset($checkStatus)) {
+//                $statusId = $checkStatus->id;
+//            } else {
+//                $dataCreate = ClientStatus::create([
+//                    'name' => $data[$status],
+//                    "slug" => $data[$status]
+//                ]);
+//                $statusId = $dataCreate->id;
+//            }
 
-            //////Clinet Status
-            $checkStatus = ClientStatus::where('name', $data[$status])->first();
-            $statusId = 0;
-            if (isset($checkStatus)) {
-                $statusId = $checkStatus->id;
-            } else {
-                $dataCreate = ClientStatus::create([
-                    'name' => $data[$status],
-                    "slug" => $data[$status]
-                ]);
-                $statusId = $dataCreate->id;
-            }
+//            //////Clinet Status
+//            $checkStatus = ClientStatus::where('name', $data[$status])->first();
+//            $statusId = 0;
+//            if (isset($checkStatus)) {
+//                $statusId = $checkStatus->id;
+//            } else {
+//                $dataCreate = ClientStatus::create([
+//                    'name' => $data[$status],
+//                    "slug" => $data[$status]
+//                ]);
+//                $statusId = $dataCreate->id;
+//            }
 
             //////Clinet gender
             $genderData = Gender::where('name', $data[$gender])->first();
@@ -208,7 +208,7 @@ class TestController extends Controller
                     'pick_up' => $data[$pick_up],
                     'drop_down' => $data[$drop_down],
                     'request_type' => $requestTypeId, ///seect
-                    'status' => $statusId, ///seect
+                ///    'status' => $statusId, ///seect
                     'origin' => $data[$originData[0]] . ' ' . $data[$originData[1]] . ' ' . $data[$originData[2]] . ' ' . $data[$originData[3]],
                     'origin_phone' => $data[$originData[7]],
                     ///'origin_id' => $originDataId,

@@ -18,7 +18,12 @@ const defaultDat ={
     pick_up:"",
     drop_down:"",
     request_type: 0,
-    status:0,
+    type_id:{
+        id: 0,
+        value: "",
+        label: '',
+        slug: '',
+    },
     origin:"",
     origin_id:"",
     origin_phone:"",

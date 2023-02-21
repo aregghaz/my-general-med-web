@@ -303,7 +303,6 @@ const Home: React.FC<IHome> = () => {
 
 
     const handlerCloseModal = () => {
-        dispatch(clientAction.fetching({ clientById: null }));
         setCar(null);
         setCarData(null);
         setIsModalOpen(false);
