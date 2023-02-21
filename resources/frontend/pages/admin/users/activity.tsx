@@ -44,6 +44,7 @@ const Activity: React.FC<Beneficiary> = ({ id }) => {
                     paginated={false}
                     isDelete={false}
                     isEdit={false}
+                    isGetInfo={false}
                     isGetHistory={false}
                     isCreate={false}
                     isGetItems={false}

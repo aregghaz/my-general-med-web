@@ -68,6 +68,8 @@ return [
     'operatorAction' => 'Action',
     'additionalNote' => 'Additional note',
     'operator_note' => 'Dispatcher note',
+    'nameStatus' => 'Label',
+    'statusName' => 'Label',
 
 
     'seeMore' => 'Home number',

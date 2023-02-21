@@ -144,6 +144,7 @@ const Vendors: React.FC<IVendors> = () => {
                     isDelete
                     isEdit
                     isCreate
+                    isGetInfo={false}
                     isGetItems={typeId === 2}
                     handlerAction={handlerAction}
                     paginated={false}

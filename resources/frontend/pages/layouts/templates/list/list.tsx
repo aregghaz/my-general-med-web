@@ -13,6 +13,7 @@ interface IList {
     isGetHistory: boolean;
     isCreate: boolean;
     isGetItems: boolean;
+    isGetInfo: boolean;
     paginated: boolean;
     activeItem?: number;
     ////FIXMECHANGE IT NORMA TYPR
@@ -30,6 +31,7 @@ const List: React.FC<IList> = (
         data,
         titles,
         isCreate = false,
+        isGetInfo = false,
         isGetHistory=false,
         handlerAction,
         className,
@@ -53,6 +55,7 @@ const List: React.FC<IList> = (
                     data={data}
                     isEdit={isEdit}
                     isDelete={isDelete}
+                    isGetInfo={isGetInfo}
                     isGetItems={isGetItems}
                     handlerAction={handlerAction}
                     className={className}

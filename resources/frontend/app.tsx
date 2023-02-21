@@ -76,8 +76,8 @@ const App = (): JSX.Element => (
                 <VendorCreate path='vendors/create/2'/>
                 <OperatorCreate path='vendors/create/4'/>
                 <Status path='status'/>
-                <StatusCreate path='status/create'/>
-                <StatusEdit path='changeStatus/:id'/>
+                <StatusCreate path='addStatus/:statusId/create'/>
+                <StatusEdit path='changeStatus/:id/:statusId'/>
                 <NotFound default/>
             </Site>
 

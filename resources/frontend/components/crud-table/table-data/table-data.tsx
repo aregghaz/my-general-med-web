@@ -6,7 +6,8 @@ interface ITableData {
     data?: any
     rowspan?: number
     colspan?: number
-    className?: string
+    className?: string,
+    isGetInfo:boolean,
     handlerAction?: (action:string,id: number) => void
 }
 
@@ -15,6 +16,7 @@ const TableData: React.FC<ITableData> = (
         rowspan = 1,
         colspan = 1,
         className,
+        isGetInfo,
         children,
         handlerAction,
         data
@@ -27,7 +29,7 @@ const TableData: React.FC<ITableData> = (
             className={`${s.tableTd} ${className ? className : ''}`}
             colSpan={colspan || 1}
             rowSpan={rowspan || 1}
-            onClick={(event) => handlerAction('get',data)}
+            onClick={(event) => isGetInfo && handlerAction('get',data)}
         >
 
             {children}

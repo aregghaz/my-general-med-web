@@ -22,14 +22,7 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
     const crudKey = "users";
     const { userdata, driversCount, operatorsCount } = useSelector(adminVendorUsers);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [countPages, setCountPages] = useState(null);
-    const [deleteId, setDeleteId] = useState(null);
-    const [count, setCount] = useState(0);
-    const [activeItem, setActiveItem] = useState(null);
-    const [tabId, setTabId] = useState();
     const [tabIdSelected, setTabIdSelected] = useState(3);
-    const [dataID, setDataID] = useState(null);
-    const [typeName, setTypeName] = useState<string>("driver");
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [isLoading, setLoading] = useState(true);
@@ -67,10 +60,6 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
 
     const handlerCloseModal = () => {
         setIsModalOpen(false);
-    };
-    const handlerDeleteModal = (id: number) => {
-        setDeleteId(id);
-        setIsModalOpen(true);
     };
 
     const handlerDeleteItem = () => {
@@ -146,6 +135,7 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
                     isEdit
                     isGetHistory
                     isCreate={false}
+                    isGetInfo={false}
                     isGetItems={false}
                     paginated={false}
                 />

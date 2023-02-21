@@ -24,8 +24,8 @@ export const AdminApi = {
         return axios.post(`/api/admin/clientsData`, options, {
         }).then(res => res.data)
     },
-    getAllStatusData(crudKey: string) {
-        return axios.get(`/api/admin/${crudKey}/escortType`).then(res => res.data)
+    getAllStatusData(crudKey: string,tabId:number) {
+        return axios.get(`/api/admin/${crudKey}/${tabId}`).then(res => res.data)
     },
     createItem(crudKey: string) {
         return axios.get(`/api/admin/${crudKey}/create`).then(res => res.data)
@@ -53,6 +53,9 @@ export const AdminApi = {
     },
     getActivityClient(id:number) {
         return axios.get(`/api/admin/getActivityClient/${id}`).then(res => res.data)
+    },
+    changeStatus(crudKey:string,id:number, statusId:number) {
+        return axios.get(`/api/admin/${crudKey}/${id}/${statusId}`).then(res => res.data)
     },
     updateClient(data: {pick_up:string, drop_down:string, additionalNote:string},id:number) {
         return axios.post(`/api/admin/updateClient/${id}`, data, {

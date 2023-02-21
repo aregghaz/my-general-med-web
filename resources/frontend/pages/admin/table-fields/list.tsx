@@ -31,9 +31,9 @@ const TableFildsList: React.FC<ITableFilds> = () => {
     useEffect(() => {
         (
             async () => {
-                const data = await AdminApi.getAllStatusData(crudKey);
-                setData(data.table);
-                setCount(data.count);
+               /// const data = await AdminApi.getAllStatusData(crudKey);
+               //  setData(data.table);
+               //  setCount(data.count);
 
             }
         )();
@@ -142,6 +142,7 @@ const TableFildsList: React.FC<ITableFilds> = () => {
                 titles={titles}
                 isDelete={false}
                 isEdit={false}
+                isGetInfo={false}
                 paginated={false}
                 isCreate={false}
                 isGetItems={false}
@@ -149,6 +150,7 @@ const TableFildsList: React.FC<ITableFilds> = () => {
 
                 className={"pagination"}
             />
+
 
             <Modal
                 isOpen={isModalOpen !== false}

@@ -7,39 +7,25 @@ import {AdminApi} from '../../../api/admin-api/admin-api'
 interface IUsersEditItem {
     path: string
     id?: number
+    statusId?: number
 }
 
-const StatusEdit: React.FC<IUsersEditItem> = ({id}) => {
+const StatusEdit: React.FC<IUsersEditItem> = ({id, statusId}) => {
     const {t} = useTranslation()
-    const crudKey = 'users';
+    const crudKey = `changeStatus`;
+    const redirectKey = `status`;
     const [data, setData] = useState(null)
     const fields: Array<IItem> = [
-        {name: 'main_image', type: 'file', label: 'image'},
-        {name: 'name', type: 'input', label: 'title'},
-        {name: 'surname', type: 'input', label: 'surName'},
-        {name: 'email', type: 'input', label: 'email'},
-        {name: 'business_address', type: 'input', label: 'businessAddress'},
-        {name: 'birthday', type: 'input', label: 'birthDate'},
-        {name: 'phone_number', type: 'input', label: 'phoneNumber'},
-        {name: 'selectedTypes', type: 'multiSelect', label: 'services'},
-        {name: 'selectOptions', type: 'hidden', inputType: 'hidden',},
-        // {name: 'province', type: 'hidden',  inputType : 'hidden', },
-        // {name: 'languages', type: 'multiSelect', label: 'languages'},
-        {name: 'rating', type: 'select', label: 'rating'},
+        {name: 'name', type: 'input', label: 'statusName'},
+        {name: 'slug', type: 'input', label: 'slug'},
         {name: 'id', type: 'hidden', inputType: 'hidden'},
-        // {name: 'province', type: 'select', label: 'province'},
-        // {name: 'region', type: 'select', label: 'region'},
-        {name: 'role', type: 'select', label: 'role'},
-        {name: 'active', type: 'select', label: 'active'},
-        {name: 'description', type: 'textarea', label: 'description'},
-        {name: 'text', type: 'textarea', label: 'text'}
     ]
 
 
     useEffect(() => {
         (
             async () => {
-                const data = await AdminApi.getUserData(crudKey, id)
+                const data = await AdminApi.changeStatus(crudKey, id,statusId)
                 console.log(data)
                 setData(data)
 
@@ -47,11 +33,22 @@ const StatusEdit: React.FC<IUsersEditItem> = ({id}) => {
         )()
 
     }, [])
+    const requiredFields = [
+        // 'make',
+        // 'model',
+        'slug',
+        'name',
+        // 'inspection',
+        // 'insurance',
+        // 'liability',
+    ];
     return (
         data &&
         <Edit
-            crudKey={crudKey}
+            crudKey={`admin/${crudKey}/${statusId}`}
             data={data}
+            redirectKey={`admin/${redirectKey}`}
+            requiredFields={requiredFields}
             fields={fields}
             title={''}
             children={t('update')}

@@ -43,6 +43,7 @@ const ActivityClient: React.FC<Beneficiary> = ({ clientId }) => {
                     paginated={false}
                     isDelete={false}
                     isEdit={false}
+                    isGetInfo={false}
                     isGetHistory={false}
                     isCreate={false}
                     isGetItems={false}

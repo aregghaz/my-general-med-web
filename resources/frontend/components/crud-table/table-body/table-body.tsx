@@ -13,6 +13,7 @@ interface ITableBody {
     isEdit: boolean
     isDelete: boolean,
     isGetHistory: boolean
+    isGetInfo: boolean
     isGetItems: boolean
     handlerAction: (action: string, id: number) => void
 }
@@ -23,6 +24,7 @@ const TableBody: React.FC<ITableBody> = (
         isEdit,
         isDelete,
         isGetItems,
+        isGetInfo,
         isGetHistory,
         handlerAction
     }) => {
@@ -43,7 +45,7 @@ const TableBody: React.FC<ITableBody> = (
 
                                                 if (key == "fields") {
                                                     return i != 0 && (
-                                                        <TableData data={item.id} key={i}
+                                                        <TableData data={item.id} key={i} isGetInfo={isGetInfo}
                                                                    handlerAction={handlerAction}
                                                         >
                                                             {item[key].map((e: string, ind: number) => {
@@ -54,7 +56,7 @@ const TableBody: React.FC<ITableBody> = (
                                                     );
                                                 } else if (key == "image") {
                                                     return i != 0 && (
-                                                        <TableData data={item.id} key={i}
+                                                        <TableData data={item.id} key={i} isGetInfo={isGetInfo}
                                                                    handlerAction={handlerAction}
                                                         >
                                                             <img src={item[key]} alt="" />
@@ -62,7 +64,7 @@ const TableBody: React.FC<ITableBody> = (
                                                     );
                                                 }else if (key == "operatorAction") {
                                                     return i != 0 && (
-                                                        <TableData data={item.id} key={i}
+                                                        <TableData data={item.id} key={i} isGetInfo={isGetInfo}
                                                                    handlerAction={handlerAction}
                                                         >
                                                            <span  className={s.label_span}> {t(item[key])}</span>
@@ -70,7 +72,7 @@ const TableBody: React.FC<ITableBody> = (
                                                     );
                                                 } else {
                                                     return i != 0 && (
-                                                        <TableData data={item.id} key={i}
+                                                        <TableData data={item.id} key={i} isGetInfo={isGetInfo}
                                                                    handlerAction={handlerAction}
                                                         >
                                                             {item[key]}
@@ -85,8 +87,8 @@ const TableBody: React.FC<ITableBody> = (
 
                             {
                                 (isEdit || isDelete || isGetItems || isGetHistory) &&
-                                <TableData>
-                                    <div className={s.iconsWrapper}>
+                                <TableData isGetInfo={isGetInfo} className={s.iconsWrapper}>
+
                                         {
                                             isEdit &&
                                             <EditIcon
@@ -115,7 +117,7 @@ const TableBody: React.FC<ITableBody> = (
                                                 onClick={() => handlerAction('delete',item.id)}
                                             />
                                         }
-                                    </div>
+
                                 </TableData>
                             }
 

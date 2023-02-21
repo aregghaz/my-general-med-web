@@ -67,7 +67,8 @@ return [
     'assign' => 'Assign',
     'additionalNote' => 'Additional note',
     'operator_note' => 'Dispatcher note',
-
+    'nameStatus' => 'Label',
+    'statusName' => 'Label',
 
 
     'ru' => 'Русский',

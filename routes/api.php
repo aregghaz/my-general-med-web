@@ -90,8 +90,9 @@ Route::group([
 
     Route::get('/audit', [VendorController::class, 'audit']);
     Route::get('/changeStatus/{slug}', [AdminController::class, 'changeStatus']);
-    Route::get('/changeStatus/{slug}/{id}', [AdminController::class, 'getStatusById']);
-    Route::post('/changeStatus/{slug}', [AdminController::class, 'createStatus']);
+    Route::get('/changeStatus/{id}/{statusId}', [AdminController::class, 'getStatusById']);
+    Route::post('/changeStatus/{statusId}', [AdminController::class, 'createStatus']);
+    Route::put('/changeStatus/{statusId}/{id}', [AdminController::class, 'updateStatus']);
 });
 Route::group([
     'prefix' => 'operators', 'middleware' => 'auth:api'

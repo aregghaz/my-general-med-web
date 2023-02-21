@@ -1,154 +1,89 @@
-import React, {useEffect, useState} from 'react'
-import {AdminApi} from '../../../api/admin-api/admin-api'
-import List from '../../layouts/templates/list/list'
-import {useNavigate} from '@reach/router'
-import Button from "../../../components/button/button";
-import s from "../../layouts/templates/list/list.module.scss";
-import Select, {IOption, IOptionMultiselect} from '../../../components/select/select'
-import {useTranslation} from 'react-i18next'
-import Modal from 'react-modal'
-import InfoBlock from "../../../components/info-block/info-block";
-import {actions} from "../../../store/home";
-import {useDispatch} from "react-redux";
+import React, { useEffect, useState } from "react";
+import { AdminApi } from "../../../api/admin-api/admin-api";
+import List from "../../layouts/templates/list/list";
+import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
 import Tabs from "../../../components/tabs/tabs";
+import { navigate } from "@reach/router";
 
 interface Beneficiary {
-    path: string
+    path: string;
 }
 
 const Status: React.FC<Beneficiary> = () => {
-    const dispatch = useDispatch();
-    const crudKey = 'changeStatus'
-    // const crudKey = 'status'
-    const [data, setData] = useState([])
-    const [isModalOpen, setIsModalOpen] = useState(false)
-    const [countPages, setCountPages] = useState(null)
-    const [deleteId, setDeleteId] = useState(null)
-    const [count, setCount] = useState(0)
-    const [activeItem, setActiveItem] = useState(null)
-    const [tabId, setTabId] = useState<number>(1)
+    const crudKey = "changeStatus";
+    const [data, setData] = useState([]);
+    const [genderCount, setGenderCount] = useState<number>(0);
+    const [tabId, setTabId] = useState<number>(1);
+    const [los, setLos] = useState<number>(0);
+    const [clientStatus, setClientStatus] = useState<number>(0);
+    const [requestType, setRequestType] = useState<number>(0);
 
-    const [dataID, setDataID] = useState(null)
-
-
-    const navigate = useNavigate()
-    const {t} = useTranslation()
+    const { t } = useTranslation();
     useEffect(() => {
         (
             async () => {
-                const data = await AdminApi.getAllStatusData(crudKey)
-                setData(data.table)
-                setCount(data.count)
+                const data = await AdminApi.getAllStatusData(crudKey, tabId);
+                setData(data.table);
+                setGenderCount(data.gender);
+                setLos(data.los);
+                setClientStatus(data.clientStatus);
+                setRequestType(data.requestType);
 
             }
-        )()
-        // dispatch(actions.setTitles(titles))
-        // dispatch(actions.clearData())
-    }, [])
+        )();
+    }, [tabId]);
 
     const titles: Array<string> = [
-        'id',
-        'name',
-        'slug',
-        'action'
-    ]
-    // const handlerAddBeneficiaryItem = () => navigate(`/admin/users/create`)
-    const handlerAddBeneficiaryItem = () => navigate(`/admin/status/create`)
-
-
-    const handlerCloseModal = () => {
-        setIsModalOpen(false)
-    }
-    const handlerDeleteModal = (id: number) => {
-        setDeleteId(id)
-        setIsModalOpen(true)
-    }
-
-
-    const handlerDeleteItem = () => {
-
-        AdminApi.delete(crudKey, deleteId).then(data => {
-            setData(data.data.beneficiaries)
-            setIsModalOpen(false)
-        })
-    }
-    const handlerEditBeneficiaryItem = (id: number) => navigate(`/admin/${crudKey}/${id}`)
-    const HandlerGetProducts = (id: number) => navigate(`/admin/users-products/${id}`)
-
-    const HandlerPagination = (activeItem: number) => {
-        const role = localStorage.getItem('role');
-        localStorage.setItem('page', activeItem.toString());
-
-    }
-    const handlerGetClientData = (id: number) => {
-        setDataID(id)
-
-    }
+        "id",
+        "nameStatus",
+        "slug",
+        "action"
+    ];
 
     const tabs = [
         {
             id: 1,
             name: "gender",
-            count: 0
+            count: genderCount
         },
-        {
-            id: 2,
-            name: "escortType",
-            count: 0
-        },
+        // {
+        //     id: 2,
+        //     name: "escortType",
+        //     count: 0
+        // },
         {
             id: 4,
             name: "request_type",
-            count: 0
-        },    {
+            count: requestType
+        }, {
             id: 3,
             name: "los",
-            count: 0
+            count: los
         },
         {
             id: 5,
             name: "status",
-            count: 0
-        },
-    ]
-    const customStyles: ReactModal.Styles = {
-        content: {
-            position: 'fixed',
-            border: 'none',
-            overflowY: 'unset',
-            outline: 'none',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50% , -50%)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '290px'
-        },
-        overlay: {
-            zIndex: 400,
-            background: 'rgba(0, 0, 0, 0.35)',
-            backdropFilter: 'blur(5px)'
+            count: clientStatus
         }
-    }
+    ];
 
-    const handlerChangeTabs = (tabId: number) => {
-        setTabId(tabId);
+    const handlerChangeTabs = (statusId: number) => {
+        setTabId(statusId);
     };
     const handlerAction = async (action: string, id: number) => {
         switch (action) {
-            case "history":
-                /// await handlerSelectClient(id);
+            case "edit":
+                await handlerEditItem(id, tabId);
                 break;
             case "add":
-              ///  await handlerAddItem();
-                break;
-            case "edit":
-             ///   await handlerEditItem(id);
+                await handlerAddItem(id, tabId);
                 break;
 
         }
     };
+    const handlerEditItem = async (id: number, tabId: number) => await navigate(`/admin/changeStatus/${id}/${tabId}`)
+    const handlerAddItem = async (id: number, tabId: number) => await navigate(`/admin/addStatus/${tabId}/create`)
     return (
         data &&
         <>
@@ -168,41 +103,19 @@ const Status: React.FC<Beneficiary> = () => {
                 titles={titles}
                 isDelete
                 isEdit
-                paginated={false}
+                isGetInfo={false}
                 isGetHistory={false}
                 isCreate
-                isGetItems
+                isGetItems={false}
                 handlerAction={handlerAction}
-                //   handlerGetClientData={handlerGetClientData}
-                className={'pagination'}
+                className={"pagination"}
+                paginated={false}
             />
 
-            <Modal
-                isOpen={isModalOpen !== false}
-                style={customStyles}
-                onRequestClose={handlerCloseModal}
-            >
-                <div className={s.modalBody}>
-                    <div className={s.iconWrapper}>
-                        <i className='cancelicon-'
-                           onClick={handlerCloseModal}
-                        />
-                    </div>
-
-                    <i className={`binicon- ${s.icon}`}/>
-                    <p className={s.text}>{t('admin.do_you_want_to_delete')}</p>
-                    <div className={s.buttons}>
-                        <Button type={'green'} onClick={handlerDeleteItem}
-                                className={s.button}>{t('admin.yes')}</Button>
-                        <Button type={'transparent'} onClick={handlerCloseModal}
-                                className={s.button}>{t('admin.no')}</Button>
-                    </div>
-                </div>
-            </Modal>
 
         </>
-    )
-}
+    );
+};
 
 
-export default Status
+export default Status;

@@ -140,6 +140,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
                     isEdit
                     paginated={false}
                     isCreate
+                    isGetInfo
                     handlerAction={handlerAction}
                     className={"pagination"}
                     isGetHistory={false}

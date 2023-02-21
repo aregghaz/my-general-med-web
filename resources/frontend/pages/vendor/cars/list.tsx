@@ -129,6 +129,7 @@ const Cars: React.FC<Beneficiary> = () => {
                 handlerAction={handlerAction}
                 paginated={false}
                 isCreate
+                isGetInfo
                 className={"pagination"}
                 isGetHistory={false}
                 isGetItems={false}
