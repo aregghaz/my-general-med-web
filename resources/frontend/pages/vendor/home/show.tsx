@@ -7,11 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { GOOGLE_API_KEY } from "../../../environments";
 import { getClientData } from "../../../store/selectors";
 import { useTranslation } from "react-i18next";
-import TimePickers from "../../../components/time-picker/timepicker";
-import getFieldLabel from "../../../utils/getFieldLabel";
 import TimePicker from "react-time-picker";
 import s from "../../../components/time-picker/timepicker.module.scss";
-import TextField from "../../../components/text-field/text-field";
 import Textarea from "../../../components/textarea/textarea";
 import Button from "../../../components/button/button";
 import Select, { IOption } from "../../../components/select/select";
@@ -50,8 +47,9 @@ const Show: React.FC<IShow> = ({ id }) => {
         setDuration(results.routes[0].legs[0].duration.text);
         setSteps(results.routes[0].legs[0].steps);
     }
+
     const [values, setFieldValue] = useState({
-        pick_up : clientById.pick_up,
+        pick_up: clientById.pick_up,
         drop_down: clientById.drop_down,
         additionalNote: clientById.additionalNote,
         status: clientById.type_id
@@ -60,15 +58,15 @@ const Show: React.FC<IShow> = ({ id }) => {
     useEffect(() => {
         (async () => {
             const homeData = await homeAPI.getCLientById(id);
-            setStatuses(homeData.status)
+            setStatuses(homeData.status);
             dispatch(clientAction.fetching({ clientById: homeData.client }));
             setFieldValue({
-                pick_up : homeData.client.pick_up,
+                pick_up: homeData.client.pick_up,
                 drop_down: homeData.client.drop_down,
                 additionalNote: homeData.client.additionalNote,
                 status: homeData.client.type_id
 
-            })
+            });
             await calculateRoute(homeData.client);
         })();
         return () => {
@@ -78,8 +76,8 @@ const Show: React.FC<IShow> = ({ id }) => {
     }, []);
 
     const handlerUpdate = async () => {
-        const homeData = await homeAPI.updateClient(values,id);
-    }
+        const homeData = await homeAPI.updateClient(values, id);
+    };
 
 
     return clientById && <div className={cls.block}>
@@ -93,21 +91,41 @@ const Show: React.FC<IShow> = ({ id }) => {
                 {clientById.date_of_service}
             </div>
             <div className={cls.item}>
-                <TimePicker className={s.time} clockIcon={null} clearIcon={null} onChange={(time:string) => setFieldValue((state:any) => {
-                  return {
-                      ...state,
-                    'pick_up':time
-                  }
-                }) }  name={'pick_up'} value={clientById.pick_up} />
+                <span className={cls.b_text}>{t("pick_up")}: </span>
+                <TimePicker
+                    className={s.time}
+                    format={"HH:mm"}
+                    clockIcon={null}
+                    clearIcon={null}
+                    amPmAriaLabel={false}
+                    onChange={(time: string) => setFieldValue((state: any) => {
+                        return {
+                            ...state,
+                            "pick_up": time
+                        };
+                    })}
+                    name={"pick_up"}
+                    value={clientById.pick_up}
+                />
             </div>
 
             <div className={cls.item}>
-                <TimePicker className={s.time} clockIcon={null} clearIcon={null} onChange={(time:string) => setFieldValue((state:any) => {
-                    return {
-                        ...state,
-                        'drop_down':time
-                    }
-                }) }  name={'drop_down'} value={clientById.drop_down} />
+                <span className={cls.b_text}>{t("drop_down")}: </span>
+                <TimePicker
+                    className={s.time}
+                    format={"HH:mm"}
+                    clockIcon={null}
+                    clearIcon={null}
+                    amPmAriaLabel={false}
+                    onChange={(time: string) => setFieldValue((state: any) => {
+                        return {
+                            ...state,
+                            "drop_down": time
+                        };
+                    })}
+                    name={"drop_down"}
+                    value={clientById.drop_down}
+                />
             </div>
 
             <div className={cls.item}>
@@ -149,14 +167,14 @@ const Show: React.FC<IShow> = ({ id }) => {
                 <Select
                     getOptionValue={(option: IOption) => option.value}
                     getOptionLabel={(option: IOption) => t(option.label)}
-                    onChange={(options:IOption) => {
+                    onChange={(options: IOption) => {
                         return setFieldValue((state: any) => {
                             return {
                                 ...state,
-                                status:options
+                                status: options
                             };
                         });
-                    } }
+                    }}
 
                     options={statuses}
                     value={values.status}
@@ -167,10 +185,10 @@ const Show: React.FC<IShow> = ({ id }) => {
             </div>
             <div className={cls.item}>
                 <Textarea
-                    name={'additionalNote'}
+                    name={"additionalNote"}
                     value={values.additionalNote}
-                    placeholder={t('additionalNote')}
-                    onChange={(event:any) => {
+                    placeholder={t("additionalNote")}
+                    onChange={(event: any) => {
                         event.persist();
                         return setFieldValue((state: any) => {
                             return {
@@ -178,40 +196,40 @@ const Show: React.FC<IShow> = ({ id }) => {
                                 additionalNote: event.target.value
                             };
                         });
-                    } }
-                    label={t('additionalNote')}
+                    }}
+                    label={t("additionalNote")}
                 />
             </div>
 
 
             <div>
-                <Button type={'adminUpdate'} onClick={handlerUpdate}>
+                <Button type={"adminUpdate"} onClick={handlerUpdate}>
                     Update
                 </Button>
             </div>
             {isLoaded && <div className={cls.selectDiv}>
 
-              <div className={cls.mapDiv}>
-                  <GoogleMap
-                      ///  center={center}
-                      zoom={15}
-                      mapContainerStyle={{ width: "100%", height: "100%" }}
-                      options={{
-                          zoomControl: true,
-                          streetViewControl: false,
-                          mapTypeControl: false,
-                          fullscreenControl: false
-                      }}
-                      onLoad={map => setMap(map)}
-                  >
-                      {/* <Marker position={center} /> */}
-                      {directionsResponse && (
-                          <DirectionsRenderer directions={directionsResponse} />
-                      )}
+                <div className={cls.mapDiv}>
+                    <GoogleMap
+                        ///  center={center}
+                        zoom={15}
+                        mapContainerStyle={{ width: "100%", height: "100%" }}
+                        options={{
+                            zoomControl: true,
+                            streetViewControl: false,
+                            mapTypeControl: false,
+                            fullscreenControl: false
+                        }}
+                        onLoad={map => setMap(map)}
+                    >
+                        {/* <Marker position={center} /> */}
+                        {directionsResponse && (
+                            <DirectionsRenderer directions={directionsResponse} />
+                        )}
 
-                  </GoogleMap>
-              </div>
-                <div  className={cls.directionDiv}>
+                    </GoogleMap>
+                </div>
+                <div className={cls.directionDiv}>
                     {steps && steps.map((el: any) => {
                         return (
                             <div

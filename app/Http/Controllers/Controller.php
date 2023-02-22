@@ -134,12 +134,12 @@ class Controller extends BaseController
                 'label' => 'Scheduled',
                 'slug' => 'Scheduled',
                 'value' => 'Scheduled',
-            ],  [
+            ], [
                 'id' => 2,
                 'label' => 'reRoute',
                 'slug' => 'reRoute',
                 'value' => 'reRoute',
-            ],  [
+            ], [
                 'id' => 3,
                 'label' => 'hold',
                 'slug' => 'hold',
@@ -156,6 +156,65 @@ class Controller extends BaseController
                 'slug' => 'done',
                 'value' => 'done',
             ],
+        ];
+    }
+
+    public function clientCreateTye(): array
+    {
+        return [
+            [
+                'id' => 1,
+                'label' => 'single',
+                'slug' => 'single',
+                'value' => 'single',
+            ],
+            [
+                'id' => 2,
+                'label' => 'timePeriod',
+                'slug' => 'timePeriod',
+                'value' => 'timePeriod',
+            ]
+        ];
+    }
+
+    public function daysOnWeek()
+    {
+        return [[
+            'id' => 1,
+            'label' => 'Sunday',
+            'slug' => 'Sunday',
+            'value' => 'Sunday',
+        ], [
+            'id' => 1,
+            'label' => 'Monday',
+            'slug' => 'Monday',
+            'value' => 'Monday',
+        ], [
+            'id' => 1,
+            'label' => 'Tuesday',
+            'slug' => 'Tuesday',
+            'value' => 'Tuesday',
+        ], [
+            'id' => 1,
+            'label' => 'Wednesday',
+            'slug' => 'Wednesday',
+            'value' => 'Wednesday',
+        ], [
+            'id' => 1,
+            'label' => 'Thursday',
+            'slug' => 'Thursday',
+            'value' => 'Thursday',
+        ], [
+            'id' => 1,
+            'label' => 'Friday',
+            'slug' => 'Friday',
+            'value' => 'Friday',
+        ], [
+            'id' => 1,
+            'label' => 'Saturday',
+            'slug' => 'Saturday',
+            'value' => 'Saturday',
+        ]
         ];
     }
 }
