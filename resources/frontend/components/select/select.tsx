@@ -120,7 +120,7 @@ const Select: React.FC<ISelect> = (
 
     return (
         <>
-            <label className={`${s.label} ${labelStyle} `} htmlFor={name}>{label}</label>
+            <label htmlFor={name}>{label}</label>
             <div className={s.buttonsSelect}>
                 {isMulti && <><Button
                     type={"green"}
@@ -145,7 +145,7 @@ const Select: React.FC<ISelect> = (
                 styles={{
                     control: (baseStyles, state) => ({
                         ...baseStyles,
-                       /// backgroundColor: 'black',
+                        /// backgroundColor: 'black',
                         //  borderRadius: "15px"
                         borderButton: "1px solid #D63D3D",
                         height: 50,
@@ -177,7 +177,7 @@ const Select: React.FC<ISelect> = (
                         color: "#393E46",
                         fontWeight: "bold",
                         ///borderRadius: 10,
-                     //   border: "1px solid #D63D3D",
+                        //   border: "1px solid #D63D3D",
 
                         /// backgroundColor: '#545cd8',
                         //  borderRadius: "15px"

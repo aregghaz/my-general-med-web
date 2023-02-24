@@ -1,64 +1,254 @@
-import React, {useEffect, useState} from 'react'
-import {IItem} from '../../layouts/templates/formik-handler/formik-handler'
-import {useTranslation} from 'react-i18next'
-import Create from '../../layouts/templates/create/create'
-import {AdminApi} from '../../../api/admin-api/admin-api'
+import React, { useEffect, useState } from "react";
+import FormikHandler, { IItem } from "../../layouts/templates/formik-handler/formik-handler";
+import { useTranslation } from "react-i18next";
+import { AdminApi } from "../../../api/admin-api/admin-api";
+import { Formik, FormikHelpers } from "formik";
+import { FormikValues } from "formik/dist/types";
+import s from "../../vendor/cars/car.module.scss";
+import AsyncSelect from "../../../components/select/async-select";
+import Select, { IOption } from "../../../components/select/select";
+import Button from "../../../components/button/button";
+import { useNavigate } from "@reach/router";
+import validationRules from "../../../utils/validationRule";
+import populateCreateFormFields from "../../../constants/populateCreateFormFields";
+import Calendar from "react-calendar";
+import Input from "../../../components/input/input";
+import getFieldLabel from "../../../utils/getFieldLabel";
 
 interface IClientCreate {
-    path: string
+    path: string;
 }
 
 
 const ClientCreate: React.FC<IClientCreate> = () => {
-    const {t} = useTranslation()
-    const crudKey = 'clients'
-    const [data, setData] = useState(null)
+    const crudKey = "clients";
+    const [data, setData] = useState(null);
+    const [show, setShow] = useState(false);
     const fields: Array<IItem> = [
-        { name: "trip_id", type: "input", label: "trip_id" },
+        ///  { name: "date_of_service", type: "datepicker", label: "date_of_service" },
+        { name: "trip_id", type: "select", label: "trip_type" },
         { name: "fullName", type: "input", label: "fullName" },
         { name: "gender", type: "select", label: "gender" },
         { name: "los", type: "select", label: "los" },
         { name: "member_uniqie_identifer", type: "input", label: "member_uniqie_identifer" },
         { name: "request_type", type: "select", label: "request_type" },
-       /// { name: "status", type: "select", label: "status" },
+        /// { name: "status", type: "select", label: "status" },
         { name: "origin_phone", type: "input", label: "origin_phone" },
-        { name: "origin_comment", type: "input", label: "origin_comment" },
+        { name: "origin_comment", type: "textarea", label: "origin_comment" },
         { name: "destination_phone", type: "input", label: "destination_phone" },
-        { name: "destination_comments", type: "input", label: "destination_comments" },
+        { name: "destination_comments", type: "textarea", label: "destination_comments" },
         { name: "birthday", type: "datepicker", label: "birthday" },
-        { name: "date_of_service", type: "datepicker", label: "date_of_service" },
         { name: "miles", type: "input", label: "miles" },
         { name: "id", type: "hidden", inputType: "hidden" },
         { name: "height", type: "input", label: "height" },
         { name: "weight", type: "input", label: "weight" },
         { name: "pick_up", type: "timePicker", label: "pick_up" },
         { name: "drop_down", type: "timePicker", label: "drop_down" },
-        { name: "location", type: "autocomplete", label: "location" },
-    ]
+        { name: "location", type: "autocomplete", label: "location" }
+    ];
 
     useEffect(() => {
         (
             async () => {
-                const data = await AdminApi.createItem(crudKey)
+                const data = await AdminApi.createItem(crudKey);
 
-                setData(data)
+                setData(data);
             }
-        )()
+        )();
 
-    }, [])
+    }, []);
 
     const requiredFields = [
         "fullName"
     ];
-    return data && <Create
-        crudKey={crudKey}
-        data={data}
-        requiredFields={requiredFields}
-        fields={fields}
-        title={''}
-        children={t('create')}
-    />
 
-}
+    const { t } = useTranslation();
 
-export default ClientCreate
+    const navigate = useNavigate();
+    const validate = (values: FormikValues) => validationRules(values, requiredFields, fields, t);
+
+    const submit = async (values: FormikValues, { setSubmitting }: FormikHelpers<FormikValues>) => {
+        setSubmitting(true);
+        const formData: FormData = new FormData();
+        formData.append("value", JSON.stringify(values));
+        const res: any = await AdminApi.store(formData, crudKey, true);
+        if (Number(res.status === 200)) await navigate(`/admin/${crudKey}`);
+    };
+
+
+    const loadTripPeriod = async (id: number) => {
+        if (id === 1) {
+            setShow(false);
+            return data["daysOnWeek"];
+        } else {
+            fields[0]["type"] = "hidden";
+            setShow(true);
+            return data["daysOnWeek"];
+        }
+
+    };
+
+    const loadStatus = async () => {
+        // console.log(make, "aaa");
+        return data["clientType"];
+
+
+    };
+    return data && <div>
+
+        <Formik
+            selectOptions={data}
+            initialValues={populateCreateFormFields(fields, data)}
+            onSubmit={submit}
+            validate={(values: FormikValues) => validate(values)}
+            validateOnChange={false}
+            validateOnBlur={false}
+        >
+            {({
+                  handleSubmit,
+                  handleChange,
+                  values,
+                  setFieldValue,
+                  errors
+              }) => {
+                return (
+                    <>
+                        <form className={s.form}>
+                            <div className={s.item}>
+                                {
+                                    <AsyncSelect
+                                        loadOptions={loadStatus}
+                                        defaultValue={values["clientType"]}
+                                        getOptionValue={(option: IOption) => option.value}
+                                        getOptionLabel={(option: IOption) => option.label}
+                                        ///
+                                        options={data ? data["clientType"] : data}
+                                        /// options={selectOptions}
+                                        onChange={(option: IOption) => {
+                                            setFieldValue("clientType", option);
+                                            loadTripPeriod(option.id);
+                                        }}
+                                        label={"clientType"}
+                                        isSearchable={false}
+                                        name={"clientType"}
+                                        placeholder={"clientType"}
+                                    />
+                                }
+                            </div>
+
+                            {show &&
+                                <>
+                                    <div className={s.item}>
+                                        <Select
+                                            value={values["daysOnWeek"]}
+                                            getOptionValue={(option: IOption) => option.value}
+                                            getOptionLabel={(option: IOption) => option.label}
+                                            ///
+                                            options={data["daysOnWeek"]}
+                                            isMulti
+                                            onChange={(option: IOption) => setFieldValue("daysOnWeek", option)}
+                                            label={"daysOnWeek"}
+                                            isSearchable={false}
+                                            name={"daysOnWeek"}
+                                            placeholder={"daysOnWeek"}
+                                        />
+                                    </div>
+                                    <div className={s.item}>
+                                        <Calendar
+                                            formats="MM-dd-yyyy"
+                                            selected={new Date().toLocaleDateString()}
+                                            /// className={s.dataPicker}
+                                            selectRange={true}
+                                            onKeyDown={(e: any) => {
+                                                e.preventDefault();
+                                            }}
+                                            onChange={(date: any) => {
+                                                console.log(date);
+                                                setFieldValue("range", date);
+                                                ////  setShow(!show);
+                                            }}
+                                        />
+                                    </div>
+
+                                </>
+                            }
+
+                            {!show &&    <div className={s.item}>
+                                {/* {errors[item.name] && <div >{errors[item.name] }</div>} */}
+
+                                <Input
+                                    name={"date_of_service"}
+                                    value={values["date_of_service"]}
+                                    onChange={handleChange}
+                                    placeholder={t("date_of_service")}
+                                    label={getFieldLabel(t, "date_of_service", "date_of_service", requiredFields)}
+                                    ///  error={errors['date_of_service']}
+                                    type={"string"}
+                                />
+                            </div>}
+                            {
+                                fields
+                                    .map((field, index) => {
+                                            if (data && data[field.name]) {
+                                                return <div key={index} className={s.item}>
+                                                    <FormikHandler
+                                                        item={field}
+                                                        className={s.item}
+                                                        handleChange={handleChange}
+                                                        values={values}
+                                                        setFieldValue={setFieldValue}
+                                                        selectOptions={data}
+                                                        requiredFields={requiredFields}
+                                                        errors={errors}
+                                                    />
+                                                </div>;
+                                            } else {
+                                                return <div key={index} className={s.item}>
+                                                    <FormikHandler
+                                                        item={field}
+                                                        className={s.item}
+                                                        handleChange={handleChange}
+                                                        values={values}
+                                                        setFieldValue={setFieldValue}
+                                                        requiredFields={requiredFields}
+                                                        errors={errors}
+                                                    />
+                                                </div>;
+                                            }
+
+                                        }
+                                    )
+                            }
+                            <div className={s.buttonDiv}>
+                                <Button
+                                    type={"adminUpdate"}
+                                    onClick={handleSubmit}
+                                    className={"admin"}
+                                >
+                                    save
+                                </Button>
+                            </div>
+
+                        </form>
+
+                    </>
+
+                );
+            }
+            }
+
+        </Formik>
+
+    </div>;
+    //     <Create
+    //     crudKey={crudKey}
+    //     data={data}
+    //     requiredFields={requiredFields}
+    //     fields={fields}
+    //     title={''}
+    //     children={t('create')}
+    // />
+
+};
+
+export default ClientCreate;

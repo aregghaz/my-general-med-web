@@ -225,4 +225,32 @@ class TestController extends Controller
         }
         return true;
     }
+
+    public function getMondaysInRange($dateFromString, $dateToString)
+    {
+        $dateFrom = new \DateTime($dateFromString);
+        $dateTo = new \DateTime($dateToString);
+        $dates = [];
+
+        if ($dateFrom > $dateTo) {
+            return $dates;
+        }
+
+        if (1 != $dateFrom->format('N')) {
+            $dateFrom->modify('next monday');
+        }
+
+        while ($dateFrom <= $dateTo) {
+            $dates[] = $dateFrom->format('Y-m-d');
+            $dateFrom->modify('+1 week');
+        }
+
+        return $dates;
+    }
+
+    public function getDate(){
+        $dateFromString = '2023-02-05';
+        $dateToString = '2023-06-20';
+        var_dump($this->getMondaysInRange($dateFromString, $dateToString));
+    }
 }

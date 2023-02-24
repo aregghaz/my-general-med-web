@@ -159,7 +159,7 @@ class Controller extends BaseController
         ];
     }
 
-    public function clientCreateTye(): array
+    public function clientCreateType(): array
     {
         return [
             [
@@ -173,6 +173,24 @@ class Controller extends BaseController
                 'label' => 'timePeriod',
                 'slug' => 'timePeriod',
                 'value' => 'timePeriod',
+            ]
+        ];
+    }
+
+    public function tripType()
+    {
+        return [
+            [
+                'id' => 1,
+                'label' => 'A',
+                'slug' => 'A',
+                'value' => 'A',
+            ],
+            [
+                'id' => 2,
+                'label' => 'B',
+                'slug' => 'B',
+                'value' => 'B',
             ]
         ];
     }

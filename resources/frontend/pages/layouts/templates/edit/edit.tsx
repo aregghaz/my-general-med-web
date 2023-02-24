@@ -17,6 +17,7 @@ interface IEdit {
     crudKey?: string
     handleDrawMap?:any,
     title: string,
+    selectRange?:boolean
     redirectKey?: string,
     requiredFields?: Array<string>
 }
@@ -28,6 +29,7 @@ const Edit: React.FC<IEdit> = (
         data,
         children,
         redirectKey,
+        selectRange,
         handleDrawMap,
         requiredFields,
     }) => {
@@ -90,6 +92,7 @@ const Edit: React.FC<IEdit> = (
                                                     handleDrawMap={handleDrawMap}
                                                     handleChange={handleChange}
                                                     values={values}
+                                                    selectRange={selectRange}
                                                     requiredFields={requiredFields}
                                                     setFieldValue={setFieldValue}
                                                     selectOptions={data}

@@ -159,18 +159,42 @@ class ClientsController extends Controller
     public function create()
     {
         $request_type = RequestType::get();
-      ///  $clientStatus = ClientStatus::get();
+        ///  $clientStatus = ClientStatus::get();
         $gender = Gender::get();
         $los = Los::get();
 
         return response()->json([
-            ///   'escortType'=> new StatusCollection($escort),
+            'clientType' => $this->clientCreateType(),
+            'daysOnWeek' => $this->daysOnWeek(),
             "gender" => new StatusCollection($gender),
             'request_type' => new StatusCollection($request_type),
             "los" => new StatusCollection($los),
+            'trip_id'=> $this->tripType(),
             ///'status' => new StatusCollection($clientStatus),
 
         ], 200);
+    }
+
+    public function getMondaysInRange($dateFromString, $dateToString, $day)
+    {
+        $dateFrom = new \DateTime($dateFromString);
+        $dateTo = new \DateTime($dateToString);
+        $dates = [];
+
+        if ($dateFrom > $dateTo) {
+            return $dates;
+        }
+
+        if (1 != $dateFrom->format('N')) {
+            $dateFrom->modify("next $day");
+        }
+
+        while ($dateFrom <= $dateTo) {
+            $dates[] = $dateFrom->format('Y-m-d');
+            $dateFrom->modify('+1 week');
+        }
+
+        return $dates;
     }
 
     /**
@@ -181,19 +205,89 @@ class ClientsController extends Controller
      */
     public function store(Request $request)
     {
+
         $requestData = json_decode($request->value);
+
         $userId = $request->user()->id;
+        if ((int)$requestData->clientType->id === 2) {
+            foreach ($requestData->daysOnWeek as $days) {
+                $dataData = $this->getMondaysInRange($requestData->range[0], $requestData->range[1], $days->label);
+                foreach ($dataData as $date) {
+                    $this->createClient($requestData, $userId, $date);
+                }
+            }
+        }else{
+            $this->createClient($requestData, $userId, $requestData->date_of_service);
+        }
+//        dd($dataData);
+//        $userId = $request->user()->id;
+//        $client = new Clients();
+//        $client->type_id = 2;
+//        $client->trip_id = $requestData->trip_id;
+//        $client->fullName = $requestData->fullName;
+//        $client->gender = $requestData->gender->id;
+//        $client->los_id = $requestData->los->id;
+//        $client->date_of_service = $requestData->date_of_service;
+//        $client->pick_up = $requestData->pick_up;
+//        $client->drop_down = $requestData->drop_down;
+//        $client->request_type = $requestData->request_type->id;
+//        /// $client->status = $requestData->status->id;
+//        $client->operator_id = $userId;
+//        if (isset($requestData->origin->address)) {
+//            $client->origin = $requestData->origin->address;
+//            $client->origin_id = $requestData->origin->id;
+//        } else {
+//            $client->origin = $requestData->origin;
+//        }
+//        $client->origin_phone = $requestData->origin_phone;
+//        $client->origin_comment = $requestData->origin_comment;
+//        if (isset($requestData->destination->address)) {
+//            $client->destination = $requestData->destination->address;
+//            $client->destination_id = $requestData->destination->id;
+//        } else {
+//            $client->destination = $requestData->destination;
+//        }
+//        $client->destination_phone = $requestData->destination_phone;
+//        $client->destination_comments = $requestData->destination_comments;
+//        $client->member_uniqie_identifer = $requestData->member_uniqie_identifer;
+//        $client->birthday = $requestData->birthday;
+//        $client->miles = (int)$requestData->miles;
+
+//        if (!$client->save()) {
+//            return response()->json(
+//                [
+//                    'success' => '0',
+//                    'type' => 'forbidden',
+//                ],
+//                200
+//            );
+//        }
+
+
+        return response()->json(
+            [
+                'success' => '1',
+                'type' => 'success',
+                'status' => 200,
+            ],
+            201
+        );
+
+    }
+
+
+    protected function createClient($requestData, $userId, $date)
+    {
         $client = new Clients();
         $client->type_id = 2;
-        $client->trip_id = $requestData->trip_id;
         $client->fullName = $requestData->fullName;
         $client->gender = $requestData->gender->id;
         $client->los_id = $requestData->los->id;
-        $client->date_of_service = $requestData->date_of_service;
+        $client->date_of_service = $date;
         $client->pick_up = $requestData->pick_up;
         $client->drop_down = $requestData->drop_down;
         $client->request_type = $requestData->request_type->id;
-       /// $client->status = $requestData->status->id;
+        /// $client->status = $requestData->status->id;
         $client->operator_id = $userId;
         if (isset($requestData->origin->address)) {
             $client->origin = $requestData->origin->address;
@@ -214,27 +308,15 @@ class ClientsController extends Controller
         $client->member_uniqie_identifer = $requestData->member_uniqie_identifer;
         $client->birthday = $requestData->birthday;
         $client->miles = (int)$requestData->miles;
-
         if (!$client->save()) {
-            return response()->json(
-                [
-                    'success' => '0',
-                    'type' => 'forbidden',
-                ],
-                200
-            );
+            return false;
         }
+        $client->update([
+            "trip_id"=> "CC-$client->id-$requestData->trip_id",
+        ]);
 
         $this->createAction($userId, $client->id, 7, 1);
-        return response()->json(
-            [
-                'success' => '1',
-                'type' => 'success',
-                'status' => 200,
-            ],
-            201
-        );
-
+        return true;
     }
 
     /**
@@ -245,7 +327,6 @@ class ClientsController extends Controller
      */
     public function show(Clients $clients, $id)
     {
-
         $request_type = RequestType::get();
         $clientStatus = ClientStatus::get();
         $gender = Gender::get();
@@ -257,7 +338,6 @@ class ClientsController extends Controller
             'clientStatus',
             'requestType'
         ])->find($id);
-
 
         $clientdata = $this->convertSingleData($client);
 
@@ -334,7 +414,7 @@ class ClientsController extends Controller
         $client->pick_up = $requestData->pick_up;
         $client->drop_down = $requestData->drop_down;
         $client->request_type = $requestData->request_type->id;
-      ////  $client->status = $requestData->status->id;
+        ////  $client->status = $requestData->status->id;
         $client->operator_id = $userId;
         if (isset($requestData->origin->address)) {
             $client->origin = $requestData->origin->address;

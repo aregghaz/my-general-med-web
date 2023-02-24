@@ -15,22 +15,22 @@
     background-color: red;
 }
 
-.label {
-    font-size: 15px;
-    @include themify($themes) {
-        color: themed('modalTitleColor');
-    }
-    font-weight: normal;
-    margin-bottom: 10px;
-
-    @media only screen and (max-width: $smallDisplay) {
-        font-size: 12px;
-    }
-
-    span {
-        color: $asteriskColor;
-    }
-}
+//.label {
+//    font-size: 15px;
+//    @include themify($themes) {
+//        color: themed('modalTitleColor');
+//    }
+//    font-weight: normal;
+//    margin-bottom: 10px;
+//
+//    @media only screen and (max-width: $smallDisplay) {
+//        font-size: 12px;
+//    }
+//
+//    span {
+//        color: $asteriskColor;
+//    }
+//}
 
 .customMenuList {
     list-style: none;

@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import s from "./data-picker.module.scss";
 import Calendar from "react-calendar";
 import timestampToDate from "../../utils/timestampToDate";
+import '!style-loader!css-loader!react-calendar/dist/Calendar.css';
 
 interface IDataPicker {
     setFieldValue: (name: string, date: string) => void;
     ///value: (name: string, option: IOption) => void
     label: string;
+    selectRange:boolean,
     name: string;
     value: any;
 }
@@ -15,6 +17,7 @@ const DataPicker: React.FC<IDataPicker> = (
     {
         name,
         setFieldValue,
+        selectRange=false,
         label,
         value
     }) => {
@@ -29,7 +32,7 @@ const DataPicker: React.FC<IDataPicker> = (
                 formats="MM/dd/yyyy"
                 selected={value ? new Date(getDateValue) : new Date().toLocaleDateString()}
                 /// className={s.dataPicker}
-                aria-label={false}
+                selectRange={selectRange}
                 onKeyDown={(e: any) => {
                     e.preventDefault();
                 }}

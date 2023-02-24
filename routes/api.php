@@ -29,6 +29,7 @@ Route::group([
     'middleware' => 'auth:api'
 ], function () {
     Route::post('/test', [\App\Http\Controllers\TestController::class, 'index']);
+    Route::get('/getDate', [\App\Http\Controllers\TestController::class, 'getDate']);
 
     Route::get('/car-data-for-select', [HomeController::class, 'carDataForSelect']);
     Route::get('/clients-data-driver', [ApiController::class, 'getClientsDataForDriver']);

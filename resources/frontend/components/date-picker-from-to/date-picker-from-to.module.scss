@@ -41,9 +41,6 @@
     @include themify($themes) {
         color: themed('modalTitleColor');
     }
-    margin-bottom: 10px;
-
-
     @media only screen and (max-width: $smallDisplay) {
         font-size: 12px;
     }

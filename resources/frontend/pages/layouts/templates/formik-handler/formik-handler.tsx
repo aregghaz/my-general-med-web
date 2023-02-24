@@ -34,6 +34,8 @@ interface IFormikHandler {
     errors?: any;
     handleDrawMap?: any;
     autoCompleteRef?: any;
+    selectRange?:boolean;
+    className?:string;
 }
 
 const FormikHandler: React.FC<IFormikHandler> = (
@@ -44,6 +46,8 @@ const FormikHandler: React.FC<IFormikHandler> = (
         handleChange,
         setFieldValue,
         selectOptions,
+        className,
+        selectRange,
         autoCompleteRef,
         handleDrawMap,
         requiredFields
@@ -60,6 +64,7 @@ const FormikHandler: React.FC<IFormikHandler> = (
                         name={item.name}
                         value={values[item.name]}
                         type={item.inputType}
+                        className={className}
                         onChange={handleChange}
                         placeholder={t(item.placeholder)}
                         label={getFieldLabel(t, item.label, item.name, requiredFields)}
@@ -159,6 +164,7 @@ const FormikHandler: React.FC<IFormikHandler> = (
                 <DataPicker
                     name={item.name}
                     setFieldValue={setFieldValue}
+                    selectRange={selectRange}
                     ///  handleChange={handleChange}
                     label={t(item.label)}
                     value={values[item.name]}

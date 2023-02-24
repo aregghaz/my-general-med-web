@@ -15,6 +15,7 @@ interface ICreate {
     fields: Array<IItem>
     crudKey?: string
     isAdmin?: boolean
+    selectRange?: boolean
     redirectKey?: string
     title: string,
     requiredFields?: Array<string>
@@ -26,6 +27,7 @@ const Create: React.FC<ICreate> = (
         fields,
         crudKey,
         data,
+        selectRange,
         isAdmin = true,
         children,
         redirectKey,
@@ -33,6 +35,7 @@ const Create: React.FC<ICreate> = (
     }) => {
     const navigate = useNavigate()
     const {t} = useTranslation()
+
 
     const validate = (values: FormikValues) => validationRules(values, requiredFields, fields, t)
     const create = async (values: FormikValues, {setSubmitting}: FormikHelpers<FormikValues>) => {
@@ -92,6 +95,7 @@ const Create: React.FC<ICreate> = (
                                                             item={field}
                                                             handleChange={handleChange}
                                                             values={values}
+                                                            selectRange={selectRange}
                                                             setFieldValue={setFieldValue}
                                                             selectOptions={data}
                                                             requiredFields={requiredFields}
@@ -108,6 +112,7 @@ const Create: React.FC<ICreate> = (
                                                             item={field}
                                                             handleChange={handleChange}
                                                             values={values}
+                                                            selectRange={selectRange}
                                                             setFieldValue={setFieldValue}
                                                             requiredFields={requiredFields}
                                                             errors={errors}
