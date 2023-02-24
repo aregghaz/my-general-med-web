@@ -21,6 +21,7 @@ class Clients extends Model
         'car_id',
         'vendor_id',
         'operator_id',
+        'price',
         'type_id',
         'trip_id',
         'fullName',

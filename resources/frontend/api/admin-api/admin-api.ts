@@ -2,6 +2,9 @@ import axios from 'axios'
 
 export const AdminApi = {
 
+    dashboard() {
+        return axios.get('/api/admin/dashboard').then(res => res.data)
+    },
     delete(crudKey: string, deleteId: number) {
         return axios.get('/api/auth/user').then(res => res.data)
     },

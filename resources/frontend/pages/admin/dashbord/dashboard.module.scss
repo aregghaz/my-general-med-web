@@ -1,24 +1,44 @@
 @import "../../../styles/variables";
 
 .root {
-  position: relative;
-  height: calc(100vh - 200px);
+    position: relative;
+    height: calc(100vh - 200px);
 }
 
 .block {
-  margin: auto;
-  width: 500px;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  height: fit-content;
+    margin-top: 20px;
+    display: flex;
 }
 
 .text {
-  color: $greenColor;
-  text-align: center;
-  font-size: 20px;
-  line-height: 1.5;
+    color: $greenColor;
+    text-align: center;
+    font-size: 20px;
+    line-height: 1.5;
+}
+
+.chartItem {
+    flex: 1
+}
+.dashBordItem{
+    flex: 3;
+    height: 200px;
+    text-align: center;
+    padding: 30px;
+    border: 1px solid;
+    margin: 0 5px;
+    border-radius:15px
+}
+.itemHeader{
+   flex: 1;
+    flex-direction: column;
+}
+.title{
+    font-size: 25px;
+    color: black;
+}
+.number{
+    margin-top:20px;
+    color:#D63D3D;
+    font-size:35px;
 }

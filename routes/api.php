@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\ActionsController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\DashBoardController;
 use App\Http\Controllers\Admin\OperatorController;
 use App\Http\Controllers\Admin\VendorController;
 use App\Http\Controllers\Admin\ClientsController;
@@ -75,6 +76,7 @@ Route::group([
         'operators' => OperatorController::class,
 
     ]);
+    Route::get('/dashboard', [DashBoardController::class, 'index']);
     Route::post('/clientsData', [ClientsController::class, 'clientsData']);
     Route::get('/vendors', [VendorController::class, 'index']);
     Route::get('/vendors/create', [VendorController::class, 'create']);

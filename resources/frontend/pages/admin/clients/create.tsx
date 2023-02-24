@@ -28,6 +28,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         ///  { name: "date_of_service", type: "datepicker", label: "date_of_service" },
         { name: "trip_id", type: "select", label: "trip_type" },
         { name: "fullName", type: "input", label: "fullName" },
+        { name: "price", type: "input", label: "price" },
         { name: "gender", type: "select", label: "gender" },
         { name: "los", type: "select", label: "los" },
         { name: "member_uniqie_identifer", type: "input", label: "member_uniqie_identifer" },

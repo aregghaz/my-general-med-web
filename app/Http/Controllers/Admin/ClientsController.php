@@ -284,6 +284,7 @@ class ClientsController extends Controller
         $client->gender = $requestData->gender->id;
         $client->los_id = $requestData->los->id;
         $client->date_of_service = $date;
+        $client->price = (float)$requestData->price;
         $client->pick_up = $requestData->pick_up;
         $client->drop_down = $requestData->drop_down;
         $client->request_type = $requestData->request_type->id;
@@ -308,6 +309,8 @@ class ClientsController extends Controller
         $client->member_uniqie_identifer = $requestData->member_uniqie_identifer;
         $client->birthday = $requestData->birthday;
         $client->miles = (int)$requestData->miles;
+        $client->height = (float)$requestData->height;
+        $client->weight = (float)$requestData->weight;
         if (!$client->save()) {
             return false;
         }

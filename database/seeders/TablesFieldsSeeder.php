@@ -20,6 +20,7 @@ class TablesFieldsSeeder extends Seeder
             'trip_id',
             'car_id',
             'vendor_id',
+            'price',
             'fullName',
             'gender',
             'los_id',
