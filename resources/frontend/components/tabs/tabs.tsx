@@ -6,6 +6,7 @@ interface ITabs {
     name: string;
     count?: number;
     id: number;
+    selected: boolean;
 
 }
 
@@ -14,18 +15,18 @@ interface IProps {
     handlerChangeTabs: (id: number) => void,
 }
 
-const Tabs: FC<IProps> = ({ tabs, handlerChangeTabs,   }) => {
+const Tabs: FC<IProps> = ({ tabs, handlerChangeTabs }) => {
     const { t } = useTranslation();
     return (
         <div className={s.table_upper_tab}>
             {
                 tabs.length >= 0 && tabs.map(tab => (
                     <div
-                        className={s.table_upper_tab_item}
+                        className={`${s.table_upper_tab_item} ${tab.selected ? s.selected : ""}`}
                         key={tab.id}
                         onClick={() => handlerChangeTabs(tab.id)}
                     >
-                        {tab.count >=0 && <span className={s.bage_count}>{tab.count}</span>}
+                        {tab.count >= 0 && <span className={s.bage_count}>{tab.count}</span>}
                         <span className={s.tab_text}>{t(tab.name)}</span>
                     </div>
                 ))

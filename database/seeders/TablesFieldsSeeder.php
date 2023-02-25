@@ -29,7 +29,7 @@ class TablesFieldsSeeder extends Seeder
             'pick_up',
             'drop_down',
             'request_type', ///seect
-            'status', ///seect
+            ////'status', ///seect
             'origin',
           ///  'origin_id',
             'origin_phone',

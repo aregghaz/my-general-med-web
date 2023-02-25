@@ -235,4 +235,23 @@ class Controller extends BaseController
         ]
         ];
     }
+
+    protected function convertQuery($queryData, $title, $clients)
+    {
+
+        $clients = $clients->where(function ($query) use($queryData) {
+            $query->where('fullName', 'LIKE', '%' . $queryData . '%')
+                ->orWhere('trip_id', 'LIKE', '%' . $queryData . '%');
+        });
+//        $clients = $clients->where(function ($query) use ($title, $queryData) {
+//            // $clients =  $this->convertQuery($request->queryData, $vendorFields, $clients);
+//            for ($i = 0; $i < count($title); $i++) {
+//                if ($title[$i] !== 'id') {
+//                    $query->orWhere($title[$i], 'LIKE', '%' . $queryData . '%');
+//                }
+//            }
+//        });
+        return $clients;
+    }
+
 }

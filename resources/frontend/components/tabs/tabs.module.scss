@@ -21,6 +21,21 @@
         border-bottom-color: $asteriskColor;
     }
 }
+.selected {
+    background: #ffffff;
+    border-bottom: 1px solid $asteriskColor;
+    color:$asteriskColor;
+    position: relative;
+    padding: 10px 30px;
+    cursor: pointer;
+    &:hover {
+        span{
+            color: $asteriskColor;
+        }
+        color: $asteriskColor;
+        border-bottom-color: $asteriskColor;
+    }
+}
 .tab_text{
     font-size: 13px;
 }

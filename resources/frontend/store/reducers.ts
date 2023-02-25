@@ -6,6 +6,7 @@ import itemReducer from "./item";
 import clientReducer from './client';
 import adminUsersReducer from "./adminUser";
 import adminVendorUsersReducer from "./vendorUsers";
+import tabsReducer from "./tab";
 
 
 const reducers = combineReducers({
@@ -16,6 +17,7 @@ const reducers = combineReducers({
     clientReducer,
     adminUsersReducer,
     adminVendorUsersReducer,
+    tabsReducer,
 })
 export type ReducerType = typeof reducers
 

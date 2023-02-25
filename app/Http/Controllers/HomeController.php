@@ -5,10 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Resources\CarsSelectCollection;
 use App\Http\Resources\ClientCollection;
 use App\Http\Resources\ClientFieldCollection;
-use App\Http\Resources\StatusCollection;
 use App\Models\Cars;
 use App\Models\Clients;
-use App\Models\ClientStatus;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -68,12 +66,13 @@ class HomeController extends Controller
         $clientsData = [];
         $typeId = (int)$request->typeId;
         $selectedFieldsTitle = [];
+        $queryData = $request->queryData;
         $vendorId = $request->user()->vendor_id;
-        $tripCount = Clients::where(['vendor_id' => $vendorId, 'type_id' => 1])->count();
-        $available = Clients::where('type_id', 2)->where('vendor_id', '<>', $vendorId)->orWhereNull('vendor_id')->count();
-        $cancelCount = Clients::where(['type_id' => 2, 'vendor_id' => $vendorId])->count();
-        $progressCount = Clients::where('type_id', 5)->count();
-        $doneCount = Clients::where('type_id', 6)->count();
+        $tripCount = Clients::where(['vendor_id' => $vendorId, 'type_id' => 1]);
+        $available = Clients::where('type_id', 2)->where('vendor_id', '<>', $vendorId)->OrWhereNull('vendor_id');
+        $cancelCount = Clients::where(['type_id' => 2, 'vendor_id' => $vendorId]);
+        $progressCount = Clients::where('type_id', 5);
+        $doneCount = Clients::where('type_id', 6);
 
         if ($typeId === 2 || $typeId === 3 || $typeId === 4) {
             if (($key = array_search('car_id', $vendorFields)) !== false) {
@@ -90,20 +89,43 @@ class HomeController extends Controller
             $clients = DB::table('clients')->where(['type_id' => $request->typeId, 'clients.vendor_id' => $vendorId]);
         }
 
-        if (isset($request->queryData)) {
-            $this->convertQuery($request->queryData, $vendorFields, $clients);
+        if (isset($queryData)) {
+            $this->convertQuery($queryData, $vendorFields, $clients);
+
+            $tripCount = $tripCount->where(function ($query) use ($queryData) {
+                $query->where('fullName', 'LIKE', '%' . $queryData . '%')
+                    ->orWhere('trip_id', 'LIKE', '%' . $queryData . '%');
+            });
+            $available = $available->where(function ($query) use ($queryData) {
+                $query->where('fullName', 'LIKE', '%' . $queryData . '%')
+                    ->orWhere('trip_id', 'LIKE', '%' . $queryData . '%');
+            });
+            $cancelCount = $cancelCount->where(function ($query) use ($queryData) {
+                $query->where('fullName', 'LIKE', '%' . $queryData . '%')
+                    ->orWhere('trip_id', 'LIKE', '%' . $queryData . '%');
+            });
+            $progressCount = $progressCount->where(function ($query) use ($queryData) {
+                $query->where('fullName', 'LIKE', '%' . $queryData . '%')
+                    ->orWhere('trip_id', 'LIKE', '%' . $queryData . '%');
+            });
+            $doneCount = $doneCount->where(function ($query) use ($queryData) {
+                $query->where('fullName', 'LIKE', '%' . $queryData . '%')
+                    ->orWhere('trip_id', 'LIKE', '%' . $queryData . '%');
+            });
         }
-        $clientsDataWith = [];
+
+        $doneCount = $doneCount->count();
+        $progressCount = $progressCount->count();
+        $cancelCount = $cancelCount->count();
+        $tripCount = $tripCount->count();
+        $available = $available->count();
+
         for ($i = 0; $i < count($vendorFields); $i++) {
             $selectedFieldsTitle[] = $vendorFields[$i];
             if ($vendorFields[$i] == 'request_type') {
                 $clients = $clients->join('request_types', 'clients.request_type', '=', 'request_types.id');
                 $clientsData[] = "request_types.name as request_type";
                 //////status reletion cheking and add to title
-            } else if ($vendorFields[$i] == 'status') {
-                $clients = $clients->join('client_statuses', 'clients.type_id', '=', 'client_statuses.id');
-                $clientsData[] = "client_statuses.name as status";
-                //////gender reletion cheking and add to title
             } else if ($vendorFields[$i] == 'los_id') {
                 $clients = $clients->join('los', 'clients.los_id', '=', 'los.id');
                 $clientsData[] = "los.name as los_id";
@@ -160,7 +182,7 @@ class HomeController extends Controller
         $status = $this->clientTypes();
         return response()->json([
             'client' => $this->convertSingleDataForInfo($client),
-            'status' =>$status,
+            'status' => $status,
         ], 200);
     }
 
@@ -238,25 +260,13 @@ class HomeController extends Controller
             Clients::whereIn('id', $ids)->update(['type_id' => $request->status, 'vendor_id' => $vendorId]);
         }
         foreach ($ids as $id) {
-            $this->createAction($vendorId, $id,(int)$request->status, 1);
+            $this->createAction($vendorId, $id, (int)$request->status, 1);
         }
         return response()->json([
             'status' => 200
         ], 200);
     }
 
-    protected function convertQuery($queryData, $title, $clients)
-    {
-        $clients = $clients->where(function ($query) use ($title, $queryData) {
-            // $clients =  $this->convertQuery($request->queryData, $vendorFields, $clients);
-            for ($i = 0; $i < count($title); $i++) {
-                if ($title[$i] !== 'name' && $title[$i] !== 'id') {
-                    $query->orWhere($title[$i], 'LIKE', '%' . $queryData . '%');
-                }
-            }
-        });
-        return $clients;
-    }
 
     /**
      * @param Request $request
