@@ -96,12 +96,14 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
         {
             id: 3,
             name: "Drivers",
-            count: driversCount
+            count: driversCount,
+            selected:false,
         },
         {
             id: 4,
             name: "Operators",
-            count: operatorsCount
+            count: operatorsCount,
+            selected:false,
         }
     ];
     const handleActionMiddleware = () => {

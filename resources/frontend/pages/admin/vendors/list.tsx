@@ -78,12 +78,14 @@ const Vendors: React.FC<IVendors> = () => {
         {
             id: 2,
             name: "Vendor",
-            count: vendorCount
+            count: vendorCount,
+            selected:false,
         },
         {
             id: 4,
             name: "Operator",
-            count: operatorCount
+            count: operatorCount,
+            selected:false,
         }
     ];
     const handlerChangeTabs = async (tabId: number) => {

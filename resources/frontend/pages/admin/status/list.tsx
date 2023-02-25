@@ -45,7 +45,8 @@ const Status: React.FC<Beneficiary> = () => {
         {
             id: 1,
             name: "gender",
-            count: genderCount
+            count: genderCount,
+            selected:false,
         },
         // {
         //     id: 2,
@@ -55,16 +56,19 @@ const Status: React.FC<Beneficiary> = () => {
         {
             id: 4,
             name: "request_type",
-            count: requestType
+            count: requestType,
+            selected:false,
         }, {
             id: 3,
             name: "los",
-            count: los
+            count: los,
+            selected:false,
         },
         {
             id: 5,
             name: "status",
-            count: clientStatus
+            count: clientStatus,
+            selected:false,
         }
     ];
 
