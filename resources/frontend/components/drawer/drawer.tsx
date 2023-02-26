@@ -53,6 +53,11 @@ const Drawer: React.FC = ({ children }) => {
     if (userData.user && (userData.user.role == "vendor" )) {
         menuItemsFirst = [
             {
+                id: 4,
+                Icon: <HomeIcon />,
+                item: "Dashboard",
+                page: "/dashboard"
+            },{
                 id: 1,
                 Icon: <Clients />,
                 item: "clients",

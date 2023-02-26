@@ -77,7 +77,6 @@ class HomeController extends Controller
         if ($typeId === 2 || $typeId === 3 || $typeId === 4) {
             if (($key = array_search('car_id', $vendorFields)) !== false) {
                 array_splice($vendorFields, $key, 1);
-
             }
             if ($typeId == 4) {
                 $clients = DB::table('clients')->where(['type_id' => 2, 'clients.vendor_id' => $vendorId]);
@@ -90,6 +89,7 @@ class HomeController extends Controller
         }
 
         if (isset($queryData)) {
+         ///   dd(isset($queryData));
             $this->convertQuery($queryData, $vendorFields, $clients);
 
             $tripCount = $tripCount->where(function ($query) use ($queryData) {
@@ -136,8 +136,8 @@ class HomeController extends Controller
                 //////adding default fields in to select
             } else if ($vendorFields[$i] == 'car_id' and ($typeId !== 2)) {
                 $clients = $clients->leftJoin('cars', function ($query) {
-                    $query->on('cars.id', '=', 'clients.car_id')->orWhereNull('clients.car_id');;
-                });
+                    $query->on('cars.id', '=', 'clients.car_id');
+                })->orWhereNotNull('clients.car_id');;;
                 $clients = $clients->leftJoin('makes', 'makes.id', '=', 'cars.make_id');
                 $clientsData[] = "clients.car_id as " . $selectedFieldsTitle[$i];
                 $clientsData[] = "makes.name as car_name";
@@ -171,17 +171,23 @@ class HomeController extends Controller
         ], 200);
     }
 
-    public function show($id)
+    public function show($id, Request $request)
     {
+        $vendorId  = $request->user()->vendor_id;
         $client = Clients::with([
             /// 'origin',
             /// 'destination',
+            'car',
             'clientStatus',
             'requestType'
         ])->find($id);
+
+        $cars = Cars::with('driver')->where('vendor_id', $vendorId)->get();
+
         $status = $this->clientTypes();
         return response()->json([
             'client' => $this->convertSingleDataForInfo($client),
+            "cars" => new CarsSelectCollection($cars),
             'status' => $status,
         ], 200);
     }

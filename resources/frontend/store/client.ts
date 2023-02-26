@@ -10,6 +10,12 @@ const defaultDat ={
     trip_id:0,
     fullName:'',
     gender:"",
+    car: {
+        id: 0,
+        value: '',
+        label: '',
+
+    },
     pick_up_address:"",
     los:"",
     phone_number:"",

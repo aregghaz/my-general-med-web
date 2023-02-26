@@ -40,6 +40,7 @@ import Show from "./pages/vendor/home/show";
 import ShowAdmin from "./pages/admin/clients/show";
 import Activity from "./pages/admin/users/activity";
 import ActivityClient from "./pages/admin/clients/activity";
+import VendorDashboard from "./pages/vendor/dashbord/dashboard";
 
 const App = (): JSX.Element => (
     <Provider store={store}>
@@ -47,6 +48,7 @@ const App = (): JSX.Element => (
             <LoginWrapper path="/login"/>
             <Site path="/">
                 <Home path="/"/>
+                <VendorDashboard path="/dashboard"/>
                 <Show path="/client/:id"/>
                 <VendorUsers path="/users"/>
                 <VendorDriverEdit path="/users/driver/:id"/>

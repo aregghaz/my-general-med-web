@@ -57,6 +57,10 @@ class Clients extends Model
     {
         return $this->hasOne(TypeOfTrip::class, 'id', 'type_of_trip');
     }
+    public function car()
+    {
+        return $this->hasOne(Cars::class, 'id', 'car_id');
+    }
 
     public function escortType()
     {

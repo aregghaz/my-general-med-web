@@ -80,10 +80,17 @@ class Controller extends BaseController
 
     protected function convertSingleDataForInfo($client)
     {
+//dd($client->car);
         return [
             'id' => $client->id,
             'trip_id' => $client->trip_id,
             'fullName' => $client->fullName,
+            'car' =>  isset($client->car) ? [
+                'id' => $client->car->id,
+                'label' => $client->car->driver[0]->user->name .' '.$client->car->driver[0]->user->surname,
+                'slug' => $client->car->driver[0]->user->name.' '.$client->car->driver[0]->user->surname,
+                'value' => $client->car->driver[0]->user->name.' '.$client->car->driver[0]->user->surname,
+            ] : [],
             /// 'surname' => $client->surname,
             'gender' => $client->genderType->name,
             'los' => $client->los->name,

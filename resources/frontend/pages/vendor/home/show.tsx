@@ -29,7 +29,8 @@ const Show: React.FC<IShow> = ({ id }) => {
     const clientData = useSelector(getClientData);
     const { clientById } = clientData;
     const { t } = useTranslation();
-
+    const [carData, setCarData] = useState<Array<any>>(null);
+    const [car, setCar] = useState<IOption>(null);
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: GOOGLE_API_KEY,
         libraries: ["geometry", "drawing", "places"]
@@ -52,7 +53,8 @@ const Show: React.FC<IShow> = ({ id }) => {
         pick_up: clientById.pick_up,
         drop_down: clientById.drop_down,
         additionalNote: clientById.additionalNote,
-        status: clientById.type_id
+        status: clientById.type_id,
+        car: clientById.car
 
     });
     useEffect(() => {
@@ -60,11 +62,13 @@ const Show: React.FC<IShow> = ({ id }) => {
             const homeData = await homeAPI.getCLientById(id);
             setStatuses(homeData.status);
             dispatch(clientAction.fetching({ clientById: homeData.client }));
+            setCarData(homeData.cars);
             setFieldValue({
                 pick_up: homeData.client.pick_up,
                 drop_down: homeData.client.drop_down,
                 additionalNote: homeData.client.additionalNote,
-                status: homeData.client.type_id
+                status: homeData.client.type_id,
+                car: homeData.client.car
 
             });
             await calculateRoute(homeData.client);
@@ -161,6 +165,23 @@ const Show: React.FC<IShow> = ({ id }) => {
             <div className={cls.item}>
                 <span className={cls.b_text}>{t("height")}: </span>
                 {clientById.height}
+            </div>
+            <div>
+                <Select
+                    getOptionValue={(option: IOption) => option.value}
+                    getOptionLabel={(option: IOption) => t(option.label)}
+                    onChange={(options: IOption) => setFieldValue((state: any) => {
+                        return {
+                            ...state,
+                            "car": options
+                        };
+                    })}
+                    /// onChange={handlerSetCar}
+                    options={carData}
+                    value={values.car}
+                    name={"Cars"}
+                    isMulti={false}
+                />
             </div>
             <div className={cls.item}>
                 <span className={cls.b_text}>{t("status")}: </span>

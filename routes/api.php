@@ -44,6 +44,7 @@ Route::group([
         'home-data' => HomeController::class,
         'vendorClients' => VendorUsersController::class,
         'cars' => CarsController::class,
+        'dashboard' => App\Http\Controllers\Vendor\DashboardController::class,
     ]);
 });
 Route::group([

@@ -42,6 +42,9 @@ export const homeAPI = {
     editUserData(crudKey: string, id: number) {
         return axios.get(`/api/${crudKey}/${id}/edit`).then(res => res.data)
     },
+    dashboard() {
+        return axios.get(`/api/dashboard`).then(res => res.data)
+    },
     cancelRequest() {
       ///  return cancelPost()
     }

@@ -107,8 +107,8 @@ class ClientsController extends Controller
                 $clientsData[] = "genders.name as gender";
             } else if ($vendorFields[$i] == 'car_id') {
                 $clients = $clients->leftJoin('cars', function ($query) {
-                    $query->on('cars.id', '=', 'clients.car_id')->orWhereNull('clients.car_id');;
-                });
+                    $query->on('cars.id', '=', 'clients.car_id');
+                })->orWhereNotNull('clients.car_id');;;
                 $clients = $clients->leftJoin('makes', 'makes.id', '=', 'cars.make_id');
                 $clientsData[] = "clients.car_id as " . $selectedFieldsTitle[$i];
                 $clientsData[] = "makes.name as car_name";
