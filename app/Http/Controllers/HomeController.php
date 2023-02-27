@@ -72,7 +72,7 @@ class HomeController extends Controller
         $available = Clients::where('type_id', 2)->where('vendor_id', '<>', $vendorId)->OrWhereNull('vendor_id');
         $cancelCount = Clients::where(['type_id' => 2, 'vendor_id' => $vendorId]);
         $progressCount = Clients::where('type_id', 5);
-        $doneCount = Clients::where('type_id', 6);
+        $doneCount = Clients::where(['type_id'=> 6, 'vendor_id' => $vendorId]);
 
         if ($typeId === 2 || $typeId === 3 || $typeId === 4) {
             if (($key = array_search('car_id', $vendorFields)) !== false) {
@@ -85,9 +85,8 @@ class HomeController extends Controller
                 $clients = DB::table('clients')->where('type_id', 2)->where('vendor_id', '<>', $vendorId)->orWhereNull('vendor_id');
             }
         } else {
-            $clients = DB::table('clients')->where(['type_id' => $request->typeId, 'clients.vendor_id' => $vendorId]);
+            $clients =Clients::where(['clients.type_id' => $request->typeId, 'clients.vendor_id' => $vendorId]);
         }
-
         if (isset($queryData)) {
          ///   dd(isset($queryData));
             $this->convertQuery($queryData, $vendorFields, $clients);
@@ -136,8 +135,8 @@ class HomeController extends Controller
                 //////adding default fields in to select
             } else if ($vendorFields[$i] == 'car_id' and ($typeId !== 2)) {
                 $clients = $clients->leftJoin('cars', function ($query) {
-                    $query->on('cars.id', '=', 'clients.car_id');
-                })->orWhereNotNull('clients.car_id');;;
+                    $query->on('cars.id', '=', 'clients.car_id')->whereNotNull('clients.car_id');;
+                });
                 $clients = $clients->leftJoin('makes', 'makes.id', '=', 'cars.make_id');
                 $clientsData[] = "clients.car_id as " . $selectedFieldsTitle[$i];
                 $clientsData[] = "makes.name as car_name";

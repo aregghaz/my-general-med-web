@@ -107,8 +107,8 @@ class ClientsController extends Controller
                 $clientsData[] = "genders.name as gender";
             } else if ($vendorFields[$i] == 'car_id') {
                 $clients = $clients->leftJoin('cars', function ($query) {
-                    $query->on('cars.id', '=', 'clients.car_id');
-                })->orWhereNotNull('clients.car_id');;;
+                    $query->on('cars.id', '=', 'clients.car_id')->whereNotNull('clients.car_id');;
+                });
                 $clients = $clients->leftJoin('makes', 'makes.id', '=', 'cars.make_id');
                 $clientsData[] = "clients.car_id as " . $selectedFieldsTitle[$i];
                 $clientsData[] = "makes.name as car_name";
@@ -408,9 +408,8 @@ class ClientsController extends Controller
         $userId = $request->user()->id;
         $requestData = json_decode($request->value);
         $client = Clients::find($id);
-
-        $client->trip_id = $requestData->trip_id;
         $client->fullName = $requestData->fullName;
+        $client->price = (float)$requestData->price;
         $client->gender = $requestData->gender->id;
         $client->los_id = $requestData->los->id;
         $client->date_of_service = $requestData->date_of_service;

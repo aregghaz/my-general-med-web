@@ -28,10 +28,10 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
     //     libraries: ["geometry", "drawing", "places"]
     // });
     const fields: Array<IItem> = [
-        { name: "trip_id", type: "input", label: "trip_id" },
         { name: "fullName", type: "input", label: "fullName" },
         { name: "gender", type: "select", label: "gender" },
         { name: "los", type: "select", label: "los" },
+        { name: "price", type: "input", label: "price" },
         { name: "member_uniqie_identifer", type: "input", label: "member_uniqie_identifer" },
         { name: "request_type", type: "select", label: "request_type" },
        /// { name: "status", type: "select", label: "status" },

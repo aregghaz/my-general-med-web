@@ -18,6 +18,7 @@ class Controller extends BaseController
             'id' => $client->id,
             'trip_id' => $client->trip_id,
             'fullName' => $client->fullName,
+            'price' => $client->price,
             'gender' => [
                 'id' => $client->genderType->id,
                 'label' => $client->genderType->name,
