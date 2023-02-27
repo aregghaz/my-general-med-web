@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react'
+import React, {ChangeEvent, useRef} from 'react'
 
 import s from './input.module.scss'
 
@@ -16,7 +16,7 @@ interface IInput {
     isAsterisk?: boolean
     className?: string
     labelStyle?: string
-    ref?:string
+    ref?: string
 }
 
 const Input: React.FC<IInput> = (
@@ -34,32 +34,38 @@ const Input: React.FC<IInput> = (
         isAsterisk,
         className,
         labelStyle,
-        ref
-    }) => (
-    <>
-        {error && <div className={s.error}>{error}</div>}
-        {label &&
-            <label
-                className={`${s.label} ${labelStyle}`}
-                htmlFor={name}
-            >
-                {`${label}`} {isAsterisk && <span>*</span>}
-            </label>}
-        <input
-            id={name}
-            disabled={disable}
-            name={name}
-            className={`${s.input}  ${className} ${error && s.errorBorder}`}
-            type={type}
-            placeholder={placeholder}
-            value={value}
-            ref={ref}
-            onBlur={onChange}
-            onChange={onChange}
-            autoComplete={autoComplete}
-        />
-    </>
-)
-
+        ref,
+    }) => {
+    return (
+        <>
+            {error && <div className={s.error}>{error}</div>}
+            {label &&
+                <label
+                    className={`${s.label} ${!String(value) ? s.blankLabel : ""} ${labelStyle}`}
+                    htmlFor={name}
+                >
+                    {`${label}`} {isAsterisk && <span>*</span>}
+                </label>}
+            <input
+                id={name}
+                disabled={disable}
+                name={name}
+                className={`${s.input} ${!String(value) ? s.blankInput : ""}  ${className} ${error && s.errorBorder}`}
+                type={type}
+                placeholder={placeholder}
+                value={value}
+                ref={ref}
+                onBlur={onChange}
+                onChange={onChange}
+                onFocus={(event) => {
+                    if (!event.target.value) {
+                        event.target.parentElement.children[0].classList.add("aaa")
+                    }
+                }}
+                autoComplete={autoComplete}
+            />
+        </>
+    )
+}
 
 export default Input

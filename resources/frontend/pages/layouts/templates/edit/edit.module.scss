@@ -11,6 +11,21 @@
     margin: auto;
 }
 
+@media only screen and (max-width: 1250px) {
+    .form {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .item {
+        width: 100%;
+        align-items: center;
+    }
+}
+
 .title {
     margin-bottom: 25px;
     text-transform: uppercase;
@@ -21,7 +36,10 @@
     //margin-bottom: 15px;
     //width: 30%;
     //width: 100%;
+    //display: flex;
+    //flex-direction: column;
     margin: 10px 10px 15px;
+    position: relative;
 
     svg {
         width: 20px;
@@ -40,8 +58,15 @@
 }
 
 .buttonDiv {
+    @media only screen and (max-width: 1250px) {
+        width: 100%;
+
+        & > button {
+            width: 100%;
+            margin: 10px 10px 15px;
+        }
+    }
     grid-column: 1/4;
-    text-align: end;
 }
 .googleMap {
     position: relative;
