@@ -10,7 +10,10 @@
     padding-left: 10px;
     outline: none;
     margin-top: 10px;
-    border-radius: 10px;
+    border-bottom: 0.5px solid black;
+    border-top: none;
+    border-left: none;
+    border-right: none;
     @include themify($themes) {
         color: themed('modalTitleColor');
         background-color: themed('modalInputBgColor');

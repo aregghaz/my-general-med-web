@@ -57,11 +57,11 @@ const Input: React.FC<IInput> = (
                 ref={ref}
                 onBlur={onChange}
                 onChange={onChange}
-                onFocus={(event) => {
-                    if (!event.target.value) {
-                        event.target.parentElement.children[0].classList.add("aaa")
-                    }
-                }}
+                // onFocus={(event) => {
+                //     if (!event.target.value) {
+                //         event.target.parentElement.children[0].classList.add("aaa")
+                //     }
+                // }}
                 autoComplete={autoComplete}
             />
         </>
