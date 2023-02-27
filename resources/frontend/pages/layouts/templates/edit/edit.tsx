@@ -10,6 +10,7 @@ import s from './edit.module.scss'
 import {AdminApi} from "../../../../api/admin-api/admin-api";
 import validationRules from "../../../../utils/validationRule";
 import {useTranslation} from "react-i18next";
+import { toast } from "react-toastify";
 
 interface IEdit {
     data: { [key: string]: { [key: string]: Object } }
@@ -57,7 +58,15 @@ const Edit: React.FC<IEdit> = (
         formData.append('_method', 'put');
         formData.append('value', JSON.stringify(values))
         const res: any = await AdminApi.update(formData, crudKey, values.id)
-        if (Number(res.status === 200)) await navigate(`/${redirectKey ?? crudKey}`)
+        if (Number(res.status === 200)) {
+            const options = {
+                type: toast.TYPE.SUCCESS,
+                position: toast.POSITION.BOTTOM_RIGHT
+            };
+
+            toast(t('record_successfully_added'), options);
+          await navigate(`/${redirectKey ?? crudKey}`);
+        }
     }
 
 

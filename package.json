@@ -91,6 +91,7 @@
         "react-iframe": "^1.8.0",
         "react-intersection-observer": "^8.32.0",
         "react-sortable-hoc": "^2.0.0",
-        "react-time-picker": "^5.2.0"
+        "react-time-picker": "^5.2.0",
+        "react-toastify": "9.0.3"
     }
 }

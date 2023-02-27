@@ -76,6 +76,9 @@ return [
     'reRoute' => 'Rerouted trip',
     'inProgress' => 'In progress',
     'done' => 'Done trip',
+    'sign_in' => 'sign in',
+    'record_successfully_added' => "Record Successfully Added",
+    'record_successfully_edited' => "Record Successfully Edited",
 
 
     'seeMore' => 'Home number',

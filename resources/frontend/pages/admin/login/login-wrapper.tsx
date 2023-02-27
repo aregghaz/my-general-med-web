@@ -49,41 +49,46 @@ const LoginWrapper: React.FC<ILoginWrapper> = () => {
         }
 
     }, [user]);
-    return (
-        <div className={s.login}>
-            <Formik
-                initialValues={{
-                    email: "",
-                    password: ""
-                } as FormikValues}
-                onSubmit={submit}
-                validateOnChange={false}
-                validateOnBlur={false}
-            >
-                {({ values, handleSubmit, handleChange }) => (
-                    <form id={"form"} onSubmit={handleSubmit} className={s.form}>
-                        <h3> {t("login")} </h3>
-                        <Input
-                            label={t("email")}
-                            name={"email"}
-                            type={"text"}
-                            onChange={handleChange}
-                            value={values.email}
-                        />
-                        <Input
-                            label={t("password")}
-                            name={"password"}
-                            type={"password"}
-                            onChange={handleChange}
-                            value={values.password}
-                        />
-                        <div className={s.actions}>
-                            <Button isSubmit type={"green"} onClick={handleSubmit}>{t("login")}</Button>
-                        </div>
-                    </form>
-                )}
-            </Formik>
-        </div>
+    return (<>
+
+            <div className={s.login}>
+                <Formik
+                    initialValues={{
+                        email: "",
+                        password: ""
+                    } as FormikValues}
+                    onSubmit={submit}
+                    validateOnChange={false}
+                    validateOnBlur={false}
+                >
+                    {({ values, handleSubmit, handleChange }) => (
+                        <form id={"form"} onSubmit={handleSubmit} className={s.form}>
+                            {/*<h3> {t("login")} </h3>*/}
+                            <div className={s.logoDiv}>
+                                <img src={`../../images/logo.png`} alt="logo" />
+                            </div>
+                            <Input
+                                label={t("email")}
+                                name={"email"}
+                                type={"text"}
+                                onChange={handleChange}
+                                value={values.email}
+                            />
+                            <Input
+                                label={t("password")}
+                                name={"password"}
+                                type={"password"}
+                                onChange={handleChange}
+                                value={values.password}
+                            />
+                            <div className={s.actions}>
+                                <Button isSubmit type={"green"} onClick={handleSubmit}>{t("sign_in")}</Button>
+                            </div>
+                        </form>
+                    )}
+                </Formik>
+            </div>
+        </>
     );
 };
 export default LoginWrapper;

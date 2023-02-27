@@ -78,6 +78,7 @@ return [
 
     'ru' => 'Русский',
     'adminBeneficiaries' => "Users",
+    'record_successfully_added' => "Record Successfully Edited",
 
      "welcome_message_part_one" => "Բարի գալուստ",
      "welcome_message_part_two" => "Ընտանիքում բռնության դեպքերի կենտրոնացված հաշվառման տեղեկատվական համակարգ",

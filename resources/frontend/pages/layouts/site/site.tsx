@@ -6,7 +6,8 @@ import {Col, Row} from 'react-grid-system'
 import { getUserData} from '../../../store/selectors'
 import {navigate} from '@reach/router'
 import Drawer from "../../../components/drawer/drawer";
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from "react-toastify";
+import '!style-loader!css-loader!react-toastify/dist/ReactToastify.css';
 
 interface ISite {
     path: string
@@ -15,7 +16,6 @@ interface ISite {
 const Site: React.FC<ISite> = ({children}) => {
 
     const dispatch = useDispatch()
-
     const {user,loggedIn} = useSelector(getUserData)
     const [isLoading, setLoading] = useState(true);
     //
@@ -23,16 +23,13 @@ const Site: React.FC<ISite> = ({children}) => {
         dispatch(checkLoggedIn())
     }, [])
 
-    // useEffect(() => {
-    //     (async () =>{
-    //         await  dispatch(checkLoggedIn())
-    //         // if (!loggedIn) {
-    //         //     navigate('/login')
-    //         // }
-    //     })()
-    // }, [])
+
+
     return loggedIn && (
         <Row className={s.mainRow}>
+            <div className={s.notificationDiv}>
+                <ToastContainer />
+            </div>
             <Drawer>
             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className={s.mainContainer}>
                 {children}

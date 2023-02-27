@@ -9,6 +9,7 @@ import populateCreateFormFields from "../../../../constants/populateCreateFormFi
 import {AdminApi} from '../../../../api/admin-api/admin-api';
 import validationRules from '../../../../utils/validationRule';
 import {useTranslation} from 'react-i18next';
+import { toast } from "react-toastify";
 
 interface ICreate {
     data?: { [key: string]: Object }
@@ -58,7 +59,15 @@ const Create: React.FC<ICreate> = (
 
         formData.append('value', JSON.stringify(values))
         const res: any = await AdminApi.store(formData, crudKey, isAdmin)
-        if (Number(res.status === 200)) await navigate(`/${isAdmin ? 'admin/' : ''}${redirectKey ?? crudKey}`)
+        if (Number(res.status === 200)) {
+            const options = {
+                type: toast.TYPE.SUCCESS,
+                position: toast.POSITION.BOTTOM_RIGHT
+            };
+
+            toast(t('record_successfully_added'), options);
+            await navigate(`/${isAdmin ? "admin/" : ""}${redirectKey ?? crudKey}`);
+        }
     }
 
     return (
