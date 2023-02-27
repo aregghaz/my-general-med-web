@@ -10,31 +10,51 @@
     padding-left: 10px;
     outline: none;
     margin-top: 10px;
+    border-radius: 10px;
     @include themify($themes) {
         color: themed('modalTitleColor');
         background-color: themed('modalInputBgColor');
-        border: 1px solid themed('inputBorderColor')
+        //border: 1px solid themed('inputBorderColor')
     }
-    @media only screen and (max-width: $smallDisplay) {
-        font-size: 12px;
+    @media only screen and (max-width: 1250px) {
+        font-size: 16px;
     }
 }
 
 .label {
-    font-size: 16px;
+    font-size: 18px;
     @include themify($themes) {
         color: themed('modalTitleColor');
     }
     font-weight: normal;
-    @media only screen and (max-width: $smallDisplay) {
-        font-size: 12px;
+    //@media only screen and (max-width: $smallDisplay) {
+    //    font-size: 12px;
+    //}
+    @media only screen and (max-width: 1250px) {
+        .blankLabel {
+            left: 2%;
+        }
     }
+    position: absolute;
+    top: -25%;
+    transform: translate(0);
+    z-index: 2;
+    left: 0%;
+    transition: 0.2s linear;
 
     span {
         color: $asteriskColor;
     }
 }
 
+.blankLabel {
+    color: gray;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-25%);
+    left: 5%;
+    font-size: 16px;
+}
 
 .errorBorder {
     border: 1.5px solid crimson !important;

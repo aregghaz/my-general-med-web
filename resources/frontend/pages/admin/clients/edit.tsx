@@ -48,6 +48,7 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
         { name: "pick_up", type: "timePicker", label: "pick_up" },
         { name: "drop_down", type: "timePicker", label: "drop_down" },
         { name: "location", type: "autocomplete", label: "location" },
+        { name: "price", type: "input", label: "price" },
 
     ];
 
