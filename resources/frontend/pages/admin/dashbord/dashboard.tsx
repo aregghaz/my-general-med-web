@@ -160,7 +160,6 @@ const Dashboard: React.FC<IDashboard> = () => {
         )();
 
     }, []);
-    console.log(    data);
     return (
         <div className={s.root}>
             <div className={s.block}>
