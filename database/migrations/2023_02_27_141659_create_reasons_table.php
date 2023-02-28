@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateClientTablePriceField extends Migration
+class CreateReasonsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class UpdateClientTablePriceField extends Migration
      */
     public function up()
     {
-        Schema::table('clients', function(Blueprint $table){
-            $table->float('price' , 8, 2)->nullable();
+        Schema::create('reasons', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('slug');
+            $table->timestamps();
         });
     }
 
@@ -25,6 +28,6 @@ class UpdateClientTablePriceField extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('reasons');
     }
 }

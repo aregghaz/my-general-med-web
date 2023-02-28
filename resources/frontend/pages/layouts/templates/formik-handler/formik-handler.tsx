@@ -97,7 +97,7 @@ const FormikHandler: React.FC<IFormikHandler> = (
                     name={item.name}
                     onChange={handleChange}
                     value={values[item.name]}
-                    label={item.label}
+                    label={t(item.label)}
                     placeholder={item.placeholder}
                 />
             );

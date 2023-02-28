@@ -48,6 +48,7 @@ class Clients extends Model
         'height',
         'additionalNote',
         'operator_note',
+        'reason_id',
 
     ];
 

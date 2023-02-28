@@ -86,6 +86,7 @@ const Home: React.FC<IHome> = () => {
     const [carData, setCarData] = useState<Array<any>>(null);
     const [car, setCar] = useState<IOption>(null);
     const [query, setQuery] = useState("");
+    const [reasons, setReasons] = useState<IOption>(null);
     const tableRef = useRef(null);
 
     const [ref, inView] = useInView({
@@ -178,11 +179,14 @@ const Home: React.FC<IHome> = () => {
                 setStatus(1);
                 setIsOpen(true);
                 break;
-            case "remove":
-                setIds([id]);
+            case "reRoute":
+                /// setIds([id]);
                 setStatus(4);
-                setIsOpen(true);
+                const getReasonData = await vendorAPI.getReasonData();
+                setCarData(getReasonData.data);
+                setIsModalOpen(true);
                 break;
+
         }
     };
 
@@ -209,7 +213,6 @@ const Home: React.FC<IHome> = () => {
                     progressCount: homeData.progressCount
 
                 }));
-
                 countRef.current++;
                 setLoading(false);
             }
@@ -288,10 +291,16 @@ const Home: React.FC<IHome> = () => {
     }
 
     const handleActionMiddleware = async (status: number, action: string) => {
+        console.log(action, "status");
         switch (action) {
             case "assign":
                 const getCarData = await vendorAPI.getCarsDataForSelect("cars");
                 setCarData(getCarData.cars);
+                setIsModalOpen(true);
+                break;
+            case "reRoute":
+                const getReasonData = await vendorAPI.getReasonData();
+                setCarData(getReasonData.data);
                 setIsModalOpen(true);
                 break;
             case "default":
@@ -299,15 +308,6 @@ const Home: React.FC<IHome> = () => {
                 setStatus(status);
                 break;
         }
-        // if (ids.length > 0 && status !== 99) {
-        //     setIsOpen(true);
-        //     setStatus(status);
-        // } else if (status == 99) {
-        //     const getCarData = await vendorAPI.getCarsDataForSelect("cars");
-        //     setCarData(getCarData.cars);
-        //     setIsModalOpen(true);
-        // }
-
     };
     const agreeWith = (callOrNot: boolean) => {
         setAgreement(callOrNot);
@@ -331,10 +331,20 @@ const Home: React.FC<IHome> = () => {
 
 
     const handlerSetCar = async () => {
-        const getCarData = await vendorAPI.assignCarToClient({
-            ids: ids,
-            carId: parseFloat(car.value)
-        });
+        var getCarData;
+
+        if (status === 4) {
+            const reasonId = car.id;
+            getCarData = await homeAPI.changeClientsTypes({ status, ids, reasonId });
+            setIds([]);
+        } else {
+            const carId = parseFloat(car.value);
+            getCarData = await vendorAPI.assignCarToClient({
+                ids: ids,
+                carId: carId
+            });
+        }
+
         if (getCarData.success) {
             handlerCloseModal();
             setLoading(true);
@@ -376,7 +386,7 @@ const Home: React.FC<IHome> = () => {
                         <div className={s.import_block}>
                             <RemoveIcon
                                 className={`${s.icon} ${typeId === 2 || typeId === 4 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
-                                onClick={() => handleActionMiddleware(4, "default")}
+                                onClick={() => handleActionMiddleware(4, "reRoute")}
                             />
                         </div>
                         <div className={s.import_block}>

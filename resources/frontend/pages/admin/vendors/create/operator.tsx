@@ -19,7 +19,7 @@ const OperatorCreate: React.FC<IVendorCreate> = () => {
         { name: "surname", type: "input", label: "surname" },
         { name: "email", type: "input", label: "email" },
         { name: "address", type: "input", label: "address" },
-        { name: "phone_number", type: "input", label: "phone_number" },
+        { name: "phone_number", type: "input", label: "phone_number",inputType:'tel'  },
         { name: "fields", type: "multiSelect", label: "fields" },
         { name: "id", type: "hidden", inputType: "hidden" },
         { name: "password", type: "input", inputType: "password" }

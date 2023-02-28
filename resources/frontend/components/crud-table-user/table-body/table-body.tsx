@@ -56,7 +56,7 @@ const TableBody: React.FC<ITableBody> = (
                                   className={selectedIds?.includes(item["id"]) ? `${s.chosen}` : ""}>
                             {
                                 (isEdit || isDelete || isInfo || isAssign) &&
-                                <TableData item={99999} key={999999}>
+                                <TableData item={item} key={999999} handlerAction={handlerAction}>
                                     <div className={s.iconsWrapper}>
                                         {
                                             isDelete &&
@@ -88,7 +88,7 @@ const TableBody: React.FC<ITableBody> = (
                                         {isRemove && typeId === 1 &&
                                             <RemoveIcon
                                                 className={s.icon}
-                                                onClick={() => handlerAction(item.id, "remove")}
+                                                onClick={() => handlerAction(item.id, "reRoute")}
                                             />
                                         }
 

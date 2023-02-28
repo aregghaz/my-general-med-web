@@ -12,6 +12,7 @@ import s from "../../../components/time-picker/timepicker.module.scss";
 import Textarea from "../../../components/textarea/textarea";
 import Button from "../../../components/button/button";
 import Select, { IOption } from "../../../components/select/select";
+import { toast, ToastOptions } from "react-toastify";
 
 interface IShow {
     path: string;
@@ -79,8 +80,36 @@ const Show: React.FC<IShow> = ({ id }) => {
 
     }, []);
 
+    // const sendNotification = (options: ToastOptions, text: string) => {
+    //     toast(t(text), options);
+    // };
     const handlerUpdate = async () => {
-        const homeData = await homeAPI.updateClient(values, id);
+        ////TODO optimize this part
+        if (!values.car.value) {
+            const options = {
+                type: toast.TYPE.WARNING,
+                position: toast.POSITION.TOP_RIGHT
+            };
+            toast(t("please select car"), options);
+        } else {
+            const homeData = await homeAPI.updateClient(values, id).catch((e) => {
+                const options = {
+                    type: toast.TYPE.ERROR,
+                    position: toast.POSITION.TOP_RIGHT
+                };
+                toast(t(e), options);
+            });
+            if (homeData.success) {
+                const options = {
+                    type: toast.TYPE.SUCCESS,
+                    position: toast.POSITION.TOP_RIGHT
+                };
+
+                toast(t("record_successfully_added"), options);
+            }
+        }
+
+
     };
 
 
@@ -173,7 +202,7 @@ const Show: React.FC<IShow> = ({ id }) => {
                     onChange={(options: IOption) => setFieldValue((state: any) => {
                         return {
                             ...state,
-                            "car": options
+                            car: options
                         };
                     })}
                     /// onChange={handlerSetCar}

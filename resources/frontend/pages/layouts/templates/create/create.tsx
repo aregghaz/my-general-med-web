@@ -62,7 +62,7 @@ const Create: React.FC<ICreate> = (
         if (Number(res.status === 200)) {
             const options = {
                 type: toast.TYPE.SUCCESS,
-                position: toast.POSITION.BOTTOM_RIGHT
+                position: toast.POSITION.TOP_RIGHT
             };
 
             toast(t('record_successfully_added'), options);

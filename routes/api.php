@@ -32,6 +32,7 @@ Route::group([
     Route::post('/test', [\App\Http\Controllers\TestController::class, 'index']);
     Route::get('/getDate', [\App\Http\Controllers\TestController::class, 'getDate']);
 
+    Route::get('/get-reason-data', [HomeController::class, 'getReasonData']);
     Route::get('/car-data-for-select', [HomeController::class, 'carDataForSelect']);
     Route::get('/clients-data-driver', [ApiController::class, 'getClientsDataForDriver']);
     Route::get('/client-data-driver/{id}', [ApiController::class, 'getClientDataForDriver']);

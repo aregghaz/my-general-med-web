@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { AdminApi } from "../../../api/admin-api/admin-api";
 import List from "../../layouts/templates/list/list";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
 import Tabs from "../../../components/tabs/tabs";
 import { navigate } from "@reach/router";
 
@@ -18,6 +17,7 @@ const Status: React.FC<Beneficiary> = () => {
     const [los, setLos] = useState<number>(0);
     const [clientStatus, setClientStatus] = useState<number>(0);
     const [requestType, setRequestType] = useState<number>(0);
+    const [reasons, setReasons] = useState<number>(0);
 
     const { t } = useTranslation();
     useEffect(() => {
@@ -29,6 +29,7 @@ const Status: React.FC<Beneficiary> = () => {
                 setLos(data.los);
                 setClientStatus(data.clientStatus);
                 setRequestType(data.requestType);
+                setReasons(data.reasons);
 
             }
         )();
@@ -46,7 +47,7 @@ const Status: React.FC<Beneficiary> = () => {
             id: 1,
             name: "gender",
             count: genderCount,
-            selected:false,
+            selected: false
         },
         // {
         //     id: 2,
@@ -57,18 +58,23 @@ const Status: React.FC<Beneficiary> = () => {
             id: 4,
             name: "request_type",
             count: requestType,
-            selected:false,
+            selected: false
         }, {
             id: 3,
             name: "los",
             count: los,
-            selected:false,
+            selected: false
         },
         {
             id: 5,
             name: "status",
             count: clientStatus,
-            selected:false,
+            selected: false
+        }, {
+            id: 6,
+            name: "reasons",
+            count: reasons,
+            selected: false
         }
     ];
 
@@ -86,8 +92,8 @@ const Status: React.FC<Beneficiary> = () => {
 
         }
     };
-    const handlerEditItem = async (id: number, tabId: number) => await navigate(`/admin/changeStatus/${id}/${tabId}`)
-    const handlerAddItem = async (id: number, tabId: number) => await navigate(`/admin/addStatus/${tabId}/create`)
+    const handlerEditItem = async (id: number, tabId: number) => await navigate(`/admin/changeStatus/${id}/${tabId}`);
+    const handlerAddItem = async (id: number, tabId: number) => await navigate(`/admin/addStatus/${tabId}/create`);
     return (
         data &&
         <>

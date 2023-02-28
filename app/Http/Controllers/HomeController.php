@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Resources\CarsSelectCollection;
 use App\Http\Resources\ClientCollection;
 use App\Http\Resources\ClientFieldCollection;
+use App\Http\Resources\StatusCollection;
 use App\Models\Cars;
 use App\Models\Clients;
+use App\Models\Reason;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -55,7 +56,7 @@ class HomeController extends Controller
         'birthday'
     ];
 
-    public function clientData(Request $request)
+    public function clientData(Request $request): JsonResponse
     {
         $allFields = $request->user()->fields()->get()->pluck('name')->toArray();
         $vendorFields = $request->titles ? $request->titles : $allFields;
@@ -72,7 +73,7 @@ class HomeController extends Controller
         $available = Clients::where('type_id', 2)->where('vendor_id', '<>', $vendorId)->OrWhereNull('vendor_id');
         $cancelCount = Clients::where(['type_id' => 2, 'vendor_id' => $vendorId]);
         $progressCount = Clients::where('type_id', 5);
-        $doneCount = Clients::where(['type_id'=> 6, 'vendor_id' => $vendorId]);
+        $doneCount = Clients::where(['type_id' => 6, 'vendor_id' => $vendorId]);
 
         if ($typeId === 2 || $typeId === 3 || $typeId === 4) {
             if (($key = array_search('car_id', $vendorFields)) !== false) {
@@ -85,10 +86,10 @@ class HomeController extends Controller
                 $clients = DB::table('clients')->where('type_id', 2)->where('vendor_id', '<>', $vendorId)->orWhereNull('vendor_id');
             }
         } else {
-            $clients =Clients::where(['clients.type_id' => $request->typeId, 'clients.vendor_id' => $vendorId]);
+            $clients = Clients::where(['clients.type_id' => $request->typeId, 'clients.vendor_id' => $vendorId]);
         }
         if (isset($queryData)) {
-         ///   dd(isset($queryData));
+            ///   dd(isset($queryData));
             $this->convertQuery($queryData, $vendorFields, $clients);
 
             $tripCount = $tripCount->where(function ($query) use ($queryData) {
@@ -170,9 +171,9 @@ class HomeController extends Controller
         ], 200);
     }
 
-    public function show($id, Request $request)
+    public function show($id, Request $request): JsonResponse
     {
-        $vendorId  = $request->user()->vendor_id;
+        $vendorId = $request->user()->vendor_id;
         $client = Clients::with([
             /// 'origin',
             /// 'destination',
@@ -191,9 +192,9 @@ class HomeController extends Controller
         ], 200);
     }
 
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
-        $vendorID = Auth::user()->vendor_id;
+        $vendorID = $request->user()->vendor_id;
         $showMore = $request->showmore;
 
 
@@ -250,7 +251,7 @@ class HomeController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function changeClientType(Request $request)
+    public function changeClientType(Request $request): JsonResponse
     {
         $ids = $request->ids;
         $vendorId = $request->user()->vendor_id;
@@ -258,7 +259,7 @@ class HomeController extends Controller
             Clients::whereIn('id', $ids)->update(['type_id' => $request->status, 'vendor_id' => null, "car_id" => null]);
 
         } else if ((int)$request->status === 4) {
-            Clients::whereIn('id', $ids)->update(['type_id' => 2, "car_id" => null]);
+            Clients::whereIn('id', $ids)->update(['type_id' => 2, "car_id" => null, 'reason_id' => (int)$request->reasonId]);
         } else if ((int)$request->status === 1) {
             Clients::whereIn('id', $ids)->update(['type_id' => 1, 'vendor_id' => $vendorId, "car_id" => null]);
         } else {
@@ -268,6 +269,7 @@ class HomeController extends Controller
             $this->createAction($vendorId, $id, (int)$request->status, 1);
         }
         return response()->json([
+            'success' => 1,
             'status' => 200
         ], 200);
     }
@@ -277,7 +279,7 @@ class HomeController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function carDataForSelect(Request $request)
+    public function carDataForSelect(Request $request): JsonResponse
     {
         $vendorId = $request->user()->vendor_id;
         $cars = Cars::with('driver')->where('vendor_id', $vendorId)->get();
@@ -316,13 +318,22 @@ class HomeController extends Controller
         }
     }
 
-    public function getClientDataDriver(Request $request)
+    public function getClientDataDriver(Request $request): JsonResponse
     {
         $vendorId = $request->user()->vendor_id;
         $carId = $request->user()->driver->car_id;
         $clients = Clients::where(['vendor_id' => $vendorId, 'car_id' => $carId])->get();
         return response()->json([
             'clients' => $clients,
+            'success' => 1,
+        ], 200);
+    }
+
+    public function getReasonData(): JsonResponse
+    {
+        $reasons = Reason::get();
+        return response()->json([
+            'data' => new StatusCollection($reasons),
             'success' => 1,
         ], 200);
     }

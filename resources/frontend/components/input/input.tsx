@@ -36,6 +36,8 @@ const Input: React.FC<IInput> = (
         labelStyle,
         ref,
     }) => {
+
+    console.log(value,!String(value),'value');
     return (
         <>
             {error && <div className={s.error}>{error}</div>}

@@ -26,6 +26,9 @@ export const vendorAPI = {
     getCarsDataForSelect(crudKey: string) {
         return axios.get(`/api/car-data-for-select`).then(res => res.data)
     },
+    getReasonData() {
+        return axios.get(`/api/get-reason-data`).then(res => res.data)
+    },
     getVendorsDataForSelect() {
         return axios.get(`/api/admin/vendor-data-for-select`).then(res => res.data)
     },

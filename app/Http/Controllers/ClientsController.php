@@ -233,11 +233,13 @@ class ClientsController extends Controller
             "drop_down" => $request->drop_down,
             "additionalNote" => $request->additionalNote,
             "type_id" => $request->status['id'],
+            "car_id" => (int)$request->car['value'],
         ]);
         $vendorId = $request->user()->vendor_id;
         /////TODO SHOULD ADD IF CHANGE STATUS
         $this->createAction($vendorId, $id, $request->status['id'], 1);
         return response()->json([
+            "success" => 1
         ], 200);
     }
 

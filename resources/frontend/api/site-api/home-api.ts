@@ -15,7 +15,7 @@ export const homeAPI = {
     getCLientById(id: number) {
         return axios.get(`/api/home-data/${id}`).then(res => res.data)
     },
-    changeClientsTypes(clientTypeChangeData: {status:number, ids:Array<number>}){
+    changeClientsTypes(clientTypeChangeData: {status:number, ids:Array<number>, reasonId?:number}){
         return axios.post(`/api/changeClientType`, clientTypeChangeData, {
             // cancelToken: new CancelToken(function executor(c) {
             //     cancelPost = c;

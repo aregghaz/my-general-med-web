@@ -61,10 +61,10 @@ const Edit: React.FC<IEdit> = (
         if (Number(res.status === 200)) {
             const options = {
                 type: toast.TYPE.SUCCESS,
-                position: toast.POSITION.BOTTOM_RIGHT
+                position: toast.POSITION.TOP_RIGHT
             };
 
-            toast(t('record_successfully_added'), options);
+            toast(t('record_successfully_edited'), options);
           await navigate(`/${redirectKey ?? crudKey}`);
         }
     }

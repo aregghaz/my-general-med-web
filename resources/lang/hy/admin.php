@@ -75,7 +75,8 @@ return [
     'reRoute' => 'Rerouted trip',
     'inProgress' => 'In progress',
     'done' => 'Done trip',
-
+    'miles' => 'Miles',
+    'price' => 'Trip price',
     'ru' => 'Русский',
     'adminBeneficiaries' => "Users",
     'record_successfully_added' => "Record Successfully Edited",

@@ -14,7 +14,6 @@ const defaultDat ={
         id: 0,
         value: '',
         label: '',
-
     },
     pick_up_address:"",
     los:"",
