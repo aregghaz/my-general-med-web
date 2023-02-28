@@ -5,6 +5,11 @@
 
 .select {
     margin-top: 10px;
+    & svg {
+        width: 25px !important;
+        height: 25px !important;
+        color: black !important;
+    }
 }
 
 .react-select-container {

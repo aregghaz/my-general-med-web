@@ -26,12 +26,15 @@ const TimePickers: React.FC<ITextarea> = (
         <label
             className={`${s.label}`}
             htmlFor={name}
+            style={{
+                color: value ? "black" : "gray",
+            }}
         >
             {`${label}`} {isAsterisk && <span>*</span>}
         </label>
 
         <TimePicker
-            format={"HH:mm"}
+            format={"h:m"}
             className={s.time}
             clockIcon={null}
             clearIcon={null}

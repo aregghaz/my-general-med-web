@@ -4,12 +4,21 @@
     width: 100%;
     border: none;
 
+    & span {
+        font-size: 40px;
+        display: inline-block;
+        height: auto !important;
+        transform: translateY(5%);
+        font-family: roboto;
+    }
+
     input, select {
-        width: 50px !important;
-        height: 40px;
-        font-size:20px;
-       /// padding: 5px
+        width: 100px !important;
+        height: 50px;
+        //font-size:20px;
+        padding: 5px;
         text-align:center;
+        font-size: 18px;
     }
     select{
         width: 85px !important;
