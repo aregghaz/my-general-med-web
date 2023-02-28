@@ -15,6 +15,7 @@ import TextField from "../../../components/text-field/text-field";
 import Textarea from "../../../components/textarea/textarea";
 import Button from "../../../components/button/button";
 import { AdminApi } from "../../../api/admin-api/admin-api";
+import { toast } from "react-toastify";
 
 interface IShow {
     path: string;
@@ -78,7 +79,21 @@ const Show: React.FC<IShow> = ({ id }) => {
 
 
     const handlerUpdate = async () => {
-        await AdminApi.updateClient(values,id);
+       const homeData = await AdminApi.updateClient(values,id).catch((e) => {
+            const options = {
+                type: toast.TYPE.ERROR,
+                position: toast.POSITION.TOP_RIGHT
+            };
+            toast(t(e), options);
+        });
+        if (homeData.success) {
+            const options = {
+                type: toast.TYPE.SUCCESS,
+                position: toast.POSITION.TOP_RIGHT
+            };
+
+            toast(t("record_successfully_edited"), options);
+        }
     }
 
 

@@ -25,6 +25,7 @@ import { AdminApi } from "../../../api/admin-api/admin-api";
 import { navigate } from "@reach/router";
 import AssignVendorIcon from "-!svg-react-loader!../../../images/add-company-icon.svg";
 import { actionsTabs } from "../../../store/tab";
+import { toast } from "react-toastify";
 
 
 interface IHome {
@@ -182,7 +183,7 @@ const Home: React.FC<IHome> = () => {
                     titles: titles.length ? titles : JSON.parse(titlesData),
                     showMore: countRef.current,
                     typeId: typeId,
-                    queryData:query
+                    queryData: query
                 });
                 setDefaultData(homeData.titles);
                 dispatch(actions.setTitles({
@@ -207,7 +208,7 @@ const Home: React.FC<IHome> = () => {
 
     const onSearchInput = async (event: { search: string }) => {
         const titlesData = localStorage.getItem("titles");
-        setQuery(event.search)
+        setQuery(event.search);
         const homeData = await AdminApi.getAllData({
             titles: titles.length ? titles : JSON.parse(titlesData),
             showMore: countRef.current,
@@ -305,14 +306,17 @@ const Home: React.FC<IHome> = () => {
         setLoading(true);
     };
 
-
     const handlerSetVendor = async () => {
         const getCarData = await vendorAPI.assignVendorToClient({
             ids: ids,
             vendorId: selectedVendor.id
         });
-
         if (getCarData.success) {
+            const options = {
+                type: toast.TYPE.SUCCESS,
+                position: toast.POSITION.TOP_RIGHT
+            };
+            toast(t("vendor_successfully_added"), options);
             setIds([]);
             handlerCloseModal();
             setLoading(true);
@@ -358,16 +362,10 @@ const Home: React.FC<IHome> = () => {
                             <Filters height="24px" onClick={showFilter} />
                         </div>
                         <div className={s.upload_block}>
-                            <label htmlFor="uploadFile">
-                                <DownloadTableExcel
-                                    filename="users table"
-                                    sheet="users"
-                                    currentTableRef={tableRef.current}
-                                >
-                                    <Upload />
-                                </DownloadTableExcel>
 
-                            </label>
+                                <label htmlFor="uploadFile">
+                                    <Upload />
+                                </label>
                             <input
                                 id="uploadFile"
                                 type="file"
@@ -378,7 +376,13 @@ const Home: React.FC<IHome> = () => {
                         </div>
                         <div className={s.import_block}>
                             <label>
+                                <DownloadTableExcel
+                                    filename="users table"
+                                    sheet="users"
+                                    currentTableRef={tableRef.current}
+                                >
                                 <Import />
+                                </DownloadTableExcel>
                             </label>
                         </div>
                         <div className={s.import_block} onClick={() => {

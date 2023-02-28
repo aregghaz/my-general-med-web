@@ -26,6 +26,7 @@ import AssignIcon from "-!svg-react-loader!../../../images/car-travel-plus-add-s
 import ClaimTrip from "-!svg-react-loader!../../../images/briefcase-work-business-add-svgrepo-com.svg";
 import RemoveIcon from "-!svg-react-loader!../../../images/briefcase-work-business-delete-svgrepo-com.svg";
 import { actionsTabs } from "../../../store/tab";
+import { toast } from "react-toastify";
 
 interface IHome {
     path: string;
@@ -332,7 +333,6 @@ const Home: React.FC<IHome> = () => {
 
     const handlerSetCar = async () => {
         var getCarData;
-
         if (status === 4) {
             const reasonId = car.id;
             getCarData = await homeAPI.changeClientsTypes({ status, ids, reasonId });
@@ -346,6 +346,11 @@ const Home: React.FC<IHome> = () => {
         }
 
         if (getCarData.success) {
+            const options = {
+                type: toast.TYPE.SUCCESS,
+                position: toast.POSITION.TOP_RIGHT
+            };
+            toast(t("record_successfully_updated"), options);
             handlerCloseModal();
             setLoading(true);
             setIds([]);
@@ -401,14 +406,7 @@ const Home: React.FC<IHome> = () => {
                         </div>
                         <div className={s.upload_block}>
                             <label htmlFor="uploadFile">
-                                <DownloadTableExcel
-                                    filename="users table"
-                                    sheet="users"
-                                    currentTableRef={tableRef.current}
-                                >
-                                    <Upload />
-                                </DownloadTableExcel>
-
+                                <Upload />
                             </label>
                             <input
                                 id="uploadFile"
@@ -420,7 +418,13 @@ const Home: React.FC<IHome> = () => {
                         </div>
                         <div className={s.import_block}>
                             <label>
-                                <Import />
+                                <DownloadTableExcel
+                                    filename="users table"
+                                    sheet="users"
+                                    currentTableRef={tableRef.current}
+                                >
+                                    <Import />
+                                </DownloadTableExcel>
                             </label>
                         </div>
                         <div className={s.import_block} onClick={() => {

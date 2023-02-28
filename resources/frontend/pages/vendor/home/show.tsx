@@ -105,7 +105,7 @@ const Show: React.FC<IShow> = ({ id }) => {
                     position: toast.POSITION.TOP_RIGHT
                 };
 
-                toast(t("record_successfully_added"), options);
+                toast(t("record_successfully_edited"), options);
             }
         }
 
@@ -205,7 +205,7 @@ const Show: React.FC<IShow> = ({ id }) => {
                             car: options
                         };
                     })}
-                    /// onChange={handlerSetCar}
+                    isDisabled={(values.status.id == 6)}
                     options={carData}
                     value={values.car}
                     name={"Cars"}
@@ -225,7 +225,7 @@ const Show: React.FC<IShow> = ({ id }) => {
                             };
                         });
                     }}
-
+                    isDisabled={(values.status.id == 6)}
                     options={statuses}
                     value={values.status}
                     name={"Cars"}

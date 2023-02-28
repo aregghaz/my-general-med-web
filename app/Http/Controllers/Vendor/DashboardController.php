@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Vendor;
 use App\Http\Controllers\Controller;
 use App\Models\Cars;
 use App\Models\Clients;
-use App\Models\Driver;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,14 +15,20 @@ class DashboardController extends Controller
     {
 
         $vendorId = $request->user()->vendor_id;
-        $carsId = Cars::where('vendor_id',$vendorId)->with('driver.user')->get()->toArray();
-
-        $carsIdData = array_column($carsId, 'id');
+        $cars = Cars::where('vendor_id', $vendorId)->with('driver.user')->orderBy("id")->get();
+        $driverName = [];
+        foreach ($cars as $index => $car) {
+            $driverName[$index] = '';
+            foreach ($car->driver as $key =>  $driver ) {
+                $driverName[$index] .= ($key == 1 ? '-' : '').$driver->user->name ;
+            }
+        }
+        $carsIdData = array_column($cars->toArray(), 'id');
 //        $carsName =     Driver::select(
 //            DB::raw('car_id as car_id'),
 //            DB::raw('id as id'),
 //        )->whereIn('car_id', $carsId)->groupBy('car_id')->groupBy('id')->get();
-     ///   dd($carsId);
+        ///   dd($carsId);
 //        dd($carsName);
         $data = Clients::select(
             DB::raw('year(created_at) as year'),
@@ -45,7 +50,7 @@ class DashboardController extends Controller
             DB::raw('sum(price) as price'),
         )
             ->where(DB::raw('date(created_at)'), '>=', "2023-01-01")
-            ->whereIn('car_id',  $carsIdData)
+            ->whereIn('car_id', $carsIdData)
             ->groupBy('car_id')
             ->where('type_id', '=', 6)
             ->orderBy('car_id')
@@ -57,7 +62,7 @@ class DashboardController extends Controller
             DB::raw('count(id) as count'),
         )
             ->where(DB::raw('date(created_at)'), '>=', "2023-01-01")
-            ->whereIn('car_id',  $carsIdData)
+            ->whereIn('car_id', $carsIdData)
             ->where('type_id', '=', 6)
             ->groupBy('car_id')
             ->orderBy('car_id')
@@ -85,11 +90,11 @@ class DashboardController extends Controller
             'profitInYear' => $profitInYear,
             'vendorProfit' => [
                 "profit" => $vendorProfit,
-                'vendorsList' => $vendorsListData
+                'vendorsList' => $driverName
             ],
             'tripCount' => [
                 "count" => $vendorTripCount,
-                'vendorsList' => $vendorsListData
+                'vendorsList' => $driverName
             ],
             'totalProfit' => $totalProfit[0],
         ], 200);

@@ -81,6 +81,8 @@ return [
     'sign_in' => 'sign in',
     'record_successfully_added' => "Record Successfully Added",
     'record_successfully_edited' => "Record Successfully Edited",
+    'vendor_successfully_added' => "Vendor Successfully Changed",
+    'record_successfully_updated' => "Record Successfully Updated",
 
 
     'seeMore' => 'Home number',

@@ -178,6 +178,7 @@ class AdminController extends Controller
             "operator_note" => $request->operator_note,
         ]);
         return response()->json([
+            "success" => 1
         ], 200);
     }
 }

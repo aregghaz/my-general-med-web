@@ -43,6 +43,7 @@ interface ISelect {
     handlerMenuOpen?: () => void
     handlerMenuClose?: () => void
     hideSelectedOptions?: boolean
+    isDisabled?: boolean
     isMenuAdd?: boolean,
     handlerAdd?: () => void
 }
@@ -105,6 +106,7 @@ const Select: React.FC<ISelect> = (
         handlerMenuOpen,
         hideSelectedOptions = false,
         isMenuAdd = false,
+        isDisabled = false,
         handlerAdd
     }
 ) => {
@@ -212,6 +214,7 @@ const Select: React.FC<ISelect> = (
                 isSearchable={isSearchable}
                 onChange={onChange}
                 ///FIXME: ADD THIS PART
+                isDisabled={isDisabled}
                 /// isOptionDisabled={() => 5 >= 3}
                 getOptionLabel={getOptionLabel}
                 getOptionValue={getOptionValue}

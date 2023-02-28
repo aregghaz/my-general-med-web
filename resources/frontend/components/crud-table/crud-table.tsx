@@ -41,13 +41,13 @@ const CrudTable: React.FC<ICrudTable> = (
     }
     return (
         <>
-            {/*<DownloadTableExcel*/}
-            {/*    filename="users table"*/}
-            {/*    sheet="users"*/}
-            {/*    currentTableRef={tableRef.current}*/}
-            {/*>*/}
-            {/*    <button className={s.download_btn}> Export excel</button>*/}
-            {/*</DownloadTableExcel>*/}
+            <DownloadTableExcel
+                filename="users table"
+                sheet="users"
+                currentTableRef={tableRef.current}
+            >
+                <button className={s.download_btn}> Export excel</button>
+            </DownloadTableExcel>
 
             <table className={s.table} ref={tableRef}>
                 <TableHead titles={titles} titleSort={titleSort} filterTable={filterTable} titleName={titleName}/>
