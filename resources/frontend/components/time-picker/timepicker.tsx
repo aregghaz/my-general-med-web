@@ -34,7 +34,7 @@ const TimePickers: React.FC<ITextarea> = (
         </label>
 
         <TimePicker
-            format={"h:m"}
+            format={"HH:mm"}
             className={s.time}
             clockIcon={null}
             clearIcon={null}
