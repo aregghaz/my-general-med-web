@@ -4,12 +4,14 @@
 
 .dataPicker {
     position: absolute !important;
-    z-index: 1 !important;
+    //z-index: 1 !important;
+    z-index: 9999 !important;
     ///width: 300px !important;
    /// background-color: white !important;
    /// border: 1px solid !important;
 
 }
+
 
 .input {
     position: relative;
@@ -17,6 +19,11 @@
     width: 100%;
     height: 50px;
     padding-left: 10px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid black;
+    cursor: pointer;
     outline: none;
     margin-top: 10px;
     @include themify($themes) {

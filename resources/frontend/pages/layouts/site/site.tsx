@@ -28,7 +28,7 @@ const Site: React.FC<ISite> = ({children}) => {
     return loggedIn && (
         <Row className={s.mainRow}>
             <div className={s.notificationDiv}>
-                <ToastContainer />
+                <ToastContainer/>
             </div>
             <Drawer>
             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className={s.mainContainer}>

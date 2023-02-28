@@ -22,7 +22,7 @@ const DataPicker: React.FC<IDataPicker> = (
         value
     }) => {
     const [show, setShow] = useState<boolean>(false);
-    const getDateValue =value ? new Date(value) : new Date().toLocaleDateString();
+    const getDateValue = value ? new Date(value) : new Date().toLocaleDateString();
     return (
         <>
             <label className={s.label}>{label}</label>

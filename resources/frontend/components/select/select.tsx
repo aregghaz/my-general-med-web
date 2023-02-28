@@ -150,25 +150,51 @@ const Select: React.FC<ISelect> = (
                         /// backgroundColor: 'black',
                         //  borderRadius: "15px"
                         borderButton: "1px solid #D63D3D",
-                        height: 50,
-                        outline: "none"
+                        // height: 50,
+                        width: "100%",
+                        outline: "none",
+                        borderTop: "none",
+                        borderLeft: "none",
+                        borderRight: "none",
+                        borderBottom: "1px solid black",
+                        overflowX: "auto",
+                        // borderColor: state.menuIsOpen ? 'grey' : 'red',
                     }),
-                    menu: base => ({
+                    valueContainer: (baseStyles, state) => ({
+                       ...baseStyles,
+                       display: "flex",
+                        flexDirection: "row",
+                    }),
+                    indicatorsContainer: base => ({
                         ...base,
+                        color: "aqua",
+                    }),
+                    menu: (baseStyles, state) => ({
+                        ...baseStyles,
                         // override border radius to match the box
                         ///borderRadius: 0,
                         // backgroundColor: '#6D9886',
                         backgroundColor: "white",
                         // borderRadius: "15px",
                         // kill the gap
-                        marginTop: 0
+                        // gap: "10px",
+                        marginTop: "3px",
+                        zIndex: 9999,
+                        outline: "none",
+                        boxShadow: "none",
+                    }),
+                    option: (baseStyles, state) => ({
+                        ...baseStyles,
+                        padding: "15px",
+                        backgroundColor: state.isSelected ? "#C54944" : baseStyles.backgroundColor
                     }),
                     menuList: base => ({
                         ...base,
                         // kill the white space on first and last option
-                        padding: 0,
+                        padding: "0px",
                         // borderRadius: "15px",
-                        backgroundColor: "white"
+                        backgroundColor: "white",
+                        borderRadius: "5px",
                     }),
                     multiValue: (baseStyles, state) => ({
                         ...baseStyles,
@@ -192,7 +218,7 @@ const Select: React.FC<ISelect> = (
                         ...styles,
                         // backgroundColor: '#6D9886',
                         backgroundColor: "white",
-                        color: data.color
+                        color: data.color,
                     })
                 }}
                 className={s.select}
