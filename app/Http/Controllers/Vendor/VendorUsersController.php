@@ -57,7 +57,7 @@ class VendorUsersController extends Controller
                     'email' => $vendorData->email,
                     'address' => $vendorData->address,
                     'birthday' => $vendorData->birthday,
-                    'password' => $vendorData->password,
+                   /// 'password' => $vendorData->password,
                     'phone_number' => $vendorData->phone_number,
                     'license' => $vendorData->driver->license,
                     'picture' => $vendorData->driver->picture,
