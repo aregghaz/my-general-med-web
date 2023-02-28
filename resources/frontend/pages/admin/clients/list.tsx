@@ -85,7 +85,7 @@ const Home: React.FC<IHome> = () => {
     const [selectedVendor, setSelectedVendor] = useState<IOption>(null);
     const tableRef = useRef(null);
 
-
+    const [query, setQuery] = useState("");
     const [ref, inView] = useInView({
         threshold: 1
     });
@@ -127,6 +127,10 @@ const Home: React.FC<IHome> = () => {
     const [titles, setTitles] = useState<string[]>([]);
 
     const openSearch = () => {
+        if (open) {
+            setQuery("");
+            setLoading(true);
+        }
         setOpen(!open);
     };
 
@@ -172,12 +176,13 @@ const Home: React.FC<IHome> = () => {
 
     useEffect(() => {
         (async () => {
-            if ((inView || loading) && !open) {
+            if ((inView || loading)) {
                 const titlesData = localStorage.getItem("titles");
                 const homeData = await AdminApi.getAllData({
                     titles: titles.length ? titles : JSON.parse(titlesData),
                     showMore: countRef.current,
-                    typeId: typeId
+                    typeId: typeId,
+                    queryData:query
                 });
                 setDefaultData(homeData.titles);
                 dispatch(actions.setTitles({
@@ -198,11 +203,11 @@ const Home: React.FC<IHome> = () => {
             ///   homeAPI.cancelRequest();
         };
 
-    }, [inView, loading, agreement]);
+    }, [inView, loading, typeId]);
 
     const onSearchInput = async (event: { search: string }) => {
         const titlesData = localStorage.getItem("titles");
-
+        setQuery(event.search)
         const homeData = await AdminApi.getAllData({
             titles: titles.length ? titles : JSON.parse(titlesData),
             showMore: countRef.current,

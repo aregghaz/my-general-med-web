@@ -58,13 +58,12 @@ class ClientsController extends Controller
         $clientsData = [];
         $selectedFieldsTitle = [];
         $typeId = (int)$request->typeId;
-        $tripCount = Clients::where(['type_id' => 1])->count();
-        $available = Clients::where('type_id', 2)
-            ////->where('vendor_id', '=', null)
-            ->count();
-        $cancelCount = Clients::where('type_id', 2)->where('vendor_id', '!=', null)->count();
-        $progressCount = Clients::where('type_id', 5)->count();
-        $doneCount = Clients::where('type_id', 6)->count();
+        $queryData = $request->queryData;
+        $tripCount = Clients::where(['type_id' => 1]);
+        $available = Clients::where('type_id', 2);
+        $cancelCount = Clients::where('type_id', 2)->where('vendor_id', '!=', null);
+        $progressCount = Clients::where('type_id', 5);
+        $doneCount = Clients::where('type_id', 6);
 
 
         if ($typeId === 2 || $typeId === 3 || $typeId === 4) {
@@ -86,9 +85,36 @@ class ClientsController extends Controller
             $clients = DB::table('clients')->where('type_id', $request->typeId);
         }
         ///  $clients = DB::table('clients')->where('type_id', $request->typeId);
-        if (isset($request->queryData)) {
-            $this->convertQuery($request->queryData, $vendorFields, $clients);
+        if (isset($queryData)) {
+            $this->convertQuery($queryData, $vendorFields, $clients);
+
+            $tripCount = $tripCount->where(function ($query) use ($queryData) {
+                $query->where('fullName', 'LIKE', '%' . $queryData . '%')
+                    ->orWhere('trip_id', 'LIKE', '%' . $queryData . '%');
+            });
+            $available = $available->where(function ($query) use ($queryData) {
+                $query->where('fullName', 'LIKE', '%' . $queryData . '%')
+                    ->orWhere('trip_id', 'LIKE', '%' . $queryData . '%');
+            });
+            $cancelCount = $cancelCount->where(function ($query) use ($queryData) {
+                $query->where('fullName', 'LIKE', '%' . $queryData . '%')
+                    ->orWhere('trip_id', 'LIKE', '%' . $queryData . '%');
+            });
+            $progressCount = $progressCount->where(function ($query) use ($queryData) {
+                $query->where('fullName', 'LIKE', '%' . $queryData . '%')
+                    ->orWhere('trip_id', 'LIKE', '%' . $queryData . '%');
+            });
+            $doneCount = $doneCount->where(function ($query) use ($queryData) {
+                $query->where('fullName', 'LIKE', '%' . $queryData . '%')
+                    ->orWhere('trip_id', 'LIKE', '%' . $queryData . '%');
+            });
         }
+
+        $doneCount = $doneCount->count();
+        $progressCount = $progressCount->count();
+        $cancelCount = $cancelCount->count();
+        $tripCount = $tripCount->count();
+        $available = $available->count();
 
         for ($i = 0; $i < count($vendorFields); $i++) {
             $selectedFieldsTitle[] = $vendorFields[$i];
@@ -169,7 +195,7 @@ class ClientsController extends Controller
             "gender" => new StatusCollection($gender),
             'request_type' => new StatusCollection($request_type),
             "los" => new StatusCollection($los),
-            'trip_id'=> $this->tripType(),
+            'trip_id' => $this->tripType(),
             ///'status' => new StatusCollection($clientStatus),
 
         ], 200);
@@ -216,7 +242,7 @@ class ClientsController extends Controller
                     $this->createClient($requestData, $userId, $date);
                 }
             }
-        }else{
+        } else {
             $this->createClient($requestData, $userId, $requestData->date_of_service);
         }
 //        dd($dataData);
@@ -315,7 +341,7 @@ class ClientsController extends Controller
             return false;
         }
         $client->update([
-            "trip_id"=> "CC-$client->id-$requestData->trip_id",
+            "trip_id" => "CC-$client->id-$requestData->trip_id",
         ]);
 
         $this->createAction($userId, $client->id, 7, 1);

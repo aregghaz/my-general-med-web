@@ -370,6 +370,7 @@ const Home: React.FC<IHome> = () => {
     const showFilter = () => {
         setfiltre(!filtre);
     };
+
     return (
         clients && <>
             <div className={s.panel}>
