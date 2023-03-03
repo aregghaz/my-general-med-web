@@ -45,7 +45,7 @@ const TableHead: React.FC<ITableHead> = (
                             return index !== 0 && (
                                 <th
                                     onClick={() => titleSort(title)}
-                                    className={` ${s.tableTd} ${s.tableTh}`}
+                                    className={` ${s.tableTd} `}
                                     key={index}
                                     colSpan={colspan || 1}
                                     rowSpan={rowspan || 1}

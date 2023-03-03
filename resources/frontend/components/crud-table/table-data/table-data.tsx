@@ -26,7 +26,7 @@ const TableData: React.FC<ITableData> = (
 
     return (
         <td
-            className={`${s.tableTd} ${className ? className : ''}`}
+           className={`${s.tableTh} ${className ? className : ''}`}
             colSpan={colspan || 1}
             rowSpan={rowspan || 1}
             onClick={(event) => isGetInfo && handlerAction('get',data)}

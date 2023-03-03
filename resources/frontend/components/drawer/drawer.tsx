@@ -26,7 +26,7 @@ const Drawer: React.FC = ({ children }) => {
     const logoutRef = useRef(null);
     const userData = useSelector(getUserData);
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
-    const [isOpen, setIsOpen] = useState<boolean>(true);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
 
     const handlerLogOut = () => dispatch(setLogOut());
     const openAccountMenu = () => setMenuOpen(!menuOpen);

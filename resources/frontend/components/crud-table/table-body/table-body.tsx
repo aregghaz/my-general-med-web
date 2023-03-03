@@ -29,6 +29,9 @@ const TableBody: React.FC<ITableBody> = (
         handlerAction
     }) => {
     const { t } = useTranslation();
+
+    let count = 0;
+
     return (
         <tbody>
         {
@@ -36,7 +39,7 @@ const TableBody: React.FC<ITableBody> = (
                 .map((item, index) => {
                     const keys = Object.keys(item);
                     return (
-                        <TableRow key={index}>
+                        <TableRow key={index} className={ ++count % 2 == 0 ? s.classNameFieldEven : ""}>
                             {
                                 keys.length > 0 &&
                                 (
@@ -45,7 +48,7 @@ const TableBody: React.FC<ITableBody> = (
 
                                                 if (key == "fields") {
                                                     return i != 0 && (
-                                                        <TableData data={item.id} key={i} isGetInfo={isGetInfo}
+                                                        <TableData data={item.id} key={i} className={s.address} isGetInfo={isGetInfo}
                                                                    handlerAction={handlerAction}
                                                         >
                                                             {item[key].map((e: string, ind: number) => {
@@ -56,7 +59,7 @@ const TableBody: React.FC<ITableBody> = (
                                                     );
                                                 } else if (key == "image") {
                                                     return i != 0 && (
-                                                        <TableData data={item.id} key={i} isGetInfo={isGetInfo}
+                                                        <TableData data={item.id} key={i}  isGetInfo={isGetInfo}
                                                                    handlerAction={handlerAction}
                                                         >
                                                             <img src={item[key]} alt="" />
