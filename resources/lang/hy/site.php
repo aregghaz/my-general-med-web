@@ -52,7 +52,7 @@ return [
     'make' => 'Make',
     'model' => 'Model',
     'year' => 'Year',
-    'clients' => 'Clients',
+    'clients' => 'Trips',
     'companyName' => 'Company Name',
     'fields' => 'Table fields',
     'vendors' => 'Vendors',

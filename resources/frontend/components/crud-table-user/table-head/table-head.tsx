@@ -55,7 +55,7 @@ const TableHead: React.FC<ITableHead> = (
                 titles && titles
                     .map((title, index) => {
                             var classNameField;
-                            if (title.label === "origin" || title.label === "destination") {
+                            if (title.label === "origin" || title.label === "destination"|| title.label === "destination_comments"|| title.label === "origin_comment") {
                                 classNameField = `${s.tableTd} ${s.address}`;
                             } else if (title.label === "gender") {
                                 classNameField = `${s.tableTd}  ${s.gender}`;
