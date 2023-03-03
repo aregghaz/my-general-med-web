@@ -20,6 +20,7 @@ const TimePickers: React.FC<ITextarea> = (
         value,
         error
 
+
     }) => (
     <>
         {error && <div className={s.error}>{error}</div>}
@@ -45,5 +46,6 @@ const TimePickers: React.FC<ITextarea> = (
         />
     </>
 );
+
 
 export default TimePickers;

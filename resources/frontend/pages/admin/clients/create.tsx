@@ -14,6 +14,7 @@ import populateCreateFormFields from "../../../constants/populateCreateFormField
 import Calendar from "react-calendar";
 import Input from "../../../components/input/input";
 import getFieldLabel from "../../../utils/getFieldLabel";
+import store from "../../../store/store";
 
 interface IClientCreate {
     path: string;
@@ -28,24 +29,34 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         ///  { name: "date_of_service", type: "datepicker", label: "date_of_service" },
         { name: "trip_id", type: "select", label: "trip_type" },
         { name: "fullName", type: "input", label: "fullName" },
-        { name: "price", type: "input", label: "price" ,inputType:'number' },
         { name: "gender", type: "select", label: "gender" },
+        { name: "birthday", type: "datepicker", label: "birthday" },
+
         { name: "los", type: "select", label: "los" },
-        { name: "member_uniqie_identifer", type: "input", label: "member_uniqie_identifer" },
+
         { name: "request_type", type: "select", label: "request_type" },
+
+        { name: "member_uniqie_identifer", type: "input", label: "member_uniqie_identifer" },
+        { name: "id", type:"hidden", inputType: "hidden"},
+        { name: "id", type:"hidden", inputType: "hidden"},
+        { name: "id", type:"hidden", inputType: "hidden"},
+
         /// { name: "status", type: "select", label: "status" },
         { name: "origin_phone", type: "input", label: "origin_phone",inputType:'tel'  },
-        { name: "origin_comment", type: "textarea", label: "origin_comment" },
         { name: "destination_phone", type: "input", label: "destination_phone", inputType:'tel'  },
+        { name: "price", type: "input", label: "price" ,inputType:'number' },
+        { name: "origin_comment", type: "textarea", label: "origin_comment" },
         { name: "destination_comments", type: "textarea", label: "destination_comments" },
-        { name: "birthday", type: "datepicker", label: "birthday" },
-        { name: "miles", type: "input", label: "miles" ,inputType:'number' },
-        { name: "id", type: "hidden", inputType: "hidden" },
+        { name: "location", type: "autocomplete", label: "location" },
+
+        // { name: "id", type: "hidden", inputType: "hidden" },
         { name: "height", type: "input", label: "height" ,inputType:'number' },
         { name: "weight", type: "input", label: "weight",inputType:'number'  },
+        { name: "miles", type: "input", label: "miles" ,inputType:'number' },
+
         { name: "pick_up", type: "timePicker", label: "pick_up", },
         { name: "drop_down", type: "timePicker", label: "drop_down" },
-        { name: "location", type: "autocomplete", label: "location" }
+
     ];
 
     useEffect(() => {
@@ -112,6 +123,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                   setFieldValue,
                   errors
               }) => {
+                console.log(values)
                 return (
                     <>
                         <form className={s.form}>
@@ -129,7 +141,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                             setFieldValue("clientType", option);
                                             loadTripPeriod(option.id);
                                         }}
-                                        label={"clientType"}
+                                        label={null}
                                         isSearchable={false}
                                         name={"clientType"}
                                         placeholder={"clientType"}
@@ -181,9 +193,10 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                     name={"date_of_service"}
                                     value={values["date_of_service"]}
                                     onChange={handleChange}
-                                    placeholder={t("date_of_service")}
+                                    className={`${s.input}`}
+                                    placeholder={null}
                                     label={getFieldLabel(t, "date_of_service", "date_of_service", requiredFields)}
-                                    ///  error={errors['date_of_service']}
+                                    // error={errors['date_of_service']}
                                     type={"string"}
                                 />
                             </div>}

@@ -36,14 +36,14 @@ const Input: React.FC<IInput> = (
         labelStyle,
         ref,
     }) => {
+    // console.log(value)
 
-    console.log(value,!String(value),'value');
     return (
         <>
             {error && <div className={s.error}>{error}</div>}
             {label &&
                 <label
-                    className={`${s.label} ${!String(value) ? s.blankLabel : ""} ${labelStyle}`}
+                    className={`${s.label} ${!String(value ?? "") ? s.blankLabel : ""} ${labelStyle}`}
                     htmlFor={name}
                 >
                     {`${label}`} {isAsterisk && <span>*</span>}
@@ -52,7 +52,7 @@ const Input: React.FC<IInput> = (
                 id={name}
                 disabled={disable}
                 name={name}
-                className={`${s.input} ${!String(value) ? s.blankInput : ""}  ${className} ${error && s.errorBorder}`}
+                className={`${s.input} ${!String(value ?? "") ? s.blankInput : ""}  ${className} ${error && s.errorBorder}`}
                 type={type}
                 placeholder={placeholder}
                 value={value}

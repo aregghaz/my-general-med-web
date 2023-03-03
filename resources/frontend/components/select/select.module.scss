@@ -5,6 +5,13 @@
 
 .select {
     margin-top: 10px;
+    border: none;
+    & div {
+        box-shadow: none;
+    }
+    & div:hover {
+        border-color: black;
+    }
     & svg {
         width: 25px !important;
         height: 25px !important;

@@ -158,14 +158,14 @@ const Select: React.FC<ISelect> = (
                         overflowX: "auto",
                     }),
                     valueContainer: (baseStyles, state) => ({
-                       ...baseStyles,
-                       display: "flex",
+                        ...baseStyles,
+                        display: "flex",
                         flexDirection: "row",
                     }),
-                    indicatorsContainer: base => ({
-                        ...base,
-                        color: "aqua",
-                    }),
+                    // indicatorsContainer: base => ({
+                    //     ...base,
+                    //     color: "aqua",
+                    // }),
                     menu: (baseStyles, state) => ({
                         ...baseStyles,
                         backgroundColor: "white",
