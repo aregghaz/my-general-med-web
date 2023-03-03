@@ -20,31 +20,32 @@ const TimePickers: React.FC<ITextarea> = (
         value,
         error
 
-    }) => {
-        return (
-            <>
-                {error && <div className={s.error}>{error}</div>}
-                <label
-                    className={`${s.label}`}
-                    htmlFor={name}
-                    style={{
-                        color: value ? "black" : "gray",
-                    }}
-                >
-                    {`${label}`} {isAsterisk && <span>*</span>}
-                </label>
-                <TimePicker
-                    format={"h:m"}
-                    className={s.time}
-                    clockIcon={null}
-                    clearIcon={null}
-                    amPmAriaLabel={false}
-                    onChange={(time: string) => setFieldValue(name, time)}
-                    name={name}
-                    value={value}
-                />
-            </>
-        )
-    }
+
+    }) => (
+    <>
+        {error && <div className={s.error}>{error}</div>}
+        <label
+            className={`${s.label}`}
+            htmlFor={name}
+            style={{
+                color: value ? "black" : "gray",
+            }}
+        >
+            {`${label}`} {isAsterisk && <span>*</span>}
+        </label>
+
+        <TimePicker
+            format={"HH:mm"}
+            className={s.time}
+            clockIcon={null}
+            clearIcon={null}
+            amPmAriaLabel={false}
+            onChange={(time: string) => setFieldValue(name, time)}
+            name={name}
+            value={value}
+        />
+    </>
+);
+
 
 export default TimePickers;

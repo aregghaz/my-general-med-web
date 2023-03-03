@@ -24,12 +24,7 @@ class DashboardController extends Controller
             }
         }
         $carsIdData = array_column($cars->toArray(), 'id');
-//        $carsName =     Driver::select(
-//            DB::raw('car_id as car_id'),
-//            DB::raw('id as id'),
-//        )->whereIn('car_id', $carsId)->groupBy('car_id')->groupBy('id')->get();
-        ///   dd($carsId);
-//        dd($carsName);
+//
         $data = Clients::select(
             DB::raw('year(created_at) as year'),
             DB::raw('month(created_at) as month'),

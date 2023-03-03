@@ -147,18 +147,15 @@ const Select: React.FC<ISelect> = (
                 styles={{
                     control: (baseStyles, state) => ({
                         ...baseStyles,
-                        /// backgroundColor: 'black',
-                        //  borderRadius: "15px"
                         borderButton: "1px solid #D63D3D",
-                        // height: 50,
                         width: "100%",
                         outline: "none",
                         borderTop: "none",
                         borderLeft: "none",
                         borderRight: "none",
                         borderBottom: "1px solid black",
+                        borderRadius: 0,
                         overflowX: "auto",
-                        // borderColor: state.menuIsOpen ? 'grey' : 'red',
                     }),
                     valueContainer: (baseStyles, state) => ({
                         ...baseStyles,
@@ -171,13 +168,7 @@ const Select: React.FC<ISelect> = (
                     // }),
                     menu: (baseStyles, state) => ({
                         ...baseStyles,
-                        // override border radius to match the box
-                        ///borderRadius: 0,
-                        // backgroundColor: '#6D9886',
                         backgroundColor: "white",
-                        // borderRadius: "15px",
-                        // kill the gap
-                        // gap: "10px",
                         marginTop: "3px",
                         zIndex: 9999,
                         outline: "none",
@@ -192,9 +183,8 @@ const Select: React.FC<ISelect> = (
                         ...base,
                         // kill the white space on first and last option
                         padding: "0px",
-                        // borderRadius: "15px",
                         backgroundColor: "white",
-                        borderRadius: "5px",
+                       /// borderRadius: "5px",
                     }),
                     multiValue: (baseStyles, state) => ({
                         ...baseStyles,
@@ -204,15 +194,8 @@ const Select: React.FC<ISelect> = (
                         // color: "black",
                         color: "#393E46",
                         fontWeight: "bold",
-                        ///borderRadius: 10,
-                        //   border: "1px solid #D63D3D",
-
-                        /// backgroundColor: '#545cd8',
-                        //  borderRadius: "15px"
                         borderButton: "1px solid #D63D3D",
-                        // backgroundColor: '#6D9886',
                         backgroundColor: "white"
-                        /// padding: "0 8px"
                     }),
                     multiValueLabel: (styles: any, { data }: any) => ({
                         ...styles,
