@@ -75,7 +75,7 @@ class DashboardController extends Controller
             ->where('type_id', '=', 6)
             ->get()
             ->toArray();
-
+///dd($vendorProfitData);
         $vendorProfit = array_column($vendorProfitData, 'price');
         $profitInYear = array_column($data, 'price');
 

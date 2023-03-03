@@ -35,6 +35,9 @@ Route::group([
     Route::get('/get-reason-data', [HomeController::class, 'getReasonData']);
     Route::get('/car-data-for-select', [HomeController::class, 'carDataForSelect']);
     Route::get('/clients-data-driver', [ApiController::class, 'getClientsDataForDriver']);
+    Route::get('/start-trip/{id}', [ApiController::class, 'startTrip']);
+    Route::get('/done-trip/{id}', [ApiController::class, 'doneTrip']);
+    Route::get('/client-route-driver/{id}', [ApiController::class, 'clientRoute']);
     Route::get('/client-data-driver/{id}', [ApiController::class, 'getClientDataForDriver']);
     Route::post('/clientData', [HomeController::class, 'clientData']);
     Route::post('/changeClientType', [HomeController::class, 'changeClientType']);
