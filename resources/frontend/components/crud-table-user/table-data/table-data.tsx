@@ -20,10 +20,9 @@ const TableData: React.FC<ITableData> = (
         handlerAction
     }
 ) => {
-
     return (
         <td
-            className={s.classNameField}
+            className={`${s.classNameField} ${className}`}
             colSpan={colspan || 1}
 
             rowSpan={rowspan || 1}

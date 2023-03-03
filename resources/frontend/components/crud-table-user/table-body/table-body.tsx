@@ -42,6 +42,7 @@ const TableBody: React.FC<ITableBody> = (
         selectedIds,
         typeId
     }) => {
+    let count = 0;
 
     return (
         <tbody>
@@ -53,7 +54,7 @@ const TableBody: React.FC<ITableBody> = (
                     return keys.length > 0 && (
 
                         <TableRow key={index} data-rowid={item["id"]}
-                                  className={selectedIds?.includes(item["id"]) ? `${s.chosen}` : ""}>
+                                  className={`${selectedIds?.includes(item["id"]) ? s.chosen : ""} ${++count % 2 == 0 ? s.classNameFieldEven : ""}`} >
                             {
                                 (isEdit || isDelete || isInfo || isAssign) &&
                                 <TableData item={item} key={999999} handlerAction={handlerAction}>

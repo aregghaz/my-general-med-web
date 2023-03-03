@@ -45,6 +45,8 @@ const TableHead: React.FC<ITableHead> = (
         <thead className={s.tableHead}>
         <TableRow>
             { (action ) && <th key={222222}
+                               className={s.tableTd}
+
                  colSpan={colspan || 1}
                  rowSpan={rowspan || 1}
             >Action

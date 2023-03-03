@@ -13,7 +13,7 @@ const TableRow: React.FC<ITableRow> = (
         children
     }) => {
     return (
-        <tr className={`${s.row}  ${className ? className : ''}`}>
+        <tr className={`${s.row} ${s.myTr}  ${className ? className : ''}`}>
             {children}
         </tr>
     )

@@ -32,7 +32,7 @@
 .table {
     table-layout: fixed;
     border-collapse: inherit;
-    border-spacing: 10px;
+    border-spacing: 0;
     min-width: 100%;
     //display: grid;
 
@@ -41,9 +41,12 @@
     //}
 }
 
+.classNameFieldEven {
+    background-color: rgba(63, 122, 173, 0.15);
+}
+
 .tableHead {
     display: table-header-group;
-    border-bottom: 1px solid black;
 }
 
 .tableBody {
@@ -60,11 +63,19 @@
 .iconsWrapper {
     display: flex;
     flex-direction: row;
+    gap: 15px;
     .icon{
         width: 25px;
         height: 25px;
         cursor: pointer;
         margin: 0 3px;
+        transition: 0.1s;
+    }
+
+    .icon:hover {
+        transform: translateY(-3px);
+        color: red;
+        fill: red;
     }
 }
 
@@ -82,7 +93,7 @@
 
 
 .tableTd {
-    display: table-cell;
+    //display: table-cell;
    /// padding: 9px;
     text-align: center;
    /// font-weight: bold;
@@ -91,6 +102,10 @@
     ////margin-bottom: 10px;
     color: $fontColor;
     min-width: 190px;
+    table-layout: auto;
+    border-top: 2px solid #3F7AAD;
+    border-bottom: 2px solid #3F7AAD;
+    width: 100%;
     //FIXME: Fix for large sizes & no support for vw
     font-size: min(max(16px, 1vw), 19px);
     @media only screen and (max-width: $mediumDisplay) {
@@ -143,6 +158,8 @@
     vertical-align: inherit;
     //// margin-bottom: 10px;
     color: $fontColor;
+    border-bottom: 0.1px solid rgba(128, 128, 128, 1);
+    height: 70px;
 }
 .address {
     min-width: 350px;
