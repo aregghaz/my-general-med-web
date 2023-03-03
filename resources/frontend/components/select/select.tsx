@@ -161,14 +161,14 @@ const Select: React.FC<ISelect> = (
                         // borderColor: state.menuIsOpen ? 'grey' : 'red',
                     }),
                     valueContainer: (baseStyles, state) => ({
-                       ...baseStyles,
-                       display: "flex",
+                        ...baseStyles,
+                        display: "flex",
                         flexDirection: "row",
                     }),
-                    indicatorsContainer: base => ({
-                        ...base,
-                        color: "aqua",
-                    }),
+                    // indicatorsContainer: base => ({
+                    //     ...base,
+                    //     color: "aqua",
+                    // }),
                     menu: (baseStyles, state) => ({
                         ...baseStyles,
                         // override border radius to match the box

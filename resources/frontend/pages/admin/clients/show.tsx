@@ -108,7 +108,7 @@ const Show: React.FC<IShow> = ({ id }) => {
                 {clientById.date_of_service}
             </div>
             <div className={cls.item}>
-                <TimePicker className={s.time} clockIcon={null} clearIcon={null} onChange={(time:string) => setFieldValue((state:any) => {
+                <TimePicker format={"h:m"} className={s.time} clockIcon={null} clearIcon={null} onChange={(time:string) => setFieldValue((state:any) => {
                   return {
                       ...state,
                     'pick_up':time
@@ -117,7 +117,7 @@ const Show: React.FC<IShow> = ({ id }) => {
             </div>
 
             <div className={cls.item}>
-                <TimePicker className={s.time} clockIcon={null} clearIcon={null} onChange={(time:string) => setFieldValue((state:any) => {
+                <TimePicker format={"h:m"} className={s.time} clockIcon={null} clearIcon={null} onChange={(time:string) => setFieldValue((state:any) => {
                     return {
                         ...state,
                         'drop_down':time
@@ -127,37 +127,36 @@ const Show: React.FC<IShow> = ({ id }) => {
 
             <div className={cls.item}>
                 <span className={cls.b_text}>{t("pick_up_address")}: </span>
-                {clientById.origin}
-
+                {clientById.origin ? clientById.origin : "Unspecified"}
             </div>
             <div className={cls.item}>
                 <span className={cls.b_text}>{t("origin_comment")}: </span>
-                {clientById.origin_comment}
+                {clientById.origin_comment ? clientById.origin_comment : "Unspecified"}
             </div>
             <div className={cls.item}>
                 <span className={cls.b_text}>{t("origin_phone")}: </span>
-                {clientById.origin_phone}
+                {clientById.origin_phone ? clientById.origin_phone : "Unspecified"}
             </div>
             <div className={cls.item}>
                 <span className={cls.b_text}>{t("destination")}: </span>
-                {clientById.destination}
+                {clientById.destination ? clientById.destination : "Unspecified"}
             </div>
 
             <div className={cls.item}>
                 <span className={cls.b_text}>{t("destination_comments")}: </span>
-                {clientById.destination_comment}
+                {clientById.destination_comment ? clientById.destination_id : "Unspecified"}
             </div>
             <div className={cls.item}>
                 <span className={cls.b_text}>{t("destination_phone")}: </span>
-                {clientById.destination_phone}
+                {clientById.destination_phone ? clientById.destination_phone : "Unspecified"}
             </div>
             <div className={cls.item}>
                 <span className={cls.b_text}>{t("weight")}: </span>
-                {clientById.weight}
+                {clientById.weight ? clientById.weight : "Unspecified"}
             </div>
             <div className={cls.item}>
                 <span className={cls.b_text}>{t("height")}: </span>
-                {clientById.height}
+                {clientById.height ? clientById.height : "Unspecified"}
             </div>
             <div className={cls.item}>
                 <Textarea

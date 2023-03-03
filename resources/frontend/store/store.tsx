@@ -27,5 +27,4 @@ export const loadState = (state: AppStateType) => {
 const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)))
 
 store.subscribe(() => loadState(store.getState()))
-
 export default store
