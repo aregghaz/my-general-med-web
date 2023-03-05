@@ -8,25 +8,15 @@ import s from "../../../styles/home.module.scss";
 import CrudTable from "../../../components/crud-table-user/crud-table";
 import Select, { IOption } from "../../../components/select/select";
 import { useInView } from "react-intersection-observer";
-import Upload from "-!svg-react-loader!../../../images/Upload.svg";
-import Import from "-!svg-react-loader!../../../images/Import.svg";
-import Filters from "-!svg-react-loader!../../../images/database-svgrepo-com.svg";
-import Search from "-!svg-react-loader!../../../images/Search.svg";
-import Close from "-!svg-react-loader!../../../images/Close.svg";
 import axios from "axios";
-import BackDropSearch from "../../../components/backdrop-search/backdrop-search";
 import Modal from "react-modal";
 import PopupModal from "../../../components/popup-modal/popup-modal";
 import MultiSelectSort from "../../../components/select/sort-select";
 import { vendorAPI } from "../../../api/site-api/vendor-api";
-import Tabs from "../../../components/tabs/tabs";
 import Button from "../../../components/button/button";
-import { DownloadTableExcel } from "react-export-table-to-excel";
-import AssignIcon from "-!svg-react-loader!../../../images/car-travel-plus-add-svgrepo-com.svg";
-import ClaimTrip from "-!svg-react-loader!../../../images/briefcase-work-business-add-svgrepo-com.svg";
-import RemoveIcon from "-!svg-react-loader!../../../images/briefcase-work-business-delete-svgrepo-com.svg";
 import { actionsTabs } from "../../../store/tab";
 import { toast } from "react-toastify";
+import NavigationTab from "../../../components/navigation/navigationTab";
 
 interface IHome {
     path: string;
@@ -291,8 +281,7 @@ const Home: React.FC<IHome> = () => {
         });
     }
 
-    const handleActionMiddleware = async (status: number, action: string) => {
-        console.log(action, "status");
+    const handleActionMiddleware = async (id: number, action?: string) => {
         switch (action) {
             case "assign":
                 const getCarData = await vendorAPI.getCarsDataForSelect("cars");
@@ -306,7 +295,7 @@ const Home: React.FC<IHome> = () => {
                 break;
             case "default":
                 setIsOpen(true);
-                setStatus(status);
+                setStatus(id);
                 break;
         }
     };
@@ -372,72 +361,30 @@ const Home: React.FC<IHome> = () => {
 
     }, [isModalOpen]);
 
-    const showFilter = () => {
-        setfiltre(!filtre);
-    };
+
 
     return (
         clients && <>
             <div className={s.panel}>
                 <div className={s.upload_panel}>
-                    <Tabs tabs={tabs}
-                          handlerChangeTabs={handlerChangeTabs} />
-                    <div style={{ display: "flex", gap: "10px" }}>
-                        <div className={s.import_block}>
-                            <ClaimTrip
-                                className={`${s.icon} ${typeId === 1 || typeId === 4 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
-                                onClick={() => handleActionMiddleware(1, "default")}
-                            />
-                        </div>
-                        <div className={s.import_block}>
-                            <RemoveIcon
-                                className={`${s.icon} ${typeId === 2 || typeId === 4 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
-                                onClick={() => handleActionMiddleware(4, "reRoute")}
-                            />
-                        </div>
-                        <div className={s.import_block}>
-                            <AssignIcon
-                                className={`${s.icon} ${typeId === 2 || typeId === 4 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
-                                onClick={() => handleActionMiddleware(99, "assign")}
-                            />
-                        </div>
-                        <div className={s.import_block}>
-                            <Filters height="24px" onClick={showFilter} />
-                        </div>
-                        <div className={s.upload_block}>
-                            <label htmlFor="uploadFile">
-                                <Upload />
-                            </label>
-                            <input
-                                id="uploadFile"
-                                type="file"
-                                onChange={fileUploader}
-                                style={{ display: "none" }}
-                                accept=".xls, .xlsx, .csv"
-                            />
-                        </div>
-                        <div className={s.import_block}>
-                            <label>
-                                <DownloadTableExcel
-                                    filename="users table"
-                                    sheet="users"
-                                    currentTableRef={tableRef.current}
-                                >
-                                    <Import />
-                                </DownloadTableExcel>
-                            </label>
-                        </div>
-                        <div className={s.import_block} onClick={() => {
-                            openSearch();
-                        }}>
-                            {open ? <Close /> : <Search />}
-                        </div>
-                    </div>
-                    <div
-                        className={`${s.header_input_block} ${open ? s.active : s.passive}`}
-                    >
-                        <BackDropSearch handlerSubmit={onSearchInput} />
-                    </div>
+                    <NavigationTab
+                        fileUploader={fileUploader}
+                        filtre={filtre}
+                        handleActionMiddleware={handleActionMiddleware}
+                        handlerChangeTabs={handlerChangeTabs}
+                        ids={ids}
+                        onSearchInput={onSearchInput}
+                        openSearch={openSearch}
+                        setfiltre={setfiltre}
+                        tableRef={tableRef}
+                        tabs={tabs}
+                        typeId={typeId}
+                        open={open}
+                        isClaimTrip
+                        isReRoute
+                        IsAssignCar
+                        isShowFiltre
+                    />
 
                 </div>
                 {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}

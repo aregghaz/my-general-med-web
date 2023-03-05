@@ -50,7 +50,6 @@ const Input: React.FC<IInput> = (
                 </label>}
             <input
                 id={name}
-                disabled={disable}
                 name={name}
                 className={`${s.input} ${!String(value ?? "") ? s.blankInput : ""}  ${className} ${error && s.errorBorder}`}
                 type={type}
@@ -64,6 +63,7 @@ const Input: React.FC<IInput> = (
                 //         event.target.parentElement.children[0].classList.add("aaa")
                 //     }
                 // }}
+                disabled={ type === 'disabled'}
                 autoComplete={autoComplete}
             />
         </>

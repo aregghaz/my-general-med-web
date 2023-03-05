@@ -184,115 +184,11 @@ body {
 
 
 
-.upload_block,
-.import_block {
-    width: 40px;
-    height: 40px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: 0.2s ease-in-out;
-    background-color: white;
-
-    label {
-        cursor: pointer;
-    }
-
-    &:hover {
-        background-color: $menuColor;
-        color: white;
-        border-color: transparent;
-    }
-}
-
-.header_input_block {
-    height: 40px;
-    width: 0;
-    overflow: hidden;
-
-    input {
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        height: 100%;
-        margin: 0;
-        color: black !important;
-        width: 100%;
-        padding: 0 10px;
-        outline: none;
-    }
-}
-
-.header_input_block.active {
-    min-width: 500px;
-    //width: 100%
-}
-
-.header_input_block.passive {
-    width: 0;
-}
-
 
 ///////Areg
 
 
 
-.disabled_action {
-    pointer-events: none;
-    opacity: .3;
-    user-select: none;
-    &:hover {
-        fill: white;
-    }
-}
-
-
-
-.action_block {
-    display: inline-block;
-    border-radius: 10px;
-    padding: 10px 20px;
-    cursor: pointer;
-    background-color: $menuColor;
-    color: $whiteColor;
-
-    label {
-        cursor: pointer;
-    }
-
-    &:hover {
-        background-color: $asteriskColor;
-        color: white;
-    }
-}
-
-.iconWrapper {
-    i {
-        border: 1px solid $asteriskColor;
-        border-radius: 5px;
-        padding: 5px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 30px;
-        height: 30px;
-        cursor: pointer;
-        position: absolute;
-        right: 20px;
-        top: 5px;
-
-        &:hover {
-            background-color: $asteriskColor;
-            border: none;
-        }
-
-        &:hover::before {
-            color: white;
-        }
-    }
-}
 
 .addBtnWrapper {
     display: flex;

@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { AdminApi } from "../../../api/admin-api/admin-api";
 import List from "../../layouts/templates/list/list";
 import { useTranslation } from "react-i18next";
 import Tabs from "../../../components/tabs/tabs";
 import { navigate } from "@reach/router";
+import s from "../../layouts/templates/list/list.module.scss";
+import NavigationTab from "../../../components/navigation/navigationTab";
+import axios from "axios";
 
 interface Beneficiary {
     path: string;
@@ -94,17 +97,47 @@ const Status: React.FC<Beneficiary> = () => {
     };
     const handlerEditItem = async (id: number, tabId: number) => await navigate(`/admin/changeStatus/${id}/${tabId}`);
     const handlerAddItem = async (id: number, tabId: number) => await navigate(`/admin/addStatus/${tabId}/create`);
+
+    const [query, setQuery] = useState("");
+    const [open, setOpen] = useState(false);
+    const tableRef = useRef(null);
+
+    const onSearchInput = async (event: { search: string }) => {
+
+    };
+    const openSearch = () => {
+        if (open) {
+            setQuery("");
+          ///  setLoading(true);
+        }
+        setOpen(!open);
+    };
+    const fileUploader = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const validValues = ["text/csv", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"];
+        if (e.target.files) {
+            if (validValues?.includes(e.target.files[0].type)) {
+                // setLoadFile(e.target.files[0])
+                const data = new FormData();
+                data.append("file", e.target.files[0]);
+                await axios.post("/api/test", data);
+               /// setLoading(true);
+            } else {
+                ///  setErrorMessage("please upload valid type!");
+            }
+
+        }
+    };
     return (
         data &&
         <>
-            {/* <InfoBlock  items={data}/> */}
-            <div style={{
-                padding: 10
-                /// border: 1px solid #ddd;
-                ///  background-color: $whiteColor;
-
-            }}>
-                <Tabs tabs={tabs} handlerChangeTabs={handlerChangeTabs} />
+            <div className={s.upload_panel}>
+                <NavigationTab
+                    fileUploader={fileUploader}
+                    handlerChangeTabs={handlerChangeTabs}
+                    tabs={tabs}
+                    typeId={tabId}
+                    open={open}
+                    onSearchInput={onSearchInput} openSearch={openSearch} tableRef={tableRef} />
 
             </div>
 
@@ -113,6 +146,7 @@ const Status: React.FC<Beneficiary> = () => {
                 titles={titles}
                 isDelete
                 isEdit
+                tableRef={tableRef}
                 isGetInfo={false}
                 isGetHistory={false}
                 isCreate

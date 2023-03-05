@@ -173,3 +173,18 @@
     background-color: $menuColor;
     color: $whiteColor;
 }
+
+///////////
+
+
+.upload_panel {
+    padding: 10px 0;
+    /// border: 1px solid #ddd;
+    ///  background-color: $whiteColor;
+    border-radius: 5px;
+    width: 100%;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

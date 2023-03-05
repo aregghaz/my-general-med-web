@@ -1,0 +1,63 @@
+@import "../../styles/variables";
+@import "resources/frontend/styles/mixins";
+@import "resources/frontend/styles/color-pallete";
+
+
+.upload_block,
+.import_block {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    background-color: white;
+
+    label {
+        cursor: pointer;
+    }
+
+    &:hover {
+        background-color: $menuColor;
+        color: white;
+        border-color: transparent;
+    }
+}
+
+.header_input_block {
+    height: 40px;
+    width: 0;
+    overflow: hidden;
+
+    input {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        height: 100%;
+        margin: 0;
+        color: black !important;
+        width: 100%;
+        padding: 0 10px;
+        outline: none;
+    }
+}
+
+.header_input_block.active {
+    min-width: 500px;
+    //width: 100%
+}
+
+.header_input_block.passive {
+    width: 0;
+}
+.disabled_action {
+    pointer-events: none;
+    opacity: .3;
+    user-select: none;
+    &:hover {
+        fill: white;
+    }
+}
+

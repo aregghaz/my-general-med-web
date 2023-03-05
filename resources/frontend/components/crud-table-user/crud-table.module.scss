@@ -63,7 +63,7 @@
 .iconsWrapper {
     display: flex;
     flex-direction: row;
-    gap: 15px;
+    gap: 7px;
     .icon{
         width: 25px;
         height: 25px;
@@ -91,16 +91,48 @@
     transform: rotate(180deg);
 }
 
+.tooltip {
+    position: relative;
+}
 
+.tooltip .tooltiptext {
+    width: 40px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 2px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: -20px;
+    left: -5px;
+    font-size:10px;
+}
+
+.delete{
+   // left: -10px;
+}
+.history,.assignVendor,.info,.edit,.delete {
+    visibility: hidden;
+}
+.historySpan:hover .history,.infoSpan:hover .info ,.editSpan:hover .edit ,.deleteSpan:hover .delete {
+    visibility: visible;
+}
+.assignVendorSpan:hover .assignVendor {
+    visibility: visible;
+}
 .tableTd {
     //display: table-cell;
    /// padding: 9px;
-    text-align: center;
+    text-align: start;
    /// font-weight: bold;
     vertical-align: inherit;
     ///border-bottom: 1px solid #ddd;
     ////margin-bottom: 10px;
-    color: $fontColor;
+    color: $thTextColor;
+padding-left: 20px;
     min-width: 190px;
     table-layout: auto;
     border-top: 2px solid #3F7AAD;
@@ -153,11 +185,12 @@
 .classNameField {
     display: table-cell;
     /// padding: 9px;
-    text-align: center;
+    text-align: start;
     /// font-weight: bold;
     vertical-align: inherit;
     //// margin-bottom: 10px;
-    color: $fontColor;
+    padding-left: 20px;
+    color: $thTextColor;
     border-bottom: 0.1px solid rgba(128, 128, 128, 1);
     height: 70px;
 }

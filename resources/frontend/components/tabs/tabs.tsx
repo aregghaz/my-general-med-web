@@ -1,14 +1,9 @@
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import s from "./tabs.module.scss";
+import { ITabs } from "../../types/admin";
 
-interface ITabs {
-    name: string;
-    count?: number;
-    id: number;
-    selected: boolean;
 
-}
 
 interface IProps {
     tabs: Array<ITabs>,

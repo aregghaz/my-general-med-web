@@ -7,25 +7,18 @@ import s from "../../../styles/home.module.scss";
 import CrudTable from "../../../components/crud-table-user/crud-table";
 import Select, { IOption } from "../../../components/select/select";
 import { useInView } from "react-intersection-observer";
-import Upload from "-!svg-react-loader!../../../images/Upload.svg";
-import Import from "-!svg-react-loader!../../../images/Import.svg";
-import Filters from "-!svg-react-loader!../../../images/filters.svg";
-import Search from "-!svg-react-loader!../../../images/Search.svg";
-import Close from "-!svg-react-loader!../../../images/Close.svg";
+
 import axios from "axios";
-import BackDropSearch from "../../../components/backdrop-search/backdrop-search";
 import Modal from "react-modal";
 import PopupModal from "../../../components/popup-modal/popup-modal";
 import MultiSelectSort from "../../../components/select/sort-select";
 import { vendorAPI } from "../../../api/site-api/vendor-api";
-import Tabs from "../../../components/tabs/tabs";
 import Button from "../../../components/button/button";
-import { DownloadTableExcel } from "react-export-table-to-excel";
 import { AdminApi } from "../../../api/admin-api/admin-api";
 import { navigate } from "@reach/router";
-import AssignVendorIcon from "-!svg-react-loader!../../../images/add-company-icon.svg";
 import { actionsTabs } from "../../../store/tab";
 import { toast } from "react-toastify";
+import NavigationTab from "../../../components/navigation/navigationTab";
 
 
 interface IHome {
@@ -338,9 +331,7 @@ const Home: React.FC<IHome> = () => {
 
     }, [isModalOpen]);
 
-    const showFilter = () => {
-        setfiltre(!filtre);
-    };
+
     const handlerEditItem = (id: number) => navigate(`/admin/clients/${id}`);
     const handlerAddItem = () => navigate("/admin/clients/create");
     return (
@@ -348,54 +339,22 @@ const Home: React.FC<IHome> = () => {
 
             <div className={s.panel}>
                 <div className={s.upload_panel}>
-                    <Tabs tabs={tabs}
-                          handlerChangeTabs={handlerChangeTabs} />
-                    <div style={{ display: "flex", gap: "10px" }}>
-                        <div className={s.import_block}>
-                            <AssignVendorIcon
-                                className={`${s.icon} ${ids.length == 0 ? s.disabled_action : s.enabled_action}`}
-                                onClick={() => handleActionMiddleware()}
-                            />
-
-                        </div>
-                        <div className={s.import_block}>
-                            <Filters height="24px" onClick={showFilter} />
-                        </div>
-                        <div className={s.upload_block}>
-
-                                <label htmlFor="uploadFile">
-                                    <Upload />
-                                </label>
-                            <input
-                                id="uploadFile"
-                                type="file"
-                                onChange={fileUploader}
-                                style={{ display: "none" }}
-                                accept=".xls, .xlsx, .csv"
-                            />
-                        </div>
-                        <div className={s.import_block}>
-                            <label>
-                                <DownloadTableExcel
-                                    filename="users table"
-                                    sheet="users"
-                                    currentTableRef={tableRef.current}
-                                >
-                                <Import />
-                                </DownloadTableExcel>
-                            </label>
-                        </div>
-                        <div className={s.import_block} onClick={() => {
-                            openSearch();
-                        }}>
-                            {open ? <Close /> : <Search />}
-                        </div>
-                    </div>
-                    <div
-                        className={`${s.header_input_block} ${open ? s.active : s.passive}`}
-                    >
-                        <BackDropSearch handlerSubmit={onSearchInput} />
-                    </div>
+                    <NavigationTab
+                        fileUploader={fileUploader}
+                        filtre={filtre}
+                        handleActionMiddleware={handleActionMiddleware}
+                        handlerChangeTabs={handlerChangeTabs}
+                        ids={ids}
+                        onSearchInput={onSearchInput}
+                        openSearch={openSearch}
+                        setfiltre={setfiltre}
+                        tableRef={tableRef}
+                        tabs={tabs}
+                        open={open}
+                        isAssignVednor
+                        isShowFiltre
+                        typeId={typeId}
+                    />
 
                 </div>
                 {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}

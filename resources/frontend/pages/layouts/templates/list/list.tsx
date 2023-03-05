@@ -20,6 +20,7 @@ interface IList {
     last_page?: number;
     handlerAction?: (action:string,id: number) => void;
     className?: string;
+    tableRef?: any;
 }
 
 
@@ -35,7 +36,7 @@ const List: React.FC<IList> = (
         isGetHistory=false,
         handlerAction,
         className,
-        paginated
+        tableRef,
     }) => {
 
     const { t } = useTranslation();
@@ -53,6 +54,7 @@ const List: React.FC<IList> = (
                 <CrudTable
                     titles={titles}
                     data={data}
+                    tableRef={tableRef}
                     isEdit={isEdit}
                     isDelete={isDelete}
                     isGetInfo={isGetInfo}

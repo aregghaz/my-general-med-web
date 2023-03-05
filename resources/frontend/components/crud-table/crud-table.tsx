@@ -17,13 +17,14 @@ const CrudTable: React.FC<ICrudTable> = (
         isGetItems,
         isGetHistory,
         handlerAction,
+        tableRef,
         className,
     }) => {
 
     const [filterTable, setFilterTable] = useState<string>("ASC")
     const [filteredData, setFilteredData] = useState<any[]>(null)
     const [titleName, setTitleName] = useState<string>("")
-    const tableRef = useRef(null);
+
 
     const titleSort = (name: string) => {
         if (name !== "action") {
@@ -41,13 +42,6 @@ const CrudTable: React.FC<ICrudTable> = (
     }
     return (
         <>
-            <DownloadTableExcel
-                filename="users table"
-                sheet="users"
-                currentTableRef={tableRef.current}
-            >
-                <button className={s.download_btn}> Export excel</button>
-            </DownloadTableExcel>
 
             <table className={s.table} ref={tableRef}>
                 <TableHead titles={titles} titleSort={titleSort} filterTable={filterTable} titleName={titleName}/>
@@ -86,6 +80,7 @@ interface ICrudTable {
     isGetItems?: boolean
     className: string
     handlerAction: (action:string,id: number) => void
+    tableRef:any
 }
 
 export default CrudTable

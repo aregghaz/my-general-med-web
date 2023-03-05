@@ -8,10 +8,11 @@ import { useTranslation } from "react-i18next";
 import Modal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../../../store/adminUser";
-import Tabs from "../../../components/tabs/tabs";
 import { getAdminUsersData } from "../../../store/selectors";
 import { homeAPI } from "../../../api/site-api/home-api";
 import { useInView } from "react-intersection-observer";
+import NavigationTab from "../../../components/navigation/navigationTab";
+import axios from "axios";
 
 interface IVendors {
     path: string;
@@ -60,7 +61,7 @@ const Vendors: React.FC<IVendors> = () => {
     const handlerAction = async (action: string, id: number) => {
         switch (action) {
             case "history":
-                 await handlerGetActivityOperator(id);
+                await handlerGetActivityOperator(id);
                 break;
             case "add":
                 await handlerAddItem();
@@ -79,13 +80,13 @@ const Vendors: React.FC<IVendors> = () => {
             id: 2,
             name: "Vendor",
             count: vendorCount,
-            selected:false,
+            selected: false
         },
         {
             id: 4,
             name: "Operator",
             count: operatorCount,
-            selected:false,
+            selected: false
         }
     ];
     const handlerChangeTabs = async (tabId: number) => {
@@ -128,16 +129,48 @@ const Vendors: React.FC<IVendors> = () => {
             backdropFilter: "blur(5px)"
         }
     };
+    const [query, setQuery] = useState("");
+    const tableRef = useRef(null);
 
+    const onSearchInput = async (event: { search: string }) => {
 
+    };
+    const openSearch = () => {
+        if (open) {
+            setQuery("");
+            setLoading(true);
+        }
+        setOpen(!open);
+    };
+    const fileUploader = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const validValues = ["text/csv", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"];
+        if (e.target.files) {
+            if (validValues?.includes(e.target.files[0].type)) {
+                // setLoadFile(e.target.files[0])
+                const data = new FormData();
+                data.append("file", e.target.files[0]);
+                await axios.post("/api/test", data);
+                setLoading(true);
+            } else {
+                ///  setErrorMessage("please upload valid type!");
+            }
+
+        }
+    };
     return (
         userdata &&
         <>
-            <div style={{
-                padding: 10
-            }}>
-                <Tabs tabs={tabs} handlerChangeTabs={handlerChangeTabs} />
+            <div className={s.upload_panel}>
+                <NavigationTab
+                    fileUploader={fileUploader}
+                    handlerChangeTabs={handlerChangeTabs}
+                    tabs={tabs}
+                    typeId={typeId}
+                    open={open}
+                    onSearchInput={onSearchInput} openSearch={openSearch} tableRef={tableRef} />
+
             </div>
+
 
             <div ref={contentRef} className={s.table_wrapper}>
                 <List
@@ -145,6 +178,7 @@ const Vendors: React.FC<IVendors> = () => {
                     titles={titles}
                     isDelete
                     isEdit
+                    tableRef={tableRef}
                     isCreate
                     isGetInfo={false}
                     isGetItems={typeId === 2}
@@ -155,27 +189,27 @@ const Vendors: React.FC<IVendors> = () => {
                 />
             </div>
             <div className={s.detector} ref={ref} />
-            <Modal
-                isOpen={isModalOpen !== false}
-                style={customStyles}
-                onRequestClose={handlerCloseModal}
-            >
-                <div className={s.modalBody}>
-                    <div className={s.iconWrapper}>
-                        <i className="cancelicon-"
-                           onClick={handlerCloseModal}
-                        />
-                    </div>
+            {/*<Modal*/}
+            {/*    isOpen={isModalOpen !== false}*/}
+            {/*    style={customStyles}*/}
+            {/*    onRequestClose={handlerCloseModal}*/}
+            {/*>*/}
+            {/*    <div className={s.modalBody}>*/}
+            {/*        <div className={s.iconWrapper}>*/}
+            {/*            <i className="cancelicon-"*/}
+            {/*               onClick={handlerCloseModal}*/}
+            {/*            />*/}
+            {/*        </div>*/}
 
-                    <i className={`binicon- ${s.icon}`} />
-                    <p className={s.text}>{t("do_you_want_to_delete")}</p>
-                    <div className={s.buttons}>
-                        <Button type={"green"}
-                                className={s.button}>{t("yes")}</Button>
-                        <Button type={"transparent"} onClick={handlerCloseModal} className={s.button}>{t("no")}</Button>
-                    </div>
-                </div>
-            </Modal>
+            {/*        <i className={`binicon- ${s.icon}`} />*/}
+            {/*        <p className={s.text}>{t("do_you_want_to_delete")}</p>*/}
+            {/*        <div className={s.buttons}>*/}
+            {/*            <Button type={"green"}*/}
+            {/*                    className={s.button}>{t("yes")}</Button>*/}
+            {/*            <Button type={"transparent"} onClick={handlerCloseModal} className={s.button}>{t("no")}</Button>*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*</Modal>*/}
 
         </>
     );

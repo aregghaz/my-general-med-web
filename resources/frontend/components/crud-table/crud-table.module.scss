@@ -96,18 +96,17 @@
 .tableTd {
     //display: table-cell;
     /// padding: 9px;
-    text-align: center;
+    text-align: start;
     /// font-weight: bold;
     vertical-align: inherit;
     ///border-bottom: 1px solid #ddd;
     ////margin-bottom: 10px;
-    color: $fontColor;
+    color: $thTextColor;
+    padding-left: 20px;
     min-width: 190px;
     table-layout: auto;
     border-top: 2px solid #3F7AAD;
     border-bottom: 2px solid #3F7AAD;
-    width: 100%;
-
     //FIXME: Fix for large sizes & no support for vw
     font-size: min(max(16px, 1vw), 19px);
     @media only screen and (max-width: $mediumDisplay) {
@@ -131,37 +130,30 @@
 
 .tableTh {
     z-index: 2;
-    //background-color: $menuColor;
-    color: grey;
-    font-weight: bold;
-    //FIXME: Fix for large sizes & no support for vw
-    // white-space: nowrap;
+    color: $thTextColor;
+    padding-left: 20px;
+    table-layout: auto;
     font-size: min(max(16px, 1vw), 25px);
     border-bottom: 0.2px solid grey;
-    text-align: center;
+    text-align: start;
     @media only screen and (max-width: $mediumDisplay) {
         font-size: min(max(12px, 1vw), 25px);
     }
     @media only screen and (max-width: $smallDisplay) {
         font-size: min(max(10px, 1vw), 25px);
     }
-
-    &:first-of-type {
-        // number column
-        width: 40px;
-    }
 }
-
 .classNameField {
     display: table-cell;
     /// padding: 9px;
-    text-align: center;
+    text-align: start;
     /// font-weight: bold;
     vertical-align: inherit;
     //// margin-bottom: 10px;
-    color: $fontColor;
+    padding-left: 20px;
+    color: $thTextColor;
     border-bottom: 0.1px solid rgba(128, 128, 128, 1);
-    // height: 70px;
+    height: 70px;
 }
 
 .address {
@@ -227,7 +219,6 @@
 
 .iconsWrapper {
     justify-content: center;
-    text-align: center;
     flex-direction: row;
     border-bottom: 0.2px solid green;
     height: 100%;
