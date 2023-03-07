@@ -114,10 +114,10 @@
 .delete{
    // left: -10px;
 }
-.history,.assignVendor,.info,.edit,.delete {
+.history,.assignVendor,.info,.edit,.delete,.reRoute,.claim {
     visibility: hidden;
 }
-.historySpan:hover .history,.infoSpan:hover .info ,.editSpan:hover .edit ,.deleteSpan:hover .delete {
+.historySpan:hover .history,.infoSpan:hover .info ,.editSpan:hover .edit ,.deleteSpan:hover .delete,.reRouteSpan:hover .reRoute, .claimSpan:hover .claim {
     visibility: visible;
 }
 .assignVendorSpan:hover .assignVendor {

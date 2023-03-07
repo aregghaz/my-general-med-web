@@ -17,6 +17,7 @@ import Button from "../../../components/button/button";
 import { actionsTabs } from "../../../store/tab";
 import { toast } from "react-toastify";
 import NavigationTab from "../../../components/navigation/navigationTab";
+import { AdminApi } from "../../../api/admin-api/admin-api";
 
 interface IHome {
     path: string;
@@ -79,6 +80,7 @@ const Home: React.FC<IHome> = () => {
     const [query, setQuery] = useState("");
     const [reasons, setReasons] = useState<IOption>(null);
     const tableRef = useRef(null);
+    const [date, setDate] = useState("");
 
     const [ref, inView] = useInView({
         threshold: 1
@@ -181,49 +183,19 @@ const Home: React.FC<IHome> = () => {
         }
     };
 
-    useEffect(() => {
-        (async () => {
-            console.log((inView || loading));
-            if (inView || loading) {
-                const titlesData = localStorage.getItem("titles");
-                const homeData = await homeAPI.getClientData({
-                    titles: titles.length ? titles : JSON.parse(titlesData),
-                    showMore: countRef.current,
-                    typeId: typeId,
-                    queryData: query
-                });
-                setDefaultData(homeData.titles);
-                dispatch(actions.setTitles({
-                    titles: homeData.titles,
-                    selectedTitle: homeData.selectedFields,
-                    clients: homeData.clients,
-                    tripCount: homeData.tripCount,
-                    availableCount: homeData.availableCount,
-                    cancelCount: homeData.cancelCount,
-                    doneCount: homeData.doneCount,
-                    progressCount: homeData.progressCount
 
-                }));
-                countRef.current++;
-                setLoading(false);
-            }
-        })();
-        return () => {
-            homeAPI.cancelRequest();
-        };
 
-    }, [inView, loading, typeId]);
-
-    const onSearchInput = async (event: { search: string }) => {
+    const getClientData = async (queryData: string, date:string) => {
         const titlesData = localStorage.getItem("titles");
-        setQuery(event.search);
         const homeData = await homeAPI.getClientData({
             titles: titles.length ? titles : JSON.parse(titlesData),
             showMore: countRef.current,
             typeId: typeId,
-            queryData: event.search
+            queryData: queryData,
+            date: date
         });
         setDefaultData(homeData.titles);
+        setDate(date);
         dispatch(actions.setTitles({
             titles: homeData.titles,
             selectedTitle: homeData.selectedFields,
@@ -234,8 +206,32 @@ const Home: React.FC<IHome> = () => {
             doneCount: homeData.doneCount,
             progressCount: homeData.progressCount
         }));
-        // }
     };
+
+    useEffect(() => {
+        (async () => {
+            if ((inView || loading)) {
+                await getClientData(query, date);
+                countRef.current++;
+                setLoading(false);
+            }
+        })();
+        return () => {
+            ///   homeAPI.cancelRequest();
+        };
+
+    }, [inView, loading]);
+
+    const onSearchInput = async (event: { search: string }) => {
+        setQuery(event.search);
+        await getClientData(event.search, date);
+    };
+
+    const setFieldValue = async (name: string, dateData: string) => {
+        setDate(dateData)
+        await getClientData(query, dateData);
+    };
+
 
     const changeFields = (options: Array<IOption>) => {
         console.log(options, "options");
@@ -373,6 +369,8 @@ const Home: React.FC<IHome> = () => {
                         handleActionMiddleware={handleActionMiddleware}
                         handlerChangeTabs={handlerChangeTabs}
                         ids={ids}
+                        setFieldValue={setFieldValue}
+
                         onSearchInput={onSearchInput}
                         openSearch={openSearch}
                         setfiltre={setfiltre}
@@ -384,6 +382,7 @@ const Home: React.FC<IHome> = () => {
                         isReRoute
                         IsAssignCar
                         isShowFiltre
+                        IsDateSearch
                     />
 
                 </div>

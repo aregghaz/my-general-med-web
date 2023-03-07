@@ -19,7 +19,7 @@ class CarsSelectCollection extends ResourceCollection
 
             if(count($cars->driver)){
                 for($i=0;$i< count($cars->driver); $i++){
-                    $users[] =[ 'label' =>  $cars->driver[$i]->user->name .' '.$cars->driver[$i]->user->surname , "value"=> $cars->id];
+                    $users[] =[ 'label' =>  $cars->driver[$i]->user->name .' '.$cars->driver[$i]->user->surname , "value"=> $cars->id , "id"=> $cars->id];
                 }
             }
             return [

@@ -1,13 +1,14 @@
 import axios from 'axios'
 import {IOption} from '../../components/select/select'
+import { IClintSendData } from "../../types/api";
 
 
-interface IClintSendData {
-    titles: Array<string>,
-    queryData?: string,
-    showMore: number,
-    typeId:number
-}
+// interface IClintSendData {
+//     titles: Array<string>,
+//     queryData?: string,
+//     showMore: number,
+//     typeId:number
+// }
 
 const CancelToken = axios.CancelToken
 let cancelPost: any;

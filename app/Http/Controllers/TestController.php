@@ -203,7 +203,7 @@ class TestController extends Controller
                     'gender' => $genderType,
                     'los_id' => $losType,
                    /// 'phone_number' => $data[$phone_number],
-                    'date_of_service' => $data[$date_of_service],
+                    'date_of_service' => date('Y-m-d', strtotime($data[$date_of_service])),
                     ///'appointment_time' => $data[$appointment_time],
                     'pick_up' => $data[$pick_up],
                     'drop_down' => $data[$drop_down],

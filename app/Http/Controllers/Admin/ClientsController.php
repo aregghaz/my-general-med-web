@@ -59,6 +59,7 @@ class ClientsController extends Controller
         $selectedFieldsTitle = [];
         $typeId = (int)$request->typeId;
         $queryData = $request->queryData;
+        $dateData = $request->date;
         $tripCount = Clients::where(['type_id' => 1]);
         $available = Clients::where('type_id', 2);
         $cancelCount = Clients::where('type_id', 2)->where('vendor_id', '!=', null);
@@ -83,6 +84,16 @@ class ClientsController extends Controller
             }
         } else {
             $clients = DB::table('clients')->where('type_id', $request->typeId);
+        }
+
+        if (isset($dateData)) {
+
+            $clients = $clients->where('date_of_service', date('Y-m-d', strtotime($dateData)));
+            $tripCount = $tripCount->where('date_of_service', date('Y-m-d', strtotime($dateData)));
+            $available = $available->where('date_of_service', date('Y-m-d', strtotime($dateData)));
+            $cancelCount = $cancelCount->where('date_of_service', date('Y-m-d', strtotime($dateData)));
+            $progressCount = $progressCount->where('date_of_service', date('Y-m-d', strtotime($dateData)));
+            $doneCount = $doneCount->where('date_of_service', date('Y-m-d', strtotime($dateData)));
         }
         ///  $clients = DB::table('clients')->where('type_id', $request->typeId);
         if (isset($queryData)) {
@@ -154,7 +165,7 @@ class ClientsController extends Controller
         array_unshift($selectedFields, 'clients.id as id');
         ///dd( $selectedFields);
 
-        $clients = $clients->select($selectedFields);
+        $clients = $clients->select($selectedFields)->orderBy('date_of_service', 'asc');
 
         $clients = $clients->take(15 * $showMore)->get();
         // // dd($clients);
@@ -301,36 +312,38 @@ class ClientsController extends Controller
 
     }
 
-
-    protected function createClient($requestData, $userId, $date)
+    protected function getClientFieldsForCreate($requestData, $userId, $date, $tripType, $origin, $destination)
     {
         $client = new Clients();
         $client->type_id = 2;
         $client->fullName = $requestData->fullName;
         $client->gender = $requestData->gender->id;
         $client->los_id = $requestData->los->id;
-        $client->date_of_service = $date;
+        $client->date_of_service = date('Y-m-d', strtotime($date));
         $client->price = (float)$requestData->price;
-        $client->pick_up = $requestData->pick_up;
-        $client->drop_down = $requestData->drop_down;
+        $client->pick_up = $origin['time'];
+        $client->drop_down = $destination['time'];
         $client->request_type = $requestData->request_type->id;
         /// $client->status = $requestData->status->id;
         $client->operator_id = $userId;
-        if (isset($requestData->origin->address)) {
-            $client->origin = $requestData->origin->address;
-            $client->origin_id = $requestData->origin->id;
-        } else {
-            $client->origin = $requestData->origin;
-        }
-        $client->origin_phone = $requestData->origin_phone;
+        ///if (isset($requestData->origin->address)) {
+        /// dd()
+//        dd($origin);
+        $client->origin = $origin['address'];
+
+        $client->origin_id = $origin['address_id'];
+//        } else {
+//            $client->origin = $requestData->origin;
+//        }
+        $client->origin_phone = $origin['phone'];
         $client->origin_comment = $requestData->origin_comment;
-        if (isset($requestData->destination->address)) {
-            $client->destination = $requestData->destination->address;
-            $client->destination_id = $requestData->destination->id;
-        } else {
-            $client->destination = $requestData->destination;
-        }
-        $client->destination_phone = $requestData->destination_phone;
+        ///   if (isset($requestData->destination->address)) {
+        $client->destination = $destination['address'];
+        $client->destination_id = $destination['address_id'];
+//        } else {
+//            $client->destination = $requestData->destination;
+//        }
+        $client->destination_phone = $destination['phone'];
         $client->destination_comments = $requestData->destination_comments;
         $client->member_uniqie_identifer = $requestData->member_uniqie_identifer;
         $client->birthday = $requestData->birthday;
@@ -341,10 +354,44 @@ class ClientsController extends Controller
             return false;
         }
         $client->update([
-            "trip_id" => "CC-$client->id-$requestData->trip_id",
+            "trip_id" => "CC-$client->id-$tripType",
         ]);
 
         $this->createAction($userId, $client->id, 7, 1);
+        return true;
+    }
+
+    protected function createClient($requestData, $userId, $date)
+    {
+        $origin = [
+            "address" => $requestData->origin->address,
+            "address_id" => $requestData->origin->id,
+            "phone" => $requestData->origin_phone,
+            'time' => $requestData->pick_up,
+        ];
+        $destination = [
+            "address" => $requestData->destination->address,
+            "address_id" => $requestData->destination->id,
+            "phone" => $requestData->destination_phone,
+            "time" => $requestData->drop_down,
+        ];
+        $tripType = $requestData->trip_id;
+        if ((int)$tripType->id === 3) {
+
+            foreach (['A', 'B'] as $value) {
+                if ($value === 'A') {
+                    $this->getClientFieldsForCreate($requestData, $userId, $date, $value, $origin, $destination);
+
+                } else {
+                    $origin['time'] = null;
+                    $destination['time'] = null;
+                    $this->getClientFieldsForCreate($requestData, $userId, $date, $value, $destination, $origin);
+
+                }
+            }
+        } else {
+            $this->getClientFieldsForCreate($requestData, $userId, $date, $tripType->label, $origin, $destination);
+        }
         return true;
     }
 
@@ -438,7 +485,7 @@ class ClientsController extends Controller
         $client->price = (float)$requestData->price;
         $client->gender = $requestData->gender->id;
         $client->los_id = $requestData->los->id;
-        $client->date_of_service = $requestData->date_of_service;
+        $client->date_of_service = date('Y-m-d', strtotime($requestData->date_of_service));
         $client->pick_up = $requestData->pick_up;
         $client->drop_down = $requestData->drop_down;
         $client->request_type = $requestData->request_type->id;

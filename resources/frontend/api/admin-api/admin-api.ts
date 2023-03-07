@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { IClintSendData } from "../../types/api";
 
 export const AdminApi = {
 

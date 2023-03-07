@@ -5,7 +5,7 @@ const timestampToDate = (date: Date | string) => {
     const dayRaw = new Date(date).getDate();
     const day = dayRaw > 9 ? dayRaw : `0${dayRaw}`;
 
-    return `${day}.${monthFormatted}.${year}`;
+    return `${monthFormatted}/${day}/${year}`;
 };
 
 export default timestampToDate;

@@ -4,7 +4,7 @@ import TableData from "../table-data/table-data";
 import TrashIcon from "-!svg-react-loader!../../../images/trash.svg";
 import EditIcon from "-!svg-react-loader!../../../images/edit.svg";
 import UsersIcon from "-!svg-react-loader!../../../images/Users.svg";
-import ActivityIcon from "-!svg-react-loader!../../../images/user-activity-svgrepo-com.svg";
+import ActivityIcon from "-!svg-react-loader!../../../images/Actions.svg";
 import s from "../crud-table.module.scss";
 import { useTranslation } from "react-i18next";
 

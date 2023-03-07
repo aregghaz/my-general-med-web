@@ -80,6 +80,7 @@ const Home: React.FC<IHome> = () => {
     const tableRef = useRef(null);
 
     const [query, setQuery] = useState("");
+    const [date, setDate] = useState("");
     const [ref, inView] = useInView({
         threshold: 1
     });
@@ -123,6 +124,7 @@ const Home: React.FC<IHome> = () => {
     const openSearch = () => {
         if (open) {
             setQuery("");
+            setDate("");
             setLoading(true);
         }
         setOpen(!open);
@@ -167,48 +169,17 @@ const Home: React.FC<IHome> = () => {
         }
     };
 
-
-    useEffect(() => {
-        (async () => {
-            if ((inView || loading)) {
-                const titlesData = localStorage.getItem("titles");
-                const homeData = await AdminApi.getAllData({
-                    titles: titles.length ? titles : JSON.parse(titlesData),
-                    showMore: countRef.current,
-                    typeId: typeId,
-                    queryData: query
-                });
-                setDefaultData(homeData.titles);
-                dispatch(actions.setTitles({
-                    titles: homeData.titles,
-                    selectedTitle: homeData.selectedFields,
-                    clients: homeData.clients,
-                    tripCount: homeData.tripCount,
-                    availableCount: homeData.availableCount,
-                    cancelCount: homeData.cancelCount,
-                    doneCount: homeData.doneCount,
-                    progressCount: homeData.progressCount
-                }));
-                countRef.current++;
-                setLoading(false);
-            }
-        })();
-        return () => {
-            ///   homeAPI.cancelRequest();
-        };
-
-    }, [inView, loading, typeId]);
-
-    const onSearchInput = async (event: { search: string }) => {
+    const getClientData = async (queryData: string, date:string) => {
         const titlesData = localStorage.getItem("titles");
-        setQuery(event.search);
         const homeData = await AdminApi.getAllData({
             titles: titles.length ? titles : JSON.parse(titlesData),
             showMore: countRef.current,
             typeId: typeId,
-            queryData: event.search
+            queryData: queryData,
+            date: date
         });
         setDefaultData(homeData.titles);
+        setDate(date);
         dispatch(actions.setTitles({
             titles: homeData.titles,
             selectedTitle: homeData.selectedFields,
@@ -219,7 +190,25 @@ const Home: React.FC<IHome> = () => {
             doneCount: homeData.doneCount,
             progressCount: homeData.progressCount
         }));
-        // }
+    };
+
+    useEffect(() => {
+        (async () => {
+            if ((inView || loading)) {
+                await getClientData(query, date);
+                countRef.current++;
+                setLoading(false);
+            }
+        })();
+        return () => {
+            ///   homeAPI.cancelRequest();
+        };
+
+    }, [inView, loading]);
+
+    const onSearchInput = async (event: { search: string }) => {
+        setQuery(event.search);
+        await getClientData(event.search, date);
     };
 
     const changeFields = (options: Array<IOption>) => {
@@ -330,7 +319,10 @@ const Home: React.FC<IHome> = () => {
         }
 
     }, [isModalOpen]);
-
+    const setFieldValue = async (name: string, dateData: string) => {
+        setDate(dateData)
+        await getClientData(query, dateData);
+    };
 
     const handlerEditItem = (id: number) => navigate(`/admin/clients/${id}`);
     const handlerAddItem = () => navigate("/admin/clients/create");
@@ -345,14 +337,17 @@ const Home: React.FC<IHome> = () => {
                         handleActionMiddleware={handleActionMiddleware}
                         handlerChangeTabs={handlerChangeTabs}
                         ids={ids}
+                        setFieldValue={setFieldValue}
                         onSearchInput={onSearchInput}
                         openSearch={openSearch}
                         setfiltre={setfiltre}
                         tableRef={tableRef}
                         tabs={tabs}
                         open={open}
+                        date={date}
                         isAssignVednor
                         isShowFiltre
+                        IsDateSearch
                         typeId={typeId}
                     />
 

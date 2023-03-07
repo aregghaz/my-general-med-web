@@ -19,9 +19,6 @@ const InfoBlockDriver: FC<IProps> = ({data}) => {
 
     return (
         <div className={cls.block}>
-            <div className={cls.panel}>
-                <span className={`${cls.menu} ${cls.menu_active}`}>Driver Detail</span>
-            </div>
             <div className={cls.items}>
                 {
                     newData &&

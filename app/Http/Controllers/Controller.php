@@ -90,7 +90,7 @@ class Controller extends BaseController
                 'id' => $client->car->id,
                 'label' => $client->car->driver[0]->user->name .' '.$client->car->driver[0]->user->surname,
                 'slug' => $client->car->driver[0]->user->name.' '.$client->car->driver[0]->user->surname,
-                'value' => $client->car->driver[0]->user->name.' '.$client->car->driver[0]->user->surname,
+                'value' => $client->car->id,
             ] : [],
             /// 'surname' => $client->surname,
             'gender' => $client->genderType->name,
@@ -199,6 +199,11 @@ class Controller extends BaseController
                 'label' => 'B',
                 'slug' => 'B',
                 'value' => 'B',
+            ], [
+                'id' => 3,
+                'label' => 'A-B',
+                'slug' => 'AB',
+                'value' => 'A-B',
             ]
         ];
     }

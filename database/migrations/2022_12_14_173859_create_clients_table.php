@@ -22,7 +22,7 @@ class CreateClientsTable extends Migration
             $table->string('fullName');
             $table->tinyInteger('gender');
             $table->string('los_id')->nullable();
-            $table->string('date_of_service');
+           // $table->string('date_of_service');
             $table->string('pick_up')->nullable();
             $table->string('drop_down')->nullable();
             $table->tinyInteger('request_type');

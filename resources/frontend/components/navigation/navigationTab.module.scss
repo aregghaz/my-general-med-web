@@ -5,8 +5,8 @@
 
 .upload_block,
 .import_block {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 60px;
     border: 1px solid #ddd;
     border-radius: 5px;
     display: flex;
@@ -31,6 +31,7 @@
     height: 40px;
     width: 0;
     overflow: hidden;
+    display: flex;
 
     input {
         border: 1px solid #ddd;
@@ -46,18 +47,32 @@
 
 .header_input_block.active {
     min-width: 500px;
+   div{
+       margin: 0 10px;
+   }
     //width: 100%
 }
 
 .header_input_block.passive {
     width: 0;
 }
+
 .disabled_action {
     pointer-events: none;
     opacity: .3;
     user-select: none;
+
     &:hover {
         fill: white;
     }
 }
 
+.history,.assignVendor,.info,.edit,.delete,.reRoute,.claim {
+    visibility: hidden;
+}
+.historySpan:hover .history,.infoSpan:hover .info ,.editSpan:hover .edit ,.deleteSpan:hover .delete,.reRouteSpan:hover .reRoute, .claimSpan:hover .claim {
+    visibility: visible;
+}
+.assignVendorSpan:hover .assignVendor {
+    visibility: visible;
+}

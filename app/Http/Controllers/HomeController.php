@@ -69,6 +69,7 @@ class HomeController extends Controller
         $selectedFieldsTitle = [];
         $queryData = $request->queryData;
         $vendorId = $request->user()->vendor_id;
+        $dateData = $request->date;
         $tripCount = Clients::where(['vendor_id' => $vendorId, 'type_id' => 1]);
         $available = Clients::where('type_id', 2)->where('vendor_id', '<>', $vendorId)->OrWhereNull('vendor_id');
         $cancelCount = Clients::where(['type_id' => 2, 'vendor_id' => $vendorId]);
@@ -87,6 +88,16 @@ class HomeController extends Controller
             }
         } else {
             $clients = Clients::where(['clients.type_id' => $request->typeId, 'clients.vendor_id' => $vendorId]);
+        }
+
+        if (isset($dateData)) {
+
+            $clients = $clients->where('date_of_service', date('Y-m-d', strtotime($dateData)));
+            $tripCount = $tripCount->where('date_of_service', date('Y-m-d', strtotime($dateData)));
+            $available = $available->where('date_of_service', date('Y-m-d', strtotime($dateData)));
+            $cancelCount = $cancelCount->where('date_of_service', date('Y-m-d', strtotime($dateData)));
+            $progressCount = $progressCount->where('date_of_service', date('Y-m-d', strtotime($dateData)));
+            $doneCount = $doneCount->where('date_of_service', date('Y-m-d', strtotime($dateData)));
         }
         if (isset($queryData)) {
             ///   dd(isset($queryData));
@@ -257,7 +268,6 @@ class HomeController extends Controller
         $vendorId = $request->user()->vendor_id;
         if ((int)$request->status === 2) {
             Clients::whereIn('id', $ids)->update(['type_id' => $request->status, 'vendor_id' => null, "car_id" => null]);
-
         } else if ((int)$request->status === 4) {
             Clients::whereIn('id', $ids)->update(['type_id' => 2, "car_id" => null, 'reason_id' => (int)$request->reasonId]);
         } else if ((int)$request->status === 1) {

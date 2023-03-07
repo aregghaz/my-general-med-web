@@ -11,10 +11,10 @@ import Account from "-!svg-react-loader!../../images/User.svg";
 import Logout from "-!svg-react-loader!../../images/SignOut.svg";
 import Settings from "-!svg-react-loader!../../images/Settings.svg";
 import Clients from "-!svg-react-loader!../../images/Clients.svg";
-import Users from "-!svg-react-loader!../../images/Users.svg";
+import Users from "-!svg-react-loader!../../images/User.svg";
 import Cars from "-!svg-react-loader!../../images/Car.svg";
 import ArrowDown from "-!svg-react-loader!../../svgs/arrow-down.svg";
-import HomeIcon from "-!svg-react-loader!../../images/home.svg";
+import HomeIcon from "-!svg-react-loader!../../images/my-services.svg";
 import Status from "-!svg-react-loader!../../images/Status.svg";
 import UserRole from "-!svg-react-loader!../../images/UserRole.svg";
 import { getUserData } from "../../store/selectors";
@@ -65,7 +65,7 @@ const Drawer: React.FC = ({ children }) => {
             },
             {
                 id: 2,
-                Icon: <Users />,
+                Icon: <Account />,
                 item: "Users",
                 page: "/users"
             },
@@ -86,7 +86,7 @@ const Drawer: React.FC = ({ children }) => {
             },
             {
                 id: 2,
-                Icon: <Users />,
+                Icon: <Account />,
                 item: "vendors",
                 page: "/admin/vendors"
             },
@@ -121,7 +121,7 @@ const Drawer: React.FC = ({ children }) => {
             },
             {
                 id: 2,
-                Icon: <Users />,
+                Icon: <Account />,
                 item: "vendors",
                 page: "/operators/vendors"
             },
