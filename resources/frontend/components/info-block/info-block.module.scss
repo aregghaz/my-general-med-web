@@ -33,9 +33,9 @@
 .items {
     padding: 5px;
     grid-gap: 10px;
-    display: block;
+    display: grid;
     background-color: $whiteColor;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
 }
 
 .item {

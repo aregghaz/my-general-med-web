@@ -73,7 +73,10 @@ const NavigationTab: React.FC<INavigationTab> = (
             <Tabs tabs={tabs}
                   handlerChangeTabs={handlerChangeTabs} />
             <div style={{ display: "flex", gap: "10px" }}>
-                {isAssignVednor && <div className={s.import_block}>`
+                {isAssignVednor && <div className={s.import_block}>
+                    <div className={s.iconAbbr}>
+                        Assign Vendor
+                    </div>
                     <AssignVendorIcon
                         className={`${s.icon}  ${ typeId === 5 || typeId === 6 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
                         onClick={() => handleActionMiddleware()}
@@ -98,10 +101,15 @@ const NavigationTab: React.FC<INavigationTab> = (
                     />
                 </div>}
                 {isShowFiltre && <div className={s.import_block}>
+                    <div className={s.iconAbbr}>
+                        Filters
+                    </div>
                     <Filters height="24px" onClick={showFilter} />
                 </div>}
                 <div className={s.upload_block}>
-
+                    <div className={s.iconAbbr}>
+                        Upload
+                    </div>
                     <label htmlFor="uploadFile">
                         <Upload />
                     </label>
@@ -114,7 +122,10 @@ const NavigationTab: React.FC<INavigationTab> = (
                     />
                 </div>
                 <div className={s.import_block}>
-                    <label>
+                    <div className={s.iconAbbr}>
+                        Download Excel
+                    </div>
+                    <label htmlFor="downloadTableExcel">
                         <DownloadTableExcel
                             filename="users table"
                             sheet="users"
@@ -127,6 +138,9 @@ const NavigationTab: React.FC<INavigationTab> = (
                 <div className={s.import_block} onClick={() => {
                     openSearch();
                 }}>
+                    <div className={s.iconAbbr}>
+                        {open ? "Close" : "Search"}
+                    </div>
                     {open ? <Close /> : <Search />}
                 </div>
             </div>

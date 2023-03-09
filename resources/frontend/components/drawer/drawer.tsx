@@ -48,7 +48,7 @@ const Drawer: React.FC = ({ children }) => {
         id: number,
         Icon: any,
         item: string,
-        page: string
+        page: string,
     }> = [];
     if (userData.user && (userData.user.role == "vendor" )) {
         menuItemsFirst = [
@@ -56,24 +56,24 @@ const Drawer: React.FC = ({ children }) => {
                 id: 4,
                 Icon: <HomeIcon />,
                 item: "Dashboard",
-                page: "/dashboard"
+                page: "/dashboard",
             },{
                 id: 1,
                 Icon: <Clients />,
                 item: "clients",
-                page: "/"
+                page: "/",
             },
             {
                 id: 2,
                 Icon: <Account />,
                 item: "Users",
-                page: "/users"
+                page: "/users",
             },
             {
                 id: 3,
                 Icon: <Cars />,
                 item: "Cars",
-                page: "/cars"
+                page: "/cars",
             }
         ];
     } else if (userData.user && userData.user.role == "admin") {
@@ -82,25 +82,25 @@ const Drawer: React.FC = ({ children }) => {
                 id: 1,
                 Icon: <HomeIcon />,
                 item: "Home",
-                page: "/admin"
+                page: "/admin",
             },
             {
                 id: 2,
                 Icon: <Account />,
                 item: "vendors",
-                page: "/admin/vendors"
+                page: "/admin/vendors",
             },
             {
                 id: 4,
                 Icon: <Clients />,
                 item: "clients",
-                page: "/admin/clients"
+                page: "/admin/clients",
             },
             {
                 id: 5,
                 Icon: <Status />,
                 item: "status",
-                page: "/admin/status"
+                page: "/admin/status",
             },
             // {
             //     id: 6,
@@ -117,19 +117,19 @@ const Drawer: React.FC = ({ children }) => {
                 id: 1,
                 Icon: <HomeIcon />,
                 item: "Home",
-                page: "/operators"
+                page: "/operators",
             },
             {
                 id: 2,
                 Icon: <Account />,
                 item: "vendors",
-                page: "/operators/vendors"
+                page: "/operators/vendors",
             },
             {
                 id: 4,
                 Icon: <Clients />,
                 item: "clients",
-                page: "/operators/clients"
+                page: "/operators/clients",
             },
 
 

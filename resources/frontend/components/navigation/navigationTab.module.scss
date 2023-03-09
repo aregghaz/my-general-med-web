@@ -15,6 +15,23 @@
     cursor: pointer;
     transition: 0.2s ease-in-out;
     background-color: white;
+    position: relative;
+    z-index: 1;
+
+    & > label {
+      transform: translateY(0);
+        transition: 0.5s;
+    }
+
+    &:hover > label[for="uploadFile"] {
+        transition: 0.5s;
+        transform: translateY(-10px);
+    }
+
+    &:hover > label[for="downloadTableExcel"] {
+        transition: 0.5s;
+        transform: translateY(5px);
+    }
 
     label {
         cursor: pointer;
@@ -24,6 +41,34 @@
         background-color: $menuColor;
         color: white;
         border-color: transparent;
+    }
+
+    .iconAbbr {
+        position: absolute;
+        top: -35%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: auto;
+        min-width: 40px;
+        height: 15px;
+        font-size: 10px;
+        background-color: black;
+        color: white;
+        padding: 2px 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: -1;
+        border-radius: 10px;
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.2s;
+        white-space: nowrap;
+    }
+
+    &:hover > .iconAbbr {
+        opacity: 1;
+        visibility: visible;
     }
 }
 
@@ -46,7 +91,10 @@
 }
 
 .header_input_block.active {
-    min-width: 500px;
+    width: 500px;
+    transition: 1s;
+    opacity: 1;
+    visibility: visible;
    div{
        margin: 0 10px;
    }
@@ -54,7 +102,10 @@
 }
 
 .header_input_block.passive {
+    transition: 1s;
     width: 0;
+    opacity: 0;
+    visibility: hidden;
 }
 
 .disabled_action {
