@@ -83,12 +83,12 @@ const Status: React.FC<Beneficiary> = () => {
             count: reasons,
             selected: false
         }, {
-            id: 7,
+            id: 8,
             name: "artificial",
             count: artificial,
             selected: false
         }, {
-            id: 8,
+            id: 7,
             name: "waitDuration",
             count: waitDuration,
             selected: false

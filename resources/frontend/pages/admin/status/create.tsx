@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import Create from "../../layouts/templates/create/create";
 import Select, { IOption } from "../../../components/select/select";
 import { IItem } from "../../layouts/templates/formik-handler/formik-handler";
+import s from "../../layouts/templates/create/create.module.scss";
 
 interface IUserCreate {
     path: string,
@@ -69,12 +70,12 @@ const StatusCreate: React.FC<IUserCreate> = ({ statusId }) => {
             label: "reasons"
 
         }, {
-            id: 7,
+            id: 8,
             value: "artificial",
             label: "artificial"
 
         }, {
-            id: 8,
+            id: 7,
             value: "waitDuration",
             label: "waitDuration"
 
@@ -87,18 +88,21 @@ const StatusCreate: React.FC<IUserCreate> = ({ statusId }) => {
         "name"
     ];
     return <>
-        <Select
-            getOptionValue={(option: IOption) => option.value}
-            getOptionLabel={(option: IOption) => t(option.label)}
-            onChange={(options: IOption) => setStatus(options)}
-            /// onChange={handlerSetCar}
-            options={tabs}
-            // value={selectedTitle}
-            name={"Cars"}
-            isMulti={false}
-        />
+          <div className={s.item} style={{width: 200, margin: "0 auto"}}>
+              <Select
+                  label={'status'}
+                  getOptionValue={(option: IOption) => option.value}
+                  getOptionLabel={(option: IOption) => t(option.label)}
+                  onChange={(options: IOption) => setStatus(options)}
+                  /// onChange={handlerSetCar}
+                  options={tabs}
+                  // value={selectedTitle}
+                  name={"Cars"}
+                  isMulti={false}
+              />
+          </div>
         {fields.length > 0 && <Create
-            crudKey={`${crudKey}/${status}`}
+            crudKey={`${crudKey}/${status.id}`}
             redirectKey={redirectKey}
             fields={fields}
             title={""}
