@@ -38,7 +38,6 @@ const StatusCreate: React.FC<IUserCreate> = ({ statusId }) => {
                 { name: "id", type: "hidden", inputType: "hidden" },
             ])
         }
-
     }, [status]);
 
 
