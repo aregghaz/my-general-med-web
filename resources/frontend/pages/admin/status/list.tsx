@@ -21,6 +21,8 @@ const Status: React.FC<Beneficiary> = () => {
     const [clientStatus, setClientStatus] = useState<number>(0);
     const [requestType, setRequestType] = useState<number>(0);
     const [reasons, setReasons] = useState<number>(0);
+    const [waitDuration, setWaitDuration] = useState<number>(0);
+    const [artificial, setArtificial] = useState<number>(0);
 
     const { t } = useTranslation();
     useEffect(() => {
@@ -33,6 +35,8 @@ const Status: React.FC<Beneficiary> = () => {
                 setClientStatus(data.clientStatus);
                 setRequestType(data.requestType);
                 setReasons(data.reasons);
+                setWaitDuration(data.waitDuration);
+                setArtificial(data.artificial);
 
             }
         )();
@@ -77,6 +81,16 @@ const Status: React.FC<Beneficiary> = () => {
             id: 6,
             name: "reasons",
             count: reasons,
+            selected: false
+        }, {
+            id: 7,
+            name: "artificial",
+            count: artificial,
+            selected: false
+        }, {
+            id: 8,
+            name: "waitDuration",
+            count: waitDuration,
             selected: false
         }
     ];
