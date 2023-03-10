@@ -50,7 +50,7 @@ class ApiController extends Controller
         } else {
             $client = Clients::find($id)->update([
                 "type_id" => 5,
-                'start_time' => date('Y-m-d H:i:s')
+                'start_time' => date('H:i')
             ]);
         }
 
@@ -63,7 +63,7 @@ class ApiController extends Controller
     {
         $client = Clients::find($id)->update([
             "type_id" => 6,
-            'end_time' => date('Y-m-d H:i:s')
+            'end_time' => date('H:i')
         ]);
         return response()->json([
             'status' => 200,
