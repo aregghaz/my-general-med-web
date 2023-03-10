@@ -39,7 +39,7 @@ class ApiController extends Controller
     public function startTrip(Request $request, $id)
     {
         $carId = $request->user()->driver->car_id;
-        $check = Clients::where(['type_id' => 5, 'car_id' => $carId])->first();
+        $check = Clients::where(['type_id' => 5, 'car_id' => $carId, 'start_time' => date('Y-m-d H:i:s')])->first();
         if (isset($check)){
 
             return response()->json([
@@ -61,7 +61,8 @@ class ApiController extends Controller
     public function doneTrip($id)
     {
         $client = Clients::find($id)->update([
-            "type_id" => 6
+            "type_id" => 6,
+             'end_time' => date('Y-m-d H:i:s')
         ]);
         return response()->json([
             'status' => 200,
