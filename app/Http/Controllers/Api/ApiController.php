@@ -40,6 +40,7 @@ class ApiController extends Controller
     {
         $carId = $request->user()->driver->car_id;
         $check = Clients::where(['type_id' => 5, 'car_id' => $carId])->first();
+
         if (isset($check)) {
 
             return response()->json([

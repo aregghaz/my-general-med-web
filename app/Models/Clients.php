@@ -27,6 +27,8 @@ class Clients extends Model
         'fullName',
         'gender',///seect
         'los_id',
+        'start_time',
+        'end_time',
         'date_of_service',
         'pick_up',
         'drop_down',
