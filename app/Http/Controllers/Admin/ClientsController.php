@@ -304,7 +304,7 @@ class ClientsController extends Controller
         $client->los_id = $requestData->los->id;
         $client->artificial_id = $requestData->artificial->id;
         $client->duration_id = $requestData->waitDuration->id;
-        $client->date_of_service = date('m-d-Y', strtotime($date));
+        $client->date_of_service = date('Y-m-d', strtotime($date));
         $client->price = (int)$requestData->price + (int)$requestData->waitDuration->value + (int)$requestData->artificial->value;
         $client->pick_up = $origin['time'];
         $client->drop_down = $destination['time'];
