@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import GooglePlacesAutocomplete, { geocodeByPlaceId } from "react-google-places-autocomplete";
 import { GOOGLE_API_KEY } from "../../environments";
 import Button from "../button/button";
-import s from './autocomplete.module.scss'
+import s from "./autocomplete.module.scss";
+import getMapResponse from "../../utils/googleMap";
+
 interface ITextarea {
-    values:any,
-    name:string,
-    setFieldValue: (name: string, date: { address:string, id:string}) => void;
+    values: any,
+    name: string,
+    setFieldValue: (name: string, date: any) => void;
     handleDrawMap: (origin: string, destination: string) => void;
 
 }
@@ -19,11 +21,24 @@ const Autocomplete: React.FC<ITextarea> = (
         handleDrawMap
 
     }) => {
-    const [value, setValue] = useState(null);
+    const [load, setLoad] = useState(false);
+    useEffect(() => {
+        (async () => {
+            console.log(values["origin"]["address"].length, "1111");
+            if (values["origin"]["address"].length > 0 && values["destination"]["address"].length > 0) {
 
-    return ( <>
+                const results = await getMapResponse(values["origin"]["address"], values["destination"]["address"]);
+                setFieldValue('miles', parseFloat(results.routes[0].legs[0].distance.text));
+                console.log(results.routes[0].legs[0].duration.text,'duration');
+                // setDistance(results.routes[0].legs[0].distance.text);
+                // setDuration(results.routes[0].legs[0].duration.text);
+
+            }
+        })();
+    }, [load]);
+
+    return (<>
         <div>
-            {values["location"]}
             <GooglePlacesAutocomplete
                 apiKey={GOOGLE_API_KEY}
                 selectProps={{
@@ -36,9 +51,10 @@ const Autocomplete: React.FC<ITextarea> = (
                             address: originData[0].formatted_address,
                             id: originValue.value.place_id
                         });
+                        setLoad(!load);
                     }),
                     className: `${s.input}`,
-                    placeholder: 'Pick up address'
+                    placeholder: "Pick up address"
                 }}
             />
             <GooglePlacesAutocomplete
@@ -52,9 +68,10 @@ const Autocomplete: React.FC<ITextarea> = (
                             address: destinationData[0].formatted_address,
                             id: destination.value.place_id
                         });
+                        setLoad(!load);
                     }),
                     className: `${s.input}`,
-                    placeholder: 'Drop down adress'
+                    placeholder: "Drop down address"
                 }}
             />
             <Button
@@ -64,7 +81,7 @@ const Autocomplete: React.FC<ITextarea> = (
                 Show on map
             </Button>
         </div>
-    </>)
-}
+    </>);
+};
 
-export default Autocomplete
+export default Autocomplete;

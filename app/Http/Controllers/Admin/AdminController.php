@@ -30,7 +30,7 @@ class AdminController extends Controller
         ///$escort = Escort::count();
         $table = $this->getTable($slug);
 
-        $table = $table->get();
+        $table = $table->orderBy('name', 'asc')->get();
         return response()->json([
             'table' => new StatusTableCollection($table),
             "gender" => $gender,

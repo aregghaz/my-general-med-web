@@ -32,7 +32,7 @@ class UserController extends Controller
         }
         $roles = Role::withCount('users')->get();
 
-        $users = $users->get();
+        $users = $users->orderBy('name', 'asc')->get();
       ///  $users = User::get();
         return response()->json([
             'data' => new UserCollection($users),

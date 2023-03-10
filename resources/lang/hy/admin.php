@@ -81,6 +81,15 @@ return [
     'adminBeneficiaries' => "Users",
     'record_successfully_added' => "Record Successfully Edited",
     'vendor_successfully_added' => "Vendor Successfully Changed",
+    'duration_id' => "Waite time",
+    'waitDuration' => "Waite time",
+    'start_time' => "Trip start time",
+    'end_time' => "Trip end time",
+    'artificial_id' => "Artificial",
+
+
+
+
 
      "welcome_message_part_one" => "Բարի գալուստ",
      "welcome_message_part_two" => "Ընտանիքում բռնության դեպքերի կենտրոնացված հաշվառման տեղեկատվական համակարգ",

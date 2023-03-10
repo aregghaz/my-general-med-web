@@ -83,7 +83,11 @@ return [
     'record_successfully_edited' => "Record Successfully Edited",
     'vendor_successfully_added' => "Vendor Successfully Changed",
     'record_successfully_updated' => "Record Successfully Updated",
-
+    'duration_id' => "Waite time",
+    'waitDuration' => "Waite time",
+    'start_time' => "Trip start time",
+    'end_time' => "Trip end time",
+    'artificial_id' => "Artificial",
 
     'seeMore' => 'Home number',
     'adminBeneficiaries' => "Users",

@@ -10,6 +10,7 @@ import RemoveIcon from "-!svg-react-loader!../../../images/briefcase-work-busine
 import s from "../crud-table.module.scss";
 import ClaimTrip from "-!svg-react-loader!../../../images/briefcase-work-business-add-svgrepo-com.svg";
 import ActivityIcon from "-!svg-react-loader!../../../images/Actions.svg";
+import timestampToDate from "../../../utils/timestampToDate";
 
 interface ITableBody {
     data: Array<any>
@@ -57,7 +58,7 @@ const TableBody: React.FC<ITableBody> = (
                                   className={`${selectedIds?.includes(item["id"]) ? s.chosen : ""} ${++count % 2 == 0 ? s.classNameFieldEven : ""}`}>
                             {
                                 (isEdit || isDelete || isInfo || isAssign) &&
-                                <TableData item={item} key={999999} handlerAction={handlerAction}>
+                                <TableData item={item} key={999999}>
                                     <div className={s.iconsWrapper}>
                                         {
                                             isDelete && typeId !== 5 && typeId !== 6 &&
@@ -142,10 +143,36 @@ const TableBody: React.FC<ITableBody> = (
                             }
                             {
                                 keys.map((key: any, i: number) => {
+                                        let itemData = "";
+                                        switch (key) {
+                                            case "car_id":
+                                                itemData = item["car_id"] != null ? item["car_name"] : "";
+                                                break;
+                                            case "duration_id":
+                                                itemData = item[key] + " minute";
+                                                break;
+                                            case "miles":
+                                                itemData = item[key] + " mile";
+                                                break;
+                                            case "price":
+                                                itemData = item[key] + " $";
+                                                break;
+                                            case "date_of_service":
+                                                itemData = timestampToDate(item[key]);
+                                                break;
+                                            case "birthday":
+                                                itemData = timestampToDate(item[key]);
+                                                break;
+                                            default:
+                                                itemData = item[key];
+                                        }
+
+
                                         return i !== 0 && key !== "car_name" && (
                                             <TableData key={key} item={item} className={key}
                                                        handlerAction={handlerAction}>
-                                                {(key !== "car_id" ? item[key] : item["car_id"] != null ? item["car_name"] : "")}
+                                                {itemData}
+
                                             </TableData>
                                         );
                                     }

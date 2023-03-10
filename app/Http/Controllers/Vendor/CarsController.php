@@ -26,7 +26,7 @@ class CarsController extends Controller
      */
     public function index(Request $request)
     {
-        $cars = Cars::where('vendor_id', $request->user()->vendor_id)->with('make', 'year', 'model', 'driver', 'driver.user')->get();
+        $cars = Cars::where('vendor_id', $request->user()->vendor_id)->with('make', 'year', 'model', 'driver', 'driver.user')->orderBy('make_id', 'asc')->get();
         return response()->json([
             'cars' => new CarsCollection($cars),
         ], 200);

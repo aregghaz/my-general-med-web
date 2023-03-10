@@ -257,7 +257,7 @@ class VendorController extends Controller
             $vendorData = User::where(['role_id' => $tabId, "vendor_id" => $id])
                 ->with('fields');
         }
-        $vendorData = $vendorData->get();
+        $vendorData = $vendorData->orderBy('name', 'asc')->get();
         return response()->json(
             [
                 'data' => new VendorsCollection($vendorData),

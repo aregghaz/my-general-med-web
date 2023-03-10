@@ -35,7 +35,7 @@ class CreateClientsTable extends Migration
             $table->string('destination_phone')->nullable();
             $table->text('origin_comment')->nullable();
             $table->text('destination_comments')->nullable();
-            $table->unsignedBigInteger('miles')->nullable();
+            $table->float('miles',5,2)->nullable();
             $table->string('member_uniqie_identifer')->nullable();
             $table->string('birthday')->nullable();
             $table->float('weight' , 5, 2)->nullable();

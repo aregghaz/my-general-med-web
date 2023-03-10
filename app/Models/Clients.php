@@ -87,6 +87,14 @@ class Clients extends Model
     {
         return $this->hasOne(RequestType::class, 'id', 'request_type');
     }
+    public function waiteDuration()
+    {
+        return $this->hasOne(WaitDuration::class, 'id', 'duration_id');
+    }
+    public function artificial()
+    {
+        return $this->hasOne(Artificial::class, 'id', 'artificial_id');
+    }
     public function los()
     {
         return $this->hasOne(Los::class, 'id', 'los_id');

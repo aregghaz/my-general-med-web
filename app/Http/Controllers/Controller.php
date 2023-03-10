@@ -32,7 +32,6 @@ class Controller extends BaseController
                 'value' => $client->los->slug,
             ],
             'date_of_service' => $client->date_of_service,
-            'appointment_time' => $client->appointment_time,
             'pick_up' => $client->pick_up,
             'drop_down' => $client->drop_down,
             'request_type' => [
@@ -40,6 +39,18 @@ class Controller extends BaseController
                 'label' => $client->requestType->name,
                 'slug' => $client->requestType->slug,
                 'value' => $client->requestType->slug,
+            ],
+            'duration_id' => [
+                'id' => $client->waiteDuration->id,
+                'label' => $client->waiteDuration->name,
+                'slug' => $client->waiteDuration->slug,
+                'value' => $client->waiteDuration->slug,
+            ],
+            'artificial_id' => [
+                'id' => $client->artificial->id,
+                'label' => $client->artificial->name,
+                'slug' => $client->artificial->slug,
+                'value' => $client->artificial->slug,
             ],
             ///select
 

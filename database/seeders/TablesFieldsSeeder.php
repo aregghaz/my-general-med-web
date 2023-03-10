@@ -24,10 +24,14 @@ class TablesFieldsSeeder extends Seeder
             'fullName',
             'gender',
             'los_id',
+            'artificial_id',
+            'duration_id',
            /// 'phone_number',
             'date_of_service',
             'pick_up',
+            'start_time',
             'drop_down',
+            'end_time',
             'request_type', ///seect
             ////'status', ///seect
             'origin',

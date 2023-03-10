@@ -4,49 +4,22 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ClientFieldCollection;
+use App\Http\Resources\SelectAndPriceCollection;
 use App\Http\Resources\StatusCollection;
+use App\Models\Artificial;
 use App\Models\Clients;
 use App\Models\ClientStatus;
 use App\Models\ClientTable;
 use App\Models\Gender;
 use App\Models\Los;
 use App\Models\RequestType;
+use App\Models\User;
+use App\Models\WaitDuration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ClientsController extends Controller
 {
-
-    protected $title = [
-        "id",
-        'car_id',
-        'vendor_id',
-        'type_id',
-        'trip_id',
-        'operator_id',
-        'fullName',
-        'gender',///seect
-        'los_id',
-        'date_of_service',
-        'pick_up',
-        'drop_down',
-        'request_type', ///seect
-        'status',///seect
-        'origin',
-        'origin_phone',
-        'origin_id',
-        'origin_comment',
-        'origin_phone',
-        "destination_id",
-        "destination",
-        "destination_phone",
-        'destination_comments',
-        'miles',
-        'member_uniqie_identifer',
-        'birthday',
-        'weight',
-        'height',
-    ];
 
     public function clientsData(Request $request)
     {
@@ -68,6 +41,7 @@ class ClientsController extends Controller
 
 
         if ($typeId === 2 || $typeId === 3 || $typeId === 4) {
+            /////FIXME ADD START AND END TIME FORM DRIVE
             if (($key = array_search('car_id', $vendorFields)) !== false) {
                 array_splice($vendorFields, $key, 1);
 
@@ -135,6 +109,12 @@ class ClientsController extends Controller
             } else if ($vendorFields[$i] == 'status') {
                 $clients = $clients->join('client_statuses', 'clients.type_id', '=', 'client_statuses.id');
                 $clientsData[] = "client_statuses.name as status";
+            } else if ($vendorFields[$i] == 'duration_id') {
+                $clients = $clients->join('wait_durations', 'clients.duration_id', '=', 'wait_durations.id');
+                $clientsData[] = "wait_durations.name as duration_id";
+            } else if ($vendorFields[$i] == 'artificial_id') {
+                $clients = $clients->join('artificials', 'clients.artificial_id', '=', 'artificials.id');
+                $clientsData[] = "artificials.name as artificial";
             } else if ($vendorFields[$i] == 'los_id') {
                 $clients = $clients->join('los', 'clients.los_id', '=', 'los.id');
                 $clientsData[] = "los.name as los_id";
@@ -163,18 +143,9 @@ class ClientsController extends Controller
         $result = array_diff($allFields, $selectedFieldsTitle);
         $selectedFields = count($clientsData) > 0 ? $clientsData : $clientData;
         array_unshift($selectedFields, 'clients.id as id');
-        ///dd( $selectedFields);
-
         $clients = $clients->select($selectedFields)->orderBy('date_of_service', 'asc');
-
         $clients = $clients->take(15 * $showMore)->get();
-        // // dd($clients);
-        // // dd( $clients->get());
-        // if(count($selectedFieldsTitle) > 1){
-        //  array_shift($selectedFieldsTitle);
-        // }
-        ////  $selectedFieldsTitle[] = 'action';
-        //   dd($selectedFieldsTitle);
+
         return response()->json([
             'clients' => $clients,
             'selectedFields' => new ClientFieldCollection($selectedFieldsTitle),
@@ -199,6 +170,9 @@ class ClientsController extends Controller
         ///  $clientStatus = ClientStatus::get();
         $gender = Gender::get();
         $los = Los::get();
+        $artificial = Artificial::get();
+        $waitDuration = WaitDuration::get();
+        $vendors = User::where('role_id', 2)->get();
 
         return response()->json([
             'clientType' => $this->clientCreateType(),
@@ -206,7 +180,10 @@ class ClientsController extends Controller
             "gender" => new StatusCollection($gender),
             'request_type' => new StatusCollection($request_type),
             "los" => new StatusCollection($los),
+            "vendors" => new StatusCollection($vendors),
             'trip_id' => $this->tripType(),
+            'artificial' => new SelectAndPriceCollection($artificial),
+            'waitDuration' => new SelectAndPriceCollection($waitDuration),
             ///'status' => new StatusCollection($clientStatus),
 
         ], 200);
@@ -315,12 +292,20 @@ class ClientsController extends Controller
     protected function getClientFieldsForCreate($requestData, $userId, $date, $tripType, $origin, $destination)
     {
         $client = new Clients();
-        $client->type_id = 2;
+
+        if (isset($requestData->vendors)) {
+            $client->vendor_id = $requestData->vendors->id;
+            $client->type_id = 1;
+        } else {
+            $client->type_id = 2;
+        }
         $client->fullName = $requestData->fullName;
         $client->gender = $requestData->gender->id;
         $client->los_id = $requestData->los->id;
-        $client->date_of_service = date('Y-m-d', strtotime($date));
-        $client->price = (float)$requestData->price;
+        $client->artificial_id = $requestData->artificial->id;
+        $client->duration_id = $requestData->waitDuration->id;
+        $client->date_of_service = date('m-d-Y', strtotime($date));
+        $client->price = (int)$requestData->price + (int)$requestData->waitDuration->value + (int)$requestData->artificial->value;
         $client->pick_up = $origin['time'];
         $client->drop_down = $destination['time'];
         $client->request_type = $requestData->request_type->id;
@@ -336,20 +321,35 @@ class ClientsController extends Controller
 //            $client->origin = $requestData->origin;
 //        }
         $client->origin_phone = $origin['phone'];
-        $client->origin_comment = $requestData->origin_comment;
+        if (isset($requestData->origin_comment)) {
+            $client->origin_comment = $requestData->origin_comment;
+
+        }
         ///   if (isset($requestData->destination->address)) {
         $client->destination = $destination['address'];
         $client->destination_id = $destination['address_id'];
 //        } else {
 //            $client->destination = $requestData->destination;
 //        }
+        if (isset($requestData->destination_comments)) {
+            $client->destination_comments = $requestData->destination_comments;
+
+        }
         $client->destination_phone = $destination['phone'];
-        $client->destination_comments = $requestData->destination_comments;
         $client->member_uniqie_identifer = $requestData->member_uniqie_identifer;
-        $client->birthday = $requestData->birthday;
-        $client->miles = (int)$requestData->miles;
-        $client->height = (float)$requestData->height;
-        $client->weight = (float)$requestData->weight;
+        if (isset($requestData->birthday)) {
+            $client->birthday = $requestData->birthday;
+        }
+
+        $client->miles = (float)$requestData->miles;
+        if (isset($client->height)) {
+            $client->height = (float)$requestData->height;
+
+        }
+        if (isset($requestData->weight)) {
+            $client->weight = (float)$requestData->weight;
+        }
+
         if (!$client->save()) {
             return false;
         }
@@ -407,9 +407,12 @@ class ClientsController extends Controller
         $clientStatus = ClientStatus::get();
         $gender = Gender::get();
         $los = Los::get();
+        $artificial = Artificial::get();
+        $waitDuration = WaitDuration::get();
+        $vendors = User::where('role_id', 2)->get();
         $client = Clients::with([
-            /// 'typeOfTrip',
-            /// 'escort',
+            'waiteDuration',
+            'artificial',
             'genderType',
             'clientStatus',
             'requestType'
@@ -425,7 +428,9 @@ class ClientsController extends Controller
             'los' => new StatusCollection($los),
             ///  "type_of_trip" => new StatusCollection($typeOfTrip),
             'status' => new StatusCollection($clientStatus),
-
+            "vendors" => new StatusCollection($vendors),
+            'artificial_id' => new SelectAndPriceCollection($artificial),
+            'duration_id' => new SelectAndPriceCollection($waitDuration),
         ], 200);
     }
 
@@ -480,38 +485,65 @@ class ClientsController extends Controller
 //        }
         $userId = $request->user()->id;
         $requestData = json_decode($request->value);
+        $origin = [
+            "phone" => $requestData->origin_phone,
+            'time' => $requestData->pick_up,
+        ];
+        $destination = [
+            "phone" => $requestData->destination_phone,
+            "time" => $requestData->drop_down,
+        ];
         $client = Clients::find($id);
         $client->fullName = $requestData->fullName;
-        $client->price = (float)$requestData->price;
         $client->gender = $requestData->gender->id;
         $client->los_id = $requestData->los->id;
+        $client->artificial_id = $requestData->artificial_id->id;
+        $client->duration_id = $requestData->duration_id->id;
         $client->date_of_service = date('Y-m-d', strtotime($requestData->date_of_service));
-        $client->pick_up = $requestData->pick_up;
-        $client->drop_down = $requestData->drop_down;
+        $client->price = (int)$requestData->price + (int)$requestData->duration_id->value + (int)$requestData->artificial_id->value;
+        $client->pick_up = $origin['time'];
+        $client->drop_down = $destination['time'];
         $client->request_type = $requestData->request_type->id;
-        ////  $client->status = $requestData->status->id;
+        /// $client->status = $requestData->status->id;
         $client->operator_id = $userId;
+        ///if (isset($requestData->origin->address)) {
+        /// dd()
+//        dd($origin);
+        if (isset($requestData->destination->address)) {
+            $client->destination = $requestData->destination->address;
+
+            $client->destination_id = $requestData->destination->id;
+        }
         if (isset($requestData->origin->address)) {
             $client->origin = $requestData->origin->address;
             $client->origin_id = $requestData->origin->id;
-        } else {
-            $client->origin = $requestData->origin;
         }
-        $client->origin_phone = $requestData->origin_phone;
-        $client->origin_comment = $requestData->origin_comment;
-        if (isset($requestData->destination->address)) {
-            $client->destination = $requestData->destination->address;
-            $client->destination_id = $requestData->destination->id;
-        } else {
-            $client->destination = $requestData->destination;
+
+
+        $client->origin_phone = $origin['phone'];
+        if (isset($requestData->origin_comment)) {
+            $client->origin_comment = $requestData->origin_comment;
+
         }
-        $client->destination_phone = $requestData->destination_phone;
-        $client->destination_comments = $requestData->destination_comments;
+        if (isset($requestData->destination_comments)) {
+            $client->destination_comments = $requestData->destination_comments;
+
+        }
+        $client->destination_phone = $destination['phone'];
         $client->member_uniqie_identifer = $requestData->member_uniqie_identifer;
-        $client->birthday = $requestData->birthday;
-        $client->miles = (int)$requestData->miles;
-        $client->height = (float)$requestData->height;
-        $client->weight = (float)$requestData->weight;
+        if (isset($requestData->birthday)) {
+            $client->birthday = $requestData->birthday;
+        }
+
+        $client->miles = (float)$requestData->miles;
+        if (isset($client->height)) {
+            $client->height = (float)$requestData->height;
+
+        }
+        if (isset($requestData->weight)) {
+            $client->weight = (float)$requestData->weight;
+        }
+
         $client->update();
         $this->createAction($userId, $id, 9, 1);
         return response()->json(

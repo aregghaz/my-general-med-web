@@ -15,47 +15,6 @@ use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
-
-
-    protected $title = [
-        'id',
-        'trip_id',
-        'name',
-        'surname',
-        'gender',
-        'los_id',
-        'phone_number',
-        'date_of_service',
-        'appointment_time',
-        'pick_up',
-        'drop_down',
-        'request_type', ///seect
-        'status', ///seect
-        'origin_name',
-        'origin_street',
-        'origin_suite',
-        'origin_city',
-        'origin_state',
-        'origin_postal',
-        'origin_country',
-        'origin_phone',
-        'origin_comment',
-        'destination_name',
-        'destination_street',
-        'destination_suite',
-        'destination_city',
-        'destination_state',
-        'destination_postal',
-        'destination_country',
-        'destination_phone',
-        'destination_comments',
-        'escortType', //select
-        'type_of_trip', //select
-        'miles',
-        'member_uniqie_identifer',
-        'birthday'
-    ];
-
     public function clientData(Request $request): JsonResponse
     {
         $allFields = $request->user()->fields()->get()->pluck('name')->toArray();
@@ -141,6 +100,12 @@ class HomeController extends Controller
                 $clients = $clients->join('los', 'clients.los_id', '=', 'los.id');
                 $clientsData[] = "los.name as los_id";
                 //////gender reletion cheking and add to title
+            }else if ($vendorFields[$i] == 'duration_id') {
+                $clients = $clients->join('wait_durations', 'clients.duration_id', '=', 'wait_durations.id');
+                $clientsData[] = "wait_durations.name as duration_id";
+            }else if ($vendorFields[$i] == 'artificial_id') {
+                $clients = $clients->join('artificials', 'clients.artificial_id', '=', 'artificials.id');
+                $clientsData[] = "artificials.name as artificial";
             } else if ($vendorFields[$i] == 'gender') {
                 $clients = $clients->join('genders', 'clients.gender', '=', 'genders.id');
                 $clientsData[] = "genders.name as gender";
@@ -161,7 +126,7 @@ class HomeController extends Controller
         $selectedFields = count($clientsData) > 0 ? $clientsData : $clientData;
 
         array_unshift($selectedFields, 'clients.id as id');
-        $clients = $clients->select($selectedFields);
+        $clients = $clients->select($selectedFields)->orderBy('date_of_service', 'asc');
 
         $clients = $clients->take(15 * $showMore)->get();
         /// dd($selectedFields);

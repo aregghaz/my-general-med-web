@@ -32,12 +32,13 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         { name: "birthday", type: "datepicker", label: "birthday" },
 
         { name: "los", type: "select", label: "los" },
+        { name: "artificial", type: "select", label: "artificial" },
+        { name: "waitDuration", type: "select", label: "waitDuration" },
+        { name: "vendors", type: "select", label: "vendors" },
 
         { name: "request_type", type: "select", label: "request_type" },
 
         { name: "member_uniqie_identifer", type: "input", label: "member_uniqie_identifer" },
-        { name: "id", type: "hidden", inputType: "hidden" },
-        { name: "id", type: "hidden", inputType: "hidden" },
         { name: "id", type: "hidden", inputType: "hidden" },
 
         /// { name: "status", type: "select", label: "status" },
@@ -51,7 +52,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         // { name: "id", type: "hidden", inputType: "hidden" },
         { name: "height", type: "input", label: "height", inputType: "number" },
         { name: "weight", type: "input", label: "weight", inputType: "number" },
-        { name: "miles", type: "input", label: "miles", inputType: "number" },
+        { name: "miles", type: "input", label: "miles", inputType: "disabled" },
 
         { name: "pick_up", type: "timePicker", label: "pick_up" },
         { name: "drop_down", type: "timePicker", label: "drop_down" }

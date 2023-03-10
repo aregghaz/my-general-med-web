@@ -15,8 +15,8 @@ class UpdateClientTabeleInWaitDuration extends Migration
     {
         Schema::table('clients', function(Blueprint $table){
             $table->text('duration_id')->nullable()->after('los_id');
-            $table->text('start_time')->nullable()->after('pick_up');
-            $table->text('end_time')->nullable()->after('drop_down');
+            $table->date('start_time')->nullable()->after('pick_up');
+            $table->date('end_time')->nullable()->after('drop_down');
         });
     }
 

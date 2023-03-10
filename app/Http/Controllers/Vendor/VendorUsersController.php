@@ -26,7 +26,7 @@ class VendorUsersController extends Controller
         if ($request->input('tabId')) {
             $users = $users->where('role_id', $request->input('tabId'));
         }
-        $users = $users->get();
+        $users = $users->orderBy('name', 'asc')->get();
         $roles = Role::where('id', '>', $request->user()->role_id)->withCount(['users' => function ($query) use ($vendorId) {
             $query->where('vendor_id', $vendorId);
         }])
