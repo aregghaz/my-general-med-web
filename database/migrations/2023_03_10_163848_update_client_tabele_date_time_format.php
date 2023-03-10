@@ -1,0 +1,31 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class UpdateClientTabeleDateTimeFormat extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('clients', function (Blueprint $table) {
+            $table->time('start_time')->format('H:i')->change();// Renaming "emp_name" to "employee_name"
+            $table->time('end_time')->format('H:i')->change(); // Change Datatype length
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        //
+    }
+}
