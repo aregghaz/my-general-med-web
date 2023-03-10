@@ -17,7 +17,7 @@ class ApiController extends Controller
             'genderType',
             'clientStatus',
             'requestType'
-        ])->where(['vendor_id' => $vendorId,'car_id' => $carId])->where('type_id' , 1 )->orWhere('type_id' , 5)->get();
+        ])->where(['vendor_id' => $vendorId, 'car_id' => $carId])->where('type_id', 1)->orWhere('type_id', 5)->get();
         return response()->json([
             'clients' => new ClientCollection($clients),
             'success' => 1,
@@ -39,17 +39,18 @@ class ApiController extends Controller
     public function startTrip(Request $request, $id)
     {
         $carId = $request->user()->driver->car_id;
-        $check = Clients::where(['type_id' => 5, 'car_id' => $carId, 'start_time' => date('Y-m-d H:i:s')])->first();
-        if (isset($check)){
+        $check = Clients::where(['type_id' => 5, 'car_id' => $carId])->first();
+        if (isset($check)) {
 
             return response()->json([
                 'clientId' => $check->id,
                 'tripId' => $check->trip_id,
                 'status' => 1,
             ], 200);
-        }else{
+        } else {
             $client = Clients::find($id)->update([
-                "type_id" => 5
+                "type_id" => 5,
+                'start_time' => date('Y-m-d H:i:s')
             ]);
         }
 
@@ -62,7 +63,7 @@ class ApiController extends Controller
     {
         $client = Clients::find($id)->update([
             "type_id" => 6,
-             'end_time' => date('Y-m-d H:i:s')
+            'end_time' => date('Y-m-d H:i:s')
         ]);
         return response()->json([
             'status' => 200,
