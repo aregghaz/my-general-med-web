@@ -5,6 +5,8 @@ import TrashIcon from "-!svg-react-loader!../../../images/trash.svg";
 import EditIcon from "-!svg-react-loader!../../../images/edit.svg";
 import UsersIcon from "-!svg-react-loader!../../../images/Users.svg";
 import ActivityIcon from "-!svg-react-loader!../../../images/Actions.svg";
+import CLoseMessage from "-!svg-react-loader!../../../images/close-message.svg";
+import OpenMessage from "-!svg-react-loader!../../../images/open.svg";
 import s from "../crud-table.module.scss";
 import { useTranslation } from "react-i18next";
 
@@ -71,6 +73,14 @@ const TableBody: React.FC<ITableBody> = (
                                                                    handlerAction={handlerAction}
                                                         >
                                                            <span  className={s.label_span}> {t(item[key])}</span>
+                                                        </TableData>
+                                                    );
+                                                } else if (key == "new") {
+                                                    return i != 0 && (
+                                                        <TableData data={item.id} key={i} isGetInfo={isGetInfo}
+                                                                   handlerAction={handlerAction}
+                                                        >
+                                                            {item[key] ? <CLoseMessage/> : <OpenMessage/> }
                                                         </TableData>
                                                     );
                                                 } else {

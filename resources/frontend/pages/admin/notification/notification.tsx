@@ -18,7 +18,8 @@ const NotificationList: React.FC<INotificationList> = () => {
         "value_id",
         "field",
         "type_id",
-        "model"
+        "model",
+        "created_at"
     ];
 
     useEffect(() => {

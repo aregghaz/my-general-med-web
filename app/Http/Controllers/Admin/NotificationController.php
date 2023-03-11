@@ -19,7 +19,7 @@ class NotificationController extends Controller
     public function index()
     {
 
-        $notification = Notification::with('getAction')->get();
+        $notification = Notification::with('getAction')->orderBy('new', "desc")->get();
         return response()->json(
             [
                 'data' => new NotificationCollection($notification),

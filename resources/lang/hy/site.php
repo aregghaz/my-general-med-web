@@ -92,7 +92,7 @@ return [
     'birthDate' => "Date of Birthday",
     'defensive_driving' => 'Defensive Driving Certificate',
     'license' => 'Driver License',
-
+    'date'=> 'Date',
 
 
 
@@ -101,7 +101,7 @@ return [
     'adminBeneficiaries' => "Users",
     'seeMoves'=> 'Նոր կինոնկարներ',
     'seeSerials'=> 'Նոր սերիալներ',
-    'date'=> 'Թողարկման ամսաթիվը',
+
     'allFilms'=> 'Բոլոր ֆիլմերը',
     'seeAll'=> 'դիտել բոլոր',
     'minute'=> 'ր.',

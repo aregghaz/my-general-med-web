@@ -19,11 +19,12 @@ class NotificationCollection extends ResourceCollection
             return [
                 ///  'id' => $data->id,
                 'id' => $data->id,
-                'new' => $data->new ? 'new' : 'readed',
+                'new' => $data->new ,
                 "value_id"=> $data->value_id,
                 'field' => $data->field,
                 'type_id' =>  $data->getAction->name,
-                'model' =>  $data->model
+                'model' =>  $data->model,
+                'created_at' =>date('m-d-Y H:i', strtotime($data->created_at))
             ];
         });
     }
