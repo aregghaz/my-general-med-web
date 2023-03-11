@@ -267,7 +267,6 @@ class VendorUsersController extends Controller
                 }
             }
             $license = $request->file('license');
-            $this->saveNotification('driver', 'license', $id, 9);
             $vendor->license_exp = date('Y-m-d', strtotime($requestData->license_exp));
             $vendor->license = $this->getPdfFile($license, $vendorId, $userId);
             $this->saveNotification('driver', 'license', $id, 9);
