@@ -49,50 +49,87 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
     //     }
     // }
     return (
+        // <>
+        //     {/* <Viewer fileUrl={url} /> */}
+        //     {/*{oldImage && (*/}
+        //     {/*    <div className={s.existingImageBlock}>*/}
+        //     {/*        <img className={s.existingImage} src={URL.createObjectURL(oldImage)} alt={oldName}/>*/}
+        //     {/*    </div>*/}
+        //     {/*)}*/}
+        //     {/*FIXME this PDF viewer has some errors and doesn't run properly ???*/}
+        //     {/*<PDFViewer viewPDF={viewPDF}/>*/}
+        //     {/*<ExamplePDFViewer/>*/}
+        //     {/*{*/}
+        //     {/*    oldVideo &&*/}
+        //     {/*    <div className={s.existingImageBlock}>*/}
+        //     {/*        <video controls className={s.existingImage} src={oldVideo}/>*/}
+        //     {/*    </div>*/}
+        //     {/*}*/}
+        //     <div className={s.wrapper}>
+        //         <div className={s.uploadButtonWrapper}>
+        //             <span style={{ display: "flex", fontWeight: "normal", justifyContent: "space-between",}}>{label}</span>
+        //             {
+        //                 error &&
+        //                 <div className={s.error}>{error}</div>
+        //             }
+        //             <label className={s.upload_label}>
+        //             <span className={s.uploadFileText}>
+        //                 <ButtonSVg />
+        //             </span>
+        //                 {/*{*/}
+        //                 {/*    value['name'] &&*/}
+        //                 {/*    <span className={s.uploadedImage}>{value[name].name}</span>*/}
+        //                 {/*}*/}
+        //                 <input name={name} type="file" className={s.fileInput} onChange={onChange} />
+        //             </label>
+        //
+        //         </div>
+        //         <span>
+        //             {type !== "hidden" ? "Experation date" : null}
+        //         </span>
+        //         {type !== 'hidden' && <DataPicker
+        //             name={`${name}_exp`}
+        //             setFieldValue={setFieldValue}
+        //             selectRange={false}
+        //             ///  handleChange={handleChange}
+        //             label={``}
+        //             value={value[`${name}_exp`]}
+        //         />}
+        //     </div>
+        // </>
+
         <>
-            {/* <Viewer fileUrl={url} /> */}
-            {/*{oldImage && (*/}
-            {/*    <div className={s.existingImageBlock}>*/}
-            {/*        <img className={s.existingImage} src={URL.createObjectURL(oldImage)} alt={oldName}/>*/}
-            {/*    </div>*/}
-            {/*)}*/}
-            {/*FIXME this PDF viewer has some errors and doesn't run properly ???*/}
-            {/*<PDFViewer viewPDF={viewPDF}/>*/}
-            {/*<ExamplePDFViewer/>*/}
-            {/*{*/}
-            {/*    oldVideo &&*/}
-            {/*    <div className={s.existingImageBlock}>*/}
-            {/*        <video controls className={s.existingImage} src={oldVideo}/>*/}
-            {/*    </div>*/}
-            {/*}*/}
-            <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-
+            <div className={s.wrapper}>
                 <div className={s.uploadButtonWrapper}>
-                    <span style={{ display: "block", fontWeight: "normal" }}>{label}</span>
-                    {
-                        error &&
-                        <div className={s.error}>{error}</div>
-                    }
-                    <label className={s.upload_label}>
-                    <span className={s.uploadFileText}>
-                        <ButtonSVg />
-                    </span>
-                        {/*{*/}
-                        {/*    value['name'] &&*/}
-                        {/*    <span className={s.uploadedImage}>{value[name].name}</span>*/}
-                        {/*}*/}
-                        <input name={name} type="file" className={s.fileInput} onChange={onChange} />
-                    </label>
-
+                    <div className={s.uploadButtonLabel}>
+                        <span>{label}</span>
+                    </div>
+                    <div className={s.uploadButton}>
+                        <label>
+                            <span className={s.uploadFileText}><ButtonSVg/></span>
+                            <input name={name} type="file" className={s.fileInput} onChange={onChange} />
+                            <span>filename</span>
+                        </label>
+                    </div>
                 </div>
-                {type !== 'hidden' && <DataPicker
-                    name={`${name}_exp`}
-                    setFieldValue={setFieldValue}
-                    selectRange={false}
-                    ///  handleChange={handleChange}
-                    label={``}
-                    value={value[`${name}_exp`]}
-                />}
+                {type !== "hidden" && <div className={s.splitter}></div>}
+                <div className={s.datePickerWrapper}>
+                    <div className={s.datePickerLabel}>
+                        <span>{type !== "hidden" ? "Experation date" : null}</span>
+                    </div>
+                    <div className={s.datepicker}>
+                        {type !== 'hidden' ? <DataPicker
+                            name={`${name}_exp`}
+                            setFieldValue={setFieldValue}
+                            selectRange={false}
+                            ///  handleChange={handleChange}
+                            label={``}
+                            value={value[`${name}_exp`]}
+                        /> : <div style={{
+                            height: 50,
+                        }}></div>}
+                    </div>
+                </div>
             </div>
         </>
     );
