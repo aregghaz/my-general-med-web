@@ -22,7 +22,9 @@ class Driver extends Model
         'emt_1',
         'first_aid',
         'company_training',
-        'drug_test'
+        'drug_test',
+        'sex_offender_check_exp',
+        'motor_vehicle_record_exp'
     ];
 
     public function user()

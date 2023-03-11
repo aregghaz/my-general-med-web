@@ -11,6 +11,7 @@ const populateEditFormFields = (fields: Array<IItem>, data: { [key: string] : { 
                     break
                 case 'file':
                     values[field.name] =data.data[field.name]
+                    values[`${field.name}_exp`] = data.data[`${field.name}_exp`]
                     break
                 case 'hidden':
                     values[field.name] = data.data[field.name]

@@ -125,9 +125,11 @@ const FormikHandler: React.FC<IFormikHandler> = (
                         onChange={(event) => {
                             setFieldValue(item.name, event.currentTarget.files[0]);
                         }}
+                        type={item.inputType}
+                        setFieldValue={setFieldValue}
                         label={t(item.label)}
                         media={"image"}
-                        value={values[item.name]}
+                        value={values}
                         error={errors[item.name]}
                     />
                 </div>

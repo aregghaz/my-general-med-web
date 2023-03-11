@@ -26,7 +26,7 @@ const VendorDriverCreate: React.FC<IUserCreate> = () => {
         {name: 'password', type: 'input', label: 'password',inputType:'password' },
       ///  {name: 'roles', type: 'select', label: 'role'},
         {name: 'license', type: 'file', label: 'Driver License'},
-        {name: 'picture', type: 'file', label: 'Driver Picture'},
+        {name: 'picture', type: 'file', label: 'Driver Picture', inputType: 'hidden'},
         {name: 'sex_offender_check', type: 'file', label: 'Sex Offender Check '},
         {name: 'motor_vehicle_record', type: 'file', label: 'Motor Vehicle Record'},
         {name: 'defensive_driving', type: 'file', label: 'Defensive Driving Certificate'},

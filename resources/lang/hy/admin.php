@@ -86,7 +86,8 @@ return [
     'start_time' => "Trip start time",
     'end_time' => "Trip end time",
     'artificial_id' => "Artificial",
-
+    'field_required' => "Field Required",
+    'birthDate' => "Date of Birthday",
 
 
 

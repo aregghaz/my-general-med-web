@@ -64,6 +64,9 @@ class VendorUsersController extends Controller
                     'sex_offender_check' => $vendorData->driver->sex_offender_check,
                     'motor_vehicle_record' => $vendorData->driver->motor_vehicle_record,
                     'defensive_driving' => $vendorData->driver->defensive_driving,
+                    'motor_vehicle_record_exp' => $vendorData->driver->motor_vehicle_record_exp,
+                    'sex_offender_check_exp' => $vendorData->driver->sex_offender_check_exp,
+
                     'wheelchair_securement' => $vendorData->driver->wheelchair_securement,
                     'pass_basic' => $vendorData->driver->pass_basic,
                     'emt_1' => $vendorData->driver->emt_1,
@@ -98,6 +101,9 @@ class VendorUsersController extends Controller
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string',
             'birthday' => 'string',
+            'license_exp' => 'string',
+            'sex_offender_check_exp' => 'string',
+            'motor_vehicle_record_exp' => 'string',
             'address' => 'string',
             'phone_number' => 'string',
         ]);
@@ -130,6 +136,10 @@ class VendorUsersController extends Controller
             'vendor_id' => $request->user()->vendor_id,
             'email' => $requestData['email'],
             'role_id' => 3,
+            'license_exp' => $requestData['license_exp'],
+            'sex_offender_check_exp' => $requestData['sex_offender_check_exp'],
+            'motor_vehicle_record_exp' => $requestData['motor_vehicle_record_exp'],
+
             'password' => bcrypt($requestData['password']),
             'birthday' => date('Y-m-d', strtotime($requestData['birthday'])),
             'address' => $requestData['address'],
@@ -248,6 +258,10 @@ class VendorUsersController extends Controller
             $vendor->license = $this->getPdfFile($license, $vendorId, $userId);
 
         }
+
+
+        $vendor->sex_offender_check_exp = date('Y-m-d', strtotime($requestData->sex_offender_check_exp));
+        $vendor->motor_vehicle_record_exp =  date('Y-m-d', strtotime($requestData->motor_vehicle_record_exp));
         if ($request->hasFile('picture')) {
             if (is_file(public_path($vendor->picture))) {
                 $oldImage = public_path($vendor->picture);
@@ -396,7 +410,9 @@ class VendorUsersController extends Controller
                 'license' => $vendorData->driver->license,
                 'picture' => $vendorData->driver->picture,
                 'sex_offender_check' => $vendorData->driver->sex_offender_check,
+                'sex_offender_check_exp' => $vendorData->driver->sex_offender_check_exp,
                 'motor_vehicle_record' => $vendorData->driver->motor_vehicle_record,
+                'motor_vehicle_record_exp' => $vendorData->driver->motor_vehicle_record_exp,
                 'defensive_driving' => $vendorData->driver->defensive_driving,
                 'wheelchair_securement' => $vendorData->driver->wheelchair_securement,
                 'pass_basic' => $vendorData->driver->pass_basic,
