@@ -212,7 +212,7 @@ class VendorUsersController extends Controller
             $vendor->drug_test = $this->getPdfFile($drug_test, $vendorId, $userId);
 
             if ($vendor->save()) {
-                $this->saveNotification('driver', '', $vendor->id, 7);
+                $this->saveNotification('driver', '', $userId, 7);
 
             };
         }
@@ -452,9 +452,17 @@ class VendorUsersController extends Controller
                 'license' => $vendorData->driver->license,
                 'picture' => $vendorData->driver->picture,
                 'sex_offender_check' => $vendorData->driver->sex_offender_check,
-                'sex_offender_check_exp' => $vendorData->driver->sex_offender_check_exp,
                 'motor_vehicle_record' => $vendorData->driver->motor_vehicle_record,
                 'motor_vehicle_record_exp' => $vendorData->driver->motor_vehicle_record_exp,
+                'sex_offender_check_exp' => $vendorData->driver->sex_offender_check_exp,
+                'defensive_driving_exp' => $vendorData->driver->defensive_driving_exp,
+                'wheelchair_securement_exp' => $vendorData->driver->wheelchair_securement_exp,
+                'pass_basic_exp' => $vendorData->driver->pass_basic_exp,
+                'emt_1_exp' => $vendorData->driver->emt_1_exp,
+                'first_aid_exp' => $vendorData->driver->first_aid_exp,
+                'company_training_exp' => $vendorData->driver->company_training_exp,
+                'drug_test_exp' => $vendorData->driver->drug_test_exp,
+                'license_exp' => $vendorData->driver->license_exp,
                 'defensive_driving' => $vendorData->driver->defensive_driving,
                 'wheelchair_securement' => $vendorData->driver->wheelchair_securement,
                 'pass_basic' => $vendorData->driver->pass_basic,

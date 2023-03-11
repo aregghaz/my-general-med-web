@@ -41,7 +41,7 @@ const TableBody: React.FC<ITableBody> = (
                 .map((item, index) => {
                     const keys = Object.keys(item);
                     return (
-                        <TableRow key={index} className={ ++count % 2 == 0 ? s.classNameFieldEven : ""}>
+                        <TableRow key={index} className={++count % 2 == 0 ? s.classNameFieldEven : ""}>
                             {
                                 keys.length > 0 &&
                                 (
@@ -50,7 +50,8 @@ const TableBody: React.FC<ITableBody> = (
 
                                                 if (key == "fields") {
                                                     return i != 0 && (
-                                                        <TableData data={item.id} key={i} className={s.address} isGetInfo={isGetInfo}
+                                                        <TableData data={item.id} key={i} className={s.address}
+                                                                   isGetInfo={isGetInfo}
                                                                    handlerAction={handlerAction}
                                                         >
                                                             {item[key].map((e: string, ind: number) => {
@@ -61,18 +62,18 @@ const TableBody: React.FC<ITableBody> = (
                                                     );
                                                 } else if (key == "image") {
                                                     return i != 0 && (
-                                                        <TableData data={item.id} key={i}  isGetInfo={isGetInfo}
+                                                        <TableData data={item.id} key={i} isGetInfo={isGetInfo}
                                                                    handlerAction={handlerAction}
                                                         >
                                                             <img src={item[key]} alt="" />
                                                         </TableData>
                                                     );
-                                                }else if (key == "operatorAction") {
+                                                } else if (key == "operatorAction") {
                                                     return i != 0 && (
                                                         <TableData data={item.id} key={i} isGetInfo={isGetInfo}
                                                                    handlerAction={handlerAction}
                                                         >
-                                                           <span  className={s.label_span}> {t(item[key])}</span>
+                                                            <span className={s.label_span}> {t(item[key])}</span>
                                                         </TableData>
                                                     );
                                                 } else if (key == "new") {
@@ -80,7 +81,7 @@ const TableBody: React.FC<ITableBody> = (
                                                         <TableData data={item.id} key={i} isGetInfo={isGetInfo}
                                                                    handlerAction={handlerAction}
                                                         >
-                                                            {item[key] ? <CLoseMessage/> : <OpenMessage/> }
+                                                            {item[key] ? <CLoseMessage /> : <OpenMessage />}
                                                         </TableData>
                                                     );
                                                 } else {
@@ -102,34 +103,34 @@ const TableBody: React.FC<ITableBody> = (
                                 (isEdit || isDelete || isGetItems || isGetHistory) &&
                                 <TableData isGetInfo={isGetInfo} className={s.iconsWrapper}>
 
-                                        {
-                                            isEdit &&
-                                            <EditIcon
-                                                className={s.editIcon}
-                                                onClick={() => handlerAction('edit',item.id)}
-                                            />
-                                        }
-                                        {
-                                            isGetItems &&
-                                            <UsersIcon
-                                                className={s.editIcon}
-                                                onClick={() => handlerAction('getVendorUser', item.id)}
-                                            />
-                                        }
-                                        {
-                                            isGetHistory &&
-                                            <ActivityIcon
-                                                className={s.editIcon}
-                                                onClick={() => handlerAction('history',item.id)}
-                                            />
-                                        }
-                                        {
-                                            isDelete &&
-                                            <TrashIcon
-                                                className={s.trashIcon}
-                                                onClick={() => handlerAction('delete',item.id)}
-                                            />
-                                        }
+                                    {
+                                        isEdit &&
+                                        <EditIcon
+                                            className={s.editIcon}
+                                            onClick={() => handlerAction("edit", item.id)}
+                                        />
+                                    }
+                                    {
+                                        isGetItems &&
+                                        <UsersIcon
+                                            className={s.editIcon}
+                                            onClick={() => handlerAction("getVendorUser", item.id)}
+                                        />
+                                    }
+                                    {
+                                        isGetHistory &&
+                                        <ActivityIcon
+                                            className={s.editIcon}
+                                            onClick={() => handlerAction("history", item.id)}
+                                        />
+                                    }
+                                    {
+                                        isDelete &&
+                                        <TrashIcon
+                                            className={s.trashIcon}
+                                            onClick={() => handlerAction("delete", item.id)}
+                                        />
+                                    }
 
                                 </TableData>
                             }

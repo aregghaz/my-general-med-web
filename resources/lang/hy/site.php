@@ -90,10 +90,20 @@ return [
     'artificial_id' => "Artificial",
     'field_required' => "Field Required",
     'birthDate' => "Date of Birthday",
-    'defensive_driving' => 'Defensive Driving Certificate',
+
     'license' => 'Driver License',
     'date'=> 'Date',
-
+    'picture'=> 'Picture',
+    'motor_vehicle_record'=> 'Motor Vehicle Record',
+    'defensive_driving'=> 'Defensive Driving Certificate',
+    'wheelchair_securement'=> 'Wheelchair Securement Certificate',
+    'pass_basic'=> 'Pass Basic',
+    'emt_1'=> 'EMT 1 Certificate',
+    'first_aid'=> 'First Aid and CPR Certificate',
+    'company_training'=> 'Company Training Letter',
+    'drug_test'=> 'Drug Test',
+    'sex_offender_check'=> 'Sex Offender Check',
+    'fullname'=> 'Full name',
 
 
 
