@@ -47,6 +47,7 @@ const TimePickers: React.FC<ITextarea> = (
             onChange={(time: string) => setFieldValue(name, time)}
             name={name}
             value={value}
+            locale={"sv-sv"}
         />
     </>
 );

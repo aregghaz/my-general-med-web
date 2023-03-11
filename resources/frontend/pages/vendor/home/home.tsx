@@ -40,9 +40,10 @@ const customStyles: ReactModal.Styles = {
         height: "fit-content"
     },
     overlay: {
-        zIndex: 400,
+        zIndex: 99999,
+        backgroundColor: "red",
         overflow: "hidden",
-        background: "rgba(0, 0, 0, 0.35)",
+        // background: "rgba(0, 0, 0, 0.35)",
         backdropFilter: "blur(5px)"
     }
 };
