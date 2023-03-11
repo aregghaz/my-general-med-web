@@ -147,6 +147,12 @@ class AuthController extends Controller
             'address' => $user->address,
             'birthday' => $user->birthday,
         ];
+        if($user->role->name == 'admin'){
+            $data['count'] = \App\Models\Notification::where('new', 1)->count();
+        }else{
+            $data['count'] = 0;
+        }
+
         return response()->json($data);
     }
 

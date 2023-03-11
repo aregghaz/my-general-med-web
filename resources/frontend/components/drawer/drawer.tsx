@@ -10,6 +10,8 @@ import Close from "-!svg-react-loader!../../images/Close.svg";
 import Account from "-!svg-react-loader!../../images/User.svg";
 import Logout from "-!svg-react-loader!../../images/SignOut.svg";
 import Settings from "-!svg-react-loader!../../images/Settings.svg";
+import Notification from "-!svg-react-loader!../../images/notifications.svg";
+import NotificationActive from "-!svg-react-loader!../../images/notifications-active.svg";
 import Clients from "-!svg-react-loader!../../images/Clients.svg";
 import Users from "-!svg-react-loader!../../images/User.svg";
 import Cars from "-!svg-react-loader!../../images/Car.svg";
@@ -18,6 +20,7 @@ import HomeIcon from "-!svg-react-loader!../../images/my-services.svg";
 import Status from "-!svg-react-loader!../../images/Status.svg";
 import UserRole from "-!svg-react-loader!../../images/UserRole.svg";
 import { getUserData } from "../../store/selectors";
+import { AdminApi } from "../../api/admin-api/admin-api";
 
 const Drawer: React.FC = ({ children }) => {
     const { t } = useTranslation();
@@ -36,6 +39,7 @@ const Drawer: React.FC = ({ children }) => {
             setMenuOpen(false);
         }
     };
+
     useEffect(() => {
         document.addEventListener("mousedown", outsideClickHandler);
 
@@ -43,6 +47,9 @@ const Drawer: React.FC = ({ children }) => {
             document.removeEventListener("mousedown", outsideClickHandler);
         };
     }, [logoutRef]);
+
+
+
 
     var menuItemsFirst: Array<{
         id: number,
@@ -159,6 +166,13 @@ const Drawer: React.FC = ({ children }) => {
                                 </span>
                                 </Button>
                             </div>
+                            {/*<div className={s.iconBlock}>*/}
+                            {/*    <Button type={"blank"}>*/}
+                            {/*    <span className={s.icon}>*/}
+                            {/*        <Notification />*/}
+                            {/*    </span>*/}
+                            {/*    </Button>*/}
+                            {/*</div>*/}
                             <div className={s.iconBlock}>
                                 <Button
                                     type={"blank"}
@@ -234,6 +248,26 @@ const Drawer: React.FC = ({ children }) => {
                                         </li>
                                     )
                                 )
+                        }
+                        {
+                            userData.user && userData.user.role === 'admin' &&   <li className={s.item} key={`first-notification`}>
+                                <Link
+                                    to={'/admin/notification'}
+                                    className={`${s.link} ${activeIcon === 6 ? s.active_icon : s.passive_icon}`}
+                                    onClick={() => setActiveIcon(6)}
+                                >
+                                                <span className={s.link_block}>
+                                                <span className={s.side_icon}>
+                                                    {/*{li.Icon}*/}
+                                                    {userData.user.count ?<> <NotificationActive/> <span className={s.bage}>{userData.user.count}</span></> : <Notification />}
+                                                </span>
+                                                <span className={s.side_text}>
+                                                    {t('Notification')}
+                                                </span>
+                                                </span>
+
+                                </Link>
+                            </li>
                         }
                     </ul>
                 </nav>

@@ -13,6 +13,7 @@ export interface IUser {
     image?: string
     languages?: Array<ISelect>
     name: string
+    count: number
     description?: string
     phone_number: string
     region?: null | string

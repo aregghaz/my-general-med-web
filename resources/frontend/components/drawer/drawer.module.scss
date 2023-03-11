@@ -268,3 +268,21 @@
     display: table-cell;
     vertical-align: middle;
 }
+
+
+.bage{
+    position: relative;
+    top: -15px;
+    left: -22px;
+    color: white;
+    background-color: red;
+    width: 20px;
+    height: 18px;
+    font-size: 14px;
+    border-radius: 12px;
+    display: inline-table;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+}

@@ -43,17 +43,17 @@ const Create: React.FC<ICreate> = (
         setSubmitting(true)
         const formData: FormData = new FormData()
         if (crudKey == 'vendorClients') {
-            formData.append('picture', values['license'])
-            formData.append('sex_offender_check', values['license'])
-            formData.append('motor_vehicle_record', values['license'])
-            formData.append('defensive_driving', values['license'])
-            formData.append('wheelchair_securement', values['license'])
-            formData.append('pass_basic', values['license'])
-            formData.append('emt_1', values['license'])
-            formData.append('first_aid', values['license'])
-            formData.append('company_training', values['license'])
+            formData.append('picture', values['picture'])
+            formData.append('sex_offender_check', values['sex_offender_check'])
+            formData.append('motor_vehicle_record', values['motor_vehicle_record'])
+            formData.append('defensive_driving', values['defensive_driving'])
+            formData.append('wheelchair_securement', values['wheelchair_securement'])
+            formData.append('pass_basic', values['pass_basic'])
+            formData.append('emt_1', values['emt_1'])
+            formData.append('first_aid', values['first_aid'])
+            formData.append('company_training', values['company_training'])
             formData.append('license', values['license'])
-            formData.append('drug_test', values['license'])
+            formData.append('drug_test', values['drug_test'])
 
         }
 

@@ -51,16 +51,19 @@ const VendorDriverCreate: React.FC<IUserCreate> = () => {
     }, [])
     const requiredFields = [
         'name',
-        // 'license',
-        // 'picture',
-        // 'sex_offender_check',
-        // 'motor_vehicle_record',
-        // 'defensive_driving',
-        // 'wheelchair_securement',
-        // 'pass_basic',
-        // 'emt_1',
-        // 'first_aid',
-        // 'company_training'
+        'surname',
+        'email',
+        'license',
+        'picture',
+        'sex_offender_check',
+        'motor_vehicle_record',
+        'defensive_driving',
+        'wheelchair_securement',
+        'pass_basic',
+        'emt_1',
+        'first_aid',
+        'company_training',
+        'drug_test'
     ]
 
     return data && <Create

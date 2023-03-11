@@ -41,6 +41,7 @@ import ShowAdmin from "./pages/admin/clients/show";
 import Activity from "./pages/admin/users/activity";
 import ActivityClient from "./pages/admin/clients/activity";
 import VendorDashboard from "./pages/vendor/dashbord/dashboard";
+import NotificationList from "./pages/admin/notification/notification";
 
 const App = (): JSX.Element => (
     <Provider store={store}>
@@ -80,6 +81,7 @@ const App = (): JSX.Element => (
                 <Status path='status'/>
                 <StatusCreate path='addStatus/:statusId/create'/>
                 <StatusEdit path='changeStatus/:id/:statusId'/>
+                <NotificationList path='/notification'/>
                 <NotFound default/>
             </Site>
 

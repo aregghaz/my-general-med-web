@@ -2,10 +2,11 @@
 
 use App\Http\Controllers\Admin\ActionsController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ClientsController;
 use App\Http\Controllers\Admin\DashBoardController;
+use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\OperatorController;
 use App\Http\Controllers\Admin\VendorController;
-use App\Http\Controllers\Admin\ClientsController;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
@@ -23,7 +24,6 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 
 
 Route::group([
@@ -76,7 +76,7 @@ Route::group([
     'prefix' => 'admin', 'middleware' => 'auth:api'
 ], function () {
     Route::resources([
-        'users'=> UserController::class,
+        'users' => UserController::class,
         'clients' => ClientsController::class,
         'operators' => OperatorController::class,
 
@@ -97,6 +97,8 @@ Route::group([
     Route::post('/updateClient/{id}', [AdminController::class, 'updateClient']);
 
     Route::get('/audit', [VendorController::class, 'audit']);
+    Route::get('/get-notification', [NotificationController::class, 'index']);
+    Route::get('/get-count', [NotificationController::class, 'getCount']);
     Route::get('/changeStatus/{slug}', [AdminController::class, 'changeStatus']);
     Route::get('/changeStatus/{id}/{statusId}', [AdminController::class, 'getStatusById']);
     Route::post('/changeStatus/{statusId}', [AdminController::class, 'createStatus']);

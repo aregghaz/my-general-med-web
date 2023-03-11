@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Actions;
+use App\Models\Notification;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -90,6 +91,14 @@ class Controller extends BaseController
         ];
     }
 
+    protected function saveNotification ($model,$field, $id, $actionid) {
+        $notification = new Notification();
+        $notification->value_id = $id;
+        $notification->field = $field;
+        $notification->model = $model;
+        $notification->type_id = $actionid;
+        $notification->save();
+    }
     protected function convertSingleDataForInfo($client)
     {
 //dd($client->car);

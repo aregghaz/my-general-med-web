@@ -24,7 +24,15 @@ class Driver extends Model
         'company_training',
         'drug_test',
         'sex_offender_check_exp',
-        'motor_vehicle_record_exp'
+        'motor_vehicle_record_exp',
+        'license_exp',
+        'defensive_driving_exp',
+        'wheelchair_securement_exp',
+        'pass_basic_exp',
+        'emt_1_exp',
+        'first_aid_exp',
+        'company_training_exp',
+        'drug_test_exp',
     ];
 
     public function user()
