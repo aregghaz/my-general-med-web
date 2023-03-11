@@ -2003,6 +2003,10 @@ textarea[type=number] {
   height: 100%;
   background-color: black;
 }
+
+.single-file-upload_datePickerWrapper__3wtBC {
+  width: 50%;
+}
 .Clock_react-clock__2S-ZH {
   display: block;
   position: relative;
@@ -2203,6 +2207,8 @@ textarea[type=number] {
 }
 .autocomplete_input__129-1 {
   height: 50px !important;
+  position: relative;
+  z-index: 9999999;
 }
 .edit_form__1EZLc {
   padding: 25px;

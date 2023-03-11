@@ -24,7 +24,6 @@ const Site: React.FC<ISite> = ({children}) => {
     }, [])
 
 
-
     return loggedIn && (
         <Row className={s.mainRow}>
             <div className={s.notificationDiv}>

@@ -112,7 +112,7 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
                         </label>
                     </div>
                 </div>
-                {type !== "hidden" && <div className={s.splitter}></div>}
+                {/*{type !== "hidden" && <div className={s.splitter}></div>}*/}
                 <div className={s.datePickerWrapper}>
                     <div className={s.datePickerLabel}>
                         <span>{type !== "hidden" ? "Experation date" : null}</span>
