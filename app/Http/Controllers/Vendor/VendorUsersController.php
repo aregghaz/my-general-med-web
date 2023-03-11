@@ -212,7 +212,7 @@ class VendorUsersController extends Controller
             $vendor->drug_test = $this->getPdfFile($drug_test, $vendorId, $userId);
 
             if ($vendor->save()) {
-                $this->saveNotification('driver', 'license', $vendor->id, 7);
+                $this->saveNotification('driver', '', $vendor->id, 7);
 
             };
         }
@@ -269,7 +269,7 @@ class VendorUsersController extends Controller
             $license = $request->file('license');
             $vendor->license_exp = date('Y-m-d', strtotime($requestData->license_exp));
             $vendor->license = $this->getPdfFile($license, $vendorId, $userId);
-            $this->saveNotification('driver', 'license', $id, 9);
+            $this->saveNotification('driver', 'Driver License', $id, 9);
 
         }
 
@@ -294,7 +294,7 @@ class VendorUsersController extends Controller
             $vendor->sex_offender_check_exp = date('Y-m-d', strtotime($requestData->sex_offender_check_exp));
             $sex_offender_check = $request->file('sex_offender_check');
             $vendor->sex_offender_check = $this->getPdfFile($sex_offender_check, $vendorId, $userId);
-            $this->saveNotification('driver', 'sex_offender_check', $id, 9);
+            $this->saveNotification('driver', 'Sex Offender Check', $id, 9);
         }
         if ($request->hasFile('motor_vehicle_record')) {
             if (is_file(public_path($vendor->motor_vehicle_record))) {
@@ -306,7 +306,7 @@ class VendorUsersController extends Controller
             $vendor->motor_vehicle_record_exp = date('Y-m-d', strtotime($requestData->motor_vehicle_record_exp));
             $motor_vehicle_record = $request->file('motor_vehicle_record');
             $vendor->motor_vehicle_record = $this->getPdfFile($motor_vehicle_record, $vendorId, $userId);
-            $this->saveNotification('driver', 'motor_vehicle_record', $id, 9);
+            $this->saveNotification('driver', 'Motor Vehicle Record', $id, 9);
 
         }
 
@@ -320,7 +320,7 @@ class VendorUsersController extends Controller
             $vendor->defensive_driving_exp = date('Y-m-d', strtotime($requestData->defensive_driving_exp));
             $defensive_driving = $request->file('defensive_driving');
             $vendor->defensive_driving = $this->getPdfFile($defensive_driving, $vendorId, $userId);
-            $this->saveNotification('driver', 'defensive_driving', $id, 9);
+            $this->saveNotification('driver', 'Defensive Driving Certificate', $id, 9);
 
         }
         if ($request->hasFile('wheelchair_securement')) {
@@ -333,7 +333,7 @@ class VendorUsersController extends Controller
             $vendor->wheelchair_securement_exp = date('Y-m-d', strtotime($requestData->wheelchair_securement_exp));
             $wheelchair_securement = $request->file('wheelchair_securement');
             $vendor->wheelchair_securement = $this->getPdfFile($wheelchair_securement, $vendorId, $userId);
-            $this->saveNotification('driver', 'wheelchair_securement', $id, 9);
+            $this->saveNotification('driver', 'Wheelchair Securement Certificate', $id, 9);
 
         }
 
@@ -348,7 +348,7 @@ class VendorUsersController extends Controller
 
             $pass_basic = $request->file('pass_basic');
             $vendor->pass_basic = $this->getPdfFile($pass_basic, $vendorId, $userId);
-            $this->saveNotification('driver', 'pass_basic', $id, 9);
+            $this->saveNotification('driver', 'Pass Basic', $id, 9);
 
         }
         if ($request->hasFile('emt_1')) {
@@ -361,7 +361,7 @@ class VendorUsersController extends Controller
             $vendor->emt_1_exp = date('Y-m-d', strtotime($requestData->emt_1_exp));
             $emt_1 = $request->file('emt_1');
             $vendor->emt_1 = $this->getPdfFile($emt_1, $vendorId, $userId);
-            $this->saveNotification('driver', 'emt_1', $id, 9);
+            $this->saveNotification('driver', 'EMT 1 Certificate', $id, 9);
 
         }
 
@@ -376,7 +376,7 @@ class VendorUsersController extends Controller
 
             $first_aid = $request->file('first_aid');
             $vendor->first_aid = $this->getPdfFile($first_aid, $vendorId, $userId);
-            $this->saveNotification('driver', 'first_aid', $id, 9);
+            $this->saveNotification('driver', 'First Aid and CPR Certificate', $id, 9);
 
         }
 
@@ -392,7 +392,7 @@ class VendorUsersController extends Controller
 
             $company_training = $request->file('company_training');
             $vendor->company_training = $this->getPdfFile($company_training, $vendorId, $userId);
-            $this->saveNotification('driver', 'company_training', $id, 9);
+            $this->saveNotification('driver', 'Company Training Letter', $id, 9);
 
         }
 
@@ -407,7 +407,7 @@ class VendorUsersController extends Controller
 
             $drug_test = $request->file('drug_test');
             $vendor->drug_test = $this->getPdfFile($drug_test, $vendorId, $userId);
-            $this->saveNotification('driver', 'drug_test', $id, 9);
+            $this->saveNotification('driver', 'Drug Test', $id, 9);
 
         }
         $vendor->update();

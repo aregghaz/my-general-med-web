@@ -90,6 +90,11 @@ return [
     'artificial_id' => "Artificial",
     'field_required' => "Field Required",
     'birthDate' => "Date of Birthday",
+    'defensive_driving' => 'Defensive Driving Certificate',
+    'license' => 'Driver License',
+
+
+
 
 
     'seeMore' => 'Home number',
