@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Vendor\VendorUsersController;
 use App\Http\Resources\NotificationCollection;
+use App\Models\Driver;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 
@@ -32,6 +34,23 @@ class NotificationController extends Controller
         return response()->json(
             [
                 'data' => $notification,
+            ],
+            200
+        );
+    }
+    public function getInfo($id)
+    {
+        $notification = Notification::find($id);
+        switch ($notification->model){
+            case 'driver':
+                $data = VendorUsersController::show($notification->value_id);
+                break;
+        }
+        $notification->new = 0;
+        $notification->update();
+        return response()->json(
+            [
+                'data' => $data->original,
             ],
             200
         );

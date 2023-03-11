@@ -72,5 +72,9 @@ export const AdminApi = {
     getCount() {
         return axios.get(`/api/admin/get-count/`,  {
         }).then(res => res.data)
+    },
+    getInfoData(id:number) {
+        return axios.get(`/api/admin/get-info/${id}`,  {
+        }).then(res => res.data)
     }
 }

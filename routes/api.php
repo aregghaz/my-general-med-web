@@ -99,6 +99,7 @@ Route::group([
     Route::get('/audit', [VendorController::class, 'audit']);
     Route::get('/get-notification', [NotificationController::class, 'index']);
     Route::get('/get-count', [NotificationController::class, 'getCount']);
+    Route::get('/get-info/{id}', [NotificationController::class, 'getInfo']);
     Route::get('/changeStatus/{slug}', [AdminController::class, 'changeStatus']);
     Route::get('/changeStatus/{id}/{statusId}', [AdminController::class, 'getStatusById']);
     Route::post('/changeStatus/{statusId}', [AdminController::class, 'createStatus']);

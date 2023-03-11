@@ -73,14 +73,6 @@ const TableBody: React.FC<ITableBody> = (
                                                            <span  className={s.label_span}> {t(item[key])}</span>
                                                         </TableData>
                                                     );
-                                                }else if (key == "field") {
-                                                    return i != 0 && (
-                                                        <TableData data={item.id} key={i} isGetInfo={isGetInfo}
-                                                                   handlerAction={handlerAction}
-                                                        >
-                                                            {t(item[key])}
-                                                        </TableData>
-                                                    );
                                                 } else {
                                                     return i != 0 && (
                                                         <TableData data={item.id} key={i} isGetInfo={isGetInfo}

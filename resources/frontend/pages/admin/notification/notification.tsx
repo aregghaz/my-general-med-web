@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import List from "../../layouts/templates/list/list";
 import { AdminApi } from "../../../api/admin-api/admin-api";
+import InfoBlockDriver from "../../../components/info-block-driver/info-block";
 
 interface INotificationList {
     path: string;
@@ -9,6 +10,7 @@ interface INotificationList {
 const NotificationList: React.FC<INotificationList> = () => {
     const tableRef = useRef(null);
     const [data, setData] = useState([]);
+    const [driver, setDriver] = useState(null);
 
     const titles: Array<string> = [
         "id",
@@ -30,19 +32,13 @@ const NotificationList: React.FC<INotificationList> = () => {
 
     const handlerAction = async (action: string, id: number) => {
         console.log(id,action,'id');
-        // switch (action) {
-        //     case "edit":
-        //         await handlerEditItem(id, tabId);
-        //         break;
-        //     case "add":
-        //         await handlerAddItem(id, tabId);
-        //         break;
-        //
-        // }
+        const notifData = await AdminApi.getInfoData(id);
+        setDriver(notifData.data)
     };
     return data && (
 
         <>
+            {driver && <InfoBlockDriver data={driver} />}
             <List
                 data={data}
                 titles={titles}
