@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Vendor\CarsController;
 use App\Http\Controllers\Vendor\VendorUsersController;
 use App\Http\Resources\NotificationCollection;
-use App\Models\Driver;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 
@@ -16,13 +16,18 @@ class NotificationController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index($showMore)
     {
 
-        $notification = Notification::with('getAction')->orderBy('new', "desc")->get();
+        $notification = Notification::with('getAction')
+            ->orderBy('new', "desc")
+            ->orderBy('created_at', "desc")
+            ->take(25 * $showMore)->get();;
+
         return response()->json(
             [
                 'data' => new NotificationCollection($notification),
+                'count' => Notification::where('new', 1)->count(),
             ],
             200
         );
@@ -38,12 +43,17 @@ class NotificationController extends Controller
             200
         );
     }
+
     public function getInfo($id)
     {
         $notification = Notification::find($id);
-        switch ($notification->model){
+        switch ($notification->model) {
             case 'driver':
                 $data = VendorUsersController::show($notification->value_id);
+                break;
+            case 'car':
+                $car = new CarsController();
+                $data = $car->show($notification->value_id);
                 break;
         }
         $notification->new = 0;
@@ -51,6 +61,7 @@ class NotificationController extends Controller
         return response()->json(
             [
                 'data' => $data->original,
+                'model' => $notification->model,
             ],
             200
         );

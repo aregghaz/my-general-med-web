@@ -97,7 +97,7 @@ Route::group([
     Route::post('/updateClient/{id}', [AdminController::class, 'updateClient']);
 
     Route::get('/audit', [VendorController::class, 'audit']);
-    Route::get('/get-notification', [NotificationController::class, 'index']);
+    Route::get('/get-notification/{showMore}', [NotificationController::class, 'index']);
     Route::get('/get-count', [NotificationController::class, 'getCount']);
     Route::get('/get-info/{id}', [NotificationController::class, 'getInfo']);
     Route::get('/changeStatus/{slug}', [AdminController::class, 'changeStatus']);

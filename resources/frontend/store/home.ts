@@ -10,9 +10,10 @@ const initialState = {
     availableCount: 0 as number,
     cancelCount: 0 as number,
     progressCount: 0 as number,
-    doneCount: 0 as number
+    doneCount: 0 as number,
 
 };
+
 
 type InitialState = typeof initialState
 type Actions = InferActionsTypes<typeof actions>
@@ -46,7 +47,6 @@ const homeReducer = (state = initialState, action: Actions): InitialState => {
                 doneCount: action.payload.doneCount
             };
 
-
         default:
             return state;
     }
@@ -57,7 +57,7 @@ const homeReducer = (state = initialState, action: Actions): InitialState => {
 export const actions = {
     fetching: (data: InitialState) => ({ type: "FETCHING_HOME_PAGE_DATA", payload: data } as const),
     resetState: () => ({ type: "RESET_HOME_PAGE_STATE" } as const),
-    setTitles: (data: InitialState) => ({ type: "SET_TITLES", payload: data } as const)
+    setTitles: (data: InitialState) => ({ type: "SET_TITLES", payload: data } as const),
 };
 
 

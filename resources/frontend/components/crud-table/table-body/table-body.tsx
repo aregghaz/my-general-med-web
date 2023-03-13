@@ -31,7 +31,6 @@ const TableBody: React.FC<ITableBody> = (
         handlerAction
     }) => {
     const { t } = useTranslation();
-
     let count = 0;
 
     return (

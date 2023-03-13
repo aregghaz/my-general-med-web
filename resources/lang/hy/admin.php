@@ -101,6 +101,9 @@ return [
     'drug_test'=> 'Drug Test',
     'sex_offender_check'=> 'Sex Offender Check',
     'fullname'=> 'Full name',
+    'assignDriver'=> 'Assign driver',
+    'model'=> 'Car model',
+    'make'=> 'Car make',
 
 
 

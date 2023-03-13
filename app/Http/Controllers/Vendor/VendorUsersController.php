@@ -111,6 +111,13 @@ class VendorUsersController extends Controller
             'license_exp' => 'string',
             'sex_offender_check_exp' => 'string',
             'motor_vehicle_record_exp' => 'string',
+            'emt_1_exp' => 'string',
+            'drug_test_exp' => 'string',
+            'pass_basic_exp' => 'string',
+            'wheelchair_securement_exp' => 'string',
+            'defensive_driving_exp' => 'string',
+            'company_training_exp' => 'string',
+            'first_aid_exp' => 'string',
             'address' => 'string',
             'phone_number' => 'string',
         ]);
@@ -179,40 +186,52 @@ class VendorUsersController extends Controller
             $vendorId = $request->user()->vendor_id;
 
             $license = $request->file('license');
+            $vendor->license_exp = date('Y-m-d', strtotime($requestData['license_exp']));
+
             $vendor->license = $this->getPdfFile($license, $vendorId, $userId);
 
             $picture = $request->file('picture');
             $vendor->picture = $this->getPdfFile($picture, $vendorId, $userId);
 
             $sex_offender_check = $request->file('sex_offender_check');
+            $vendor->sex_offender_check_exp = date('Y-m-d', strtotime($requestData['sex_offender_check_exp']));
+
             $vendor->sex_offender_check = $this->getPdfFile($sex_offender_check, $vendorId, $userId);
 
             $motor_vehicle_record = $request->file('motor_vehicle_record');
+            $vendor->motor_vehicle_record_exp = date('Y-m-d', strtotime($requestData['motor_vehicle_record_exp']));
             $vendor->motor_vehicle_record = $this->getPdfFile($motor_vehicle_record, $vendorId, $userId);
 
             $defensive_driving = $request->file('defensive_driving');
+            $vendor->defensive_driving_exp = date('Y-m-d', strtotime($requestData['defensive_driving_exp']));
             $vendor->defensive_driving = $this->getPdfFile($defensive_driving, $vendorId, $userId);
 
             $wheelchair_securement = $request->file('wheelchair_securement');
+            $vendor->wheelchair_securement_exp = date('Y-m-d', strtotime($requestData['wheelchair_securement_exp']));
             $vendor->wheelchair_securement = $this->getPdfFile($wheelchair_securement, $vendorId, $userId);
 
             $pass_basic = $request->file('pass_basic');
+            $vendor->pass_basic_exp = date('Y-m-d', strtotime($requestData['pass_basic_exp']));
             $vendor->pass_basic = $this->getPdfFile($pass_basic, $vendorId, $userId);
 
             $emt_1 = $request->file('emt_1');
+            $vendor->emt_1_exp = date('Y-m-d', strtotime($requestData['emt_1_exp']));
             $vendor->emt_1 = $this->getPdfFile($emt_1, $vendorId, $userId);
 
             $first_aid = $request->file('first_aid');
+            $vendor->first_aid_exp = date('Y-m-d', strtotime($requestData['first_aid_exp']));
             $vendor->first_aid = $this->getPdfFile($first_aid, $vendorId, $userId);
 
             $company_training = $request->file('company_training');
+            $vendor->company_training_exp = date('Y-m-d', strtotime($requestData['company_training_exp']));
             $vendor->company_training = $this->getPdfFile($company_training, $vendorId, $userId);
 
             $drug_test = $request->file('drug_test');
+            $vendor->drug_test_exp = date('Y-m-d', strtotime($requestData['drug_test_exp']));
             $vendor->drug_test = $this->getPdfFile($drug_test, $vendorId, $userId);
 
             if ($vendor->save()) {
-                $this->saveNotification('driver', '', $userId, 7);
+                $this->saveNotification('driver', '', $user->id, 7);
 
             };
         }
@@ -373,7 +392,6 @@ class VendorUsersController extends Controller
                 }
             }
             $vendor->first_aid_exp = date('Y-m-d', strtotime($requestData->first_aid_exp));
-
             $first_aid = $request->file('first_aid');
             $vendor->first_aid = $this->getPdfFile($first_aid, $vendorId, $userId);
             $this->saveNotification('driver', 'First Aid and CPR Certificate', $id, 9);

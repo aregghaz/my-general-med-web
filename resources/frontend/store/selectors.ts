@@ -1,5 +1,4 @@
 import {AppStateType} from './store'
-import tabsReducer from "./tab";
 
 export const getHomePageData = (state: AppStateType) => ({
     titles:state.homeReducer.titles,
@@ -23,6 +22,10 @@ export const getClientData = (state:AppStateType)=>({
 export const getTabId = (state:AppStateType)=>({
     typeId:state.tabsReducer.tabId,
 })
+export const getNotificationCount = (state:AppStateType)=>({
+    count:state.NotificationReducer.count,
+})
+
 export const getUserData = (state: AppStateType) => ({
     user: state.authReducer.user,
     loggedIn: state.authReducer.loggedIn

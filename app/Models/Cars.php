@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use Fico7489\Laravel\RevisionableUpgrade\Traits\RevisionableUpgradeTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Passport\HasApiTokens;
 use Venturecraft\Revisionable\RevisionableTrait;
-use Fico7489\Laravel\RevisionableUpgrade\Traits\RevisionableUpgradeTrait;
 
 class Cars extends Model
 {
@@ -25,6 +25,9 @@ class Cars extends Model
         'inspection',
         'insurance',
         'liability',
+        'inspection_exp',
+        'insurance_exp',
+        'liability_exp'
     ];
 
     public function make()
@@ -36,14 +39,17 @@ class Cars extends Model
     {
         return $this->hasOne(MakeModel::class, 'id', 'model_id');
     }
+
     public function driver()
     {
         return $this->hasMany(Driver::class, 'car_id', 'id');
     }
+
     public function images()
     {
         return $this->hasMany(CarImages::class, 'car_id', 'id');
     }
+
     public function year()
     {
         return $this->hasOne(Year::class, 'id', 'year_id');

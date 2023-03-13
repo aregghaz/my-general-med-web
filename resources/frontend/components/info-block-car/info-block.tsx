@@ -21,52 +21,55 @@ const InfoBlockCar: FC<IProps> = ({data}) => {
 
     return (
         <div className={cls.block}>
-            <div className={cls.panel}>
-                <span className={`${cls.menu} ${cls.menu_active}`}>Car Detail</span>
-            </div>
             <div className={cls.items}>
                 {
                     newData &&
                     <>
 
-                        <div className={cls.item}>
-                            <span className={cls.b_text}>{t('make')}: </span>
-                            {newData.make.name}
-                        </div>
-                        <div className={cls.item}>
-                            <span className={cls.b_text}>{t('model')}: </span>
-                            {newData.model.name}
-                        </div>
+                 <div className={cls.item_block}>
+                     <div className={cls.item}>
+                         <span className={cls.b_text}>{t('carModel')}: </span>
+                         {newData.make.name}
+                     </div>
+                     <div className={cls.item}>
+                         <span className={cls.b_text}>{t('carModel')}: </span>
+                         {newData.model.name}
+                     </div>
 
-                        <div className={cls.item}>
-                            <span className={cls.b_text}>{t('year')}: </span>
-                            {newData.year.name}
-                        </div>
-                        <div className={cls.item}>
-                            <span className={cls.b_text}>{t('registration')}: </span>
-                            {newData.registration}
-                        </div>
-                        <div className={cls.item}>
-                            <span className={cls.b_text}>{t('inspection')}: </span>
-                            <a href = {newData.inspection} target = "_blank">Download inspection form pdf</a>
-                        </div>
-                        <div className={cls.item}>
-                            <span className={cls.b_text}>{t('insurance')}: </span>
-                            <a href = {newData.insurance} target = "_blank">Download auto insurance pdf</a>
-                        </div>
-                        <div className={cls.item}>
-                            <span className={cls.b_text}>{t('liability')}: </span>
-                            <a href = {newData.liability} target = "_blank">Download general and professional liability insurance pdf</a>
-                        </div>
-                        <div className={cls.item}>
-                            <span className={cls.b_text}>{t('drivers')}: </span>
-                            {newData.drivers.map((el:IOption) => {
-                                return <span>{el.label}</span>
-                            })}
-                        </div>
+                     <div className={cls.item}>
+                         <span className={cls.b_text}>{t('year')}: </span>
+                         {newData.year.name}
+                     </div>
+                     <div className={cls.item}>
+                         <span className={cls.b_text}>{t('carRegistration')}: </span>
+                         {newData.registration}
+                     </div>
+                     <div className={cls.item}>
+                         <span className={cls.b_text}>{t('carInspection')}: </span>
+                         <a href = {newData.inspection} target = "_blank">Download</a><br/>
+                         <span>Expiration date : {newData.inspection_exp}</span>
+                     </div>
 
-                        <div className={cls.image_block}>
-                            <hr/>
+                     <div className={cls.item}>
+                         <span className={cls.b_text}>{t('carInsurance')}: </span>
+                         <a href = {newData.insurance} target = "_blank">Download</a><br/>
+                         <span>Expiration date : {newData.insurance_exp}</span>
+
+                     </div>
+                     <div className={cls.item}>
+                         <span className={cls.b_text}>{t('carLiability')}: </span>
+                         <a href = {newData.liability} target = "_blank">Download</a><br/>
+                         <span>Expiration date : {newData.liability_exp}</span>
+                     </div>
+                     <div className={cls.item}>
+                         <span className={cls.b_text}>{t('drivers')}: </span>
+                         {newData.drivers.map((el:IOption) => {
+                             return <span>{el.label}</span>
+                         })}
+                     </div>
+
+                 </div>
+                        <div className={cls.item_block}>
                             <ImageGallery
                                 images={newData.images}
                             />

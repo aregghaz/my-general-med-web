@@ -5,6 +5,7 @@ import {Dispatch} from 'redux'
 import {authAPI} from '../api/site-api/auth-api'
 import {navigate} from '@reach/router'
 import {homeAPI} from '../api/site-api/home-api'
+import { actionsNotification } from "./notification";
 
 const initialState = {
     user: null as IUser | null,
@@ -123,6 +124,7 @@ export const getUserData = (): ThunkType => async (dispatch) => {
         const token = localStorage.getItem('access_token') || ''
         const user = await authAPI.getUser(token)
         dispatch(actions.setUser(user))
+
     } catch (e) {
         console.error(e)
     }

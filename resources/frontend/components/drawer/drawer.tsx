@@ -8,19 +8,19 @@ import { setLogOut } from "../../store/auth";
 import Bars from "-!svg-react-loader!../../images/Bars.svg";
 import Close from "-!svg-react-loader!../../images/Close.svg";
 import Account from "-!svg-react-loader!../../images/User.svg";
+import Users from "-!svg-react-loader!../../images/User.svg";
 import Logout from "-!svg-react-loader!../../images/SignOut.svg";
 import Settings from "-!svg-react-loader!../../images/Settings.svg";
 import Notification from "-!svg-react-loader!../../images/notifications.svg";
 import NotificationActive from "-!svg-react-loader!../../images/notifications-active.svg";
 import Clients from "-!svg-react-loader!../../images/Clients.svg";
-import Users from "-!svg-react-loader!../../images/User.svg";
 import Cars from "-!svg-react-loader!../../images/Car.svg";
 import ArrowDown from "-!svg-react-loader!../../svgs/arrow-down.svg";
 import HomeIcon from "-!svg-react-loader!../../images/my-services.svg";
 import Status from "-!svg-react-loader!../../images/Status.svg";
-import UserRole from "-!svg-react-loader!../../images/UserRole.svg";
-import { getUserData } from "../../store/selectors";
-import { AdminApi } from "../../api/admin-api/admin-api";
+import { getNotificationCount,  getUserData } from "../../store/selectors";
+import { actions } from "../../store/home";
+import { actionsNotification } from "../../store/notification";
 
 const Drawer: React.FC = ({ children }) => {
     const { t } = useTranslation();
@@ -28,6 +28,8 @@ const Drawer: React.FC = ({ children }) => {
     const navigate = useNavigate();
     const logoutRef = useRef(null);
     const userData = useSelector(getUserData);
+   /// const selectedPage = useSelector(getSelectedMenu);
+    const notificationCount = useSelector(getNotificationCount);
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -40,6 +42,8 @@ const Drawer: React.FC = ({ children }) => {
         }
     };
 
+    var selectedPage2: string = localStorage.getItem('page')
+    var selectedPage = parseFloat(selectedPage2)
     useEffect(() => {
         document.addEventListener("mousedown", outsideClickHandler);
 
@@ -49,66 +53,65 @@ const Drawer: React.FC = ({ children }) => {
     }, [logoutRef]);
 
 
-
-
     var menuItemsFirst: Array<{
         id: number,
         Icon: any,
         item: string,
         page: string,
     }> = [];
-    if (userData.user && (userData.user.role == "vendor" )) {
+    if (userData.user && (userData.user.role == "vendor")) {
         menuItemsFirst = [
             {
                 id: 4,
                 Icon: <HomeIcon />,
                 item: "Dashboard",
-                page: "/dashboard",
-            },{
+                page: "/dashboard"
+            }, {
                 id: 1,
                 Icon: <Clients />,
                 item: "clients",
-                page: "/",
+                page: "/"
             },
             {
                 id: 2,
                 Icon: <Account />,
                 item: "Users",
-                page: "/users",
+                page: "/users"
             },
             {
                 id: 3,
                 Icon: <Cars />,
                 item: "Cars",
-                page: "/cars",
+                page: "/cars"
             }
         ];
     } else if (userData.user && userData.user.role == "admin") {
+        console.log('aaa');
         menuItemsFirst = [
             {
                 id: 1,
                 Icon: <HomeIcon />,
                 item: "Home",
-                page: "/admin",
+                page: "/admin"
             },
             {
                 id: 2,
                 Icon: <Account />,
                 item: "vendors",
-                page: "/admin/vendors",
+                page: "/admin/vendors"
             },
             {
                 id: 4,
                 Icon: <Clients />,
                 item: "clients",
-                page: "/admin/clients",
+                page: "/admin/clients"
             },
             {
                 id: 5,
                 Icon: <Status />,
                 item: "status",
-                page: "/admin/status",
-            },
+                page: "/admin/status"
+            }
             // {
             //     id: 6,
             //     Icon: <UserRole />,
@@ -118,33 +121,37 @@ const Drawer: React.FC = ({ children }) => {
 
         ];
 
-    }else if(userData.user && userData.user.role == "operator"){
+    } else if (userData.user && userData.user.role == "operator") {
         menuItemsFirst = [
             {
                 id: 1,
                 Icon: <HomeIcon />,
                 item: "Home",
-                page: "/operators",
+                page: "/operators"
             },
             {
                 id: 2,
                 Icon: <Account />,
                 item: "vendors",
-                page: "/operators/vendors",
+                page: "/operators/vendors"
             },
             {
                 id: 4,
                 Icon: <Clients />,
                 item: "clients",
-                page: "/operators/clients",
-            },
+                page: "/operators/clients"
+            }
 
 
         ];
     }
 
-    const [activeIcon, setActiveIcon] = useState<number>(1);
+    ///  const [activeIcon, setActiveIcon] = useState<number>(1);
 
+    const setActiveIcon = (pageId: number) => {
+        localStorage.setItem('page',`${pageId}`)
+       /// dispatch(navigationActions.fetching({page:pageId}));
+    };
     return (
         <>
             <nav className={s.header_nav}>
@@ -232,7 +239,7 @@ const Drawer: React.FC = ({ children }) => {
                                         <li className={s.item} key={`first-${li.item}`}>
                                             <Link
                                                 to={li.page}
-                                                className={`${s.link} ${activeIcon === li.id ? s.active_icon : s.passive_icon}`}
+                                                className={`${s.link} ${selectedPage === li.id ? s.active_icon : s.passive_icon}`}
                                                 onClick={() => setActiveIcon(li.id)}
                                             >
                                                 <span className={s.link_block}>
@@ -250,19 +257,22 @@ const Drawer: React.FC = ({ children }) => {
                                 )
                         }
                         {
-                            userData.user && userData.user.role === 'admin' &&   <li className={s.item} key={`first-notification`}>
+                            userData.user && userData.user.role === "admin" &&
+                            <li className={s.item} key={`first-notification`}>
                                 <Link
-                                    to={'/admin/notification'}
-                                    className={`${s.link} ${activeIcon === 6 ? s.active_icon : s.passive_icon}`}
+                                    to={"/admin/notification"}
+                                    className={`${s.link} ${selectedPage === 6 ? s.active_icon : s.passive_icon}`}
                                     onClick={() => setActiveIcon(6)}
                                 >
                                                 <span className={s.link_block}>
                                                 <span className={s.side_icon}>
                                                     {/*{li.Icon}*/}
-                                                    {userData.user.count ?<> <NotificationActive/> <span className={s.bage}>{userData.user.count}</span></> : <Notification />}
+                                                    {userData.user.count ? <> <NotificationActive /> <span
+                                                            className={s.bage}>{notificationCount.count}</span></> :
+                                                        <Notification />}
                                                 </span>
                                                 <span className={s.side_text}>
-                                                    {t('Notification')}
+                                                    {t("Notification")}
                                                 </span>
                                                 </span>
 

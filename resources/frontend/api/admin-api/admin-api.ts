@@ -65,8 +65,8 @@ export const AdminApi = {
         return axios.post(`/api/admin/updateClient/${id}`, data, {
         }).then(res => res.data)
     },
-    getNotification() {
-        return axios.get(`/api/admin/get-notification/`,  {
+    getNotification(showMore:number) {
+        return axios.get(`/api/admin/get-notification/${showMore}`,  {
         }).then(res => res.data)
     } ,
     getCount() {

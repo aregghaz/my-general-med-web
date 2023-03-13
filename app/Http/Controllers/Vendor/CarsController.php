@@ -4,18 +4,18 @@ namespace App\Http\Controllers\Vendor;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CarImageCollection;
+use App\Http\Resources\CarsCollection;
 use App\Http\Resources\DriverUserCollection;
 use App\Http\Resources\FullNameCollection;
+use App\Http\Resources\StatusCollection;
 use App\Models\CarImages;
 use App\Models\Cars;
 use App\Models\Driver;
+use App\Models\Make;
 use App\Models\MakeModel;
 use App\Models\User;
 use App\Models\Year;
-use App\Models\Make;
 use Illuminate\Http\Request;
-use App\Http\Resources\CarsCollection;
-use App\Http\Resources\StatusCollection;
 
 class CarsController extends Controller
 {
@@ -72,6 +72,9 @@ class CarsController extends Controller
         $cars->year_id = $data->year->id;
         $cars->vendor_id = $request->user()->vendor_id;
         $cars->registration = $data->registration;
+        $cars->insurance_exp = date('Y-m-d', strtotime($data->insurance_exp));
+        $cars->liability_exp = date('Y-m-d', strtotime($data->liability_exp));
+        $cars->inspection_exp = date('Y-m-d', strtotime($data->inspection_exp));
         $vendorId = $request->user()->vendor_id;
         if (!$cars->save()) {
             return response()->json(
@@ -129,6 +132,7 @@ class CarsController extends Controller
                 403
             );
         }
+        $this->saveNotification('Car', '', $cars->id, 7);
         if (isset($data->drivers)) {
             $ids = array_column($data->drivers, 'id');
 
@@ -163,7 +167,7 @@ class CarsController extends Controller
      * @param \App\Models\Cars $cars
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Cars $cars, $id)
+    public function show($id)
     {
         $car = Cars::with('images')->find($id);
 
@@ -228,6 +232,9 @@ class CarsController extends Controller
                     unlink($oldImage);
                 }
             }
+            $cars->inspection_exp = date('Y-m-d', strtotime($data->inspection_exp));
+            $this->saveNotification('car', 'Car inspection', $id, 9);
+
             $inspection = $request->file('inspection');
             $cars->inspection = $this->getPdfFile($inspection, $vendorId, $carId);
         }
@@ -240,6 +247,9 @@ class CarsController extends Controller
             }
             $insurance = $request->file('insurance');
             $cars->insurance = $this->getPdfFile($insurance, $vendorId, $carId);
+            $cars->insurance_exp = date('Y-m-d', strtotime($data->insurance_exp));
+            $this->saveNotification('car', 'Car insurance', $id, 9);
+
         }
         if ($request->hasFile('liability')) {
             if (is_file(public_path($cars->liability))) {
@@ -250,6 +260,9 @@ class CarsController extends Controller
             }
             $liability = $request->file('liability');
             $cars->liability = $this->getPdfFile($liability, $vendorId, $carId);
+            $cars->liability_exp = date('Y-m-d', strtotime($data->liability_exp));
+            $this->saveNotification('car', 'Car liability', $id, 9);
+
         }
         if ($request->hasFile('front')) {
             $carsImage = $request->file('front');
@@ -339,8 +352,11 @@ class CarsController extends Controller
             "drivers" => new DriverUserCollection($car->driver),
             'registration' => $car->registration,
             'inspection' => $car->inspection,
+            'inspection_exp' => $car->inspection_exp,
             'insurance' => $car->insurance,
+            'insurance_exp' => $car->insurance_exp,
             'liability' => $car->liability,
+            'liability_exp' => $car->liability_exp,
             'images' => new CarImageCollection($car->images),
         ];
     }

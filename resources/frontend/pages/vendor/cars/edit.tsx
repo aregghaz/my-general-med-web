@@ -31,12 +31,12 @@ const CarsEdit: React.FC<IUsersEditItem> = ({id}) => {
         {name: "inspection", type: "file", label: "inspection"},
         {name: "insurance", type: "file", label: "insurance"},
         {name: "liability", type: "file", label: "liability"},
-        {name: "front", type: "file", label: "Front image"},
-        {name: "rear", type: "file", label: "Rear"},
-        {name: "right", type: "file", label: "Right Side"},
-        {name: "left", type: "file", label: "Left Side"},
-        {name: "interior_1", type: "file", label: "interior_1"},
-        {name: "interior_2", type: "file", label: "interior_2"}
+        {name: "front", type: "file", label: "Front image",inputType: 'hidden'},
+        {name: "rear", type: "file", label: "Rear",inputType: 'hidden'},
+        {name: "right", type: "file", label: "Right Side",inputType: 'hidden'},
+        {name: "left", type: "file", label: "Left Side",inputType: 'hidden'},
+        {name: "interior_1", type: "file", label: "interior_1",inputType: 'hidden'},
+        {name: "interior_2", type: "file", label: "interior_2",inputType: 'hidden'}
     ];
     /////TODO FIX THIS PART FOR POPULATE FIELDS
     const fields2: Array<IItem> = [
@@ -48,12 +48,12 @@ const CarsEdit: React.FC<IUsersEditItem> = ({id}) => {
         {name: "inspection", type: "file", label: "inspection"},
         {name: "insurance", type: "file", label: "insurance"},
         {name: "liability", type: "file", label: "liability"},
-        {name: "front", type: "file", label: "Front image"},
-        {name: "rear", type: "file", label: "Rear"},
-        {name: "right", type: "file", label: "Right Side"},
-        {name: "left", type: "file", label: "Left Side"},
-        {name: "interior_1", type: "file", label: "interior_1"},
-        {name: "interior_2", type: "file", label: "interior_2"}
+        {name: "front", type: "file", label: "Front image",inputType: 'hidden'},
+        {name: "rear", type: "file", label: "Rear",inputType: 'hidden'},
+        {name: "right", type: "file", label: "Right Side",inputType: 'hidden'},
+        {name: "left", type: "file", label: "Left Side",inputType: 'hidden'},
+        {name: "interior_1", type: "file", label: "interior_1",inputType: 'hidden'},
+        {name: "interior_2", type: "file", label: "interior_2",inputType: 'hidden'}
     ];
     useEffect(() => {
         (
