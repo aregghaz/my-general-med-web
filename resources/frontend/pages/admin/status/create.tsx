@@ -15,7 +15,11 @@ const StatusCreate: React.FC<IUserCreate> = ({ statusId }) => {
     const { t } = useTranslation();
     const crudKey = "changeStatus";
     const redirectKey = `status`;
-    const [status, setStatus] = useState<IOption>(null);
+    const [status, setStatus] = useState<IOption>({
+        "id": 1,
+        "value": "gender",
+        "label": "gender"
+    });
     const [fields, setFields] = useState<Array<IItem>>([]);
 
     // var fields:Array<IItem> = [
@@ -88,27 +92,40 @@ const StatusCreate: React.FC<IUserCreate> = ({ statusId }) => {
         "name"
     ];
     return <>
-          <div className={s.item} style={{width: 200, margin: "0 auto"}}>
-              <Select
-                  label={'status'}
-                  getOptionValue={(option: IOption) => option.value}
-                  getOptionLabel={(option: IOption) => t(option.label)}
-                  onChange={(options: IOption) => setStatus(options)}
-                  /// onChange={handlerSetCar}
-                  options={tabs}
-                  // value={selectedTitle}
-                  name={"Cars"}
-                  isMulti={false}
-              />
+          <div className={s.item}>
+              <div className={s.select}>
+                  <Select
+                      label={'status'}
+                      getOptionValue={(option: IOption) => option.value}
+                      getOptionLabel={(option: IOption) => t(option.label)}
+                      onChange={(options: IOption) => setStatus(options)}
+                      /// onChange={handlerSetCar}
+                      options={tabs}
+                      // value={selectedTitle}
+                      name={"Cars"}
+                      isMulti={false}
+                      value={status}
+                  />
+              </div>
+              <div className={s.mainForm}>
+                  <Create
+                      crudKey={`${crudKey}/${status.id}`}
+                      redirectKey={redirectKey}
+                      fields={fields}
+                      title={""}
+                      requiredFields={requiredFields}
+                      children={t("create")}
+                  />
+              </div>
           </div>
-        {fields.length > 0 && <Create
-            crudKey={`${crudKey}/${status.id}`}
-            redirectKey={redirectKey}
-            fields={fields}
-            title={""}
-            requiredFields={requiredFields}
-            children={t("create")}
-        />}
+        {/*{fields.length > 0 && <Create*/}
+        {/*    crudKey={`${crudKey}/${status.id}`}*/}
+        {/*    redirectKey={redirectKey}*/}
+        {/*    fields={fields}*/}
+        {/*    title={""}*/}
+        {/*    requiredFields={requiredFields}*/}
+        {/*    children={t("create")}*/}
+        {/*/>}*/}
     </>;
 
 };

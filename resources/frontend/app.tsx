@@ -84,7 +84,6 @@ const App = (): JSX.Element => (
                 <NotificationList path='/notification'/>
                 <NotFound default/>
             </Site>
-
         </Router>
     </Provider>
 )

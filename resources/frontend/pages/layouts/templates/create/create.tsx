@@ -32,7 +32,7 @@ const Create: React.FC<ICreate> = (
         isAdmin = true,
         children,
         redirectKey,
-        requiredFields
+        requiredFields,
     }) => {
     const navigate = useNavigate()
     const {t} = useTranslation()

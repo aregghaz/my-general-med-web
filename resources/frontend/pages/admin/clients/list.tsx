@@ -36,14 +36,16 @@ const customStyles: ReactModal.Styles = {
         overflow: "hidden",
         transform: "translate(-50% , -50%)",
         /// display: 'flex',
-        justifyContent: "center"
+        justifyContent: "center",
+        width: "80%",
+        height: "60vh",
         ///  alignItems: "center",
     },
     overlay: {
-        zIndex: 400,
+        zIndex: 999999,
         overflow: "hidden",
         background: "rgba(0, 0, 0, 0.35)",
-        backdropFilter: "blur(5px)"
+        backdropFilter: "blur(5px)",
     }
 };
 

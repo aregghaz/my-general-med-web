@@ -5,8 +5,9 @@
     box-shadow: 0 5px 25px rgba(34, 41, 97, 0.08);
     background: $formBgColor;
     display: grid;
+    align-items: flex-start;
+    gap: 20px;
     grid-template-columns: repeat(3, 1fr);
-    align-items: flex-end;
     width: 100%;
     margin: auto;
 }
