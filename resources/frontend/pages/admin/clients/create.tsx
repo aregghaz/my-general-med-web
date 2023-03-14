@@ -39,7 +39,6 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         { name: "request_type", type: "select", label: "request_type" },
 
         { name: "member_uniqie_identifer", type: "input", label: "member_uniqie_identifer" },
-        { name: "id", type: "hidden", inputType: "hidden" },
 
         /// { name: "status", type: "select", label: "status" },
         { name: "origin_phone", type: "input", label: "origin_phone", inputType: "tel" },
