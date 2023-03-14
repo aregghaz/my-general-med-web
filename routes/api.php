@@ -24,12 +24,12 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('/test', [\App\Http\Controllers\TestController::class, 'index']);
 
 
 Route::group([
     'middleware' => 'auth:api'
 ], function () {
-    Route::post('/test', [\App\Http\Controllers\TestController::class, 'index']);
     Route::get('/getDate', [\App\Http\Controllers\TestController::class, 'getDate']);
 
     Route::get('/get-reason-data', [HomeController::class, 'getReasonData']);
