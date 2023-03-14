@@ -55,7 +55,7 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
     return (
 
         <>
-            <label className={`${s.label} ${labelStyle} `} htmlFor={name}>{label}</label>
+            {label && <label className={`${s.label} ${labelStyle} `} htmlFor={name}>{label}</label>}
             <Select
                 isMulti={isMulti}
                 name={name}
