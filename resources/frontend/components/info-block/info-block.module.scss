@@ -23,58 +23,127 @@
 }
 
 .block {
-    //width: calc(100% - 30px);
-    min-height: 200px;
-    /// border: 3px solid $menuColor;
-    border-radius: 3px;
-    margin: 20px;
-}
+    width: 100%;
+    height: 800px;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
 
-.items {
-    padding: 5px;
-    grid-gap: 10px;
-    display: grid;
-    background-color: $whiteColor;
-    grid-template-columns: repeat(2, 1fr);
-}
-
-.item {
-    padding: 5px;
-
-}
-
-.showBtn {
-    user-select: none;
-    cursor: pointer;
-    border-radius: 5px;
-    width: max-content;
-    padding: 5px;
-    background-color: $menuColor;
-    color: $whiteColor;
-
-    &:hover {
-        background-color: #1a1a1a;
-        color: white;
+    & * {
+        border: 1px solid black;
     }
 }
 
-.b_text {
-    font-weight: bold;
-    color: $headColor;
-}
-
-.mapDiv, .directionDiv {
-    padding: 0 5px;
-    flex-direction: column;
-    flex: 1;
-}
-
-.selectDiv {
-    flex: 1;
+.infoLabel {
+    width: 100%;
+    height: auto;
+    padding: 10px;
     display: flex;
-    flex-direction: row;
-    min-height: 500px
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    & > h1 {
+        margin: 0;
+        padding: 0;
+    }
 }
-.directions {
-    margin-top: 10px;
+
+.infoMain {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
+
+.infoTop {
+    width: 100%;
+    height: 50%;
+    display: flex;
+}
+
+.infoTopLeft {
+    width: 50%;
+    height: 100%;
+}
+
+.infoTopRight {
+    width: 50%;
+    height: 100%;
+}
+
+.infoBottom {
+    width: 100%;
+    height: 50%;
+    display: flex;
+}
+
+.infoBottomLeft {
+    width: 50%;
+    height: 100%;
+}
+
+.infoBottomRight {
+    width: 50%;
+    height: 100%;
+}
+
+.item {
+    padding: 10px;
+}
+
+//.block {
+//    //width: calc(100% - 30px);
+//    min-height: 200px;
+//    /// border: 3px solid $menuColor;
+//    border-radius: 3px;
+//    margin: 20px;
+//}
+//
+//.items {
+//    padding: 5px;
+//    grid-gap: 10px;
+//    display: grid;
+//    background-color: $whiteColor;
+//    grid-template-columns: repeat(2, 1fr);
+//}
+//
+//.item {
+//    padding: 5px;
+//
+//}
+//
+//.showBtn {
+//    user-select: none;
+//    cursor: pointer;
+//    border-radius: 5px;
+//    width: max-content;
+//    padding: 5px;
+//    background-color: $menuColor;
+//    color: $whiteColor;
+//
+//    &:hover {
+//        background-color: #1a1a1a;
+//        color: white;
+//    }
+//}
+//
+//.b_text {
+//    font-weight: bold;
+//    color: $headColor;
+//}
+//
+//.mapDiv, .directionDiv {
+//    padding: 0 5px;
+//    flex-direction: column;
+//    flex: 1;
+//}
+//
+//.selectDiv {
+//    flex: 1;
+//    display: flex;
+//    flex-direction: row;
+//    min-height: 500px
+//}
+//.directions {
+//    margin-top: 10px;
+//}

@@ -3,19 +3,16 @@
 @import "resources/frontend/styles/color-pallete";
 
 .form {
-    padding: 25px;
     box-shadow: 0 5px 25px rgba(34, 41, 97, 0.08);
-    background: $formBgColor;
+    background: #ffffff;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    align-items: flex-end;
+    align-items: start;
     width: 100%;
+    row-gap: 20px;
+    column-gap: 150px;
     margin: auto;
-    //display: flex;
-    ///* flex-direction: column; */
-    ///* width: 100%; */
-    //flex-wrap: wrap;
-    //gap: 10px;
+    padding: 20px 75px 50px 75px;
 
     @media only screen and (max-width: 1200px) {
         flex-direction: column;

@@ -27,7 +27,7 @@ const InfoBlockDriver: FC<IProps> = ({data}) => {
                     <>
                         <div className={cls.driver}>
                             <div className={cls.driverInfoLabel}>
-                                <h1>Driver Personal Info</h1>
+                                <h1>{newData.fullname}</h1>
                             </div>
                             <div className={cls.driverInfo}>
                                 <div className={cls.driverPicture}>
@@ -37,10 +37,6 @@ const InfoBlockDriver: FC<IProps> = ({data}) => {
                                     </div>
                                 </div>
                                 <div className={cls.driverPersonal}>
-                                    <div className={cls.item}>
-                                        <span className={cls.b_text}>{t('fullname')} : </span>
-                                        {newData.fullname}
-                                    </div>
                                     <div className={cls.item}>
                                         <span className={cls.b_text}>{t('email')} : </span>
                                         {newData.email}
@@ -57,6 +53,13 @@ const InfoBlockDriver: FC<IProps> = ({data}) => {
                                         <span className={cls.b_text}>{t('phone_number')} : </span>
                                         {newData.phone_number}
                                     </div>
+                                </div>
+                                <div className={cls.driverActions}>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur congue ipsum et tellus congue congue. Aenean id est at sem tempor efficitur quis at tortor. Praesent vestibulum sem ac auctor sollicitudin. Aenean dignissim neque nec sollicitudin scelerisque. Cras rutrum convallis dui in aliquam. Aliquam quis magna fermentum, iaculis metus malesuada, ullamcorper dui. Nam maximus turpis quis diam vehicula, at vehicula lacus laoreet.
+                                        Donec eget rhoncus tellus, ac dictum tortor. Pellentesque a vehicula tellus. Morbi efficitur tempor nisi, non tincidunt enim semper quis. Mauris in faucibus risus. Aenean in lorem lacus. Phasellus feugiat, urna ac faucibus ultrices, risus neque venenatis neque, sed hendrerit diam ligula ut tellus. Mauris sit amet ligula quam. Praesent ut metus facilisis, luctus nibh et, ultrices lacus. Suspendisse potenti. Quisque at dapibus neque, a mollis magna. In hac habitasse platea dictumst. Nunc scelerisque et elit gravida semper. Cras eu tincidunt metus, at vulputate purus. Curabitur sed faucibus turpis, nec dignissim orci.
+                                        Integer sed hendrerit velit. Nullam condimentum lacus sit amet felis consequat auctor. Vestibulum nulla arcu, vestibulum non volutpat vel, elementum in nulla. Duis placerat maximus arcu, vel condimentum felis condimentum in. Pellentesque ultricies, diam ut commodo vulputate, dolor erat venenatis ex, id pretium massa tellus id nulla. Nulla convallis molestie metus, ut elementum neque efficitur id. Cras at nisi sit amet libero sodales fermentum vitae quis leo. Duis ac tempus est. Donec interdum odio id euismod vulputate. Pellentesque a est bibendum, eleifend velit vitae, laoreet velit.
+                                    </p>
                                 </div>
                             </div>
                         </div>

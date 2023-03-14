@@ -1,5 +1,71 @@
-//@import "../../styles/variables";
-
+@import "../../styles/variables";
+//
+//.panel {
+//    display: flex;
+//    align-items: flex-end;
+//    width: 100%;
+//    height: 40px;
+//    background-color: $menuColor;
+//    color: white;
+//}
+//
+//.menu {
+//    height: calc(100% - 5px);
+//    display: flex;
+//    align-items: center;
+//    padding: 0 8px;
+//    margin-left: 5px;
+//}
+//
+//.menu_active {
+//    background-color: $adminBgColor;
+//    color: black;
+//}
+//
+//.block {
+//    //width: calc(100% - 30px);
+//    min-height: 200px;
+//    border: 3px solid $menuColor;
+//    border-radius: 3px;
+//    margin: 20px;
+//}
+//
+//.items {
+//    padding: 5px;
+//    display: grid;
+//    grid-gap: 10px;
+//    background-color: $whiteColor;
+//    grid-template-columns: repeat(3, 1fr);
+//}
+//
+//.item {
+//    padding: 5px;
+//}
+//
+//.showBtn {
+//    user-select: none;
+//    cursor: pointer;
+//    border-radius: 5px;
+//    width: max-content;
+//    padding: 5px;
+//    background-color: $menuColor;
+//    color: $whiteColor;
+//
+//    &:hover {
+//        background-color: #1a1a1a;
+//        color: white;
+//    }
+//}
+//
+//.b_text {
+//    font-weight: bold;
+//    color: $headColor;
+//}
+//
+//
+//.image_block{
+//    display: block;
+//}
 
 .block {
     width: 100%;
@@ -81,18 +147,16 @@
 }
 
 .driverPersonal {
-    width: 80%;
+    width: 30%;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     align-items: center;
+}
 
-    @media screen and (max-width: 1200px) {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    @media screen and (max-width: 1024px) {
-        grid-template-columns: repeat(1, 1fr);
-    }
+.driverActions {
+    width: 50%;
+    height: 100%;
+    border: 1px solid black;
 }
 
 .documents {
@@ -117,9 +181,13 @@
 .item {
     width: auto;
     height: auto;
-    padding: 5px;
+    //padding: 5px;
     font-size: 20px;
     font-weight: 600;
+
+    & > a {
+        color: $borderColor;
+    }
 
     @media screen and (max-width: 1000px) {
         font-size: 18px

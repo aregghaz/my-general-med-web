@@ -153,7 +153,7 @@ const Select: React.FC<ISelect> = (
                         borderTop: "none",
                         borderLeft: "none",
                         borderRight: "none",
-                        borderBottom: "1px solid black",
+                        borderBottom: "1px solid #194b76",
                         borderRadius: 0,
                         overflowX: "auto",
                     }),
