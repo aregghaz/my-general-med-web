@@ -2,7 +2,8 @@
 
 .time {
     width: 100%;
-    border: none;
+    //border: none;
+
 
     & span {
         font-size: 40px;
@@ -10,18 +11,26 @@
         height: auto !important;
         transform: translateY(5%);
         font-family: roboto;
+
+        &:nth-child(2) {
+            display: none;
+        }
     }
 
     input, select {
         width: 100px !important;
         height: 50px;
-        //font-size:20px;
         padding: 5px;
-        text-align: center;
-        font-size: 18px;
-    }
+        text-align:center;
+        font-size: 20px;
+        border: 1px solid $borderColor;
+        border-radius: 5px;
 
-    select {
+        //border-color: $borderColor;
+    }
+    select{
         width: 85px !important;
     }
 }
+
+

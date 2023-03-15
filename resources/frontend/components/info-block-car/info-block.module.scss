@@ -1,4 +1,4 @@
-//@import "../../styles/variables";
+@import "../../styles/variables";
 
 
 .block {
@@ -8,9 +8,11 @@
     border-top: 1px solid black;
     border-bottom: 1px solid black;
     padding: 10px 0;
+    //background-color: red;
 
     & * {
         //border: 1px solid black;
+        //background-color: red;
     }
 }
 

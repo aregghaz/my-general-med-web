@@ -115,13 +115,23 @@
     & > label {
         display: flex;
         align-items: center;
+        justify-content: flex-start;
         gap: 20px;
         cursor: pointer;
 
         & > input {
             display: none;
         }
+
+
     }
+}
+
+.filename {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 60%;
+    width: 60%;
 }
 
 .splitter {

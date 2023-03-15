@@ -36,11 +36,11 @@ const customStyles: ReactModal.Styles = {
         /// display: 'flex',
         justifyContent: "center",
         ///  alignItems: "center",
-        height: "fit-content"
+        width: "80vw",
+        height: "80vh",
     },
     overlay: {
         zIndex: 99999,
-        backgroundColor: "red",
         overflow: "hidden",
         // background: "rgba(0, 0, 0, 0.35)",
         backdropFilter: "blur(5px)"

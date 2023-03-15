@@ -576,6 +576,7 @@ body {
   flex-direction: column;
   width: 100%;
   margin-top: 20px;
+  row-gap: 50px;
 }
 .crud-table_root__4DK8O {
   width: 100%;
@@ -2012,11 +2013,19 @@ textarea[type=number] {
 .single-file-upload_uploadButton__3RO-4 > label {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 20px;
   cursor: pointer;
 }
 .single-file-upload_uploadButton__3RO-4 > label > input {
   display: none;
+}
+
+.single-file-upload_filename__3qd4b {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 60%;
+  width: 60%;
 }
 
 .single-file-upload_splitter__HnKKP {
@@ -2207,7 +2216,6 @@ textarea[type=number] {
 
 .timepicker_time__23YmP {
   width: 100%;
-  border: none;
 }
 .timepicker_time__23YmP span {
   font-size: 40px;
@@ -2216,12 +2224,17 @@ textarea[type=number] {
   transform: translateY(5%);
   font-family: roboto;
 }
+.timepicker_time__23YmP span:nth-child(2) {
+  display: none;
+}
 .timepicker_time__23YmP input, .timepicker_time__23YmP select {
   width: 100px !important;
   height: 50px;
   padding: 5px;
   text-align: center;
-  font-size: 18px;
+  font-size: 20px;
+  border: 1px solid #194b76;
+  border-radius: 5px;
 }
 .timepicker_time__23YmP select {
   width: 85px !important;
@@ -2441,6 +2454,7 @@ textarea[type=number] {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  padding-right: 25px;
 }
 .car_form__3a61v {
   box-shadow: 0 5px 25px rgba(34, 41, 97, 0.08);
@@ -2722,105 +2736,35 @@ textarea[type=number] {
     font-size: 18px;
   }
 }
-.info-block_block__1NwJO {
+.info-block-vendor_block__20QXN {
   width: 100%;
-  height: auto;
-  background-color: white;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-  padding: 10px 0;
-}
-.info-block_items__18kVp {
-  width: 100%;
-  height: 100%;
+  height: 90vh;
+  border: 1px solid red;
   display: flex;
-  gap: 20px;
+}
+
+.info-block-vendor_carInfoBox__1gUv1 {
+  width: 50%;
+  height: 90vh;
+  border: inherit;
   padding: 20px;
-}
-@media screen and (max-width: 1000px) {
-  .info-block_items__18kVp {
-    padding: 20px;
-  }
-}
-
-.info-block_driver__1iaU3 {
-  justify-content: flex-start;
-  align-items: flex-start;
-  border-bottom: 0.1px solid gray;
-  padding-bottom: 5px;
-}
-
-.info-block_driverInfoLabel__3e5j- {
-  width: 100%;
-  height: 20%;
-}
-.info-block_driverInfoLabel__3e5j- > h1 {
-  margin: 0;
-  padding: 0;
-}
-
-.info-block_driverInfo__3KB6q {
-  width: 100%;
-  height: 80%;
-  display: flex;
-  gap: 30px;
-}
-
-.info-block_driverPersonal__1IK72 {
-  width: 80%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  align-items: center;
-}
-@media screen and (max-width: 1200px) {
-  .info-block_driverPersonal__1IK72 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media screen and (max-width: 1024px) {
-  .info-block_driverPersonal__1IK72 {
-    grid-template-columns: repeat(1, 1fr);
-  }
-}
-
-.info-block_documents__4tTof {
-  width: 100%;
-  height: 50%;
-  border-top: 0.1px solid gray;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 30px;
-  padding-top: 20px;
-}
-@media screen and (max-width: 1200px) {
-  .info-block_documents__4tTof {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media screen and (max-width: 850px) {
-  .info-block_documents__4tTof {
-    grid-template-columns: repeat(1, 1fr);
-  }
-}
-
-.info-block_item__GyucX {
-  width: auto;
-  height: auto;
-  padding: 5px;
-  font-size: 20px;
-  font-weight: 600;
-}
-@media screen and (max-width: 1000px) {
-  .info-block_item__GyucX {
-    font-size: 18px;
-  }
-}
-
-.info-block_item_block__1RNpm {
   display: flex;
   flex-direction: column;
+  gap: 20px;
+}
+
+.info-block-vendor_carImgBox__DoTLe {
   width: 50%;
-  float: left;
+  height: 90vh;
+  border: inherit;
+}
+
+.info-block-vendor_infoItem__19NTZ {
+  width: 80%;
+  height: auto;
+  padding: 15px 0px;
+  padding-left: 20px;
+  border-bottom: 1px solid black;
 }
 .image-gallery-carousel_img__3h4P_ {
   max-width: 100%;
