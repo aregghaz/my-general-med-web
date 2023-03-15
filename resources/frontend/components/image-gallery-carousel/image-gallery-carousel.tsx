@@ -43,6 +43,7 @@ interface IQuickShopItem {
 const ImageGallery: React.FC<IQuickShopItem> = ({ images, modelOption }) => {
     return (
         <Carousel
+            thumbnailPosition={"right"}
             items={images}
             showFullscreenButton={false}
             showPlayButton={false}

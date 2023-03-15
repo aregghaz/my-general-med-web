@@ -42,9 +42,11 @@ const InfoBlockCar: FC<IProps> = ({data, is_admin}) => {
                             <span className={cls.b_text}>{t('carRegistration')}: </span>
                             {newData.registration}
                         </div>
-                        <div className={cls.infoItem}>
-                            <span className={cls.b_text}>{t('carInspection')}: </span>
-                            <a href = {newData.inspection} target = "_blank">Download</a><br/>
+                        <div className={`${cls.infoItem} ${cls.infoItemDownload}`}>
+                            <div>
+                                <span className={cls.b_text}>{t('carInspection')}: </span>
+                                <a href = {newData.inspection} target = "_blank">Download</a>
+                            </div>
                             <span>Expiration date : {newData.inspection_exp}</span>
                         </div>
                         <div className={cls.infoItem}>
