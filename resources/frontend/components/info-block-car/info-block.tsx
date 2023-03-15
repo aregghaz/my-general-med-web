@@ -8,12 +8,13 @@ import ImageGallery from "../image-gallery-carousel/image-gallery-carousel";
 
 interface IProps {
     data:any,
+    is_admin:boolean,
 
 
 }
 
 
-const InfoBlockCar: FC<IProps> = ({data}) => {
+const InfoBlockCar: FC<IProps> = ({data, is_admin}) => {
     /// const infoData: any = items.find(item => item.id === idData);
     const newData = data.data
     const {t} = useTranslation()
