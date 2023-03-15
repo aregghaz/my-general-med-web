@@ -124,7 +124,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
     return (
         data && (
             <>
-                {Object.keys(itemData).length > 0 && <InfoBlockDriver data={itemData} />}
+                {Object.keys(itemData).length > 0 && <InfoBlockDriver data={itemData} is_admin={false} />}
                 <Tabs tabs={tabs}
                       handlerChangeTabs={handlerChangeTabs} />
                 <List

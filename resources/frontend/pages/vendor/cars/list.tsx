@@ -120,7 +120,7 @@ const Cars: React.FC<Beneficiary> = () => {
     return (
         data &&
         <>
-            {Object.keys(itemData).length > 0 && <InfoBlockCar data={itemData} />}
+            {Object.keys(itemData).length > 0 && <InfoBlockCar data={itemData} is_admin={false}/>}
             <List
                 data={data}
                 titles={titles}

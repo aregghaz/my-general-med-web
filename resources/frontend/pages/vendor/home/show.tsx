@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import cls from "../../../components/info-block/info-block.module.scss";
-import { useJsApiLoader } from "@react-google-maps/api";
+import { DirectionsRenderer, GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { homeAPI } from "../../../api/site-api/home-api";
 import { clientAction } from "../../../store/client";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,8 +9,10 @@ import { getClientData } from "../../../store/selectors";
 import { useTranslation } from "react-i18next";
 import TimePicker from "react-time-picker";
 import s from "../../../components/time-picker/timepicker.module.scss";
-import { IOption } from "../../../components/select/select";
+import Select, { IOption } from "../../../components/select/select";
 import { toast } from "react-toastify";
+import Button from "../../../components/button/button";
+import Textarea from "../../../components/textarea/textarea";
 
 interface IShow {
     path: string;
@@ -176,10 +178,6 @@ const Show: React.FC<IShow> = ({ id }) => {
                 </div>
             </div>
             <div className={cls.item1}>
-                <div className={cls.itemsBlock}>
-                    <span className={cls.b_text}>{t("date_of_service")}: </span>
-                    {clientById.date_of_service}
-                </div>
                 <div className={cls.itemsBlock}>
                     <span className={cls.b_text}>{t("drop_down")}: </span>
                      <TimePicker

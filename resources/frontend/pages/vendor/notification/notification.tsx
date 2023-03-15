@@ -66,8 +66,8 @@ const Notification: React.FC<INotificationList> = () => {
     return data && (
 
         <>
-            {model === "driver" && <InfoBlockDriver data={info} />}
-            {model === "car" && <InfoBlockCar data={info} />}
+            {model === "driver" && <InfoBlockDriver data={info} is_admin={false} />}
+            {model === "car" && <InfoBlockCar data={info} is_admin={false}/>}
             <List
                 data={data}
                 titles={titles}

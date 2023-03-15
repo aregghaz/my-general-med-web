@@ -34,6 +34,7 @@ class NotificationController extends Controller
             200
         );
     }
+
     public function vendorNotification(Request $request, $showMore)
     {
 

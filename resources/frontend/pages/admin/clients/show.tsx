@@ -162,10 +162,7 @@ const Show: React.FC<IShow> = ({ id }) => {
                 {/*</div>*/}
             </div>
             <div className={cls.item1}>
-                <div className={cls.itemsBlock}>
-                    <span className={cls.b_text}>{t("date_of_service")}: </span>
-                    {clientById.date_of_service}
-                </div>
+
                 <div className={cls.itemsBlock}>
                     <span className={cls.b_text}>{t("drop_down")}: </span>
                     <TimePicker
