@@ -18,8 +18,10 @@ class NotificationController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index($showMore)
+    public function index(Request $request,$showMore)
     {
+
+        $roleId = $request->user()->role;
 
         $notification = Notification::with('getAction')
             ->orderBy('new_admin', "desc")

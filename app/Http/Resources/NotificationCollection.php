@@ -14,11 +14,12 @@ class NotificationCollection extends ResourceCollection
      */
     public function toArray($request)
     {
+
         return $this->map(function ($data) use ($request) {
             return [
                 ///  'id' => $data->id,
                 'id' => $data->id,
-                'new' => $request->user()->role == 'admin' ? $data->new_admin : $data->new_vendor,
+                'new' => $request->user()->role->name == 'admin' ? $data->new_admin : $data->new_vendor,
                 "value_id"=> $data->value_id,
                 'field' => $data->field,
                 'type_id' =>  $data->getAction->name,
