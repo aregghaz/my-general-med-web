@@ -20,25 +20,29 @@
 .chartItem {
     flex: 1
 }
-.dashBordItem{
+
+.dashBordItem {
     flex: 3;
     height: 200px;
     text-align: center;
     padding: 30px;
     border: 1px solid;
     margin: 0 5px;
-    border-radius:15px
+    border-radius: 15px
 }
-.itemHeader{
-   flex: 1;
+
+.itemHeader {
+    flex: 1;
     flex-direction: column;
 }
-.title{
+
+.title {
     font-size: 25px;
     color: black;
 }
-.number{
-    margin-top:20px;
-    color:#D63D3D;
-    font-size:35px;
+
+.number {
+    margin-top: 20px;
+    color: #D63D3D;
+    font-size: 35px;
 }

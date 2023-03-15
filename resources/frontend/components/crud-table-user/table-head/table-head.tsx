@@ -15,7 +15,7 @@ interface ITableHead {
     titleSort: (name: string) => void,
     filterTable: string
     titleName: string,
-    action?:boolean
+    action?: boolean
 }
 
 const TableHead: React.FC<ITableHead> = (
@@ -24,7 +24,7 @@ const TableHead: React.FC<ITableHead> = (
         colspan = 1,
         rowspan = 1,
         titleSort,
-        action =false,
+        action = false,
         filterTable,
         titleName
     }) => {
@@ -44,18 +44,18 @@ const TableHead: React.FC<ITableHead> = (
     return (
         <thead className={s.tableHead}>
         <TableRow>
-            { (action ) && <th key={222222}
-                               className={s.tableTd}
+            {(action) && <th key={222222}
+                             className={s.tableTd}
 
-                 colSpan={colspan || 1}
-                 rowSpan={rowspan || 1}
+                             colSpan={colspan || 1}
+                             rowSpan={rowspan || 1}
             >Action
             </th>}
             {
                 titles && titles
                     .map((title, index) => {
                             var classNameField;
-                            if (title.label === "origin" || title.label === "destination"|| title.label === "destination_comments"|| title.label === "origin_comment") {
+                            if (title.label === "origin" || title.label === "destination" || title.label === "destination_comments" || title.label === "origin_comment") {
                                 classNameField = `${s.tableTd} ${s.address}`;
                             } else if (title.label === "gender") {
                                 classNameField = `${s.tableTd}  ${s.gender}`;

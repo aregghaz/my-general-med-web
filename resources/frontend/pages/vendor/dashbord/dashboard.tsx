@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ReactApexChart from "react-apexcharts";
 import s from "./dashboard.module.scss";
-import { AdminApi } from "../../../api/admin-api/admin-api";
 import { homeAPI } from "../../../api/site-api/home-api";
 
 interface IDashboard {
@@ -16,7 +15,7 @@ const VendorDashboard: React.FC<IDashboard> = () => {
         profitInYear: [],
         vendorProfit: { vendorsList: [], profit: [] },
         tripCount: { vendorsList: [], count: [] },
-        totalProfit:{price:0,count:0}
+        totalProfit: { price: 0, count: 0 }
     });
     const profitInYear = {
         series: [{
@@ -161,21 +160,25 @@ const VendorDashboard: React.FC<IDashboard> = () => {
         )();
 
     }, []);
-    console.log(    data);
+    console.log(data);
     return (
         <div className={s.root}>
             <div className={s.block}>
                 <div className={s.dashBordItem}>
                     <div className={`${s.itemHeader} ${s.title}`}>Total Revenue</div>
-                    <div  className={`${s.itemHeader} ${s.number}`}>{data.totalProfit.price  ? data.totalProfit.price.toFixed(2): 0} $</div>
+                    <div
+                        className={`${s.itemHeader} ${s.number}`}>{data.totalProfit.price ? data.totalProfit.price.toFixed(2) : 0} $
+                    </div>
                 </div>
                 <div className={s.dashBordItem}>
-                   <div  className={`${s.itemHeader} ${s.title}`}> Total Rides</div>
-                    <div  className={`${s.itemHeader} ${s.number}`}>{data.totalProfit.count}</div>
+                    <div className={`${s.itemHeader} ${s.title}`}> Total Rides</div>
+                    <div className={`${s.itemHeader} ${s.number}`}>{data.totalProfit.count}</div>
                 </div>
                 <div className={s.dashBordItem}>
-                   <div  className={`${s.itemHeader} ${s.title}`}> Avg Revenue Per Ride</div>
-                    <div  className={`${s.itemHeader} ${s.number}`}>{data.totalProfit.price && data.totalProfit.count ? (data.totalProfit.price/data.totalProfit.count).toFixed(2): 0} $</div>
+                    <div className={`${s.itemHeader} ${s.title}`}> Avg Revenue Per Ride</div>
+                    <div
+                        className={`${s.itemHeader} ${s.number}`}>{data.totalProfit.price && data.totalProfit.count ? (data.totalProfit.price / data.totalProfit.count).toFixed(2) : 0} $
+                    </div>
                 </div>
             </div>
             <div className={s.block}>

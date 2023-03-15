@@ -1,10 +1,10 @@
-import React from 'react'
+import React from "react";
 
-import s from '../crud-table.module.scss'
+import s from "../crud-table.module.scss";
 
 interface ITableRow {
-    className?: string
-    onClick?: any
+    className?: string;
+    onClick?: any;
 }
 
 const TableRow: React.FC<ITableRow> = (
@@ -13,11 +13,11 @@ const TableRow: React.FC<ITableRow> = (
         children
     }) => {
     return (
-        <tr className={`${s.row} ${s.myTr}  ${className ? className : ''}`}>
+        <tr className={`${s.row} ${s.myTr}  ${className ? className : ""}`}>
             {children}
         </tr>
-    )
-}
+    );
+};
 
 
-export default TableRow
+export default TableRow;

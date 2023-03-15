@@ -1,69 +1,69 @@
-import React, {useState} from 'react'
-import {useTranslation} from 'react-i18next'
-import {Row, Visible} from 'react-grid-system'
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Visible } from "react-grid-system";
 
-import CustomContainer from '../../../components/custom-container/custom-container'
-import {Link} from '@reach/router'
-import {Links} from '../../../constants/helpers'
+import CustomContainer from "../../../components/custom-container/custom-container";
+import { Link } from "@reach/router";
+import { Links } from "../../../constants/helpers";
 
-import s from './footer.module.scss'
-import {FACEBOOK, INSTAGRAM} from '../../../constants/likelocals-info'
+import s from "./footer.module.scss";
+import { FACEBOOK, INSTAGRAM } from "../../../constants/likelocals-info";
 
 interface IFooterItem {
-    name?: string
-    link: string
+    name?: string;
+    link: string;
 }
 
 export type LinkType = keyof typeof Links
 
 export const menuList: { [key in keyof typeof Links]: Array<IFooterItem> } = {
     traditionalCrafts: [
-        {name: 'sculpture', link: '/traditional-handicrafts/qandakagvortsvouthyvoun'},
-        {name: 'blackSmiting', link: '/traditional-handicrafts/darbnagvortsvouthyvoun'},
-        {name: 'woodworking', link: '/traditional-handicrafts/phaytamshakvoum'},
-        {name: 'carpetMaking', link: '/traditional-handicrafts/gvorgagvortsvouthyvoun'},
-        {name: 'pottery', link: '/traditional-handicrafts/azgayin-erg-ev-par'},
-        {name: 'nationalSongDance', link: '/traditional-handicrafts/azgayin-erg-ev-par'}
+        { name: "sculpture", link: "/traditional-handicrafts/qandakagvortsvouthyvoun" },
+        { name: "blackSmiting", link: "/traditional-handicrafts/darbnagvortsvouthyvoun" },
+        { name: "woodworking", link: "/traditional-handicrafts/phaytamshakvoum" },
+        { name: "carpetMaking", link: "/traditional-handicrafts/gvorgagvortsvouthyvoun" },
+        { name: "pottery", link: "/traditional-handicrafts/azgayin-erg-ev-par" },
+        { name: "nationalSongDance", link: "/traditional-handicrafts/azgayin-erg-ev-par" }
     ],
     culturalCustoms: [
-        {name: 'distillationOfVodka', link: '/cultural-traditions/oghvou-thvorvoum'},
-        {name: 'lambShearing', link: '/cultural-traditions/gar-khvouzel'},
-        {name: 'mulberryShake', link: '/cultural-traditions/thvouth-thaph-tal'}
+        { name: "distillationOfVodka", link: "/cultural-traditions/oghvou-thvorvoum" },
+        { name: "lambShearing", link: "/cultural-traditions/gar-khvouzel" },
+        { name: "mulberryShake", link: "/cultural-traditions/thvouth-thaph-tal" }
     ],
     services: [
-        {name: 'liveLikeHim', link: '/services'},
-        {name: 'craftLessons', link: '/services'},
-        {name: 'courses', link: '/services'}
+        { name: "liveLikeHim", link: "/services" },
+        { name: "craftLessons", link: "/services" },
+        { name: "courses", link: "/services" }
     ],
-    beneficiary: [{link: '/beneficiaries'}],
-    handmadeProducts: [{link: '/handmade-products'}],
-    aboutUs: [{link: '/about-us'}]
-}
+    beneficiary: [{ link: "/beneficiaries" }],
+    handmadeProducts: [{ link: "/handmade-products" }],
+    aboutUs: [{ link: "/about-us" }]
+};
 
 interface IListItem {
-    [key: string]: boolean
+    [key: string]: boolean;
 }
 
 function ColOne(): JSX.Element {
-    const {t} = useTranslation()
+    const { t } = useTranslation();
     const [isOpenList, setOpenList] = useState<IListItem>(() => {
-        const initialState: IListItem = {}
+        const initialState: IListItem = {};
         Object.keys(menuList).slice(0, 2)
-            .forEach((el) => initialState[el] = false)
-        return initialState
-    })
+            .forEach((el) => initialState[el] = false);
+        return initialState;
+    });
 
     const handlerOpenList = (item: string) => setOpenList(prev => ({
         ...prev,
         [item]: !prev[item]
-    }))
+    }));
 
     return (
         <div>
             {Object.keys(menuList).slice(0, 2)
                 .map((item: LinkType, index) => (
                         <div
-                            className={`${s.itemList} ${item === 'culturalCustoms' && s.footerMargin}`}
+                            className={`${s.itemList} ${item === "culturalCustoms" && s.footerMargin}`}
                             key={index}
                         >
                             <Visible xs sm>
@@ -108,29 +108,29 @@ function ColOne(): JSX.Element {
                 )
             }
         </div>
-    )
+    );
 }
 
 function ColTwo(): JSX.Element {
-    const {t} = useTranslation()
+    const { t } = useTranslation();
     const [isOpenList, setOpenList] = useState<IListItem>(() => {
-        const initialState: IListItem = {}
+        const initialState: IListItem = {};
         Object.keys(menuList).slice(2, 6)
-            .forEach(el => initialState[el] = false)
-        return initialState
-    })
+            .forEach(el => initialState[el] = false);
+        return initialState;
+    });
 
     const handlerOpenList = (item: string) => setOpenList(prev => ({
         ...prev,
         [item]: !prev[item]
-    }))
+    }));
 
     return (
         <div>
             {Object.keys(menuList).slice(2, 6)
                 .map((item: LinkType, index) => (
                     <div
-                        className={`${s.itemList} ${item === 'beneficiary' && s.footerMargin}`}
+                        className={`${s.itemList} ${item === "beneficiary" && s.footerMargin}`}
                         key={index}
                     >
                         <Visible xs sm>
@@ -174,7 +174,7 @@ function ColTwo(): JSX.Element {
                 )
             }
         </div>
-    )
+    );
 }
 
 function ColThree(): JSX.Element {
@@ -184,14 +184,14 @@ function ColThree(): JSX.Element {
                 {/*<img src={AboutUsPhoto} alt="AboutUsPhoto"/>*/}
             </div>
         </div>
-    )
+    );
 }
 
 const Footer = (): JSX.Element => {
 
-    const {t} = useTranslation()
-    const newDate = new Date()
-    const year = newDate.getFullYear()
+    const { t } = useTranslation();
+    const newDate = new Date();
+    const year = newDate.getFullYear();
 
     return (
         <footer className={s.footer}>
@@ -215,26 +215,26 @@ const Footer = (): JSX.Element => {
                 <Visible xs>
                     <div className={s.icons}>
                         <a href={FACEBOOK} target="_blank">
-                            <i className={`facebookicon- ${s.facebook} `}/>
+                            <i className={`facebookicon- ${s.facebook} `} />
                         </a>
                         <a href={INSTAGRAM} target="_blank">
-                            <i className={`instagramicon- ${s.instagram} `}/>
+                            <i className={`instagramicon- ${s.instagram} `} />
                         </a>
                     </div>
                 </Visible>
             </CustomContainer>
-            <hr className={s.border}/>
+            <hr className={s.border} />
             <CustomContainer>
                 <div className={s.socialMedia}>
                     <p className={s.copyright}>
-                        Copyright {year}. <span className={s.logo}></span> {t('allRightsReserved')}
+                        Copyright {year}. <span className={s.logo}></span> {t("allRightsReserved")}
                     </p>
                     <Visible sm md lg xl xxl>
                         <div className={s.icons}>
-                            <a href={'/'
+                            <a href={"/"
                                 //    FACEBOOK
                             } target="_blank">
-                                <i className={`facebookicon- ${s.facebook} `}/>
+                                <i className={`facebookicon- ${s.facebook} `} />
                             </a>
                             {/*<a href={INSTAGRAM} target="_blank">*/}
                             {/*    <i className={`instagramicon- ${s.instagram} `}/>*/}
@@ -244,7 +244,7 @@ const Footer = (): JSX.Element => {
                 </div>
             </CustomContainer>
         </footer>
-    )
-}
+    );
+};
 
-export default Footer
+export default Footer;

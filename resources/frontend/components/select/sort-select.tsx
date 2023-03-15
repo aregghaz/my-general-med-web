@@ -1,33 +1,21 @@
-import React, {MouseEventHandler, useState} from 'react'
-import useLocalStorage from '../../hooks/use-local-storage'
-import Checkbox from '../checkbox/checkbox'
-import Select, {
-    components,
-    MenuProps,
-    OptionProps,
-    OptionTypeBase,
-    MultiValueProps,
-} from 'react-select'
-import {
-    SortableContainer,
-    SortableContainerProps,
-    SortableElement,
-    SortEndHandler,
-    SortableHandle,
-} from 'react-sortable-hoc';
-import {useTranslation} from 'react-i18next'
-import s from './select.module.scss'
+import React, { MouseEventHandler, useState } from "react";
+import useLocalStorage from "../../hooks/use-local-storage";
+import Checkbox from "../checkbox/checkbox";
+import Select, { components, MenuProps, MultiValueProps, OptionProps, OptionTypeBase } from "react-select";
+import { SortableContainer, SortableElement, SortableHandle, SortEndHandler } from "react-sortable-hoc";
+import { useTranslation } from "react-i18next";
+import s from "./select.module.scss";
 
 export interface IOption {
-    id: number
-    value: string
-    label: string
-    slug?: string
+    id: number;
+    value: string;
+    label: string;
+    slug?: string;
 }
 
 interface IMenu {
-    props: MenuProps<OptionTypeBase>
-    handlerAdd: () => void
+    props: MenuProps<OptionTypeBase>;
+    handlerAdd: () => void;
 }
 
 interface ISelect {
@@ -68,10 +56,10 @@ const Option = (props: OptionProps<OptionTypeBase>) => (
             labelStyle={props.selectProps.authCheckboxLabelStyle}
         />
     </components.Option>
-)
+);
 
-const Menu: React.FC<IMenu> = ({props, handlerAdd}) => {
-    const {t} = useTranslation()
+const Menu: React.FC<IMenu> = ({ props, handlerAdd }) => {
+    const { t } = useTranslation();
     return (
         <components.Menu {...props} >
             <>
@@ -90,12 +78,12 @@ const Menu: React.FC<IMenu> = ({props, handlerAdd}) => {
                     }
                 </ul>
                 <div className={s.addBtn} onClick={handlerAdd}>
-                    {t('add_new_type')} +
+                    {t("add_new_type")} +
                 </div>
             </>
         </components.Menu>
-    )
-}
+    );
+};
 
 function arrayMove<T>(array: T[], from: number, to: number) {
     const slicedArray = array.slice();
@@ -112,8 +100,8 @@ const SortableMultiValue = SortableElement((props: MultiValueProps<ISortOption>)
             e.preventDefault();
             e.stopPropagation();
         };
-        const innerProps = {...props.innerProps, onMouseDown};
-        return <components.MultiValue {...props} innerProps={innerProps}/>;
+        const innerProps = { ...props.innerProps, onMouseDown };
+        return <components.MultiValue {...props} innerProps={innerProps} />;
     }
 );
 
@@ -121,14 +109,14 @@ const SortableMultiValueLabel = SortableHandle(
     (props: any) => <components.MultiValueLabel {...props} />
 );
 
-const SortableSelect: any = SortableContainer(Select)
+const SortableSelect: any = SortableContainer(Select);
 
 
 const MultiSelectSort: React.FC<ISelect> = (
     {
         isCheckbox = false,
         isSearchable = false,
-        placeholder = '',
+        placeholder = "",
         options,
         onChange,
         getOptionLabel,
@@ -149,14 +137,14 @@ const MultiSelectSort: React.FC<ISelect> = (
 ) => {
 
     const [selected, setSelected] = useState(value);
-    const onHandleChange = (selectedOptions: any) => setSelected(selectedOptions)
+    const onHandleChange = (selectedOptions: any) => setSelected(selectedOptions);
 
-    const onSortEnd: SortEndHandler = ({oldIndex, newIndex}) => {
+    const onSortEnd: SortEndHandler = ({ oldIndex, newIndex }) => {
         const newValue = arrayMove(selected, oldIndex, newIndex);
         setSelected(newValue);
-        onChangePosition(newValue)
+        onChangePosition(newValue);
     };
-    const [themeType] = useLocalStorage('theme', 'light')
+    const [themeType] = useLocalStorage("theme", "light");
 
 
     return (
@@ -172,14 +160,14 @@ const MultiSelectSort: React.FC<ISelect> = (
                 axis="xy"
                 onSortEnd={onSortEnd}
                 distance={4}
-                getHelperDimensions={({node}: any) => node.getBoundingClientRect()}
+                getHelperDimensions={({ node }: any) => node.getBoundingClientRect()}
                 options={options}
                 // value={selected.length > 0 ? selected : value}
                 value={selected}
                 // value={value}
                 onChange={(e: any) => {
-                    onChange(e)
-                    onHandleChange(e)
+                    onChange(e);
+                    onHandleChange(e);
                 }}
                 components={
                     isCheckbox
@@ -187,19 +175,19 @@ const MultiSelectSort: React.FC<ISelect> = (
                             Option,
                             IndicatorSeparator: (): null => null,
                             MultiValue: SortableMultiValue,
-                            MultiValueLabel: SortableMultiValueLabel,
+                            MultiValueLabel: SortableMultiValueLabel
                         }
                         : isMenuAdd
                             ? {
-                                Menu: (props: any) => <Menu props={props} handlerAdd={handlerAdd}/>,
+                                Menu: (props: any) => <Menu props={props} handlerAdd={handlerAdd} />,
                                 IndicatorSeparator: (): null => null,
                                 MultiValue: SortableMultiValue,
-                                MultiValueLabel: SortableMultiValueLabel,
+                                MultiValueLabel: SortableMultiValueLabel
                             }
                             : {
                                 IndicatorSeparator: (): null => null,
                                 MultiValue: SortableMultiValue,
-                                MultiValueLabel: SortableMultiValueLabel,
+                                MultiValueLabel: SortableMultiValueLabel
                             }
                 }
                 authCheckboxLabelStyle={authCheckboxLabelStyle}
@@ -212,24 +200,24 @@ const MultiSelectSort: React.FC<ISelect> = (
                 styles={{
                     control: (baseStyles: any, state: any) => ({
                         ...baseStyles,
-                        borderColor: '#D63D3D',
-                       /// backgroundColor: '#545cd8',
+                        borderColor: "#D63D3D",
+                        /// backgroundColor: '#545cd8',
                         borderRadius: "15px",
-                        color: "#707980",
+                        color: "#707980"
                     }),
                     menu: (base: any) => ({
                         ...base,
                         borderRadius: 15,
-                        backgroundColor: 'white',
+                        backgroundColor: "white",
                         marginTop: 0,
-                        color: "#707980",
+                        color: "#707980"
                     }),
                     menuList: (base: any) => ({
                         ...base,
                         // kill the white space on first and last option
                         padding: 0,
                         color: "#707980",
-                        backgroundColor: 'white',
+                        backgroundColor: "white"
                     }),
                     multiValue: (baseStyles: any, state: any) => ({
                         ...baseStyles,
@@ -238,17 +226,17 @@ const MultiSelectSort: React.FC<ISelect> = (
                         lineHeight: 1.5,
                         color: "#707980",
                         fontWeight: "bold",
-                        backgroundColor: 'white',
+                        backgroundColor: "white"
                     }),
-                    multiValueLabel: (styles: any, {data}: any) => ({
+                    multiValueLabel: (styles: any, { data }: any) => ({
                         ...styles,
-                        backgroundColor: 'white',
-                        color: data.color,
-                    }),
+                        backgroundColor: "white",
+                        color: data.color
+                    })
                 }}
             />
         </>
-    )
-}
+    );
+};
 
-export default MultiSelectSort
+export default MultiSelectSort;

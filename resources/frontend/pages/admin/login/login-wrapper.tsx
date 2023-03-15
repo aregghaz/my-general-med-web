@@ -9,7 +9,6 @@ import { getUserData } from "../../../store/selectors";
 import { useNavigate } from "@reach/router";
 
 import s from "./login-wrapper.module.scss";
-import { actionsNotification } from "../../../store/notification";
 
 
 interface ILoginWrapper {

@@ -7,18 +7,19 @@
 .transparent,
 .green,
 .blank {
-  border: none;
-  cursor: pointer;
-  text-align: center;
-  transition: 1s;
-  font-size: 13px;
-  background-color: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    transition: 1s;
+    font-size: 13px;
+    background-color: transparent;
 
-  &:focus {
-    outline: none;
-    box-shadow: none
-  }
+    &:focus {
+        outline: none;
+        box-shadow: none
+    }
 }
+
 .selectButton {
     padding: 8px 15px;
     text-decoration: none;
@@ -28,7 +29,7 @@
     cursor: pointer;
     border-radius: 3px;
 
-    &:not(.blank,.round){
+    &:not(.blank,.round) {
         box-shadow: $buttonBoxShadow;
     }
 
@@ -47,28 +48,28 @@
 }
 
 .transparent {
-  background-color: transparent;
-  color: $greenColor;
-  border: 1.5px solid $greenColor;
+    background-color: transparent;
+    color: $greenColor;
+    border: 1.5px solid $greenColor;
 }
 
 
 .green {
-  background-color: $menuColor;
-  @include themify($themes) {
-    color: themed('modalBgColor')
-  }
+    background-color: $menuColor;
+    @include themify($themes) {
+        color: themed('modalBgColor')
+    }
 }
 
 .blank {
-  background-color: transparent;
-  border: none;
+    background-color: transparent;
+    border: none;
 }
 
 
-.update{
+.update {
     width: 150px;
     height: 50px;
     border-radius: 25px;
-    color: white!important;
+    color: white !important;
 }

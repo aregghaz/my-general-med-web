@@ -1,11 +1,10 @@
-import React from 'react'
+import React from "react";
 ///import Header from '../../layouts/header/header'
-import ServicesBg from '../../../images/services-bg.png'
 
-import s from './not-found.module.scss'
+import s from "./not-found.module.scss";
 
 interface INotFound {
-    default: boolean
+    default: boolean;
 }
 
 const NotFound: React.FC<INotFound> = () => {
@@ -20,9 +19,9 @@ const NotFound: React.FC<INotFound> = () => {
                 <h2>404 NOT FOUND</h2>
             </div>
         </>
-    )
+    );
 
-}
+};
 
 
-export default NotFound
+export default NotFound;

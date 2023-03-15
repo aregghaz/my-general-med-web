@@ -28,20 +28,20 @@ const StatusCreate: React.FC<IUserCreate> = ({ statusId }) => {
     //     { name: "id", type: "hidden", inputType: "hidden" }
     // ];
     useEffect(() => {
-        console.log(status,'status');
+        console.log(status, "status");
         if (status !== null && (status.id === 7 || status.id === 8)) {
             setFields([
                 { name: "name", type: "input", label: "statusName" },
                 { name: "slug", type: "input", label: "slug" },
                 { name: "id", type: "hidden", inputType: "hidden" },
                 { name: "price", type: "input", label: "price" }
-            ])
-        } else if(status !== null) {
+            ]);
+        } else if (status !== null) {
             setFields([
                 { name: "name", type: "input", label: "statusName" },
                 { name: "slug", type: "input", label: "slug" },
-                { name: "id", type: "hidden", inputType: "hidden" },
-            ])
+                { name: "id", type: "hidden", inputType: "hidden" }
+            ]);
         }
     }, [status]);
 
@@ -92,32 +92,32 @@ const StatusCreate: React.FC<IUserCreate> = ({ statusId }) => {
         "name"
     ];
     return <>
-          <div className={s.item}>
-              <div className={s.select}>
-                  <Select
-                      label={'status'}
-                      getOptionValue={(option: IOption) => option.value}
-                      getOptionLabel={(option: IOption) => t(option.label)}
-                      onChange={(options: IOption) => setStatus(options)}
-                      /// onChange={handlerSetCar}
-                      options={tabs}
-                      // value={selectedTitle}
-                      name={"Cars"}
-                      isMulti={false}
-                      value={status}
-                  />
-              </div>
-              <div className={s.mainForm}>
-                  <Create
-                      crudKey={`${crudKey}/${status.id}`}
-                      redirectKey={redirectKey}
-                      fields={fields}
-                      title={""}
-                      requiredFields={requiredFields}
-                      children={t("create")}
-                  />
-              </div>
-          </div>
+        <div className={s.item}>
+            <div className={s.select}>
+                <Select
+                    label={"status"}
+                    getOptionValue={(option: IOption) => option.value}
+                    getOptionLabel={(option: IOption) => t(option.label)}
+                    onChange={(options: IOption) => setStatus(options)}
+                    /// onChange={handlerSetCar}
+                    options={tabs}
+                    // value={selectedTitle}
+                    name={"Cars"}
+                    isMulti={false}
+                    value={status}
+                />
+            </div>
+            <div className={s.mainForm}>
+                <Create
+                    crudKey={`${crudKey}/${status.id}`}
+                    redirectKey={redirectKey}
+                    fields={fields}
+                    title={""}
+                    requiredFields={requiredFields}
+                    children={t("create")}
+                />
+            </div>
+        </div>
         {/*{fields.length > 0 && <Create*/}
         {/*    crudKey={`${crudKey}/${status.id}`}*/}
         {/*    redirectKey={redirectKey}*/}

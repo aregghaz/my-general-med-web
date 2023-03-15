@@ -25,7 +25,7 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
         error,
         name,
         value,
-        type = 'show',
+        type = "show",
         media,
         label,
         setFieldValue,
@@ -106,7 +106,7 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
                     </div>
                     <div className={s.uploadButton}>
                         <label>
-                            <span className={s.uploadFileText}><ButtonSVg/></span>
+                            <span className={s.uploadFileText}><ButtonSVg /></span>
                             <input name={name} type="file" className={s.fileInput} onChange={onChange} />
                             <span>filename</span>
                         </label>
@@ -118,7 +118,7 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
                         <span>{type !== "hidden" ? "Experation date" : null}</span>
                     </div>
                     <div className={s.datepicker}>
-                        {type !== 'hidden' ? <DataPicker
+                        {type !== "hidden" ? <DataPicker
                             name={`${name}_exp`}
                             setFieldValue={setFieldValue}
                             selectRange={false}
@@ -126,7 +126,7 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
                             label={``}
                             value={value[`${name}_exp`]}
                         /> : <div style={{
-                            height: 50,
+                            height: 50
                         }}></div>}
                     </div>
                 </div>

@@ -38,14 +38,14 @@ const customStyles: ReactModal.Styles = {
         /// display: 'flex',
         justifyContent: "center",
         width: "80%",
-        height: "60vh",
+        height: "60vh"
         ///  alignItems: "center",
     },
     overlay: {
         zIndex: 999999,
         overflow: "hidden",
         background: "rgba(0, 0, 0, 0.35)",
-        backdropFilter: "blur(5px)",
+        backdropFilter: "blur(5px)"
     }
 };
 
@@ -171,7 +171,7 @@ const Home: React.FC<IHome> = () => {
         }
     };
 
-    const getClientData = async (queryData: string, date:string) => {
+    const getClientData = async (queryData: string, date: string) => {
         const titlesData = localStorage.getItem("titles");
         const homeData = await AdminApi.getAllData({
             titles: titles.length ? titles : JSON.parse(titlesData),
@@ -322,7 +322,7 @@ const Home: React.FC<IHome> = () => {
 
     }, [isModalOpen]);
     const setFieldValue = async (name: string, dateData: string) => {
-        setDate(dateData)
+        setDate(dateData);
         await getClientData(query, dateData);
     };
 

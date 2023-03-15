@@ -9,7 +9,6 @@ import { useTranslation } from "react-i18next";
 import Modal from "react-modal";
 import { actions } from "../../../store/vendorUsers";
 import { useDispatch, useSelector } from "react-redux";
-import Tabs from "../../../components/tabs/tabs";
 import { adminVendorUsers } from "../../../store/selectors";
 import NavigationTab from "../../../components/navigation/navigationTab";
 import axios from "axios";
@@ -54,7 +53,7 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
         "address",
         "phone_number",
         "birthday",
-        "actions",
+        "actions"
         /// "image",
     ];
 
@@ -99,13 +98,13 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
             id: 3,
             name: "Drivers",
             count: driversCount,
-            selected:false,
+            selected: false
         },
         {
             id: 4,
             name: "Operators",
             count: operatorsCount,
-            selected:false,
+            selected: false
         }
     ];
     const handleActionMiddleware = () => {

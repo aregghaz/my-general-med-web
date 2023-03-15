@@ -3,40 +3,40 @@
 @import "resources/frontend/styles/color-pallete";
 
 .textarea {
-  margin-top: 10px;
-  width: calc(100% - 20px);
-  border: 1px solid $borderColor;
-  height: 160px;
-  padding: 10px;
-  resize: none;
-  outline: none;
-  @include themify($themes) {
-    color: themed('modalTitleColor');
-    background-color: themed('modalInputBgColor');
-    border: 1px solid themed('inputBorderColor')
-  }
-  @media only screen and (max-width: $smallDisplay) {
-    font-size: 12px;
-    height: 150px;
-  }
+    margin-top: 10px;
+    width: calc(100% - 20px);
+    border: 1px solid $borderColor;
+    height: 160px;
+    padding: 10px;
+    resize: none;
+    outline: none;
+    @include themify($themes) {
+        color: themed('modalTitleColor');
+        background-color: themed('modalInputBgColor');
+        border: 1px solid themed('inputBorderColor')
+    }
+    @media only screen and (max-width: $smallDisplay) {
+        font-size: 12px;
+        height: 150px;
+    }
 }
 
 .label {
-  font-size: 15px;
-  @include themify($themes) {
-    color: themed('modalTitleColor');
-  }
-  font-weight: normal;
-  margin-bottom: 10px;
+    font-size: 15px;
+    @include themify($themes) {
+        color: themed('modalTitleColor');
+    }
+    font-weight: normal;
+    margin-bottom: 10px;
 }
 
 
 textarea::-webkit-outer-spin-button,
 textarea::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 textarea[type=number] {
-  -moz-appearance: textfield;
+    -moz-appearance: textfield;
 }

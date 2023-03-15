@@ -47,7 +47,7 @@ const ActivityClient: React.FC<Beneficiary> = ({ clientId }) => {
                     isGetHistory={false}
                     isCreate={false}
                     isGetItems={false}
-                 ///   handlerAction={handlerAction}
+                    ///   handlerAction={handlerAction}
                 />
             </>
         )

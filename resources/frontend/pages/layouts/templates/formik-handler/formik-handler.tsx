@@ -34,8 +34,8 @@ interface IFormikHandler {
     errors?: any;
     handleDrawMap?: any;
     autoCompleteRef?: any;
-    selectRange?:boolean;
-    className?:string;
+    selectRange?: boolean;
+    className?: string;
 }
 
 const FormikHandler: React.FC<IFormikHandler> = (

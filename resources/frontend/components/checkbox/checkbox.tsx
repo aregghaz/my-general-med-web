@@ -1,16 +1,16 @@
-import React from 'react'
+import React from "react";
 
-import s from './checkbox.module.scss'
+import s from "./checkbox.module.scss";
 
 interface ICheckbox {
-    name?: string
-    label: string
-    checked: boolean
-    handlerCheckbox?: () => void
-    disabled?: boolean
-    onLabelClick?: () => void
-    className?: string
-    labelStyle?: string
+    name?: string;
+    label: string;
+    checked: boolean;
+    handlerCheckbox?: () => void;
+    disabled?: boolean;
+    onLabelClick?: () => void;
+    className?: string;
+    labelStyle?: string;
 }
 
 const Checkbox: React.FC<ICheckbox> = (
@@ -32,7 +32,7 @@ const Checkbox: React.FC<ICheckbox> = (
             checked={checked}
             onChange={handlerCheckbox}
         />
-        <span className={`${className}`}/>
+        <span className={`${className}`} />
             <label
                 className={`${s.checkboxLabel}
                 ${labelStyle}`}
@@ -41,7 +41,7 @@ const Checkbox: React.FC<ICheckbox> = (
                 {label}
             </label>
     </span>
-)
+);
 
 
-export default Checkbox
+export default Checkbox;

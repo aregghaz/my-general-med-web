@@ -1,6 +1,7 @@
-import path from 'path';
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
+import path from "path";
+
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const getCSSModuleLocalIdent = require("react-dev-utils/getCSSModuleLocalIdent");
 
 class ReactCSSModules {
     /**
@@ -21,7 +22,7 @@ class ReactCSSModules {
      * @return {String|Array}
      */
     name() {
-        return 'reactCSSModules';
+        return "reactCSSModules";
     }
 
     /**
@@ -30,7 +31,7 @@ class ReactCSSModules {
      * @return {string}
      */
     defaultScopedName() {
-        return '[name]__[local]___[hash:base64:5]';
+        return "[name]__[local]___[hash:base64:5]";
     }
 
     /**
@@ -39,7 +40,7 @@ class ReactCSSModules {
      * @return {Array}
      */
     dependencies() {
-        return ['babel-plugin-react-css-modules', 'postcss-scss', 'postcss-nested'];
+        return ["babel-plugin-react-css-modules", "postcss-scss", "postcss-nested"];
     }
 
     /**
@@ -71,9 +72,9 @@ class ReactCSSModules {
         // Loop through all rules
         config.plugins.push(
             new MiniCssExtractPlugin({
-                filename: '/css/main.css',
-                chunkFilename: '/css/main.chunk.css',
-            }),
+                filename: "/css/main.css",
+                chunkFilename: "/css/main.chunk.css"
+            })
         );
 
         config.module.rules = config.module.rules.map((rule) => {
@@ -83,28 +84,28 @@ class ReactCSSModules {
 
             // Loop through all loaders
             rule.loaders = rule.loaders.map((loader) => {
-                if (loader.loader === 'style-loader' || loader === 'style-loader') {
+                if (loader.loader === "style-loader" || loader === "style-loader") {
                     loader = {
                         loader: MiniCssExtractPlugin.loader,
-                        options: { publicPath: 'public' },
+                        options: { publicPath: "public" }
                     };
                     return loader;
                 }
 
-                if (loader.loader === 'css-loader' || loader === 'css-loader') {
+                if (loader.loader === "css-loader" || loader === "css-loader") {
                     // Add our options to the loader
                     let options = {
                         modules: {
-                            getLocalIdent: getCSSModuleLocalIdent,
-                        },
+                            getLocalIdent: getCSSModuleLocalIdent
+                        }
                     };
 
                     // Convert string syntax to object syntax if neccessary
                     loader =
-                        typeof loader === 'string'
+                        typeof loader === "string"
                             ? {
-                                  loader,
-                              }
+                                loader
+                            }
                             : loader;
 
                     // Inject our options into the loader
@@ -131,21 +132,21 @@ class ReactCSSModules {
         return {
             plugins: [
                 [
-                    'react-css-modules',
+                    "react-css-modules",
                     {
                         filetypes: {
-                            '.scss': {
-                                syntax: 'postcss-scss',
-                                plugins: ['postcss-nested'],
-                            },
+                            ".scss": {
+                                syntax: "postcss-scss",
+                                plugins: ["postcss-nested"]
+                            }
                         },
-                        exclude: 'node_modules',
-                        handleMissingStyleName: 'warn',
+                        exclude: "node_modules",
+                        handleMissingStyleName: "warn",
                         generateScopedName: this.scopedName,
-                        context: path.resolve(__dirname + '/../../laravel-mix/src/builder'),
-                    },
-                ],
-            ],
+                        context: path.resolve(__dirname + "/../../laravel-mix/src/builder")
+                    }
+                ]
+            ]
         };
     }
 }

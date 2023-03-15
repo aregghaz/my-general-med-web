@@ -14,7 +14,6 @@ interface ISite {
 }
 
 
-
 const Site: React.FC<ISite> = ({ children }) => {
 
     const dispatch = useDispatch();
@@ -32,7 +31,7 @@ const Site: React.FC<ISite> = ({ children }) => {
         (
             async () => {
                 console.log(user, "user");
-                if (user.count > 0) {
+                if (user && user.count >= 0) {
                     dispatch(actionsNotification.fetching({ count: user.count }));
 
                 }
@@ -40,9 +39,6 @@ const Site: React.FC<ISite> = ({ children }) => {
         )();
     }, [user]);
 
-
-    console.log("asasdsadsa");
-    console.log("asasdsadsa");
     return loggedIn && (
         <Row className={s.mainRow}>
             <div className={s.notificationDiv}>

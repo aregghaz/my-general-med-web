@@ -1,5 +1,5 @@
-import React from 'react'
-import s from '../crud-table.module.scss'
+import React from "react";
+import s from "../crud-table.module.scss";
 
 
 interface ITableData {
@@ -7,8 +7,8 @@ interface ITableData {
     rowspan?: number
     colspan?: number
     className?: string,
-    isGetInfo:boolean,
-    handlerAction?: (action:string,id: number) => void
+    isGetInfo: boolean,
+    handlerAction?: (action: string, id: number) => void
 }
 
 const TableData: React.FC<ITableData> = (
@@ -26,16 +26,16 @@ const TableData: React.FC<ITableData> = (
 
     return (
         <td
-           className={`${s.tableTh} ${className ? className : ''}`}
+            className={`${s.tableTh} ${className ? className : ""}`}
             colSpan={colspan || 1}
             rowSpan={rowspan || 1}
-            onClick={(event) => isGetInfo && handlerAction('get',data)}
+            onClick={(event) => isGetInfo && handlerAction("get", data)}
         >
 
             {children}
         </td>
-    )
-}
+    );
+};
 
 
-export default TableData
+export default TableData;

@@ -4,7 +4,6 @@ import s from "./tabs.module.scss";
 import { ITabs } from "../../types/admin";
 
 
-
 interface IProps {
     tabs: Array<ITabs>,
     handlerChangeTabs: (id: number) => void,

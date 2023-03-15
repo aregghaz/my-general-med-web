@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import cls from "../../../components/info-block/info-block.module.scss";
-import { DirectionsRenderer, GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import { useJsApiLoader } from "@react-google-maps/api";
 import { homeAPI } from "../../../api/site-api/home-api";
 import { clientAction } from "../../../store/client";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,10 +9,8 @@ import { getClientData } from "../../../store/selectors";
 import { useTranslation } from "react-i18next";
 import TimePicker from "react-time-picker";
 import s from "../../../components/time-picker/timepicker.module.scss";
-import Textarea from "../../../components/textarea/textarea";
-import Button from "../../../components/button/button";
-import Select, { IOption } from "../../../components/select/select";
-import { toast, ToastOptions } from "react-toastify";
+import { IOption } from "../../../components/select/select";
+import { toast } from "react-toastify";
 
 interface IShow {
     path: string;

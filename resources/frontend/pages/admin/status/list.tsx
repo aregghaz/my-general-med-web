@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { AdminApi } from "../../../api/admin-api/admin-api";
 import List from "../../layouts/templates/list/list";
 import { useTranslation } from "react-i18next";
-import Tabs from "../../../components/tabs/tabs";
 import { navigate } from "@reach/router";
 import s from "../../layouts/templates/list/list.module.scss";
 import NavigationTab from "../../../components/navigation/navigationTab";
@@ -122,7 +121,7 @@ const Status: React.FC<Beneficiary> = () => {
     const openSearch = () => {
         if (open) {
             setQuery("");
-          ///  setLoading(true);
+            ///  setLoading(true);
         }
         setOpen(!open);
     };
@@ -134,7 +133,7 @@ const Status: React.FC<Beneficiary> = () => {
                 const data = new FormData();
                 data.append("file", e.target.files[0]);
                 await axios.post("/api/test", data);
-               /// setLoading(true);
+                /// setLoading(true);
             } else {
                 ///  setErrorMessage("please upload valid type!");
             }

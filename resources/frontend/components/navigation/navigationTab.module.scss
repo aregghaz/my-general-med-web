@@ -18,7 +18,7 @@
     position: relative;
 
     & > label {
-      transform: translateY(0);
+        transform: translateY(0);
         transition: 0.5s;
     }
 
@@ -94,9 +94,11 @@
     transition: 1s;
     opacity: 1;
     visibility: visible;
-   div{
-       margin: 0 10px;
-   }
+
+    div {
+        margin: 0 10px;
+    }
+
     //width: 100%
 }
 
@@ -117,12 +119,14 @@
     }
 }
 
-.history,.assignVendor,.info,.edit,.delete,.reRoute,.claim {
+.history, .assignVendor, .info, .edit, .delete, .reRoute, .claim {
     visibility: hidden;
 }
-.historySpan:hover .history,.infoSpan:hover .info ,.editSpan:hover .edit ,.deleteSpan:hover .delete,.reRouteSpan:hover .reRoute, .claimSpan:hover .claim {
+
+.historySpan:hover .history, .infoSpan:hover .info, .editSpan:hover .edit, .deleteSpan:hover .delete, .reRouteSpan:hover .reRoute, .claimSpan:hover .claim {
     visibility: visible;
 }
+
 .assignVendorSpan:hover .assignVendor {
     visibility: visible;
 }

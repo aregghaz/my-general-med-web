@@ -1,12 +1,13 @@
 @import "../../../styles/variables";
 
-.trPagination{
+.trPagination {
     display: flex;
     justify-content: center;
     margin-top: 12px;
     margin-bottom: 12px;
 }
-.number{
+
+.number {
     width: 30px;
     height: 30px;
     display: flex;
@@ -16,13 +17,16 @@
     margin: 0 5px;
     border-radius: 25px;
     background-color: white;
-    div button{
+
+    div button {
         color: $greenColor;
     }
 }
-.active{
+
+.active {
     background-color: $grayColor;
-    div button{
+
+    div button {
         color: white;
     }
 }

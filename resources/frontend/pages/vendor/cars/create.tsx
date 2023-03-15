@@ -125,7 +125,7 @@ const CarsCreate: React.FC<IUserCreate> = () => {
                                                     setFieldValue("make", option);
                                                     loadOptions4(option.id);
                                                 }}
-                                         ///       label={t("make")}
+                                                ///       label={t("make")}
                                                 isSearchable={false}
                                                 name={"make"}
                                                 placeholder={t("make")}
@@ -144,7 +144,7 @@ const CarsCreate: React.FC<IUserCreate> = () => {
                                                 /// options={selectOptions}
                                                 onChange={(option: IOption) => setFieldValue("model", option)}
 
-                                             ///   label={t("model")}
+                                                ///   label={t("model")}
                                                 isSearchable={false}
                                                 name={"model"}
                                                 placeholder={t("model")}
@@ -164,7 +164,7 @@ const CarsCreate: React.FC<IUserCreate> = () => {
                                                 /// options={selectOptions}
                                                 onChange={(option: IOption) => setFieldValue("drivers", option)}
                                                 hideSelectedOptions={true}
-                                               // label={t("assignDriver")}
+                                                // label={t("assignDriver")}
                                                 isSearchable={true}
                                                 name={"drivers"}
                                                 placeholder={t("assignDriver")}

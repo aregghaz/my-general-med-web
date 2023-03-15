@@ -1,25 +1,25 @@
 export interface ISelect {
-    id: number
-    name: string
+    id: number;
+    name: string;
 }
 
 
 export interface IUser {
-    id?: number
-    birthday: string | null
-    business_address: null | string
+    id?: number;
+    birthday: string | null;
+    business_address: null | string;
     // spheresOfActivity?: Array<ISelect>
-    email: string | null
-    image?: string
-    languages?: Array<ISelect>
-    name: string
-    count: number
-    description?: string
-    phone_number: string
-    region?: null | string
-    surname: string
-    rating?: number
-    role: string
+    email: string | null;
+    image?: string;
+    languages?: Array<ISelect>;
+    name: string;
+    count: number;
+    description?: string;
+    phone_number: string;
+    region?: null | string;
+    surname: string;
+    rating?: number;
+    role: string;
 }
 
 

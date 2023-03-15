@@ -41,7 +41,7 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
         { name: "destination_phone", type: "input", label: "destination_phone", inputType: "tel" },
         { name: "birthday", type: "datepicker", label: "birthday" },
         { name: "date_of_service", type: "datepicker", label: "date_of_service" },
-        { name: "miles", type: "input", label: "miles",  inputType: "disabled" },
+        { name: "miles", type: "input", label: "miles", inputType: "disabled" },
         { name: "id", type: "hidden", inputType: "hidden" },
         { name: "height", type: "input", label: "height", inputType: "number" },
         { name: "weight", type: "input", label: "weight", inputType: "number" },

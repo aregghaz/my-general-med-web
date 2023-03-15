@@ -1,22 +1,22 @@
-import React, {ChangeEvent} from 'react'
+import React, { ChangeEvent } from "react";
 
-import s from './input.module.scss'
+import s from "./input.module.scss";
 
 interface IInput {
-    name: string
-    value?: string
-    placeholder?: string
-    type: string
-    error?: string
-    onChange?: (event: ChangeEvent<HTMLInputElement>) => void
-    onBlur?: (event: ChangeEvent<HTMLInputElement>) => void
-    autoComplete?: string
-    disable?: boolean
-    label?: string
-    isAsterisk?: boolean
-    className?: string
-    labelStyle?: string
-    ref?: string
+    name: string;
+    value?: string;
+    placeholder?: string;
+    type: string;
+    error?: string;
+    onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+    onBlur?: (event: ChangeEvent<HTMLInputElement>) => void;
+    autoComplete?: string;
+    disable?: boolean;
+    label?: string;
+    isAsterisk?: boolean;
+    className?: string;
+    labelStyle?: string;
+    ref?: string;
 }
 
 const Input: React.FC<IInput> = (
@@ -24,17 +24,17 @@ const Input: React.FC<IInput> = (
         name,
         value,
         label,
-        autoComplete = 'off',
+        autoComplete = "off",
         disable,
         error,
         onBlur,
         onChange,
         placeholder,
-        type = 'text',
+        type = "text",
         isAsterisk,
         className,
         labelStyle,
-        ref,
+        ref
     }) => {
     // console.log(value)
 
@@ -63,11 +63,11 @@ const Input: React.FC<IInput> = (
                 //         event.target.parentElement.children[0].classList.add("aaa")
                 //     }
                 // }}
-                disabled={ type === 'disabled'}
+                disabled={type === "disabled"}
                 autoComplete={autoComplete}
             />
         </>
-    )
-}
+    );
+};
 
-export default Input
+export default Input;

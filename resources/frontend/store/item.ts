@@ -1,22 +1,22 @@
-import {InferActionsTypes} from './store'
+import { InferActionsTypes } from "./store";
 
 const initialState = {
     id: null as number,
-    genre: '' as string,
+    genre: "" as string,
     year: null as number,
     duration: null as number,
     kinopoisk_id: null as number,
     rating: null as number,
-    name: '' as string,
-    director: '' as string,
-    quality: '' as string,
-    translation: '' as string,
-    description: '' as string,
-    country: '' as string,
-    slug: '' as string,
-    image: '' as string,
-    url: '' as string,
-}
+    name: "" as string,
+    director: "" as string,
+    quality: "" as string,
+    translation: "" as string,
+    description: "" as string,
+    country: "" as string,
+    slug: "" as string,
+    image: "" as string,
+    url: "" as string
+};
 type InitialState = typeof initialState
 type Actions = InferActionsTypes<typeof actions>
 
@@ -24,7 +24,7 @@ const itemReducer = (state = initialState, action: Actions): InitialState => {
 
 
     switch (action.type) {
-        case 'FETCHING_MOVES_ITEM_PAGE_DATA':
+        case "FETCHING_MOVES_ITEM_PAGE_DATA":
             return {
                 ...state,
                 id: action.payload.id,
@@ -40,37 +40,37 @@ const itemReducer = (state = initialState, action: Actions): InitialState => {
                 rating: action.payload.rating,
                 description: action.payload.description,
                 country: action.payload.country,
-                image: action.payload.image,
-            }
-        case 'RESET_ITEM_PAGE_STATE':
+                image: action.payload.image
+            };
+        case "RESET_ITEM_PAGE_STATE":
             return {
                 ...state,
                 id: null,
-                genre: '',
+                genre: "",
                 year: null,
                 duration: null,
                 kinopoisk_id: null,
-                name: '',
-                slug: '',
-                url: '',
-                director: '',
-                quality: '',
-                description: '',
-                country: '',
+                name: "",
+                slug: "",
+                url: "",
+                director: "",
+                quality: "",
+                description: "",
+                country: "",
                 rating: null,
-                image: '',
-            }
+                image: ""
+            };
         default:
-            return state
+            return state;
     }
 
-}
+};
 
 
 export const actions = {
-    fetching: (data: InitialState) => ({type: 'FETCHING_MOVES_ITEM_PAGE_DATA', payload: data} as const),
-    resetState: () => ({type: 'RESET_ITEM_PAGE_STATE'} as const)
-}
+    fetching: (data: InitialState) => ({ type: "FETCHING_MOVES_ITEM_PAGE_DATA", payload: data } as const),
+    resetState: () => ({ type: "RESET_ITEM_PAGE_STATE" } as const)
+};
 
 
-export default itemReducer
+export default itemReducer;

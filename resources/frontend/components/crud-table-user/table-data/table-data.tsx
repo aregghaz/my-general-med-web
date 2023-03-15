@@ -7,7 +7,7 @@ interface ITableData {
     colspan?: number
     className?: string,
     item: any,
-    handlerAction?: (id: number, action:string) => void
+    handlerAction?: (id: number, action: string) => void
 }
 
 const TableData: React.FC<ITableData> = (

@@ -1,14 +1,13 @@
-import React from 'react'
-import s from './create.module.scss'
-import FormikHandler, {IItem} from "../formik-handler/formik-handler";
-import populateEditFormFields from "../../../../constants/populateEditFormFields";
+import React from "react";
+import s from "./create.module.scss";
+import FormikHandler, { IItem } from "../formik-handler/formik-handler";
 import Button from "../../../../components/button/button";
-import {Formik, FormikHelpers, FormikValues} from 'formik'
-import {useNavigate} from '@reach/router'
+import { Formik, FormikHelpers, FormikValues } from "formik";
+import { useNavigate } from "@reach/router";
 import populateCreateFormFields from "../../../../constants/populateCreateFormFields";
-import {AdminApi} from '../../../../api/admin-api/admin-api';
-import validationRules from '../../../../utils/validationRule';
-import {useTranslation} from 'react-i18next';
+import { AdminApi } from "../../../../api/admin-api/admin-api";
+import validationRules from "../../../../utils/validationRule";
+import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
 interface ICreate {
@@ -32,43 +31,43 @@ const Create: React.FC<ICreate> = (
         isAdmin = true,
         children,
         redirectKey,
-        requiredFields,
+        requiredFields
     }) => {
-    const navigate = useNavigate()
-    const {t} = useTranslation()
+    const navigate = useNavigate();
+    const { t } = useTranslation();
 
 
-    const validate = (values: FormikValues) => validationRules(values, requiredFields, fields, t)
-    const create = async (values: FormikValues, {setSubmitting}: FormikHelpers<FormikValues>) => {
-        setSubmitting(true)
-        const formData: FormData = new FormData()
-        if (crudKey == 'vendorClients') {
-            formData.append('picture', values['picture'])
-            formData.append('sex_offender_check', values['sex_offender_check'])
-            formData.append('motor_vehicle_record', values['motor_vehicle_record'])
-            formData.append('defensive_driving', values['defensive_driving'])
-            formData.append('wheelchair_securement', values['wheelchair_securement'])
-            formData.append('pass_basic', values['pass_basic'])
-            formData.append('emt_1', values['emt_1'])
-            formData.append('first_aid', values['first_aid'])
-            formData.append('company_training', values['company_training'])
-            formData.append('license', values['license'])
-            formData.append('drug_test', values['drug_test'])
+    const validate = (values: FormikValues) => validationRules(values, requiredFields, fields, t);
+    const create = async (values: FormikValues, { setSubmitting }: FormikHelpers<FormikValues>) => {
+        setSubmitting(true);
+        const formData: FormData = new FormData();
+        if (crudKey == "vendorClients") {
+            formData.append("picture", values["picture"]);
+            formData.append("sex_offender_check", values["sex_offender_check"]);
+            formData.append("motor_vehicle_record", values["motor_vehicle_record"]);
+            formData.append("defensive_driving", values["defensive_driving"]);
+            formData.append("wheelchair_securement", values["wheelchair_securement"]);
+            formData.append("pass_basic", values["pass_basic"]);
+            formData.append("emt_1", values["emt_1"]);
+            formData.append("first_aid", values["first_aid"]);
+            formData.append("company_training", values["company_training"]);
+            formData.append("license", values["license"]);
+            formData.append("drug_test", values["drug_test"]);
 
         }
 
-        formData.append('value', JSON.stringify(values))
-        const res: any = await AdminApi.store(formData, crudKey, isAdmin)
+        formData.append("value", JSON.stringify(values));
+        const res: any = await AdminApi.store(formData, crudKey, isAdmin);
         if (Number(res.status === 200)) {
             const options = {
                 type: toast.TYPE.SUCCESS,
                 position: toast.POSITION.TOP_RIGHT
             };
 
-            toast(t('record_successfully_added'), options);
+            toast(t("record_successfully_added"), options);
             await navigate(`/${isAdmin ? "admin/" : ""}${redirectKey ?? crudKey}`);
         }
-    }
+    };
 
     return (
         <div>
@@ -86,7 +85,7 @@ const Create: React.FC<ICreate> = (
                       handleChange,
                       values,
                       setFieldValue,
-                      errors,
+                      errors
                   }) => {
                     return (
                         <>
@@ -98,7 +97,7 @@ const Create: React.FC<ICreate> = (
                                                     return <div
                                                         key={index}
                                                         className={s.item}
-                                                        style={field.type == 'hidden' ? {display: "none"} : {}}
+                                                        style={field.type == "hidden" ? { display: "none" } : {}}
                                                     >
                                                         <FormikHandler
                                                             item={field}
@@ -110,12 +109,12 @@ const Create: React.FC<ICreate> = (
                                                             requiredFields={requiredFields}
                                                             errors={errors}
                                                         />
-                                                    </div>
+                                                    </div>;
                                                 } else {
                                                     return <div
                                                         key={index}
                                                         className={s.item}
-                                                        style={field.type == 'hidden' ? {display: "none"} : {}}
+                                                        style={field.type == "hidden" ? { display: "none" } : {}}
                                                     >
                                                         <FormikHandler
                                                             item={field}
@@ -126,7 +125,7 @@ const Create: React.FC<ICreate> = (
                                                             requiredFields={requiredFields}
                                                             errors={errors}
                                                         />
-                                                    </div>
+                                                    </div>;
                                                 }
 
                                             }
@@ -134,9 +133,9 @@ const Create: React.FC<ICreate> = (
                                 }
                                 <div className={s.buttonDiv}>
                                     <Button
-                                        type={'adminUpdate'}
+                                        type={"adminUpdate"}
                                         onClick={handleSubmit}
-                                        className={'admin'}
+                                        className={"admin"}
                                     >
                                         {children}
                                     </Button>
@@ -146,15 +145,15 @@ const Create: React.FC<ICreate> = (
 
                         </>
 
-                    )
+                    );
                 }
                 }
 
             </Formik>
 
         </div>
-    )
-}
+    );
+};
 
 
-export default Create
+export default Create;

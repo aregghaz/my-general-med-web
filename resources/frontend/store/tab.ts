@@ -1,9 +1,7 @@
 import { InferActionsTypes } from "./store";
-import { ISerialCard } from "../types/serial";
-import { IOption } from "../components/select/select";
 
 const initialState = {
-    tabId: 1 as number,
+    tabId: 1 as number
 };
 
 type InitialState = typeof initialState
@@ -16,12 +14,12 @@ const tabsReducer = (state = initialState, action: Actions): InitialState => {
         case "FETCHING_TAB_ID":
             return {
                 ...state,
-                tabId: action.payload.tabId,
+                tabId: action.payload.tabId
             };
         case "RESET_TAB_ID":
             return {
                 ...state,
-                tabId: 1,
+                tabId: 1
             };
         default:
             return state;

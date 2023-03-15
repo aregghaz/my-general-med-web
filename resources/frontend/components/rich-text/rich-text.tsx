@@ -1,15 +1,15 @@
-import React from 'react'
-import {Editor} from '@tinymce/tinymce-react'
-import {EventHandler} from '@tinymce/tinymce-react/lib/cjs/main/ts/Events'
+import React from "react";
+import { Editor } from "@tinymce/tinymce-react";
+import { EventHandler } from "@tinymce/tinymce-react/lib/cjs/main/ts/Events";
 
 
 interface IRichText {
-    handleEditorChange: EventHandler<any>
-    menubar?: boolean
-    initialValue: string
-    height?: number
-    plugins?: Array<string>
-    toolbar?: string
+    handleEditorChange: EventHandler<any>;
+    menubar?: boolean;
+    initialValue: string;
+    height?: number;
+    plugins?: Array<string>;
+    toolbar?: string;
 }
 
 const RichText: React.FC<IRichText> = (
@@ -18,8 +18,8 @@ const RichText: React.FC<IRichText> = (
         menubar = true,
         initialValue,
         height = 500,
-        plugins = [''],
-        toolbar = ''
+        plugins = [""],
+        toolbar = ""
     }
 ) => {
 
@@ -34,7 +34,7 @@ const RichText: React.FC<IRichText> = (
             }}
             onEditorChange={handleEditorChange}
         />
-    )
-}
+    );
+};
 
-export default RichText
+export default RichText;

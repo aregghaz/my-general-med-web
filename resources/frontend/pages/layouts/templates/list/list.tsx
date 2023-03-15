@@ -18,7 +18,7 @@ interface IList {
     activeItem?: number;
     ////FIXMECHANGE IT NORMA TYPR
     last_page?: number;
-    handlerAction?: (action:string,id: number) => void;
+    handlerAction?: (action: string, id: number) => void;
     className?: string;
     tableRef?: any;
 }
@@ -33,10 +33,10 @@ const List: React.FC<IList> = (
         titles,
         isCreate = false,
         isGetInfo = false,
-        isGetHistory=false,
+        isGetHistory = false,
         handlerAction,
         className,
-        tableRef,
+        tableRef
     }) => {
 
     const { t } = useTranslation();
@@ -45,7 +45,7 @@ const List: React.FC<IList> = (
             <div className={s.addBtnWrapper}>
                 {
                     isCreate &&
-                    <Button type="green" className={s.add} onClick={() => handlerAction( 'add', 0)}>
+                    <Button type="green" className={s.add} onClick={() => handlerAction("add", 0)}>
                         <span>+</span>
                     </Button>
                 }

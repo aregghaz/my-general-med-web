@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
 
-import s from './custom-container.module.scss'
+import s from "./custom-container.module.scss";
 
 interface ICustomContainer {
-    className?: string
+    className?: string;
 }
 
 const CustomContainer: React.FC<ICustomContainer> = (
@@ -14,8 +14,8 @@ const CustomContainer: React.FC<ICustomContainer> = (
     <div className={`${s.container} ${className} `}>
         {children}
     </div>
-)
+);
 
 
-export default CustomContainer
+export default CustomContainer;
 

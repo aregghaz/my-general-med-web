@@ -1,7 +1,6 @@
-import React, {FC} from "react";
-import {useTranslation} from "react-i18next";
-import {IClientsData} from "../../types/home-types";
-import cls from './info-block.module.scss'
+import React, { FC } from "react";
+import { useTranslation } from "react-i18next";
+import cls from "./info-block.module.scss";
 
 
 interface IProps {
@@ -11,10 +10,10 @@ interface IProps {
 }
 
 
-const InfoBlock: FC<IProps> = ({clientById, calculateRoute}) => {
+const InfoBlock: FC<IProps> = ({ clientById, calculateRoute }) => {
     /// const infoData: any = items.find(item => item.id === idData);
-    const newData = clientById
-    const {t} = useTranslation()
+    const newData = clientById;
+    const { t } = useTranslation();
 
 
     return (
@@ -26,55 +25,55 @@ const InfoBlock: FC<IProps> = ({clientById, calculateRoute}) => {
 
 
                         <div className={cls.item}>
-                            <span className={cls.b_text}>{t('fullName')}: </span>
+                            <span className={cls.b_text}>{t("fullName")}: </span>
                             {newData.fullName}
                         </div>
                         <div className={cls.item}>
-                            <span className={cls.b_text}>{t('date_of_service')}: </span>
+                            <span className={cls.b_text}>{t("date_of_service")}: </span>
                             {newData.date_of_service}
                         </div>
                         <div className={cls.item}>
-                            <span className={cls.b_text}>{t('pick_up')}: </span>
+                            <span className={cls.b_text}>{t("pick_up")}: </span>
                             {newData.pick_up}
                         </div>
 
                         <div className={cls.item}>
-                            <span className={cls.b_text}>{t('drop_down')}: </span>
+                            <span className={cls.b_text}>{t("drop_down")}: </span>
                             {newData.drop_down}
                         </div>
 
                         <div className={cls.item}>
-                            <span className={cls.b_text}>{t('pick_up_address')}: </span>
+                            <span className={cls.b_text}>{t("pick_up_address")}: </span>
                             {newData.origin}
 
                         </div>
                         <div className={cls.item}>
-                            <span className={cls.b_text}>{t('origin_comment')}: </span>
+                            <span className={cls.b_text}>{t("origin_comment")}: </span>
                             {newData.origin_comment}
                         </div>
                         <div className={cls.item}>
-                            <span className={cls.b_text}>{t('origin_phone')}: </span>
+                            <span className={cls.b_text}>{t("origin_phone")}: </span>
                             {newData.origin_phone}
                         </div>
                         <div className={cls.item}>
-                            <span className={cls.b_text}>{t('destination')}: </span>
+                            <span className={cls.b_text}>{t("destination")}: </span>
                             {newData.destination}
                         </div>
 
                         <div className={cls.item}>
-                            <span className={cls.b_text}>{t('destination_comments')}: </span>
+                            <span className={cls.b_text}>{t("destination_comments")}: </span>
                             {newData.destination_comments}
                         </div>
                         <div className={cls.item}>
-                            <span className={cls.b_text}>{t('destination_phone')}: </span>
+                            <span className={cls.b_text}>{t("destination_phone")}: </span>
                             {newData.destination_phone}
                         </div>
                         <div className={cls.item}>
-                            <span className={cls.b_text}>{t('weight')}: </span>
+                            <span className={cls.b_text}>{t("weight")}: </span>
                             {newData.weight}
                         </div>
                         <div className={cls.item}>
-                            <span className={cls.b_text}>{t('height')}: </span>
+                            <span className={cls.b_text}>{t("height")}: </span>
                             {newData.height}
                         </div>
 
@@ -85,7 +84,7 @@ const InfoBlock: FC<IProps> = ({clientById, calculateRoute}) => {
                 }
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default InfoBlock;

@@ -3,8 +3,6 @@ import Edit from "../../layouts/templates/edit/edit";
 import { IItem } from "../../layouts/templates/formik-handler/formik-handler";
 import { useTranslation } from "react-i18next";
 import { AdminApi } from "../../../api/admin-api/admin-api";
-import { geocodeByPlaceId } from "react-google-places-autocomplete";
-import { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete';
 import { DirectionsRenderer, GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { GOOGLE_API_KEY } from "../../../environments";
 
@@ -17,15 +15,15 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
     const { t } = useTranslation();
     const crudKey = "clients";
     const [data, setData] = useState(null);
-    const [map, setMap] = useState(/** @type google.maps.Map */ (null))
-    const [origin, setOrigin] = useState(null)
-    const [destination, setDestination] = useState(null)
-    const [directionsResponse, setDirectionsResponse] = useState(null)
-    const [distance, setDistance] = useState('')
-    const [duration, setDuration] = useState('')
+    const [map, setMap] = useState(/** @type google.maps.Map */ (null));
+    const [origin, setOrigin] = useState(null);
+    const [destination, setDestination] = useState(null);
+    const [directionsResponse, setDirectionsResponse] = useState(null);
+    const [distance, setDistance] = useState("");
+    const [duration, setDuration] = useState("");
     const [steps, setSteps] = useState<Array<any>>([]);
 
-    const {isLoaded} = useJsApiLoader({
+    const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: GOOGLE_API_KEY,
         libraries: ["geometry", "drawing", "places"]
     });
@@ -57,15 +55,16 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
 
 
     ];
-    async function handleDrawMap(origin: { id:string, address:string }, destination:{ id:string, address:string })  {
+
+    async function handleDrawMap(origin: { id: string, address: string }, destination: { id: string, address: string }) {
 
 
-        const directionsService = new google.maps.DirectionsService()
+        const directionsService = new google.maps.DirectionsService();
         const results = await directionsService.route({
             origin: origin.address,
             destination: destination.address,
-            travelMode: google.maps.TravelMode.DRIVING,
-        })
+            travelMode: google.maps.TravelMode.DRIVING
+        });
         setDirectionsResponse(results);
         setDistance(results.routes[0].legs[0].distance.text);
         setDuration(results.routes[0].legs[0].duration.text);
@@ -96,50 +95,50 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
     ];
     return (
         data &&
-            <>
-                {isLoaded && directionsResponse && <div >
-                    <GoogleMap
-                        ///  center={center}
-                        zoom={15}
-                        mapContainerStyle={{width: "100%", height: "100%"}}
-                        options={{
-                            zoomControl: true,
-                            streetViewControl: false,
-                            mapTypeControl: false,
-                            fullscreenControl: false
-                        }}
-                        onLoad={map => setMap(map)}
-                    >
-                        {/* <Marker position={center} /> */}
-                        {directionsResponse && (
-                            <DirectionsRenderer directions={directionsResponse}/>
-                        )}
+        <>
+            {isLoaded && directionsResponse && <div>
+                <GoogleMap
+                    ///  center={center}
+                    zoom={15}
+                    mapContainerStyle={{ width: "100%", height: "100%" }}
+                    options={{
+                        zoomControl: true,
+                        streetViewControl: false,
+                        mapTypeControl: false,
+                        fullscreenControl: false
+                    }}
+                    onLoad={map => setMap(map)}
+                >
+                    {/* <Marker position={center} /> */}
+                    {directionsResponse && (
+                        <DirectionsRenderer directions={directionsResponse} />
+                    )}
 
-                    </GoogleMap>
-                    <div style={{border: "1px solid #ddd", padding: "5px", marginTop: "10px"}}>
-                        {steps && steps.map((el: any) => {
-                            return (
-                                <div
-                                    // className={s.directions}
-                                    dangerouslySetInnerHTML={{__html: el.instructions}}
-                                />
-                            );
-                        })}
-                    </div>
-                </div>}
-                <Edit
-                    crudKey={crudKey}
-                    data={data}
-                    fields={fields}
-                    title={""}
-                    requiredFields={requiredFields}
-                    handleDrawMap={handleDrawMap}
-                    // originRef={originRef}
-                    // destiantionRef={destiantionRef}
-                    children={t("update")}
+                </GoogleMap>
+                <div style={{ border: "1px solid #ddd", padding: "5px", marginTop: "10px" }}>
+                    {steps && steps.map((el: any) => {
+                        return (
+                            <div
+                                // className={s.directions}
+                                dangerouslySetInnerHTML={{ __html: el.instructions }}
+                            />
+                        );
+                    })}
+                </div>
+            </div>}
+            <Edit
+                crudKey={crudKey}
+                data={data}
+                fields={fields}
+                title={""}
+                requiredFields={requiredFields}
+                handleDrawMap={handleDrawMap}
+                // originRef={originRef}
+                // destiantionRef={destiantionRef}
+                children={t("update")}
 
-                />
-            </>
+            />
+        </>
 
     );
 };

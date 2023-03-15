@@ -4,7 +4,7 @@ const getMapResponse = async (origin: string, destination: string) => {
         origin: origin,
         destination: destination,
         travelMode: google.maps.TravelMode.DRIVING,
-        unitSystem: google.maps.UnitSystem.IMPERIAL,
+        unitSystem: google.maps.UnitSystem.IMPERIAL
     });
 };
 

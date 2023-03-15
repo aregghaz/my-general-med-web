@@ -1,10 +1,9 @@
-import React, {ChangeEvent} from 'react'
+import React from "react";
 
-import s from './navigationTab.module.scss'
+import s from "./navigationTab.module.scss";
 import Tabs from "../tabs/tabs";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 import BackDropSearch from "../backdrop-search/backdrop-search";
-import tabs from "../tabs/tabs";
 import { ITabs } from "../../types/admin";
 import Upload from "-!svg-react-loader!../../images/Upload.svg";
 import Import from "-!svg-react-loader!../../images/Import.svg";
@@ -21,25 +20,26 @@ import DataPicker from "../data-picker/data-picker";
 interface INavigationTab {
     tabs: Array<ITabs>,
     handlerChangeTabs: (id: number) => void,
-    handleActionMiddleware?: (id?: number, action?:string) => void,
+    handleActionMiddleware?: (id?: number, action?: string) => void,
     setfiltre?: (filtre: boolean) => void,
-    onSearchInput: ( event: { search: string }) => void,
+    onSearchInput: (event: { search: string }) => void,
     setFieldValue?: (name: string, date: string) => void,
     openSearch: () => void,
     fileUploader: (file: React.ChangeEvent<HTMLInputElement>) => void,
-    filtre?:boolean,
-    isAssignVednor?:boolean,
-    IsDateSearch?:boolean,
-    isClaimTrip?:boolean,
-    isReRoute?:boolean,
-    IsAssignCar?:boolean,
-    isShowFiltre?:boolean,
-    date?:string,
-    open:boolean,
-    tableRef:any,
-    typeId:number,
-    ids?:Array<number>,
+    filtre?: boolean,
+    isAssignVednor?: boolean,
+    IsDateSearch?: boolean,
+    isClaimTrip?: boolean,
+    isReRoute?: boolean,
+    IsAssignCar?: boolean,
+    isShowFiltre?: boolean,
+    date?: string,
+    open: boolean,
+    tableRef: any,
+    typeId: number,
+    ids?: Array<number>,
 }
+
 const NavigationTab: React.FC<INavigationTab> = (
     {
         tabs,
@@ -47,12 +47,12 @@ const NavigationTab: React.FC<INavigationTab> = (
         handleActionMiddleware,
         ids,
         openSearch,
-        isAssignVednor=false,
-        isClaimTrip=false,
-        isReRoute=false,
-        IsAssignCar=false,
-        IsDateSearch=false,
-        isShowFiltre=false,
+        isAssignVednor = false,
+        isClaimTrip = false,
+        isReRoute = false,
+        IsAssignCar = false,
+        IsDateSearch = false,
+        isShowFiltre = false,
         filtre,
         typeId,
         setFieldValue,
@@ -67,7 +67,7 @@ const NavigationTab: React.FC<INavigationTab> = (
     const showFilter = () => {
         setfiltre(!filtre);
     };
-    console.log(typeId,'');
+    console.log(typeId, "");
     return (
         <>
             <Tabs tabs={tabs}
@@ -78,7 +78,7 @@ const NavigationTab: React.FC<INavigationTab> = (
                         Assign Vendor
                     </div>
                     <AssignVendorIcon
-                        className={`${s.icon}  ${ typeId === 5 || typeId === 6 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
+                        className={`${s.icon}  ${typeId === 5 || typeId === 6 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
                         onClick={() => handleActionMiddleware()}
                     />
                 </div>}
@@ -152,14 +152,14 @@ const NavigationTab: React.FC<INavigationTab> = (
                                 value={date} />
 
                 </div>}
-            <div style={{width:"100%"}}>
-                <BackDropSearch handlerSubmit={onSearchInput} />
-            </div>
+                <div style={{ width: "100%" }}>
+                    <BackDropSearch handlerSubmit={onSearchInput} />
+                </div>
 
             </div>
 
         </>
-    )
-}
+    );
+};
 
-export default NavigationTab
+export default NavigationTab;

@@ -1,97 +1,97 @@
-import React, {useRef, useState} from 'react'
-import {useTranslation} from 'react-i18next'
-import {Field, Formik, FormikHelpers, FormikValues} from 'formik'
-import Radio from '../radio/radio'
-import {Col, Hidden, Row, Visible} from 'react-grid-system'
-import Input from '../input/input'
-import Button from '../button/button'
-import {UserType} from '../../constants/helpers'
-import Select, {IOption} from '../select/select'
-import {authAPI} from '../../api/site-api/auth-api'
-import AsyncSelect from '../select/async-select'
+import React, { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Field, Formik, FormikHelpers, FormikValues } from "formik";
+import Radio from "../radio/radio";
+import { Col, Hidden, Row, Visible } from "react-grid-system";
+import Input from "../input/input";
+import Button from "../button/button";
+import { UserType } from "../../constants/helpers";
+import Select, { IOption } from "../select/select";
+import { authAPI } from "../../api/site-api/auth-api";
+import AsyncSelect from "../select/async-select";
 
-import s from './auth.module.scss'
+import s from "./auth.module.scss";
 
 interface IRegister {
-    handlerAlreadyRegistered: () => void
-    handlerSuccessModal: () => void
+    handlerAlreadyRegistered: () => void;
+    handlerSuccessModal: () => void;
 }
 
-const Register: React.FC<IRegister> = ({handlerAlreadyRegistered, handlerSuccessModal}) => {
-    const {t} = useTranslation()
-    const [province, setProvince] = useState<Array<IOption> | null>(null)
-    const [typeOfActivity, setTypeOfActivity] = useState<Array<IOption> | null>(null)
-    const [isInputOpen, setInputOpen] = useState<boolean>(false)
-    const formRef = useRef<HTMLFormElement | null>(null)
+const Register: React.FC<IRegister> = ({ handlerAlreadyRegistered, handlerSuccessModal }) => {
+    const { t } = useTranslation();
+    const [province, setProvince] = useState<Array<IOption> | null>(null);
+    const [typeOfActivity, setTypeOfActivity] = useState<Array<IOption> | null>(null);
+    const [isInputOpen, setInputOpen] = useState<boolean>(false);
+    const formRef = useRef<HTMLFormElement | null>(null);
 
     const getProvince = async (option: IOption) => {
         // const res = await authAPI.getProvince(option.id)
         // if (Number(res.status) === 200) setProvince(res.data)
-    }
+    };
 
     const getTypeOfActivity = async (slug: string) => {
         // const res = await authAPI.typeOfActivity(slug)
         // setTypeOfActivity(res)
-    }
+    };
 
-    const handlerAdd = () => setInputOpen(true)
+    const handlerAdd = () => setInputOpen(true);
 
-    const handlerInputClose = () => setInputOpen(false)
+    const handlerInputClose = () => setInputOpen(false);
 
-    const submit = async (values: FormikValues, {setSubmitting}: FormikHelpers<FormikValues>) => {
-        setSubmitting(true)
+    const submit = async (values: FormikValues, { setSubmitting }: FormikHelpers<FormikValues>) => {
+        setSubmitting(true);
 
-        const formData: FormData = new FormData()
+        const formData: FormData = new FormData();
 
-        formData.append('name', values.name)
-        formData.append('surname', values.surName)
-        formData.append('email', values.email)
-        formData.append('birthday', values.birthDate)
-        formData.append('region', values.district)
-        formData.append('business_address', values.businessAddress)
-        formData.append('phone_number', values.phone)
-        formData.append('residence', JSON.stringify(values.residence))
-        formData.append('state', JSON.stringify(values.state))
-        formData.append('sphere_of_activity', JSON.stringify([values.typeOfActivity]))
-        formData.append('typeOfActivityInput', values.typeOfActivityInput)
+        formData.append("name", values.name);
+        formData.append("surname", values.surName);
+        formData.append("email", values.email);
+        formData.append("birthday", values.birthDate);
+        formData.append("region", values.district);
+        formData.append("business_address", values.businessAddress);
+        formData.append("phone_number", values.phone);
+        formData.append("residence", JSON.stringify(values.residence));
+        formData.append("state", JSON.stringify(values.state));
+        formData.append("sphere_of_activity", JSON.stringify([values.typeOfActivity]));
+        formData.append("typeOfActivityInput", values.typeOfActivityInput);
 
-        const resultCode = await authAPI.register(formData)
-        if (Number(resultCode.success) === 1) handlerSuccessModal()
-    }
+        const resultCode = await authAPI.register(formData);
+        if (Number(resultCode.success) === 1) handlerSuccessModal();
+    };
 
     const loadOptionsFieldOfActivity = async () => {
         // const data = await authAPI.getFieldOfActivity()
         // return data.slice(0, 2)
-    }
+    };
 
     const loadOptionsResidence = async () => {
         // const {regions} = await authAPI.getRegistrationFormData()
         // return regions
-    }
+    };
 
 
     return (
         <>
             <div className={s.registerText}>
-                <h5>{t('register')}</h5>
+                <h5>{t("register")}</h5>
             </div>
             <div className={s.register}>
                 <Formik
                     initialValues={{
                         operator: UserType.beneficiary,
-                        name: '',
-                        surName: '',
-                        email: '',
-                        birthDate: '',
-                        district: '',
-                        businessAddress: '',
-                        phone: '',
+                        name: "",
+                        surName: "",
+                        email: "",
+                        birthDate: "",
+                        district: "",
+                        businessAddress: "",
+                        phone: "",
                         fieldOfActivity: [],
                         typeOfActivity: [],
-                        typeOfActivityInput: '',
-                        companyName: '',
-                        taxpayer: '',
-                        legalAddress: '',
+                        typeOfActivityInput: "",
+                        companyName: "",
+                        taxpayer: "",
+                        legalAddress: "",
                         state: [],
                         residence: []
                     } as FormikValues}
@@ -110,24 +110,24 @@ const Register: React.FC<IRegister> = ({handlerAlreadyRegistered, handlerSuccess
                                 <div className={s.radioGroup}>
                                     <Field
                                         component={Radio}
-                                        name={'operator'}
-                                        label={t('recipient')}
-                                        onChange={() => setFieldValue('operator', UserType.beneficiary)}
+                                        name={"operator"}
+                                        label={t("recipient")}
+                                        onChange={() => setFieldValue("operator", UserType.beneficiary)}
                                         checked={values.operator === UserType.beneficiary}
                                     />
                                     <Field
                                         component={Radio}
-                                        name={'operator'}
-                                        label={t('operator')}
-                                        onChange={() => setFieldValue('operator', UserType.operator)}
+                                        name={"operator"}
+                                        label={t("operator")}
+                                        onChange={() => setFieldValue("operator", UserType.operator)}
                                         checked={values.operator === UserType.operator}
                                     />
 
                                     <Field
                                         component={Radio}
-                                        name={'operator'}
-                                        label={t('tourOperator')}
-                                        onChange={() => setFieldValue('operator', UserType.tourOperator)}
+                                        name={"operator"}
+                                        label={t("tourOperator")}
+                                        onChange={() => setFieldValue("operator", UserType.tourOperator)}
                                         checked={values.operator === UserType.tourOperator}
 
                                     />
@@ -139,56 +139,56 @@ const Register: React.FC<IRegister> = ({handlerAlreadyRegistered, handlerSuccess
                                             <Visible xl xxl>
                                                 <Col xl={6} xxl={6}>
                                                     <Input
-                                                        name={'name'}
-                                                        type={'text'}
+                                                        name={"name"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.name}
-                                                        label={t('name')}
+                                                        label={t("name")}
                                                     />
                                                 </Col>
                                                 <Col xl={6} xxl={6}>
                                                     <Input
-                                                        name={'surName'}
-                                                        type={'text'}
+                                                        name={"surName"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.surName}
-                                                        label={t('surName')}
+                                                        label={t("surName")}
                                                     />
                                                 </Col>
                                                 <Col xl={6} xxl={6}>
                                                     <Input
-                                                        name={'email'}
-                                                        type={'text'}
+                                                        name={"email"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.email}
-                                                        label={t('email')}
+                                                        label={t("email")}
                                                     />
                                                 </Col>
                                                 <Col xl={6} xxl={6}>
                                                     <Input
-                                                        name={'birthDate'}
-                                                        type={'text'}
+                                                        name={"birthDate"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.birthDate}
-                                                        label={t('birthDate')}
+                                                        label={t("birthDate")}
                                                     />
                                                 </Col>
                                                 <Col xl={6} xxl={6}>
                                                     <Input
-                                                        name={'phone'}
-                                                        type={'text'}
+                                                        name={"phone"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.phone}
-                                                        label={t('phoneNumber')}
+                                                        label={t("phoneNumber")}
                                                     />
                                                 </Col>
                                                 <Col xl={6} xxl={6}>
                                                     <Input
-                                                        name={'businessAddress'}
-                                                        type={'text'}
+                                                        name={"businessAddress"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.businessAddress}
-                                                        label={t('businessAddress')}
+                                                        label={t("businessAddress")}
                                                     />
                                                 </Col>
 
@@ -199,12 +199,12 @@ const Register: React.FC<IRegister> = ({handlerAlreadyRegistered, handlerSuccess
                                                         getOptionValue={(option: IOption) => option.value}
                                                         getOptionLabel={(option: IOption) => t(option.value)}
                                                         onChange={(option: IOption) => {
-                                                            getProvince(option).catch(e => e)
-                                                            setFieldValue('state', option)
+                                                            getProvince(option).catch(e => e);
+                                                            setFieldValue("state", option);
                                                         }}
-                                                        label={t('state')}
+                                                        label={t("state")}
                                                         isSearchable={false}
-                                                        name={'state'}
+                                                        name={"state"}
                                                         loadOptions={loadOptionsResidence}
                                                     />
                                                 </Col>
@@ -216,10 +216,10 @@ const Register: React.FC<IRegister> = ({handlerAlreadyRegistered, handlerSuccess
                                                         getOptionLabel={(option: IOption) => t(option.value)}
                                                         options={province}
                                                         onChange={(option: IOption) =>
-                                                            setFieldValue('residence', option)}
-                                                        label={t('residence')}
+                                                            setFieldValue("residence", option)}
+                                                        label={t("residence")}
                                                         isSearchable={false}
-                                                        name={'residence'}
+                                                        name={"residence"}
                                                     />
                                                 </Col>
 
@@ -229,12 +229,12 @@ const Register: React.FC<IRegister> = ({handlerAlreadyRegistered, handlerSuccess
                                                         getOptionValue={(option: IOption) => option.value}
                                                         getOptionLabel={(option: IOption) => t(option.value)}
                                                         onChange={(option: IOption) => {
-                                                            getTypeOfActivity(option.slug).catch(e => e)
-                                                            setFieldValue('fieldOfActivity', option)
+                                                            getTypeOfActivity(option.slug).catch(e => e);
+                                                            setFieldValue("fieldOfActivity", option);
                                                         }}
-                                                        label={t('fieldOfActivity')}
+                                                        label={t("fieldOfActivity")}
                                                         isSearchable={false}
-                                                        name={'fieldOfActivity'}
+                                                        name={"fieldOfActivity"}
                                                         loadOptions={loadOptionsFieldOfActivity}
                                                     />
                                                 </Col>
@@ -247,21 +247,21 @@ const Register: React.FC<IRegister> = ({handlerAlreadyRegistered, handlerSuccess
                                                                 getOptionLabel={(option: IOption) => t(option.value)}
                                                                 options={typeOfActivity}
                                                                 onChange={(option: IOption) =>
-                                                                    setFieldValue('typeOfActivity', option)
+                                                                    setFieldValue("typeOfActivity", option)
                                                                 }
-                                                                label={t('typeOfActivity')}
-                                                                name={'typeOfActivity'}
+                                                                label={t("typeOfActivity")}
+                                                                name={"typeOfActivity"}
                                                                 isMenuAdd
                                                                 handlerAdd={handlerAdd}
                                                             />
                                                             :
                                                             <div className={s.typeOfActivityInputWrapper}>
                                                                 <Input
-                                                                    name={'typeOfActivityInput'}
-                                                                    type={'text'}
+                                                                    name={"typeOfActivityInput"}
+                                                                    type={"text"}
                                                                     onChange={handleChange}
                                                                     value={values.typeOfActivityInput}
-                                                                    label={t('typeOfActivity')}
+                                                                    label={t("typeOfActivity")}
                                                                 />
                                                                 <i className={`cancelicon- ${s.typeOfActivityCancelIcon}`}
                                                                    onClick={handlerInputClose}
@@ -275,66 +275,66 @@ const Register: React.FC<IRegister> = ({handlerAlreadyRegistered, handlerSuccess
                                                     <Input
                                                         labelStyle={s.inputLabelMobileStyle}
                                                         className={s.inputMobileStyle}
-                                                        name={'name'}
-                                                        type={'text'}
+                                                        name={"name"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.name}
-                                                        label={t('name')}
+                                                        label={t("name")}
                                                     />
                                                 </Col>
                                                 <Col xs={12} sm={12} md={6} lg={6}>
                                                     <Input
                                                         labelStyle={s.inputLabelMobileStyle}
                                                         className={s.inputMobileStyle}
-                                                        name={'surName'}
-                                                        type={'text'}
+                                                        name={"surName"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.surName}
-                                                        label={t('surName')}
+                                                        label={t("surName")}
                                                     />
                                                 </Col>
                                                 <Col xs={12} sm={12} md={6} lg={6}>
                                                     <Input
                                                         labelStyle={s.inputLabelMobileStyle}
                                                         className={s.inputMobileStyle}
-                                                        name={'email'}
-                                                        type={'text'}
+                                                        name={"email"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.email}
-                                                        label={t('email')}
+                                                        label={t("email")}
                                                     />
                                                 </Col>
                                                 <Col xs={12} sm={12} md={6} lg={6}>
                                                     <Input
                                                         labelStyle={s.inputLabelMobileStyle}
                                                         className={s.inputMobileStyle}
-                                                        name={'birthDate'}
-                                                        type={'text'}
+                                                        name={"birthDate"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.birthDate}
-                                                        label={t('birthDate')}
+                                                        label={t("birthDate")}
                                                     />
                                                 </Col>
                                                 <Col xs={12} sm={12} md={6} lg={6}>
                                                     <Input
                                                         labelStyle={s.inputLabelMobileStyle}
                                                         className={s.inputMobileStyle}
-                                                        name={'phone'}
-                                                        type={'text'}
+                                                        name={"phone"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.phone}
-                                                        label={t('phoneNumber')}
+                                                        label={t("phoneNumber")}
                                                     />
                                                 </Col>
                                                 <Col xs={12} sm={12} md={6} lg={6}>
                                                     <Input
                                                         labelStyle={s.inputLabelMobileStyle}
                                                         className={s.inputMobileStyle}
-                                                        name={'businessAddress'}
-                                                        type={'text'}
+                                                        name={"businessAddress"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.businessAddress}
-                                                        label={t('businessAddress')}
+                                                        label={t("businessAddress")}
                                                     />
                                                 </Col>
 
@@ -346,12 +346,12 @@ const Register: React.FC<IRegister> = ({handlerAlreadyRegistered, handlerSuccess
                                                         getOptionValue={(option: IOption) => option.value}
                                                         getOptionLabel={(option: IOption) => t(option.value)}
                                                         onChange={(option: IOption) => {
-                                                            getProvince(option).catch(e => e)
-                                                            setFieldValue('state', option)
+                                                            getProvince(option).catch(e => e);
+                                                            setFieldValue("state", option);
                                                         }}
-                                                        label={t('state')}
+                                                        label={t("state")}
                                                         isSearchable={false}
-                                                        name={'state'}
+                                                        name={"state"}
                                                         loadOptions={loadOptionsResidence}
                                                     />
                                                 </Col>
@@ -365,10 +365,10 @@ const Register: React.FC<IRegister> = ({handlerAlreadyRegistered, handlerSuccess
                                                         getOptionLabel={(option: IOption) => t(option.value)}
                                                         options={province}
                                                         onChange={(option: IOption) =>
-                                                            setFieldValue('residence', option)}
-                                                        label={t('residence')}
+                                                            setFieldValue("residence", option)}
+                                                        label={t("residence")}
                                                         isSearchable={false}
-                                                        name={'residence'}
+                                                        name={"residence"}
                                                     />
                                                 </Col>
 
@@ -378,12 +378,12 @@ const Register: React.FC<IRegister> = ({handlerAlreadyRegistered, handlerSuccess
                                                         getOptionValue={(option: IOption) => option.value}
                                                         getOptionLabel={(option: IOption) => t(option.value)}
                                                         onChange={(option: IOption) => {
-                                                            getTypeOfActivity(option.slug).catch(e => e)
-                                                            setFieldValue('fieldOfActivity', option)
+                                                            getTypeOfActivity(option.slug).catch(e => e);
+                                                            setFieldValue("fieldOfActivity", option);
                                                         }}
-                                                        label={t('fieldOfActivity')}
+                                                        label={t("fieldOfActivity")}
                                                         isSearchable={false}
-                                                        name={'fieldOfActivity'}
+                                                        name={"fieldOfActivity"}
                                                         loadOptions={loadOptionsFieldOfActivity}
                                                         labelStyle={s.inputLabelMobileStyle}
                                                     />
@@ -399,10 +399,10 @@ const Register: React.FC<IRegister> = ({handlerAlreadyRegistered, handlerSuccess
                                                                 getOptionLabel={(option: IOption) => t(option.value)}
                                                                 options={typeOfActivity}
                                                                 onChange={(option: IOption) =>
-                                                                    setFieldValue('typeOfActivity', option)
+                                                                    setFieldValue("typeOfActivity", option)
                                                                 }
-                                                                label={t('typeOfActivity')}
-                                                                name={'typeOfActivity'}
+                                                                label={t("typeOfActivity")}
+                                                                name={"typeOfActivity"}
                                                                 isMenuAdd
                                                                 handlerAdd={handlerAdd}
                                                             />
@@ -411,11 +411,11 @@ const Register: React.FC<IRegister> = ({handlerAlreadyRegistered, handlerSuccess
                                                                 <Input
                                                                     labelStyle={s.inputLabelMobileStyle}
                                                                     className={s.inputMobileStyle}
-                                                                    name={'typeOfActivityInput'}
-                                                                    type={'text'}
+                                                                    name={"typeOfActivityInput"}
+                                                                    type={"text"}
                                                                     onChange={handleChange}
                                                                     value={values.typeOfActivityInput}
-                                                                    label={t('typeOfActivity')}
+                                                                    label={t("typeOfActivity")}
                                                                 />
                                                                 <i className={`cancelicon- ${s.typeOfActivityCancelIcon}`}
                                                                    onClick={handlerInputClose}
@@ -433,56 +433,56 @@ const Register: React.FC<IRegister> = ({handlerAlreadyRegistered, handlerSuccess
                                             <Visible xl xxl>
                                                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                                                     <Input
-                                                        name={'companyName'}
-                                                        type={'text'}
+                                                        name={"companyName"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.companyName}
-                                                        label={t('companyName')}
+                                                        label={t("companyName")}
                                                     />
                                                 </Col>
                                                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                                                     <Input
-                                                        name={'taxpayer'}
-                                                        type={'text'}
+                                                        name={"taxpayer"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.taxpayer}
-                                                        label={t('taxpayer')}
+                                                        label={t("taxpayer")}
                                                     />
                                                 </Col>
                                                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                                                     <Input
-                                                        name={'email'}
-                                                        type={'text'}
+                                                        name={"email"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.email}
-                                                        label={t('email')}
+                                                        label={t("email")}
                                                     />
                                                 </Col>
                                                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                                                     <Input
-                                                        name={'phoneNumber'}
-                                                        type={'text'}
+                                                        name={"phoneNumber"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.phone}
-                                                        label={t('phoneNumber')}
+                                                        label={t("phoneNumber")}
                                                     />
                                                 </Col>
                                                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                                                     <Input
-                                                        name={'legalAddress'}
-                                                        type={'text'}
+                                                        name={"legalAddress"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.legalAddress}
-                                                        label={t('legalAddress')}
+                                                        label={t("legalAddress")}
                                                     />
                                                 </Col>
                                                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                                                     <Input
-                                                        name={'businessAddress'}
-                                                        type={'text'}
+                                                        name={"businessAddress"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.businessAddress}
-                                                        label={t('businessAddress')}
+                                                        label={t("businessAddress")}
                                                     />
                                                 </Col>
                                             </Visible>
@@ -490,61 +490,61 @@ const Register: React.FC<IRegister> = ({handlerAlreadyRegistered, handlerSuccess
                                                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                                                     <Input
                                                         className={s.inputMobileStyle}
-                                                        name={'companyName'}
-                                                        type={'text'}
+                                                        name={"companyName"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.companyName}
-                                                        label={t('companyName')}
+                                                        label={t("companyName")}
                                                     />
                                                 </Col>
                                                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                                                     <Input
                                                         className={s.inputMobileStyle}
-                                                        name={'taxpayer'}
-                                                        type={'text'}
+                                                        name={"taxpayer"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.taxpayer}
-                                                        label={t('taxpayer')}
+                                                        label={t("taxpayer")}
                                                     />
                                                 </Col>
                                                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                                                     <Input
                                                         className={s.inputMobileStyle}
-                                                        name={'email'}
-                                                        type={'text'}
+                                                        name={"email"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.email}
-                                                        label={t('email')}
+                                                        label={t("email")}
                                                     />
                                                 </Col>
                                                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                                                     <Input
                                                         className={s.inputMobileStyle}
-                                                        name={'phoneNumber'}
-                                                        type={'text'}
+                                                        name={"phoneNumber"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.phone}
-                                                        label={t('phoneNumber')}
+                                                        label={t("phoneNumber")}
                                                     />
                                                 </Col>
                                                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                                                     <Input
                                                         className={s.inputMobileStyle}
-                                                        name={'legalAddress'}
-                                                        type={'text'}
+                                                        name={"legalAddress"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.legalAddress}
-                                                        label={t('legalAddress')}
+                                                        label={t("legalAddress")}
                                                     />
                                                 </Col>
                                                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                                                     <Input
                                                         className={s.inputMobileStyle}
-                                                        name={'businessAddress'}
-                                                        type={'text'}
+                                                        name={"businessAddress"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.businessAddress}
-                                                        label={t('businessAddress')}
+                                                        label={t("businessAddress")}
                                                     />
                                                 </Col>
                                             </Visible>
@@ -556,38 +556,38 @@ const Register: React.FC<IRegister> = ({handlerAlreadyRegistered, handlerSuccess
                                             <Visible xl xxl>
                                                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                                                     <Input
-                                                        name={'name'}
-                                                        type={'text'}
+                                                        name={"name"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.name}
-                                                        label={t('name')}
+                                                        label={t("name")}
                                                     />
                                                 </Col>
                                                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                                                     <Input
-                                                        name={'surName'}
-                                                        type={'text'}
+                                                        name={"surName"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.surName}
-                                                        label={t('surName')}
+                                                        label={t("surName")}
                                                     />
                                                 </Col>
                                                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                                                     <Input
-                                                        name={'email'}
-                                                        type={'text'}
+                                                        name={"email"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.email}
-                                                        label={t('email')}
+                                                        label={t("email")}
                                                     />
                                                 </Col>
                                                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                                                     <Input
-                                                        name={'birthDate'}
-                                                        type={'text'}
+                                                        name={"birthDate"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.birthDate}
-                                                        label={t('birthDate')}
+                                                        label={t("birthDate")}
                                                     />
                                                 </Col>
                                                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
@@ -597,22 +597,22 @@ const Register: React.FC<IRegister> = ({handlerAlreadyRegistered, handlerSuccess
                                                         getOptionValue={(option: IOption) => option.value}
                                                         getOptionLabel={(option: IOption) => t(option.value)}
                                                         onChange={(option: IOption) => {
-                                                            getProvince(option).catch(e => e)
-                                                            setFieldValue('state', option)
+                                                            getProvince(option).catch(e => e);
+                                                            setFieldValue("state", option);
                                                         }}
-                                                        label={t('state')}
+                                                        label={t("state")}
                                                         isSearchable={false}
-                                                        name={'state'}
+                                                        name={"state"}
                                                         loadOptions={loadOptionsResidence}
                                                     />
                                                 </Col>
                                                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                                                     <Input
-                                                        name={'phoneNumber'}
-                                                        type={'text'}
+                                                        name={"phoneNumber"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.phone}
-                                                        label={t('phoneNumber')}
+                                                        label={t("phoneNumber")}
                                                     />
                                                 </Col>
                                             </Visible>
@@ -620,41 +620,41 @@ const Register: React.FC<IRegister> = ({handlerAlreadyRegistered, handlerSuccess
                                                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                                                     <Input
                                                         className={s.inputMobileStyle}
-                                                        name={'name'}
-                                                        type={'text'}
+                                                        name={"name"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.name}
-                                                        label={t('name')}
+                                                        label={t("name")}
                                                     />
                                                 </Col>
                                                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                                                     <Input
                                                         className={s.inputMobileStyle}
-                                                        name={'surName'}
-                                                        type={'text'}
+                                                        name={"surName"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.surName}
-                                                        label={t('surName')}
+                                                        label={t("surName")}
                                                     />
                                                 </Col>
                                                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                                                     <Input
                                                         className={s.inputMobileStyle}
-                                                        name={'email'}
-                                                        type={'text'}
+                                                        name={"email"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.email}
-                                                        label={t('email')}
+                                                        label={t("email")}
                                                     />
                                                 </Col>
                                                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                                                     <Input
                                                         className={s.inputMobileStyle}
-                                                        name={'birthDate'}
-                                                        type={'text'}
+                                                        name={"birthDate"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.birthDate}
-                                                        label={t('birthDate')}
+                                                        label={t("birthDate")}
                                                     />
                                                 </Col>
                                                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
@@ -664,23 +664,23 @@ const Register: React.FC<IRegister> = ({handlerAlreadyRegistered, handlerSuccess
                                                         getOptionValue={(option: IOption) => option.value}
                                                         getOptionLabel={(option: IOption) => t(option.value)}
                                                         onChange={(option: IOption) => {
-                                                            getProvince(option).catch(e => e)
-                                                            setFieldValue('state', option)
+                                                            getProvince(option).catch(e => e);
+                                                            setFieldValue("state", option);
                                                         }}
-                                                        label={t('state')}
+                                                        label={t("state")}
                                                         isSearchable={false}
-                                                        name={'state'}
+                                                        name={"state"}
                                                         loadOptions={loadOptionsResidence}
                                                     />
                                                 </Col>
                                                 <Col xs={12} sm={12} md={12} lg={6} xl={6} xxl={6}>
                                                     <Input
                                                         className={s.inputMobileStyle}
-                                                        name={'phoneNumber'}
-                                                        type={'text'}
+                                                        name={"phoneNumber"}
+                                                        type={"text"}
                                                         onChange={handleChange}
                                                         value={values.phone}
-                                                        label={t('phoneNumber')}
+                                                        label={t("phoneNumber")}
                                                     />
                                                 </Col>
                                             </Visible>
@@ -691,15 +691,15 @@ const Register: React.FC<IRegister> = ({handlerAlreadyRegistered, handlerSuccess
                                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                         <Button
                                             isSubmit
-                                            type={'green'}
+                                            type={"green"}
                                             onClick={handleSubmit}
                                         >
-                                            {t('sendRequest')}
+                                            {t("sendRequest")}
                                         </Button>
                                     </Col>
                                     <Hidden xs sm md>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                            <Button type={'transparent'}>{t('cancel')}</Button>
+                                            <Button type={"transparent"}>{t("cancel")}</Button>
                                         </Col>
                                     </Hidden>
                                     <p className={s.termsText}>
@@ -707,11 +707,11 @@ const Register: React.FC<IRegister> = ({handlerAlreadyRegistered, handlerSuccess
                                         <span> Terms and Conditions</span> and <span>Privacy Policy</span>
                                     </p>
                                     <Button
-                                        type={'blank'}
+                                        type={"blank"}
                                         className={s.alreadyRegisteredBtn}
                                         onClick={handlerAlreadyRegistered}
                                     >
-                                        {t('alreadyRegistered')}
+                                        {t("alreadyRegistered")}
                                     </Button>
                                 </Row>
                             </form>
@@ -720,8 +720,8 @@ const Register: React.FC<IRegister> = ({handlerAlreadyRegistered, handlerSuccess
                 </Formik>
             </div>
         </>
-    )
-}
+    );
+};
 
 
-export default Register
+export default Register;

@@ -4,14 +4,8 @@ import List from "../../layouts/templates/list/list";
 import { useNavigate } from "@reach/router";
 import Button from "../../../components/button/button";
 import s from "../../layouts/templates/list/list.module.scss";
-import Select, {
-    IOption,
-    IOptionMultiselect,
-} from "../../../components/select/select";
 import { useTranslation } from "react-i18next";
 import Modal from "react-modal";
-import InfoBlock from "../../../components/info-block/info-block";
-import { actions } from "../../../store/home";
 import { useDispatch } from "react-redux";
 import { homeAPI } from "../../../api/site-api/home-api";
 import InfoBlockDriver from "../../../components/info-block-driver/info-block";
@@ -31,7 +25,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
     const [tabIdSelected, setTabIdSelected] = useState(3);
     const [itemData, setItemData] = useState({});
     const [tabs, setTabs] = useState([]);
-    const [typeName, setTypeName] = useState<string>('driver')
+    const [typeName, setTypeName] = useState<string>("driver");
     const navigate = useNavigate();
     const { t } = useTranslation();
 
@@ -41,7 +35,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
                 tabIdSelected
             );
             setData(data.data);
-            setTabs(data.roles)
+            setTabs(data.roles);
         })();
         return () => {
             homeAPI.cancelRequest();
@@ -55,7 +49,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
         "address",
         "phone_number",
         "birthday",
-        "action",
+        "action"
     ];
 
     const handlerAddItem = () => navigate(`/users/${typeName}/create`);
@@ -87,11 +81,11 @@ const VendorUsers: React.FC<Beneficiary> = () => {
         setTabIdSelected(tabId);
         // setLoading(true)
     };
-    const handlerGetItemData = async (id:number) => {
-        const data = await  vendorAPI.getItemData('vendorClients', id)
+    const handlerGetItemData = async (id: number) => {
+        const data = await vendorAPI.getItemData("vendorClients", id);
 
         setItemData(data);
-    }
+    };
     const customStyles: ReactModal.Styles = {
         content: {
             position: "fixed",
@@ -104,13 +98,13 @@ const VendorUsers: React.FC<Beneficiary> = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            height: "290px",
+            height: "290px"
         },
         overlay: {
             zIndex: 400,
             background: "rgba(0, 0, 0, 0.35)",
-            backdropFilter: "blur(5px)",
-        },
+            backdropFilter: "blur(5px)"
+        }
     };
     const handlerAction = async (action: string, id: number) => {
         switch (action) {
@@ -130,7 +124,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
     return (
         data && (
             <>
-                {Object.keys(itemData).length >0  && <InfoBlockDriver  data={itemData}/> }
+                {Object.keys(itemData).length > 0 && <InfoBlockDriver data={itemData} />}
                 <Tabs tabs={tabs}
                       handlerChangeTabs={handlerChangeTabs} />
                 <List
@@ -144,7 +138,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
                     handlerAction={handlerAction}
                     className={"pagination"}
                     isGetHistory={false}
-                 isGetItems={false}/>
+                    isGetItems={false} />
                 <Modal
                     isOpen={isModalOpen !== false}
                     style={customStyles}

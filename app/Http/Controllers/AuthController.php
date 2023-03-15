@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PasswordRequest;
+use App\Models\Cars;
 use App\Models\User;
 use App\Models\Province;
 use Carbon\Carbon;
@@ -148,9 +149,21 @@ class AuthController extends Controller
             'birthday' => $user->birthday,
         ];
         if($user->role->name == 'admin'){
-            $data['count'] = \App\Models\Notification::where('new', 1)->count();
+            $data['count'] = \App\Models\Notification::where('new_admin', 1)->count();
         }else{
-            $data['count'] = 0;
+            $ids = User::where('vendor_id',  $user->vendor_id)->where(
+                'id',
+                '!=',
+                $user->vendor_id
+            )->select('id')->get()->toArray();
+         //   dd($ids);
+            $carIds = Cars::where('vendor_id',  $user->vendor_id)->select('id')->get()->toArray();
+            $data['count'] =  \App\Models\Notification::where(function ($query) use ($ids) {
+                $query->whereIn('value_id', $ids)->where('model', 'driver');
+            })->orWhere(function ($query) use ($carIds) {
+                $query->whereIn('value_id', $carIds)->where('model', 'car');
+            })->where('new_vendor', 1)->count();
+
         }
 
         return response()->json($data);

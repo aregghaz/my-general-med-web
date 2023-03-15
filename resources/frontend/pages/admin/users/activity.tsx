@@ -31,7 +31,7 @@ const Activity: React.FC<Beneficiary> = ({ id }) => {
         "trip_id",
         "vendor",
         ///"clinet_id",
-        "created_at",
+        "created_at"
     ];
 
 

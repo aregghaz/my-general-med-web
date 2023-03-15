@@ -31,7 +31,7 @@ Route::group([
     'middleware' => 'auth:api'
 ], function () {
     Route::get('/getDate', [\App\Http\Controllers\TestController::class, 'getDate']);
-
+    Route::get('/get-notification/{showMore}', [NotificationController::class, 'vendorNotification']);
     Route::get('/get-reason-data', [HomeController::class, 'getReasonData']);
     Route::get('/car-data-for-select', [HomeController::class, 'carDataForSelect']);
     Route::get('/clients-data-driver', [ApiController::class, 'getClientsDataForDriver']);
@@ -62,6 +62,7 @@ Route::group([
     Route::group([
         'middleware' => 'auth:api'
     ], function () {
+
         Route::get('user', [\App\Http\Controllers\AuthController::class, 'user']);
         // Route::get('account-data', [\App\Http\Controllers\AuthController::class, 'userData']);
         // Route::post('reset', [\App\Http\Controllers\AuthController::class, 'reset']);
@@ -99,7 +100,7 @@ Route::group([
     Route::get('/audit', [VendorController::class, 'audit']);
     Route::get('/get-notification/{showMore}', [NotificationController::class, 'index']);
     Route::get('/get-count', [NotificationController::class, 'getCount']);
-    Route::get('/get-info/{id}', [NotificationController::class, 'getInfo']);
+    Route::get('/get-info/{id}/{role}', [NotificationController::class, 'getInfo']);
     Route::get('/changeStatus/{slug}', [AdminController::class, 'changeStatus']);
     Route::get('/changeStatus/{id}/{statusId}', [AdminController::class, 'getStatusById']);
     Route::post('/changeStatus/{statusId}', [AdminController::class, 'createStatus']);

@@ -1,5 +1,5 @@
-require('./app')
-require('./bootstrap')
-require('./app.scss')
+require("./app");
+require("./bootstrap");
+require("./app.scss");
 
 

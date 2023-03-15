@@ -128,7 +128,7 @@
 .header_nav {
     //background-color: $headColor;
     background-color: #f1f2f2;
-   /// position: sticky;
+    /// position: sticky;
     top: 0;
     //z-index: 111111;
     box-shadow: 0 0 20px #ddd;
@@ -210,7 +210,7 @@
     overflow: hidden;
     background-color: #f1f2f2;
     transition: width .2s ease-in-out;
-   /// position: fixed;
+    /// position: fixed;
     z-index: 11111;
     height: 100%;
     box-shadow: 0 0 20px #ddd;
@@ -249,19 +249,22 @@
     background-color: white;
     min-height: calc(100vh - 60px);
 }
+
 .logoDiv {
     display: flex;
     float: left;
     margin-left: 30px;
+
     img {
         width: 80px;
         height: 50px;
     }
 }
 
-.logoSection{
+.logoSection {
     display: table;
 }
+
 .iconBlock {
     position: relative;
     margin-right: 30px;
@@ -270,7 +273,7 @@
 }
 
 
-.bage{
+.bage {
     position: relative;
     top: -15px;
     left: -22px;

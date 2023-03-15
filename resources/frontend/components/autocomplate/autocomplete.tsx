@@ -28,8 +28,8 @@ const Autocomplete: React.FC<ITextarea> = (
             if (values["origin"]["address"].length > 0 && values["destination"]["address"].length > 0) {
 
                 const results = await getMapResponse(values["origin"]["address"], values["destination"]["address"]);
-                setFieldValue('miles', parseFloat(results.routes[0].legs[0].distance.text));
-                console.log(results.routes[0].legs[0].duration.text,'duration');
+                setFieldValue("miles", parseFloat(results.routes[0].legs[0].distance.text));
+                console.log(results.routes[0].legs[0].duration.text, "duration");
                 // setDistance(results.routes[0].legs[0].distance.text);
                 // setDuration(results.routes[0].legs[0].duration.text);
 

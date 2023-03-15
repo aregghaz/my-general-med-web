@@ -1,13 +1,13 @@
-import React, {ChangeEvent} from 'react'
+import React, { ChangeEvent } from "react";
 
-import s from './textarea.module.scss'
+import s from "./textarea.module.scss";
 
 interface ITextarea {
-    name: string
-    placeholder?: string
-    onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void
-    value: string
-    label?: string
+    name: string;
+    placeholder?: string;
+    onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+    value: string;
+    label?: string;
 }
 
 const Textarea: React.FC<ITextarea> = (
@@ -28,6 +28,6 @@ const Textarea: React.FC<ITextarea> = (
             value={value}
         />
     </>
-)
+);
 
-export default Textarea
+export default Textarea;

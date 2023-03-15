@@ -1,9 +1,7 @@
 import { InferActionsTypes } from "./store";
-import { ISerialCard } from "../types/serial";
-import { IOption } from "../components/select/select";
 
 const initialState = {
-    count: 0 as number,
+    count: 0 as number
 };
 
 type InitialState = typeof initialState
@@ -16,12 +14,12 @@ const NotificationReducer = (state = initialState, action: Actions): InitialStat
         case "FETCHING_NOTIFICATION_COUNT":
             return {
                 ...state,
-                count: action.payload.count,
+                count: action.payload.count
             };
         case "RESET_TAB_ID":
             return {
                 ...state,
-                count: 0,
+                count: 0
             };
         default:
             return state;

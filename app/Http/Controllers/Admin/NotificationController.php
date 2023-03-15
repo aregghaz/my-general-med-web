@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Vendor\CarsController;
 use App\Http\Controllers\Vendor\VendorUsersController;
 use App\Http\Resources\NotificationCollection;
+use App\Models\Cars;
 use App\Models\Notification;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
@@ -20,14 +22,44 @@ class NotificationController extends Controller
     {
 
         $notification = Notification::with('getAction')
-            ->orderBy('new', "desc")
+            ->orderBy('new_admin', "desc")
             ->orderBy('created_at', "desc")
             ->take(25 * $showMore)->get();;
 
         return response()->json(
             [
                 'data' => new NotificationCollection($notification),
-                'count' => Notification::where('new', 1)->count(),
+                'count' => Notification::where('new_admin', 1)->count(),
+            ],
+            200
+        );
+    }
+    public function vendorNotification(Request $request, $showMore)
+    {
+
+        $vendor = $request->user()->vendor_id;
+        $ids = User::where('vendor_id', $vendor)->where(
+            'id',
+            '!=',
+            $vendor
+        )->select('id')->get()->toArray();
+
+        $carIds = Cars::where('vendor_id', $vendor)->select('id')->get()->toArray();
+
+
+        $notification = Notification::with('getAction')->where(function ($query) use ($ids) {
+            $query->whereIn('value_id', $ids)->where('model', 'driver');
+        })->orWhere(function ($query) use ($carIds) {
+            $query->whereIn('value_id', $carIds)->where('model', 'car');
+        })
+            ->orderBy('new_vendor', "desc")
+            ->orderBy('created_at', "desc")
+            ->take(25 * $showMore)->get();;
+
+        return response()->json(
+            [
+                'data' => new NotificationCollection($notification),
+                'count' => $notification->where('new_vendor', 1)->count(),
             ],
             200
         );
@@ -35,7 +67,7 @@ class NotificationController extends Controller
 
     public function getCount()
     {
-        $notification = Notification::where('new', 1)->count();
+        $notification = Notification::where('new_admin', 1)->count();
         return response()->json(
             [
                 'data' => $notification,
@@ -44,9 +76,10 @@ class NotificationController extends Controller
         );
     }
 
-    public function getInfo($id)
+    public function getInfo(Request $request,$id, $role)
     {
         $notification = Notification::find($id);
+
         switch ($notification->model) {
             case 'driver':
                 $data = VendorUsersController::show($notification->value_id);
@@ -56,12 +89,21 @@ class NotificationController extends Controller
                 $data = $car->show($notification->value_id);
                 break;
         }
-        $notification->new = 0;
+        if ($role == 'admin') {
+            $notification->new_admin = 0;
+            $userData =  User::with('Company')->find($notification->value_id);
+            $companyName = $userData->company->name;
+        } else {
+            $notification->new_vendor = 0;
+            $companyName = $request->user()->name;
+        }
+
         $notification->update();
         return response()->json(
             [
                 'data' => $data->original,
                 'model' => $notification->model,
+                'companyName' =>$companyName,
             ],
             200
         );

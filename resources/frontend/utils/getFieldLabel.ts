@@ -2,8 +2,8 @@ const getFieldLabel = (t: any, label: string, name: string, requiredFields: Arra
 
     ////TODO ADD LOGIN TO ADMIN PANEL
     return label
-        ? `${t(`admin:${label}`)}${requiredFields?.includes(name) ? '*' : ''}`
-        : `${t(`admin:${name}`)}${requiredFields?.includes(name) ? '*' : ''}`;
+        ? `${t(`admin:${label}`)}${requiredFields?.includes(name) ? "*" : ""}`
+        : `${t(`admin:${name}`)}${requiredFields?.includes(name) ? "*" : ""}`;
 };
 
 

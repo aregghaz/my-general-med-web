@@ -16,7 +16,7 @@ const NotificationList: React.FC<INotificationList> = () => {
     const tableRef = useRef(null);
     const [data, setData] = useState([]);
     const [info, setInfoData] = useState(null);
-    const [model, setModel] = useState('');
+    const [model, setModel] = useState("");
 
     const [loading, setLoading] = useState(false);
     const countRef = useRef(1);
@@ -49,7 +49,7 @@ const NotificationList: React.FC<INotificationList> = () => {
     }, [inView, loading]);
 
     const handlerAction = async (action: string, id: number) => {
-        const notifData = await AdminApi.getInfoData(id);
+        const notifData = await AdminApi.getInfoData(id, 'admin');
         switch (notifData.model) {
             case "driver":
                 setInfoData(notifData.data);
@@ -58,15 +58,15 @@ const NotificationList: React.FC<INotificationList> = () => {
                 setInfoData(notifData.data);
                 break;
         }
-        setModel(notifData.model)
+        setModel(notifData.model);
         setLoading(true);
     };
-    console.log(data,'carcar');
+    console.log(data, "carcar");
     return data && (
 
         <>
-            {model === 'driver' && <InfoBlockDriver data={info} />}
-            {model === 'car' && <InfoBlockCar data={info} />}
+            {model === "driver" && <InfoBlockDriver data={info} is_admin={true} />}
+            {model === "car" && <InfoBlockCar data={info} is_admin={true} />}
             <List
                 data={data}
                 titles={titles}

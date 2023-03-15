@@ -41,4 +41,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Driver::class, 'user_id', 'id');
     }
+    public function Company()
+    {
+        return $this->hasOne(User::class, 'id', 'vendor_id');
+    }
+
 }

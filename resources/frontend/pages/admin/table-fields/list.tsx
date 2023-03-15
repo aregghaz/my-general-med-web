@@ -31,9 +31,9 @@ const TableFildsList: React.FC<ITableFilds> = () => {
     useEffect(() => {
         (
             async () => {
-               /// const data = await AdminApi.getAllStatusData(crudKey);
-               //  setData(data.table);
-               //  setCount(data.count);
+                /// const data = await AdminApi.getAllStatusData(crudKey);
+                //  setData(data.table);
+                //  setCount(data.count);
 
             }
         )();

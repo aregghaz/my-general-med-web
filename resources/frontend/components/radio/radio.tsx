@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
-import s from './radio.module.scss'
+import s from "./radio.module.scss";
 
 interface IRadio {
-    onChange: () => void
-    label: string
-    checked: boolean
+    onChange: () => void;
+    label: string;
+    checked: boolean;
 }
 
 const Radio: React.FC<IRadio> = (
@@ -16,12 +16,12 @@ const Radio: React.FC<IRadio> = (
     }) => (
     <div className={s.modernRadioContainer} onClick={onChange}>
         <div className={`${s.radioOuterCircle}  ${!checked && s.unselected}`}>
-            <div className={`${checked && s.radioInnerCircle}`}/>
+            <div className={`${checked && s.radioInnerCircle}`} />
         </div>
         <div className={`${s.helperText} ${checked && s.helperTextActive}`}>{label}</div>
     </div>
-)
+);
 
 
-export default Radio
+export default Radio;
 

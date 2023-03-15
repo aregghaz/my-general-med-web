@@ -1,10 +1,7 @@
-import React, {useRef, useState} from 'react'
-import TableHead from './table-head/table-head'
-import TableBody from './table-body/table-body'
-import s from './crud-table.module.scss'
-import TableFoot from "./table-foot/table-foot";
-import {ICount} from '../../types/admin';
-import {DownloadTableExcel} from "react-export-table-to-excel";
+import React, { useState } from "react";
+import TableHead from "./table-head/table-head";
+import TableBody from "./table-body/table-body";
+import s from "./crud-table.module.scss";
 
 
 const CrudTable: React.FC<ICrudTable> = (
@@ -18,33 +15,33 @@ const CrudTable: React.FC<ICrudTable> = (
         isGetHistory,
         handlerAction,
         tableRef,
-        className,
+        className
     }) => {
 
-    const [filterTable, setFilterTable] = useState<string>("ASC")
-    const [filteredData, setFilteredData] = useState<any[]>(null)
-    const [titleName, setTitleName] = useState<string>("")
+    const [filterTable, setFilterTable] = useState<string>("ASC");
+    const [filteredData, setFilteredData] = useState<any[]>(null);
+    const [titleName, setTitleName] = useState<string>("");
 
 
     const titleSort = (name: string) => {
         if (name !== "action") {
             if (filterTable === "ASC") {
-                setFilteredData(data.sort((a, b) => a[name]?.toLowerCase() > b[name]?.toLowerCase() ? 1 : -1))
-                setFilterTable("DSC")
+                setFilteredData(data.sort((a, b) => a[name]?.toLowerCase() > b[name]?.toLowerCase() ? 1 : -1));
+                setFilterTable("DSC");
             }
             if (filterTable === "DSC") {
-                setFilteredData(data.sort((a, b) => a[name]?.toLowerCase() < b[name]?.toLowerCase() ? 1 : -1))
-                setFilterTable("ASC")
+                setFilteredData(data.sort((a, b) => a[name]?.toLowerCase() < b[name]?.toLowerCase() ? 1 : -1));
+                setFilterTable("ASC");
             }
-            setTitleName(name)
+            setTitleName(name);
         }
 
-    }
+    };
     return (
         <>
 
             <table className={s.table} ref={tableRef}>
-                <TableHead titles={titles} titleSort={titleSort} filterTable={filterTable} titleName={titleName}/>
+                <TableHead titles={titles} titleSort={titleSort} filterTable={filterTable} titleName={titleName} />
                 <TableBody
                     data={filteredData ? filteredData : data}
                     isDelete={isDelete}
@@ -66,21 +63,21 @@ const CrudTable: React.FC<ICrudTable> = (
 
             {/*}*/}
         </>
-    )
-}
+    );
+};
 
 interface ICrudTable {
     ////FIXME SHOULD ADD TYPE DATA
-    data: Array<any>
-    titles: Array<string>
-    isEdit: boolean
-    isDelete: boolean
-    isGetInfo: boolean
-    isGetHistory: boolean
-    isGetItems?: boolean
-    className: string
-    handlerAction: (action:string,id: number) => void
-    tableRef:any
+    data: Array<any>;
+    titles: Array<string>;
+    isEdit: boolean;
+    isDelete: boolean;
+    isGetInfo: boolean;
+    isGetHistory: boolean;
+    isGetItems?: boolean;
+    className: string;
+    handlerAction: (action: string, id: number) => void;
+    tableRef: any;
 }
 
-export default CrudTable
+export default CrudTable;

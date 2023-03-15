@@ -1,10 +1,10 @@
-import React from 'react'
-import Select, {IOption} from '../select/select'
-import {getDaysInMonth, getMonthDays} from '../../constants/utils'
-import {months} from '../../constants/helpers'
-import {useTranslation} from 'react-i18next'
+import React from "react";
+import Select, { IOption } from "../select/select";
+import { getDaysInMonth, getMonthDays } from "../../constants/utils";
+import { months } from "../../constants/helpers";
+import { useTranslation } from "react-i18next";
 
-import s from './date-picker-from-to.module.scss'
+import s from "./date-picker-from-to.module.scss";
 
 
 interface IDates {
@@ -36,7 +36,7 @@ const DataPickerFromTo: React.FC<IDataPicker> = (
         dates,
         index
     }) => {
-    const {t} = useTranslation()
+    const { t } = useTranslation();
     return (
         <>
             <label className={s.label}>{label}</label>
@@ -50,10 +50,10 @@ const DataPickerFromTo: React.FC<IDataPicker> = (
                         options={getMonthDays(getDaysInMonth(new Date()))}
                         placeholder={t(`${getDaysInMonth(new Date())}`)}
                         onChange={(option) => {
-                            setFieldValue('dates', [...(dates.slice(0, index)), {
+                            setFieldValue("dates", [...(dates.slice(0, index)), {
                                 ...dates[index],
                                 dayFrom: option
-                            }, ...dates.slice(index + 1, dates.length)])
+                            }, ...dates.slice(index + 1, dates.length)]);
                         }}
                         isMulti={false}
                         isSearchable={false}
@@ -66,12 +66,12 @@ const DataPickerFromTo: React.FC<IDataPicker> = (
                         getOptionValue={(option) => option.value}
                         getOptionLabel={(option) => t(option.value)}
                         options={months}
-                        placeholder={t('month')}
+                        placeholder={t("month")}
                         onChange={(option) => {
-                            setFieldValue('dates', [...(dates.slice(0, index)), {
+                            setFieldValue("dates", [...(dates.slice(0, index)), {
                                 ...dates[index],
                                 monthFrom: option
-                            }, ...dates.slice(index + 1, dates.length)])
+                            }, ...dates.slice(index + 1, dates.length)]);
                         }}
                         isMulti={false}
                         isSearchable={false}
@@ -89,10 +89,10 @@ const DataPickerFromTo: React.FC<IDataPicker> = (
                         options={getMonthDays(getDaysInMonth(new Date()))}
                         placeholder={t(`${getDaysInMonth(new Date())}`)}
                         onChange={(option) => {
-                            setFieldValue('dates', [...(dates.slice(0, index)), {
+                            setFieldValue("dates", [...(dates.slice(0, index)), {
                                 ...dates[index],
                                 dayTo: option
-                            }, ...dates.slice(index + 1, dates.length)])
+                            }, ...dates.slice(index + 1, dates.length)]);
                         }}
                         isMulti={false}
                         isSearchable={false}
@@ -105,12 +105,12 @@ const DataPickerFromTo: React.FC<IDataPicker> = (
                         getOptionValue={(option) => option.value}
                         getOptionLabel={(option) => t(option.value)}
                         options={months}
-                        placeholder={t('month')}
+                        placeholder={t("month")}
                         onChange={(option) => {
-                            setFieldValue('dates', [...(dates.slice(0, index)), {
+                            setFieldValue("dates", [...(dates.slice(0, index)), {
                                 ...dates[index],
                                 monthTo: option
-                            }, ...dates.slice(index + 1, dates.length)])
+                            }, ...dates.slice(index + 1, dates.length)]);
                         }}
                         isMulti={false}
                         isSearchable={false}
@@ -118,8 +118,8 @@ const DataPickerFromTo: React.FC<IDataPicker> = (
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
 
 
-export default DataPickerFromTo
+export default DataPickerFromTo;

@@ -1,123 +1,129 @@
-import { __rest } from 'tslib';
-import React from 'react';
-import { TabProvider, TabConsumer } from './TabsContext';
-import TabItem from './Tab';
+import { __rest } from "tslib";
+import React from "react";
+import { TabConsumer, TabProvider } from "./TabsContext";
+import TabItem from "./Tab";
+
 const ListTabs = ({ children, className = null, style = {} }) =>
     React.createElement(
-        'ul',
+        "ul",
         {
-            style: Object.assign({ paddingLeft: 0, listStyle: 'none', margin: 0 }, style),
-            className: className,
+            style: Object.assign({ paddingLeft: 0, listStyle: "none", margin: 0 }, style),
+            className: className
         },
-        children,
+        children
     );
 const TabTitleItem = (_a) => {
     var { children, innerRef } = _a,
-        restProps = __rest(_a, ['children', 'innerRef']);
+        restProps = __rest(_a, ["children", "innerRef"]);
     return React.createElement(
-        'li',
+        "li",
         Object.assign(
             {
                 ref: innerRef,
                 style: {
-                    display: 'inline-block',
-                    transition: 'all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-                },
+                    display: "inline-block",
+                    transition: "all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+                }
             },
-            restProps,
+            restProps
         ),
-        children,
+        children
     );
 };
 const ActiveTabBorder = (_a) => {
     var { activeTabElement } = _a,
-        restProps = __rest(_a, ['activeTabElement']);
+        restProps = __rest(_a, ["activeTabElement"]);
     const style = {
-        height: '4px',
-        backgroundColor: '#0088dd',
-        position: 'absolute',
-        bottom: '0',
-        transition: 'all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-        willChange: 'left, width',
+        height: "4px",
+        backgroundColor: "#0088dd",
+        position: "absolute",
+        bottom: "0",
+        transition: "all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        willChange: "left, width"
     };
     if (activeTabElement) {
         style.width = activeTabElement.offsetWidth;
         style.left = activeTabElement.offsetLeft;
     }
-    return React.createElement('div', Object.assign({ style: style }, restProps));
+    return React.createElement("div", Object.assign({ style: style }, restProps));
 };
 const TabAnchorItem = (_a) => {
     var { isActiveTab, children, tabIndex } = _a,
-        restProps = __rest(_a, ['isActiveTab', 'children', 'tabIndex']);
+        restProps = __rest(_a, ["isActiveTab", "children", "tabIndex"]);
     const style = {
-        textTransform: 'capitalize',
-        color: '#000000',
+        textTransform: "capitalize",
+        color: "#000000",
         fontWeight: 600,
-        padding: '16px 30px',
-        cursor: 'pointer',
-        opacity: '0.4',
-        display: 'block',
-        textDecoration: 'none',
-        backgroundColor: 'transparent',
-        outline: 'none',
+        padding: "16px 30px",
+        cursor: "pointer",
+        opacity: "0.4",
+        display: "block",
+        textDecoration: "none",
+        backgroundColor: "transparent",
+        outline: "none",
         border: 0,
-        ':hover': {
-            opacity: 1,
-        },
+        ":hover": {
+            opacity: 1
+        }
     };
     if (isActiveTab) {
-        style.transition = 'all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms';
-        style.cursor = 'default';
+        style.transition = "all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms";
+        style.cursor = "default";
         style.opacity = 1;
     }
     return React.createElement(
-        'button',
+        "button",
         Object.assign({ style: style, tabIndex: tabIndex }, restProps),
-        children,
+        children
     );
 };
 const TabsContainer = (_a) => {
     var { children } = _a,
-        restProps = __rest(_a, ['children']);
+        restProps = __rest(_a, ["children"]);
     return React.createElement(
-        'div',
+        "div",
         Object.assign(
             {
                 style: {
-                    position: 'relative',
-                    borderBottom: '1px solid #dfdfdf',
-                },
+                    position: "relative",
+                    borderBottom: "1px solid #dfdfdf"
+                }
             },
-            restProps,
+            restProps
         ),
-        children,
+        children
     );
 };
 const ReactTabs = (_a) => {
     var { children } = _a,
-        restProps = __rest(_a, ['children']);
+        restProps = __rest(_a, ["children"]);
     return React.createElement(
-        'div',
-        Object.assign({ style: { position: 'relative' } }, restProps),
-        children,
+        "div",
+        Object.assign({ style: { position: "relative" } }, restProps),
+        children
     );
 };
+
 class Tabs extends React.Component {
     constructor() {
         super(...arguments);
         this.state = {
-            tabsElements: [],
+            tabsElements: []
         };
     }
+
     updateDimensions() {
         this.setState(Object.assign({}, this.state));
     }
+
     componentDidMount() {
-        window.addEventListener('resize', this.updateDimensions.bind(this));
+        window.addEventListener("resize", this.updateDimensions.bind(this));
     }
+
     componentWillUnmount() {
-        window.removeEventListener('resize', this.updateDimensions.bind(this));
+        window.removeEventListener("resize", this.updateDimensions.bind(this));
     }
+
     render() {
         const tabsProps = this.props.tabsProps || {};
         return React.createElement(
@@ -145,11 +151,11 @@ class Tabs extends React.Component {
                                                     const tabsElements = prevState.tabsElements;
                                                     tabsElements[tab.id] = tabElement;
                                                     return {
-                                                        tabsElements,
+                                                        tabsElements
                                                     };
                                                 });
                                             }
-                                        },
+                                        }
                                     },
                                     React.createElement(
                                         TabAnchorItem,
@@ -162,23 +168,24 @@ class Tabs extends React.Component {
                                                 if (code === 13) {
                                                     value.context.onClick(tab)(event);
                                                 }
-                                            },
+                                            }
                                         },
-                                        tab.title,
-                                    ),
-                                ),
-                            ),
+                                        tab.title
+                                    )
+                                )
+                            )
                         ),
                         React.createElement(ActiveTabBorder, {
-                            activeTabElement: this.state.tabsElements[value.context.activeTab.id],
-                        }),
+                            activeTabElement: this.state.tabsElements[value.context.activeTab.id]
+                        })
                     ),
-                    this.props.children,
-                ),
-            ),
+                    this.props.children
+                )
+            )
         );
     }
 }
+
 Tabs.Tab = TabItem;
 export default Tabs;
 //# sourceMappingURL=Tabs.js.map

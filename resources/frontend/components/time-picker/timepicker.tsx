@@ -1,9 +1,7 @@
 import React from "react";
 import TimePicker from "react-time-picker";
 import s from "./timepicker.module.scss";
-import Clock from 'react-clock';
-import Input from "../input/input";
-import getFieldLabel from "../../utils/getFieldLabel";
+
 interface ITextarea {
     name: string
     value: string,
@@ -32,7 +30,7 @@ const TimePickers: React.FC<ITextarea> = (
             className={`${s.label}`}
             htmlFor={name}
             style={{
-                color: value ? "black" : "gray",
+                color: value ? "black" : "gray"
             }}
         >
             {`${label}`} {isAsterisk && <span>*</span>}

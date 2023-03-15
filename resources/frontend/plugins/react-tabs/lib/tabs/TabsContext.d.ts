@@ -1,4 +1,5 @@
 import React from "react";
+
 declare const TabsContext: React.Context<{
     context: {
         prevActiveTab: {};
@@ -11,6 +12,7 @@ declare const TabsContext: React.Context<{
         onClick: (tab: any) => (event: any) => void;
     };
 }>;
+
 declare class TabProvider extends React.Component {
     props: {
         activeTab: any;
@@ -24,8 +26,10 @@ declare class TabProvider extends React.Component {
     addTab: (tab: any) => void;
     removeTab: (tabId: string) => void;
     onClick: (tab: any) => (event: any) => void;
+
     render(): JSX.Element;
 }
+
 declare const TabConsumer: React.Consumer<{
     context: {
         prevActiveTab: {};

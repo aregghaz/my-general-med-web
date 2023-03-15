@@ -2,13 +2,13 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="theme-color" content="#000000"/>
-    <meta name="description" content="KinoMino"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="KinoMino" />
 
     <meta name="viewport" content="width=device-width, user-scalable=no">
-    <meta property="og:url" content="https://"/>
-    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://" />
+    <meta property="og:type" content="website" />
 
     <link rel="local_logo" href="/local_logo.svg">
     <link rel="icon" href="/images/logo.png">

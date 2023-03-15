@@ -17,7 +17,6 @@ import Button from "../../../components/button/button";
 import { actionsTabs } from "../../../store/tab";
 import { toast } from "react-toastify";
 import NavigationTab from "../../../components/navigation/navigationTab";
-import { AdminApi } from "../../../api/admin-api/admin-api";
 
 interface IHome {
     path: string;
@@ -185,8 +184,7 @@ const Home: React.FC<IHome> = () => {
     };
 
 
-
-    const getClientData = async (queryData: string, date:string) => {
+    const getClientData = async (queryData: string, date: string) => {
         const titlesData = localStorage.getItem("titles");
         const homeData = await homeAPI.getClientData({
             titles: titles.length ? titles : JSON.parse(titlesData),
@@ -229,7 +227,7 @@ const Home: React.FC<IHome> = () => {
     };
 
     const setFieldValue = async (name: string, dateData: string) => {
-        setDate(dateData)
+        setDate(dateData);
         await getClientData(query, dateData);
     };
 
@@ -357,7 +355,6 @@ const Home: React.FC<IHome> = () => {
         }
 
     }, [isModalOpen]);
-
 
 
     return (

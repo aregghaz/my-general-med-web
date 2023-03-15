@@ -1,4 +1,5 @@
 @import "../../styles/variables";
+
 .bage_count {
     padding: 3px 6px 3px 6px;
     font-size: 20px;
@@ -7,44 +8,53 @@
     text-align: center;
 
 }
+
 .table_upper_tab_item {
     background: #ffffff;
     border-bottom: 1px solid rgba(162, 162, 162, 0.2);
     position: relative;
     padding: 10px 30px;
     cursor: pointer;
+
     &:hover {
-        span{
+        span {
             color: $asteriskColor;
         }
+
         color: $asteriskColor;
         border-bottom-color: $asteriskColor;
     }
 }
+
 .selected {
     background: #ffffff;
     border-bottom: 1px solid $asteriskColor;
-    color:$asteriskColor;
+    color: $asteriskColor;
     position: relative;
     padding: 10px 30px;
     cursor: pointer;
+
     &:hover {
-        span{
+        span {
             color: $asteriskColor;
         }
+
         color: $asteriskColor;
         border-bottom-color: $asteriskColor;
     }
 }
-.tab_text{
+
+.tab_text {
     font-size: 13px;
 }
+
 .table_upper_tab {
-     display: flex;
-     align-items: center;
-     gap: 10px;
-     width: 100%;
- }
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
 .action_block {
     display: inline-block;
     border-radius: 10px;
@@ -53,9 +63,11 @@
     cursor: pointer;
     background-color: $menuColor;
     color: $whiteColor;
+
     label {
         cursor: pointer;
     }
+
     &:hover {
         background-color: $asteriskColor;
         color: white;

@@ -1,13 +1,13 @@
-import React, {FC} from "react"
-import cls from "./popup-modal.module.scss"
+import React, { FC } from "react";
+import cls from "./popup-modal.module.scss";
 
 interface IProps {
-    isOpen: boolean
-    agreeWith: (b: boolean) => void
-    notAgreeWith: () => void
+    isOpen: boolean;
+    agreeWith: (b: boolean) => void;
+    notAgreeWith: () => void;
 }
 
-const PopupModal: FC<IProps> = ({isOpen, agreeWith, notAgreeWith}) => {
+const PopupModal: FC<IProps> = ({ isOpen, agreeWith, notAgreeWith }) => {
 
     // const []
 
@@ -45,7 +45,7 @@ const PopupModal: FC<IProps> = ({isOpen, agreeWith, notAgreeWith}) => {
                 </div>
             }
         </>
-    )
-}
+    );
+};
 
-export default PopupModal
+export default PopupModal;

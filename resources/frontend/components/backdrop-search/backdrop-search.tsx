@@ -1,37 +1,33 @@
-import React, {useEffect} from 'react'
-import {Formik} from 'formik'
-import TextField from '../text-field/text-field'
-import {useTranslation} from 'react-i18next'
-import {Visible} from 'react-grid-system'
-
-import s from './backdrop-search.module.scss'
+import React from "react";
+import { Formik } from "formik";
+import { useTranslation } from "react-i18next";
 
 interface IBackDropSearch {
-    handlerCloseBackDropSearch?: () => void
-    handlerSubmit: (event: { search: string }) => void
+    handlerCloseBackDropSearch?: () => void;
+    handlerSubmit: (event: { search: string }) => void;
 }
 
-const BackDropSearch: React.FC<IBackDropSearch> = ({handlerSubmit}) => {
-    const {t} = useTranslation()
+const BackDropSearch: React.FC<IBackDropSearch> = ({ handlerSubmit }) => {
+    const { t } = useTranslation();
 
     return (
         <>
             <Formik
                 initialValues={{
-                    search: ''
+                    search: ""
                 }}
                 onSubmit={handlerSubmit}
                 validateOnChange={false}
                 validateOnBlur={false}
             >
                 {
-                    ({values, handleChange, handleSubmit}) => (
-                        <form onSubmit={handleSubmit} style={{height: "100%"}}>
+                    ({ values, handleChange, handleSubmit }) => (
+                        <form onSubmit={handleSubmit} style={{ height: "100%" }}>
                             <input
-                                name={'search'}
+                                name={"search"}
                                 value={values.search}
-                                type={'text'}
-                                placeholder={t('search')}
+                                type={"text"}
+                                placeholder={t("search")}
                                 onChange={handleChange}
 
                             />
@@ -40,7 +36,7 @@ const BackDropSearch: React.FC<IBackDropSearch> = ({handlerSubmit}) => {
                 }
             </Formik>
         </>
-    )
-}
+    );
+};
 
-export default BackDropSearch
+export default BackDropSearch;

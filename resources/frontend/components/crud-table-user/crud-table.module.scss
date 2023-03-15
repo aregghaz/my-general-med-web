@@ -51,7 +51,7 @@
 
 .tableBody {
     display: table-row-group;
-  ///  max-height: 60vh;
+    ///  max-height: 60vh;
 }
 
 
@@ -64,7 +64,8 @@
     display: flex;
     flex-direction: row;
     gap: 7px;
-    .icon{
+
+    .icon {
         width: 25px;
         height: 25px;
         cursor: pointer;
@@ -108,31 +109,35 @@
     z-index: 1;
     top: -20px;
     left: -5px;
-    font-size:10px;
+    font-size: 10px;
 }
 
-.delete{
-   // left: -10px;
+.delete {
+    // left: -10px;
 }
-.history,.assignVendor,.info,.edit,.delete,.reRoute,.claim {
+
+.history, .assignVendor, .info, .edit, .delete, .reRoute, .claim {
     visibility: hidden;
 }
-.historySpan:hover .history,.infoSpan:hover .info ,.editSpan:hover .edit ,.deleteSpan:hover .delete,.reRouteSpan:hover .reRoute, .claimSpan:hover .claim {
+
+.historySpan:hover .history, .infoSpan:hover .info, .editSpan:hover .edit, .deleteSpan:hover .delete, .reRouteSpan:hover .reRoute, .claimSpan:hover .claim {
     visibility: visible;
 }
+
 .assignVendorSpan:hover .assignVendor {
     visibility: visible;
 }
+
 .tableTd {
     //display: table-cell;
-   /// padding: 9px;
+    /// padding: 9px;
     text-align: start;
-   /// font-weight: bold;
+    /// font-weight: bold;
     vertical-align: inherit;
     ///border-bottom: 1px solid #ddd;
     ////margin-bottom: 10px;
     color: $thTextColor;
-padding-left: 20px;
+    padding-left: 20px;
     min-width: 190px;
     table-layout: auto;
     border-top: 2px solid #3F7AAD;
@@ -167,7 +172,7 @@ padding-left: 20px;
     //FIXME: Fix for large sizes & no support for vw
     white-space: nowrap;
     font-size: min(max(16px, 1vw), 25px);
-   //// margin-bottom: 10px;
+    //// margin-bottom: 10px;
     min-width: 170px;
     text-align: center;
     @media only screen and (max-width: $mediumDisplay) {
@@ -182,6 +187,7 @@ padding-left: 20px;
         width: 40px;
     }
 }
+
 .classNameField {
     display: table-cell;
     /// padding: 9px;
@@ -194,14 +200,17 @@ padding-left: 20px;
     border-bottom: 0.1px solid rgba(128, 128, 128, 1);
     height: 70px;
 }
+
 .address {
     min-width: 350px;
     width: 100%;
 }
+
 .gender {
     max-width: 50px;
     width: 100%;
 }
+
 .inputWrapper {
     margin-top: 10px;
 }
@@ -232,11 +241,12 @@ padding-left: 20px;
 .chosen {
     background-color: $asteriskColor !important;
     opacity: 0.7;
+
     td {
         color: $whiteColor;
     }
 }
 
-.arrowSpan{
+.arrowSpan {
     margin: 0 5px;
 }

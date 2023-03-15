@@ -1,19 +1,22 @@
 # Demo
 
--   For quick demo please checkout this [storybook](https://feuer-ui.netlify.app/).
--   For quick code usage pelase checkout this [codesandbox](https://codesandbox.io/s/frosty-pond-etcqj?file=/src/App.js)
+- For quick demo please checkout this [storybook](https://feuer-ui.netlify.app/).
+- For quick code usage pelase checkout this [codesandbox](https://codesandbox.io/s/frosty-pond-etcqj?file=/src/App.js)
 
 # React Tabs
 
-Simple React Tabs using the new react ContextAPI to manage changes active tabs or not. And there is no need to add tabs container you just add a tab component.
+Simple React Tabs using the new react ContextAPI to manage changes active tabs or not. And there is no need to add tabs
+container you just add a tab component.
 
 ## Introduction
 
-This project done using ReactJS and normal styling to add a small react-tabs component to your project without a huge library.
+This project done using ReactJS and normal styling to add a small react-tabs component to your project without a huge
+library.
 
 ## Installation
 
-This module is distributed via npm which is bundled with node and should be installed as one of your project's dependencies:
+This module is distributed via npm which is bundled with node and should be installed as one of your project's
+dependencies:
 
 ### Yarn
 
@@ -27,7 +30,8 @@ yarn add @feuer/react-tabs
 npm install @feuer/react-tabs
 ```
 
-This package also depends on `react`, `tslib` only esm for umd its already included, `react-dom`, `prop-types`. Please make sure you have it installed as well.
+This package also depends on `react`, `tslib` only esm for umd its already included, `react-dom`, `prop-types`. Please
+make sure you have it installed as well.
 
 ## Usage
 
@@ -91,16 +95,19 @@ Tab.propTypes = {
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of
+conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see
+the [tags on this repository](https://github.com/your/project/tags).
 
 ## Authors
 
--   **Yazan Aabed**
--   See also the list of [contributors](https://github.com/yazaabed/react-tabs/graphs/contributors) who participated in this project.
+- **Yazan Aabed**
+- See also the list of [contributors](https://github.com/yazaabed/react-tabs/graphs/contributors) who participated in
+  this project.
 
 ## License
 

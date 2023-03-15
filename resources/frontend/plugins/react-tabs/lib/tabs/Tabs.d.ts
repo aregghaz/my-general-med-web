@@ -1,5 +1,6 @@
 import React, { CSSProperties } from "react";
 import TabItem, { TabInputs } from "./Tab";
+
 declare class Tabs extends React.Component {
     static Tab: typeof TabItem;
     props: {
@@ -13,9 +14,14 @@ declare class Tabs extends React.Component {
     state: {
         tabsElements: any[];
     };
+
     updateDimensions(): void;
+
     componentDidMount(): void;
+
     componentWillUnmount(): void;
+
     render(): JSX.Element;
 }
+
 export default Tabs;

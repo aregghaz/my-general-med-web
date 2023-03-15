@@ -12,14 +12,14 @@ interface IVendorCreate {
 const OperatorCreate: React.FC<IVendorCreate> = () => {
     const { t } = useTranslation();
     const crudKey = "operators";
-    const redirectKey = 'vendors';
+    const redirectKey = "vendors";
     const [data, setData] = useState(null);
     const fields: Array<IItem> = [
         { name: "name", type: "input", label: "name" },
         { name: "surname", type: "input", label: "surname" },
         { name: "email", type: "input", label: "email" },
         { name: "address", type: "input", label: "address" },
-        { name: "phone_number", type: "input", label: "phone_number",inputType:'tel'  },
+        { name: "phone_number", type: "input", label: "phone_number", inputType: "tel" },
         { name: "fields", type: "multiSelect", label: "fields" },
         { name: "id", type: "hidden", inputType: "hidden" },
         { name: "password", type: "input", inputType: "password" }

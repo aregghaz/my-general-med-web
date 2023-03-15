@@ -155,12 +155,12 @@ const Select: React.FC<ISelect> = (
                         borderRight: "none",
                         borderBottom: "1px solid #194b76",
                         borderRadius: 0,
-                        overflowX: "auto",
+                        overflowX: "auto"
                     }),
                     valueContainer: (baseStyles, state) => ({
                         ...baseStyles,
                         display: "flex",
-                        flexDirection: "row",
+                        flexDirection: "row"
                     }),
                     // indicatorsContainer: base => ({
                     //     ...base,
@@ -172,7 +172,7 @@ const Select: React.FC<ISelect> = (
                         marginTop: "3px",
                         zIndex: 9999,
                         outline: "none",
-                        boxShadow: "none",
+                        boxShadow: "none"
                     }),
                     option: (baseStyles, state) => ({
                         ...baseStyles,
@@ -183,8 +183,8 @@ const Select: React.FC<ISelect> = (
                         ...base,
                         // kill the white space on first and last option
                         padding: "0px",
-                        backgroundColor: "white",
-                       /// borderRadius: "5px",
+                        backgroundColor: "white"
+                        /// borderRadius: "5px",
                     }),
                     multiValue: (baseStyles, state) => ({
                         ...baseStyles,
@@ -201,7 +201,7 @@ const Select: React.FC<ISelect> = (
                         ...styles,
                         // backgroundColor: '#6D9886',
                         backgroundColor: "white",
-                        color: data.color,
+                        color: data.color
                     })
                 }}
                 className={s.select}

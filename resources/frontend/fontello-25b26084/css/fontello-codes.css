@@ -1,36 +1,176 @@
 
-.facebookicon-:before { content: '\e800'; } /* '' */
-.instagramicon-:before { content: '\e801'; } /* '' */
-.linkedinicon-:before { content: '\e802'; } /* '' */
-.weathericon-:before { content: '\e803'; } /* '' */
-.vkicon-:before { content: '\e804'; } /* '' */
-.twittericon-:before { content: '\e805'; } /* '' */
-.usericon-:before { content: '\e806'; } /* '' */
-.sunicon-:before { content: '\e807'; } /* '' */
-.searchicon-:before { content: '\e808'; } /* '' */
-.languageicon-:before { content: '\e809'; } /* '' */
-.vectoricon-:before { content: '\e80a'; } /* '' */
-.right-arrowicon-:before { content: '\e80b'; } /* '' */
-.right-thinicon-:before { content: '\e80c'; } /* '' */
-.staricon-:before { content: '\e80d'; } /* '' */
-.star-emptyicon-:before { content: '\e80e'; } /* '' */
-.cancelicon-:before { content: '\e80f'; } /* '' */
-.wheather_rainicon-:before { content: '\e810'; } /* '' */
-.wheathericon-:before { content: '\e811'; } /* '' */
-.weather_sun_rainyicon-:before { content: '\e812'; } /* '' */
-.wheather_sunicon-:before { content: '\e813'; } /* '' */
-.weather_snowicon-:before { content: '\e814'; } /* '' */
-.vector-1icon-:before { content: '\e815'; } /* '' */
-.showicon-:before { content: '\e816'; } /* '' */
-.good-luck-iconicon-:before { content: '\e817'; } /* '' */
-.back-buttonicon-:before { content: '\e818'; } /* '' */
-.price-iconicon-:before { content: '\e819'; } /* '' */
-.my-ordersicon-:before { content: '\e81a'; } /* '' */
-.my-servicesicon-:before { content: '\e81b'; } /* '' */
-.personal-detailsicon-:before { content: '\e81c'; } /* '' */
-.log-outicon-:before { content: '\e81d'; } /* '' */
-.view-iconicon-:before { content: '\e81e'; } /* '' */
-.box-iconicon-:before { content: '\e81f'; } /* '' */
-.binicon-:before { content: '\e820'; } /* '' */
-.editicon-:before { content: '\e821'; } /* '' */
-.vector-2icon-:before { content: '\e822'; } /* '' */
+.facebookicon-:before {
+    content: '\e800';
+}
+
+/* '' */
+.instagramicon-:before {
+    content: '\e801';
+}
+
+/* '' */
+.linkedinicon-:before {
+    content: '\e802';
+}
+
+/* '' */
+.weathericon-:before {
+    content: '\e803';
+}
+
+/* '' */
+.vkicon-:before {
+    content: '\e804';
+}
+
+/* '' */
+.twittericon-:before {
+    content: '\e805';
+}
+
+/* '' */
+.usericon-:before {
+    content: '\e806';
+}
+
+/* '' */
+.sunicon-:before {
+    content: '\e807';
+}
+
+/* '' */
+.searchicon-:before {
+    content: '\e808';
+}
+
+/* '' */
+.languageicon-:before {
+    content: '\e809';
+}
+
+/* '' */
+.vectoricon-:before {
+    content: '\e80a';
+}
+
+/* '' */
+.right-arrowicon-:before {
+    content: '\e80b';
+}
+
+/* '' */
+.right-thinicon-:before {
+    content: '\e80c';
+}
+
+/* '' */
+.staricon-:before {
+    content: '\e80d';
+}
+
+/* '' */
+.star-emptyicon-:before {
+    content: '\e80e';
+}
+
+/* '' */
+.cancelicon-:before {
+    content: '\e80f';
+}
+
+/* '' */
+.wheather_rainicon-:before {
+    content: '\e810';
+}
+
+/* '' */
+.wheathericon-:before {
+    content: '\e811';
+}
+
+/* '' */
+.weather_sun_rainyicon-:before {
+    content: '\e812';
+}
+
+/* '' */
+.wheather_sunicon-:before {
+    content: '\e813';
+}
+
+/* '' */
+.weather_snowicon-:before {
+    content: '\e814';
+}
+
+/* '' */
+.vector-1icon-:before {
+    content: '\e815';
+}
+
+/* '' */
+.showicon-:before {
+    content: '\e816';
+}
+
+/* '' */
+.good-luck-iconicon-:before {
+    content: '\e817';
+}
+
+/* '' */
+.back-buttonicon-:before {
+    content: '\e818';
+}
+
+/* '' */
+.price-iconicon-:before {
+    content: '\e819';
+}
+
+/* '' */
+.my-ordersicon-:before {
+    content: '\e81a';
+}
+
+/* '' */
+.my-servicesicon-:before {
+    content: '\e81b';
+}
+
+/* '' */
+.personal-detailsicon-:before {
+    content: '\e81c';
+}
+
+/* '' */
+.log-outicon-:before {
+    content: '\e81d';
+}
+
+/* '' */
+.view-iconicon-:before {
+    content: '\e81e';
+}
+
+/* '' */
+.box-iconicon-:before {
+    content: '\e81f';
+}
+
+/* '' */
+.binicon-:before {
+    content: '\e820';
+}
+
+/* '' */
+.editicon-:before {
+    content: '\e821';
+}
+
+/* '' */
+.vector-2icon-:before {
+    content: '\e822';
+}
+
+/* '' */

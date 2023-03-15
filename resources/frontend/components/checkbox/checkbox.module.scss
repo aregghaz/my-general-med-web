@@ -4,87 +4,87 @@
 
 
 .checkbox {
-  position: relative;
-  font-family: inherit;
-  font-size: inherit;
-  background-color: 'black';
-  @include themify($themes) {
-    color: themed('modalTitleColor');
-  }
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-
-  & * {
-    pointer-events: none;
-  }
-
-  & input {
-    z-index: -1;
-    opacity: 0;
-    width: 0;
-  }
-
-  & label {
-    font-size: 16px;
-    margin-left: 18px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    @media only screen and (max-width: $smallDisplay) {
-      font-size: 14px;
-    }
-  }
-
-  & span {
     position: relative;
-    display: inline-block;
-    width: 1.2rem;
-    height: 1rem;
+    font-family: inherit;
+    font-size: inherit;
+    background-color: 'black';
     @include themify($themes) {
-      border: 1px solid themed('inputBorderColor');
-      background-color: themed('modalInputBgColor');
+        color: themed('modalTitleColor');
     }
-    border-radius: 3px;
-  }
+    cursor: pointer;
+    display: flex;
+    align-items: center;
 
-  & input:checked ~ span::after {
-    content: $checkbox;
-    position: absolute;
-    left: .2rem;
-  }
+    & * {
+        pointer-events: none;
+    }
 
-  & input:focus {
-    outline-color: transparent;
-  }
+    & input {
+        z-index: -1;
+        opacity: 0;
+        width: 0;
+    }
 
-  & input:focus ~ span {
-    box-shadow: 1px 1px $boxShadowColor;
-  }
+    & label {
+        font-size: 16px;
+        margin-left: 18px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        @media only screen and (max-width: $smallDisplay) {
+            font-size: 14px;
+        }
+    }
 
-  & input:focus ~ label {
-    text-shadow: 0 1px $boxShadowColor;
-  }
+    & span {
+        position: relative;
+        display: inline-block;
+        width: 1.2rem;
+        height: 1rem;
+        @include themify($themes) {
+            border: 1px solid themed('inputBorderColor');
+            background-color: themed('modalInputBgColor');
+        }
+        border-radius: 3px;
+    }
 
-  & input:disabled ~ span {
-    box-shadow: none;
-    color: $disabledColor;
-    border-color: currentColor;
+    & input:checked ~ span::after {
+        content: $checkbox;
+        position: absolute;
+        left: .2rem;
+    }
 
-  }
+    & input:focus {
+        outline-color: transparent;
+    }
 
-  & input:disabled ~ label {
-    color: $disabledColor;
-  }
+    & input:focus ~ span {
+        box-shadow: 1px 1px $boxShadowColor;
+    }
+
+    & input:focus ~ label {
+        text-shadow: 0 1px $boxShadowColor;
+    }
+
+    & input:disabled ~ span {
+        box-shadow: none;
+        color: $disabledColor;
+        border-color: currentColor;
+
+    }
+
+    & input:disabled ~ label {
+        color: $disabledColor;
+    }
 }
 
 
 .checkboxLabel {
-  font-size: 14px;
-  margin-left: 10px;
-  @include themify($themes) {
-    color: themed('modalTitleColor');
-  }
+    font-size: 14px;
+    margin-left: 10px;
+    @include themify($themes) {
+        color: themed('modalTitleColor');
+    }
 }
 

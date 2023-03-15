@@ -1,28 +1,28 @@
-import React from 'react'
-import Select from 'react-select/async'
-import {components, OptionProps, OptionTypeBase} from 'react-select'
-import {IOption} from './select'
-import {OptionsType} from 'react-select/src/types'
-import Checkbox from '../checkbox/checkbox'
-import useLocalStorage from '../../hooks/use-local-storage'
-import {getStyles} from './common'
+import React from "react";
+import Select from "react-select/async";
+import { components, OptionProps, OptionTypeBase } from "react-select";
+import { IOption } from "./select";
+import { OptionsType } from "react-select/src/types";
+import Checkbox from "../checkbox/checkbox";
+import useLocalStorage from "../../hooks/use-local-storage";
+import { getStyles } from "./common";
 
-import s from './select.module.scss'
+import s from "./select.module.scss";
 
 interface IAsyncSelect {
-    isSearchable?: boolean
-    placeholder?: string
-    options?: Array<IOption>
-    onChange: (option: IOption | Array<IOption>) => void
-    getOptionLabel: (option: IOption) => string
-    getOptionValue: (option: IOption) => string
-    defaultValue: Array<IOption> | IOption
+    isSearchable?: boolean;
+    placeholder?: string;
+    options?: Array<IOption>;
+    onChange: (option: IOption | Array<IOption>) => void;
+    getOptionLabel: (option: IOption) => string;
+    getOptionValue: (option: IOption) => string;
+    defaultValue: Array<IOption> | IOption;
     loadOptions: (inputValue: string, callback: ((options: OptionsType<IOption>) => void)) => Promise<any> | void;
-    name?: string
-    label?: string
-    labelStyle?: string
-    isCheckbox?: boolean
-    isMulti?: boolean
+    name?: string;
+    label?: string;
+    labelStyle?: string;
+    isCheckbox?: boolean;
+    isMulti?: boolean;
 }
 
 const Option = (props: OptionProps<OptionTypeBase>) => (
@@ -33,13 +33,13 @@ const Option = (props: OptionProps<OptionTypeBase>) => (
             labelStyle={props.selectProps.authCheckboxLabelStyle}
         />
     </components.Option>
-)
+);
 
 const AsyncSelect: React.FC<IAsyncSelect> = (
     {
         isCheckbox = false,
         isSearchable = false,
-        placeholder = '',
+        placeholder = "",
         options,
         onChange,
         getOptionLabel,
@@ -51,7 +51,7 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
         labelStyle,
         isMulti = false
     }) => {
-    const [themeType] = useLocalStorage('theme', 'light')
+    const [themeType] = useLocalStorage("theme", "light");
     return (
 
         <>
@@ -69,7 +69,7 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
                         borderLeft: "none",
                         borderRight: "none",
                         borderRadius: "none",
-                        borderBottom: "1px solid black",
+                        borderBottom: "1px solid black"
                     }),
                     menu: (base, props) => ({
                         ...base,
@@ -77,7 +77,7 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
                         marginTop: "3px",
                         zIndex: 9999,
                         outline: "none",
-                        boxShadow: "none",
+                        boxShadow: "none"
                     }),
                     option: (baseStyles, state) => ({
                         ...baseStyles,
@@ -90,7 +90,7 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
                         padding: "0px",
                         // borderRadius: "15px",
                         backgroundColor: "white",
-                        borderRadius: "none",
+                        borderRadius: "none"
                     }),
                     multiValue: (baseStyles, state) => ({
                         ...baseStyles,
@@ -114,7 +114,7 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
                         ...styles,
                         // backgroundColor: '#6D9886',
                         backgroundColor: "white",
-                        color: data.color,
+                        color: data.color
                     })
                 }}
                 options={options}
@@ -124,7 +124,7 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
                 components={isCheckbox ? {
                     Option,
                     IndicatorSeparator: () => null
-                } : {IndicatorSeparator: () => null}}
+                } : { IndicatorSeparator: () => null }}
                 defaultOptions
                 cacheOptions
                 isSearchable={isSearchable}
@@ -135,8 +135,8 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
 
             />
         </>
-    )
-}
+    );
+};
 
 
-export default AsyncSelect
+export default AsyncSelect;
