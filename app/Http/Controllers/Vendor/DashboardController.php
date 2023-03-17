@@ -26,11 +26,11 @@ class DashboardController extends Controller
         $carsIdData = array_column($cars->toArray(), 'id');
 //
         $data = Clients::select(
-            DB::raw('year(created_at) as year'),
-            DB::raw('month(created_at) as month'),
+            DB::raw('year(date_of_service) as year'),
+            DB::raw('month(date_of_service) as month'),
             DB::raw('sum(price) as price'),
         )
-            ->where(DB::raw('date(created_at)'), '>=', "2023-01-01")
+            ->where(DB::raw('date(date_of_service)'), '>=', "2023-01-01")
             ->where(DB::raw('vendor_id'), '=', $vendorId)
             ->where('type_id', '=', 6)
             ->groupBy('month')
@@ -44,7 +44,7 @@ class DashboardController extends Controller
             DB::raw('car_id as car_id'),
             DB::raw('sum(price) as price'),
         )
-            ->where(DB::raw('date(created_at)'), '>=', "2023-01-01")
+            ->where(DB::raw('date(date_of_service)'), '>=', "2023-01-01")
             ->whereIn('car_id', $carsIdData)
             ->groupBy('car_id')
             ->where('type_id', '=', 6)
@@ -56,7 +56,7 @@ class DashboardController extends Controller
             DB::raw('car_id as car_id'),
             DB::raw('count(id) as count'),
         )
-            ->where(DB::raw('date(created_at)'), '>=', "2023-01-01")
+            ->where(DB::raw('date(date_of_service)'), '>=', "2023-01-01")
             ->whereIn('car_id', $carsIdData)
             ->where('type_id', '=', 6)
             ->groupBy('car_id')
@@ -70,7 +70,7 @@ class DashboardController extends Controller
             DB::raw('sum(price) as price'),
             DB::raw('count(id) as count'),
         )
-            ->where(DB::raw('date(created_at)'), '>=', "2023-01-01")
+            ->where(DB::raw('date(date_of_service)'), '>=', "2023-01-01")
             ->where(DB::raw('vendor_id'), '=', $vendorId)
             ->where('type_id', '=', 6)
             ->get()
