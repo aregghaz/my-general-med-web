@@ -136,7 +136,7 @@ const MultiSelectSort: React.FC<ISelect> = (
     }
 ) => {
 
-    const [selected, setSelected] = useState(value);
+    const [selected, setSelected] = useState(null /*value*/);
     const onHandleChange = (selectedOptions: any) => setSelected(selectedOptions);
 
     const onSortEnd: SortEndHandler = ({ oldIndex, newIndex }) => {
@@ -152,7 +152,7 @@ const MultiSelectSort: React.FC<ISelect> = (
             <label className={`${s.label} ${labelStyle} `} htmlFor={name}>{label}</label>
             <SortableSelect
                 isMulti={isMulti}
-                className={s.select}
+                className={s.sortSelect}
                 placeholder={placeholder}
                 name={name}
                 isSearchable={isSearchable}
@@ -200,10 +200,11 @@ const MultiSelectSort: React.FC<ISelect> = (
                 styles={{
                     control: (baseStyles: any, state: any) => ({
                         ...baseStyles,
-                        borderColor: "#D63D3D",
-                        /// backgroundColor: '#545cd8',
+                        // borderColor: "#D63D3D",
+                        // backgroundColor: '#545cd8',
                         borderRadius: "15px",
-                        color: "#707980"
+                        color: "#707980",
+                        boxShadow: "0px 0px 4px black"
                     }),
                     menu: (base: any) => ({
                         ...base,
@@ -217,7 +218,7 @@ const MultiSelectSort: React.FC<ISelect> = (
                         // kill the white space on first and last option
                         padding: 0,
                         color: "#707980",
-                        backgroundColor: "white"
+                        backgroundColor: "white",
                     }),
                     multiValue: (baseStyles: any, state: any) => ({
                         ...baseStyles,

@@ -193,6 +193,7 @@ const Drawer: React.FC = ({ children }) => {
                                     <div className={s.account_drop_menu} ref={logoutRef}>
                                         <div>
                                             <Button
+                                                className={s.logOutButton}
                                                 type={"blank"}
                                                 onClick={() => {
                                                     handlerLogOut();
@@ -202,7 +203,9 @@ const Drawer: React.FC = ({ children }) => {
                                                 <span className={s.icon}>
                                                     <Logout />
                                                 </span>
-
+                                                <span className={s.iconLabel}>
+                                                    Log out
+                                                </span>
                                             </Button>
                                         </div>
                                     </div>
