@@ -2618,7 +2618,6 @@ textarea[type=number] {
   width: 100%;
   height: auto;
   background-color: white;
-  border-bottom: 1px solid black;
   padding: 10px 0;
 }
 .info-block_items__p1gzU {
@@ -2627,7 +2626,7 @@ textarea[type=number] {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 50px;
+  padding: 20px;
 }
 @media screen and (max-width: 1000px) {
   .info-block_items__p1gzU {
@@ -2642,7 +2641,6 @@ textarea[type=number] {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  border-bottom: 0.1px solid gray;
   padding-bottom: 5px;
 }
 
@@ -2690,10 +2688,7 @@ textarea[type=number] {
 }
 
 .info-block_driverPersonal__1sC22 {
-  width: 30%;
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  align-items: center;
+  align-items: start;
 }
 
 .info-block_driverActions__1fxyM {
@@ -2704,12 +2699,9 @@ textarea[type=number] {
 .info-block_documents__3YGTk {
   width: 100%;
   height: 50%;
-  padding-top: 5px;
   border-top: 0.1px solid gray;
-  display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 30px;
-  padding-top: 20px;
 }
 @media screen and (max-width: 1200px) {
   .info-block_documents__3YGTk {
@@ -2723,7 +2715,7 @@ textarea[type=number] {
 }
 
 .info-block_item__1jkbz {
-  width: auto;
+  width: 100%;
   height: auto;
   font-size: 20px;
   font-weight: 600;
@@ -2733,6 +2725,23 @@ textarea[type=number] {
 }
 @media screen and (max-width: 1000px) {
   .info-block_item__1jkbz {
+    font-size: 18px;
+  }
+}
+
+.info-block_itemBorder__27TdG {
+  width: 100%;
+  height: auto;
+  font-size: 20px;
+  font-weight: 600;
+  border-bottom: 0.1px solid gray;
+  padding: 20px 0;
+}
+.info-block_itemBorder__27TdG > a {
+  color: #194b76;
+}
+@media screen and (max-width: 1000px) {
+  .info-block_itemBorder__27TdG {
     font-size: 18px;
   }
 }
@@ -2826,6 +2835,24 @@ textarea[type=number] {
   margin-top: 20px;
   color: #D63D3D;
   font-size: 35px;
+}
+.not_infoSection__3cahA {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  float: left;
+}
+
+.not_infoTable__13It0 {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+}
+
+.not_fullWidth__bFpTz {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 

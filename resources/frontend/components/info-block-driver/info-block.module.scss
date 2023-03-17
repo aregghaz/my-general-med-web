@@ -71,8 +71,8 @@
     width: 100%;
     height: auto;
     background-color: white;
-  ///  border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    ///  border-top: 1px solid black;
+   // border-bottom: 1px solid black;
     padding: 10px 0;
 
     & * {
@@ -86,7 +86,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding: 50px;
+    padding: 20px;
 
     @media screen and (max-width: 1000px) {
         padding: 20px;
@@ -100,7 +100,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    border-bottom: 0.1px solid gray;
+   /// border-bottom: 0.1px solid gray;
     padding-bottom: 5px;
 }
 
@@ -147,28 +147,25 @@
 }
 
 .driverPersonal {
-    width: 30%;
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    align-items: center;
+    //width: 30%;
+    //display: grid;
+    //grid-template-columns: repeat(1, 1fr);
+    align-items: start;
 }
 
 .driverActions {
     width: 50%;
     height: 100%;
- ///   border: 1px solid black;
+    ///   border: 1px solid black;
 }
 
 .documents {
     width: 100%;
     height: 50%;
-    padding-top: 5px;
     border-top: 0.1px solid gray;
-    display: grid;
+    //display: flex;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 30px;
-    padding-top: 20px;
-
     @media screen and (max-width: 1200px) {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -179,11 +176,29 @@
 }
 
 .item {
-    width: auto;
+    width: 100%;
     height: auto;
     //padding: 5px;
     font-size: 20px;
     font-weight: 600;
+
+    & > a {
+        color: $borderColor;
+    }
+
+    @media screen and (max-width: 1000px) {
+        font-size: 18px
+    }
+}
+
+.itemBorder {
+
+    width: 100%;
+    height: auto;
+    font-size: 20px;
+    font-weight: 600;
+    border-bottom: 0.1px solid gray;
+    padding: 20px 0;
 
     & > a {
         color: $borderColor;

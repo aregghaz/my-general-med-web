@@ -1,0 +1,19 @@
+@import "../../../styles/variables";
+
+.infoSection{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    float:left;
+}
+.infoTable{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+
+.fullWidth{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}

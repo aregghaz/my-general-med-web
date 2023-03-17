@@ -3,7 +3,7 @@ import List from "../../layouts/templates/list/list";
 import { AdminApi } from "../../../api/admin-api/admin-api";
 import InfoBlockDriver from "../../../components/info-block-driver/info-block";
 import { useInView } from "react-intersection-observer";
-import s from "../../../styles/home.module.scss";
+import s from "./not.module.scss";
 import { actionsNotification } from "../../../store/notification";
 import { useDispatch } from "react-redux";
 import InfoBlockCar from "../../../components/info-block-car/info-block";
@@ -12,11 +12,13 @@ interface INotificationList {
     path: string;
 }
 
+
 const NotificationList: React.FC<INotificationList> = () => {
     const tableRef = useRef(null);
     const [data, setData] = useState([]);
     const [info, setInfoData] = useState(null);
-    const [model, setModel] = useState("");
+    const [model, setModel] = useState(null);
+    const [companyName, setVendor] = useState(null);
 
     const [loading, setLoading] = useState(false);
     const countRef = useRef(1);
@@ -49,7 +51,7 @@ const NotificationList: React.FC<INotificationList> = () => {
     }, [inView, loading]);
 
     const handlerAction = async (action: string, id: number) => {
-        const notifData = await AdminApi.getInfoData(id, 'admin');
+        const notifData = await AdminApi.getInfoData(id, "admin");
         switch (notifData.model) {
             case "driver":
                 setInfoData(notifData.data);
@@ -58,6 +60,7 @@ const NotificationList: React.FC<INotificationList> = () => {
                 setInfoData(notifData.data);
                 break;
         }
+        setVendor(notifData.companyName);
         setModel(notifData.model);
         setLoading(true);
     };
@@ -65,23 +68,27 @@ const NotificationList: React.FC<INotificationList> = () => {
     return data && (
 
         <>
-            {model === "driver" && <InfoBlockDriver data={info} is_admin={true} />}
-            {model === "car" && <InfoBlockCar data={info} is_admin={true} />}
-            <List
-                data={data}
-                titles={titles}
-                tableRef={tableRef}
-                isGetInfo={true}
-                isGetHistory={false}
-                handlerAction={handlerAction}
-                className={"pagination"}
-                paginated={false}
-                isCreate={false}
-                isDelete={false}
-                isEdit={false}
-                isGetItems={false}
-            />
-            <div className={s.detector} ref={ref} />
+            {model && <div className={s.infoSection}>
+                {model === "driver" && <InfoBlockDriver data={info} is_admin={true} />}
+                {model === "car" && <InfoBlockCar data={info} is_admin={true} />}
+            </div>}
+            <div className={!model ? s.fullWidth :s.infoTable}>
+                <List
+                    data={data}
+                    titles={titles}
+                    tableRef={tableRef}
+                    isGetInfo={true}
+                    isGetHistory={false}
+                    handlerAction={handlerAction}
+                    className={"pagination"}
+                    paginated={false}
+                    isCreate={false}
+                    isDelete={false}
+                    isEdit={false}
+                    isGetItems={false}
+                />
+                <div className={s.detector} ref={ref} />
+            </div>
         </>
     );
 };
