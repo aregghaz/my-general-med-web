@@ -265,6 +265,7 @@ const Home: React.FC<IHome> = () => {
         setLoading(true);
     };
 
+
     const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
     if (agreement && ids.length > 0) {
