@@ -24,7 +24,7 @@ class NotificationController extends Controller
         $roleId = $request->user()->role;
 
         $notification = Notification::with('getAction')
-            ->orderBy('new_admin', "desc")
+           // ->orderBy('new_admin', "desc")
             ->orderBy('created_at', "desc")
             ->take(25 * $showMore)->get();;
 
@@ -55,7 +55,7 @@ class NotificationController extends Controller
         })->orWhere(function ($query) use ($carIds) {
             $query->whereIn('value_id', $carIds)->where('model', 'car');
         })
-            ->orderBy('new_vendor', "desc")
+         //   ->orderBy('new_vendor', "desc")
             ->orderBy('created_at', "desc")
             ->take(25 * $showMore)->get();;
 
@@ -107,6 +107,7 @@ class NotificationController extends Controller
                 'data' => $data->original,
                 'model' => $notification->model,
                 'companyName' =>$companyName,
+                'field' =>($notification->field ?? false),
             ],
             200
         );

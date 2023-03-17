@@ -130,56 +130,61 @@ const VendorUsers: React.FC<Beneficiary> = () => {
     return (
         data && (
             <>
-                {Object.keys(itemData).length > 0 && <InfoBlockDriver data={itemData} is_admin={false} />}
+
                 <Tabs tabs={tabs}
                       handlerChangeTabs={handlerChangeTabs} />
-                <List
-                    data={data}
-                    titles={titles}
-                    isDelete
-                    isEdit
-                    paginated={false}
-                    isCreate
-                    isGetInfo
-                    handlerAction={handlerAction}
-                    className={"pagination"}
-                    isGetHistory={false}
-                    isGetItems={false} />
-                <Modal
-                    isOpen={isModalOpen !== false}
-                    style={customStyles}
-                    onRequestClose={handlerCloseModal}
-                >
-                    <div className={s.modalBody}>
-                        <div className={s.iconWrapper}>
-                            <i
-                                className="cancelicon-"
-                                onClick={handlerCloseModal}
-                            />
-                        </div>
+                {Object.keys(itemData).length > 0 && <div className={s.itemInfo}>
+                    <InfoBlockDriver data={itemData} is_admin={false} />
+                </div>}
+             <div className={Object.keys(itemData).length > 0 ? s.itemOpen : s.ItemClose}>
+                 <List
+                     data={data}
+                     titles={titles}
+                     isDelete
+                     isEdit
+                     paginated={false}
+                     isCreate
+                     isGetInfo
+                     handlerAction={handlerAction}
+                     className={"pagination"}
+                     isGetHistory={false}
+                     isGetItems={false} />
+                 <Modal
+                     isOpen={isModalOpen !== false}
+                     style={customStyles}
+                     onRequestClose={handlerCloseModal}
+                 >
+                     <div className={s.modalBody}>
+                         <div className={s.iconWrapper}>
+                             <i
+                                 className="cancelicon-"
+                                 onClick={handlerCloseModal}
+                             />
+                         </div>
 
-                        <i className={`binicon- ${s.icon}`} />
-                        <p className={s.text}>
-                            {t("admin.do_you_want_to_delete")}
-                        </p>
-                        <div className={s.buttons}>
-                            <Button
-                                type={"green"}
-                                onClick={handlerDeleteItem}
-                                className={s.button}
-                            >
-                                {t("admin.yes")}
-                            </Button>
-                            <Button
-                                type={"transparent"}
-                                onClick={handlerCloseModal}
-                                className={s.button}
-                            >
-                                {t("admin.no")}
-                            </Button>
-                        </div>
-                    </div>
-                </Modal>
+                         <i className={`binicon- ${s.icon}`} />
+                         <p className={s.text}>
+                             {t("admin.do_you_want_to_delete")}
+                         </p>
+                         <div className={s.buttons}>
+                             <Button
+                                 type={"green"}
+                                 onClick={handlerDeleteItem}
+                                 className={s.button}
+                             >
+                                 {t("admin.yes")}
+                             </Button>
+                             <Button
+                                 type={"transparent"}
+                                 onClick={handlerCloseModal}
+                                 className={s.button}
+                             >
+                                 {t("admin.no")}
+                             </Button>
+                         </div>
+                     </div>
+                 </Modal>
+             </div>
             </>
         )
     );

@@ -3,7 +3,7 @@ import List from "../../layouts/templates/list/list";
 import { AdminApi } from "../../../api/admin-api/admin-api";
 import InfoBlockDriver from "../../../components/info-block-driver/info-block";
 import { useInView } from "react-intersection-observer";
-import s from "../../../styles/home.module.scss";
+import s from "../../layouts/templates/list/list.module.scss";
 import { actionsNotification } from "../../../store/notification";
 import { useDispatch } from "react-redux";
 import InfoBlockCar from "../../../components/info-block-car/info-block";
@@ -17,7 +17,7 @@ const Notification: React.FC<INotificationList> = () => {
     const tableRef = useRef(null);
     const [data, setData] = useState([]);
     const [info, setInfoData] = useState(null);
-    const [model, setModel] = useState("");
+    const [model, setModel] = useState(null);
 
     const [loading, setLoading] = useState(false);
     const countRef = useRef(1);
@@ -62,27 +62,34 @@ const Notification: React.FC<INotificationList> = () => {
         setModel(notifData.model);
         setLoading(true);
     };
+
+
     console.log(data, "carcar");
     return data && (
 
         <>
-            {model === "driver" && <InfoBlockDriver data={info} is_admin={false} />}
-            {model === "car" && <InfoBlockCar data={info} is_admin={false}/>}
-            <List
-                data={data}
-                titles={titles}
-                tableRef={tableRef}
-                isGetInfo={true}
-                isGetHistory={false}
-                handlerAction={handlerAction}
-                className={"pagination"}
-                paginated={false}
-                isCreate={false}
-                isDelete={false}
-                isEdit={false}
-                isGetItems={false}
-            />
-            <div className={s.detector} ref={ref} />
+            {model && <div className={s.itemInfo}>
+                {model === "driver" && <InfoBlockDriver data={info} is_admin={false} />}
+                {model === "car" && <InfoBlockCar data={info} is_admin={false} />}
+            </div>}
+            <div  className={model ? s.itemOpen : s.ItemClose}>
+                <List
+                    data={data}
+                    titles={titles}
+                    tableRef={tableRef}
+                    isGetInfo={true}
+                    isGetHistory={false}
+                    handlerAction={handlerAction}
+                    className={"pagination"}
+                    paginated={false}
+                    isCreate={false}
+                    isDelete={false}
+                    isEdit={false}
+                    isGetItems={false}
+                />
+                <div className={s.detector} ref={ref} />
+            </div>
+
         </>
     );
 };

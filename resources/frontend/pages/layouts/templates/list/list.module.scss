@@ -176,6 +176,22 @@
 
 ///////////
 
+.itemInfo{
+    width: 30%;
+    display: flex;
+    flex-direction: row;
+    float:left
+}
+.itemOpen{
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+}
+.ItemClose{
+    width: 100%;
+    display: flex;
+}
+
 
 .upload_panel {
     padding: 10px 20px 10px 40px;

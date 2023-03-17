@@ -120,20 +120,22 @@ const Cars: React.FC<Beneficiary> = () => {
     return (
         data &&
         <>
-            {Object.keys(itemData).length > 0 && <InfoBlockCar data={itemData} is_admin={false}/>}
-            <List
-                data={data}
-                titles={titles}
-                isDelete
-                isEdit
-                handlerAction={handlerAction}
-                paginated={false}
-                isCreate
-                isGetInfo
-                className={"pagination"}
-                isGetHistory={false}
-                isGetItems={false}
-            />
+            {Object.keys(itemData).length > 0 &&<div  className={s.itemInfo}> <InfoBlockCar data={itemData} is_admin={false}/></div>}
+     <div className={Object.keys(itemData).length > 0 ? s.itemOpen : s.ItemClose}>
+         <List
+             data={data}
+             titles={titles}
+             isDelete
+             isEdit
+             handlerAction={handlerAction}
+             paginated={false}
+             isCreate
+             isGetInfo
+             className={"pagination"}
+             isGetHistory={false}
+             isGetItems={false}
+         />
+     </div>
 
             <Modal
                 isOpen={isModalOpen !== false}

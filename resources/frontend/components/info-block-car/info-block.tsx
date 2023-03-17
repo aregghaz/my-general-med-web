@@ -25,6 +25,11 @@ const InfoBlockCar: FC<IProps> = ({data, is_admin}) => {
             {
                 newData &&
                 <>
+                    <div className={cls.carImgBox}>
+                        <ImageGallery
+                            images={newData.images}
+                        />
+                    </div>
                     <div className={cls.carInfoBox}>
                         <div className={cls.infoItem}>
                             <span className={cls.b_text}>{t('carModel')}: </span>
@@ -56,11 +61,7 @@ const InfoBlockCar: FC<IProps> = ({data, is_admin}) => {
                             })}
                         </div>
                     </div>
-                    <div className={cls.carImgBox}>
-                        <ImageGallery
-                            images={newData.images}
-                        />
-                    </div>
+
                 </>
             }
         </div>
