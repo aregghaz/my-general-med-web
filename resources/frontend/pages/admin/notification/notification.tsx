@@ -7,7 +7,7 @@ import s from "./not.module.scss";
 import { actionsNotification } from "../../../store/notification";
 import { useDispatch } from "react-redux";
 import InfoBlockCar from "../../../components/info-block-car/info-block";
-import CloseSvg from "-!svg-react-loader!../../../images/close.svg";
+import CloseSvg from "-!svg-react-loader!../../../images/Close.svg";
 
 interface INotificationList {
     path: string;

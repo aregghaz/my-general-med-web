@@ -16,11 +16,20 @@ class NotificationCollection extends ResourceCollection
     {
 
         return $this->map(function ($data) use ($request) {
+            switch ($data->model){
+                case"car":
+                    $typeID = $data->getCars->make->name . ' ' . $data->getCars->model->name;
+                    break;
+                case "driver" :
+                    $typeID =  $data->getDriver->name . ' ' . $data->getDriver->surname;
+
+                    break;
+            }
             return [
                 ///  'id' => $data->id,
                 'id' => $data->id,
                 'new' => $request->user()->role->name == 'admin' ? $data->new_admin : $data->new_vendor,
-                "value_id"=> $data->value_id,
+                "value_id"=> $typeID,
                 'field' => $data->field,
                 'type_id' =>  $data->getAction->name,
                 'model' =>  $data->model,

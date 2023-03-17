@@ -21,4 +21,10 @@ class Notification extends Model
     {
         return $this->hasOne(ActionStatus::class, 'id', 'type_id');
     }
+    public function getCars() {
+        return $this->hasOne(Cars::class, 'id', 'value_id');
+    }
+    public function getDriver() {
+        return $this->hasOne(User::class, 'id', 'value_id');
+    }
 }

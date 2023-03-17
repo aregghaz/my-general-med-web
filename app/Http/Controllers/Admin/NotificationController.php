@@ -23,11 +23,10 @@ class NotificationController extends Controller
 
         $roleId = $request->user()->role;
 
-        $notification = Notification::with('getAction')
+        $notification = Notification::with('getAction')->with('getCars', 'getDriver')
            // ->orderBy('new_admin', "desc")
             ->orderBy('created_at', "desc")
-            ->take(25 * $showMore)->get();;
-
+            ->take(25 * $showMore)->get();
         return response()->json(
             [
                 'data' => new NotificationCollection($notification),

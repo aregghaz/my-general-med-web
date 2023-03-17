@@ -122,7 +122,7 @@ const Select: React.FC<ISelect> = (
 
     return (
         <>
-            <label htmlFor={name}>{label}</label>
+            {label && <label htmlFor={name}>{label}</label>}
             <div className={s.buttonsSelect}>
                 {isMulti && <><Button
                     type={"green"}

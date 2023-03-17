@@ -12,6 +12,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { adminVendorUsers } from "../../../store/selectors";
 import NavigationTab from "../../../components/navigation/navigationTab";
 import axios from "axios";
+import InfoBlockDriver from "../../../components/info-block-driver/info-block";
+import { vendorAPI } from "../../../api/site-api/vendor-api";
+import CloseSvg from "-!svg-react-loader!../../../images/Close.svg";
 
 interface Beneficiary {
     path: string;
@@ -27,6 +30,7 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [isLoading, setLoading] = useState(true);
+    const [itemData, setItemData] = useState({});
 
     useEffect(() => {
         (async () => {
@@ -107,17 +111,20 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
             selected: false
         }
     ];
-    const handleActionMiddleware = () => {
-
+    const handleActionMiddleware = async (id: number) => {
+        const data = await vendorAPI.getItemData("vendorClients", id);
+        console.log(data, "data");
+        setItemData(data);
     };
     const handlerChangeTabs = async (tabId: number) => {
         setTabIdSelected(tabId);
         setLoading(true);
     };
     const handlerAction = async (action: string, id: number) => {
+        console.log(action, "action");
         switch (action) {
-            case "add":
-                await handlerAddItem();
+            case "get":
+                await handleActionMiddleware(id);
                 break;
             case "edit":
                 await handlerEditItem(id);
@@ -155,6 +162,7 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
 
         }
     };
+    const handlerClose = () => setItemData({});
     return (
         userdata && (
             <>
@@ -170,19 +178,31 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
                         onSearchInput={onSearchInput} openSearch={openSearch} tableRef={tableRef} />
 
                 </div>
-                <List
-                    data={userdata}
-                    titles={titles}
-                    handlerAction={handlerAction}
-                    isDelete={true}
-                    isEdit
-                    tableRef={tableRef}
-                    isGetHistory
-                    isCreate={false}
-                    isGetInfo={false}
-                    isGetItems={false}
-                    paginated={false}
-                />
+                {Object.keys(itemData).length > 0 && <div className={s.infoSection}>
+                    <div style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignContent: "end",
+                        justifyContent: "end",
+                        padding: "10px 10px 0 0"
+                    }}><CloseSvg onClick={handlerClose} /></div>
+                    <div className={s.itemInfo}><InfoBlockDriver data={itemData} is_admin={false} /></div>
+                </div>}
+                <div className={Object.keys(itemData).length > 0 ? s.itemOpen : s.ItemClose}>
+                    <List
+                        data={userdata}
+                        titles={titles}
+                        handlerAction={handlerAction}
+                        isDelete={true}
+                        isEdit
+                        tableRef={tableRef}
+                        isGetHistory
+                        isCreate={false}
+                        isGetInfo
+                        isGetItems={false}
+                        paginated={false}
+                    />
+                </div>
                 <Modal
                     isOpen={isModalOpen !== false}
                     style={customStyles}

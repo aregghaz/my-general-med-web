@@ -112,6 +112,11 @@ return [
     'carLiability' => 'Car liability',
     'carRegistration' => 'Car registration',
 
+    'single' => 'Single trip',
+    'timePeriod' => 'Multi trips',
+
+
+
 
     'seeMore' => 'Home number',
     'adminBeneficiaries' => "Users",

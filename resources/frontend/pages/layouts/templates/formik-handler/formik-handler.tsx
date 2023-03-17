@@ -110,10 +110,10 @@ const FormikHandler: React.FC<IFormikHandler> = (
                     options={selectOptions ? selectOptions[item.name] : selectOptions}
                     /// options={selectOptions}
                     onChange={(option: IOption) => setFieldValue(item.name, option)}
-                    label={t(item.label)}
+                  //  label={t(item.label)}
                     isSearchable={false}
                     name={item.name}
-                    placeholder={t(item.placeholder)}
+                    placeholder={t(item.label)}
                 />
             );
         case "file":

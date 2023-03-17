@@ -102,8 +102,8 @@ return [
     'sex_offender_check' => 'Sex Offender Check',
     'fullname' => 'Full name',
     'assignDriver' => 'Assign driver',
-    'model' => 'Car model',
-    'make' => 'Car make',
+    'single' => 'Single trip',
+    'timePeriod' => 'Multi trips',
 
 
     "welcome_message_part_one" => "Բարի գալուստ",

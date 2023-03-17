@@ -132,7 +132,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                         loadOptions={loadStatus}
                                         defaultValue={values["clientType"]}
                                         getOptionValue={(option: IOption) => option.value}
-                                        getOptionLabel={(option: IOption) => option.label}
+                                        getOptionLabel={(option: IOption) => t(option.label)}
                                         ///
                                         options={data ? data["clientType"] : data}
                                         /// options={selectOptions}
@@ -143,7 +143,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                         label={null}
                                         isSearchable={false}
                                         name={"clientType"}
-                                        placeholder={"clientType"}
+                                        placeholder={"Trip type"}
                                     />
                                 }
                             </div>
@@ -194,7 +194,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                     selectRange={false}
                                     /// className={`${s.input}`}
                                     ///  placeholder={null}
-                                    label={getFieldLabel(t, "date_of_service", "date_of_service", requiredFields)}
+                                   /// placeholder={getFieldLabel(t, "date_of_service", "date_of_service", requiredFields)}
                                     // error={errors['date_of_service']}
                                     // type={"string"}
                                     setFieldValue={setFieldValue} />
