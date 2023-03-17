@@ -22,7 +22,7 @@ class StatusTableCollection extends ResourceCollection
                 //'label' => $status->name,
                 'fieldName' => $status->name,
                 'slug' => $status->slug,
-                //"value"=> $status->name,
+                //"price"=> isset($status->price),
 
             ];
         });

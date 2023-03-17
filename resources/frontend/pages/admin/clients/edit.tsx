@@ -45,11 +45,13 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
         { name: "id", type: "hidden", inputType: "hidden" },
         { name: "height", type: "input", label: "height", inputType: "number" },
         { name: "weight", type: "input", label: "weight", inputType: "number" },
+        { name: "origin_comment", type: "textarea", label: "origin_comment" },
+
+        { name: "destination_comments", type: "textarea", label: "destination_comments" },
+        { name: "location", type: "autocomplete", label: "location" },
+
         { name: "pick_up", type: "timePicker", label: "pick_up", inputType: "number" },
         { name: "drop_down", type: "timePicker", label: "drop_down", inputType: "number" },
-        { name: "origin_comment", type: "textarea", label: "origin_comment" },
-        { name: "destination_comments", type: "textarea", label: "destination_comments" },
-        { name: "location", type: "autocomplete", label: "location" }
     ];
 
 
