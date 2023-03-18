@@ -2,10 +2,11 @@
 
 .block{
     width: 100%;
-    height: 550px   ;
+    height: 100%;
     //border: 1px solid red;
     display: flex;
-    padding: 0 50px;
+    padding: 0 10px;
+    flex-direction: column-reverse;
 
     & * {
         //border: 1px solid black;
@@ -13,19 +14,18 @@
 }
 
 .carInfoBox{
-    width: 40%;
+    width: 100%;
     height: 100%;
-    padding: 20px;
+    //padding: 20px;
     display: flex;
     gap: 15px;
     flex-direction: column;
 }
 
 
-.carImgBox{
-    width: 60%;
+.carImgBox {
+    width: 100%;
     height: 100%;
-    padding-top: 50px;
 }
 
 .infoItem{
