@@ -71,5 +71,8 @@ export const AdminApi = {
     },
     getInfoData(id: number, role:string) {
         return axios.get(`/api/admin/get-info/${id}/${role}`, {}).then(res => res.data);
+    },
+    deleteStatus(id:number, tabId:number) {
+      return axios.get(`/api/admin/deleteStatus/${tabId}/${id}`)
     }
 };

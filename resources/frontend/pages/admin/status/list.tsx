@@ -22,6 +22,7 @@ const Status: React.FC<Beneficiary> = () => {
     const [reasons, setReasons] = useState<number>(0);
     const [waitDuration, setWaitDuration] = useState<number>(0);
     const [artificial, setArtificial] = useState<number>(0);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const { t } = useTranslation();
     useEffect(() => {
@@ -39,7 +40,7 @@ const Status: React.FC<Beneficiary> = () => {
 
             }
         )();
-    }, [tabId]);
+    }, [tabId,loading]);
 
     const titles: Array<string> = [
         "id",
@@ -105,9 +106,17 @@ const Status: React.FC<Beneficiary> = () => {
             case "add":
                 await handlerAddItem(id, tabId);
                 break;
+                case "delete":
+                await handlerDelete(id, tabId);
+                break;
 
         }
     };
+
+    const handlerDelete = async (id:number, tabId:number) => {
+        await AdminApi.deleteStatus(id, tabId);
+        setLoading(!loading)
+    }
     const handlerEditItem = async (id: number, tabId: number) => await navigate(`/admin/changeStatus/${id}/${tabId}`);
     const handlerAddItem = async (id: number, tabId: number) => await navigate(`/admin/addStatus/${tabId}/create`);
 

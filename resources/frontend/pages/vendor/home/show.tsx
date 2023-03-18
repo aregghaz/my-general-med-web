@@ -31,7 +31,7 @@ const Show: React.FC<IShow> = ({ id }) => {
     const { clientById } = clientData;
     const { t } = useTranslation();
     const [carData, setCarData] = useState<Array<any>>(null);
-    const [car, setCar] = useState<IOption>(null);
+    const [disabled, setDisabled] = useState(false);
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: GOOGLE_API_KEY,
         libraries: ["geometry", "drawing", "places"]
@@ -62,6 +62,11 @@ const Show: React.FC<IShow> = ({ id }) => {
         (async () => {
             const homeData = await homeAPI.getCLientById(id);
             setStatuses(homeData.status);
+            console.log(homeData.client.type_id,'homeData.status');
+            if(homeData.client.type_id.id===6){
+                setDisabled(true)
+
+            }
             dispatch(clientAction.fetching({ clientById: homeData.client }));
             setCarData(homeData.cars);
             setFieldValue({
@@ -169,7 +174,7 @@ const Show: React.FC<IShow> = ({ id }) => {
                                 car: options
                             };
                         })}
-                        isDisabled={(values.status.id == 6)}
+                        isDisabled={disabled}
                         options={carData}
                         value={values.car}
                         name={"Cars"}
@@ -225,7 +230,7 @@ const Show: React.FC<IShow> = ({ id }) => {
                                  };
                              });
                          }}
-                         isDisabled={(values.status.id == 6)}
+                         isDisabled={disabled}
                          options={statuses}
                          value={values.status}
                          name={"Cars"}

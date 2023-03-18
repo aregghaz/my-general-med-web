@@ -76,13 +76,13 @@ class AdminController extends Controller
     {
         $table = $this->getTable($tableId);
         $requestData = json_decode($request->value);
-        if($tableId == 7 || $tableId == 8){
+        if ($tableId == 7 || $tableId == 8) {
             $table = $table->create([
                 'name' => $requestData->name,
                 'slug' => $requestData->slug,
                 'price' => $requestData->price,
             ]);
-        }else{
+        } else {
             $table = $table->create([
                 'name' => $requestData->name,
                 'slug' => $requestData->slug,
@@ -105,13 +105,13 @@ class AdminController extends Controller
         $table = $this->getTable($tableId);
         $requestData = json_decode($request->value);
 
-        if($tableId == 7 || $tableId == 8){
+        if ($tableId == 7 || $tableId == 8) {
             $table->find($id)->update([
                 'name' => $requestData->name,
                 'slug' => $requestData->slug,
                 'price' => $requestData->price,
             ]);
-        }else{
+        } else {
             $table->find($id)->update([
                 'name' => $requestData->name,
                 'slug' => $requestData->slug,
@@ -131,6 +131,16 @@ class AdminController extends Controller
             ///"additionalNote"=>$request->additionalNote,
             "operator_note" => $request->operator_note,
         ]);
+        return response()->json([
+            "success" => 1
+        ], 200);
+    }
+
+
+    public function delete($tableId, $id)
+    {
+        $table = $this->getTable($tableId);
+        $table->find($id)->delete();
         return response()->json([
             "success" => 1
         ], 200);
