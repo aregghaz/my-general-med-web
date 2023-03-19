@@ -4,8 +4,8 @@
 
 .dataPicker {
     position: absolute !important;
-    top:230px;
-    left:290px;
+    top:110%;
+    left:-20%;
     //z-index: 1 !important;
     z-index: 1 !important;
 
@@ -15,9 +15,9 @@
 
 }
 
-.dataPickerAlt {
-    transform: translateX(-80%) translateY(-60%);
-}
+//.dataPickerAlt {
+//    transform: translateX(50%);
+//}
 
 
 .input {

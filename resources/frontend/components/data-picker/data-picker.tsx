@@ -30,8 +30,8 @@ const DataPicker: React.FC<IDataPicker> = (
                    readOnly={true} />
             {show && <div className={s.dataPicker}><Calendar
                 selected={value ? new Date(value) : new Date().toLocaleDateString()}
-                /// className={s.dataPicker}
-                className={s.dataPickerAlt}
+                // className={s.dataPicker}
+                // className={s.dataPickerAlt}
                 selectRange={selectRange}
                 onKeyDown={(e: any) => {
                     e.preventDefault();

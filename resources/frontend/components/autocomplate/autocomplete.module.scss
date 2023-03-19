@@ -3,5 +3,9 @@
 .input {
     height: 50px !important;
     position: relative;
-    z-index: 9999999;
+    z-index: 99999;
+
+    & > div {
+        //z-index: 999999;
+    }
 }

@@ -25,6 +25,7 @@ const Drawer: React.FC = ({ children }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const logoutRef = useRef(null);
+    const accountRef = useRef(null)
     const userData = useSelector(getUserData);
     /// const selectedPage = useSelector(getSelectedMenu);
     const notificationCount = useSelector(getNotificationCount);
@@ -35,7 +36,7 @@ const Drawer: React.FC = ({ children }) => {
     const openAccountMenu = () => setMenuOpen(!menuOpen);
     const openSideBar = () => setIsOpen(!isOpen);
     const outsideClickHandler = (e: MouseEvent) => {
-        if (logoutRef.current && !logoutRef.current.contains(e.target)) {
+        if (logoutRef.current && !logoutRef.current.contains(e.target) && !accountRef.current.contains(e.target)) {
             setMenuOpen(false);
         }
     };
@@ -178,10 +179,10 @@ const Drawer: React.FC = ({ children }) => {
                             {/*    </span>*/}
                             {/*    </Button>*/}
                             {/*</div>*/}
-                            <div className={s.iconBlock}>
+                            <div className={s.iconBlock} ref={accountRef}>
                                 <Button
                                     type={"blank"}
-                                    onClick={openAccountMenu}
+                                    onClick={() => {console.log(menuOpen); openAccountMenu()}}
                                 >
                                 <span className={s.icon}>
                                     <Account />
