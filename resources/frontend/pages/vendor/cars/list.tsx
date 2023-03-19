@@ -9,6 +9,8 @@ import Modal from "react-modal";
 import { useDispatch } from "react-redux";
 import { vendorAPI } from "../../../api/site-api/vendor-api";
 import InfoBlockCar from "../../../components/info-block-car/info-block";
+import customStyles from "../../../utils/style";
+import { homeAPI } from "../../../api/site-api/home-api";
 
 interface Beneficiary {
     path: string;
@@ -23,7 +25,7 @@ const Cars: React.FC<Beneficiary> = () => {
     const [countPages, setCountPages] = useState(null);
     const [deleteId, setDeleteId] = useState(null);
     const [count, setCount] = useState(0);
-    const [activeItem, setActiveItem] = useState(null);
+    const [ids, setIds] = useState(0);
 
     const [dataID, setDataID] = useState(null);
 
@@ -63,19 +65,14 @@ const Cars: React.FC<Beneficiary> = () => {
 
 
     const handlerDeleteItem = () => {
-        AdminApi.delete(crudKey, deleteId).then(data => {
-            setData(data.data.beneficiaries);
+        homeAPI.delete(crudKey).then(data => {
+
             setIsModalOpen(false);
         });
     };
 
     const handlerEditItem = (id: number) => navigate(`/${crudKey}/${id}`);
 
-    const HandlerPagination = (activeItem: number) => {
-        const role = localStorage.getItem("role");
-        localStorage.setItem("page", activeItem.toString());
-
-    };
     const handlerGetItemData = async (id: number) => {
         const data = await vendorAPI.getItemData(crudKey, id);
         setItemData(data);
@@ -84,26 +81,6 @@ const Cars: React.FC<Beneficiary> = () => {
     };
 
 
-    const customStyles: ReactModal.Styles = {
-        content: {
-            position: "fixed",
-            border: "none",
-            overflowY: "unset",
-            outline: "none",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50% , -50%)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "290px"
-        },
-        overlay: {
-            zIndex: 400,
-            background: "rgba(0, 0, 0, 0.35)",
-            backdropFilter: "blur(5px)"
-        }
-    };
     const handlerAction = async (action: string, id: number) => {
         switch (action) {
             case "get":
@@ -115,27 +92,33 @@ const Cars: React.FC<Beneficiary> = () => {
             case "edit":
                 await handlerEditItem(id);
                 break;
+            case "delete":
+                await handlerDeleteModal(id);
+                break;
         }
     };
+
+
     return (
         data &&
         <>
-            {Object.keys(itemData).length > 0 &&<div  className={s.itemInfo}> <InfoBlockCar data={itemData} is_admin={false}/></div>}
-     <div className={Object.keys(itemData).length > 0 ? s.itemOpen : s.ItemClose}>
-         <List
-             data={data}
-             titles={titles}
-             isDelete
-             isEdit
-             handlerAction={handlerAction}
-             paginated={false}
-             isCreate
-             isGetInfo
-             className={"pagination"}
-             isGetHistory={false}
-             isGetItems={false}
-         />
-     </div>
+            {Object.keys(itemData).length > 0 &&
+                <div className={s.itemInfo}><InfoBlockCar data={itemData} is_admin={false} /></div>}
+            <div className={Object.keys(itemData).length > 0 ? s.itemOpen : s.ItemClose}>
+                <List
+                    data={data}
+                    titles={titles}
+                    isDelete
+                    isEdit
+                    handlerAction={handlerAction}
+                    paginated={false}
+                    isCreate
+                    isGetInfo
+                    className={"pagination"}
+                    isGetHistory={false}
+                    isGetItems={false}
+                />
+            </div>
 
             <Modal
                 isOpen={isModalOpen !== false}

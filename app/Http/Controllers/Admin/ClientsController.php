@@ -100,7 +100,7 @@ class ClientsController extends Controller
         $cancelCount = $cancelCount->count();
         $tripCount = $tripCount->count();
         $available = $available->count();
-
+//dd($vendorFields);
         for ($i = 0; $i < count($vendorFields); $i++) {
             $selectedFieldsTitle[] = $vendorFields[$i];
             if ($vendorFields[$i] == 'request_type') {

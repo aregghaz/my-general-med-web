@@ -6,6 +6,9 @@ import { navigate } from "@reach/router";
 import s from "../../layouts/templates/list/list.module.scss";
 import NavigationTab from "../../../components/navigation/navigationTab";
 import axios from "axios";
+import Modal from "react-modal";
+import Button from "../../../components/button/button";
+import customStyles from "../../../utils/style";
 
 interface Beneficiary {
     path: string;
@@ -20,9 +23,11 @@ const Status: React.FC<Beneficiary> = () => {
     const [clientStatus, setClientStatus] = useState<number>(0);
     const [requestType, setRequestType] = useState<number>(0);
     const [reasons, setReasons] = useState<number>(0);
+    const [ids, setIds] = useState<number>(0);
     const [waitDuration, setWaitDuration] = useState<number>(0);
     const [artificial, setArtificial] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const { t } = useTranslation();
     useEffect(() => {
@@ -40,7 +45,7 @@ const Status: React.FC<Beneficiary> = () => {
 
             }
         )();
-    }, [tabId,loading]);
+    }, [tabId, loading]);
 
     const titles: Array<string> = [
         "id",
@@ -106,17 +111,18 @@ const Status: React.FC<Beneficiary> = () => {
             case "add":
                 await handlerAddItem(id, tabId);
                 break;
-                case "delete":
-                await handlerDelete(id, tabId);
+            case "delete":
+                setIds(id);
+                await handlerDelete(id);
                 break;
 
         }
     };
 
-    const handlerDelete = async (id:number, tabId:number) => {
-        await AdminApi.deleteStatus(id, tabId);
-        setLoading(!loading)
-    }
+    const handlerDelete = async (id: number) => {
+        setIsModalOpen(true);
+
+    };
     const handlerEditItem = async (id: number, tabId: number) => await navigate(`/admin/changeStatus/${id}/${tabId}`);
     const handlerAddItem = async (id: number, tabId: number) => await navigate(`/admin/addStatus/${tabId}/create`);
 
@@ -126,6 +132,14 @@ const Status: React.FC<Beneficiary> = () => {
 
     const onSearchInput = async (event: { search: string }) => {
 
+    };
+    const handlerCloseModal = () => {
+        setIsModalOpen(false);
+    };
+    const handlerDeleteItem = async () => {
+        await AdminApi.deleteStatus(ids, tabId);
+        handlerCloseModal();
+        setLoading(!loading);
     };
     const openSearch = () => {
         if (open) {
@@ -163,23 +177,55 @@ const Status: React.FC<Beneficiary> = () => {
 
             </div>
 
-           <div style={{width:"50%"}}>
-               <List
-                   data={data}
-                   titles={titles}
-                   isDelete
-                   isEdit
-                   tableRef={tableRef}
-                   isGetInfo={false}
-                   isGetHistory={false}
-                   isCreate
-                   isGetItems={false}
-                   handlerAction={handlerAction}
-                   className={"pagination"}
-                   paginated={false}
-               />
-
-           </div>
+            <div style={{ width: "50%" }}>
+                <List
+                    data={data}
+                    titles={titles}
+                    isDelete={false}
+                    isEdit
+                    tableRef={tableRef}
+                    isGetInfo={false}
+                    isGetHistory={false}
+                    isCreate
+                    isGetItems={false}
+                    handlerAction={handlerAction}
+                    className={"pagination"}
+                    paginated={false}
+                />
+                <Modal
+                    isOpen={isModalOpen !== false}
+                    style={customStyles}
+                    onRequestClose={handlerCloseModal}
+                >
+                    <div className={s.modalBody}>
+                        <div className={s.iconWrapper}>
+                            <i
+                                className="cancelicon-"
+                                onClick={handlerCloseModal}
+                            />
+                        </div>
+                        <p className={s.text}>
+                            {t("do_you_want_to_delete")}
+                        </p>
+                        <div className={s.buttons}>
+                            <Button
+                                type={"green"}
+                                onClick={handlerDeleteItem}
+                                className={s.button}
+                            >
+                                {t("yes")}
+                            </Button>
+                            <Button
+                                type={"transparent"}
+                                onClick={handlerCloseModal}
+                                className={s.button}
+                            >
+                                {t("no")}
+                            </Button>
+                        </div>
+                    </div>
+                </Modal>
+            </div>
 
         </>
     );

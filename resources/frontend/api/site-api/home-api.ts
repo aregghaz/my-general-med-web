@@ -47,6 +47,9 @@ export const homeAPI = {
     getNotification(showMore: number) {
         return axios.get(`/api/get-notification/${showMore}`, {}).then(res => res.data);
     },
+    delete(crudKey:string){
+        return axios.delete(`/api/${crudKey}/delete`, {}).then(res => res.data);
+    },
     cancelRequest() {
         ///  return cancelPost()
     }

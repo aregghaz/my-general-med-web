@@ -15,6 +15,7 @@ import axios from "axios";
 import InfoBlockDriver from "../../../components/info-block-driver/info-block";
 import { vendorAPI } from "../../../api/site-api/vendor-api";
 import CloseSvg from "-!svg-react-loader!../../../images/Close.svg";
+import customStyles from "../../../utils/style";
 
 interface Beneficiary {
     path: string;
@@ -77,26 +78,7 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
 
 
     const [typeId, setTypeId] = useState<number>(1);
-    const customStyles: ReactModal.Styles = {
-        content: {
-            position: "fixed",
-            border: "none",
-            overflowY: "unset",
-            outline: "none",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50% , -50%)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "290px"
-        },
-        overlay: {
-            zIndex: 400,
-            background: "rgba(0, 0, 0, 0.35)",
-            backdropFilter: "blur(5px)"
-        }
-    };
+
     const tabs = [
         {
             id: 3,
