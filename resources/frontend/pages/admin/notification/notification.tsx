@@ -74,10 +74,11 @@ const NotificationList: React.FC<INotificationList> = () => {
     return data && (
 
         <>
+
             {model && <div className={s.infoSection}>
                <div style={{display:"flex", flexDirection:"row", alignContent:"end", justifyContent:'end', padding: "10px 10px 0 0 "}}> <CloseSvg onClick={handlerClose}/></div>
                 {model === "driver" && <InfoBlockDriver data={info} is_admin={true} updatedField={updatedField} companyName={companyName} />}
-                {model === "car" && <InfoBlockCar data={info} is_admin={true} />}
+                {model === "car" && <InfoBlockCar data={info} companyName={companyName} updatedField={updatedField} is_admin={true} />}
             </div>}
             <div className={!model ? s.fullWidth :s.infoTable}>
                 <List

@@ -22,9 +22,6 @@ const InfoBlockDriver: FC<IProps> = ({ data, is_admin,companyName,updatedField }
     const newData = data;
     const { t } = useTranslation();
 
-    console.log(newData);
-
-
     return (
         <div className={cls.block}>
             <div className={cls.items}>
@@ -94,7 +91,7 @@ const InfoBlockDriver: FC<IProps> = ({ data, is_admin,companyName,updatedField }
                             </div>
                         </div>
                         <div className={cls.documents}>
-                            <div className={updatedField==='asd' ? `${cls.selected} ${cls.itemBorder}` :cls.itemBorder}>
+                            <div className={updatedField==='Driver License' ? `${cls.selected} ${cls.itemBorder}` :cls.itemBorder}>
                                 <span className={cls.b_text}>{t("Driver License")} </span>
                                 <a href={newData.license} target="_blank"><DownloadSvg/></a><br />
                                 <span><DriverFileSvg/> {newData.license_exp}</span>

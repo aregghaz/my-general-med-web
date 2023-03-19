@@ -18,10 +18,18 @@
     height: 100%;
     //padding: 20px;
     display: flex;
-    gap: 15px;
     flex-direction: column;
 }
 
+.companyInfoLabel {
+    width: 100%;
+    height: 20%;
+    color: grey;
+    & > h1 {
+        margin: 0;
+        padding: 0;
+    }
+}
 
 .carImgBox {
     width: 100%;
@@ -32,7 +40,6 @@
     width: 80%;
     height: auto;
     padding: 15px 0 15px 20px;
-    border-bottom: 1px solid black;
     display: flex;
     flex-direction: row;
     gap: 10px;
@@ -40,4 +47,58 @@
 
 .infoItemDownload {
     flex-direction: column;
+}
+.itemBorder {
+
+    width: 100%;
+    height: auto;
+    font-size: 20px;
+    font-weight: 600;
+    border-bottom: 0.1px solid gray;
+    padding: 20px 0 20px 10px;
+    & > a {
+        color: $borderColor;
+    }
+
+    @media screen and (max-width: 1000px) {
+        font-size: 18px
+    }
+}
+.selected{
+    border:1px solid red
+}
+
+.item {
+    width: 100%;
+    height: auto;
+    //padding: 5px;
+    font-size: 20px;
+    font-weight: 400;
+    span  {
+        width: 25px;
+        display: inline-block;
+    }
+    color: grey;
+    & > a {
+        color: $borderColor;
+    }
+
+    @media screen and (max-width: 1000px) {
+        font-size: 18px
+    }
+}
+.documents {
+    width: 100%;
+    height: 50%;
+    border-top: 0.1px solid gray;
+    //display: flex;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 30px;
+    @media screen and (max-width: 1200px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media screen and (max-width: 850px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }
