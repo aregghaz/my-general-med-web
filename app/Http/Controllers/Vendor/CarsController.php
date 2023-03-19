@@ -375,8 +375,8 @@ class CarsController extends Controller
 
     protected function getImage($file, $vendorId, $carId, $key): bool
     {
-        $oldData = CarImages::where('car_id', $carId)->where('key', $key)->first();
 
+        $oldData = CarImages::where('car_id', $carId)->where('key', $key)->first();
         if (isset($oldData)) {
             if (is_file(public_path($oldData->value))) {
                 $oldImage = public_path($oldData->value);

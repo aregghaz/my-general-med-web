@@ -87,7 +87,7 @@ const ImageGallery: React.FC<IQuickShopItem> = ({ images, modelOption }) => {
     return (
         <Carousel
             thumbnailPosition={"top"}
-            items={aa}
+            items={images}
             showFullscreenButton={false}
             showPlayButton={false}
             showNav={false}
