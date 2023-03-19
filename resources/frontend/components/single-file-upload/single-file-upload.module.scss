@@ -72,6 +72,7 @@
 .wrapper {
     * {
         //border: 1px solid black;
+        //border-color: $borderColor;
     }
 }
 
@@ -80,6 +81,7 @@
     height: 85px;
     display: flex;
     justify-content: space-between;
+    column-gap: 10px;
     //gap: 20px;
     //border: 0.1px solid black;
 }
@@ -94,7 +96,7 @@
 }
 
 .uploadButtonLabel {
-    //color: red;
+    color: $borderColor;
 }
 
 .uploadFileText {
@@ -118,12 +120,11 @@
         justify-content: flex-start;
         gap: 20px;
         cursor: pointer;
+        color: $borderColor;
 
         & > input {
             display: none;
         }
-
-
     }
 }
 
@@ -142,4 +143,8 @@
 
 .datePickerWrapper {
     width: 50%;
+}
+
+.datePickerLabel {
+    color: $borderColor;
 }

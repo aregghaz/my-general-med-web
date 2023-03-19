@@ -5,10 +5,10 @@
     background: #ffffff;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    align-items: start;
+    align-items: end;
     width: 100%;
     row-gap: 20px;
-    column-gap: 150px;
+    column-gap: 100px;
     margin: auto;
     padding: 20px 75px 50px 75px;
 }
@@ -26,7 +26,8 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    //gap: 10px;
+    color: $borderColor;
 
     svg {
         width: 30px;

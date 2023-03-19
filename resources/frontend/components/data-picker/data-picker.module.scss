@@ -5,10 +5,10 @@
 .dataPicker {
     position: absolute !important;
     top:110%;
-    left:-20%;
+    left:50%;
     //z-index: 1 !important;
     z-index: 1 !important;
-
+    transform: translateX(-50%);
     ///width: 300px !important;
     /// background-color: white !important;
     /// border: 1px solid !important;
@@ -29,9 +29,10 @@
     border-top: none;
     border-left: none;
     border-right: none;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid $borderColor;
     cursor: pointer;
     outline: none;
+    color: $borderColor;
     margin-top: 10px;
     @include themify($themes) {
         color: themed('modalTitleColor');
