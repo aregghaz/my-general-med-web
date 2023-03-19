@@ -163,21 +163,23 @@ const Status: React.FC<Beneficiary> = () => {
 
             </div>
 
-            <List
-                data={data}
-                titles={titles}
-                isDelete
-                isEdit
-                tableRef={tableRef}
-                isGetInfo={false}
-                isGetHistory={false}
-                isCreate
-                isGetItems={false}
-                handlerAction={handlerAction}
-                className={"pagination"}
-                paginated={false}
-            />
+           <div style={{width:"50%"}}>
+               <List
+                   data={data}
+                   titles={titles}
+                   isDelete
+                   isEdit
+                   tableRef={tableRef}
+                   isGetInfo={false}
+                   isGetHistory={false}
+                   isCreate
+                   isGetItems={false}
+                   handlerAction={handlerAction}
+                   className={"pagination"}
+                   paginated={false}
+               />
 
+           </div>
 
         </>
     );
