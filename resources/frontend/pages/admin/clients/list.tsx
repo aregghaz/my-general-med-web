@@ -27,6 +27,21 @@ interface IHome {
 
 const customStyles: ReactModal.Styles = {
     content: {
+        // position: "fixed",
+        // border: "none",
+        // overflowY: "unset",
+        // outline: "none",
+        // top: "50%",
+        // left: "50%",
+        // overflow: "hidden",
+        // transform: "translate(-50% , -50%)",
+        // /// display: 'flex',
+        // justifyContent: "center",
+        // width: "80%",
+        // height: "60vh"
+        // ///  alignItems: "center",
+
+
         position: "fixed",
         border: "none",
         overflowY: "unset",
@@ -35,17 +50,24 @@ const customStyles: ReactModal.Styles = {
         left: "50%",
         overflow: "hidden",
         transform: "translate(-50% , -50%)",
+
         /// display: 'flex',
         justifyContent: "center",
-        width: "80%",
-        height: "60vh"
         ///  alignItems: "center",
+        width: "700px",
+        height: "500px",
     },
     overlay: {
-        zIndex: 999999,
+        // zIndex: 999999,
+        // overflow: "hidden",
+        // background: "rgba(0, 0, 0, 0.35)",
+        // backdropFilter: "blur(5px)"
+
+        zIndex: 99999,
         overflow: "hidden",
-        background: "rgba(0, 0, 0, 0.35)",
-        backdropFilter: "blur(5px)"
+        // background: "rgba(0, 0, 0, 0.35)",
+        backdropFilter: "blur(5px)",
+        backgroundColor: "rgba(0, 0, 0, 0.3)",
     }
 };
 

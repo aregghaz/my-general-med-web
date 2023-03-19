@@ -44,10 +44,10 @@
     flex-direction: row;
     gap: 10px;
     font-size: 18px;
-    color: $borderColor;
+    color: gray;
 
     & > span {
-        color: gray;
+        color: $borderColor;
     }
 }
 

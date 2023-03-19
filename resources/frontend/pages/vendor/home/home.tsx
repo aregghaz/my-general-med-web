@@ -36,14 +36,15 @@ const customStyles: ReactModal.Styles = {
         /// display: 'flex',
         justifyContent: "center",
         ///  alignItems: "center",
-        width: "80vw",
-        height: "80vh",
+        width: "700px",
+        height: "500px",
     },
     overlay: {
         zIndex: 99999,
         overflow: "hidden",
         // background: "rgba(0, 0, 0, 0.35)",
-        backdropFilter: "blur(5px)"
+        backdropFilter: "blur(5px)",
+        backgroundColor: "rgba(0, 0, 0, 0.3)",
     }
 };
 
@@ -369,7 +370,6 @@ const Home: React.FC<IHome> = () => {
                         handlerChangeTabs={handlerChangeTabs}
                         ids={ids}
                         setFieldValue={setFieldValue}
-
                         onSearchInput={onSearchInput}
                         openSearch={openSearch}
                         setfiltre={setfiltre}

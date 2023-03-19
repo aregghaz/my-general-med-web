@@ -32,7 +32,7 @@
     border-bottom: 1px solid $borderColor;
     cursor: pointer;
     outline: none;
-    color: $borderColor;
+    color: gray;
     margin-top: 10px;
     @include themify($themes) {
         color: themed('modalTitleColor');

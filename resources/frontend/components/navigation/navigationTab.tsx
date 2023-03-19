@@ -83,18 +83,27 @@ const NavigationTab: React.FC<INavigationTab> = (
                     />
                 </div>}
                 {isClaimTrip && <div className={s.import_block}>
+                    <div className={s.iconAbbr}>
+                        Filters??
+                    </div>
                     <ClaimTrip
                         className={`${s.icon} ${typeId === 1 || typeId === 4 || typeId === 5 || typeId === 6 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
                         onClick={() => handleActionMiddleware(1, "default")}
                     />
                 </div>}
                 {isReRoute && <div className={s.import_block}>
+                    <div className={s.iconAbbr}>
+                        Filters????
+                    </div>
                     <RemoveIcon
                         className={`${s.icon} ${typeId === 2 || typeId === 4 || typeId === 5 || typeId === 6 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
                         onClick={() => handleActionMiddleware(4, "reRoute")}
                     />
                 </div>}
                 {IsAssignCar && <div className={s.import_block}>
+                    <div className={s.iconAbbr}>
+                        Assign Car
+                    </div>
                     <AssignIcon
                         className={`${s.icon} ${typeId === 2 || typeId === 4 || typeId === 5 || typeId === 6 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
                         onClick={() => handleActionMiddleware(99, "assign")}
