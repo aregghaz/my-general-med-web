@@ -178,7 +178,7 @@
 
 .itemInfo{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     float:left;
     width: 30%;
 }
@@ -208,4 +208,8 @@
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.closeSvg {
+    color: $borderColor;
 }

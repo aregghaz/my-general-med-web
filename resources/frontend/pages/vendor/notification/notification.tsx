@@ -8,6 +8,7 @@ import { actionsNotification } from "../../../store/notification";
 import { useDispatch } from "react-redux";
 import InfoBlockCar from "../../../components/info-block-car/info-block";
 import { homeAPI } from "../../../api/site-api/home-api";
+import CloseSvg from "-!svg-react-loader!../../../images/Close.svg";
 
 interface INotificationList {
     path: string;
@@ -63,12 +64,13 @@ const Notification: React.FC<INotificationList> = () => {
         setLoading(true);
     };
 
-
+    const handlerClose = () =>setModel(null);
     console.log(data, "carcar");
     return data && (
 
         <>
             {model && <div className={s.itemInfo}>
+                <div style={{display:"flex", flexDirection:"row", alignContent:"end", justifyContent:'end', padding: "10px 10px 0 0 "}}> <CloseSvg className={s.closeSvg} style={{cursor: "pointer"}} onClick={handlerClose}/></div>
                 {model === "driver" && <InfoBlockDriver data={info} is_admin={false} />}
                 {model === "car" && <InfoBlockCar data={info} is_admin={false} />}
             </div>}

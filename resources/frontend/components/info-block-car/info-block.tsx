@@ -80,7 +80,7 @@ const InfoBlockCar: FC<IProps> = ({data, is_admin,companyName,updatedField}) => 
                         <div className={cls.infoItem}>
                             <span className={cls.b_text}>{t('drivers')}: </span>
                             {newData.drivers.map((el:IOption) => {
-                                return <span>{el.label}</span>
+                                return <>{el.label}</>
                             })}
                         </div>
                     </div>

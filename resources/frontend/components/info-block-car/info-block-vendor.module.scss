@@ -5,7 +5,7 @@
     height: 100%;
     //border: 1px solid red;
     display: flex;
-    padding: 0 10px;
+    padding: 0 20px;
     flex-direction: column-reverse;
 
     & * {
@@ -39,10 +39,16 @@
 .infoItem{
     width: 80%;
     height: auto;
-    padding: 15px 0 15px 20px;
+    padding: 15px 0;
     display: flex;
     flex-direction: row;
     gap: 10px;
+    font-size: 18px;
+    color: $borderColor;
+
+    & > span {
+        color: gray;
+    }
 }
 
 .infoItemDownload {
@@ -55,7 +61,7 @@
     font-size: 20px;
     font-weight: 600;
     border-bottom: 0.1px solid gray;
-    padding: 20px 0 20px 10px;
+    padding: 20px 0;
     & > a {
         color: $borderColor;
     }
