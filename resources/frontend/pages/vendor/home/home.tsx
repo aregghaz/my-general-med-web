@@ -187,8 +187,9 @@ const Home: React.FC<IHome> = () => {
 
     const getClientData = async (queryData: string, date: string) => {
         const titlesData = localStorage.getItem("titles");
+        console.log(JSON.parse(titlesData),'JSON.parse(titlesData)');
         const homeData = await homeAPI.getClientData({
-            titles: titles.length ? titles : JSON.parse(titlesData),
+            titles: JSON.parse(titlesData),
             showMore: countRef.current,
             typeId: typeId,
             queryData: queryData,
@@ -369,6 +370,7 @@ const Home: React.FC<IHome> = () => {
                         handleActionMiddleware={handleActionMiddleware}
                         handlerChangeTabs={handlerChangeTabs}
                         ids={ids}
+                        date={date}
                         setFieldValue={setFieldValue}
                         onSearchInput={onSearchInput}
                         openSearch={openSearch}

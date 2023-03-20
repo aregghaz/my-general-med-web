@@ -133,7 +133,7 @@ class HomeController extends Controller
         // if(count($selectedFieldsTitle) > 1){
         //  array_shift($selectedFieldsTitle);
         // }
-
+////dd($allFields,$selectedFieldsTitle);
         return response()->json([
             'clients' => $clients,
             'selectedFields' => new ClientFieldCollection($selectedFieldsTitle),

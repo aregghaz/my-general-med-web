@@ -136,7 +136,7 @@ const MultiSelectSort: React.FC<ISelect> = (
     }
 ) => {
 
-    const [selected, setSelected] = useState(null /*value*/);
+    const [selected, setSelected] = useState(value);
     const onHandleChange = (selectedOptions: any) => setSelected(selectedOptions);
 
     const onSortEnd: SortEndHandler = ({ oldIndex, newIndex }) => {

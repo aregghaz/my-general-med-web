@@ -23,13 +23,14 @@ const DataPicker: React.FC<IDataPicker> = (
     }) => {
     const [show, setShow] = useState<boolean>(false);
     // const getDateValue = value ? new Date(value) : 'mm/dd/yyyy';
+    console.log(new Date(value),'aaa');
     return (
         <>
             {label && <label className={s.label}>{label}</label>}
-            <input type="text" className={s.input} value={ value ? timestampToDate(new Date(value)) : 'Date of Service'} onClick={() => setShow(!show)}
+            <input type="text" className={s.input} value={ value ? timestampToDate(new Date(value)) : timestampToDate(new Date().toLocaleDateString())} onClick={() => setShow(!show)}
                    readOnly={true} />
             {show && <div className={s.dataPicker}><Calendar
-                selected={value ? new Date(value) : new Date().toLocaleDateString()}
+                value={value ? new Date(value) : new Date()}
                 // className={s.dataPicker}
                 // className={s.dataPickerAlt}
                 selectRange={selectRange}

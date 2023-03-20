@@ -115,7 +115,7 @@ const Select: React.FC<ISelect> = (
     const markAll = () => {
         onChange(options);
     };
-
+    console.log(options,'options');
     const unMarkAll = () => {
         onChange([]);
     };
