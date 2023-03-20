@@ -58,7 +58,7 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
         "email",
         "address",
         "phone_number",
-        "birthday",
+    ///    "birthday",
         "actions"
         /// "image",
     ];
