@@ -37,8 +37,8 @@ const Vendors: React.FC<IVendors> = () => {
 
     useEffect(() => {
         (async () => {
-            if ((inView || loading) && !open) {
-                const data = await AdminApi.getAllVendorData(crudKey, typeId, "");
+            if ((inView)) {
+                const data = await AdminApi.getAllVendorData(crudKey, typeId, query);
                 dispatch(actions.fetching(
                     {
                         userdata: data.data,
@@ -47,6 +47,27 @@ const Vendors: React.FC<IVendors> = () => {
                     }
                 ));
                 countRef.current++;
+            }
+        })();
+        return () => {
+            homeAPI.cancelRequest();
+        };
+
+    }, [inView]);
+
+
+    useEffect(() => {
+        (async () => {
+            if (loading) {
+                const data = await AdminApi.getAllVendorData(crudKey, typeId, query);
+                dispatch(actions.fetching(
+                    {
+                        userdata: data.data,
+                        operatorCount: data.operators,
+                        vendorCount: data.vendors
+                    }
+                ));
+                countRef.current = 1;
                 setLoading(false);
             }
         })();
@@ -54,7 +75,8 @@ const Vendors: React.FC<IVendors> = () => {
             homeAPI.cancelRequest();
         };
 
-    }, [inView, loading, agreement]);
+    }, [loading]);
+
 
     const handlerAction = async (action: string, id: number) => {
         switch (action) {
@@ -88,7 +110,6 @@ const Vendors: React.FC<IVendors> = () => {
         }
     ];
     const handlerChangeTabs = async (tabId: number) => {
-        /// setIds([]);
         setTypeId(tabId);
         setLoading(true);
     };
@@ -107,33 +128,15 @@ const Vendors: React.FC<IVendors> = () => {
     const handlerGetVendorUsers = async (id: number) => navigate(`/admin/users/${id}`);
     const handlerGetActivityOperator = async (id: number) => navigate(`/admin/activity/${id}`);
 
-    const customStyles: ReactModal.Styles = {
-        content: {
-            position: "fixed",
-            border: "none",
-            overflowY: "unset",
-            outline: "none",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50% , -50%)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "290px"
-        },
-        overlay: {
-            zIndex: 400,
-            background: "rgba(0, 0, 0, 0.35)",
-            backdropFilter: "blur(5px)"
-        }
-    };
     const [query, setQuery] = useState("");
     const tableRef = useRef(null);
 
     const onSearchInput = async (event: { search: string }) => {
-
+        setQuery(event.search);
+        setLoading(true);
     };
     const openSearch = () => {
+        console.log(open, "openopen");
         if (open) {
             setQuery("");
             setLoading(true);

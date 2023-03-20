@@ -25,9 +25,12 @@ class VendorController extends Controller
     {
         $vendorCount = User::where('role_id', 2)->count();;
         $operatorCount = User::where(['role_id' => 4, "vendor_id" => 1])->count();;
-        if (isset($request->querySearch)) {
-            $vendorData = User::where(['role_id' => 2, "vendor_id" => 1]);
-        } else {
+        if (isset($request->queryData) and (int)$request->typeId == 2) {
+            $vendorData = User::where(['role_id' => 2])->where('name', 'LIKE', '%' . $request->queryData . '%');
+        } else if(isset($request->queryData) and (int)$request->typeId !== 2) {
+            $vendorData = User::where(['role_id' => 4, "vendor_id" => 1])->where('name', 'LIKE', '%' . $request->queryData . '%');
+
+        }else {
             if ((int)$request->typeId !== 2) {
                 $vendorData = User::where(['role_id' => $request->typeId, "vendor_id" => 1]);
 
@@ -252,16 +255,16 @@ class VendorController extends Controller
         $operatorsCount = User::where(['role_id' => 4, "vendor_id" => $id])->count();;
         $driverCount = User::where(['role_id' => 3, "vendor_id" => $id])->count();;
 
-      if($tabId === 5 ){
+        if ($tabId === 5) {
 
-      }else{
-          if (isset($request->querySearch)) {
-              $vendorData = User::where(['role_id' => $tabId, "vendor_id" => $id]);
-          } else {
-              $vendorData = User::where(['role_id' => $tabId, "vendor_id" => $id])
-                  ->with('fields');
-          }
-      }
+        } else {
+            if (isset($request->querySearch)) {
+                $vendorData = User::where(['role_id' => $tabId, "vendor_id" => $id]);
+            } else {
+                $vendorData = User::where(['role_id' => $tabId, "vendor_id" => $id])
+                    ->with('fields');
+            }
+        }
 
         $vendorData = $vendorData->orderBy('name', 'asc')->get();
 

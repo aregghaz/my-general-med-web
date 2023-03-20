@@ -55,7 +55,7 @@ const customStyles: ReactModal.Styles = {
         justifyContent: "center",
         ///  alignItems: "center",
         width: "700px",
-        height: "500px",
+        height: "500px"
     },
     overlay: {
         // zIndex: 999999,
@@ -67,7 +67,7 @@ const customStyles: ReactModal.Styles = {
         overflow: "hidden",
         // background: "rgba(0, 0, 0, 0.35)",
         backdropFilter: "blur(5px)",
-        backgroundColor: "rgba(0, 0, 0, 0.3)",
+        backgroundColor: "rgba(0, 0, 0, 0.3)"
     }
 };
 
@@ -218,9 +218,23 @@ const Home: React.FC<IHome> = () => {
 
     useEffect(() => {
         (async () => {
-            if ((inView || loading)) {
+            console.log(inView);
+            if (inView && !loading) {
                 await getClientData(query, date);
                 countRef.current++;
+               //// setLoading(false);
+            }
+        })();
+        return () => {
+            ///   homeAPI.cancelRequest();
+        };
+    }, [inView]);
+    useEffect(() => {
+        (async () => {
+            console.log(inView, loading);
+            if (loading) {
+                await getClientData(query, date);
+                countRef.current = 1;
                 setLoading(false);
             }
         })();
@@ -228,7 +242,7 @@ const Home: React.FC<IHome> = () => {
             ///   homeAPI.cancelRequest();
         };
 
-    }, [inView, loading]);
+    }, [loading]);
 
     const onSearchInput = async (event: { search: string }) => {
         setQuery(event.search);
@@ -236,7 +250,6 @@ const Home: React.FC<IHome> = () => {
     };
 
     const changeFields = (options: Array<IOption>) => {
-        console.log(options, "options");
         let result = options.map(a => a.slug);
         localStorage.setItem("titles", JSON.stringify(result));
         if (result.length > 0) {

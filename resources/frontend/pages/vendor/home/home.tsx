@@ -46,7 +46,7 @@ const Home: React.FC<IHome> = () => {
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [ids, setIds] = useState([]);
     const [open, setOpen] = useState<boolean>(false);
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
     const [filtre, setfiltre] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -163,7 +163,6 @@ const Home: React.FC<IHome> = () => {
 
     const getClientData = async (queryData: string, date: string) => {
         const titlesData = localStorage.getItem("titles");
-        console.log(JSON.parse(titlesData),'JSON.parse(titlesData)');
         const homeData = await homeAPI.getClientData({
             titles: JSON.parse(titlesData),
             showMore: countRef.current,
@@ -185,11 +184,26 @@ const Home: React.FC<IHome> = () => {
         }));
     };
 
+
     useEffect(() => {
         (async () => {
-            if ((inView || loading)) {
+            console.log(inView);
+            if (inView) {
                 await getClientData(query, date);
                 countRef.current++;
+                //// setLoading(false);
+            }
+        })();
+        return () => {
+            ///   homeAPI.cancelRequest();
+        };
+    }, [inView]);
+    useEffect(() => {
+        (async () => {
+            console.log(inView, loading);
+            if (loading) {
+                await getClientData(query, date);
+                countRef.current = 1;
                 setLoading(false);
             }
         })();
@@ -197,7 +211,7 @@ const Home: React.FC<IHome> = () => {
             ///   homeAPI.cancelRequest();
         };
 
-    }, [inView, loading]);
+    }, [loading]);
 
     const onSearchInput = async (event: { search: string }) => {
         setQuery(event.search);
@@ -211,7 +225,6 @@ const Home: React.FC<IHome> = () => {
 
 
     const changeFields = (options: Array<IOption>) => {
-        console.log(options, "options");
         let result = options.map(a => a.slug);
         localStorage.setItem("titles", JSON.stringify(result));
         if (result.length > 0) {
@@ -384,9 +397,9 @@ const Home: React.FC<IHome> = () => {
                                         getOptionValue={(option: IOption) => option.value}
                                         getOptionLabel={(option: IOption) => t(option.label)}
                                         onChange={(options: IOption) => setCar(options)}
-                                        // onChange={handlerSetCar}
+                                        /// onChange={handlerSetCar}
                                         options={carData}
-                                        value={selectedTitle}
+                                        // value={selectedTitle}
                                         name={"Cars"}
                                         isMulti={false}
                                     />

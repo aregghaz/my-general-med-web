@@ -342,8 +342,8 @@ class ClientsController extends Controller
         }
 
         $client->miles = (float)$requestData->miles;
-        if (isset($client->height)) {
-            $client->height = (float)$requestData->height;
+        if (isset($requestData->height)) {
+            $client->height = $requestData->height;
 
         }
         if (isset($requestData->weight)) {
@@ -536,10 +536,12 @@ class ClientsController extends Controller
         }
 
         $client->miles = (float)$requestData->miles;
-        if (isset($client->height)) {
-            $client->height = (float)$requestData->height;
+
+        if (isset($requestData->height)) {
+            $client->height =$requestData->height;
 
         }
+
         if (isset($requestData->weight)) {
             $client->weight = (float)$requestData->weight;
         }
