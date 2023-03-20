@@ -17,36 +17,12 @@ import Button from "../../../components/button/button";
 import { actionsTabs } from "../../../store/tab";
 import { toast } from "react-toastify";
 import NavigationTab from "../../../components/navigation/navigationTab";
+import customStyles from "../../../utils/style";
 
 interface IHome {
     path: string;
 }
 
-const customStyles: ReactModal.Styles = {
-    content: {
-        position: "fixed",
-        border: "none",
-        overflowY: "unset",
-        outline: "none",
-        top: "50%",
-        left: "50%",
-        overflow: "hidden",
-        transform: "translate(-50% , -50%)",
-
-        /// display: 'flex',
-        justifyContent: "center",
-        ///  alignItems: "center",
-        width: "700px",
-        height: "500px",
-    },
-    overlay: {
-        zIndex: 99999,
-        overflow: "hidden",
-        // background: "rgba(0, 0, 0, 0.35)",
-        backdropFilter: "blur(5px)",
-        backgroundColor: "rgba(0, 0, 0, 0.3)",
-    }
-};
 
 
 const Home: React.FC<IHome> = () => {
@@ -408,9 +384,9 @@ const Home: React.FC<IHome> = () => {
                                         getOptionValue={(option: IOption) => option.value}
                                         getOptionLabel={(option: IOption) => t(option.label)}
                                         onChange={(options: IOption) => setCar(options)}
-                                        /// onChange={handlerSetCar}
+                                        // onChange={handlerSetCar}
                                         options={carData}
-                                        // value={selectedTitle}
+                                        value={selectedTitle}
                                         name={"Cars"}
                                         isMulti={false}
                                     />
