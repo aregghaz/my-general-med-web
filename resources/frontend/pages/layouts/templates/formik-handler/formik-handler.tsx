@@ -13,9 +13,10 @@ import getFieldLabel from "../../../../utils/getFieldLabel";
 import TimePickers from "../../../../components/time-picker/timepicker";
 import DataPicker from "../../../../components/data-picker/data-picker";
 import Autocomplete from "../../../../components/autocomplate/autocomplete";
+import Password from "../../../../components/password/password";
 
 export interface IItem {
-    type?: "input" | "autocomplete" | "timePicker" | "checkbox" | "richText" | "textarea" | "select" | "file" | "textField" | "radio" | "datepicker" | "multiSelect" | "hidden";
+    type?: "input" | "password" | "autocomplete" | "timePicker" | "checkbox" | "richText" | "textarea" | "select" | "file" | "textField" | "radio" | "datepicker" | "multiSelect" | "hidden";
     inputType?: string;
     name: string;
     value?: string | boolean | File | IOption;
@@ -72,9 +73,23 @@ const FormikHandler: React.FC<IFormikHandler> = (
                     />
                 </>
             );
+        case "password":
+            return (
+                <Password
+                    name={item.name}
+                    value={values[item.name]}
+                    type={item.inputType}
+                    className={className}
+                    onChange={handleChange}
+                    placeholder={t(item.placeholder)}
+                    label={getFieldLabel(t, item.label, item.name, requiredFields)}
+                    error={errors[item.name]}
+                />
+            )
         case "checkbox":
             return (
                 <Checkbox
+                    className={className}
                     name={item.name}
                     label={item.label}
                     checked={values[item.name]}

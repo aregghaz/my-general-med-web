@@ -20,7 +20,8 @@ const VendorEdit: React.FC<IVendorEditItem> = ({ id }) => {
         { name: "phone_number", type: "input", label: "phone_number", inputType: "tel" },
         { name: "fields", type: "multiSelect", label: "fields" },
         { name: "id", type: "hidden", inputType: "hidden" },
-        { name: "password", type: "input", inputType: "password" }
+        // { name: "password", type: "input", inputType: "password" },
+        { name: "password", type: "password", inputType: "password", label: "",}
 
     ];
     const requiredFields = [

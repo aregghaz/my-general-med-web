@@ -84,7 +84,7 @@ const NavigationTab: React.FC<INavigationTab> = (
                 </div>}
                 {isClaimTrip && <div className={s.import_block}>
                     <div className={s.iconAbbr}>
-                        Filters??
+                        Claim Trip
                     </div>
                     <ClaimTrip
                         className={`${s.icon} ${typeId === 1 || typeId === 4 || typeId === 5 || typeId === 6 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
@@ -93,7 +93,7 @@ const NavigationTab: React.FC<INavigationTab> = (
                 </div>}
                 {isReRoute && <div className={s.import_block}>
                     <div className={s.iconAbbr}>
-                        Filters????
+                        ReRoute
                     </div>
                     <RemoveIcon
                         className={`${s.icon} ${typeId === 2 || typeId === 4 || typeId === 5 || typeId === 6 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}

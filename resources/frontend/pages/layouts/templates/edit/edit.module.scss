@@ -67,6 +67,8 @@
         }
     }
     grid-column: 1/4;
+    justify-content: end;
+    display: flex;
 }
 
 .googleMap {
