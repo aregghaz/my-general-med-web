@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CarsCollection;
 use App\Http\Resources\StatusCollection;
+use App\Http\Resources\UserCollection;
 use App\Http\Resources\VendorsCollection;
+use App\Models\Cars;
 use App\Models\Clients;
 use App\Models\ClientStatus;
 use App\Models\ClientTable;
@@ -27,10 +30,10 @@ class VendorController extends Controller
         $operatorCount = User::where(['role_id' => 4, "vendor_id" => 1])->count();;
         if (isset($request->queryData) and (int)$request->typeId == 2) {
             $vendorData = User::where(['role_id' => 2])->where('name', 'LIKE', '%' . $request->queryData . '%');
-        } else if(isset($request->queryData) and (int)$request->typeId !== 2) {
+        } else if (isset($request->queryData) and (int)$request->typeId !== 2) {
             $vendorData = User::where(['role_id' => 4, "vendor_id" => 1])->where('name', 'LIKE', '%' . $request->queryData . '%');
 
-        }else {
+        } else {
             if ((int)$request->typeId !== 2) {
                 $vendorData = User::where(['role_id' => $request->typeId, "vendor_id" => 1]);
 
@@ -254,8 +257,10 @@ class VendorController extends Controller
     {
         $operatorsCount = User::where(['role_id' => 4, "vendor_id" => $id])->count();;
         $driverCount = User::where(['role_id' => 3, "vendor_id" => $id])->count();;
+        $carsCount = Cars::where("vendor_id", $id)->count();
 
-        if ($tabId === 5) {
+        if ((int)$tabId === 5) {
+            $cars = Cars::where('vendor_id', $id)->with('make', 'year', 'model', 'driver', 'driver.user')->orderBy('make_id', 'asc')->get();
 
         } else {
             if (isset($request->querySearch)) {
@@ -264,16 +269,16 @@ class VendorController extends Controller
                 $vendorData = User::where(['role_id' => $tabId, "vendor_id" => $id])
                     ->with('fields');
             }
+            $vendorData = $vendorData->orderBy('name', 'asc')->get();
         }
-
-        $vendorData = $vendorData->orderBy('name', 'asc')->get();
 
 
         return response()->json(
             [
-                'data' => new VendorsCollection($vendorData),
+                'data' => (int)$tabId === 5 ? new CarsCollection($cars) : new UserCollection($vendorData),
                 'operators' => $operatorsCount,
                 'drivers' => $driverCount,
+                'cars' => $carsCount
             ],
             200
         );

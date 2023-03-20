@@ -62,7 +62,14 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
         "actions"
         /// "image",
     ];
-
+    const carsTitle: Array<string> = [
+        "id",
+        "drivers",
+        "make",
+        "model",
+        "year",
+        "action"
+    ];
     const handlerAddItem = () => navigate(`/admin/${crudKey}/create/${id}`);
 
     const handlerCloseModal = () => {
@@ -180,10 +187,10 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
                 <div className={Object.keys(itemData).length > 0 ? s.itemOpen : s.ItemClose}>
                     <List
                         data={userdata}
-                        titles={titles}
+                        titles={tabIdSelected == 5 ? carsTitle : titles}
                         handlerAction={handlerAction}
-                        isDelete={true}
-                        isEdit
+                        isDelete={false}
+                        isEdit={false}
                         tableRef={tableRef}
                         isGetHistory
                         isCreate={false}
