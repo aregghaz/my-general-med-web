@@ -34,7 +34,8 @@ export const getUserData = (state: AppStateType) => ({
 export const adminVendorUsers = (state: AppStateType) => ({
     userdata: state.adminVendorUsersReducer.userdata,
     operatorsCount: state.adminVendorUsersReducer.operatorsCount,
-    driversCount: state.adminVendorUsersReducer.driversCount
+    driversCount: state.adminVendorUsersReducer.driversCount,
+    carsCount: state.adminVendorUsersReducer.carsCount
 });
 
 export const getLoginError = (state: AppStateType) => ({ error: state.authReducer.error });

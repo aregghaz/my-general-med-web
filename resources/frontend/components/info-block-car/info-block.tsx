@@ -53,6 +53,12 @@ const InfoBlockCar: FC<IProps> = ({data, is_admin,companyName,updatedField}) => 
                             <span className={cls.b_text}>{t('carRegistration')}: </span>
                             {newData.registration}
                         </div>
+                        <div className={cls.infoItem}>
+                            <span className={cls.b_text}>{t('drivers')}: </span>
+                            {newData.drivers.map((el:IOption) => {
+                                return <>{el.label}</>
+                            })}
+                        </div>
                         <div className={`${cls.infoItem} ${cls.infoItemDownload}`}>
                             <div className={updatedField==='Car inspection' ? `${cls.selected} ${cls.itemBorder}` :cls.itemBorder}>
                                 <span className={cls.b_text}>{t('carInspection')}: </span>
@@ -61,6 +67,7 @@ const InfoBlockCar: FC<IProps> = ({data, is_admin,companyName,updatedField}) => 
                                 <span><DriverFileSvg/> {newData.inspection_exp}</span>
                             </div>
                         </div>
+
                         <div className={`${cls.infoItem} ${cls.infoItemDownload}`}>
                             <div className={updatedField==='Car liability' ? `${cls.selected} ${cls.itemBorder}` :cls.itemBorder}>
                                 <span className={cls.b_text}>{t('Car liability')}: </span>
@@ -76,12 +83,6 @@ const InfoBlockCar: FC<IProps> = ({data, is_admin,companyName,updatedField}) => 
                                 <br />
                                 <span><DriverFileSvg/> {newData.insurance_exp}</span>
                             </div>
-                        </div>
-                        <div className={cls.infoItem}>
-                            <span className={cls.b_text}>{t('drivers')}: </span>
-                            {newData.drivers.map((el:IOption) => {
-                                return <>{el.label}</>
-                            })}
                         </div>
                     </div>
 

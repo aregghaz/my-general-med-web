@@ -1854,6 +1854,13 @@ svg[focusable=false] {
   width: 30%;
 }
 
+.list_itemInfoAdmin__3swH5 {
+  display: flex;
+  flex-direction: column;
+  float: left;
+  width: 100%;
+}
+
 .list_itemOpen__1KFrW {
   width: 70%;
   display: flex;
@@ -2480,6 +2487,30 @@ textarea[type=number] {
   position: relative;
   z-index: 99999;
 }
+.password_passwordWrapper__1yQZ5 {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+}
+.password_passwordInputWrapper__GRBfY {
+  width: 60%;
+  height: 100%;
+}
+
+.password_showPasswordWrapper__2hadB {
+  width: 40%;
+  height: 100%;
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+.password_showPasswordWrapper__2hadB > input {
+  width: 30px;
+  height: 30px;
+}
+.password_showPasswordWrapper__2hadB > input:checked {
+  background-color: #194b76;
+}
 .edit_form__1EZLc {
   padding: 25px;
   box-shadow: 0 5px 25px rgba(34, 41, 97, 0.08);
@@ -2530,6 +2561,8 @@ textarea[type=number] {
 
 .edit_buttonDiv__3jqBl {
   grid-column: 1/4;
+  justify-content: end;
+  display: flex;
 }
 @media only screen and (max-width: 1250px) {
   .edit_buttonDiv__3jqBl {
@@ -2880,12 +2913,10 @@ textarea[type=number] {
 }
 
 .info-block-vendor_infoItem__19NTZ {
-  width: 80%;
   height: auto;
-  padding: 15px 0;
+  padding: 5px 0 0 0;
   display: flex;
   flex-direction: row;
-  gap: 10px;
   font-size: 18px;
   color: gray;
 }

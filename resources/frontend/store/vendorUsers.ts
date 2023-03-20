@@ -3,7 +3,8 @@ import { InferActionsTypes } from "./store";
 const initialState = {
     userdata: [] as Array<any>,
     operatorsCount: 0 as number,
-    driversCount: 0 as number
+    driversCount: 0 as number,
+    carsCount: 0 as number
 
 };
 
@@ -18,14 +19,16 @@ const adminVendorUsersReducer = (state = initialState, action: Actions): Initial
                 ...state,
                 userdata: action.payload.userdata,
                 operatorsCount: action.payload.operatorsCount,
-                driversCount: action.payload.driversCount
+                driversCount: action.payload.driversCount,
+                carsCount: action.payload.carsCount
             };
         case "RESET_FETCHING_ADMIN_USERS_PAGE_DATA_STATE":
             return {
                 ...state,
                 userdata: [],
                 operatorsCount: 0,
-                driversCount: 0
+                driversCount: 0,
+                carsCount: 0
             };
 
         default:

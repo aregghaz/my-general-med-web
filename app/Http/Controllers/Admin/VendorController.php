@@ -251,13 +251,21 @@ class VendorController extends Controller
     {
         $operatorsCount = User::where(['role_id' => 4, "vendor_id" => $id])->count();;
         $driverCount = User::where(['role_id' => 3, "vendor_id" => $id])->count();;
-        if (isset($request->querySearch)) {
-            $vendorData = User::where(['role_id' => $tabId, "vendor_id" => $id]);
-        } else {
-            $vendorData = User::where(['role_id' => $tabId, "vendor_id" => $id])
-                ->with('fields');
-        }
+
+      if($tabId === 5 ){
+
+      }else{
+          if (isset($request->querySearch)) {
+              $vendorData = User::where(['role_id' => $tabId, "vendor_id" => $id]);
+          } else {
+              $vendorData = User::where(['role_id' => $tabId, "vendor_id" => $id])
+                  ->with('fields');
+          }
+      }
+
         $vendorData = $vendorData->orderBy('name', 'asc')->get();
+
+
         return response()->json(
             [
                 'data' => new VendorsCollection($vendorData),

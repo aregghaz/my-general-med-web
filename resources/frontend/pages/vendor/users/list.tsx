@@ -11,6 +11,7 @@ import { homeAPI } from "../../../api/site-api/home-api";
 import InfoBlockDriver from "../../../components/info-block-driver/info-block";
 import { vendorAPI } from "../../../api/site-api/vendor-api";
 import Tabs from "../../../components/tabs/tabs";
+import CloseSvg from "-!svg-react-loader!../../../images/Close.svg";
 
 interface Beneficiary {
     path: string;
@@ -28,10 +29,6 @@ const VendorUsers: React.FC<Beneficiary> = () => {
     const [typeName, setTypeName] = useState<string>("driver");
     const navigate = useNavigate();
     const { t } = useTranslation();
-
-
-
-
 
 
     useEffect(() => {
@@ -125,6 +122,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
 
         }
     };
+    const handlerClose = () => setItemData({});
 
 
     return (
@@ -134,57 +132,64 @@ const VendorUsers: React.FC<Beneficiary> = () => {
                 <Tabs tabs={tabs}
                       handlerChangeTabs={handlerChangeTabs} />
                 {Object.keys(itemData).length > 0 && <div className={s.itemInfo}>
+                    <div style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignContent: "end",
+                        justifyContent: "end",
+                        padding: "10px 10px 0 0"
+                    }}><CloseSvg onClick={handlerClose} /></div>
                     <InfoBlockDriver data={itemData} is_admin={false} />
                 </div>}
-             <div className={Object.keys(itemData).length > 0 ? s.itemOpen : s.ItemClose}>
-                 <List
-                     data={data}
-                     titles={titles}
-                     isDelete
-                     isEdit
-                     paginated={false}
-                     isCreate
-                     isGetInfo
-                     handlerAction={handlerAction}
-                     className={"pagination"}
-                     isGetHistory={false}
-                     isGetItems={false} />
-                 <Modal
-                     isOpen={isModalOpen !== false}
-                     style={customStyles}
-                     onRequestClose={handlerCloseModal}
-                 >
-                     <div className={s.modalBody}>
-                         <div className={s.iconWrapper}>
-                             <i
-                                 className="cancelicon-"
-                                 onClick={handlerCloseModal}
-                             />
-                         </div>
+                <div className={Object.keys(itemData).length > 0 ? s.itemOpen : s.ItemClose}>
+                    <List
+                        data={data}
+                        titles={titles}
+                        isDelete
+                        isEdit
+                        paginated={false}
+                        isCreate
+                        isGetInfo
+                        handlerAction={handlerAction}
+                        className={"pagination"}
+                        isGetHistory={false}
+                        isGetItems={false} />
+                    <Modal
+                        isOpen={isModalOpen !== false}
+                        style={customStyles}
+                        onRequestClose={handlerCloseModal}
+                    >
+                        <div className={s.modalBody}>
+                            <div className={s.iconWrapper}>
+                                <i
+                                    className="cancelicon-"
+                                    onClick={handlerCloseModal}
+                                />
+                            </div>
 
-                         <i className={`binicon- ${s.icon}`} />
-                         <p className={s.text}>
-                             {t("admin.do_you_want_to_delete")}
-                         </p>
-                         <div className={s.buttons}>
-                             <Button
-                                 type={"green"}
-                                 onClick={handlerDeleteItem}
-                                 className={s.button}
-                             >
-                                 {t("admin.yes")}
-                             </Button>
-                             <Button
-                                 type={"transparent"}
-                                 onClick={handlerCloseModal}
-                                 className={s.button}
-                             >
-                                 {t("admin.no")}
-                             </Button>
-                         </div>
-                     </div>
-                 </Modal>
-             </div>
+                            <i className={`binicon- ${s.icon}`} />
+                            <p className={s.text}>
+                                {t("admin.do_you_want_to_delete")}
+                            </p>
+                            <div className={s.buttons}>
+                                <Button
+                                    type={"green"}
+                                    onClick={handlerDeleteItem}
+                                    className={s.button}
+                                >
+                                    {t("admin.yes")}
+                                </Button>
+                                <Button
+                                    type={"transparent"}
+                                    onClick={handlerCloseModal}
+                                    className={s.button}
+                                >
+                                    {t("admin.no")}
+                                </Button>
+                            </div>
+                        </div>
+                    </Modal>
+                </div>
             </>
         )
     );

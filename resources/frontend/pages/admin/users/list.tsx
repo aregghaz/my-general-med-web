@@ -25,7 +25,7 @@ interface Beneficiary {
 const Users: React.FC<Beneficiary> = ({ id }) => {
     const dispatch = useDispatch();
     const crudKey = "users";
-    const { userdata, driversCount, operatorsCount } = useSelector(adminVendorUsers);
+    const { userdata, driversCount, operatorsCount, carsCount } = useSelector(adminVendorUsers);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [tabIdSelected, setTabIdSelected] = useState(3);
     const navigate = useNavigate();
@@ -41,7 +41,8 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
                     {
                         userdata: data.data,
                         driversCount: data.drivers,
-                        operatorsCount: data.operators
+                        operatorsCount: data.operators,
+                        carsCount: data.cars
                     }
                 ));
                 setLoading(false);
@@ -90,6 +91,12 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
             id: 4,
             name: "Operators",
             count: operatorsCount,
+            selected: false
+        },
+        {
+            id: 5,
+            name: "Cars",
+            count: carsCount,
             selected: false
         }
     ];
@@ -168,7 +175,7 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
                         justifyContent: "end",
                         padding: "10px 10px 0 0"
                     }}><CloseSvg onClick={handlerClose} /></div>
-                    <div className={s.itemInfo}><InfoBlockDriver data={itemData} is_admin={false} /></div>
+                    <div className={s.itemInfoAdmin}><InfoBlockDriver data={itemData} is_admin={false} /></div>
                 </div>}
                 <div className={Object.keys(itemData).length > 0 ? s.itemOpen : s.ItemClose}>
                     <List

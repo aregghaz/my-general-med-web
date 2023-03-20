@@ -11,6 +11,7 @@ import { vendorAPI } from "../../../api/site-api/vendor-api";
 import InfoBlockCar from "../../../components/info-block-car/info-block";
 import customStyles from "../../../utils/style";
 import { homeAPI } from "../../../api/site-api/home-api";
+import CloseSvg from "-!svg-react-loader!../../../images/Close.svg";
 
 interface Beneficiary {
     path: string;
@@ -98,12 +99,21 @@ const Cars: React.FC<Beneficiary> = () => {
         }
     };
 
-
+    const handlerClose = () => setItemData({});
     return (
         data &&
         <>
             {Object.keys(itemData).length > 0 &&
-                <div className={s.itemInfo}><InfoBlockCar data={itemData} is_admin={false} /></div>}
+
+                <div className={s.itemInfo}>
+                    <div style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignContent: "end",
+                        justifyContent: "end",
+                        padding: "10px 10px 0 0"
+                    }}><CloseSvg onClick={handlerClose} /></div>
+                    <InfoBlockCar data={itemData} is_admin={false} /></div>}
             <div className={Object.keys(itemData).length > 0 ? s.itemOpen : s.ItemClose}>
                 <List
                     data={data}
@@ -131,6 +141,7 @@ const Cars: React.FC<Beneficiary> = () => {
                            onClick={handlerCloseModal}
                         />
                     </div>
+
 
                     <i className={`binicon- ${s.icon}`} />
                     <p className={s.text}>{t("admin.do_you_want_to_delete")}</p>
