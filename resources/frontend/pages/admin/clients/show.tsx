@@ -17,7 +17,7 @@ import Button from "../../../components/button/button";
 import { AdminApi } from "../../../api/admin-api/admin-api";
 import { toast } from "react-toastify";
 import Select, {IOption} from "../../../components/select/select";
-
+import timestampToDate from "../../../utils/timestampToDate";
 interface IShow {
     path: string;
     id?: number;
@@ -96,169 +96,129 @@ const Show: React.FC<IShow> = ({ id }) => {
             toast(t("record_successfully_edited"), options);
         }
     }
-
+    console.dir(clientById)
 
     return clientById && <div className={cls.block}>
-        <div className={cls.items}>
-            <div className={cls.item1}>
-                <div className={cls.itemsBlock}>
-                    <span className={cls.b_text}>{t("fullName")}: </span>
-                    {clientById.fullName}
-                </div>
-                <div className={cls.itemsBlock}>
-                    <span className={cls.b_text}>{t("date_of_service")}: </span>
-                    {clientById.date_of_service}
-                </div>
-                <div className={cls.itemsBlock}>
-                    <span className={cls.b_text}>{t("pick_up")}: </span>
-                    <TimePicker
-                        className={s.time}
-                        format={"HH:mm"}
-                        clockIcon={null}
-                        clearIcon={null}
-                        amPmAriaLabel={false}
-                        onChange={(time: string) => setFieldValue((state: any) => {
-                            return {
-                                ...state,
-                                "pick_up": time
-                            };
-                        })}
-                        name={"pick_up"}
-                        value={clientById.pick_up}
-                    />
-                </div>
-                <div className={cls.itemsBlock}>
-                    <span className={cls.b_text}>{t("pick_up_address")}: </span>
-                    {clientById.origin}
-                </div>
-                <div className={cls.itemsBlock}>
-                    <span className={cls.b_text}>{t("origin_phone")}: </span>
-                    {clientById.origin_phone}
-                </div>
-                <div className={cls.itemsBlock}>
-                    <span className={cls.b_text}>{t("destination_comments")}: </span>
-                    {clientById.destination_comment}
-                </div>
-                <div className={cls.itemsBlock}>
-                    <span className={cls.b_text}>{t("weight")}: </span>
-                    {clientById.weight}
-                </div>
-                {/*<div className={cls.itemsBlock}>*/}
-                {/*    <Select*/}
-                {/*        getOptionValue={(option: IOption) => option.value}*/}
-                {/*        getOptionLabel={(option: IOption) => t(option.label)}*/}
-                {/*        onChange={(options: IOption) => setFieldValue((state: any) => {*/}
-                {/*            return {*/}
-                {/*                ...state,*/}
-                {/*                car: options*/}
-                {/*            };*/}
-                {/*        })}*/}
-                {/*        isDisabled={(values.status.id == 6)}*/}
-                {/*        options={carData}*/}
-                {/*        value={values.car}*/}
-                {/*        name={"Cars"}*/}
-                {/*        isMulti={false}*/}
-                {/*    />*/}
-                {/*</div>*/}
+        <div className={cls.infoLeft}>
+            <div className={cls.infoLeftName}>
+                <span className={cls.username}>{clientById.fullName}</span>
+                |
+                <span>{timestampToDate(clientById.date_of_service.toString())}</span>
+                |
+                <span><span>Height: {clientById.height}</span> <span>Weight: {clientById.weight}</span></span>
             </div>
-            <div className={cls.item1}>
-
-                <div className={cls.itemsBlock}>
-                    <span className={cls.b_text}>{t("drop_down")}: </span>
-                    <TimePicker
-                        className={s.time}
-                        format={"HH:mm"}
-                        clockIcon={null}
-                        clearIcon={null}
-                        amPmAriaLabel={false}
-                        onChange={(time: string) => setFieldValue((state: any) => {
-                            return {
-                                ...state,
-                                "drop_down": time
-                            };
-                        })}
-                        name={"drop_down"}
-                        value={clientById.drop_down}
-                    />
-                </div>
-                <div className={cls.itemsBlock}>
-                    <span className={cls.b_text}>{t("origin_comment")}: </span>
-                    {clientById.origin_comment}
-                </div>
-                <div className={cls.itemsBlock}>
-                    <span className={cls.b_text}>{t("destination")}: </span>
-                    {clientById.destination}
-                </div>
-                <div className={cls.itemsBlock}>
-                    <span className={cls.b_text}>{t("destination_phone")}: </span>
-                    {clientById.destination_phone}
-                </div>
-                <div className={cls.itemsBlock}>
-                    <span className={cls.b_text}>{t("height")}: </span>
-                    {clientById.height}
-                </div>
-                {/*<div className={`${cls.itemsBlock} ${cls.itemsStatus}`}>*/}
-                {/*    <span className={cls.b_text}>{t("status")}: </span>*/}
-                {/*    <Select*/}
-                {/*        getOptionValue={(option: IOption) => option.value}*/}
-                {/*        getOptionLabel={(option: IOption) => t(option.label)}*/}
-                {/*        onChange={(options: IOption) => {*/}
-                {/*            return setFieldValue((state: any) => {*/}
-                {/*                return {*/}
-                {/*                    ...state,*/}
-                {/*                    status: options*/}
-                {/*                };*/}
-                {/*            });*/}
-                {/*        }}*/}
-                {/*        isDisabled={(values.status.id == 6)}*/}
-                {/*        options={statuses}*/}
-                {/*        value={values.status}*/}
-                {/*        name={"Cars"}*/}
-                {/*        isMulti={false}*/}
-                {/*    />*/}
-                {/*</div>*/}
-            </div>
-        </div>
-        <div className={cls.items}>
-            <div className={cls.itemsMap}>
-                <div className={cls.mapBlock}>
-                    {isLoaded && <div className={cls.selectDiv}>
-                        <div className={cls.mapDiv}>
-                            <GoogleMap
-                                ///  center={center}
-                                zoom={15}
-                                mapContainerStyle={{ width: "100%", height: "100%" }}
-                                options={{
-                                    zoomControl: true,
-                                    streetViewControl: false,
-                                    mapTypeControl: false,
-                                    fullscreenControl: false
-                                }}
-                                onLoad={map => setMap(map)}
-                            >
-                                {/* <Marker position={center} /> */}
-                                {directionsResponse && (
-                                    <DirectionsRenderer directions={directionsResponse} />
-                                )}
-
-                            </GoogleMap>
-                        </div>
-                        <div className={cls.directionDiv}>
-                            {steps && steps.map((el: any) => {
-                                return (
-                                    <div
-                                        className={cls.directions}
-                                        dangerouslySetInnerHTML={{ __html: el.instructions }}
-                                    />
-                                );
-                            })}
-                        </div>
-                    </div>}
-                </div>
-            </div>
-            <div className={cls.addInfo}>
-                <div className={cls.info}>
+            <div className={cls.class}>
+                <p className={cls.classLabel}>Origin:</p>
+                <div className={cls.items}>
                     <div className={cls.item}>
+                        <span className={cls.itemLabel}>Phone:</span>
+                        <span className={cls.itemValue}>{clientById.origin_phone}</span>
+                    </div>
+                    <div className={cls.item}>
+                        <span className={cls.itemLabel}>Comment:</span>
+                        <span className={cls.itemValue}>{clientById.origin_comment}</span>
+                    </div>
+                    <div className={cls.item}>
+                        <span className={cls.itemLabel}>Pickup Address:</span>
+                        <span className={cls.itemValue}>{clientById.origin}</span>
+                    </div>
+                </div>
+            </div>
+            <div className={cls.seperator}></div>
+            <div className={cls.class}>
+                <p className={cls.classLabel}>Destination:</p>
+                <div className={cls.items}>
+                    <div className={cls.item}>
+                        <span className={cls.itemLabel}>Phone:</span>
+                        <span className={cls.itemValue}>{clientById.origin_phone}</span>
+                    </div>
+                    <div className={cls.item}>
+                        <span className={cls.itemLabel}>Comment:</span>
+                        <span className={cls.itemValue}>{clientById.origin_comment}</span>
+                    </div>
+                    <div className={cls.item}>
+                        <span className={cls.itemLabel}>Destination Address:</span>
+                        <span className={cls.itemValue}>{clientById.destination}</span>
+                    </div>
+                </div>
+            </div>
+            <div className={cls.seperator}></div>
+            <div className={cls.class}>
+                <p className={cls.classLabel}>Times:</p>
+                <div className={cls.items}>
+                <div className={cls.item} style={{alignItems: "center"}}>
+                    <div className={cls.itemLabelBox}>
+                        <span className={cls.itemLabel}>Drop Down:</span>
+                    </div>
+                    <div className={cls.itemItemBox}>
+                        <TimePicker format={"h:m"} className={s.time} clockIcon={null} clearIcon={null} onChange={(time:string) => setFieldValue((state:any) => {
+                            return {
+                                ...state,
+                                'drop_down':time
+                            }
+                        }) }  name={'drop_down'} value={clientById.drop_down} />
+                    </div>
+                </div>
+                <div className={cls.item} style={{alignItems: "center"}}>
+                    <div className={cls.itemLabelBox}>
+                        <span className={cls.itemLabel}>Pick Up:</span>
+                    </div>
+                    <div className={cls.itemItemBox}>
+                        <TimePicker format={"h:m"} className={s.time} clockIcon={null} clearIcon={null} onChange={(time:string) => setFieldValue((state:any) => {
+                            return {
+                                ...state,
+                                'pick_up':time
+                            }
+                        }) }  name={'pick_up'} value={clientById.pick_up} />
+                    </div>
+                </div>
+                </div>
+            </div>
+            {/*<div className={cls.infoLeftBottom}></div>*/}
+        </div>
+        <div className={cls.infoRight}>
+            <div className={cls.infoRightTop}>
+                {isLoaded && <div className={cls.selectDiv}>
+                    <div className={cls.mapDiv}>
+                        <GoogleMap
+                            ///  center={center}
+                            zoom={15}
+                            mapContainerStyle={{ width: "100%", height: "100%" }}
+                            options={{
+                                zoomControl: true,
+                                streetViewControl: false,
+                                mapTypeControl: false,
+                                fullscreenControl: false
+                            }}
+                            onLoad={map => setMap(map)}
+                        >
+                            {/* <Marker position={center} /> */}
+                            {directionsResponse && (
+                                <DirectionsRenderer directions={directionsResponse} />
+                            )}
+
+                        </GoogleMap>
+                    </div>
+                    <div  className={cls.directionDiv}>
+                        {steps && steps.map((el: any) => {
+                            return (
+                                <div
+                                    className={cls.directions}
+                                    dangerouslySetInnerHTML={{ __html: el.instructions }}
+                                />
+                            );
+                        })}
+                    </div>
+                </div>}
+                <div className={cls.updateButton}>
+                    <Button type={"adminUpdate"} onClick={handlerUpdate}>
+                        Update
+                    </Button>
+                </div>
+            </div>
+            <div className={cls.infoRightBottom}>
+                <div className={cls.infoRightBottomTextareas}>
+                    <div className={cls.itemTextarea}>
                         <Textarea
                             name={"additionalNote"}
                             value={values.additionalNote}
@@ -275,7 +235,7 @@ const Show: React.FC<IShow> = ({ id }) => {
                             label={t("additionalNote")}
                         />
                     </div>
-                    <div className={cls.item}>
+                    <div className={cls.itemTextarea}>
                         <Textarea
                             name={'operator_note'}
                             value={values.operator_note}
@@ -293,15 +253,10 @@ const Show: React.FC<IShow> = ({ id }) => {
                         />
                     </div>
                 </div>
-                <div className={cls.updateButton}>
-                    <Button type={"adminUpdate"} onClick={handlerUpdate}>
-                        Update
-                    </Button>
-                </div>
             </div>
         </div>
-    </div>;
-};
+    </div>
+}
 
 export default Show;
 
@@ -442,3 +397,84 @@ export default Show;
 //     </div>
 // </div>}
 //
+
+
+// <div className={cls.itemsMap}>
+//     <div className={cls.mapBlock}>
+//         {isLoaded && <div className={cls.selectDiv}>
+//             <div className={cls.mapDiv}>
+//                 <GoogleMap
+//                     ///  center={center}
+//                     zoom={15}
+//                     mapContainerStyle={{ width: "100%", height: "100%" }}
+//                     options={{
+//                         zoomControl: true,
+//                         streetViewControl: false,
+//                         mapTypeControl: false,
+//                         fullscreenControl: false
+//                     }}
+//                     onLoad={map => setMap(map)}
+//                 >
+//                     {/* <Marker position={center} /> */}
+//                     {directionsResponse && (
+//                         <DirectionsRenderer directions={directionsResponse} />
+//                     )}
+//
+//                 </GoogleMap>
+//             </div>
+//             <div className={cls.directionDiv}>
+//                 {steps && steps.map((el: any) => {
+//                     return (
+//                         <div
+//                             className={cls.directions}
+//                             dangerouslySetInnerHTML={{ __html: el.instructions }}
+//                         />
+//                     );
+//                 })}
+//             </div>
+//         </div>}
+//     </div>
+// </div>
+// <div className={cls.addInfo}>
+//     <div className={cls.info}>
+//         <div className={cls.item}>
+//             <Textarea
+//                 name={"additionalNote"}
+//                 value={values.additionalNote}
+//                 placeholder={t("additionalNote")}
+//                 onChange={(event: any) => {
+//                     event.persist();
+//                     return setFieldValue((state: any) => {
+//                         return {
+//                             ...state,
+//                             additionalNote: event.target.value
+//                         };
+//                     });
+//                 }}
+//                 label={t("additionalNote")}
+//             />
+//         </div>
+//         <div className={cls.item}>
+//             <Textarea
+//                 name={'operator_note'}
+//                 value={values.operator_note}
+//                 placeholder={t('operator_note')}
+//                 onChange={(event:any) => {
+//                     event.persist();
+//                     return setFieldValue((state: any) => {
+//                         return {
+//                             ...state,
+//                             operator_note: event.target.value
+//                         };
+//                     });
+//                 } }
+//                 label={t('operator_note')}
+//             />
+//         </div>
+//     </div>
+//     <div className={cls.updateButton}>
+//         <Button type={"adminUpdate"} onClick={handlerUpdate}>
+//             Update
+//         </Button>
+//     </div>
+// </div>

@@ -1,152 +1,178 @@
 @import "../../styles/variables";
 
 .block {
-    //width: calc(100% - 30px);
+    width: 100%;
     min-height: 200px;
-    /// border: 3px solid $menuColor;
-    border-radius: 3px;
+    height: 90vh;
+    background-color: white;
     margin: 20px;
-}
-.item {
-    padding: 5px;
     display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-
-    & > label {
-        font-size: 16px;
-    }
-
-    & > textarea {
-        height: 100%;
-    }
-
-}
-
-.showBtn {
-    user-select: none;
-    cursor: pointer;
-    border-radius: 5px;
-    width: max-content;
-    padding: 5px;
-    background-color: $menuColor;
-    color: $whiteColor;
-
-    &:hover {
-        background-color: #1a1a1a;
-        color: white;
-    }
-}
-
-.b_text {
-    font-weight: bold;
-    color: $headColor;
-}
-
-.mapDiv, .directionDiv {
-    padding: 0 5px;
-    flex-direction: column;
-    flex: 1;
-    width: 100%;
-}
-
-.selectDiv {
-    display: flex;
-    height: 100%;
-}
-.directions {
-    margin-top: 10px;
-}
-
-
-.panel {
-    display: flex;
-    align-items: flex-end;
-    width: 100%;
-    height: 40px;
-    background-color: $menuColor;
-    color: white;
-}
-
-.menu {
-    height: calc(100% - 5px);
-    display: flex;
-    align-items: center;
-    padding: 0 8px;
-    margin-left: 5px;
-}
-
-.menu_active {
-    background-color: $adminBgColor;
-    color: black;
-}
-
-.block {
-    width: 100%;
-    height: calc(100vh - 100px);
-    display: flex;
-    flex-direction: column;
+    gap: 20px;
+    padding-right: 40px;
 
     & * {
         //border: 1px solid black;
     }
 }
 
-.items{
+.infoLeft {
+    width: 40%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-right: 0.1px solid gray;
+}
+
+.infoLeftName {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+
+    .username {
+        font-size: 25px;
+    }
+
+    span {
+        color: gray;
+        display: flex;
+        gap: 30px;
+    }
+}
+
+.infoLeftTop {
     width: 100%;
     height: 100%;
     display: flex;
-    padding: 10px 20px 0 10px;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.item1{
+.infoLeftBottom {
+    width: 100%;
+    height: 100%;
+}
+
+.infoRight {
+    width: 60%;
+    height: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 20px;
+}
+
+.infoRightTop {
+    widht: 100%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.infoRightBottom {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.classLabel {
+    font-size: 20px;
+    color: $borderColor;
+}
+
+.itemLabel {
+    color: $borderColor;
+    white-space: nowrap;
+}
+
+.itemValue {
+    color: gray;
+}
+
+.class {
     width: 100%;
     height: auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding: 10px 20px 0 10px;
+    gap: 20px;
 }
 
-.itemsStatus{
-   margin-top: 32px;
-}
-
-.itemsBlock{
+.item {
     width: 100%;
     height: auto;
-    padding: 10px 30px;
-}
-
-.mapBlock{
-    width: 100%;
-    height: 100%;
-}
-
-.itemsMap {
-    width: 50%;
-    height: 100%;
-    padding-left: 35px;
-}
-
-.addInfo {
-    width: 50%;
-    height: 100%;
-    padding: 10px 20px 0 35px;
-}
-
-.info {
-    width: 100%;
-    height: 80%;
     display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.items {
+    width: calc(100% - 30px);
+    height: auto;
+    margin-left: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.selectDiv {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.mapDiv {
+    width: 100%;
+    height: 100%;
+}
+
+.directionDiv {
+    width: 50%;
+    height: 100%;
+}
+
+.directions {
+    color: gray;
+
+    & > b {
+        color: $borderColor;
+    }
+}
+
+.seperator {
+    width: 100%;
+    height: 1px;
+    background-color: $borderColor;
+}
+
+.infoRightBottomTextareas {
+    width: 100%;
+    height: auto;
+    display: flex;
+}
+
+.itemTextarea {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .updateButton {
     width: 100%;
-    height: 20%;
+    height: auto;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding-right: 25px;
+}
+
+.itemLabelBox {
+    width: 18%;
+    display: flex;
+    align-items: center;
+    height: 100%;
 }

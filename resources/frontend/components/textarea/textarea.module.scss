@@ -10,6 +10,7 @@
     padding: 10px;
     resize: none;
     outline: none;
+    color: black;
     @include themify($themes) {
         color: themed('modalTitleColor');
         background-color: themed('modalInputBgColor');
@@ -28,6 +29,7 @@
     }
     font-weight: normal;
     margin-bottom: 10px;
+    color: $borderColor;
 }
 
 
