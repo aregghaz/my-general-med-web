@@ -154,6 +154,7 @@ const Select: React.FC<ISelect> = (
                         borderLeft: "none",
                         borderRight: "none",
                         borderBottom: "1px solid #194b76",
+                        boxShadow: "none",
                         borderRadius: 0,
                         overflowX: "auto"
                     }),
@@ -172,7 +173,7 @@ const Select: React.FC<ISelect> = (
                         marginTop: "3px",
                         zIndex: 9999,
                         outline: "none",
-                        boxShadow: "none"
+                        boxShadow: "0px 3px 3px gray"
                     }),
                     option: (baseStyles, state) => ({
                         ...baseStyles,
@@ -192,7 +193,7 @@ const Select: React.FC<ISelect> = (
                         // borderRadius: "15px",
                         lineHeight: 1.5,
                         // color: "black",
-                        color: "#393E46",
+                        color: "gray",
                         fontWeight: "bold",
                         borderButton: "1px solid #D63D3D",
                         backgroundColor: "white"

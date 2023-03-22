@@ -22,8 +22,6 @@ const InfoBlock: FC<IProps> = ({ clientById, calculateRoute }) => {
                 {
                     newData &&
                     <>
-
-
                         <div className={cls.item}>
                             <span className={cls.b_text}>{t("fullName")}: </span>
                             {newData.fullName}
@@ -45,7 +43,6 @@ const InfoBlock: FC<IProps> = ({ clientById, calculateRoute }) => {
                         <div className={cls.item}>
                             <span className={cls.b_text}>{t("pick_up_address")}: </span>
                             {newData.origin}
-
                         </div>
                         <div className={cls.item}>
                             <span className={cls.b_text}>{t("origin_comment")}: </span>

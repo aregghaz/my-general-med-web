@@ -104,31 +104,43 @@ const TableBody: React.FC<ITableBody> = (
 
                                     {
                                         isEdit &&
-                                        <EditIcon
-                                            className={s.editIcon}
-                                            onClick={() => handlerAction("edit", item.id)}
-                                        />
+                                        <div className={s.iconWrapper}>
+                                            <div className={s.iconLabel}>Edit</div>
+                                            <EditIcon
+                                                className={s.editIcon}
+                                                onClick={() => handlerAction("edit", item.id)}
+                                            />
+                                        </div>
                                     }
                                     {
                                         isGetItems &&
-                                        <UsersIcon
-                                            className={s.editIcon}
-                                            onClick={() => handlerAction("getVendorUser", item.id)}
-                                        />
+                                        <div className={s.iconWrapper}>
+                                            <div className={s.iconLabel}>Users</div>
+                                            <UsersIcon
+                                                className={s.editIcon}
+                                                onClick={() => handlerAction("getVendorUser", item.id)}
+                                            />
+                                        </div>
                                     }
                                     {
                                         isGetHistory &&
-                                        <ActivityIcon
+                                        <div className={s.iconWrapper}>
+                                            <div className={s.iconLabel}>Activity</div>
+                                            <ActivityIcon
                                             className={s.editIcon}
                                             onClick={() => handlerAction("history", item.id)}
                                         />
+                                        </div>
                                     }
                                     {
                                         isDelete &&
-                                        <TrashIcon
+                                        <div className={s.iconWrapper}>
+                                            <div className={s.iconLabel}>Delete</div>
+                                               <TrashIcon
                                             className={s.trashIcon}
                                             onClick={() => handlerAction("delete", item.id)}
                                         />
+                                        </div>
                                     }
 
                                 </TableData>

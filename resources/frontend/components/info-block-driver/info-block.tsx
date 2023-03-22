@@ -35,8 +35,6 @@ const InfoBlockDriver: FC<IProps> = ({ data, is_admin,companyName,updatedField }
                             <div className={cls.driverInfoLabel}>
                                 <h1>{newData.fullname}</h1>
                             </div>
-
-
                             <div className={cls.driverInfo}>
                                 <div className={cls.driverPicture}>
                                     <div className={cls.item}>
