@@ -78,7 +78,7 @@ const Autocomplete: React.FC<ITextarea> = (
                 placeholder: `step_${item}`
             }}
         />
-            <div>
+            <div className={s.timePickerContainer}>
                 <TimePickers
                     label={`time_${item}`}
                     ////   error={errors[item.name]}

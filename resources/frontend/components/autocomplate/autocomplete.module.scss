@@ -2,6 +2,7 @@
 
 .input {
     height: 50px !important;
+    width: 100%;
     position: relative;
     z-index: 99999;
 
@@ -14,5 +15,10 @@
 }
 .row{
     display: flex;
-   /// div{}
+    width: 100%;
+    align-items: flex-end;
+}
+
+.timePickerContainer {
+    width: 100%;
 }
