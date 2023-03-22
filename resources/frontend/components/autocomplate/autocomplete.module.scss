@@ -1,24 +1,105 @@
 @import "../../styles/variables";
 
-.input {
-    height: 50px !important;
-    width: 100%;
-    position: relative;
-    z-index: 99999;
+//.input {
+//    height: 50px !important;
+//    width: 100%;
+//    position: relative;
+//
+//    & > div {
+//        //z-index: 999999;
+//    }
+//}
+//.container{
+//    width:100%;
+//    height: 100%;
+//    display: flex;
+//    flex-direction: column;
+//    justify-content: flex-start;
+//    align-items: flex-start;
+//}
+//
+//.inputs {
+//    width: 100%;
+//    height: 100%;
+//    display: grid;
+//    grid-template-columns: repeat(2, 1fr);
+//}
+//
+//.row{
+//    display: flex;
+//    width: 100%;
+//    align-items: flex-end;
+//}
+//
+//.timePickerContainer {
+//    width: 100%;
+//}
 
-    & > div {
-        //z-index: 999999;
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    row-gap: 20px;
+
+    & * {
+        //border: 1px solid black;
     }
 }
-.container{
-    width:100%
-}
-.row{
-    display: flex;
+
+.inputs {
     width: 100%;
-    align-items: flex-end;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 50px;
+}
+
+.row {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    row-gap: 15px;
+    border-bottom: 0.1px solid black;
+    padding-bottom: 10px;
+}
+
+.autocompleteWrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+}
+
+.input {
+    width: 100%;
 }
 
 .timePickerContainer {
     width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    row-gap: 10px;
+}
+
+
+.timePicker {
+    width: 100%;
+}
+
+.timePickerWrapper {
+    position: relative;
+    //left: 50px;
+}
+
+.button {
+    width: 200px;
+    height: 50px;
+    background-color: $asteriskColor;
+    border-radius: 30px;
+    color: white;
+    font-size: 16px;
 }

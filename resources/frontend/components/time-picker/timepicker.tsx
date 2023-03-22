@@ -9,6 +9,8 @@ interface ITextarea {
     label: string,
     error?: string
     isAsterisk?: boolean,
+    className?: string,
+    classNameTime?: string,
 }
 
 const TimePickers: React.FC<ITextarea> = (
@@ -18,11 +20,13 @@ const TimePickers: React.FC<ITextarea> = (
         isAsterisk,
         setFieldValue,
         value,
-        error
+        error,
+        classNameTime = "",
+        className= ""
 
 
     }) => (
-    <>
+    <div className={className}>
         {error && <div className={s.error}>{error}</div>}
 
 
@@ -38,7 +42,7 @@ const TimePickers: React.FC<ITextarea> = (
 
         <TimePicker
             format={"HH:mm"}
-            className={s.time}
+            className={`${s.time} ${classNameTime}`}
             clockIcon={null}
             clearIcon={null}
             amPmAriaLabel={false}
@@ -47,7 +51,7 @@ const TimePickers: React.FC<ITextarea> = (
             value={value}
             locale={"sv-sv"}
         />
-    </>
+    </div>
 );
 
 

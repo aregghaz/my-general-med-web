@@ -60,24 +60,27 @@ const Autocomplete: React.FC<ITextarea> = (
 
 
     const addStep = () => {
-        return (step.map((item: number) => <div className={s.row}><GooglePlacesAutocomplete
-            apiKey={GOOGLE_API_KEY}
-            selectProps={{
-                name: `step_${item}`,
-                /// placeholder:'Pick up address',
-                defaultInputValue: values[`step_${item}`],
-                onChange: (async (originValue: any) => {
-                    const originData = await geocodeByPlaceId(originValue.value.place_id);
-                    setFieldValue(`step_${item}`, {
-                        address: originData[0].formatted_address,
-                        id: originValue.value.place_id
-                    });
-                    setLoad(!load);
-                }),
-                className: `${s.input}`,
-                placeholder: `step_${item}`
-            }}
-        />
+        return (step.map((item: number) => <div className={s.row}>
+            <div className={s.autocompleteWrapper}>
+                <GooglePlacesAutocomplete
+                    apiKey={GOOGLE_API_KEY}
+                    selectProps={{
+                        name: `step_${item}`,
+                        /// placeholder:'Pick up address',
+                        defaultInputValue: values[`step_${item}`],
+                        onChange: (async (originValue: any) => {
+                            const originData = await geocodeByPlaceId(originValue.value.place_id);
+                            setFieldValue(`step_${item}`, {
+                                address: originData[0].formatted_address,
+                                id: originValue.value.place_id
+                            });
+                            setLoad(!load);
+                        }),
+                        className: `${s.input}`,
+                        placeholder: `step_${item}`
+                    }}
+                />
+            </div>
             <div className={s.timePickerContainer}>
                 <TimePickers
                     label={`time_${item}`}
@@ -85,6 +88,8 @@ const Autocomplete: React.FC<ITextarea> = (
                     name={`time_${item}`}
                     setFieldValue={setFieldValue}
                     value={values[`time_${item}`]}
+                    className={s.timePickerWrapper}
+                    classNameTime={s.timePicker}
                 />
 
                 {item !== 1 && item  !== step.length && <TimePickers
@@ -93,6 +98,8 @@ const Autocomplete: React.FC<ITextarea> = (
                     name={`time_${item}`}
                     setFieldValue={setFieldValue}
                     value={values[`time_${item}`]}
+                    className={s.timePickerWrapper}
+                    classNameTime={s.timePicker}
                     />}
             </div>
         </div>));
@@ -103,10 +110,13 @@ const Autocomplete: React.FC<ITextarea> = (
     };
     return (<>
         <div className={s.container}>
-            {addStep()}
+            <div className={s.inputs}>
+                {addStep()}
+            </div>
             <Button
                 type={"primary"}
                 onClick={addInput}
+                className={s.button}
             >
                 Add step
             </Button>
