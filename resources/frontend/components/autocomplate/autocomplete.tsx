@@ -3,7 +3,9 @@ import GooglePlacesAutocomplete, { geocodeByPlaceId } from "react-google-places-
 import { GOOGLE_API_KEY } from "../../environments";
 import Button from "../button/button";
 import s from "./autocomplete.module.scss";
-import getMapResponse from "../../utils/googleMap";
+import DataPicker from "../data-picker/data-picker";
+import TimePickers from "../time-picker/timepicker";
+import getFieldLabel from "../../utils/getFieldLabel";
 
 interface ITextarea {
     values: any,
@@ -15,73 +17,102 @@ interface ITextarea {
 
 const Autocomplete: React.FC<ITextarea> = (
     {
-        name,
+      ///  name,
         values,
         setFieldValue,
         handleDrawMap
 
     }) => {
     const [load, setLoad] = useState(false);
+    const [step, setStep] = useState([1, 2]);
+    const [newStep, setNewStep] = useState(false);
+    const [firstLoad, setFirstLoad] = useState(true);
+
+    // useEffect(() => {
+    //     (async () => {
+    //       ///  console.log(values["origin"]["address"].length, "1111");
+    //         if (values["origin"]["address"].length > 0 && values["destination"]["address"].length > 0) {
+    //
+    //             const results = await getMapResponse(values["origin"]["address"], values["destination"]["address"]);
+    //             setFieldValue("miles", parseFloat(results.routes[0].legs[0].distance.text));
+    //         ///    console.log(results.routes[0].legs[0].duration.text, "duration");
+    //             // setDistance(results.routes[0].legs[0].distance.text);
+    //             // setDuration(results.routes[0].legs[0].duration.text);
+    //
+    //         }
+    //     })();
+    // }, [load]);
     useEffect(() => {
         (async () => {
-            console.log(values["origin"]["address"].length, "1111");
-            if (values["origin"]["address"].length > 0 && values["destination"]["address"].length > 0) {
+            if (!firstLoad) {
+                setStep((state) => {
+                        return [
+                            ...state,
+                            step[step.length - 1] + 1
+                        ];
 
-                const results = await getMapResponse(values["origin"]["address"], values["destination"]["address"]);
-                setFieldValue("miles", parseFloat(results.routes[0].legs[0].distance.text));
-                console.log(results.routes[0].legs[0].duration.text, "duration");
-                // setDistance(results.routes[0].legs[0].distance.text);
-                // setDuration(results.routes[0].legs[0].duration.text);
-
+                    }
+                );
             }
+            setFirstLoad(false);
         })();
-    }, [load]);
+    }, [newStep]);
 
+
+    const addStep = () => {
+        return (step.map((item: number) => <div className={s.row}><GooglePlacesAutocomplete
+            apiKey={GOOGLE_API_KEY}
+            selectProps={{
+                name: `step_${item}`,
+                /// placeholder:'Pick up address',
+                defaultInputValue: values[`step_${item}`],
+                onChange: (async (originValue: any) => {
+                    const originData = await geocodeByPlaceId(originValue.value.place_id);
+                    setFieldValue(`step_${item}`, {
+                        address: originData[0].formatted_address,
+                        id: originValue.value.place_id
+                    });
+                    setLoad(!load);
+                }),
+                className: `${s.input}`,
+                placeholder: `step_${item}`
+            }}
+        />
+            <div>
+                <TimePickers
+                    label={`time_${item}`}
+                    ////   error={errors[item.name]}
+                    name={`time_${item}`}
+                    setFieldValue={setFieldValue}
+                    value={values[`time_${item}`]}
+                />
+
+                {item !== 1 && item  !== step.length && <TimePickers
+                    label={`time_${item}`}
+                 ////   error={errors[item.name]}
+                    name={`time_${item}`}
+                    setFieldValue={setFieldValue}
+                    value={values[`time_${item}`]}
+                    />}
+            </div>
+        </div>));
+    };
+
+    const addInput = () => {
+        setNewStep(!newStep);
+    };
     return (<>
-        <div>
-            <GooglePlacesAutocomplete
-                apiKey={GOOGLE_API_KEY}
-                selectProps={{
-                    name: "origin",
-                    /// placeholder:'Pick up address',
-                    defaultInputValue: values["origin"],
-                    onChange: (async (originValue: any) => {
-                        const originData = await geocodeByPlaceId(originValue.value.place_id);
-                        setFieldValue("origin", {
-                            address: originData[0].formatted_address,
-                            id: originValue.value.place_id
-                        });
-                        setLoad(!load);
-                    }),
-                    className: `${s.input}`,
-                    placeholder: "Pick up address"
-                }}
-            />
-            <GooglePlacesAutocomplete
-                apiKey={GOOGLE_API_KEY}
-                selectProps={{
-                    name: "destination",
-                    defaultInputValue: values["destination"],
-                    onChange: (async (destination: any) => {
-                        const destinationData = await geocodeByPlaceId(destination.value.place_id);
-                        setFieldValue("destination", {
-                            address: destinationData[0].formatted_address,
-                            id: destination.value.place_id
-                        });
-                        setLoad(!load);
-                    }),
-                    className: `${s.input}`,
-                    placeholder: "Drop down address"
-                }}
-            />
+        <div className={s.container}>
+            {addStep()}
             <Button
                 type={"primary"}
-                onClick={() => handleDrawMap(values["origin"], values["destination"])}
+                onClick={addInput}
             >
-                Show on map
+                Add step
             </Button>
         </div>
     </>);
 };
+
 
 export default Autocomplete;

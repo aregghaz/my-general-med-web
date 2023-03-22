@@ -14,6 +14,7 @@ import populateCreateFormFields from "../../../constants/populateCreateFormField
 import Calendar from "react-calendar";
 import getFieldLabel from "../../../utils/getFieldLabel";
 import DataPicker from "../../../components/data-picker/data-picker";
+import Autocomplete from "../../../components/autocomplate/autocomplete";
 
 interface IClientCreate {
     path: string;
@@ -105,6 +106,11 @@ const ClientCreate: React.FC<IClientCreate> = () => {
 
 
     };
+
+    const handleDrawMap = async () => {
+
+
+    };
     return data && <div>
 
         <Formik
@@ -125,7 +131,14 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                 console.log(values);
                 return (
                     <>
+                        {
+                            <div className={s.autocomplete}>
+                                <Autocomplete
+                                    setFieldValue={setFieldValue} handleDrawMap={handleDrawMap} values={values}  name={'asdsd'}/>
+                            </div>
+                        }
                         <form className={s.form}>
+
                             <div className={s.item}>
                                 {
                                     <AsyncSelect
@@ -184,6 +197,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
 
                                 </>
                             }
+
 
                             {!show && <div className={s.item}>
                                 {/* {errors[item.name] && <div >{errors[item.name] }</div>} */}
