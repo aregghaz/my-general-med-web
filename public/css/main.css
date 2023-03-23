@@ -230,7 +230,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #707980;
+  color: #194b76;
 }
 
 .drawer_home__1LucI {
@@ -273,6 +273,7 @@
   font-size: 18px;
   position: relative;
   top: -2px;
+  color: gray;
 }
 
 .drawer_icons__2dnRA {
@@ -714,10 +715,18 @@ body {
   top: -20px;
   left: -5px;
   font-size: 10px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  pointer-events: none;
+  transistion: 0.5s;
+  opacity: 1;
 }
 
 .crud-table_history__3tJQ8, .crud-table_assignVendor__pBR0k, .crud-table_info__3Bi63, .crud-table_edit__r6Phx, .crud-table_delete__2qEIm, .crud-table_reRoute__14m54, .crud-table_claim__2RpcM {
   visibility: hidden;
+  opacity: 0;
 }
 
 .crud-table_historySpan__QSwyr:hover .crud-table_history__3tJQ8, .crud-table_infoSpan__3Y7G9:hover .crud-table_info__3Bi63, .crud-table_editSpan__nzSSr:hover .crud-table_edit__r6Phx, .crud-table_deleteSpan__15_VO:hover .crud-table_delete__2qEIm, .crud-table_reRouteSpan__2SwcP:hover .crud-table_reRoute__14m54, .crud-table_claimSpan__1xTxL:hover .crud-table_claim__2RpcM {
@@ -928,12 +937,6 @@ svg[focusable=false] {
 .select_select__2DX3u {
   margin-top: 10px;
   border: none;
-}
-.select_select__2DX3u div {
-  box-shadow: none;
-}
-.select_select__2DX3u div:hover {
-  border-color: #194b76;
 }
 .select_select__2DX3u svg {
   width: 25px !important;
@@ -1538,6 +1541,51 @@ input[type=number] {
 
 .crud-table_tableFooter__cf25h {
   display: table-footer-group;
+}
+
+.crud-table_iconsWrapper__M1nT4 {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+
+.crud-table_iconWrapper__3b-hE {
+  position: relative;
+}
+.crud-table_iconWrapper__3b-hE:hover > .crud-table_iconLabel__3w8Ap {
+  opacity: 1;
+  visibility: visible;
+}
+.crud-table_iconWrapper__3b-hE:hover > svg {
+  fill: #D63D3D;
+  color: #D63D3D;
+}
+
+.crud-table_iconLabel__3w8Ap {
+  position: absolute;
+  top: -60%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  min-width: 40px;
+  height: 15px;
+  font-size: 10px;
+  background-color: black;
+  color: white;
+  padding: 2px 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.2s;
+  white-space: nowrap;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  pointer-events: none;
 }
 
 .crud-table_tableRow__3exYg {
@@ -2705,7 +2753,8 @@ textarea[type=number] {
   width: 100%;
   height: 90%;
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
+  gap: 10px;
 }
 
 .info-block_mapDiv__2JfaF {
