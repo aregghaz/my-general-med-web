@@ -12,7 +12,6 @@ import { useNavigate } from "@reach/router";
 import validationRules from "../../../utils/validationRule";
 import populateCreateFormFields from "../../../constants/populateCreateFormFields";
 import Calendar from "react-calendar";
-import getFieldLabel from "../../../utils/getFieldLabel";
 import DataPicker from "../../../components/data-picker/data-picker";
 import Autocomplete from "../../../components/autocomplate/autocomplete";
 
@@ -47,15 +46,15 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         { name: "price", type: "input", label: "price", inputType: "number" },
         { name: "origin_comment", type: "textarea", label: "origin_comment" },
         { name: "destination_comments", type: "textarea", label: "destination_comments" },
-        { name: "location", type: "autocomplete", label: "location" },
+        /// { name: "location", type: "autocomplete", label: "location" },
 
         // { name: "id", type: "hidden", inputType: "hidden" },
         { name: "height", type: "input", label: "height", inputType: "number" },
         { name: "weight", type: "input", label: "weight", inputType: "number" },
-        { name: "miles", type: "input", label: "miles", inputType: "disabled" },
+        { name: "miles", type: "input", label: "miles", inputType: "disabled" }
 
-        { name: "pick_up", type: "timePicker", label: "pick_up" },
-        { name: "drop_down", type: "timePicker", label: "drop_down" }
+        //   { name: "pick_up", type: "timePicker", label: "pick_up" },
+        ///  { name: "drop_down", type: "timePicker", label: "drop_down" }
 
     ];
 
@@ -134,7 +133,12 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                         {
                             <div className={s.autocomplete}>
                                 <Autocomplete
-                                    setFieldValue={setFieldValue} handleDrawMap={handleDrawMap} values={values}  name={'asdsd'}/>
+                                    setFieldValue={setFieldValue}
+                                    handleDrawMap={handleDrawMap}
+                                    values={values}
+                                    name={"asdsd"}
+                                    handleChange={handleChange}
+                                />
                             </div>
                         }
                         <form className={s.form}>
@@ -208,7 +212,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                     selectRange={false}
                                     /// className={`${s.input}`}
                                     ///  placeholder={null}
-                                   /// placeholder={getFieldLabel(t, "date_of_service", "date_of_service", requiredFields)}
+                                    /// placeholder={getFieldLabel(t, "date_of_service", "date_of_service", requiredFields)}
                                     // error={errors['date_of_service']}
                                     // type={"string"}
                                     setFieldValue={setFieldValue} />

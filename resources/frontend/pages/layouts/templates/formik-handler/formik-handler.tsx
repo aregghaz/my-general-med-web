@@ -85,7 +85,7 @@ const FormikHandler: React.FC<IFormikHandler> = (
                     label={getFieldLabel(t, item.label, item.name, requiredFields)}
                     error={errors[item.name]}
                 />
-            )
+            );
         case "checkbox":
             return (
                 <Checkbox
@@ -125,7 +125,7 @@ const FormikHandler: React.FC<IFormikHandler> = (
                     options={selectOptions ? selectOptions[item.name] : selectOptions}
                     /// options={selectOptions}
                     onChange={(option: IOption) => setFieldValue(item.name, option)}
-                  //  label={t(item.label)}
+                    //  label={t(item.label)}
                     isSearchable={false}
                     name={item.name}
                     placeholder={t(item.label)}
@@ -204,7 +204,7 @@ const FormikHandler: React.FC<IFormikHandler> = (
                     setFieldValue={setFieldValue}
                     values={values}
                     handleDrawMap={handleDrawMap}
-                />
+                    handleChange={handleChange} />
             );
         default:
             return (

@@ -3,28 +3,32 @@ import GooglePlacesAutocomplete, { geocodeByPlaceId } from "react-google-places-
 import { GOOGLE_API_KEY } from "../../environments";
 import Button from "../button/button";
 import s from "./autocomplete.module.scss";
-import DataPicker from "../data-picker/data-picker";
 import TimePickers from "../time-picker/timepicker";
-import getFieldLabel from "../../utils/getFieldLabel";
+import Input from "../input/input";
+import TextField from "../text-field/text-field";
 
 interface ITextarea {
     values: any,
     name: string,
     setFieldValue: (name: string, date: any) => void;
+    /////FIXME ADD TYPES
+    handleChange: any,
     handleDrawMap: (origin: string, destination: string) => void;
 
 }
 
 const Autocomplete: React.FC<ITextarea> = (
     {
-      ///  name,
+        ///  name,
         values,
         setFieldValue,
+        handleChange,
         handleDrawMap
 
     }) => {
     const [load, setLoad] = useState(false);
     const [step, setStep] = useState([1, 2]);
+    const [count, stepCount] = useState(2);
     const [newStep, setNewStep] = useState(false);
     const [firstLoad, setFirstLoad] = useState(true);
 
@@ -53,6 +57,8 @@ const Autocomplete: React.FC<ITextarea> = (
 
                     }
                 );
+                stepCount(count + 1);
+                setFieldValue("count", count + 1);
             }
             setFirstLoad(false);
         })();
@@ -83,7 +89,7 @@ const Autocomplete: React.FC<ITextarea> = (
             </div>
             <div className={s.timePickerContainer}>
                 <TimePickers
-                    label={`time_${item}`}
+                    label={`pick_${item}`}
                     ////   error={errors[item.name]}
                     name={`time_${item}`}
                     setFieldValue={setFieldValue}
@@ -92,15 +98,37 @@ const Autocomplete: React.FC<ITextarea> = (
                     classNameTime={s.timePicker}
                 />
 
-                {item !== 1 && item  !== step.length && <TimePickers
-                    label={`time_${item}`}
-                 ////   error={errors[item.name]}
-                    name={`time_${item}`}
+                {item !== 1 && item !== step.length && <TimePickers
+                    label={`drop_${item}`}
+                    ////   error={errors[item.name]}
+                    name={`drop_${item}`}
                     setFieldValue={setFieldValue}
-                    value={values[`time_${item}`]}
+                    value={values[`drop_${item}`]}
                     className={s.timePickerWrapper}
                     classNameTime={s.timePicker}
-                    />}
+                />}
+            </div>
+            <div className={s.timePickerContainer}>
+                <Input
+                    name={`phone_${item}`}
+                    value={values[`phone_${item}`]}
+                    type={"number"}
+                    className={""}
+                    onChange={handleChange}
+                    placeholder={`phone_${item}`}
+                    label={`phone_${item}`}
+                    /// error={errors['`phone_${item}`']}
+                />
+            </div>
+            <div className={s.timePickerContainer}>
+                <TextField
+                    name={`comment_${item}`}
+                    value={values[`comment_${item}`]}
+                    type={'text'}
+                    placeholder={`comment_${item}`}
+                    onChange={handleChange}
+                    label={`comment_${item}`}
+                />
             </div>
         </div>));
     };

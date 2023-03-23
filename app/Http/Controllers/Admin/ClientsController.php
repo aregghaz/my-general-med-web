@@ -233,49 +233,6 @@ class ClientsController extends Controller
         } else {
             $this->createClient($requestData, $userId, $requestData->date_of_service);
         }
-//        dd($dataData);
-//        $userId = $request->user()->id;
-//        $client = new Clients();
-//        $client->type_id = 2;
-//        $client->trip_id = $requestData->trip_id;
-//        $client->fullName = $requestData->fullName;
-//        $client->gender = $requestData->gender->id;
-//        $client->los_id = $requestData->los->id;
-//        $client->date_of_service = $requestData->date_of_service;
-//        $client->pick_up = $requestData->pick_up;
-//        $client->drop_down = $requestData->drop_down;
-//        $client->request_type = $requestData->request_type->id;
-//        /// $client->status = $requestData->status->id;
-//        $client->operator_id = $userId;
-//        if (isset($requestData->origin->address)) {
-//            $client->origin = $requestData->origin->address;
-//            $client->origin_id = $requestData->origin->id;
-//        } else {
-//            $client->origin = $requestData->origin;
-//        }
-//        $client->origin_phone = $requestData->origin_phone;
-//        $client->origin_comment = $requestData->origin_comment;
-//        if (isset($requestData->destination->address)) {
-//            $client->destination = $requestData->destination->address;
-//            $client->destination_id = $requestData->destination->id;
-//        } else {
-//            $client->destination = $requestData->destination;
-//        }
-//        $client->destination_phone = $requestData->destination_phone;
-//        $client->destination_comments = $requestData->destination_comments;
-//        $client->member_uniqie_identifer = $requestData->member_uniqie_identifer;
-//        $client->birthday = $requestData->birthday;
-//        $client->miles = (int)$requestData->miles;
-
-//        if (!$client->save()) {
-//            return response()->json(
-//                [
-//                    'success' => '0',
-//                    'type' => 'forbidden',
-//                ],
-//                200
-//            );
-//        }
 
 
         return response()->json(
@@ -363,6 +320,8 @@ class ClientsController extends Controller
 
     protected function createClient($requestData, $userId, $date)
     {
+
+        dd($requestData->count);
         $origin = [
             "address" => $requestData->origin->address,
             "address_id" => $requestData->origin->id,
