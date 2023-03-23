@@ -13,9 +13,8 @@ class UpdateDrivesTabeleExperitionDates extends Migration
      */
     public function up()
     {
-        Schema::table('drivers', function(Blueprint $table){
+        Schema::table('drivers', function (Blueprint $table) {
             $table->date('license_exp')->format('m/d/Y')->nullable();
-
             $table->date('sex_offender_check_exp')->format('m/d/Y')->nullable();
             $table->date('motor_vehicle_record_exp')->format('m/d/Y')->nullable();
             $table->date('defensive_driving_exp')->format('m/d/Y')->nullable();

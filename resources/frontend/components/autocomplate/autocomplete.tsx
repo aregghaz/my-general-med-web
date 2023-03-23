@@ -88,7 +88,7 @@ const Autocomplete: React.FC<ITextarea> = (
                 />
             </div>
             <div className={s.timePickerContainer}>
-                <TimePickers
+                {item !== step.length && <TimePickers
                     label={`pick_${item}`}
                     ////   error={errors[item.name]}
                     name={`time_${item}`}
@@ -96,9 +96,9 @@ const Autocomplete: React.FC<ITextarea> = (
                     value={values[`time_${item}`]}
                     className={s.timePickerWrapper}
                     classNameTime={s.timePicker}
-                />
+                />}
 
-                {item !== 1 && item !== step.length && <TimePickers
+                {item !== 1 &&  <TimePickers
                     label={`drop_${item}`}
                     ////   error={errors[item.name]}
                     name={`drop_${item}`}

@@ -25,37 +25,20 @@ const ClientCreate: React.FC<IClientCreate> = () => {
     const [data, setData] = useState(null);
     const [show, setShow] = useState(false);
     const fields: Array<IItem> = [
-        ///  { name: "date_of_service", type: "datepicker", label: "date_of_service" },
         { name: "trip_id", type: "select", label: "trip_type" },
         { name: "fullName", type: "input", label: "fullName" },
         { name: "gender", type: "select", label: "gender" },
         { name: "birthday", type: "datepicker", label: "birthday" },
-
         { name: "los", type: "select", label: "los" },
         { name: "artificial", type: "select", label: "artificial" },
         { name: "waitDuration", type: "select", label: "waitDuration" },
         { name: "vendors", type: "select", label: "vendors" },
-
         { name: "request_type", type: "select", label: "request_type" },
-
         { name: "member_uniqie_identifer", type: "input", label: "member_uniqie_identifer" },
-
-        /// { name: "status", type: "select", label: "status" },
-        { name: "origin_phone", type: "input", label: "origin_phone", inputType: "tel" },
-        { name: "destination_phone", type: "input", label: "destination_phone", inputType: "tel" },
         { name: "price", type: "input", label: "price", inputType: "number" },
-        { name: "origin_comment", type: "textarea", label: "origin_comment" },
-        { name: "destination_comments", type: "textarea", label: "destination_comments" },
-        /// { name: "location", type: "autocomplete", label: "location" },
-
-        // { name: "id", type: "hidden", inputType: "hidden" },
         { name: "height", type: "input", label: "height", inputType: "number" },
         { name: "weight", type: "input", label: "weight", inputType: "number" },
         { name: "miles", type: "input", label: "miles", inputType: "disabled" }
-
-        //   { name: "pick_up", type: "timePicker", label: "pick_up" },
-        ///  { name: "drop_down", type: "timePicker", label: "drop_down" }
-
     ];
 
     useEffect(() => {

@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Address extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
+    protected $fillable = [
+        'client_id',
+        'address',
+        'address_phone',
+        'address_id',
+        'address_comments',
+        'pick_up',
+        'drop_down',
+    ];
 }

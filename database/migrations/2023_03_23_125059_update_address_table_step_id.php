@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateClientTabeleInWaitDuration extends Migration
+class UpdateAddressTableStepId extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class UpdateClientTabeleInWaitDuration extends Migration
      */
     public function up()
     {
-        Schema::table('clients', function(Blueprint $table){
-            $table->text('duration_id')->nullable()->after('los_id');
-            $table->date('start_time')->nullable()->after('pick_up');
-            $table->date('end_time')->nullable()->after('drop_down');
+        Schema::table('addresses', function(Blueprint $table){
+            $table->tinyInteger('step')->after('address_id');
         });
     }
 
@@ -27,6 +25,6 @@ class UpdateClientTabeleInWaitDuration extends Migration
      */
     public function down()
     {
-
+        //
     }
 }

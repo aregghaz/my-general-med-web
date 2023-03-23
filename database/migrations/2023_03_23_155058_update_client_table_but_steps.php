@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateClientTabeleDateTimeFormat extends Migration
+class UpdateClientTableButSteps extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class UpdateClientTabeleDateTimeFormat extends Migration
      */
     public function up()
     {
-        Schema::table('clients', function (Blueprint $table) {
-            $table->time('start_time')->format('H:i')->change();// Renaming "emp_name" to "employee_name"
-            $table->time('end_time')->format('H:i')->change(); // Change Datatype length
+        Schema::table('clients', function(Blueprint $table){
+            $table->tinyInteger('stops')->nullable()->after('duration_id');
         });
     }
 

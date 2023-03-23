@@ -17,10 +17,10 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             RoleSeeder::class,
             StatusSeeder::class,
-           // ClientSeeder::class,
-           // VendorSeeder::class,
+            // ClientSeeder::class,
+            // VendorSeeder::class,
             TablesFieldsSeeder::class,
-           ActionsSeeder::class,
+            ActionsSeeder::class,
             MakeSeeder::class,
             YearSeeder::class,
             MakeModelSeeder::class

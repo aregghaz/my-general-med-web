@@ -21,6 +21,7 @@ class Clients extends Model
         'car_id',
         'vendor_id',
         'operator_id',
+        'stops',
         'price',
         'type_id',
         'trip_id',
@@ -30,19 +31,8 @@ class Clients extends Model
         'start_time',
         'end_time',
         'date_of_service',
-        'pick_up',
-        'drop_down',
         'request_type', ///seect
       ///  'status',///seect
-        'origin',
-        'origin_phone',
-        'origin_id',
-        'origin_comment',
-        'origin_phone',
-        "destination_id",
-        "destination",
-        "destination_phone",
-        'destination_comments',
         'miles',
         'member_uniqie_identifer',
         'birthday',
@@ -98,6 +88,11 @@ class Clients extends Model
         return $this->hasOne(Artificial::class, 'id', 'artificial_id');
     }
     public function los()
+    {
+        return $this->hasOne(Los::class, 'id', 'los_id');
+    }
+
+    public function address()
     {
         return $this->hasOne(Los::class, 'id', 'los_id');
     }

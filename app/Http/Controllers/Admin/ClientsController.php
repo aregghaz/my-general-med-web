@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ClientFieldCollection;
 use App\Http\Resources\SelectAndPriceCollection;
 use App\Http\Resources\StatusCollection;
+use App\Models\Address;
 use App\Models\Artificial;
 use App\Models\Clients;
 use App\Models\ClientStatus;
@@ -101,6 +102,8 @@ class ClientsController extends Controller
         $tripCount = $tripCount->count();
         $available = $available->count();
 //dd($vendorFields);
+        $joinCheck = false;
+        $joinCheckDrop = false;
         for ($i = 0; $i < count($vendorFields); $i++) {
             $selectedFieldsTitle[] = $vendorFields[$i];
             if ($vendorFields[$i] == 'request_type') {
@@ -112,6 +115,66 @@ class ClientsController extends Controller
             } else if ($vendorFields[$i] == 'duration_id') {
                 $clients = $clients->join('wait_durations', 'clients.duration_id', '=', 'wait_durations.id');
                 $clientsData[] = "wait_durations.name as duration_id";
+            } else if ($vendorFields[$i] == 'pick_up') {
+                if (!$joinCheck) {
+                    $clients = $clients->join('addresses as a1', 'clients.id', '=', 'a1.client_id')->where('a1.step', '=', 1);
+                    $joinCheck = true;
+                }
+                $clientsData[] = "a1.pick_up as pick_up";
+            }  else if ($vendorFields[$i] == 'origin') {
+                if (!$joinCheck) {
+                    $clients = $clients->join('addresses as a1', 'clients.id', '=', 'a1.client_id')->where('a1.step', '=', 1);
+                    $joinCheck = true;
+                }
+                $clientsData[] = "a1.address as address";
+            } else if ($vendorFields[$i] == 'origin_phone') {
+                if (!$joinCheck) {
+                    $clients = $clients->join('addresses as a1', 'clients.id', '=', 'a1.client_id')->where('a1.step', '=', 1);
+                    $joinCheck = true;
+                }
+                $clientsData[] = "a1.address_phone as origin_phone";
+            } else if ($vendorFields[$i] == 'origin_comment') {
+                if (!$joinCheck) {
+                    $clients = $clients->join('addresses as a1', 'clients.id', '=', 'a1.client_id')->where('a1.step', '=', 1);
+                    $joinCheck = true;
+                }
+                $clientsData[] = "a1.address_comments as origin_comment";
+            } else if ($vendorFields[$i] == 'drop_down') {
+                if (!$joinCheckDrop) {
+                    $clients = $clients->join('addresses as a2', function ($join) {
+                        $join->on('clients.id', '=', 'a2.client_id');
+                        $join->on('a2.step', '=', 'clients.stops');
+                    });
+                    $joinCheckDrop = true;
+                }
+                $clientsData[] = "a2.drop_down as drop_down";
+            }else if ($vendorFields[$i] == 'destination') {
+                if (!$joinCheckDrop) {
+                    $clients = $clients->join('addresses as a2', function ($join) {
+                        $join->on('clients.id', '=', 'a2.client_id');
+                        $join->on('a2.step', '=', 'clients.stops');
+                    });
+                    $joinCheckDrop = true;
+                }
+                $clientsData[] = "a2.address as destination";
+            } else if ($vendorFields[$i] == 'destination_phone') {
+                if (!$joinCheckDrop) {
+                    $clients = $clients->join('addresses as a2', function ($join) {
+                        $join->on('clients.id', '=', 'a2.client_id');
+                        $join->on('a2.step', '=', 'clients.stops');
+                    });
+                    $joinCheckDrop = true;
+                }
+                $clientsData[] = "a2.address_phone as destination_phone";
+            } else if ($vendorFields[$i] == 'destination_comments') {
+                if (!$joinCheckDrop) {
+                    $clients = $clients->join('addresses as a2', function ($join) {
+                        $join->on('clients.id', '=', 'a2.client_id');
+                        $join->on('a2.step', '=', 'clients.stops');
+                    });
+                    $joinCheckDrop = true;
+                }
+                $clientsData[] = "a2.address_comments as destination_comments";
             } else if ($vendorFields[$i] == 'artificial_id') {
                 $clients = $clients->join('artificials', 'clients.artificial_id', '=', 'artificials.id');
                 $clientsData[] = "artificials.name as artificial";
@@ -246,10 +309,10 @@ class ClientsController extends Controller
 
     }
 
-    protected function getClientFieldsForCreate($requestData, $userId, $date, $tripType, $origin, $destination)
+    protected function getClientFieldsForCreate($requestData, $userId, $date, $tripType)
     {
-        $client = new Clients();
 
+        $client = new Clients();
         if (isset($requestData->vendors)) {
             $client->vendor_id = $requestData->vendors->id;
             $client->type_id = 1;
@@ -263,42 +326,15 @@ class ClientsController extends Controller
         $client->duration_id = $requestData->waitDuration->id;
         $client->date_of_service = date('Y-m-d', strtotime($date));
         $client->price = (int)$requestData->price + (int)$requestData->waitDuration->value + (int)$requestData->artificial->value;
-        $client->pick_up = $origin['time'];
-        $client->drop_down = $destination['time'];
         $client->request_type = $requestData->request_type->id;
-        /// $client->status = $requestData->status->id;
         $client->operator_id = $userId;
-        ///if (isset($requestData->origin->address)) {
-        /// dd()
-//        dd($origin);
-        $client->origin = $origin['address'];
-
-        $client->origin_id = $origin['address_id'];
-//        } else {
-//            $client->origin = $requestData->origin;
-//        }
-        $client->origin_phone = $origin['phone'];
-        if (isset($requestData->origin_comment)) {
-            $client->origin_comment = $requestData->origin_comment;
-
-        }
-        ///   if (isset($requestData->destination->address)) {
-        $client->destination = $destination['address'];
-        $client->destination_id = $destination['address_id'];
-//        } else {
-//            $client->destination = $requestData->destination;
-//        }
-        if (isset($requestData->destination_comments)) {
-            $client->destination_comments = $requestData->destination_comments;
-
-        }
-        $client->destination_phone = $destination['phone'];
+        $client->stops = (int)$requestData->count;
         $client->member_uniqie_identifer = $requestData->member_uniqie_identifer;
         if (isset($requestData->birthday)) {
             $client->birthday = $requestData->birthday;
         }
 
-        $client->miles = (float)$requestData->miles;
+        $client->miles = 8; ///(float)$requestData->miles;
         if (isset($requestData->height)) {
             $client->height = $requestData->height;
 
@@ -314,6 +350,38 @@ class ClientsController extends Controller
             "trip_id" => "CC-$client->id-$tripType",
         ]);
 
+        for ($i = 1; $i <= $requestData->count; $i++) {
+            $address = new Address();
+            $address->client_id = $client->id;
+            $stepAddress = "step_$i";
+            $stepComment = "comment_$i";
+            $stepPhone = "phone_$i";
+            $address->address = $requestData->$stepAddress->address;
+            $address->address_id = $requestData->$stepAddress->id;
+            $address->step = $i;
+
+            if (isset($requestData->$stepComment)) {
+                $address->address_comments = $requestData->$stepComment;
+            }
+            if (isset($requestData->$stepPhone)) {
+                $address->address_phone = $requestData->$stepPhone;
+            }
+
+            if ($i === 1) {
+                $stepTimePickUp = "time_$i";
+                $address->pick_up = $requestData->$stepTimePickUp;
+            } else if ($i === $requestData->count) {
+                $stepTimeDropDown = "drop_$i";
+                $address->drop_down = $requestData->$stepTimeDropDown;
+            } else {
+                $stepTimePickUp = "time_$i";
+                $address->pick_up = $requestData->$stepTimePickUp;
+                $stepTimeDropDown = "drop_$i";
+                $address->drop_down = $requestData->$stepTimeDropDown;
+            };
+
+            $address->save();
+        }
         $this->createAction($userId, $client->id, 7, 1);
         return true;
     }
@@ -321,35 +389,22 @@ class ClientsController extends Controller
     protected function createClient($requestData, $userId, $date)
     {
 
-        dd($requestData->count);
-        $origin = [
-            "address" => $requestData->origin->address,
-            "address_id" => $requestData->origin->id,
-            "phone" => $requestData->origin_phone,
-            'time' => $requestData->pick_up,
-        ];
-        $destination = [
-            "address" => $requestData->destination->address,
-            "address_id" => $requestData->destination->id,
-            "phone" => $requestData->destination_phone,
-            "time" => $requestData->drop_down,
-        ];
         $tripType = $requestData->trip_id;
         if ((int)$tripType->id === 3) {
 
             foreach (['A', 'B'] as $value) {
                 if ($value === 'A') {
-                    $this->getClientFieldsForCreate($requestData, $userId, $date, $value, $origin, $destination);
+                    $this->getClientFieldsForCreate($requestData, $userId, $date, $value);
 
                 } else {
                     $origin['time'] = null;
                     $destination['time'] = null;
-                    $this->getClientFieldsForCreate($requestData, $userId, $date, $value, $destination, $origin);
+                    $this->getClientFieldsForCreate($requestData, $userId, $date, $value);
 
                 }
             }
         } else {
-            $this->getClientFieldsForCreate($requestData, $userId, $date, $tripType->label, $origin, $destination);
+            $this->getClientFieldsForCreate($requestData, $userId, $date, $tripType->label);
         }
         return true;
     }
@@ -497,7 +552,7 @@ class ClientsController extends Controller
         $client->miles = (float)$requestData->miles;
 
         if (isset($requestData->height)) {
-            $client->height =$requestData->height;
+            $client->height = $requestData->height;
 
         }
 
