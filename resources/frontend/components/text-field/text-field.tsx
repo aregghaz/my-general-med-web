@@ -8,7 +8,7 @@ interface ITextField {
     placeholder?: string;
     type: string;
     error?: string;
-    onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+    onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void;
     autoComplete?: string;
     disable?: boolean;
     label?: string;
@@ -27,27 +27,27 @@ const TextField: React.FC<ITextField> = (
         disable,
         label,
         autoComplete = "off",
-        className = ""
+        className = "",
     }) => (
     <div className={s.inputWrapper}>
         {error && <div className={s.error}>{error}</div>}
-        <input
+        <textarea
             id={name}
             disabled={disable}
             name={name}
-            className={className ? className : s.input}
-            type={type}
+            className={`${className ? className : ""} ${s.input}`}
+            // type={type}
             placeholder={placeholder}
             value={value}
             onChange={onChange}
             autoComplete={autoComplete}
         />
-        {
-            label &&
-            <label className={s.label} htmlFor={name}>
-                {label}
-            </label>
-        }
+        {/*{*/}
+        {/*    label &&*/}
+        {/*    <label className={s.label} htmlFor={name}>*/}
+        {/*        {label}*/}
+        {/*    </label>*/}
+        {/*}*/}
     </div>
 );
 

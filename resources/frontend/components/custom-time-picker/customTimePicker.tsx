@@ -7,6 +7,7 @@ interface customTimePickerProps {
     onChange?: Function,
     name: string,
     className?: string,
+    setFieldValue?: any,
 }
 
 const customTimePicker:FC<customTimePickerProps> = ({
