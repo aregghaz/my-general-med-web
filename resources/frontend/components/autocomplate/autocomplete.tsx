@@ -6,6 +6,7 @@ import s from "./autocomplete.module.scss";
 import TimePickers from "../time-picker/timepicker";
 import Input from "../input/input";
 import TextField from "../text-field/text-field";
+import getMapResponse from "../../utils/googleMap";
 
 interface ITextarea {
     values: any,
@@ -28,24 +29,55 @@ const Autocomplete: React.FC<ITextarea> = (
     }) => {
     const [load, setLoad] = useState(false);
     const [step, setStep] = useState([1, 2]);
-    const [count, stepCount] = useState(2);
+    const [count, stepCount] = useState(values.stops || 2);
     const [newStep, setNewStep] = useState(false);
     const [firstLoad, setFirstLoad] = useState(true);
 
-    // useEffect(() => {
-    //     (async () => {
-    //       ///  console.log(values["origin"]["address"].length, "1111");
-    //         if (values["origin"]["address"].length > 0 && values["destination"]["address"].length > 0) {
-    //
-    //             const results = await getMapResponse(values["origin"]["address"], values["destination"]["address"]);
-    //             setFieldValue("miles", parseFloat(results.routes[0].legs[0].distance.text));
-    //         ///    console.log(results.routes[0].legs[0].duration.text, "duration");
-    //             // setDistance(results.routes[0].legs[0].distance.text);
-    //             // setDuration(results.routes[0].legs[0].duration.text);
-    //
-    //         }
-    //     })();
-    // }, [load]);
+    useEffect(() => {
+        (async () => {
+            ///  console.log(values["origin"]["address"].length, "1111");
+            console.log(count, "countcountcount");
+            var origin = "";
+            var destination = "";
+            var waypoint = [];
+            for (let i = 1; i <= count; i++) {
+                console.log(values[`step_${i}`],'122222222');
+                if (i === 1) {
+                    origin = values[`step_${i}`]["address"];
+                } else if (i === count) {
+                    destination = values[`step_${i}`]["address"];
+                } else {
+                    console.log(values[`step_${i}`], "11111");
+                    waypoint.push({
+                        location:
+                            {
+                                placeId: values[`step_${i}`]["id"]
+                            }
+                    });
+                }
+
+            }
+            const results = await getMapResponse(origin, destination, waypoint);
+            if(results.routes[0].legs.length > 0 ){
+                var miles = 0;
+                results.routes[0].legs.map((item:any) => {
+                    miles += parseFloat(item.distance.text)
+                })
+                setFieldValue("miles", `${miles} mile`);
+                setFieldValue("duration", `${miles} mile`);
+            }
+            console.log(results, "resultsresultsresults");
+            //   if (values["step_1"]["address"].length > 0 && values[step.length - 1]["address"].length > 0) {
+            //
+            //       const results = await getMapResponse(values["origin"]["address"], values["destination"]["address"], );
+            //       setFieldValue("miles", parseFloat(results.routes[0].legs[0].distance.text));
+            //   ///    console.log(results.routes[0].legs[0].duration.text, "duration");
+            //       // setDistance(results.routes[0].legs[0].distance.text);
+            //       // setDuration(results.routes[0].legs[0].duration.text);
+            //
+            //   }
+        })();
+    }, [load]);
     useEffect(() => {
         (async () => {
             if (!firstLoad) {
@@ -98,7 +130,7 @@ const Autocomplete: React.FC<ITextarea> = (
                     classNameTime={s.timePicker}
                 />}
 
-                {item !== 1 &&  <TimePickers
+                {item !== 1 && <TimePickers
                     label={`drop_${item}`}
                     ////   error={errors[item.name]}
                     name={`drop_${item}`}
@@ -124,7 +156,7 @@ const Autocomplete: React.FC<ITextarea> = (
                 <TextField
                     name={`comment_${item}`}
                     value={values[`comment_${item}`]}
-                    type={'text'}
+                    type={"text"}
                     placeholder={`comment_${item}`}
                     onChange={handleChange}
                     label={`comment_${item}`}

@@ -121,7 +121,7 @@ class ClientsController extends Controller
                     $joinCheck = true;
                 }
                 $clientsData[] = "a1.pick_up as pick_up";
-            }  else if ($vendorFields[$i] == 'origin') {
+            } else if ($vendorFields[$i] == 'origin') {
                 if (!$joinCheck) {
                     $clients = $clients->join('addresses as a1', 'clients.id', '=', 'a1.client_id')->where('a1.step', '=', 1);
                     $joinCheck = true;
@@ -148,7 +148,7 @@ class ClientsController extends Controller
                     $joinCheckDrop = true;
                 }
                 $clientsData[] = "a2.drop_down as drop_down";
-            }else if ($vendorFields[$i] == 'destination') {
+            } else if ($vendorFields[$i] == 'destination') {
                 if (!$joinCheckDrop) {
                     $clients = $clients->join('addresses as a2', function ($join) {
                         $join->on('clients.id', '=', 'a2.client_id');
@@ -395,10 +395,7 @@ class ClientsController extends Controller
             foreach (['A', 'B'] as $value) {
                 if ($value === 'A') {
                     $this->getClientFieldsForCreate($requestData, $userId, $date, $value);
-
                 } else {
-                    $origin['time'] = null;
-                    $destination['time'] = null;
                     $this->getClientFieldsForCreate($requestData, $userId, $date, $value);
 
                 }
@@ -428,6 +425,7 @@ class ClientsController extends Controller
             'waiteDuration',
             'artificial',
             'genderType',
+            'address',
             'clientStatus',
             'requestType'
         ])->find($id);

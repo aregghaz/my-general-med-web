@@ -39,6 +39,7 @@ class TablesFieldsSeeder extends Seeder
             'origin_phone',
             'origin_comment',
             'destination',
+            'stops',
             ///'destination_id',
             'destination_phone',
             'destination_comments',

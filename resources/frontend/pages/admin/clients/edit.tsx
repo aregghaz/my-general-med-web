@@ -5,6 +5,8 @@ import { useTranslation } from "react-i18next";
 import { AdminApi } from "../../../api/admin-api/admin-api";
 import { DirectionsRenderer, GoogleMap } from "@react-google-maps/api";
 import cls from "../../../components/info-block/info-block.module.scss";
+import s from "../../vendor/cars/car.module.scss";
+import Autocomplete from "../../../components/autocomplate/autocomplete";
 
 interface IClientEditItem {
     path: string;
@@ -128,6 +130,7 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
                 </div>
             </div>
             }
+
             <Edit
                 crudKey={`admin/${crudKey}`}
                 data={data}

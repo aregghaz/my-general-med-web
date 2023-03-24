@@ -119,7 +119,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                     setFieldValue={setFieldValue}
                                     handleDrawMap={handleDrawMap}
                                     values={values}
-                                    name={"asdsd"}
+                                    name={"address"}
                                     handleChange={handleChange}
                                 />
                             </div>
