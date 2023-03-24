@@ -27,6 +27,7 @@ const Autocomplete: React.FC<ITextarea> = (
         ///   handleDrawMap
 
     }) => {
+
     const [load, setLoad] = useState(false);
     const [step, setStep] = useState(typeof values.stops !== "undefined" ? values.stops : [1, 2]);
     const [count, stepCount] = useState(typeof values.stops !== "undefined" ? values.stops.length : 2);
@@ -86,15 +87,17 @@ const Autocomplete: React.FC<ITextarea> = (
         })();
     }, [newStep]);
 
+    console.log(values)
 
     const addStep = () => {
         return (step.map((item: number) => {
-            let allowBorder = -1;
-            if (count > 2) {
-                allowBorder = count % 2 === 0 ? count - 2 : count - 1;
-            }
             return (
-                <div className={s.row} style={{ borderBottom: allowBorder >= item ? "0.1px solid black" : "" }}>
+                <div
+                    className={s.row}
+                >
+                    <div className={s.autocompleteName}>
+                        <span>{`step_${item}`}</span>
+                    </div>
                     <div className={s.autocompleteWrapper}>
                         <GooglePlacesAutocomplete
                             apiKey={GOOGLE_API_KEY}
@@ -111,7 +114,13 @@ const Autocomplete: React.FC<ITextarea> = (
                                     setLoad(!load);
                                 }),
                                 className: `${s.input}`,
-                                placeholder: `step_${item}`
+                                placeholder: `step_${item}`,
+                                styles: {
+                                    placeholder: (base) => ({
+                                        ...base,
+                                        color: "#C4C4C4",
+                                    }),
+                                }
                             }}
                         />
                     </div>
@@ -165,7 +174,6 @@ const Autocomplete: React.FC<ITextarea> = (
             );
         }));
     };
-
     const addInput = () => {
         setNewStep(!newStep);
     };

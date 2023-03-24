@@ -34,7 +34,7 @@ const TimePickers: React.FC<ITextarea> = (
             className={`${s.label}`}
             htmlFor={name}
             style={{
-                color: value ? "black" : "gray"
+                color: value ? "#194b76" : "#C4C4C4"
             }}
         >
             {`${label}`} {isAsterisk && <span>*</span>}

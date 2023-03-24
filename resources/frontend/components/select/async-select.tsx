@@ -41,7 +41,7 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
         isSearchable = false,
         placeholder = "",
         options,
-        onChange,
+        onChange = () => {},
         getOptionLabel,
         getOptionValue,
         defaultValue,
@@ -55,29 +55,46 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
     return (
 
         <>
-            {label && <label className={`${s.label} ${labelStyle} `} htmlFor={name}>{label}</label>}
+            {!label && <label style={{
+                color: defaultValue ? "#194b76" : "#C4C4C4"
+            }} className={`${s.label} ${labelStyle}`} htmlFor={name}>{"label"}</label>}
             <Select
                 isMulti={isMulti}
                 name={name}
                 styles={{
-                    ...(getStyles(themeType)),
-                    control: (base, props) => ({
-                        ...base,
-                        // borderButton: "1px solid #D63D3D",
+                    control: (baseStyles, state) => ({
+                        ...baseStyles,
+                        borderButton: "1px solid #D63D3D",
+                        width: "100%",
                         outline: "none",
                         borderTop: "none",
                         borderLeft: "none",
                         borderRight: "none",
-                        borderRadius: "none",
-                        borderBottom: "1px solid black"
+                        borderBottom: "1px solid #194b76",
+                        boxShadow: "none !important",
+                        borderRadius: 0,
+                        overflowX: "auto",
+                        "&:hover": {
+                            boxShadow: "none",
+                            // borderBottom: "1px solid #194b76",
+                        }
                     }),
-                    menu: (base, props) => ({
-                        ...base,
+                    valueContainer: (baseStyles, state) => ({
+                        ...baseStyles,
+                        display: "flex",
+                        flexDirection: "row"
+                    }),
+                    // indicatorsContainer: base => ({
+                    //     ...base,
+                    //     color: "aqua",
+                    // }),
+                    menu: (baseStyles, state) => ({
+                        ...baseStyles,
                         backgroundColor: "white",
                         marginTop: "3px",
                         zIndex: 9999,
                         outline: "none",
-                        boxShadow: "none"
+                        boxShadow: "0px 3px 3px gray"
                     }),
                     option: (baseStyles, state) => ({
                         ...baseStyles,
@@ -88,9 +105,8 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
                         ...base,
                         // kill the white space on first and last option
                         padding: "0px",
-                        // borderRadius: "15px",
-                        backgroundColor: "white",
-                        borderRadius: "none"
+                        backgroundColor: "white"
+                        /// borderRadius: "5px",
                     }),
                     multiValue: (baseStyles, state) => ({
                         ...baseStyles,
@@ -98,23 +114,24 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
                         // borderRadius: "15px",
                         lineHeight: 1.5,
                         // color: "black",
-                        color: "#393E46",
+                        color: "gray",
                         fontWeight: "bold",
-                        ///borderRadius: 10,
-                        //   border: "1px solid #D63D3D",
-
-                        /// backgroundColor: '#545cd8',
-                        //  borderRadius: "15px"
                         borderButton: "1px solid #D63D3D",
-                        // backgroundColor: '#6D9886',
                         backgroundColor: "white"
-                        /// padding: "0 8px"
                     }),
                     multiValueLabel: (styles: any, { data }: any) => ({
                         ...styles,
                         // backgroundColor: '#6D9886',
                         backgroundColor: "white",
                         color: data.color
+                    }),
+                    placeholder: (base) => ({
+                        ...base,
+                        color: "#C4C4C4",
+                    }),
+                    singleValue: (base) => ({
+                        ...base,
+                        color: "gray",
                     })
                 }}
                 options={options}

@@ -14,6 +14,7 @@ import populateCreateFormFields from "../../../constants/populateCreateFormField
 import Calendar from "react-calendar";
 import DataPicker from "../../../components/data-picker/data-picker";
 import Autocomplete from "../../../components/autocomplate/autocomplete";
+import 'react-calendar/dist/Calendar.css';
 
 interface IClientCreate {
     path: string;
@@ -198,6 +199,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                     /// placeholder={getFieldLabel(t, "date_of_service", "date_of_service", requiredFields)}
                                     // error={errors['date_of_service']}
                                     // type={"string"}
+                                    label={t("date of service")}
                                     setFieldValue={setFieldValue} />
                             </div>}
                             {

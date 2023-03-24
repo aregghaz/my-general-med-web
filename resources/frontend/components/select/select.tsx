@@ -119,10 +119,11 @@ const Select: React.FC<ISelect> = (
     const unMarkAll = () => {
         onChange([]);
     };
-
     return (
         <>
-            {label && <label htmlFor={name}>{label}</label>}
+            {label && <label style={{
+                color: value ? "#194b76" : "#C4C4C4"
+            }} htmlFor={name}>{label}</label>}
             <div className={s.buttonsSelect}>
                 {isMulti && <><Button
                     type={"green"}
@@ -154,9 +155,13 @@ const Select: React.FC<ISelect> = (
                         borderLeft: "none",
                         borderRight: "none",
                         borderBottom: "1px solid #194b76",
-                        boxShadow: "none",
+                        boxShadow: "none !important",
                         borderRadius: 0,
-                        overflowX: "auto"
+                        overflowX: "auto",
+                        "&:hover": {
+                            boxShadow: "none",
+                            // borderBottom: "1px solid #194b76",
+                        }
                     }),
                     valueContainer: (baseStyles, state) => ({
                         ...baseStyles,
@@ -203,6 +208,14 @@ const Select: React.FC<ISelect> = (
                         // backgroundColor: '#6D9886',
                         backgroundColor: "white",
                         color: data.color
+                    }),
+                    placeholder: (base) => ({
+                        ...base,
+                        color: "#C4C4C4",
+                    }),
+                    singleValue: (base) => ({
+                        ...base,
+                        color: "gray",
                     })
                 }}
                 className={s.select}

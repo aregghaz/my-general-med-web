@@ -26,7 +26,7 @@ const DataPicker: React.FC<IDataPicker> = (
 
     return (
         <>
-            {label && <label className={s.label}>{label}</label>}
+            {label && <label style={{color: value ? "#194b76" : "#C4C4C4"}} className={s.label}>{label}</label>}
             <input type="text" className={s.input} value={ value ? timestampToDate(new Date(value)) : timestampToDate(new Date().toLocaleDateString())} onClick={() => setShow(!show)}
                    readOnly={true} />
             {show && <div className={s.dataPicker}><Calendar

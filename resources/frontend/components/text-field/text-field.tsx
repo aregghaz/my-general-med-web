@@ -34,7 +34,9 @@ const TextField: React.FC<ITextField> = (
         <div className={s.labelWrapper}>
             {
                 label &&
-                <label className={s.label} htmlFor={name}>
+                <label className={s.label} htmlFor={name} style={{
+                    color: value ? "#194b76" : "#C4C4C4"
+                }}>
                     {label}
                 </label>
             }
@@ -46,7 +48,7 @@ const TextField: React.FC<ITextField> = (
                 name={name}
                 className={`${className ? className : ""} ${s.input}`}
                 // type={type}
-                placeholder={placeholder}
+                // placeholder={placeholder}
                 value={value}
                 onChange={onChange}
                 autoComplete={autoComplete}
