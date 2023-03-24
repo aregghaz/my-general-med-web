@@ -152,7 +152,7 @@ const Show: React.FC<IShow> = ({ id }) => {
                                 </div>
                                 <div className={cls.item}>
                                     <span className={cls.itemLabel}>Comment:</span>
-                                    <span className={cls.itemValue}>{item.address_comment}</span>
+                                    <span className={cls.itemValue}>{item.address_comments}</span>
                                 </div>
 
                             </div>

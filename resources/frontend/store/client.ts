@@ -29,7 +29,7 @@ const defaultDat = {
     },
     address : [{
         address: '',
-        address_comment: '',
+        address_comments: '',
         address_phone: "",
         pick_up:'00:00',
         drop_down:'00:00'
