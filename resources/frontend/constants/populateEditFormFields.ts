@@ -3,8 +3,6 @@ import { IItem } from "../pages/layouts/templates/formik-handler/formik-handler"
 
 const populateEditFormFields = (fields: Array<IItem>, data: { [key: string]: { [key: string]: any } }) => {
     const values: { [key: string]: Object } = {};
-
-    console.log(fields, "fields");
     fields
         .forEach((field) => {
             switch (field.type) {
@@ -30,7 +28,6 @@ const populateEditFormFields = (fields: Array<IItem>, data: { [key: string]: { [
                     break;
                 case "address":
                     let addressData = data.data["address"];
-                    console.log(data.data["address"],'data.data["address"]data.data["address"]');
                     addressData.map((item: any) => {
                         values[`step_${item.step}`] = item.address;
                         values[`phone_${item.step}`] = item.address_phone;
@@ -38,9 +35,6 @@ const populateEditFormFields = (fields: Array<IItem>, data: { [key: string]: { [
                         values[`time_${item.step}`] = item.pick_up;
                         values[`drop_${item.step}`] = item.drop_down;
                     });
-                    console.log(values,'1111111111');
-                    // values["origin"] = data.data["origin"];
-                    // values["destination"] = data.data["destination"];
                     break;
                 // case 'province':
                 //     values[`${field.name}_province`] = data[`${field.name}_province`]

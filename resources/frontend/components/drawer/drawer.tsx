@@ -85,7 +85,6 @@ const Drawer: React.FC = ({ children }) => {
             }
         ];
     } else if (userData.user && userData.user.role == "admin") {
-        console.log("aaa");
         menuItemsFirst = [
             {
                 id: 1,

@@ -136,7 +136,6 @@ const Vendors: React.FC<IVendors> = () => {
         setLoading(true);
     };
     const openSearch = () => {
-        console.log(open, "openopen");
         if (open) {
             setQuery("");
             setLoading(true);

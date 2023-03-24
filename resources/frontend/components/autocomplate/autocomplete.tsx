@@ -28,27 +28,23 @@ const Autocomplete: React.FC<ITextarea> = (
 
     }) => {
     const [load, setLoad] = useState(false);
-    const [step, setStep] = useState(values.stops);
-    const [count, stepCount] = useState(values.stops.length || 2);
+    const [step, setStep] = useState(typeof values.stops !== "undefined" ? values.stops : [1, 2]);
+    const [count, stepCount] = useState(typeof values.stops !== "undefined" ? values.stops.length : 2);
     const [newStep, setNewStep] = useState(false);
     const [dataMap, setDataMap] = useState({});
     const [firstLoad, setFirstLoad] = useState(true);
-    console.log(values, "valuesvalues");
+
     useEffect(() => {
         (async () => {
-            ///  console.log(values["origin"]["address"].length, "1111");
-            console.log(count, "countcountcount");
             var origin = "";
             var destination = "";
             var waypoint = [];
             for (let i = 1; i <= count; i++) {
-                console.log(values[`step_${i}`], "122222222");
                 if (i === 1) {
                     origin = values[`step_${i}`]["address"];
                 } else if (i === count) {
                     destination = values[`step_${i}`]["address"];
                 } else {
-                    console.log(values[`step_${i}`], "11111");
                     waypoint.push({
                         location:
                             {
@@ -56,8 +52,6 @@ const Autocomplete: React.FC<ITextarea> = (
                             }
                     });
                 }
-
-
             }
             const results = await getMapResponse(origin, destination, waypoint);
             if (results.routes[0].legs.length > 0) {
@@ -68,17 +62,6 @@ const Autocomplete: React.FC<ITextarea> = (
                 setFieldValue("miles", `${miles} mile`);
                 setFieldValue("duration", `${miles} mile`);
             }
-
-            console.log(results, "resultsresultsresults");
-            //   if (values["step_1"]["address"].length > 0 && values[step.length - 1]["address"].length > 0) {
-            //
-            //       const results = await getMapResponse(values["origin"]["address"], values["destination"]["address"], );
-            //       setFieldValue("miles", parseFloat(results.routes[0].legs[0].distance.text));
-            //   ///    console.log(results.routes[0].legs[0].duration.text, "duration");
-            //       // setDistance(results.routes[0].legs[0].distance.text);
-            //       // setDuration(results.routes[0].legs[0].duration.text);
-            //
-            //   }
         })();
     }, [load]);
 
@@ -95,6 +78,9 @@ const Autocomplete: React.FC<ITextarea> = (
                 );
                 stepCount(count + 1);
                 setFieldValue("count", count + 1);
+                setFieldValue("steps", step);
+            } else {
+                setFieldValue("count", count);
             }
             setFirstLoad(false);
         })();
@@ -108,7 +94,7 @@ const Autocomplete: React.FC<ITextarea> = (
                 allowBorder = count % 2 === 0 ? count - 2 : count - 1;
             }
             return (
-                <div className={s.row} style={{borderBottom: allowBorder >= item ? "0.1px solid black" : ""}}>
+                <div className={s.row} style={{ borderBottom: allowBorder >= item ? "0.1px solid black" : "" }}>
                     <div className={s.autocompleteWrapper}>
                         <GooglePlacesAutocomplete
                             apiKey={GOOGLE_API_KEY}
@@ -130,27 +116,27 @@ const Autocomplete: React.FC<ITextarea> = (
                         />
                     </div>
                     <div className={s.timePickerContainer}>
-                        {/*{item !== step.length && <TimePickers*/}
-                        {/*    label={`pick_${item}`}*/}
-                        {/*    ////   error={errors[item.name]}*/}
-                        {/*    name={`time_${item}`}*/}
-                        {/*    setFieldValue={setFieldValue}*/}
-                        {/*    value={values[`time_${item}`]}*/}
-                        {/*    className={s.timePickerWrapper}*/}
-                        {/*    classNameTime={s.timePicker}*/}
-                        {/*/>}*/}
+                        {item !== step.length && <TimePickers
+                            label={`pick_${item}`}
+                            ////   error={errors[item.name]}
+                            name={`time_${item}`}
+                            setFieldValue={setFieldValue}
+                            value={values[`time_${item}`]}
+                            className={s.timePickerWrapper}
+                            classNameTime={s.timePicker}
+                        />}
 
-                        {/*{item !== 1 && <TimePickers*/}
-                        {/*    label={`drop_${item}`}*/}
-                        {/*    ////   error={errors[item.name]}*/}
-                        {/*    name={`drop_${item}`}*/}
-                        {/*    setFieldValue={setFieldValue}*/}
-                        {/*    value={values[`drop_${item}`]}*/}
-                        {/*    className={s.timePickerWrapper}*/}
-                        {/*    classNameTime={s.timePicker}*/}
-                        {/*/>}*/}
-                        <CustomTimePicker value={"12:34"} name={"asd"} labelText={`drop_${item}`}/>
-                        <CustomTimePicker name={"asd"} labelText={`drop_${item}`}/>
+                        {item !== 1 && <TimePickers
+                            label={`drop_${item}`}
+                            ////   error={errors[item.name]}
+                            name={`drop_${item}`}
+                            setFieldValue={setFieldValue}
+                            value={values[`drop_${item}`]}
+                            className={s.timePickerWrapper}
+                            classNameTime={s.timePicker}
+                        />}
+                        {/*<CustomTimePicker value={"12:34"} name={"asd"} labelText={`drop_${item}`}/>*/}
+                        {/*<CustomTimePicker name={"asd"} labelText={`drop_${item}`}/>*/}
                     </div>
                     <div className={`${s.timePickerContainer} ${s.phoneInput}`}>
                         <Input
@@ -175,7 +161,7 @@ const Autocomplete: React.FC<ITextarea> = (
                         />
                     </div>
                 </div>
-            )
+            );
         }));
     };
 

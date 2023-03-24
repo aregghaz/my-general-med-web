@@ -16,7 +16,7 @@ class Controller extends BaseController
     protected function convertSingleData($client)
     {
         $count = [];
-        for ($i = 1; $i <=$client->stops; $i++){
+        for ($i = 1; $i <= $client->stops; $i++) {
             $count[] = $i;
         }
 //        dd($client->address);
@@ -76,7 +76,8 @@ class Controller extends BaseController
         ];
     }
 
-    protected function saveNotification ($model,$field, $id, $actionid) {
+    protected function saveNotification($model, $field, $id, $actionid)
+    {
         $notification = new Notification();
         $notification->value_id = $id;
         $notification->field = $field;
@@ -84,26 +85,25 @@ class Controller extends BaseController
         $notification->type_id = $actionid;
         $notification->save();
     }
+
     protected function convertSingleDataForInfo($client)
     {
-//dd($client->car);
+
+
+
         return [
             'id' => $client->id,
             'trip_id' => $client->trip_id,
             'fullName' => $client->fullName,
-            'car' =>  isset($client->car) ? [
+            'car' => isset($client->car) ? [
                 'id' => $client->car->id,
-                'label' => $client->car->driver[0]->user->name .' '.$client->car->driver[0]->user->surname,
-                'slug' => $client->car->driver[0]->user->name.' '.$client->car->driver[0]->user->surname,
+                'label' => $client->car->driver[0]->user->name . ' ' . $client->car->driver[0]->user->surname,
+                'slug' => $client->car->driver[0]->user->name . ' ' . $client->car->driver[0]->user->surname,
                 'value' => $client->car->id,
             ] : [],
-            /// 'surname' => $client->surname,
             'gender' => $client->genderType->name,
             'los' => $client->los->name,
-            ///'phone_number' => $client->phone_number,
             'date_of_service' => $client->date_of_service,
-            'pick_up' => $client->pick_up,
-            'drop_down' => $client->drop_down,
             'request_type' => $client->requestType->name,
             'type_id' => [
                 'id' => $client->clientStatus->id,
@@ -111,13 +111,8 @@ class Controller extends BaseController
                 'slug' => $client->clientStatus->slug,
                 'value' => $client->clientStatus->slug,
             ],
-            'origin' => $client->origin,
-            'origin_phone' => $client->origin_phone,
-            'origin_comment' => $client->origin_comment,
-            'destination' => $client->destination,
-            'destination_phone' => $client->destination_phone,
-            'destination_comment' => $client->destination_comment,
             'miles' => $client->miles,
+            'address' => $client->address,
             'member_uniqie_identifer' => $client->member_uniqie_identifer,
             'birthday' => $client->birthday,
             'height' => $client->height,
@@ -257,7 +252,7 @@ class Controller extends BaseController
     protected function convertQuery($queryData, $title, $clients)
     {
 
-        $clients = $clients->where(function ($query) use($queryData) {
+        $clients = $clients->where(function ($query) use ($queryData) {
             $query->where('fullName', 'LIKE', '%' . $queryData . '%')
                 ->orWhere('trip_id', 'LIKE', '%' . $queryData . '%');
         });

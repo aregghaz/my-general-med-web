@@ -65,9 +65,7 @@ const Notification: React.FC<INotificationList> = () => {
     };
 
     const handlerClose = () =>setModel(null);
-    console.log(data, "carcar");
     return data && (
-
         <>
             {model && <div className={s.itemInfo}>
                 <div style={{display:"flex", flexDirection:"row", alignContent:"end", justifyContent:'end', padding: "10px 10px 0 0 "}}> <CloseSvg className={s.closeSvg} style={{cursor: "pointer"}} onClick={handlerClose}/></div>

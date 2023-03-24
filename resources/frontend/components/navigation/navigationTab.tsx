@@ -67,7 +67,7 @@ const NavigationTab: React.FC<INavigationTab> = (
     const showFilter = () => {
         setfiltre(!filtre);
     };
-    console.log(typeId, "");
+
     return (
         <>
             <Tabs tabs={tabs}

@@ -33,8 +33,6 @@ const VendorEdit: React.FC<IVendorEditItem> = ({ id }) => {
         (
             async () => {
                 const data = await AdminApi.editUserData(crudKey, id);
-                console.log(data, "datadata");
-
                 setData(data);
 
             }

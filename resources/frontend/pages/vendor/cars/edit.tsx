@@ -102,10 +102,7 @@ const CarsEdit: React.FC<IUsersEditItem> = ({ id }) => {
     };
 
     const loadOptions3 = async () => {
-        console.log(make, "aaa");
         return data["make"];
-
-
     };
     return data && (
         <div>

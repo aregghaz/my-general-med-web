@@ -21,8 +21,6 @@ const InfoBlockCar: FC<IProps> = ({data, is_admin,companyName,updatedField}) => 
     /// const infoData: any = items.find(item => item.id === idData);
     const newData = data.data
     const {t} = useTranslation()
-
-    console.log(newData,'newData');
     return (
         <div className={cls.block}>
             {

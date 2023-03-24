@@ -478,7 +478,7 @@ class ClientsController extends Controller
         $client->price = (int)$requestData->price + (int)$requestData->duration_id->value + (int)$requestData->artificial_id->value;
         $client->request_type = $requestData->request_type->id;
         $client->operator_id = $userId;
-        $client->stops = count($requestData->stops);
+        $client->stops = $requestData->count;
         $client->member_uniqie_identifer = $requestData->member_uniqie_identifer;
         if (isset($requestData->birthday)) {
             $client->birthday = $requestData->birthday;
@@ -491,14 +491,39 @@ class ClientsController extends Controller
             $client->weight = (float)$requestData->weight;
         }
         $client->update();
-        Address::whereIn('client_id', $id)->delete();
+        /// Address::whereIn('client_id', $id)->delete();
         for ($i = 1; $i <= $requestData->count; $i++) {
             $stepAddress = "step_$i";
             $stepComment = "comment_$i";
             $stepPhone = "phone_$i";
-            if (gettype($requestData->$stepAddress) == 'string') {
+            /// dd(gettype($requestData->$stepAddress));
+            /// var
 
-            }else{
+           var_dump(gettype($requestData->$stepAddress));
+
+            if (gettype($requestData->$stepAddress) == 'string') {
+                $address = Address::where(['client_id' => $id, 'step' => $i])->first();
+                if (isset($requestData->$stepComment)) {
+                    $address->address_comments = $requestData->$stepComment;
+                }
+                if (isset($requestData->$stepPhone)) {
+                    $address->address_phone = $requestData->$stepPhone;
+                }
+                if ($i === 1) {
+                    $stepTimePickUp = "time_$i";
+                    $address->pick_up = $requestData->$stepTimePickUp;
+                } else if ($i === $requestData->count) {
+                    $stepTimeDropDown = "drop_$i";
+                    $address->drop_down = $requestData->$stepTimeDropDown;
+                } else {
+                    $stepTimePickUp = "time_$i";
+                    $address->pick_up = $requestData->$stepTimePickUp;
+                    $stepTimeDropDown = "drop_$i";
+                    $address->drop_down = $requestData->$stepTimeDropDown;
+                };
+                $address->update();
+            } else {
+                Address::where(['client_id' => $id, 'step' => $i])->delete();
                 $address = new Address();
                 $address->client_id = $client->id;
                 $address->address = $requestData->$stepAddress->address;

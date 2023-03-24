@@ -110,7 +110,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                   setFieldValue,
                   errors
               }) => {
-                console.log(values);
+
                 return (
                     <>
                         {

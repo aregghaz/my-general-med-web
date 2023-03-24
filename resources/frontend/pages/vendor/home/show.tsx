@@ -62,10 +62,8 @@ const Show: React.FC<IShow> = ({ id }) => {
         (async () => {
             const homeData = await homeAPI.getCLientById(id);
             setStatuses(homeData.status);
-            console.log(homeData.client.type_id,'homeData.status');
             if(homeData.client.type_id.id===6){
                 setDisabled(true)
-
             }
             dispatch(clientAction.fetching({ clientById: homeData.client }));
             setCarData(homeData.cars);

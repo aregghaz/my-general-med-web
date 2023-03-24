@@ -100,10 +100,10 @@ class HomeController extends Controller
                 $clients = $clients->join('los', 'clients.los_id', '=', 'los.id');
                 $clientsData[] = "los.name as los_id";
                 //////gender reletion cheking and add to title
-            }else if ($vendorFields[$i] == 'duration_id') {
+            } else if ($vendorFields[$i] == 'duration_id') {
                 $clients = $clients->join('wait_durations', 'clients.duration_id', '=', 'wait_durations.id');
                 $clientsData[] = "wait_durations.name as duration_id";
-            }else if ($vendorFields[$i] == 'artificial_id') {
+            } else if ($vendorFields[$i] == 'artificial_id') {
                 $clients = $clients->join('artificials', 'clients.artificial_id', '=', 'artificials.id');
                 $clientsData[] = "artificials.name as artificial";
             } else if ($vendorFields[$i] == 'gender') {
@@ -152,7 +152,7 @@ class HomeController extends Controller
         $vendorId = $request->user()->vendor_id;
         $client = Clients::with([
             /// 'origin',
-            /// 'destination',
+            'address',
             'car',
             'clientStatus',
             'requestType'

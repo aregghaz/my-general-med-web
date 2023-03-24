@@ -44,10 +44,7 @@ const VendorDriverEdit: React.FC<IUsersEditItem> = ({ id }) => {
     useEffect(() => {
         (
             async () => {
-                console.log(id);
-
                 const data = await homeAPI.editUserData(crudKey, id);
-                console.log(data);
                 setData(data);
 
             }

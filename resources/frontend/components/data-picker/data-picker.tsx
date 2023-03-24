@@ -23,7 +23,7 @@ const DataPicker: React.FC<IDataPicker> = (
     }) => {
     const [show, setShow] = useState<boolean>(false);
     // const getDateValue = value ? new Date(value) : 'mm/dd/yyyy';
-    console.log(new Date(value),'aaa');
+
     return (
         <>
             {label && <label className={s.label}>{label}</label>}
