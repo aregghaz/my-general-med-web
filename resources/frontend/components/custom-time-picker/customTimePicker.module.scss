@@ -1,3 +1,5 @@
+@import "../../styles/variables";
+
 .container {
     width: auto;
     height: auto;
@@ -9,6 +11,7 @@
 .top {
     border: inherit;
     width: 100%;
+    color: $borderColor;
 }
 
 .bottom {
@@ -17,13 +20,14 @@
 }
 
 .bottom > input {
-    border: 1px solid black;
+    border: 1px solid $borderColor;
     outline: none;
     border-radius: 5px;
     width: 100px;
     height: 50px;
     font-size: 20px;
     text-align: center;
+    color: gray;
 }
 
 .bottom > span {

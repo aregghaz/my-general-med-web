@@ -31,23 +31,27 @@ const TextField: React.FC<ITextField> = (
     }) => (
     <div className={s.inputWrapper}>
         {error && <div className={s.error}>{error}</div>}
-        <textarea
-            id={name}
-            disabled={disable}
-            name={name}
-            className={`${className ? className : ""} ${s.input}`}
-            // type={type}
-            placeholder={placeholder}
-            value={value}
-            onChange={onChange}
-            autoComplete={autoComplete}
-        />
-        {/*{*/}
-        {/*    label &&*/}
-        {/*    <label className={s.label} htmlFor={name}>*/}
-        {/*        {label}*/}
-        {/*    </label>*/}
-        {/*}*/}
+        <div className={s.labelWrapper}>
+            {
+                label &&
+                <label className={s.label} htmlFor={name}>
+                    {label}
+                </label>
+            }
+        </div>
+        <div className={s.textareaWrapper}>
+            <textarea
+                id={name}
+                disabled={disable}
+                name={name}
+                className={`${className ? className : ""} ${s.input}`}
+                // type={type}
+                placeholder={placeholder}
+                value={value}
+                onChange={onChange}
+                autoComplete={autoComplete}
+            />
+        </div>
     </div>
 );
 
