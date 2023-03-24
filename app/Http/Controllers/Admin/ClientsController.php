@@ -333,16 +333,13 @@ class ClientsController extends Controller
         if (isset($requestData->birthday)) {
             $client->birthday = $requestData->birthday;
         }
-
-        $client->miles = 8; ///(float)$requestData->miles;
+        $client->miles = (float)$requestData->miles;
         if (isset($requestData->height)) {
             $client->height = $requestData->height;
-
         }
         if (isset($requestData->weight)) {
             $client->weight = (float)$requestData->weight;
         }
-
         if (!$client->save()) {
             return false;
         }
@@ -465,46 +462,12 @@ class ClientsController extends Controller
      * @param \App\Models\Clients $clients
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id, Clients $clients)
+    public function update(Request $request, $id)
     {
-//       /// dd((array)json_decode($requestData->value));
-//        $validator = Validator::make((array)json_decode($requestData->value), [
-//            'trip_id' => 'required|string',
-//            'fullName' => 'required|string',
-//            'los' => 'required|string',
-//            'date_of_service' => 'required|string',
-//            'pick_up' => 'string',
-//            'drop_down' => 'string',
-//            'origin' => 'string',
-//            'origin_phone' => 'string|nullable',
-//            'origin_comment' => 'string|nullable',
-//            'destination_phone' => 'string|nullable',
-//            'destination' => 'string',
-//            'destination_comments' => 'string|nullable',
-//            'miles' => 'numeric',
-//            'member_uniqie_identifer' => 'string',
-//            'birthday' => 'string',
-//        ]);
-//        if ($validator->fails()) {
-//            return response()->json(
-//                [
-//                    'success' => 0,
-//                    'type' => 'validation_filed',
-//                    'error' => $validator->messages(),
-//                ],
-//                422
-//            );
-//        }
+
         $userId = $request->user()->id;
         $requestData = json_decode($request->value);
-        $origin = [
-            "phone" => $requestData->origin_phone,
-            'time' => $requestData->pick_up,
-        ];
-        $destination = [
-            "phone" => $requestData->destination_phone,
-            "time" => $requestData->drop_down,
-        ];
+
         $client = Clients::find($id);
         $client->fullName = $requestData->fullName;
         $client->gender = $requestData->gender->id;
@@ -513,52 +476,57 @@ class ClientsController extends Controller
         $client->duration_id = $requestData->duration_id->id;
         $client->date_of_service = date('Y-m-d', strtotime($requestData->date_of_service));
         $client->price = (int)$requestData->price + (int)$requestData->duration_id->value + (int)$requestData->artificial_id->value;
-        $client->pick_up = $origin['time'];
-        $client->drop_down = $destination['time'];
         $client->request_type = $requestData->request_type->id;
-        /// $client->status = $requestData->status->id;
         $client->operator_id = $userId;
-        ///if (isset($requestData->origin->address)) {
-        /// dd()
-//        dd($origin);
-        if (isset($requestData->destination->address)) {
-            $client->destination = $requestData->destination->address;
-
-            $client->destination_id = $requestData->destination->id;
-        }
-        if (isset($requestData->origin->address)) {
-            $client->origin = $requestData->origin->address;
-            $client->origin_id = $requestData->origin->id;
-        }
-
-
-        $client->origin_phone = $origin['phone'];
-        if (isset($requestData->origin_comment)) {
-            $client->origin_comment = $requestData->origin_comment;
-
-        }
-        if (isset($requestData->destination_comments)) {
-            $client->destination_comments = $requestData->destination_comments;
-
-        }
-        $client->destination_phone = $destination['phone'];
+        $client->stops = count($requestData->stops);
         $client->member_uniqie_identifer = $requestData->member_uniqie_identifer;
         if (isset($requestData->birthday)) {
             $client->birthday = $requestData->birthday;
         }
-
         $client->miles = (float)$requestData->miles;
-
         if (isset($requestData->height)) {
             $client->height = $requestData->height;
-
         }
-
         if (isset($requestData->weight)) {
             $client->weight = (float)$requestData->weight;
         }
-
         $client->update();
+        Address::whereIn('client_id', $id)->delete();
+        for ($i = 1; $i <= $requestData->count; $i++) {
+            $stepAddress = "step_$i";
+            $stepComment = "comment_$i";
+            $stepPhone = "phone_$i";
+            if (gettype($requestData->$stepAddress) == 'string') {
+
+            }else{
+                $address = new Address();
+                $address->client_id = $client->id;
+                $address->address = $requestData->$stepAddress->address;
+                $address->address_id = $requestData->$stepAddress->id;
+                $address->step = $i;
+                if (isset($requestData->$stepComment)) {
+                    $address->address_comments = $requestData->$stepComment;
+                }
+                if (isset($requestData->$stepPhone)) {
+                    $address->address_phone = $requestData->$stepPhone;
+                }
+                if ($i === 1) {
+                    $stepTimePickUp = "time_$i";
+                    $address->pick_up = $requestData->$stepTimePickUp;
+                } else if ($i === $requestData->count) {
+                    $stepTimeDropDown = "drop_$i";
+                    $address->drop_down = $requestData->$stepTimeDropDown;
+                } else {
+                    $stepTimePickUp = "time_$i";
+                    $address->pick_up = $requestData->$stepTimePickUp;
+                    $stepTimeDropDown = "drop_$i";
+                    $address->drop_down = $requestData->$stepTimeDropDown;
+                };
+
+                $address->save();
+            }
+
+        }
         $this->createAction($userId, $id, 9, 1);
         return response()->json(
             [

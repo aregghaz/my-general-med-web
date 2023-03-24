@@ -15,6 +15,11 @@ class Controller extends BaseController
 
     protected function convertSingleData($client)
     {
+        $count = [];
+        for ($i = 1; $i <=$client->stops; $i++){
+            $count[] = $i;
+        }
+//        dd($client->address);
         return [
             'id' => $client->id,
             'trip_id' => $client->trip_id,
@@ -33,8 +38,6 @@ class Controller extends BaseController
                 'value' => $client->los->slug,
             ],
             'date_of_service' => $client->date_of_service,
-            'pick_up' => $client->pick_up,
-            'drop_down' => $client->drop_down,
             'request_type' => [
                 'id' => $client->requestType->id,
                 'label' => $client->requestType->name,
@@ -62,31 +65,13 @@ class Controller extends BaseController
                 'value' => $client->clientStatus->slug,
             ],
             ///select
-            'origin' => $client->origin,
-            'origin_phone' => $client->origin_phone,
-            'origin_comment' => $client->origin_comment,
-            'destination' => $client->destination,
-            'destination_phone' => $client->destination_phone,
-            'destination_comments' => $client->destination_comments,
-//            'escortType' =>   [
-//                'id' => $client->escort->id,
-//                'label' => $client->escort->name,
-//                'slug' =>  $client->escort->slug,
-//                'value' => $client->escort->slug,
-//            ],
-            //select
-//            'type_of_trip' =>  [
-//                'id' => $client->typeOfTrip->id,
-//                'label' => $client->typeOfTrip->name,
-//                'slug' =>  $client->typeOfTrip->slug,
-//                'value' => $client->typeOfTrip->slug,
-//            ],
-            //select
             'miles' => $client->miles,
+            'stops' => $count,
             'member_uniqie_identifer' => $client->member_uniqie_identifer,
             'birthday' => $client->birthday,
             'height' => $client->height,
             'weight' => $client->weight,
+            'address' => $client->address,
             ///  'additionalNote' => $client->additionalNote,
         ];
     }

@@ -94,6 +94,6 @@ class Clients extends Model
 
     public function address()
     {
-        return $this->hasMany(Address::class, 'id', 'client_id');
+        return $this->hasMany(Address::class, 'client_id', 'id');
     }
 }

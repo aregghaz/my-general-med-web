@@ -16,7 +16,7 @@ import Autocomplete from "../../../../components/autocomplate/autocomplete";
 import Password from "../../../../components/password/password";
 
 export interface IItem {
-    type?: "input" | "password" | "autocomplete" | "timePicker" | "checkbox" | "richText" | "textarea" | "select" | "file" | "textField" | "radio" | "datepicker" | "multiSelect" | "hidden";
+    type?: "input" | "password" | "autocomplete" | "address" | "timePicker" | "checkbox" | "richText" | "textarea" | "select" | "file" | "textField" | "radio" | "datepicker" | "multiSelect" | "hidden";
     inputType?: string;
     name: string;
     value?: string | boolean | File | IOption;
@@ -211,10 +211,10 @@ const FormikHandler: React.FC<IFormikHandler> = (
                 <Input
                     name={item.name}
                     value={values[item.name]}
-                    type={item.inputType}
+                    type={'hidden'}
                     onChange={handleChange}
                     // placeholder={item.placeholder}
-                    label={item.label}
+                   /// label={item.label}
                 />
             );
     }

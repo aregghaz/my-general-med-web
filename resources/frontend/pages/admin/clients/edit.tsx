@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
-import Edit from "../../layouts/templates/edit/edit";
-import { IItem } from "../../layouts/templates/formik-handler/formik-handler";
+import FormikHandler, { IItem } from "../../layouts/templates/formik-handler/formik-handler";
 import { useTranslation } from "react-i18next";
 import { AdminApi } from "../../../api/admin-api/admin-api";
-import { DirectionsRenderer, GoogleMap } from "@react-google-maps/api";
-import cls from "../../../components/info-block/info-block.module.scss";
 import s from "../../vendor/cars/car.module.scss";
 import Autocomplete from "../../../components/autocomplate/autocomplete";
+import { Formik, FormikHelpers } from "formik";
+import { FormikValues } from "formik/dist/types";
+import Button from "../../../components/button/button";
+import populateEditFormFields from "../../../constants/populateEditFormFields";
+import validationRules from "../../../utils/validationRule";
+import { toast } from "react-toastify";
 
 interface IClientEditItem {
     path: string;
@@ -31,46 +34,26 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
     // });
     const fields: Array<IItem> = [
         { name: "fullName", type: "input", label: "fullName" },
+        { name: "date_of_service", type: "datepicker", label: "date_of_service" },
         { name: "gender", type: "select", label: "gender" },
+        { name: "birthday", type: "datepicker", label: "birthday" },
         { name: "los", type: "select", label: "los" },
         { name: "artificial_id", type: "select", label: "artificial" },
         { name: "duration_id", type: "select", label: "waitDuration" },
-        { name: "price", type: "input", label: "price", inputType: "number" },
-        { name: "member_uniqie_identifer", type: "input", label: "member_uniqie_identifer" },
+        { name: "vendors", type: "select", label: "vendors" },
         { name: "request_type", type: "select", label: "request_type" },
-        /// { name: "status", type: "select", label: "status" },
-        { name: "origin_phone", type: "input", label: "origin_phone", inputType: "tel" },
-        { name: "destination_phone", type: "input", label: "destination_phone", inputType: "tel" },
-        { name: "birthday", type: "datepicker", label: "birthday" },
-        { name: "date_of_service", type: "datepicker", label: "date_of_service" },
-        { name: "miles", type: "input", label: "miles", inputType: "disabled" },
-        { name: "id", type: "hidden", inputType: "hidden" },
+        { name: "member_uniqie_identifer", type: "input", label: "member_uniqie_identifer" },
+        { name: "price", type: "input", label: "price", inputType: "number" },
         { name: "height", type: "input", label: "height", inputType: "number" },
         { name: "weight", type: "input", label: "weight", inputType: "number" },
-        { name: "origin_comment", type: "textarea", label: "origin_comment" },
+        { name: "miles", type: "input", label: "miles", inputType: "disabled" },
+        { name: "address", type: "address", label: "" },
+        { name: "stops", type: "hidden", label: "stops" },
+        { name: "count", type: "hidden", label: "count" },
 
-        { name: "destination_comments", type: "textarea", label: "destination_comments" },
-        { name: "location", type: "autocomplete", label: "location" },
 
-        { name: "pick_up", type: "timePicker", label: "pick_up", inputType: "number" },
-        { name: "drop_down", type: "timePicker", label: "drop_down", inputType: "number" },
     ];
 
-
-    async function handleDrawMap(origin: string, destination: string) {
-        console.log(origin, "origin");
-        const directionsService = new google.maps.DirectionsService();
-        const results = await directionsService.route({
-            origin: origin,
-            destination: destination,
-            travelMode: google.maps.TravelMode.DRIVING
-        });
-        setDirectionsResponse(results);
-        setDistance(results.routes[0].legs[0].distance.text);
-        setDuration(results.routes[0].legs[0].duration.text);
-        setSteps(results.routes[0].legs[0].steps);
-
-    }
 
     useEffect(() => {
         (
@@ -94,58 +77,110 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
         // 'insurance',
         // 'liability',
     ];
-    return (
-        data &&
-        <>
-            {directionsResponse && <div className={cls.selectDiv}>
-                <div className={cls.mapDiv}>
-                    <GoogleMap
-                        ///  center={center}
-                        zoom={15}
-                        mapContainerStyle={{ minHeight: 500, height: "100%" }}
-                        options={{
-                            zoomControl: true,
-                            streetViewControl: false,
-                            mapTypeControl: false,
-                            fullscreenControl: false
-                        }}
-                        onLoad={map => setMap(map)}
-                    >
-                        {/* <Marker position={center} /> */}
-                        {directionsResponse && (
-                            <DirectionsRenderer directions={directionsResponse} />
-                        )}
 
-                    </GoogleMap>
-                </div>
-                <div className={cls.directionDiv}>
-                    {steps && steps.map((el: any) => {
-                        return (
-                            <div
-                                // className={s.directions}
-                                dangerouslySetInnerHTML={{ __html: el.instructions }}
-                            />
-                        );
-                    })}
-                </div>
-            </div>
+
+    const validate = (values: FormikValues) => validationRules(values, requiredFields, fields, t);
+
+    const submit = async (values: FormikValues, { setSubmitting }: FormikHelpers<FormikValues>) => {
+        setSubmitting(true);
+        const formData: FormData = new FormData();
+        formData.append("_method", "put");
+        formData.append("value", JSON.stringify(values));
+        const res: any = await AdminApi.update(formData, `admin/${crudKey}`, id);
+        if (Number(res.status === 200)) {
+            const options = {
+                type: toast.TYPE.SUCCESS,
+                position: toast.POSITION.TOP_RIGHT
+            };
+
+            toast(t("record_successfully_edited"), options);
+            // await navigate(`/${redirectKey ?? crudKey}`);
+        }
+    };
+    return data && <div>
+
+        <Formik
+            initialValues={populateEditFormFields(fields, data)}
+            onSubmit={submit}
+            validate={validate}
+            validateOnChange={false}
+            validateOnBlur={false}
+        >
+            {({
+                  handleSubmit,
+                  handleChange,
+                  values,
+                  setFieldValue,
+                  errors
+              }) => {
+                console.log(values);
+                return (
+                    <>
+                        {
+                            <div className={s.autocomplete}>
+                                <Autocomplete
+                                    setFieldValue={setFieldValue}
+                                    values={values}
+                                    name={"address"}
+                                    handleChange={handleChange}
+                                />
+                            </div>
+                        }
+                        <form className={s.form}>
+                            {
+                                fields
+                                    .map((field, index) => {
+                                            if (data && data[field.name]) {
+                                                return <div key={index} className={s.item}>
+                                                    <FormikHandler
+                                                        item={field}
+                                                        className={s.item}
+                                                        handleChange={handleChange}
+                                                        values={values}
+                                                        setFieldValue={setFieldValue}
+                                                        selectOptions={data}
+                                                        requiredFields={requiredFields}
+                                                        errors={errors}
+                                                    />
+                                                </div>;
+                                            } else {
+                                                return <div key={index} className={s.item}>
+                                                    <FormikHandler
+                                                        item={field}
+                                                        className={s.item}
+                                                        handleChange={handleChange}
+                                                        values={values}
+                                                        setFieldValue={setFieldValue}
+                                                        requiredFields={requiredFields}
+                                                        errors={errors}
+                                                    />
+                                                </div>;
+                                            }
+
+                                        }
+                                    )
+                            }
+                            <div className={s.buttonDiv}>
+                                <Button
+                                    type={"adminUpdate"}
+                                    onClick={handleSubmit}
+                                    className={"admin"}
+                                >
+                                    save
+                                </Button>
+                            </div>
+
+                        </form>
+
+                    </>
+
+                );
+            }
             }
 
-            <Edit
-                crudKey={`admin/${crudKey}`}
-                data={data}
-                fields={fields}
-                title={""}
-                requiredFields={requiredFields}
-                handleDrawMap={handleDrawMap}
-                // originRef={originRef}
-                // destiantionRef={destiantionRef}
-                children={t("update")}
+        </Formik>
 
-            />
-        </>
-
-    );
+    </div>;
 };
 
 export default ClientEdit;

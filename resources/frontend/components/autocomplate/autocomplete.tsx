@@ -7,7 +7,6 @@ import TimePickers from "../time-picker/timepicker";
 import Input from "../input/input";
 import TextField from "../text-field/text-field";
 import getMapResponse from "../../utils/googleMap";
-import CustomTimePicker from "../custom-time-picker/customTimePicker";
 
 interface ITextarea {
     values: any,
@@ -15,7 +14,7 @@ interface ITextarea {
     setFieldValue: (name: string, date: any) => void;
     /////FIXME ADD TYPES
     handleChange: any,
-    handleDrawMap: (origin: string, destination: string) => void;
+    handleDrawMap?: (dataMap: any) => void;
 
 }
 
@@ -24,16 +23,17 @@ const Autocomplete: React.FC<ITextarea> = (
         ///  name,
         values,
         setFieldValue,
-        handleChange,
-        handleDrawMap
+        handleChange
+        ///   handleDrawMap
 
     }) => {
     const [load, setLoad] = useState(false);
-    const [step, setStep] = useState([1, 2]);
-    const [count, stepCount] = useState(values.stops || 2);
+    const [step, setStep] = useState(values.stops);
+    const [count, stepCount] = useState(values.stops.length || 2);
     const [newStep, setNewStep] = useState(false);
+    const [dataMap, setDataMap] = useState({});
     const [firstLoad, setFirstLoad] = useState(true);
-
+    console.log(values, "valuesvalues");
     useEffect(() => {
         (async () => {
             ///  console.log(values["origin"]["address"].length, "1111");
@@ -42,7 +42,7 @@ const Autocomplete: React.FC<ITextarea> = (
             var destination = "";
             var waypoint = [];
             for (let i = 1; i <= count; i++) {
-                console.log(values[`step_${i}`],'122222222');
+                console.log(values[`step_${i}`], "122222222");
                 if (i === 1) {
                     origin = values[`step_${i}`]["address"];
                 } else if (i === count) {
@@ -57,16 +57,18 @@ const Autocomplete: React.FC<ITextarea> = (
                     });
                 }
 
+
             }
             const results = await getMapResponse(origin, destination, waypoint);
-            if(results.routes[0].legs.length > 0 ){
+            if (results.routes[0].legs.length > 0) {
                 var miles = 0;
-                results.routes[0].legs.map((item:any) => {
-                    miles += parseFloat(item.distance.text)
-                })
+                results.routes[0].legs.map((item: any) => {
+                    miles += parseFloat(item.distance.text);
+                });
                 setFieldValue("miles", `${miles} mile`);
                 setFieldValue("duration", `${miles} mile`);
             }
+
             console.log(results, "resultsresultsresults");
             //   if (values["step_1"]["address"].length > 0 && values[step.length - 1]["address"].length > 0) {
             //
@@ -79,10 +81,11 @@ const Autocomplete: React.FC<ITextarea> = (
             //   }
         })();
     }, [load]);
+
     useEffect(() => {
         (async () => {
             if (!firstLoad) {
-                setStep((state) => {
+                setStep((state: Array<number>) => {
                         return [
                             ...state,
                             step[step.length - 1] + 1
@@ -191,6 +194,7 @@ const Autocomplete: React.FC<ITextarea> = (
             >
                 Add step
             </Button>
+
         </div>
     </>);
 };
