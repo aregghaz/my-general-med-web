@@ -7,6 +7,7 @@ import TimePickers from "../time-picker/timepicker";
 import Input from "../input/input";
 import TextField from "../text-field/text-field";
 import getMapResponse from "../../utils/googleMap";
+import CustomTimePicker from "../custom-time-picker/customTimePicker";
 
 interface ITextarea {
     values: any,
@@ -120,25 +121,27 @@ const Autocomplete: React.FC<ITextarea> = (
                 />
             </div>
             <div className={s.timePickerContainer}>
-                {item !== step.length && <TimePickers
-                    label={`pick_${item}`}
-                    ////   error={errors[item.name]}
-                    name={`time_${item}`}
-                    setFieldValue={setFieldValue}
-                    value={values[`time_${item}`]}
-                    className={s.timePickerWrapper}
-                    classNameTime={s.timePicker}
-                />}
+                {/*{item !== step.length && <TimePickers*/}
+                {/*    label={`pick_${item}`}*/}
+                {/*    ////   error={errors[item.name]}*/}
+                {/*    name={`time_${item}`}*/}
+                {/*    setFieldValue={setFieldValue}*/}
+                {/*    value={values[`time_${item}`]}*/}
+                {/*    className={s.timePickerWrapper}*/}
+                {/*    classNameTime={s.timePicker}*/}
+                {/*/>}*/}
 
-                {item !== 1 && <TimePickers
-                    label={`drop_${item}`}
-                    ////   error={errors[item.name]}
-                    name={`drop_${item}`}
-                    setFieldValue={setFieldValue}
-                    value={values[`drop_${item}`]}
-                    className={s.timePickerWrapper}
-                    classNameTime={s.timePicker}
-                />}
+                {/*{item !== 1 && <TimePickers*/}
+                {/*    label={`drop_${item}`}*/}
+                {/*    ////   error={errors[item.name]}*/}
+                {/*    name={`drop_${item}`}*/}
+                {/*    setFieldValue={setFieldValue}*/}
+                {/*    value={values[`drop_${item}`]}*/}
+                {/*    className={s.timePickerWrapper}*/}
+                {/*    classNameTime={s.timePicker}*/}
+                {/*/>}*/}
+                <CustomTimePicker name={"asd"} labelText={`drop_${item}`}/>
+                <CustomTimePicker name={"asd"} labelText={`drop_${item}`}/>
             </div>
             <div className={s.timePickerContainer}>
                 <Input
