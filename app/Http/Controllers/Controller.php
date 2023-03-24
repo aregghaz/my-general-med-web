@@ -117,6 +117,7 @@ class Controller extends BaseController
             'birthday' => $client->birthday,
             'height' => $client->height,
             'weight' => $client->weight,
+            'stops' => $client->stops,
             'additionalNote' => $client->additionalNote,
             'operator_note' => $client->operator_note,
         ];

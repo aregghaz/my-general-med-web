@@ -27,14 +27,13 @@ const defaultDat = {
         label: "",
         slug: ""
     },
-    origin: "",
-    origin_id: "",
-    origin_phone: "",
-    origin_comment: "",
-    destination: "",
-    destination_id: "",
-    destination_phone: "",
-    destination_comment: "",
+    address : [{
+        address: '',
+        address_comment: '',
+        address_phone: "",
+        pick_up:'00:00',
+        drop_down:'00:00'
+    }],
     height: 0,
     weight: 0,
     escortType: 0,

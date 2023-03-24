@@ -90,37 +90,107 @@ class HomeController extends Controller
         $tripCount = $tripCount->count();
         $available = $available->count();
 
+        $joinCheck = false;
+        $joinCheckDrop = false;
         for ($i = 0; $i < count($vendorFields); $i++) {
             $selectedFieldsTitle[] = $vendorFields[$i];
             if ($vendorFields[$i] == 'request_type') {
                 $clients = $clients->join('request_types', 'clients.request_type', '=', 'request_types.id');
                 $clientsData[] = "request_types.name as request_type";
-                //////status reletion cheking and add to title
+            } else if ($vendorFields[$i] == 'status') {
+                $clients = $clients->join('client_statuses', 'clients.type_id', '=', 'client_statuses.id');
+                $clientsData[] = "client_statuses.name as status";
+            } else if ($vendorFields[$i] == 'duration_id') {
+                $clients = $clients->join('wait_durations', 'clients.duration_id', '=', 'wait_durations.id');
+                $clientsData[] = "wait_durations.name as duration_id";
+            } else if ($vendorFields[$i] == 'pick_up') {
+                if (!$joinCheck) {
+                    $clients = $clients->join('addresses as a1', 'clients.id', '=', 'a1.client_id')->where('a1.step', '=', 1);
+                    $joinCheck = true;
+                }
+                $clientsData[] = "a1.pick_up as pick_up";
+            } else if ($vendorFields[$i] == 'origin') {
+                if (!$joinCheck) {
+                    $clients = $clients->join('addresses as a1', 'clients.id', '=', 'a1.client_id')->where('a1.step', '=', 1);
+                    $joinCheck = true;
+                }
+                $clientsData[] = "a1.address as address";
+            } else if ($vendorFields[$i] == 'origin_phone') {
+                if (!$joinCheck) {
+                    $clients = $clients->join('addresses as a1', 'clients.id', '=', 'a1.client_id')->where('a1.step', '=', 1);
+                    $joinCheck = true;
+                }
+                $clientsData[] = "a1.address_phone as origin_phone";
+            } else if ($vendorFields[$i] == 'origin_comment') {
+                if (!$joinCheck) {
+                    $clients = $clients->join('addresses as a1', 'clients.id', '=', 'a1.client_id')->where('a1.step', '=', 1);
+                    $joinCheck = true;
+                }
+                $clientsData[] = "a1.address_comments as origin_comment";
+            } else if ($vendorFields[$i] == 'drop_down') {
+                if (!$joinCheckDrop) {
+                    $clients = $clients->join('addresses as a2', function ($join) {
+                        $join->on('clients.id', '=', 'a2.client_id');
+                        $join->on('a2.step', '=', 'clients.stops');
+                    });
+                    $joinCheckDrop = true;
+                }
+                $clientsData[] = "a2.drop_down as drop_down";
+            } else if ($vendorFields[$i] == 'destination') {
+                if (!$joinCheckDrop) {
+                    $clients = $clients->join('addresses as a2', function ($join) {
+                        $join->on('clients.id', '=', 'a2.client_id');
+                        $join->on('a2.step', '=', 'clients.stops');
+                    });
+                    $joinCheckDrop = true;
+                }
+                $clientsData[] = "a2.address as destination";
+            } else if ($vendorFields[$i] == 'destination_phone') {
+                if (!$joinCheckDrop) {
+                    $clients = $clients->join('addresses as a2', function ($join) {
+                        $join->on('clients.id', '=', 'a2.client_id');
+                        $join->on('a2.step', '=', 'clients.stops');
+                    });
+                    $joinCheckDrop = true;
+                }
+                $clientsData[] = "a2.address_phone as destination_phone";
+            } else if ($vendorFields[$i] == 'destination_comments') {
+                if (!$joinCheckDrop) {
+                    $clients = $clients->join('addresses as a2', function ($join) {
+                        $join->on('clients.id', '=', 'a2.client_id');
+                        $join->on('a2.step', '=', 'clients.stops');
+                    });
+                    $joinCheckDrop = true;
+                }
+                $clientsData[] = "a2.address_comments as destination_comments";
+            } else if ($vendorFields[$i] == 'artificial_id') {
+                $clients = $clients->join('artificials', 'clients.artificial_id', '=', 'artificials.id');
+                $clientsData[] = "artificials.name as artificial";
             } else if ($vendorFields[$i] == 'los_id') {
                 $clients = $clients->join('los', 'clients.los_id', '=', 'los.id');
                 $clientsData[] = "los.name as los_id";
                 //////gender reletion cheking and add to title
-            } else if ($vendorFields[$i] == 'duration_id') {
-                $clients = $clients->join('wait_durations', 'clients.duration_id', '=', 'wait_durations.id');
-                $clientsData[] = "wait_durations.name as duration_id";
-            } else if ($vendorFields[$i] == 'artificial_id') {
-                $clients = $clients->join('artificials', 'clients.artificial_id', '=', 'artificials.id');
-                $clientsData[] = "artificials.name as artificial";
             } else if ($vendorFields[$i] == 'gender') {
                 $clients = $clients->join('genders', 'clients.gender', '=', 'genders.id');
                 $clientsData[] = "genders.name as gender";
-                //////adding default fields in to select
-            } else if ($vendorFields[$i] == 'car_id' and ($typeId !== 2)) {
+            } else if ($vendorFields[$i] == 'car_id') {
                 $clients = $clients->leftJoin('cars', function ($query) {
                     $query->on('cars.id', '=', 'clients.car_id')->whereNotNull('clients.car_id');;
                 });
                 $clients = $clients->leftJoin('makes', 'makes.id', '=', 'cars.make_id');
                 $clientsData[] = "clients.car_id as " . $selectedFieldsTitle[$i];
                 $clientsData[] = "makes.name as car_name";
+            } else if ($vendorFields[$i] == 'vendor_id') {
+                $clients = $clients->join('users as u2', 'clients.vendor_id', '=', 'u2.id');
+                $clientsData[] = "u2.name as " . $selectedFieldsTitle[$i];
+            } else if ($vendorFields[$i] == 'operator_id') {
+                $clients = $clients->join('users AS u1', 'clients.operator_id', '=', 'u1.id');
+                $clientsData[] = "u1.name as " . $selectedFieldsTitle[$i];
             } else if ($vendorFields[$i] !== 'action') {
                 $clientsData[] = 'clients.' . $selectedFieldsTitle[$i] . " as " . $selectedFieldsTitle[$i];
             }
         }
+
         $result = array_diff($allFields, $selectedFieldsTitle);
 
         $selectedFields = count($clientsData) > 0 ? $clientsData : $clientData;

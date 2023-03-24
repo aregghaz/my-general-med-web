@@ -116,6 +116,15 @@ const Autocomplete: React.FC<ITextarea> = (
                         />
                     </div>
                     <div className={s.timePickerContainer}>
+                        {item !== 1 && <TimePickers
+                            label={`drop_${item}`}
+                            ////   error={errors[item.name]}
+                            name={`drop_${item}`}
+                            setFieldValue={setFieldValue}
+                            value={values[`drop_${item}`]}
+                            className={s.timePickerWrapper}
+                            classNameTime={s.timePicker}
+                        />}
                         {item !== step.length && <TimePickers
                             label={`pick_${item}`}
                             ////   error={errors[item.name]}
@@ -126,15 +135,7 @@ const Autocomplete: React.FC<ITextarea> = (
                             classNameTime={s.timePicker}
                         />}
 
-                        {item !== 1 && <TimePickers
-                            label={`drop_${item}`}
-                            ////   error={errors[item.name]}
-                            name={`drop_${item}`}
-                            setFieldValue={setFieldValue}
-                            value={values[`drop_${item}`]}
-                            className={s.timePickerWrapper}
-                            classNameTime={s.timePicker}
-                        />}
+
                         {/*<CustomTimePicker value={"12:34"} name={"asd"} labelText={`drop_${item}`}/>*/}
                         {/*<CustomTimePicker name={"asd"} labelText={`drop_${item}`}/>*/}
                     </div>

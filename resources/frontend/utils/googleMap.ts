@@ -1,4 +1,4 @@
-const getMapResponse = async (origin: string, destination: string, waypoint: Array<any>) => {
+const getMapResponse = async (origin: any, destination: any, waypoint: Array<any>) => {
     const directionsService = new google.maps.DirectionsService();
     return await directionsService.route({
         origin: origin,

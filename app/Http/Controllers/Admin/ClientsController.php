@@ -496,10 +496,6 @@ class ClientsController extends Controller
             $stepAddress = "step_$i";
             $stepComment = "comment_$i";
             $stepPhone = "phone_$i";
-            /// dd(gettype($requestData->$stepAddress));
-            /// var
-
-           var_dump(gettype($requestData->$stepAddress));
 
             if (gettype($requestData->$stepAddress) == 'string') {
                 $address = Address::where(['client_id' => $id, 'step' => $i])->first();

@@ -13,6 +13,8 @@ import Select, { IOption } from "../../../components/select/select";
 import { toast } from "react-toastify";
 import Button from "../../../components/button/button";
 import Textarea from "../../../components/textarea/textarea";
+import getMapResponse from "../../../utils/googleMap";
+import timestampToDate from "../../../utils/timestampToDate";
 
 interface IShow {
     path: string;
@@ -37,18 +39,7 @@ const Show: React.FC<IShow> = ({ id }) => {
         libraries: ["geometry", "drawing", "places"]
     });
 
-    async function calculateRoute(clientById: any) {
-        const directionsService = new google.maps.DirectionsService();
-        const results = await directionsService.route({
-            origin: clientById.origin,
-            destination: clientById.destination,
-            travelMode: google.maps.TravelMode.DRIVING
-        });
-        setDirectionsResponse(results);
-        setDistance(results.routes[0].legs[0].distance.text);
-        setDuration(results.routes[0].legs[0].duration.text);
-        setSteps(results.routes[0].legs[0].steps);
-    }
+
 
     const [values, setFieldValue] = useState({
         pick_up: clientById.pick_up,
@@ -75,8 +66,40 @@ const Show: React.FC<IShow> = ({ id }) => {
                 car: homeData.client.car
 
             });
-            await calculateRoute(homeData.client);
-            console.log("aaaa" + isLoaded)
+            var address = homeData.client.address;
+            var origin = "";
+            var destination = "";
+            var waypoint = [];
+            for (let i = 0; i < homeData.client.stops; i++) {
+                console.log(address[i], "address[i]");
+                if (i === 0) {
+                    origin = address[i]["address"];
+                } else if (i === homeData.client.stops - 1) {
+                    destination = address[i]["address"];
+                } else {
+                    waypoint.push({
+                        location:
+                            {
+                                placeId: address[i]["address_id"]
+                            }
+                    });
+                }
+            }
+            const results = await getMapResponse(origin, destination, waypoint);
+            setDirectionsResponse(results);
+            if (results.routes[0].legs.length > 0) {
+                var miles = 0;
+                results.routes[0].legs.map((item: any) => {
+                    miles += parseFloat(item.distance.text);
+                    setSteps((state) => {
+                        return [...state,
+                            ...item.steps
+
+                        ];
+                    });
+                });
+                setDistance(results.routes[0].legs[0].duration.text);
+            }
         })();
         return () => {
             homeAPI.cancelRequest();
@@ -119,49 +142,34 @@ const Show: React.FC<IShow> = ({ id }) => {
 
     return clientById && <div className={cls.block}>
         <div className={cls.items}>
-            <div className={cls.item1}>
-                <div className={cls.itemsBlock}>
-                    <span className={cls.b_text}>{t("fullName")}: </span>
-                    {clientById.fullName}
+            <div className={cls.infoLeft}>
+                <div className={cls.infoLeftName}>
+                    <span className={cls.username}>{clientById.fullName}</span>
+                    |
+                    <span>{timestampToDate(clientById.date_of_service.toString())}</span>
+                    |
+                    <span><span>Height: {clientById.height}</span> <span>Weight: {clientById.weight}</span></span>
                 </div>
-                <div className={cls.itemsBlock}>
-                    <span className={cls.b_text}>{t("date_of_service")}: </span>
-                    {clientById.date_of_service}
-                </div>
-                <div className={cls.itemsBlock}>
-                    <span className={cls.b_text}>{t("pick_up")}: </span>
-                        <TimePicker
-                            className={s.time}
-                            format={"HH:mm"}
-                            clockIcon={null}
-                            clearIcon={null}
-                            amPmAriaLabel={false}
-                            onChange={(time: string) => setFieldValue((state: any) => {
-                                return {
-                                    ...state,
-                                    "pick_up": time
-                               };
-                            })}
-                            name={"pick_up"}
-                            value={clientById.pick_up}
-                        />
-                </div>
-                <div className={cls.itemsBlock}>
-                    <span className={cls.b_text}>{t("pick_up_address")}: </span>
-                    {clientById.origin}
-                </div>
-                <div className={cls.itemsBlock}>
-                    <span className={cls.b_text}>{t("origin_phone")}: </span>
-                    {clientById.origin_phone}
-                </div>
-                <div className={cls.itemsBlock}>
-                    <span className={cls.b_text}>{t("destination_comments")}: </span>
-                    {clientById.destination_comment}
-                </div>
-                <div className={cls.itemsBlock}>
-                    <span className={cls.b_text}>{t("weight")}: </span>
-                    {clientById.weight}
-                </div>
+                {/*<div className={cls.itemsBlock}>*/}
+                {/*    <span className={cls.b_text}>{t("pick_up")}: </span>*/}
+                {/*        <TimePicker*/}
+                {/*            className={s.time}*/}
+                {/*            format={"HH:mm"}*/}
+                {/*            clockIcon={null}*/}
+                {/*            clearIcon={null}*/}
+                {/*            amPmAriaLabel={false}*/}
+                {/*            onChange={(time: string) => setFieldValue((state: any) => {*/}
+                {/*                return {*/}
+                {/*                    ...state,*/}
+                {/*                    "pick_up": time*/}
+                {/*               };*/}
+                {/*            })}*/}
+                {/*            name={"pick_up"}*/}
+                {/*            value={clientById.pick_up}*/}
+                {/*        />*/}
+                {/*</div>*/}
+
+
                 <div className={cls.itemsBlock}>
                     <Select
                         getOptionValue={(option: IOption) => option.value}
@@ -181,36 +189,6 @@ const Show: React.FC<IShow> = ({ id }) => {
                 </div>
             </div>
             <div className={cls.item1}>
-                <div className={cls.itemsBlock}>
-                    <span className={cls.b_text}>{t("drop_down")}: </span>
-                     <TimePicker
-                         className={s.time}
-                         format={"HH:mm"}
-                         clockIcon={null}
-                         clearIcon={null}
-                         amPmAriaLabel={false}
-                         onChange={(time: string) => setFieldValue((state: any) => {
-                             return {
-                                 ...state,
-                                 "drop_down": time
-                             };
-                         })}
-                         name={"drop_down"}
-                         value={clientById.drop_down}
-                     />
-                </div>
-                <div className={cls.itemsBlock}>
-                    <span className={cls.b_text}>{t("origin_comment")}: </span>
-                    {clientById.origin_comment}
-                </div>
-                <div className={cls.itemsBlock}>
-                    <span className={cls.b_text}>{t("destination")}: </span>
-                    {clientById.destination}
-                </div>
-                <div className={cls.itemsBlock}>
-                    <span className={cls.b_text}>{t("destination_phone")}: </span>
-                    {clientById.destination_phone}
-                </div>
                 <div className={cls.itemsBlock}>
                     <span className={cls.b_text}>{t("height")}: </span>
                     {clientById.height}
@@ -236,6 +214,41 @@ const Show: React.FC<IShow> = ({ id }) => {
                      />
                 </div>
             </div>
+
+            {
+                clientById.address.map((item, index: number) => {
+                    return (<>
+                        <div className={cls.class}>
+                            <p className={cls.classLabel}>Step: {index + 1}</p>
+                            <div className={cls.items}>
+                                <div className={cls.item}>
+                                    <span className={cls.itemLabel}>Pickup Address:</span>
+                                    <span className={cls.itemValue}>{item.address}</span>
+                                </div>
+                                {index !== 0 && <div className={cls.item}>
+                                    <span className={cls.itemLabel}>Appointment time:</span>
+                                    <span className={cls.itemValue}>{item.drop_down}</span>
+                                </div>}
+                                {clientById.address.length !== index+1 && <div className={cls.item}>
+                                    <span className={cls.itemLabel}>Pickup time:</span>
+                                    <span className={cls.itemValue}>{item.pick_up}</span>
+                                </div>}
+
+                                <div className={cls.item}>
+                                    <span className={cls.itemLabel}>Phone:</span>
+                                    <span className={cls.itemValue}>{item.address_phone}</span>
+                                </div>
+                                <div className={cls.item}>
+                                    <span className={cls.itemLabel}>Comment:</span>
+                                    <span className={cls.itemValue}>{item.address_comment}</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div className={cls.seperator}></div>
+                    </>);
+                })
+            }
         </div>
         <div className={cls.items}>
             <div className={cls.itemsMap}>

@@ -7,17 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { GOOGLE_API_KEY } from "../../../environments";
 import { getClientData } from "../../../store/selectors";
 import { useTranslation } from "react-i18next";
-import TimePickers from "../../../components/time-picker/timepicker";
-import getFieldLabel from "../../../utils/getFieldLabel";
-import TimePicker from "react-time-picker";
-import s from "../../../components/time-picker/timepicker.module.scss";
-import TextField from "../../../components/text-field/text-field";
 import Textarea from "../../../components/textarea/textarea";
 import Button from "../../../components/button/button";
 import { AdminApi } from "../../../api/admin-api/admin-api";
 import { toast } from "react-toastify";
-import Select, {IOption} from "../../../components/select/select";
 import timestampToDate from "../../../utils/timestampToDate";
+import getMapResponse from "../../../utils/googleMap";
+
 interface IShow {
     path: string;
     id?: number;
@@ -39,20 +35,9 @@ const Show: React.FC<IShow> = ({ id }) => {
         libraries: ["geometry", "drawing", "places"]
     });
 
-    async function calculateRoute(clientById: any) {
-        const directionsService = new google.maps.DirectionsService();
-        const results = await directionsService.route({
-            origin: clientById.origin,
-            destination: clientById.destination,
-            travelMode: google.maps.TravelMode.DRIVING
-        });
-        setDirectionsResponse(results);
-        setDistance(results.routes[0].legs[0].distance.text);
-        setDuration(results.routes[0].legs[0].duration.text);
-        setSteps(results.routes[0].legs[0].steps);
-    }
+
     const [values, setFieldValue] = useState({
-        pick_up : clientById.pick_up,
+        pick_up: clientById.pick_up,
         drop_down: clientById.drop_down,
         additionalNote: clientById.additionalNote,
         operator_note: clientById.operator_note
@@ -63,13 +48,47 @@ const Show: React.FC<IShow> = ({ id }) => {
             const homeData = await homeAPI.getCLientById(id);
             dispatch(clientAction.fetching({ clientById: homeData.client }));
             setFieldValue({
-                pick_up : homeData.client.pick_up,
+                pick_up: homeData.client.pick_up,
                 drop_down: homeData.client.drop_down,
                 additionalNote: homeData.client.additionalNote,
                 operator_note: homeData.client.operator_note
 
-            })
-            await calculateRoute(homeData.client);
+            });
+            var address = homeData.client.address;
+            var origin = "";
+            var destination = "";
+            var waypoint = [];
+            for (let i = 0; i < homeData.client.stops; i++) {
+                console.log(address[i], "address[i]");
+                if (i === 0) {
+                    origin = address[i]["address"];
+                } else if (i === homeData.client.stops - 1) {
+                    destination = address[i]["address"];
+                } else {
+                    waypoint.push({
+                        location:
+                            {
+                                placeId: address[i]["address_id"]
+                            }
+                    });
+                }
+            }
+            const results = await getMapResponse(origin, destination, waypoint);
+            setDirectionsResponse(results);
+            if (results.routes[0].legs.length > 0) {
+                var miles = 0;
+                results.routes[0].legs.map((item: any) => {
+                    miles += parseFloat(item.distance.text);
+                    setSteps((state) => {
+                        return [...state,
+                            ...item.steps
+
+                        ];
+                    });
+                });
+                setDistance(results.routes[0].legs[0].duration.text);
+            }
+            ///  setDistance(results.routes[0].legs[0].distance.text);
         })();
         return () => {
             homeAPI.cancelRequest();
@@ -78,9 +97,8 @@ const Show: React.FC<IShow> = ({ id }) => {
     }, []);
 
 
-
     const handlerUpdate = async () => {
-       const homeData = await AdminApi.updateClient(values,id).catch((e) => {
+        const homeData = await AdminApi.updateClient(values, id).catch((e) => {
             const options = {
                 type: toast.TYPE.ERROR,
                 position: toast.POSITION.TOP_RIGHT
@@ -95,8 +113,8 @@ const Show: React.FC<IShow> = ({ id }) => {
 
             toast(t("record_successfully_edited"), options);
         }
-    }
-    console.dir(clientById)
+    };
+    console.dir(clientById);
 
     return clientById && <div className={cls.block}>
         <div className={cls.infoLeft}>
@@ -107,73 +125,78 @@ const Show: React.FC<IShow> = ({ id }) => {
                 |
                 <span><span>Height: {clientById.height}</span> <span>Weight: {clientById.weight}</span></span>
             </div>
-            <div className={cls.class}>
-                <p className={cls.classLabel}>Origin:</p>
-                <div className={cls.items}>
-                    <div className={cls.item}>
-                        <span className={cls.itemLabel}>Phone:</span>
-                        <span className={cls.itemValue}>{clientById.origin_phone}</span>
-                    </div>
-                    <div className={cls.item}>
-                        <span className={cls.itemLabel}>Comment:</span>
-                        <span className={cls.itemValue}>{clientById.origin_comment}</span>
-                    </div>
-                    <div className={cls.item}>
-                        <span className={cls.itemLabel}>Pickup Address:</span>
-                        <span className={cls.itemValue}>{clientById.origin}</span>
-                    </div>
-                </div>
-            </div>
-            <div className={cls.seperator}></div>
-            <div className={cls.class}>
-                <p className={cls.classLabel}>Destination:</p>
-                <div className={cls.items}>
-                    <div className={cls.item}>
-                        <span className={cls.itemLabel}>Phone:</span>
-                        <span className={cls.itemValue}>{clientById.origin_phone}</span>
-                    </div>
-                    <div className={cls.item}>
-                        <span className={cls.itemLabel}>Comment:</span>
-                        <span className={cls.itemValue}>{clientById.origin_comment}</span>
-                    </div>
-                    <div className={cls.item}>
-                        <span className={cls.itemLabel}>Destination Address:</span>
-                        <span className={cls.itemValue}>{clientById.destination}</span>
-                    </div>
-                </div>
-            </div>
-            <div className={cls.seperator}></div>
-            <div className={cls.class}>
-                <p className={cls.classLabel}>Times:</p>
-                <div className={cls.items}>
-                <div className={cls.item} style={{alignItems: "center"}}>
-                    <div className={cls.itemLabelBox}>
-                        <span className={cls.itemLabel}>Drop Down:</span>
-                    </div>
-                    <div className={cls.itemItemBox}>
-                        <TimePicker format={"h:m"} className={s.time} clockIcon={null} clearIcon={null} onChange={(time:string) => setFieldValue((state:any) => {
-                            return {
-                                ...state,
-                                'drop_down':time
-                            }
-                        }) }  name={'drop_down'} value={clientById.drop_down} />
-                    </div>
-                </div>
-                <div className={cls.item} style={{alignItems: "center"}}>
-                    <div className={cls.itemLabelBox}>
-                        <span className={cls.itemLabel}>Pick Up:</span>
-                    </div>
-                    <div className={cls.itemItemBox}>
-                        <TimePicker format={"h:m"} className={s.time} clockIcon={null} clearIcon={null} onChange={(time:string) => setFieldValue((state:any) => {
-                            return {
-                                ...state,
-                                'pick_up':time
-                            }
-                        }) }  name={'pick_up'} value={clientById.pick_up} />
-                    </div>
-                </div>
-                </div>
-            </div>
+
+
+            {
+                clientById.address.map((item, index: number) => {
+                    return (<>
+                        <div className={cls.class}>
+                            <p className={cls.classLabel}>Step: {index + 1}</p>
+                            <div className={cls.items}>
+                                <div className={cls.item}>
+                                    <span className={cls.itemLabel}>Pickup Address:</span>
+                                    <span className={cls.itemValue}>{item.address}</span>
+                                </div>
+                                {index !== 0 && <div className={cls.item}>
+                                    <span className={cls.itemLabel}>Appointment time:</span>
+                                    <span className={cls.itemValue}>{item.drop_down}</span>
+                                </div>}
+                                {clientById.address.length !== index+1 && <div className={cls.item}>
+                                    <span className={cls.itemLabel}>Pickup time:</span>
+                                    <span className={cls.itemValue}>{item.pick_up}</span>
+                                </div>}
+
+                                <div className={cls.item}>
+                                    <span className={cls.itemLabel}>Phone:</span>
+                                    <span className={cls.itemValue}>{item.address_phone}</span>
+                                </div>
+                                <div className={cls.item}>
+                                    <span className={cls.itemLabel}>Comment:</span>
+                                    <span className={cls.itemValue}>{item.address_comment}</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div className={cls.seperator}></div>
+                    </>);
+                })
+            }
+
+
+            {/*<div className={cls.seperator}></div>*/}
+            {/*<div className={cls.class}>*/}
+            {/*    <p className={cls.classLabel}>Times:</p>*/}
+            {/*    <div className={cls.items}>*/}
+            {/*        <div className={cls.item} style={{ alignItems: "center" }}>*/}
+            {/*            <div className={cls.itemLabelBox}>*/}
+            {/*                <span className={cls.itemLabel}>Drop Down:</span>*/}
+            {/*            </div>*/}
+            {/*            <div className={cls.itemItemBox}>*/}
+            {/*                <TimePicker format={"h:m"} className={s.time} clockIcon={null} clearIcon={null}*/}
+            {/*                            onChange={(time: string) => setFieldValue((state: any) => {*/}
+            {/*                                return {*/}
+            {/*                                    ...state,*/}
+            {/*                                    "drop_down": time*/}
+            {/*                                };*/}
+            {/*                            })} name={"drop_down"} value={clientById.drop_down} />*/}
+            {/*            </div>*/}
+            {/*        </div>*/}
+            {/*        <div className={cls.item} style={{ alignItems: "center" }}>*/}
+            {/*            <div className={cls.itemLabelBox}>*/}
+            {/*                <span className={cls.itemLabel}>Pick Up:</span>*/}
+            {/*            </div>*/}
+            {/*            <div className={cls.itemItemBox}>*/}
+            {/*                <TimePicker format={"h:m"} className={s.time} clockIcon={null} clearIcon={null}*/}
+            {/*                            onChange={(time: string) => setFieldValue((state: any) => {*/}
+            {/*                                return {*/}
+            {/*                                    ...state,*/}
+            {/*                                    "pick_up": time*/}
+            {/*                                };*/}
+            {/*                            })} name={"pick_up"} value={clientById.pick_up} />*/}
+            {/*            </div>*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
             {/*<div className={cls.infoLeftBottom}></div>*/}
         </div>
         <div className={cls.infoRight}>
@@ -199,7 +222,7 @@ const Show: React.FC<IShow> = ({ id }) => {
 
                         </GoogleMap>
                     </div>
-                    <div  className={cls.directionDiv}>
+                    <div className={cls.directionDiv}>
                         {steps && steps.map((el: any) => {
                             return (
                                 <div
@@ -237,10 +260,10 @@ const Show: React.FC<IShow> = ({ id }) => {
                     </div>
                     <div className={cls.itemTextarea}>
                         <Textarea
-                            name={'operator_note'}
+                            name={"operator_note"}
                             value={values.operator_note}
-                            placeholder={t('operator_note')}
-                            onChange={(event:any) => {
+                            placeholder={t("operator_note")}
+                            onChange={(event: any) => {
                                 event.persist();
                                 return setFieldValue((state: any) => {
                                     return {
@@ -248,18 +271,17 @@ const Show: React.FC<IShow> = ({ id }) => {
                                         operator_note: event.target.value
                                     };
                                 });
-                            } }
-                            label={t('operator_note')}
+                            }}
+                            label={t("operator_note")}
                         />
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-}
+    </div>;
+};
 
 export default Show;
-
 
 
 // <div className={cls.item}>
