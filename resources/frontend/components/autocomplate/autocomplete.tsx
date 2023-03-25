@@ -7,6 +7,7 @@ import TimePickers from "../time-picker/timepicker";
 import Input from "../input/input";
 import TextField from "../text-field/text-field";
 import getMapResponse from "../../utils/googleMap";
+import removeIcon from "../../svgs/removeIcon.svg"
 
 interface ITextarea {
     values: any,
@@ -34,6 +35,7 @@ const Autocomplete: React.FC<ITextarea> = (
     const [newStep, setNewStep] = useState(false);
     const [dataMap, setDataMap] = useState({});
     const [firstLoad, setFirstLoad] = useState(true);
+    const [allowRemove, setAllowRemove] = useState(false)
 
     useEffect(() => {
         (async () => {
@@ -87,7 +89,6 @@ const Autocomplete: React.FC<ITextarea> = (
         })();
     }, [newStep]);
 
-    console.log(values)
 
     const addStep = () => {
         return (step.map((item: number) => {
@@ -97,6 +98,18 @@ const Autocomplete: React.FC<ITextarea> = (
                 >
                     <div className={s.autocompleteName}>
                         <span>{`step_${item}`}</span>
+                        {count > 2 && item > 2 && <>
+                            <div className={s.deleteIcon}>
+                                <button
+                                    onClick={() => {
+                                        console.log(step)
+                                    }}
+                                >
+                                    <img src={removeIcon}/>
+                                </button>
+                            </div>
+                            </>
+                        }
                     </div>
                     <div className={s.autocompleteWrapper}>
                         <GooglePlacesAutocomplete
@@ -119,6 +132,10 @@ const Autocomplete: React.FC<ITextarea> = (
                                     placeholder: (base) => ({
                                         ...base,
                                         color: "#C4C4C4",
+                                    }),
+                                    menu: (base) => ({
+                                        ...base,
+                                        zIndex: 9999,
                                     }),
                                 }
                             }}

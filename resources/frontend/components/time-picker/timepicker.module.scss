@@ -23,17 +23,20 @@
         padding: 5px;
         text-align:center;
         font-size: 20px;
-        border: 1px solid $borderColor;
         border-radius: 5px;
 
         //border-color: $borderColor;
     }
+
+    input:focus {
+        border-color: $borderColor;
+    }
+
     select{
         width: 85px !important;
     }
 }
 
 .label {
-    color: red;
-}
 
+}

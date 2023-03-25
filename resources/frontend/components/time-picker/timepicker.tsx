@@ -50,6 +50,7 @@ const TimePickers: React.FC<ITextarea> = (
             name={name}
             value={value}
             locale={"sv-sv"}
+
         />
     </div>
 );

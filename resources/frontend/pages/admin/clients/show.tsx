@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import cls from "../../../components/info-block/info-block.module.scss";
 import { DirectionsRenderer, GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { homeAPI } from "../../../api/site-api/home-api";
@@ -29,6 +29,7 @@ const Show: React.FC<IShow> = ({ id }) => {
     const clientData = useSelector(getClientData);
     const { clientById } = clientData;
     const { t } = useTranslation();
+    const blockRef = useRef(null as HTMLDivElement)
 
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: GOOGLE_API_KEY,
@@ -114,9 +115,7 @@ const Show: React.FC<IShow> = ({ id }) => {
             toast(t("record_successfully_edited"), options);
         }
     };
-    console.dir(clientById);
-
-    return clientById && <div className={cls.block}>
+    return clientById && <div className={cls.block} ref={blockRef}>
         <div className={cls.infoLeft}>
             <div className={cls.infoLeftName}>
                 <span className={cls.username}>{clientById.fullName}</span>
@@ -201,28 +200,37 @@ const Show: React.FC<IShow> = ({ id }) => {
         </div>
         <div className={cls.infoRight}>
             <div className={cls.infoRightTop}>
-                {isLoaded && <div className={cls.selectDiv}>
+                {isLoaded && <div
+                    className={cls.selectDiv}
+                    style={{
+                        flexDirection: blockRef.current.clientHeight > window.innerHeight ? "column" : "row"
+                    }}
+                >
                     <div className={cls.mapDiv}>
                         <GoogleMap
                             ///  center={center}
                             zoom={15}
-                            mapContainerStyle={{ width: "100%", height: "100%" }}
+                            mapContainerStyle={{ width: "100%", height: "100%", minHeight: "500px"}}
                             options={{
                                 zoomControl: true,
                                 streetViewControl: false,
                                 mapTypeControl: false,
-                                fullscreenControl: false
+                                fullscreenControl: false,
                             }}
                             onLoad={map => setMap(map)}
                         >
                             {/* <Marker position={center} /> */}
                             {directionsResponse && (
-                                <DirectionsRenderer directions={directionsResponse} />
+                                <DirectionsRenderer directions={directionsResponse}/>
                             )}
-
                         </GoogleMap>
                     </div>
-                    <div className={cls.directionDiv}>
+                    <div
+                        className={cls.directionDiv}
+                        style={{
+                            width: blockRef.current.clientHeight > window.innerHeight ? "100%" : "50%"
+                        }}
+                    >
                         {steps && steps.map((el: any) => {
                             return (
                                 <div
