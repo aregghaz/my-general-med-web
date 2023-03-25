@@ -28,6 +28,7 @@ const Status: React.FC<Beneficiary> = () => {
     const [artificial, setArtificial] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [servicesCount, setServices] = useState(0);
 
     const { t } = useTranslation();
     useEffect(() => {
@@ -35,13 +36,14 @@ const Status: React.FC<Beneficiary> = () => {
             async () => {
                 const data = await AdminApi.getAllStatusData(crudKey, tabId);
                 setData(data.table);
-                setGenderCount(data.gender);
-                setLos(data.los);
-                setClientStatus(data.clientStatus);
-                setRequestType(data.requestType);
-                setReasons(data.reasons);
-                setWaitDuration(data.waitDuration);
-                setArtificial(data.artificial);
+                setGenderCount(data.counts.gender);
+                setLos(data.counts.los);
+                setClientStatus(data.counts.clientStatus);
+                setRequestType(data.counts.requestType);
+                setReasons(data.counts.reasons);
+                setWaitDuration(data.counts.waitDuration);
+                setArtificial(data.counts.artificial);
+                setServices(data.counts.services);
 
             }
         )();
@@ -50,7 +52,7 @@ const Status: React.FC<Beneficiary> = () => {
     const titles: Array<string> = [
         "id",
         "nameStatus",
-        "slug",
+      ///  "slug",
         "action"
     ];
 
@@ -61,13 +63,8 @@ const Status: React.FC<Beneficiary> = () => {
             count: genderCount,
             selected: false
         },
-        // {
-        //     id: 2,
-        //     name: "escortType",
-        //     count: 0
-        // },
         {
-            id: 4,
+            id: 2,
             name: "request_type",
             count: requestType,
             selected: false
@@ -78,17 +75,17 @@ const Status: React.FC<Beneficiary> = () => {
             selected: false
         },
         {
-            id: 5,
+            id: 4,
             name: "status",
             count: clientStatus,
             selected: false
         }, {
-            id: 6,
+            id: 5,
             name: "reasons",
             count: reasons,
             selected: false
         }, {
-            id: 8,
+            id: 6,
             name: "artificial",
             count: artificial,
             selected: false
@@ -96,6 +93,11 @@ const Status: React.FC<Beneficiary> = () => {
             id: 7,
             name: "waitDuration",
             count: waitDuration,
+            selected: false
+        }, {
+            id: 8,
+            name: "services",
+            count: servicesCount,
             selected: false
         }
     ];
@@ -181,7 +183,7 @@ const Status: React.FC<Beneficiary> = () => {
                 <List
                     data={data}
                     titles={titles}
-                    isDelete={false}
+                    isDelete={true}
                     isEdit
                     tableRef={tableRef}
                     isGetInfo={false}

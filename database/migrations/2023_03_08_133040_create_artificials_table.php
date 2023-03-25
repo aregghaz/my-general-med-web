@@ -17,7 +17,6 @@ class CreateArtificialsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
-            $table->float('price' , 6, 2)->nullable();
             $table->timestamps();
         });
     }

@@ -44,6 +44,9 @@ class User extends Authenticatable
     public function Company()
     {
         return $this->hasOne(User::class, 'id', 'vendor_id');
+    }    public function los()
+    {
+        return $this->belongsToMany(Los::class, 'vendor_los');
     }
 
 }

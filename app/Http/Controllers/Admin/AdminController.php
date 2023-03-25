@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\StatusCollection;
 use App\Http\Resources\StatusTableCollection;
 use App\Models\Artificial;
 use App\Models\Clients;
@@ -12,6 +13,7 @@ use App\Models\Gender;
 use App\Models\Los;
 use App\Models\Reason;
 use App\Models\RequestType;
+use App\Models\Service;
 use App\Models\WaitDuration;
 use Illuminate\Http\Request;
 
@@ -20,30 +22,19 @@ class AdminController extends Controller
     public function changeStatus(Request $request, $slug)
     {
 
-        $gender = Gender::count();
-        $requestType = RequestType::count();
-        $los = Los::count();
-        $clientStatus = ClientStatus::count();
-        $reasons = Reason::count();
-        $waitDuration = WaitDuration::count();
-        $artificial = Artificial::count();
+        $counts = $this->getCount();
         ///$escort = Escort::count();
         $table = $this->getTable($slug);
 
         $table = $table->orderBy('name', 'asc')->get();
         return response()->json([
             'table' => new StatusTableCollection($table),
-            "gender" => $gender,
-            "los" => $los,
-            "clientStatus" => $clientStatus,
-            "requestType" => $requestType,
-            "reasons" => $reasons,
-            "waitDuration" => $waitDuration,
-            "artificial" => $artificial
+            'counts' => $counts
         ], 200);
     }
 
-    public function getStatusById(Request $request, $id, $table)
+
+    protected function getCount()
     {
         $gender = Gender::count();
         $requestType = RequestType::count();
@@ -52,23 +43,67 @@ class AdminController extends Controller
         $reasons = Reason::count();
         $waitDuration = WaitDuration::count();
         $artificial = Artificial::count();
-        ///$escort = Escort::count();
-        $table = $this->getTable($table);
-        $table = $table->find($id);
-        return response()->json([
-            'data' => [
-                'id' => $table->id,
-                'name' => $table->name,
-                'slug' => $table->slug,
-            ],
+        $services = Service::count();
+        return [
             "gender" => $gender,
             "los" => $los,
-            "reasons" => $reasons,
             "clientStatus" => $clientStatus,
             "requestType" => $requestType,
+            "reasons" => $reasons,
             "waitDuration" => $waitDuration,
-            "artificial" => $artificial
-        ], 200);
+            "artificial" => $artificial,
+            'services' => $services,
+        ];
+    }
+
+
+    public function createNewStatus()
+    {
+        $services = Service::get();
+        return [
+            'services' => new StatusCollection($services),
+        ];
+    }
+
+    public function getStatusById(Request $request, $id, $tableId)
+    {
+        $table = $this->getTable($tableId);
+        $table = $table->find($id);
+        if ((int)$tableId === 3) {
+            $services = Service::get();
+            $table = $table->with('services')->find($id);
+            if (isset($table->services)) {
+                $services = $table->services;
+                $servicesData = [];
+                foreach ($services as $item) {
+                    $servicesData[] = [
+                        'id' => $item->id,
+                        'label' => $item->name,
+                        'name' => $item->name,
+                        "value" => $item->name,
+                    ];
+                }
+            }
+            return response()->json([
+                'data' => [
+                    'id' => $table->id,
+                    'name' => $table->name,
+                    'slug' => $table->slug,
+                    'services' => $servicesData
+                ],
+                'services' => new StatusCollection($services),
+            ], 200);
+        } else {
+            $table = $table->find($id);
+            return response()->json([
+                'data' => [
+                    'id' => $table->id,
+                    'name' => $table->name,
+                    'slug' => $table->slug,
+                ],
+            ], 200);
+        }
+
     }
 
 
@@ -76,16 +111,20 @@ class AdminController extends Controller
     {
         $table = $this->getTable($tableId);
         $requestData = json_decode($request->value);
-        if ($tableId == 7 || $tableId == 8) {
+
+
+        if ((int)$tableId === 3) {
             $table = $table->create([
                 'name' => $requestData->name,
-                'slug' => $requestData->slug,
-                'price' => $requestData->price,
+                'slug' => $requestData->name,
             ]);
+            /// dd($requestData->services);
+            $idCats = array_column($requestData->services, 'id');
+            $table->services()->attach($idCats);
         } else {
             $table = $table->create([
                 'name' => $requestData->name,
-                'slug' => $requestData->slug,
+                'slug' => $requestData->name,
             ]);
         }
         if (!$table->save()) {
@@ -105,12 +144,16 @@ class AdminController extends Controller
         $table = $this->getTable($tableId);
         $requestData = json_decode($request->value);
 
-        if ($tableId == 7 || $tableId == 8) {
-            $table->find($id)->update([
+        if ((int)$tableId === 3) {
+            $table = $table->find($id);
+            $idCats = array_column($requestData->services, 'id');
+            $table->services()->sync($idCats);
+
+            $table->update([
                 'name' => $requestData->name,
-                'slug' => $requestData->slug,
-                'price' => $requestData->price,
+                'slug' => $requestData->name,
             ]);
+
         } else {
             $table->find($id)->update([
                 'name' => $requestData->name,
@@ -157,25 +200,25 @@ class AdminController extends Controller
                 $table = new Gender;
                 break;
             case 2:
-                $table = new Escort;
-                break;
-            case 4:
                 $table = new RequestType;
                 break;
             case 3:
                 $table = new Los;
                 break;
-            case 5:
+            case 4:
                 $table = new ClientStatus;
+                break;
+            case 5:
+                $table = new Reason;
+                break;
+            case 6:
+                $table = new Artificial;
                 break;
             case 7:
                 $table = new WaitDuration;
                 break;
             case 8:
-                $table = new Artificial;
-                break;
-            case 6:
-                $table = new Reason;
+                $table = new Service;
                 break;
         }
         return $table;

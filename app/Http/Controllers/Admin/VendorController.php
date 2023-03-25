@@ -11,6 +11,7 @@ use App\Models\Cars;
 use App\Models\Clients;
 use App\Models\ClientStatus;
 use App\Models\ClientTable;
+use App\Models\Los;
 use App\Models\User;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
@@ -41,7 +42,7 @@ class VendorController extends Controller
                 $vendorData = User::where(['role_id' => $request->typeId]);
             }
         }
-        $vendorData = $vendorData->with('fields')
+        $vendorData = $vendorData->with('fields', 'los')
             ->get();
         return response()->json(
             [
@@ -63,10 +64,12 @@ class VendorController extends Controller
         $clientTable = ClientTable::get();
         /// $users = User::get();
         $status = ClientStatus::get();
+        $los = Los::get();
         return response()->json(
             [
                 'status' => new StatusCollection($status),
                 'fields' => new StatusCollection($clientTable),
+                'los' => new StatusCollection($los),
             ],
             200
         );
@@ -88,7 +91,9 @@ class VendorController extends Controller
             //  'status' => 'required',
             'address' => 'string',
             'fields' => 'required',
+            'los' => 'required',
         ]);
+
         if ($validator->fails()) {
             return response()->json(
                 [
@@ -122,9 +127,11 @@ class VendorController extends Controller
         } else {
             $vendor->vendor_id = $vendor->id;
             $vendor->save();
-            $idCats = array_column($requestData['fields'], 'id');
 
+            $idCats = array_column($requestData['fields'], 'id');
             $vendor->fields()->sync($idCats);
+            $idLos = array_column($requestData['los'], 'id');
+            $vendor->los()->sync($idLos);
         }
         return response()->json(
             [
@@ -166,10 +173,11 @@ class VendorController extends Controller
      */
     public function edit(Request $request)
     {
-        $vendorData = User::with('fields')
+        $vendorData = User::with('fields', 'los')
             ->where('id', $request->id)
             ->first();
         $clientTable = ClientTable::get();
+        $losData = Los::get();
 
         return response()->json(
             [
@@ -180,8 +188,10 @@ class VendorController extends Controller
                     'address' => $vendorData->address,
                     'phone_number' => $vendorData->phone_number,
                     'fields' => new StatusCollection($vendorData->fields),
+                    'los' => new StatusCollection($vendorData->los),
                 ], ///  new VendorsCollection($vendor),
                 'fields' => new StatusCollection($clientTable),
+                'los' => new StatusCollection($losData),
                 ///   'users' => new StatusCollection($users),
                 ///    'status' => new StatusCollection($status)
             ],
@@ -205,6 +215,7 @@ class VendorController extends Controller
             ///  'status' => 'required',
             'address' => 'string',
             'fields' => 'array',
+            'los' => 'array',
         ]);
         if ($validator->fails()) {
             return response()->json(
@@ -228,10 +239,12 @@ class VendorController extends Controller
         ]);
         $idCats = array_column($requestData['fields'], 'id');
 
-        User::find($request->id)
-            ->fields()
-            ->sync($idCats);
+        $vendorData = User::find($request->id);
 
+        $vendorData->fields()
+            ->sync($idCats);
+        $idLos = array_column($requestData['los'], 'id');
+        $vendorData->los()->sync($idLos);
         return response()->json(
             [
                 'success' => '1',

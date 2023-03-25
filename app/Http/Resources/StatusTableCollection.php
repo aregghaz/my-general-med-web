@@ -21,7 +21,7 @@ class StatusTableCollection extends ResourceCollection
                 'id' => $status->id,
                 //'label' => $status->name,
                 'fieldName' => $status->name,
-                'slug' => $status->slug,
+             ///   'slug' => $status->slug,
                 //"price"=> isset($status->price),
 
             ];

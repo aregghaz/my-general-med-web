@@ -60,6 +60,9 @@ export const AdminApi = {
     changeStatus(crudKey: string, id: number, statusId: number) {
         return axios.get(`/api/admin/${crudKey}/${id}/${statusId}`).then(res => res.data);
     },
+    createStatus(crudKey: string, statusId: number) {
+        return axios.get(`/api/admin/${crudKey}/${statusId}/create`).then(res => res.data);
+    },
     updateClient(data: { pick_up: string, drop_down: string, additionalNote: string }, id: number) {
         return axios.post(`/api/admin/updateClient/${id}`, data, {}).then(res => res.data);
     },

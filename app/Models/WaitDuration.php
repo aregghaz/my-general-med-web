@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class WaitDuration extends Model
 {
     use HasFactory;
-    protected $fillable  =  [
+
+    protected $fillable = [
         'id',
         'name',
         'slug',
-        'price',
     ];
 }

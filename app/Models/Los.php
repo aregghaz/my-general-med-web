@@ -13,4 +13,9 @@ class Los extends Model
         'name',
         'slug'
     ];
+
+    public function services()
+    {
+        return $this->belongsToMany(Service::class, 'los_services','los_id','service_id');
+    }
 }

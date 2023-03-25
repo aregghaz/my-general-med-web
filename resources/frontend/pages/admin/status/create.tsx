@@ -4,6 +4,7 @@ import Create from "../../layouts/templates/create/create";
 import Select, { IOption } from "../../../components/select/select";
 import { IItem } from "../../layouts/templates/formik-handler/formik-handler";
 import s from "../../layouts/templates/create/create.module.scss";
+import { AdminApi } from "../../../api/admin-api/admin-api";
 
 interface IUserCreate {
     path: string,
@@ -21,30 +22,33 @@ const StatusCreate: React.FC<IUserCreate> = ({ statusId }) => {
         "label": "gender"
     });
     const [fields, setFields] = useState<Array<IItem>>([]);
-
+    const [data, setData] = useState(null);
     // var fields:Array<IItem> = [
     //     { name: "name", type: "input", label: "statusName" },
     //     { name: "slug", type: "input", label: "slug" },
     //     { name: "id", type: "hidden", inputType: "hidden" }
     // ];
     useEffect(() => {
-        console.log(status, "status");
-        if (status !== null && (status.id === 7 || status.id === 8)) {
-            setFields([
-                { name: "name", type: "input", label: "statusName" },
-                { name: "slug", type: "input", label: "slug" },
-                { name: "id", type: "hidden", inputType: "hidden" },
-                { name: "price", type: "input", label: "price" }
-            ]);
-        } else if (status !== null) {
-            setFields([
-                { name: "name", type: "input", label: "statusName" },
-                { name: "slug", type: "input", label: "slug" },
-                { name: "id", type: "hidden", inputType: "hidden" }
-            ]);
-        }
+        (async () => {
+            if (status !== null && (status.id === 3)) {
+                const data = await AdminApi.createStatus(crudKey, status.id);
+                console.log(data);
+                setData(data);
+                setFields([
+                    { name: "name", type: "input", label: "statusName" },
+                    ///  { name: "slug", type: "input", label: "slug" },
+                    { name: "id", type: "hidden", inputType: "hidden" },
+                    { name: "services", type: "multiSelect", label: "services" }
+                ]);
+            } else if (status !== null) {
+                setFields([
+                    { name: "name", type: "input", label: "statusName" },
+                    ///     { name: "slug", type: "input", label: "slug" },
+                    { name: "id", type: "hidden", inputType: "hidden" }
+                ]);
+            }
+        })();
     }, [status]);
-
 
     const tabs = [
         {
@@ -53,42 +57,40 @@ const StatusCreate: React.FC<IUserCreate> = ({ statusId }) => {
             label: "gender"
         },
         {
-            id: 4,
+            id: 2,
             value: "request_type",
             label: "request_type"
-
         }, {
             id: 3,
             value: "los",
             label: "los"
-
         },
         {
-            id: 5,
+            id: 4,
             value: "status",
             label: "status"
-
         }, {
-            id: 6,
+            id: 5,
             value: "reasons",
             label: "reasons"
-
         }, {
-            id: 8,
+            id: 6,
             value: "artificial",
             label: "artificial"
-
         }, {
             id: 7,
             value: "waitDuration",
             label: "waitDuration"
-
+        }, {
+            id: 8,
+            value: "services",
+            label: "services"
         }
     ];
 
 
     const requiredFields = [
-        "slug",
+        ///  "slug",
         "name"
     ];
     return <>
@@ -108,14 +110,15 @@ const StatusCreate: React.FC<IUserCreate> = ({ statusId }) => {
                 />
             </div>
             <div className={s.mainForm}>
-                <Create
+                {(status.id === 3 ? data : true) && <Create
                     crudKey={`${crudKey}/${status.id}`}
+                    data={data}
                     redirectKey={redirectKey}
                     fields={fields}
                     title={""}
                     requiredFields={requiredFields}
                     children={t("create")}
-                />
+                />}
             </div>
         </div>
         {/*{fields.length > 0 && <Create*/}

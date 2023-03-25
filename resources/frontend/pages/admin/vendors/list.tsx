@@ -120,6 +120,7 @@ const Vendors: React.FC<IVendors> = () => {
         "address",
         "phone_number",
         "fields",
+        "losService",
         "action"
     ];
     const handlerAddItem = () => navigate(`/admin/${crudKey}/create/${typeId}`);

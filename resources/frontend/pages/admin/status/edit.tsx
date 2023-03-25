@@ -15,20 +15,28 @@ const StatusEdit: React.FC<IUsersEditItem> = ({ id, statusId }) => {
     const crudKey = `changeStatus`;
     const redirectKey = `status`;
     const [data, setData] = useState(null);
-    const fields: Array<IItem> = [
-        { name: "name", type: "input", label: "statusName" },
-        { name: "slug", type: "input", label: "slug" },
-        { name: "id", type: "hidden", inputType: "hidden" }
-    ];
+    const [fields, setFields] = useState<Array<IItem>>([]);
 
 
     useEffect(() => {
         (
             async () => {
+                if (statusId == 3) {
+                    setFields([
+                        { name: "name", type: "input", label: "statusName" },
+                        ///  { name: "slug", type: "input", label: "slug" },
+                        { name: "id", type: "hidden", inputType: "hidden" },
+                        { name: "services", type: "multiSelect", label: "services" }
+                    ]);
+                } else if (status !== null) {
+                    setFields([
+                        { name: "name", type: "input", label: "statusName" },
+                        ///     { name: "slug", type: "input", label: "slug" },
+                        { name: "id", type: "hidden", inputType: "hidden" }
+                    ]);
+                }
                 const data = await AdminApi.changeStatus(crudKey, id, statusId);
-                console.log(data);
                 setData(data);
-
             }
         )();
 
