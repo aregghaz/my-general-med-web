@@ -97,7 +97,7 @@ const Autocomplete: React.FC<ITextarea> = (
                     className={s.row}
                 >
                     <div className={s.autocompleteName}>
-                        <span>{`step_${item}`}</span>
+                        <span>{`Step ${item}`}</span>
                         {count > 2 && item > 2 && <>
                             <div className={s.deleteIcon}>
                                 <button
@@ -143,7 +143,7 @@ const Autocomplete: React.FC<ITextarea> = (
                     </div>
                     <div className={s.timePickerContainer}>
                         {item !== 1 && <TimePickers
-                            label={`drop_${item}`}
+                            label={`Appointment Time`}
                             ////   error={errors[item.name]}
                             name={`drop_${item}`}
                             setFieldValue={setFieldValue}
@@ -152,7 +152,7 @@ const Autocomplete: React.FC<ITextarea> = (
                             classNameTime={s.timePicker}
                         />}
                         {item !== step.length && <TimePickers
-                            label={`pick_${item}`}
+                            label={`Pick up time`}
                             ////   error={errors[item.name]}
                             name={`time_${item}`}
                             setFieldValue={setFieldValue}
@@ -173,7 +173,7 @@ const Autocomplete: React.FC<ITextarea> = (
                             className={""}
                             onChange={handleChange}
                             // placeholder={`phone_${item}`}
-                            label={`phone_${item}`}
+                            label={`Phone Number`}
                             /// error={errors['`phone_${item}`']}
                         />
                     </div>
@@ -184,7 +184,7 @@ const Autocomplete: React.FC<ITextarea> = (
                             type={"text"}
                             placeholder={`comment_${item}`}
                             onChange={handleChange}
-                            label={`comment_${item}`}
+                            label={`Comment`}
                         />
                     </div>
                 </div>
