@@ -73,9 +73,9 @@ class AdminController extends Controller
             $services = Service::get();
             $table = $table->with('services')->find($id);
             if (isset($table->services)) {
-                $services = $table->services;
+                $servicesGet = $table->services;
                 $servicesData = [];
-                foreach ($services as $item) {
+                foreach ($servicesGet as $item) {
                     $servicesData[] = [
                         'id' => $item->id,
                         'label' => $item->name,
