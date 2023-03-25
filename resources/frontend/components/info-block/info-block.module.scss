@@ -60,7 +60,7 @@
     width: 60%;
     height: 100%;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     gap: 20px;
 }
 
@@ -107,13 +107,14 @@
     height: auto;
     display: flex;
     align-items: flex-start;
+    //flex-direction: ;
     gap: 10px;
 }
 
 .items {
-    width: calc(100% - 30px);
+    width: 100%;
     height: auto;
-    margin-left: 30px;
+    padding-left: 30px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -178,4 +179,16 @@
     display: flex;
     align-items: center;
     height: 100%;
+}
+
+.addInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.item1 {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
 }

@@ -8,6 +8,7 @@ interface ITextarea {
     onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
     value: string;
     label?: string;
+    readonly?: boolean
 }
 
 const Textarea: React.FC<ITextarea> = (
@@ -16,7 +17,8 @@ const Textarea: React.FC<ITextarea> = (
         placeholder,
         onChange,
         value,
-        label
+        label,
+        readonly = false,
     }) => (
     <>
         <label className={s.label} htmlFor={name}>{label}</label>
@@ -26,6 +28,7 @@ const Textarea: React.FC<ITextarea> = (
             placeholder={placeholder}
             onChange={onChange}
             value={value}
+            readOnly={readonly}
         />
     </>
 );

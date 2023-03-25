@@ -199,6 +199,45 @@ const Show: React.FC<IShow> = ({ id }) => {
             {/*<div className={cls.infoLeftBottom}></div>*/}
         </div>
         <div className={cls.infoRight}>
+            <div className={cls.infoRightBottom}>
+                <div className={cls.infoRightBottomTextareas}>
+                    <div className={cls.itemTextarea}>
+                        <Textarea
+                            name={"additionalNote"}
+                            value={values.additionalNote || "Unspecified"}
+                            placeholder={t("additionalNote")}
+                            onChange={(event: any) => {
+                                event.persist();
+                                return setFieldValue((state: any) => {
+                                    return {
+                                        ...state,
+                                        additionalNote: event.target.value
+                                    };
+                                });
+                            }}
+                            label={t(`Additional note (readonly)`)}
+                            readonly={true}
+                        />
+                    </div>
+                    <div className={cls.itemTextarea}>
+                        <Textarea
+                            name={"operator_note"}
+                            value={values.operator_note}
+                            placeholder={t("operator_note")}
+                            onChange={(event: any) => {
+                                event.persist();
+                                return setFieldValue((state: any) => {
+                                    return {
+                                        ...state,
+                                        operator_note: event.target.value
+                                    };
+                                });
+                            }}
+                            label={t("operator_note")}
+                        />
+                    </div>
+                </div>
+            </div>
             <div className={cls.infoRightTop}>
                 {isLoaded && <div
                     className={cls.selectDiv}
@@ -245,44 +284,6 @@ const Show: React.FC<IShow> = ({ id }) => {
                     <Button type={"adminUpdate"} onClick={handlerUpdate}>
                         Update
                     </Button>
-                </div>
-            </div>
-            <div className={cls.infoRightBottom}>
-                <div className={cls.infoRightBottomTextareas}>
-                    <div className={cls.itemTextarea}>
-                        <Textarea
-                            name={"additionalNote"}
-                            value={values.additionalNote}
-                            placeholder={t("additionalNote")}
-                            onChange={(event: any) => {
-                                event.persist();
-                                return setFieldValue((state: any) => {
-                                    return {
-                                        ...state,
-                                        additionalNote: event.target.value
-                                    };
-                                });
-                            }}
-                            label={t("additionalNote")}
-                        />
-                    </div>
-                    <div className={cls.itemTextarea}>
-                        <Textarea
-                            name={"operator_note"}
-                            value={values.operator_note}
-                            placeholder={t("operator_note")}
-                            onChange={(event: any) => {
-                                event.persist();
-                                return setFieldValue((state: any) => {
-                                    return {
-                                        ...state,
-                                        operator_note: event.target.value
-                                    };
-                                });
-                            }}
-                            label={t("operator_note")}
-                        />
-                    </div>
                 </div>
             </div>
         </div>

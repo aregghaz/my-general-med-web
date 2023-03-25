@@ -222,6 +222,9 @@ class HomeController extends Controller
         $vendorId = $request->user()->vendor_id;
         $client = Clients::with([
             /// 'origin',
+            /// '
+            'artificial',
+            'waiteDuration',
             'address',
             'car',
             'clientStatus',

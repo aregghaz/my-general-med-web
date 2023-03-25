@@ -118,6 +118,8 @@ class Controller extends BaseController
             'height' => $client->height,
             'weight' => $client->weight,
             'stops' => $client->stops,
+            'oxygen' => $client->artificial->name,
+            'waitDuration' => $client->waiteDuration->name,
             'additionalNote' => $client->additionalNote,
             'operator_note' => $client->operator_note,
         ];

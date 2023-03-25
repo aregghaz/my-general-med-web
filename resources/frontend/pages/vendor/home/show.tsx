@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import cls from "../../../components/info-block/info-block.module.scss";
 import { DirectionsRenderer, GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { homeAPI } from "../../../api/site-api/home-api";
@@ -38,6 +38,7 @@ const Show: React.FC<IShow> = ({ id }) => {
         googleMapsApiKey: GOOGLE_API_KEY,
         libraries: ["geometry", "drawing", "places"]
     });
+    const blockRef = useRef(null as HTMLDivElement)
 
 
 
@@ -140,9 +141,9 @@ const Show: React.FC<IShow> = ({ id }) => {
     };
 
 
-    return clientById && <div className={cls.block}>
-        <div className={cls.items}>
-            <div className={cls.infoLeft}>
+    return clientById && <div className={cls.block} ref={blockRef}>
+        <div className={cls.infoLeft}>
+            <div>
                 <div className={cls.infoLeftName}>
                     <span className={cls.username}>{clientById.fullName}</span>
                     |
@@ -168,8 +169,8 @@ const Show: React.FC<IShow> = ({ id }) => {
                 {/*            value={clientById.pick_up}*/}
                 {/*        />*/}
                 {/*</div>*/}
-
-
+            </div>
+            <div className={cls.item1}>
                 <div className={cls.itemsBlock}>
                     <Select
                         getOptionValue={(option: IOption) => option.value}
@@ -185,16 +186,14 @@ const Show: React.FC<IShow> = ({ id }) => {
                         value={values.car}
                         name={"Cars"}
                         isMulti={false}
+                        label={"Cars"}
                     />
                 </div>
-            </div>
-            <div className={cls.item1}>
-                <div className={cls.itemsBlock}>
-                    <span className={cls.b_text}>{t("height")}: </span>
-                    {clientById.height}
-                </div>
+                {/*<div className={cls.itemsBlock}>*/}
+                {/*    <span className={cls.b_text}>{t("height")}: </span>*/}
+                {/*    {clientById.height}*/}
+                {/*</div>*/}
                 <div className={`${cls.itemsBlock} ${cls.itemsStatus}`}>
-                    <span className={cls.b_text}>{t("status")}: </span>
                      <Select
                          getOptionValue={(option: IOption) => option.value}
                          getOptionLabel={(option: IOption) => t(option.label)}
@@ -211,6 +210,7 @@ const Show: React.FC<IShow> = ({ id }) => {
                          value={values.status}
                          name={"Cars"}
                          isMulti={false}
+                         label={"Status"}
                      />
                 </div>
             </div>
@@ -250,61 +250,66 @@ const Show: React.FC<IShow> = ({ id }) => {
                 })
             }
         </div>
-        <div className={cls.items}>
-            <div className={cls.itemsMap}>
-                <div className={cls.mapBlock}>
-                    {isLoaded && <div className={cls.selectDiv}>
-                        <div className={cls.mapDiv}>
-                            <GoogleMap
-                                ///  center={center}
-                                zoom={15}
-                                mapContainerStyle={{ width: "100%", height: "100%" }}
-                                options={{
-                                    zoomControl: true,
-                                    streetViewControl: false,
-                                    mapTypeControl: false,
-                                    fullscreenControl: false
-                                }}
-                                onLoad={map => setMap(map)}
-                            >
-                                {/* <Marker position={center} /> */}
-                                {directionsResponse && (
-                                    <DirectionsRenderer directions={directionsResponse} />
-                                )}
-
-                            </GoogleMap>
-                        </div>
-                        <div className={cls.directionDiv}>
-                            {steps && steps.map((el: any) => {
-                                return (
-                                    <div
-                                        className={cls.directions}
-                                        dangerouslySetInnerHTML={{ __html: el.instructions }}
-                                    />
-                                );
-                            })}
-                        </div>
-                    </div>}
+        <div className={cls.infoRight}>
+            <div className={cls.info}>
+                <div className={cls.itemTextarea}>
+                    <Textarea
+                        name={"additionalNote"}
+                        value={values.additionalNote}
+                        placeholder={t("additionalNote")}
+                        onChange={(event: any) => {
+                            event.persist();
+                            return setFieldValue((state: any) => {
+                                return {
+                                    ...state,
+                                    additionalNote: event.target.value
+                                };
+                            });
+                        }}
+                        label={t("additionalNote")}
+                    />
                 </div>
             </div>
             <div className={cls.addInfo}>
-                <div className={cls.info}>
-                    <div className={cls.item}>
-                        <Textarea
-                            name={"additionalNote"}
-                            value={values.additionalNote}
-                            placeholder={t("additionalNote")}
-                            onChange={(event: any) => {
-                                event.persist();
-                                return setFieldValue((state: any) => {
-                                    return {
-                                        ...state,
-                                        additionalNote: event.target.value
-                                    };
-                                });
+                <div className={cls.itemsMap}>
+                    <div className={cls.mapBlock}>
+                        {isLoaded && <div
+                            className={cls.selectDiv}
+                            style={{
+                                flexDirection: blockRef.current.clientHeight > window.innerHeight ? "column" : "row"
                             }}
-                            label={t("additionalNote")}
-                        />
+                        >
+                            <div className={cls.mapDiv}>
+                                <GoogleMap
+                                    ///  center={center}
+                                    zoom={15}
+                                    mapContainerStyle={{ width: "100%", height: "100%", minHeight: "500px", }}
+                                    options={{
+                                        zoomControl: true,
+                                        streetViewControl: false,
+                                        mapTypeControl: false,
+                                        fullscreenControl: false
+                                    }}
+                                    onLoad={map => setMap(map)}
+                                >
+                                    {/* <Marker position={center} /> */}
+                                    {directionsResponse && (
+                                        <DirectionsRenderer directions={directionsResponse} />
+                                    )}
+
+                                </GoogleMap>
+                            </div>
+                            <div className={cls.directionDiv}>
+                                {steps && steps.map((el: any) => {
+                                    return (
+                                        <div
+                                            className={cls.directions}
+                                            dangerouslySetInnerHTML={{ __html: el.instructions }}
+                                        />
+                                    );
+                                })}
+                            </div>
+                        </div>}
                     </div>
                 </div>
                 <div className={cls.updateButton}>
