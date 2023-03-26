@@ -13,6 +13,7 @@ interface IList {
     isGetHistory: boolean;
     isCreate: boolean;
     isGetItems: boolean;
+    isPrice?: boolean;
     isGetInfo: boolean;
     paginated: boolean;
     activeItem?: number;
@@ -31,6 +32,7 @@ const List: React.FC<IList> = (
         isGetItems = false,
         data,
         titles,
+        isPrice=false,
         isCreate = false,
         isGetInfo = false,
         isGetHistory = false,
@@ -58,6 +60,7 @@ const List: React.FC<IList> = (
                     isEdit={isEdit}
                     isDelete={isDelete}
                     isGetInfo={isGetInfo}
+                    isPrice={isPrice}
                     isGetItems={isGetItems}
                     handlerAction={handlerAction}
                     className={className}

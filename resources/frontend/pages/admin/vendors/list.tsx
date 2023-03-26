@@ -181,6 +181,7 @@ const Vendors: React.FC<IVendors> = () => {
                     isEdit
                     tableRef={tableRef}
                     isCreate
+                    isPrice
                     isGetInfo={false}
                     isGetItems={typeId === 2}
                     handlerAction={handlerAction}

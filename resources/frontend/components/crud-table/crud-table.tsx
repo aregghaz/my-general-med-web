@@ -12,6 +12,7 @@ const CrudTable: React.FC<ICrudTable> = (
         isEdit,
         isGetInfo,
         isGetItems,
+        isPrice,
         isGetHistory,
         handlerAction,
         tableRef,
@@ -47,6 +48,7 @@ const CrudTable: React.FC<ICrudTable> = (
                     isDelete={isDelete}
                     isEdit={isEdit}
                     isGetInfo={isGetInfo}
+                    isPrice={isPrice}
                     isGetHistory={isGetHistory}
                     handlerAction={handlerAction}
                     isGetItems={isGetItems}
@@ -74,6 +76,7 @@ interface ICrudTable {
     isDelete: boolean;
     isGetInfo: boolean;
     isGetHistory: boolean;
+    isPrice?: boolean;
     isGetItems?: boolean;
     className: string;
     handlerAction: (action: string, id: number) => void;

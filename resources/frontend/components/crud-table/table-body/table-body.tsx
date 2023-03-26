@@ -7,6 +7,7 @@ import UsersIcon from "-!svg-react-loader!../../../images/Users.svg";
 import ActivityIcon from "-!svg-react-loader!../../../images/Actions.svg";
 import CLoseMessage from "-!svg-react-loader!../../../images/close-message.svg";
 import OpenMessage from "-!svg-react-loader!../../../images/open.svg";
+import PriceSVG from "-!svg-react-loader!../../../images/price.svg";
 import s from "../crud-table.module.scss";
 import { useTranslation } from "react-i18next";
 
@@ -16,6 +17,7 @@ interface ITableBody {
     isDelete: boolean,
     isGetHistory: boolean
     isGetInfo: boolean
+    isPrice: boolean
     isGetItems: boolean
     handlerAction: (action: string, id: number) => void
 }
@@ -25,6 +27,7 @@ const TableBody: React.FC<ITableBody> = (
         data,
         isEdit,
         isDelete,
+        isPrice,
         isGetItems,
         isGetInfo,
         isGetHistory,
@@ -133,6 +136,15 @@ const TableBody: React.FC<ITableBody> = (
                                         </div>
                                     }
                                     {
+                                        isPrice &&
+                                        <div className={s.iconWrapper}>
+                                            <div className={s.iconLabel}>Price List</div>
+                                               <PriceSVG
+                                            className={s.trashIcon}
+                                            onClick={() => handlerAction("price", item.id)}
+                                        />
+                                        </div>
+                                    }  {
                                         isDelete &&
                                         <div className={s.iconWrapper}>
                                             <div className={s.iconLabel}>Delete</div>
