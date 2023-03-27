@@ -157,7 +157,7 @@ class AdminController extends Controller
         } else {
             $table->find($id)->update([
                 'name' => $requestData->name,
-                'slug' => $requestData->slug,
+                'slug' => $requestData->name,
             ]);
         }
 
