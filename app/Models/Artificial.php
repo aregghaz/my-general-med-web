@@ -11,6 +11,6 @@ class Artificial extends Model
     protected $fillable  =  [
         'id',
         'name',
-        'price',
+        'slug',
     ];
 }
