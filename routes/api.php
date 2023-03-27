@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ClientsController;
 use App\Http\Controllers\Admin\DashBoardController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\OperatorController;
+use App\Http\Controllers\Admin\PriceListController;
 use App\Http\Controllers\Admin\VendorController;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\HomeController;
@@ -98,6 +99,7 @@ Route::group([
     Route::post('/updateClient/{id}', [AdminController::class, 'updateClient']);
 
     Route::get('/audit', [VendorController::class, 'audit']);
+    Route::get('/get-price-list/{id}', [PriceListController::class, 'index']);
     Route::get('/get-notification/{showMore}', [NotificationController::class, 'index']);
     Route::get('/get-count', [NotificationController::class, 'getCount']);
     Route::get('/get-info/{id}/{role}', [NotificationController::class, 'getInfo']);

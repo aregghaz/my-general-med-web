@@ -325,7 +325,9 @@ class ClientsController extends Controller
         $client->artificial_id = $requestData->artificial->id;
         $client->duration_id = $requestData->waitDuration->id;
         $client->date_of_service = date('Y-m-d', strtotime($date));
-        $client->price = (int)$requestData->price + (int)$requestData->waitDuration->value + (int)$requestData->artificial->value;
+        /////FIXME ADD RIGHT PRICE IF VENDOR SELECTED
+        /////FIXME ADD RIGHT PRICE IF VENDOR SELECTED
+        ///$client->price = (int)$requestData->price + (int)$requestData->waitDuration->value + (int)$requestData->artificial->value;
         $client->request_type = $requestData->request_type->id;
         $client->operator_id = $userId;
         $client->stops = (int)$requestData->count;
@@ -475,7 +477,7 @@ class ClientsController extends Controller
         $client->artificial_id = $requestData->artificial_id->id;
         $client->duration_id = $requestData->duration_id->id;
         $client->date_of_service = date('Y-m-d', strtotime($requestData->date_of_service));
-        $client->price = (int)$requestData->price + (int)$requestData->duration_id->value + (int)$requestData->artificial_id->value;
+      ///  $client->price = (int)$requestData->price + (int)$requestData->duration_id->value + (int)$requestData->artificial_id->value;
         $client->request_type = $requestData->request_type->id;
         $client->operator_id = $userId;
         $client->stops = $requestData->count;

@@ -43,6 +43,7 @@ import ActivityClient from "./pages/admin/clients/activity";
 import VendorDashboard from "./pages/vendor/dashbord/dashboard";
 import NotificationList from "./pages/admin/notification/notification";
 import Notification from "./pages/vendor/notification/notification";
+import PriceList from "./pages/admin/vendors/priseList";
 
 const App = (): JSX.Element => (
     <Provider store={store}>
@@ -79,6 +80,7 @@ const App = (): JSX.Element => (
                 <VendorEdit path="vendors/:id/2" />
                 <OperatorEdit path="vendors/:id/4" />
                 <VendorCreate path="vendors/create/2" />
+                <PriceList path="priceList/:id" />
                 <OperatorCreate path="vendors/create/4" />
                 <Status path="status" />
                 <StatusCreate path="addStatus/:statusId/create" />

@@ -77,12 +77,6 @@ export interface IHandmadeProduct {
 }
 
 
-export interface IService {
-    image: string;
-    title: string;
-    text: string;
-    slug: string;
-}
 
 
 

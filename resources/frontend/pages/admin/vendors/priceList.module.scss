@@ -1,0 +1,63 @@
+@import "../../../styles/variables";
+
+.service {
+    display: flex;
+    flex-direction: column;
+    width: 33%;
+    float: left;
+    //padding:5px;
+    border: 1px solid $menuColor;
+    border-radius:15px
+}
+.losLabel{
+    font-size: 20px;
+    font-weight: 500;
+    color: $borderColor;
+    text-align: center;
+    margin: 10px auto;
+    border-bottom: 1px solid;
+}
+.losContainer {
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    gap: 20px;
+}
+
+.serviceLabel {
+    display: flex;
+    padding: 10px 10px 0 10px
+}
+
+.serviceBody {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap:10px;
+    div {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justifyContent:center
+    }
+}
+.buttonDiv{
+    display: flex;
+    height: 100%;
+    flex-direction: column-reverse;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+    button{
+        width: 100%;
+        border: 1px solid $menuColor;
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
+    }
+}
+.inputDiv {
+    padding: 0 15px;
+}
+

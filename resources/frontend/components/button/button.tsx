@@ -2,7 +2,7 @@ import React from "react";
 import s from "./button.module.scss";
 
 interface IButton {
-    type?: "primary" | "secondary" | "blank" | "green" | "transparent" | "adminUpdate"
+    type: "primary" | "secondary" | "blank" | "green" | "transparent" | "adminUpdate"
     isSubmit?: boolean
     onClick?: () => void
     className?: string,

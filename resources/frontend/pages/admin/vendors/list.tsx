@@ -92,6 +92,9 @@ const Vendors: React.FC<IVendors> = () => {
             case "getVendorUser":
                 await handlerGetVendorUsers(id);
                 break;
+            case "price":
+                await navigate(`/admin/priceList/${id}`);
+                break;
         }
     };
 

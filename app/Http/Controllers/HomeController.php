@@ -19,8 +19,9 @@ class HomeController extends Controller
     {
         $allFields = $request->user()->fields()->get()->pluck('name')->toArray();
         $vendorFields = $request->titles ? $request->titles : $allFields;
-
-        // dd($vendorFields);
+        $los = $request->user()->los()->get()->pluck('id');
+       // dd($los);
+        // dd($los);
         $clientData = new ClientFieldCollection($vendorFields);
         $showMore = $request->showMore;
         $clientsData = [];
@@ -29,10 +30,11 @@ class HomeController extends Controller
         $queryData = $request->queryData;
         $vendorId = $request->user()->vendor_id;
         $dateData = $request->date;
-        $tripCount = Clients::where(['vendor_id' => $vendorId, 'type_id' => 1]);
-        $available = Clients::where('type_id', 2)->where('vendor_id', '<>', $vendorId)->OrWhereNull('vendor_id');
-        $cancelCount = Clients::where(['type_id' => 2, 'vendor_id' => $vendorId]);
-        $progressCount = Clients::where('type_id', 5);
+        $tripCount = Clients::where(['vendor_id' => $vendorId, 'type_id' => 1])->whereIn('los_id',$los);
+        $available = Clients::where('type_id', 2)->whereIn('los_id',$los);
+        $cancelCount = Clients::where(['type_id' => 2, 'vendor_id' => $vendorId])->whereIn('los_id',$los);
+      ////FIXME ADD VENDOR_ID
+        $progressCount = Clients::where('type_id', 5)->whereIn('los_id',$los);
         $doneCount = Clients::where(['type_id' => 6, 'vendor_id' => $vendorId]);
 
         if ($typeId === 2 || $typeId === 3 || $typeId === 4) {
@@ -40,13 +42,13 @@ class HomeController extends Controller
                 array_splice($vendorFields, $key, 1);
             }
             if ($typeId == 4) {
-                $clients = DB::table('clients')->where(['type_id' => 2, 'clients.vendor_id' => $vendorId]);
+                $clients = DB::table('clients')->where(['type_id' => 2, 'clients.vendor_id' => $vendorId])->whereIn('los_id',$los);
 
             } else if ($typeId == 2) {
-                $clients = DB::table('clients')->where('type_id', 2)->where('vendor_id', '<>', $vendorId)->orWhereNull('vendor_id');
+                $clients = DB::table('clients')->where('type_id', 2)->whereIn('los_id',$los);
             }
         } else {
-            $clients = Clients::where(['clients.type_id' => $request->typeId, 'clients.vendor_id' => $vendorId]);
+            $clients = Clients::where(['clients.type_id' => $request->typeId, 'clients.vendor_id' => $vendorId])->whereIn('los_id',$los);
         }
 
         if (isset($dateData)) {

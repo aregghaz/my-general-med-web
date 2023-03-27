@@ -3283,6 +3283,69 @@ textarea[type=number] {
   display: flex;
   flex-direction: column;
 }
+.priceList_service__9eahh {
+  display: flex;
+  flex-direction: column;
+  width: 33%;
+  float: left;
+  border: 1px solid #D63D3D;
+  border-radius: 15px;
+}
+
+.priceList_losLabel__1wNFr {
+  font-size: 20px;
+  font-weight: 500;
+  color: #194b76;
+  text-align: center;
+  margin: 10px auto;
+  border-bottom: 1px solid;
+}
+
+.priceList_losContainer__1iav7 {
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+  gap: 20px;
+}
+
+.priceList_serviceLabel___3jJw {
+  display: flex;
+  padding: 10px 10px 0 10px;
+}
+
+.priceList_serviceBody__1i9fi {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 10px;
+}
+.priceList_serviceBody__1i9fi div {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justifyContent: center;
+}
+
+.priceList_buttonDiv__1Zl6V {
+  display: flex;
+  height: 100%;
+  flex-direction: column-reverse;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+}
+.priceList_buttonDiv__1Zl6V button {
+  width: 100%;
+  border: 1px solid #D63D3D;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.priceList_inputDiv__1GeQU {
+  padding: 0 15px;
+}
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
 /* Document
