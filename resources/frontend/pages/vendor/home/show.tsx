@@ -213,6 +213,19 @@ const Show: React.FC<IShow> = ({ id }) => {
                          label={"Status"}
                      />
                 </div>
+                <div className={cls.addon} style={{
+                    borderTop: "none",
+                }}>
+                    <div className={cls.addonInfo}>
+                        <p>LOS: <span>{clientById.los}</span></p>
+                        <p>Member unique identifer: <span>{clientById.member_uniqie_identifer}</span></p>
+                        <p>Miles: <span>{clientById.miles}</span></p>
+                        <p>Request type: <span>{clientById.request_type}</span></p>
+                        <p>Trip ID: <span>{clientById.trip_id}</span></p>
+                        <p>Wait duration: <span>{clientById.waitDuration} minutes</span></p>
+                        <p>Oxygen: <span>{clientById.oxygen}</span></p>
+                    </div>
+                </div>
             </div>
 
             {

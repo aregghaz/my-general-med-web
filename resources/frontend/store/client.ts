@@ -1,7 +1,6 @@
 import { InferActionsTypes } from "./store";
 
 const defaultDat = {
-
     // client_id:0,
     // car_id:0,
     // vendor_id:0,
@@ -40,6 +39,8 @@ const defaultDat = {
     type_of_trip: 0,
     miles: 0,
     member_uniqie_identifer: 0,
+    waitDuration: "",
+    oxygen: "",
     birthday: 0,
     additionalNote: "",
     operator_note: ""

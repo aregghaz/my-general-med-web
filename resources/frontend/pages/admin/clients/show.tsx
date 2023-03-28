@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import cls from "../../../components/info-block/info-block.module.scss";
 import { DirectionsRenderer, GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { homeAPI } from "../../../api/site-api/home-api";
-import { clientAction } from "../../../store/client";
+import client, { clientAction } from "../../../store/client";
 import { useDispatch, useSelector } from "react-redux";
 import { GOOGLE_API_KEY } from "../../../environments";
 import { getClientData } from "../../../store/selectors";
@@ -115,6 +115,7 @@ const Show: React.FC<IShow> = ({ id }) => {
             toast(t("record_successfully_edited"), options);
         }
     };
+    console.log(clientById)
     return clientById && <div className={cls.block} ref={blockRef}>
         <div className={cls.infoLeft}>
             <div className={cls.infoLeftName}>
@@ -124,8 +125,17 @@ const Show: React.FC<IShow> = ({ id }) => {
                 |
                 <span><span>Height: {clientById.height}</span> <span>Weight: {clientById.weight}</span></span>
             </div>
-
-
+            <div className={cls.addon}>
+                <div className={cls.addonInfo}>
+                    <p>LOS: <span>{clientById.los}</span></p>
+                    <p>Member unique identifer: <span>{clientById.member_uniqie_identifer}</span></p>
+                    <p>Miles: <span>{clientById.miles}</span></p>
+                    <p>Request type: <span>{clientById.request_type}</span></p>
+                    <p>Trip ID: <span>{clientById.trip_id}</span></p>
+                    <p>Wait duration: <span>{clientById.waitDuration} minutes</span></p>
+                    <p>Oxygen: <span>{clientById.oxygen}</span></p>
+                </div>
+            </div>
             {
                 clientById.address.map((item, index: number) => {
                     return (<>
