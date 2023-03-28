@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "@reach/router";
-import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
-import { AdminApi } from "../../../api/admin-api/admin-api";
+import React, {useEffect, useState} from "react";
+import {useNavigate} from "@reach/router";
+import {useTranslation} from "react-i18next";
+import {useDispatch} from "react-redux";
+import {AdminApi} from "../../../api/admin-api/admin-api";
 import s from "./priceList.module.scss";
 import Input from "../../../components/input/input";
-import Select, { IOption } from "../../../components/select/select";
+import Select, {IOption} from "../../../components/select/select";
 import Button from "../../../components/button/button";
 
 interface IVendors {
@@ -25,7 +25,7 @@ interface IService {
 
 }
 
-const PriceList: React.FC<IVendors> = ({ id }) => {
+const PriceList: React.FC<IVendors> = ({id}) => {
     const dispatch = useDispatch();
     const crudKey = "vendors";
     const navigate = useNavigate();
@@ -37,14 +37,14 @@ const PriceList: React.FC<IVendors> = ({ id }) => {
         los: []
     });
 
-    const { t } = useTranslation();
+    const {t} = useTranslation();
 
     const selectOptions = [
         {
             id: 0,
             value: "Select Type",
             label: "Select Type",
-        },   {
+        }, {
             id: 1,
             value: "base",
             label: "base"
@@ -74,51 +74,55 @@ const PriceList: React.FC<IVendors> = ({ id }) => {
     return Object.keys(data).length > 0 && (
 
         <>
-            <div>Company name: {data.companyName} </div>
-            <div>{t("phoneNumber")}: {data.phoneNumber} </div>
-            <div className={s.losContainer}>
-                {
-                    data.los.map((item: ILos) => {
-                        return (<div className={s.service}>
-                          <span className={s.losLabel}>  {item.name}</span>
-                            {item.services.map((service: IService) => {
-                                return (<div>
+            <div className={s.allContainer}>
+                <div className={s.companyName}>Company name: {data.companyName} </div>
+                <div className={s.companyPhone}>{t("phoneNumber")}: {data.phoneNumber} </div>
+                <div className={s.losContainer}>
+                    {
+                        data.los.map((item: ILos) => {
+                            return (<div className={s.service}>
+                                <span className={s.losLabel}>  {item.name}</span>
+                                {item.services.map((service: IService) => {
+                                    return (
+                                        <>
+                                            <div className={s.inputContainer}>
+                                                <div className={`${s.inputDiv} ${s.selectDiv}`}>
 
-                                  <div className={s.serviceBody}>
-                                     <div className={s.inputDiv}>
+                                                    <Input name={service.slug}
+                                                           label={service.slug} type={"number"}/>
+                                                </div>
 
-                                         <Input name={service.slug}  placeholder={service.slug} label={service.slug} type={"number"} />
-                                     </div>
-                                    <div className={s.inputDiv}>
-                                        <Select
-                                            getOptionValue={(option: IOption) => option.value}
-                                            getOptionLabel={(option: IOption) => t(option.label)}
-                                            onChange={(options: IOption) => setFieldValue((state: any) => {
-                                                return {
-                                                    ...state,
-                                                    car: options
-                                                };
-                                            })}
-                                            isDisabled={false}
-                                            options={selectOptions}
-                                            value={service.type}
-                                            name={`${service.slug}_type`}
-                                            isMulti={false}
-                                            label={"serviceType"}
-                                        />
-                                    </div>
-                                  </div>
-                                </div>);
-                            })}
-                         <div className={s.buttonDiv}>
-                             <Button type={'adminUpdate'}>Save</Button>
-                         </div>
-                        </div>);
-                    })
-                }
 
+                                            <div className={`${s.inputDiv}`}>
+                                                <Select
+                                                    getOptionValue={(option: IOption) => option.value}
+                                                    getOptionLabel={(option: IOption) => t(option.label)}
+                                                    onChange={(options: IOption) => setFieldValue((state: any) => {
+                                                        return {
+                                                            ...state,
+                                                            car: options
+                                                        };
+                                                    })}
+                                                    isDisabled={false}
+                                                    options={selectOptions}
+                                                    value={service.type}
+                                                    name={`${service.slug}_type`}
+                                                    isMulti={false}
+                                                    label={"serviceType"}
+                                                />
+                                            </div>
+                                            </div>
+                                        </>
+                                    );
+                                })}
+                                <div className={s.buttonDiv}>
+                                    <Button type={'adminUpdate'}>Save</Button>
+                                </div>
+                            </div>);
+                        })
+                    }
+                </div>
             </div>
-
         </>
     );
 };

@@ -5,10 +5,13 @@
 
 .select {
     margin-top: 10px;
-    border: none;
-
+    //border: 1px solid red;
+    height: auto;
+    display: flex;
     & div {
+
         //box-shadow: none;
+        //border: 1px solid red;
     }
 
     & div:hover {
@@ -24,6 +27,7 @@
 
 .react-select-container {
     background-color: black;
+    //border: 1px solid red;
 }
 
 .e-multiselect.e-input-group .e-multi-select-wrapper {
@@ -54,7 +58,6 @@
 
 .customMenuList {
     list-style: none;
-
     li {
         margin-bottom: 10px;
     }
@@ -71,6 +74,7 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
+    //border: 1px solid red;
 }
 
 .selectButton {
@@ -82,7 +86,6 @@
     cursor: pointer;
     border-radius: 3px;
     color: $whiteColor;
-
     //&:not(.blank,.round){
     //    box-shadow: $buttonBoxShadow;
     //}

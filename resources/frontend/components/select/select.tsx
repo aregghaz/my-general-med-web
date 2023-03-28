@@ -148,6 +148,7 @@ const Select: React.FC<ISelect> = (
                 styles={{
                     control: (baseStyles, state) => ({
                         ...baseStyles,
+                        display: "flex",
                         borderButton: "1px solid #D63D3D",
                         width: "100%",
                         outline: "none",
@@ -196,7 +197,7 @@ const Select: React.FC<ISelect> = (
                         ...baseStyles,
                         fontSize: 20,
                         // borderRadius: "15px",
-                        lineHeight: 1.5,
+                        // lineHeight: 1.5,
                         // color: "black",
                         color: "gray",
                         fontWeight: "bold",

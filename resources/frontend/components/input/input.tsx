@@ -43,7 +43,7 @@ const Input: React.FC<IInput> = (
             {error && <div className={s.error}>{error}</div>}
             {label &&
                 <label
-                    className={`${s.label} ${!String(value ?? "") ? s.blankLabel : ""} ${labelStyle}`}
+                    className={`${s.label} ${!String(value ?? "") ? s.blankLabel : ""} ${labelStyle} ${s.priseLabel}`}
                     htmlFor={name}
                 >
                     {`${label}`} {isAsterisk && <span>*</span>}

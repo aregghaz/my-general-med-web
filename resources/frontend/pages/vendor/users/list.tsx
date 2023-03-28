@@ -169,7 +169,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
 
                             <i className={`binicon- ${s.icon}`} />
                             <p className={s.text}>
-                                {t("admin.do_you_want_to_delete")}
+                                {t("admin.do_you_want_to_deletee")}
                             </p>
                             <div className={s.buttons}>
                                 <Button

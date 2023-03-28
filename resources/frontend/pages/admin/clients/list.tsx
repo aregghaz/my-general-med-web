@@ -43,14 +43,12 @@ const customStyles: ReactModal.Styles = {
 
 
         position: "fixed",
-        border: "none",
         overflowY: "unset",
         outline: "none",
         top: "50%",
         left: "50%",
         overflow: "hidden",
         transform: "translate(-50% , -50%)",
-
         /// display: 'flex',
         justifyContent: "center",
         ///  alignItems: "center",
