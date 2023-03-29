@@ -151,7 +151,7 @@ const Select: React.FC<ISelect> = (
                         {t(`admin:remove_all`)}
                     </Button></>}
             </div>
-            <div className={s.testwrapper}>
+            <div className={s.selectWrapper}>
                 <ReactSelect
                     ref={selectRef}
                     isMulti={isMulti}
@@ -162,10 +162,7 @@ const Select: React.FC<ISelect> = (
                         borderButton: "1px solid #D63D3D",
                         width: "100%",
                         outline: "none",
-                        borderTop: "none",
-                        borderLeft: "none",
-                        borderRight: "none",
-                        borderBottom: "1px solid #194b76",
+                            border: "none",
                         boxShadow: "none !important",
                         borderRadius: 0,
                         overflowX: "auto",
@@ -258,10 +255,13 @@ const Select: React.FC<ISelect> = (
                 onMenuClose={handlerMenuClose}
                 hideSelectedOptions={hideSelectedOptions}
             />
-                {allowValueClear && <>
-                    <div className={s.test}>
+                {(allowValueClear && !isMulti) && <>
+                    <div className={s.selectRemove}>
                         <button
                             onClick={handleOptionRemove}
+                            style={{
+                                display: value ? "flex" : "none"
+                            }}
                         ><img src={removeIcon}/></button>
                     </div>
                 </>

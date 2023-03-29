@@ -97,24 +97,31 @@
     }
 }
 
-.testwrapper {
+.selectWrapper {
     display: flex;
     align-items: center;
+    border-bottom: 1px solid $borderColor;
 }
 
-.test {
+.selectRemove {
     width: 20px;
     height: 100%;
-    border: 1px solid red;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    //border: 1px solid red;
+    padding-top: 10px;
     & > button {
         width: 100%;
         height: 100%;
-
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
         & > img {
             width: 100%;
             height: 100%;
             object-fit: contain;
+
         }
     }
 }

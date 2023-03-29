@@ -23,6 +23,7 @@ export interface IItem {
     placeholder?: string;
     label?: string;
     selectOptions?: Array<IOption> | Array<IOptionMultiselect>;
+    allowValueClear?: boolean
 }
 
 interface IFormikHandler {
@@ -129,6 +130,7 @@ const FormikHandler: React.FC<IFormikHandler> = (
                     isSearchable={false}
                     name={item.name}
                     placeholder={t(item.label)}
+                    allowValueClear={item.allowValueClear}
                 />
             );
         case "file":
@@ -174,6 +176,7 @@ const FormikHandler: React.FC<IFormikHandler> = (
                     name={item.name}
                     isMulti={true}
                     placeholder={t(item.placeholder)}
+                    allowValueClear={item.allowValueClear}
                 />
             );
         case "datepicker":

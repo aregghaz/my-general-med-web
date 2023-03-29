@@ -42,7 +42,7 @@ const TimePickers: React.FC<ITextarea> = (
 
         <TimePicker
             format={"HH:mm"}
-            className={`${s.time} ${classNameTime}`}
+            className={`${s.time} ${classNameTime} ${value ? s.timeValid : ""}`}
             clockIcon={null}
             clearIcon={null}
             amPmAriaLabel={false}
@@ -50,7 +50,6 @@ const TimePickers: React.FC<ITextarea> = (
             name={name}
             value={value}
             locale={"sv-sv"}
-
         />
     </div>
 );

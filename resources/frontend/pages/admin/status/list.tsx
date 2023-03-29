@@ -206,24 +206,26 @@ const Status: React.FC<Beneficiary> = () => {
                                 onClick={handlerCloseModal}
                             />
                         </div>
-                        <p className={s.text}>
-                            {t("do_you_want_to_delete")}
-                        </p>
-                        <div className={s.buttons}>
-                            <Button
-                                type={"green"}
-                                onClick={handlerDeleteItem}
-                                className={s.button}
-                            >
-                                {t("yes")}
-                            </Button>
-                            <Button
-                                type={"transparent"}
-                                onClick={handlerCloseModal}
-                                className={s.button}
-                            >
-                                {t("no")}
-                            </Button>
+                        <div className={s.contentWrapper}>
+                            <p className={s.text}>
+                                {t("Do you want to delete")}
+                            </p>
+                            <div className={s.buttons}>
+                                <Button
+                                    type={"transparent"}
+                                    onClick={handlerDeleteItem}
+                                    className={`${s.button} ${s.yesButton}`}
+                                >
+                                    {t("yes")}
+                                </Button>
+                                <Button
+                                    type={"transparent"}
+                                    onClick={handlerCloseModal}
+                                    className={s.button}
+                                >
+                                    {t("no")}
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 </Modal>
