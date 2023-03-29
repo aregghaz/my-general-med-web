@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useRef} from "react";
 import useLocalStorage from "../../hooks/use-local-storage";
 import Checkbox from "../checkbox/checkbox";
 import ReactSelect, { components, MenuProps, OptionProps, OptionTypeBase } from "react-select";
@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 
 import s from "./select.module.scss";
 import Button from "../button/button";
+import removeIcon from "../../svgs/removeIcon.svg"
 
 export interface IOption {
     id: number;
@@ -27,6 +28,7 @@ interface IMenu {
 }
 
 interface ISelect {
+    allowValueClear?: boolean
     isCheckbox?: boolean
     isSearchable?: boolean
     placeholder?: string
@@ -89,6 +91,7 @@ const Menu: React.FC<IMenu> = ({ props, handlerAdd }) => {
 
 const Select: React.FC<ISelect> = (
     {
+        allowValueClear= true,
         isCheckbox = false,
         isSearchable = false,
         placeholder = "",
@@ -112,6 +115,7 @@ const Select: React.FC<ISelect> = (
 ) => {
     const { t } = useTranslation();
     const [themeType] = useLocalStorage("theme", "light");
+    const selectRef = useRef(null)
     const markAll = () => {
         onChange(options);
     };
@@ -119,6 +123,10 @@ const Select: React.FC<ISelect> = (
     const unMarkAll = () => {
         onChange([]);
     };
+    const handleOptionRemove:React.MouseEventHandler<HTMLButtonElement> = (e):void => {
+        e.preventDefault()
+        selectRef.current.select.clearValue()
+    }
     return (
         <>
             {label && <label style={{
@@ -143,10 +151,12 @@ const Select: React.FC<ISelect> = (
                         {t(`admin:remove_all`)}
                     </Button></>}
             </div>
-            <ReactSelect
-                isMulti={isMulti}
-                styles={{
-                    control: (baseStyles, state) => ({
+            <div className={s.testwrapper}>
+                <ReactSelect
+                    ref={selectRef}
+                    isMulti={isMulti}
+                    styles={{
+                        control: (baseStyles, state) => ({
                         ...baseStyles,
                         display: "flex",
                         borderButton: "1px solid #D63D3D",
@@ -248,7 +258,15 @@ const Select: React.FC<ISelect> = (
                 onMenuClose={handlerMenuClose}
                 hideSelectedOptions={hideSelectedOptions}
             />
-
+                {allowValueClear && <>
+                    <div className={s.test}>
+                        <button
+                            onClick={handleOptionRemove}
+                        ><img src={removeIcon}/></button>
+                    </div>
+                </>
+                }
+            </div>
         </>
     );
 };

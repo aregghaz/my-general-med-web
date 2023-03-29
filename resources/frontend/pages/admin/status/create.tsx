@@ -107,6 +107,7 @@ const StatusCreate: React.FC<IUserCreate> = ({ statusId }) => {
                     name={"Cars"}
                     isMulti={false}
                     value={status}
+                    allowValueClear={false}
                 />
             </div>
             <div className={s.mainForm}>
