@@ -37,7 +37,7 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
         { name: "date_of_service", type: "datepicker", label: "date_of_service" },
         { name: "gender", type: "select", label: "gender" },
         { name: "birthday", type: "datepicker", label: "birthday" },
-        { name: "los", type: "select", label: "los" },
+        { name: "los", type: "select", label: "los", allowValueClear:false},
         { name: "artificial_id", type: "select", label: "artificial" },
         { name: "duration_id", type: "select", label: "waitDuration" },
         { name: "vendors", type: "select", label: "vendors" },

@@ -12,8 +12,8 @@ const customStyles: ReactModal.Styles = {
         /// display: 'flex',
         justifyContent: "center",
         ///  alignItems: "center",
-        width: "700px",
-        height: "500px",
+        width: "500px",
+        height: "250px",
         // backgroundColor: "#194b76",
     },
     overlay: {

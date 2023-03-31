@@ -13,7 +13,7 @@ class TestController extends Controller
 
 {
 
-/*    public function index()
+   public function index2()
     {
         $queryData = date('Y-m-d', strtotime("+60 days"));
         $driverData = Driver::where(function ($query) use ($queryData) {
@@ -89,7 +89,7 @@ class TestController extends Controller
         }
 
         dd(1);
-    }*/
+    }
 
         public function index(Request $request)
     {

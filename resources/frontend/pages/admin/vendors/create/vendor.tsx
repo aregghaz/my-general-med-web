@@ -21,7 +21,7 @@ const VendorCreate: React.FC<IVendorCreate> = () => {
         { name: "fields", type: "multiSelect", label: "fields"},
         { name: "id", type: "hidden", inputType: "hidden" },
         { name: "los", type: "multiSelect", inputType: "los"},
-        { name: "password", type: "input", inputType: "password" }
+        { name: "password", type: "password", inputType: "password" }
     ];
     const requiredFields = [
         "companyName",

@@ -49,11 +49,13 @@ const Password:React.FC<Password> = ({
                />
            </div>
             <div className={cls.showPasswordWrapper}>
-                Show Password:
+                {/*Show Password:*/}
                 <input
+                    className={cls.checkbox}
                     type={"checkbox"}
                     onChange={toggleHidden}
                 />
+
             </div>
         </div>
     )

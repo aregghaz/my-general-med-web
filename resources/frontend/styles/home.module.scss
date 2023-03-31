@@ -220,7 +220,7 @@ body {
 
 .selectDiv {
     display: flex;
-    /* flex: 1; */
+    //flex: 1;
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
@@ -228,14 +228,17 @@ body {
     margin-top: 20px;
     row-gap: 50px;
     padding: 20px;
+    //border: 1px solid red;
 }
 
 
 .modalBody {
     height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    //border: 1px solid red;
 }
 
 .modalDiv {
@@ -247,4 +250,5 @@ body {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    //border: 1px solid red;
 }

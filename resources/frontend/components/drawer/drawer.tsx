@@ -164,13 +164,7 @@ const Drawer: React.FC = ({ children }) => {
                         </div>
 
                         <div className={s.header_icons_block}>
-                            <div className={s.iconBlock}>
-                                <Button type={"blank"}>
-                                <span className={s.icon}>
-                                    <Settings />
-                                </span>
-                                </Button>
-                            </div>
+
                             {/*<div className={s.iconBlock}>*/}
                             {/*    <Button type={"blank"}>*/}
                             {/*    <span className={s.icon}>*/}
