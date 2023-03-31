@@ -7,9 +7,10 @@ import { login } from "../../../store/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserData } from "../../../store/selectors";
 import { useNavigate } from "@reach/router";
+import Password from "../../../components/password/password";
 
 import s from "./login-wrapper.module.scss";
-import cls from "../../../components/password/password.module.scss";
+// import cls from "../../../components/password/password.module.scss";
 
 
 interface ILoginWrapper {
@@ -69,19 +70,28 @@ const LoginWrapper: React.FC<ILoginWrapper> = () => {
                             <div className={s.logoDiv}>
                                 <img src={`../../images/logo.png`} alt="logo" />
                             </div>
-                            <Input
-                                label={t("email")}
-                                name={"email"}
-                                type={"text"}
-                                onChange={handleChange}
-                                value={values.email}
-                            />
-                            <Input
-                                label={t("password")}
+                            <div style={{position: "relative"}}>
+                                <Input
+                                    label={t("email")}
+                                    name={"email"}
+                                    type={"text"}
+                                    onChange={handleChange}
+                                    value={values.email}
+                                />
+                            </div>
+                            {/*<Input*/}
+                            {/*    label={t("password")}*/}
+                            {/*    name={"password"}*/}
+                            {/*    type={"password"}*/}
+                            {/*    onChange={handleChange}*/}
+                            {/*    value={values.password}*/}
+                            {/*/>*/}
+                            <Password
                                 name={"password"}
-                                type={"password"}
-                                onChange={handleChange}
                                 value={values.password}
+                                // className={cls.passwordWrapper}
+                                onChange={handleChange}
+                                label={t("password")}
                             />
 
                             <div className={s.actions}>

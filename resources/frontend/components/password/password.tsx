@@ -10,12 +10,12 @@ import cls from "./password.module.scss"
 interface Password {
     name: any;
     value: any;
-    type: any;
-    className: any;
+    type?: any;
+    className?: any;
     onChange: any;
-    placeholder: any;
+    placeholder?: any;
     label: any;
-    error: any;
+    error?: any;
 }
 
 const Password:React.FC<Password> = ({

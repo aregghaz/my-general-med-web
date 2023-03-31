@@ -23,7 +23,7 @@ const VendorDriverEdit: React.FC<IUsersEditItem> = ({ id }) => {
         { name: "address", type: "input", label: "address" },
         { name: "birthday", type: "input", label: "birthDate" },
         { name: "phone_number", type: "input", label: "phone_number", inputType: "tel" },
-        { name: "password", type: "input", label: "password", inputType: "password" },
+        { name: "password", type: "password", label: "password", inputType: "password" },
         ///  {name: 'roles', type: 'select', label: 'role'},
         { name: "license", type: "file", label: "Driver License" },
         { name: "picture", type: "file", label: "Driver Picture", inputType: "hidden" },

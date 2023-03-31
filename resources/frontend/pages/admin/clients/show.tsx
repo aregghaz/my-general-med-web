@@ -214,7 +214,7 @@ const Show: React.FC<IShow> = ({ id }) => {
                     <div className={cls.itemTextarea}>
                         <Textarea
                             name={"additionalNote"}
-                            value={values.additionalNote || "Unspecified"}
+                            value={values.additionalNote}
                             placeholder={t("additionalNote")}
                             onChange={(event: any) => {
                                 event.persist();
