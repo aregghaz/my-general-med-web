@@ -117,23 +117,28 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
                     </div>
                 </div>
                 {/*{type !== "hidden" && <div className={s.splitter}></div>}*/}
-                <div className={s.datePickerWrapper}>
-                    <div className={s.datePickerLabel}>
-                        <span>{type !== "hidden" ? "Experation date" : null}</span>
-                    </div>
-                    <div className={s.datepicker}>
-                        {type !== 'hidden' ? <DataPicker
-                            name={`${name}_exp`}
-                            setFieldValue={setFieldValue}
-                            selectRange={false}
-                            ///  handleChange={handleChange}
-                            label={``}
-                            value={value[`${name}_exp`]}
-                        /> : <div style={{
-                            height: 50,
-                        }}></div>}
-                    </div>
-                </div>
+                {
+                    type !== "hidden" && <>
+                        <div className={s.datePickerWrapper}>
+                            <div className={s.datePickerLabel}>
+                                <span>Experation Date</span>
+                            </div>
+                            <div className={s.datepicker}>
+                                <DataPicker
+                                    name={`${name}_exp`}
+                                    setFieldValue={setFieldValue}
+                                    selectRange={false}
+                                    ///  handleChange={handleChange}
+                                    label={``}
+                                    value={value[`${name}_exp`]}
+                                    style={{border: "none"}}
+                                /><div style={{
+                                height: 50,
+                            }}></div>
+                            </div>
+                        </div>
+                    </>
+                }
             </div>
         </>
     );

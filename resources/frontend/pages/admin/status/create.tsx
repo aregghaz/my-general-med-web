@@ -5,7 +5,6 @@ import Select, { IOption } from "../../../components/select/select";
 import { IItem } from "../../layouts/templates/formik-handler/formik-handler";
 import s from "../../layouts/templates/create/create.module.scss";
 import { AdminApi } from "../../../api/admin-api/admin-api";
-
 interface IUserCreate {
     path: string,
     statusId?: number
@@ -28,14 +27,55 @@ const StatusCreate: React.FC<IUserCreate> = ({ statusId }) => {
     //     { name: "slug", type: "input", label: "slug" },
     //     { name: "id", type: "hidden", inputType: "hidden" }
     // ];
+    const tabs = [
+        {
+            id: 1,
+            value: "gender",
+            label: "gender",
+        },
+        {
+            id: 2,
+            value: "request_type",
+            label: "request_type"
+        },
+        {
+            id: 3,
+            value: "los",
+            label: "los"
+        },
+        {
+            id: 4,
+            value: "status",
+            label: "status",
+        },
+        {
+            id: 5,
+            value: "reasons",
+            label: "reasons"
+        },
+        {
+            id: 6,
+            value: "artificial",
+            label: "artificial"
+        },
+        {
+            id: 7,
+            value: "waitDuration",
+            label: "waitDuration"
+        },
+        {
+            id: 8,
+            value: "services",
+            label: "services",
+        }
+    ];
     useEffect(() => {
         (async () => {
             if (status !== null && (status.id === 3)) {
                 const data = await AdminApi.createStatus(crudKey, status.id);
-                console.log(data);
                 setData(data);
                 setFields([
-                    { name: "name", type: "input", label: "statusName" },
+                    {name: "status", type: "select"},
                     ///  { name: "slug", type: "input", label: "slug" },
                     { name: "id", type: "hidden", inputType: "hidden" },
                     { name: "services", type: "multiSelect", label: "services" }
@@ -49,45 +89,6 @@ const StatusCreate: React.FC<IUserCreate> = ({ statusId }) => {
             }
         })();
     }, [status]);
-
-    const tabs = [
-        {
-            id: 1,
-            value: "gender",
-            label: "gender"
-        },
-        {
-            id: 2,
-            value: "request_type",
-            label: "request_type"
-        }, {
-            id: 3,
-            value: "los",
-            label: "los"
-        },
-        {
-            id: 4,
-            value: "status",
-            label: "status"
-        }, {
-            id: 5,
-            value: "reasons",
-            label: "reasons"
-        }, {
-            id: 6,
-            value: "artificial",
-            label: "artificial"
-        }, {
-            id: 7,
-            value: "waitDuration",
-            label: "waitDuration"
-        }, {
-            id: 8,
-            value: "services",
-            label: "services"
-        }
-    ];
-
 
     const requiredFields = [
         ///  "slug",

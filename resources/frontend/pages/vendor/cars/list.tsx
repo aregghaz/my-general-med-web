@@ -124,7 +124,7 @@ const Cars: React.FC<Beneficiary> = () => {
                     paginated={false}
                     isCreate
                     isGetInfo
-                    className={"pagination"}
+                    className={`pagination ${s.carsTable}`}
                     isGetHistory={false}
                     isGetItems={false}
                 />

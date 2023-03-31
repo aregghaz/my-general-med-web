@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import ReactApexChart from "react-apexcharts";
 import s from "./dashboard.module.scss";
@@ -10,6 +10,7 @@ interface IDashboard {
 
 const Dashboard: React.FC<IDashboard> = () => {
     const { t } = useTranslation();
+    const blockRef = useRef<HTMLDivElement>(null)
 
     const [data, setData] = useState({
         profitInYear: [],
@@ -89,7 +90,7 @@ const Dashboard: React.FC<IDashboard> = () => {
             title: {
                 text: "Monthly profit",
                 floating: true,
-                offsetY: 330,
+                offsetY: 480,
                 align: "center",
                 style: {
                     color: "#444"
@@ -162,7 +163,7 @@ const Dashboard: React.FC<IDashboard> = () => {
     }, []);
     return (
         <div className={s.root}>
-            <div className={s.block}>
+            <div className={s.block} ref={blockRef}>
                 <div className={s.dashBordItem}>
                     <div className={`${s.itemHeader} ${s.title}`}>Total Revenue</div>
                     <div
@@ -175,6 +176,22 @@ const Dashboard: React.FC<IDashboard> = () => {
                 </div>
                 <div className={s.dashBordItem}>
                     <div className={`${s.itemHeader} ${s.title}`}> Avg Revenue Per Ride</div>
+                    <div
+                        className={`${s.itemHeader} ${s.number}`}>{data.totalProfit.price && data.totalProfit.count ? (data.totalProfit.price / data.totalProfit.count).toFixed(2) : 0} $
+                    </div>
+                </div>
+                <div className={s.dashBordItem}>
+                    <div className={`${s.itemHeader} ${s.title}`}>DATA 4</div>
+                    <div
+                        className={`${s.itemHeader} ${s.number}`}>{data.totalProfit.price ? data.totalProfit.price.toFixed(2) : 0} $
+                    </div>
+                </div>
+                <div className={s.dashBordItem}>
+                    <div className={`${s.itemHeader} ${s.title}`}> DATA 5</div>
+                    <div className={`${s.itemHeader} ${s.number}`}>{data.totalProfit.count}</div>
+                </div>
+                <div className={s.dashBordItem}>
+                    <div className={`${s.itemHeader} ${s.title}`}> DATA 6</div>
                     <div
                         className={`${s.itemHeader} ${s.number}`}>{data.totalProfit.price && data.totalProfit.count ? (data.totalProfit.price / data.totalProfit.count).toFixed(2) : 0} $
                     </div>

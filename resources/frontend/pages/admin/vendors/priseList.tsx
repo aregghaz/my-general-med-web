@@ -22,6 +22,7 @@ interface IService {
     name: string;
     slug: string;
     type: IOption;
+    id? : number;
 
 }
 
@@ -92,25 +93,26 @@ const PriceList: React.FC<IVendors> = ({id}) => {
                                                            label={service.slug} type={"number"}/>
                                                 </div>
 
-
-                                            <div className={`${s.inputDiv}`}>
-                                                <Select
-                                                    getOptionValue={(option: IOption) => option.value}
-                                                    getOptionLabel={(option: IOption) => t(option.label)}
-                                                    onChange={(options: IOption) => setFieldValue((state: any) => {
-                                                        return {
-                                                            ...state,
-                                                            car: options
-                                                        };
-                                                    })}
-                                                    isDisabled={false}
-                                                    options={selectOptions}
-                                                    value={service.type}
-                                                    name={`${service.slug}_type`}
-                                                    isMulti={false}
-                                                    label={"serviceType"}
-                                                />
-                                            </div>
+                                                {service.id > 2 && <>
+                                                    <div className={`${s.inputDiv}`}>
+                                                        <Select
+                                                            getOptionValue={(option: IOption) => option.value}
+                                                            getOptionLabel={(option: IOption) => t(option.label)}
+                                                            onChange={(options: IOption) => setFieldValue((state: any) => {
+                                                                return {
+                                                                    ...state,
+                                                                    car: options
+                                                                };
+                                                            })}
+                                                            isDisabled={false}
+                                                            options={selectOptions}
+                                                            value={service.type}
+                                                            name={`${service.slug}_type`}
+                                                            isMulti={false}
+                                                            label={"serviceType"}
+                                                        />
+                                                    </div>
+                                                </>}
                                             </div>
                                         </>
                                     );

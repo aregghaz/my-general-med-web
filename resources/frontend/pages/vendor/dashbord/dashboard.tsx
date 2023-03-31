@@ -89,7 +89,7 @@ const VendorDashboard: React.FC<IDashboard> = () => {
             title: {
                 text: "Monthly profit",
                 floating: true,
-                offsetY: 330,
+                offsetY: 480,
                 align: "center",
                 style: {
                     color: "#444"
@@ -176,6 +176,22 @@ const VendorDashboard: React.FC<IDashboard> = () => {
                 </div>
                 <div className={s.dashBordItem}>
                     <div className={`${s.itemHeader} ${s.title}`}> Avg Revenue Per Ride</div>
+                    <div
+                        className={`${s.itemHeader} ${s.number}`}>{data.totalProfit.price && data.totalProfit.count ? (data.totalProfit.price / data.totalProfit.count).toFixed(2) : 0} $
+                    </div>
+                </div>
+                <div className={s.dashBordItem}>
+                    <div className={`${s.itemHeader} ${s.title}`}>DATA 4</div>
+                    <div
+                        className={`${s.itemHeader} ${s.number}`}>{data.totalProfit.price ? data.totalProfit.price.toFixed(2) : 0} $
+                    </div>
+                </div>
+                <div className={s.dashBordItem}>
+                    <div className={`${s.itemHeader} ${s.title}`}> DATA 5</div>
+                    <div className={`${s.itemHeader} ${s.number}`}>{data.totalProfit.count}</div>
+                </div>
+                <div className={s.dashBordItem}>
+                    <div className={`${s.itemHeader} ${s.title}`}> DATA 6</div>
                     <div
                         className={`${s.itemHeader} ${s.number}`}>{data.totalProfit.price && data.totalProfit.count ? (data.totalProfit.price / data.totalProfit.count).toFixed(2) : 0} $
                     </div>

@@ -44,12 +44,15 @@ import VendorDashboard from "./pages/vendor/dashbord/dashboard";
 import NotificationList from "./pages/admin/notification/notification";
 import Notification from "./pages/vendor/notification/notification";
 import PriceList from "./pages/admin/vendors/priseList";
+import Profile from "./pages/admin/profile/profile";
+import VendorProfile from "./pages/vendor/profile/profile";
 
 const App = (): JSX.Element => (
     <Provider store={store}>
         <Router>
             <LoginWrapper path="/login" />
             <Site path="/">
+                <VendorProfile path="/profile"/>
                 <Home path="/" />
                 <VendorDashboard path="/dashboard" />
                 <Show path="/client/:id" />
@@ -68,6 +71,7 @@ const App = (): JSX.Element => (
                 <ClientCreate path="clients/create" />
             </Site>
             <Site path="/admin">
+                <Profile path="/profile"/>
                 <Dashboard path="/" />
                 <Users path="/users/:id" />
                 <Clients path="clients" />

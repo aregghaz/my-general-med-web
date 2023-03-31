@@ -181,6 +181,7 @@ const Show: React.FC<IShow> = ({ id }) => {
                                 car: options
                             };
                         })}
+                        placeholder={"Select Car"}
                         isDisabled={disabled}
                         options={carData}
                         value={values.car}
@@ -211,6 +212,7 @@ const Show: React.FC<IShow> = ({ id }) => {
                          name={"Cars"}
                          isMulti={false}
                          label={"Status"}
+                         placeholder={"Select status"}
                      />
                 </div>
                 <div className={cls.addon} style={{

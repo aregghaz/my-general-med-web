@@ -8,6 +8,9 @@
 .block {
     margin-top: 20px;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
 }
 
 .text {
@@ -22,23 +25,25 @@
 }
 
 .dashBordItem {
-    flex: 3;
+    width: 100%;
     height: 200px;
     text-align: center;
-    padding: 30px;
-    border: 1px solid;
+    border: 2px solid $borderColor;
     margin: 0 5px;
-    border-radius: 15px
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .itemHeader {
-    flex: 1;
     flex-direction: column;
 }
 
 .title {
     font-size: 25px;
-    color: black;
+    color: $myGray;
 }
 
 .number {

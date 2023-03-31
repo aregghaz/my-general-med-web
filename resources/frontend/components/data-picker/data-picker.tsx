@@ -11,6 +11,7 @@ interface IDataPicker {
     selectRange: boolean,
     name: string;
     value: any;
+    style?: any;
 }
 
 const DataPicker: React.FC<IDataPicker> = (
@@ -19,7 +20,8 @@ const DataPicker: React.FC<IDataPicker> = (
         setFieldValue,
         selectRange = false,
         label,
-        value
+        value,
+        style = {},
     }) => {
     const [show, setShow] = useState<boolean>(false);
     // const getDateValue = value ? new Date(value) : 'mm/dd/yyyy';
@@ -27,7 +29,7 @@ const DataPicker: React.FC<IDataPicker> = (
     return (
         <>
             {label && <label style={{color: value ? "#194b76" : "#C4C4C4"}} className={s.label}>{label}</label>}
-            <input style={{color: value ? "gray" : "C4C4C4"}} type="text" className={s.input} value={ value ? timestampToDate(new Date(value)) : timestampToDate(new Date().toLocaleDateString())} onClick={() => setShow(!show)}
+            <input style={{...style, color: value ? "gray" : "C4C4C4"}} type="text"  className={s.input} value={ value ? timestampToDate(new Date(value)) : timestampToDate(new Date().toLocaleDateString())} onClick={() => setShow(!show)}
                    readOnly={true} />
             {show && <div className={s.dataPicker}><Calendar
                 value={value ? new Date(value) : new Date()}
