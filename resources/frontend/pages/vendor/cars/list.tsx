@@ -142,15 +142,17 @@ const Cars: React.FC<Beneficiary> = () => {
                         />
                     </div>
 
-
-                    <i className={`binicon- ${s.icon}`} />
-                    <p className={s.text}>{t("admin.do_you_want_to_delete")}</p>
-                    <div className={s.buttons}>
-                        <Button type={"green"} onClick={handlerDeleteItem}
-                                className={s.button}>{t("admin.yes")}</Button>
-                        <Button type={"transparent"} onClick={handlerCloseModal}
-                                className={s.button}>{t("admin.no")}</Button>
+                    <div className={s.modalContent}>
+                        <i className={`binicon- ${s.icon}`} />
+                        <p className={s.text}>{t("Do you want to delete")}</p>
+                        <div className={s.buttons}>
+                            <Button type={"green"} onClick={handlerDeleteItem}
+                                    className={`${s.button} ${s.yesButton}`}>{t("yes")}</Button>
+                            <Button type={"transparent"} onClick={handlerCloseModal}
+                                    className={s.button}>{t("no")}</Button>
+                        </div>
                     </div>
+
                 </div>
             </Modal>
 
