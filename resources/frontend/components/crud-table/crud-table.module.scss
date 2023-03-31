@@ -34,6 +34,7 @@
     border-collapse: inherit;
     border-spacing: 0;
     min-width: 100%;
+    //border: 1px solid red;
     //display: grid;
 
     //tbody {
@@ -43,10 +44,12 @@
 
 .classNameFieldEven {
     background-color: rgba(63, 122, 173, 0.15);
+    //border: 1px solid red;
 }
 
 .tableHead {
     display: table-header-group;
+    //border: 1px solid red;
 }
 
 .tableBody {
@@ -167,7 +170,7 @@
 
 .tableTh {
     z-index: 2;
-    color: $thTextColor;
+    color: $myGray;
     padding-left: 20px;
     table-layout: auto;
     font-size: min(max(16px, 1vw), 25px);

@@ -181,7 +181,6 @@ const Drawer: React.FC = ({ children }) => {
                                     <Account />
                                 </span>
                                 </Button>
-                                <ArrowDown />
                                 {
                                     menuOpen &&
                                     <div className={s.account_drop_menu} ref={logoutRef}>

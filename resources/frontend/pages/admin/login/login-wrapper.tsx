@@ -9,6 +9,7 @@ import { getUserData } from "../../../store/selectors";
 import { useNavigate } from "@reach/router";
 
 import s from "./login-wrapper.module.scss";
+import cls from "../../../components/password/password.module.scss";
 
 
 interface ILoginWrapper {
@@ -32,6 +33,7 @@ const LoginWrapper: React.FC<ILoginWrapper> = () => {
 
         setLoading(true);
     };
+
 
     useEffect(() => {
         if (user) {
@@ -81,6 +83,7 @@ const LoginWrapper: React.FC<ILoginWrapper> = () => {
                                 onChange={handleChange}
                                 value={values.password}
                             />
+
                             <div className={s.actions}>
                                 <Button isSubmit type={"green"} onClick={handleSubmit}>{t("sign_in")}</Button>
                             </div>

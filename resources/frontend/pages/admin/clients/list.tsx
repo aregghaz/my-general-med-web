@@ -52,8 +52,8 @@ const customStyles: ReactModal.Styles = {
         /// display: 'flex',
         justifyContent: "center",
         ///  alignItems: "center",
-        width: "700px",
-        height: "500px"
+        width: "500px",
+        height: "300px"
     },
     overlay: {
         // zIndex: 999999,
