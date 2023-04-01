@@ -284,7 +284,7 @@ const Drawer: React.FC = ({ children }) => {
                                                 <span className={s.side_icon}>
                                                     {/*{li.Icon}*/}
                                                     {userData.user.count > 1 ? <> <NotificationActive /> <span
-                                                            className={s.bage}>notificationCount.count</span></> :
+                                                            className={s.bage}>{notificationCount.count}</span></> :
                                                         <Notification />}
                                                 </span>
                                                 <span className={s.side_text}>
