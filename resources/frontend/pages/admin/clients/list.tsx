@@ -47,13 +47,13 @@ const customStyles: ReactModal.Styles = {
         outline: "none",
         top: "50%",
         left: "50%",
-        overflow: "hidden",
+        overflow: "visable",
         transform: "translate(-50% , -50%)",
         /// display: 'flex',
         justifyContent: "center",
         ///  alignItems: "center",
         width: "500px",
-        height: "300px"
+        height: "300px",
     },
     overlay: {
         // zIndex: 999999,

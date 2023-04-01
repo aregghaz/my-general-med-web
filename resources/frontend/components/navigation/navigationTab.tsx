@@ -12,8 +12,9 @@ import Search from "-!svg-react-loader!../../images/Search.svg";
 import Close from "-!svg-react-loader!../../images/Close.svg";
 import AssignVendorIcon from "-!svg-react-loader!../../images/add-company-icon.svg";
 import AssignIcon from "-!svg-react-loader!../../images/car-travel-plus-add-svgrepo-com.svg";
-import ClaimTrip from "-!svg-react-loader!../../images/briefcase-work-business-add-svgrepo-com.svg";
-import RemoveIcon from "-!svg-react-loader!../../images/briefcase-work-business-delete-svgrepo-com.svg";
+// import ClaimTrip from "-!svg-react-loader!../../images/briefcase-work-business-add-svgrepo-com.svg";
+import ClaimTrip from "-!svg-react-loader!../../images/tripAdd1.svg"
+import RemoveIcon from "-!svg-react-loader!../../images/tripCansle1.svg";
 import DataPicker from "../data-picker/data-picker";
 
 

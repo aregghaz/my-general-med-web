@@ -6,7 +6,7 @@ const customStyles: ReactModal.Styles = {
         outline: "none",
         top: "50%",
         left: "50%",
-        overflow: "hidden",
+        overflow: "visible",
         transform: "translate(-50% , -50%)",
 
         /// display: 'flex',

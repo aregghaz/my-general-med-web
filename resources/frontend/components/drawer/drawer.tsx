@@ -10,6 +10,7 @@ import Close from "-!svg-react-loader!../../images/Close.svg";
 import Account from "-!svg-react-loader!../../images/User.svg";
 import Users from "-!svg-react-loader!../../images/User.svg";
 import Logout from "-!svg-react-loader!../../images/SignOut.svg";
+import ProfileSvg from "-!svg-react-loader!../../images/profile.svg";
 import Settings from "-!svg-react-loader!../../images/Settings.svg";
 import Notification from "-!svg-react-loader!../../images/notifications.svg";
 import NotificationActive from "-!svg-react-loader!../../images/notifications-active.svg";
@@ -19,6 +20,7 @@ import ArrowDown from "-!svg-react-loader!../../svgs/arrow-down.svg";
 import HomeIcon from "-!svg-react-loader!../../images/my-services.svg";
 import Status from "-!svg-react-loader!../../images/Status.svg";
 import { getNotificationCount, getUserData } from "../../store/selectors";
+import Profile from "../../pages/admin/profile/profile";
 
 const Drawer: React.FC = ({ children }) => {
     const { t } = useTranslation();
@@ -197,7 +199,7 @@ const Drawer: React.FC = ({ children }) => {
                                                 }}
                                             >
                                                 <span className={s.icon}>
-                                                    <Logout />
+                                                    <ProfileSvg />
                                                 </span>
                                                 <span className={s.iconLabel}>
                                                     Profile

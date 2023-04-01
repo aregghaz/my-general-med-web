@@ -71,6 +71,7 @@
 }
 
 
+
 .header_input_block {
     height: 40px;
     width: 0;
@@ -114,6 +115,7 @@
     pointer-events: none;
     opacity: .3;
     user-select: none;
+    padding: 6px;
 
     &:hover {
         fill: white;
@@ -131,3 +133,4 @@
 .assignVendorSpan:hover .assignVendor {
     visibility: visible;
 }
+
