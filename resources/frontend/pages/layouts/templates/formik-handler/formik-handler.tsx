@@ -23,7 +23,7 @@ export interface IItem {
     placeholder?: string;
     label?: string;
     selectOptions?: Array<IOption> | Array<IOptionMultiselect>;
-    allowValueClear?: boolean
+    allowValueClear?: boolean,
 }
 
 interface IFormikHandler {
@@ -52,7 +52,7 @@ const FormikHandler: React.FC<IFormikHandler> = (
         selectRange,
         autoCompleteRef,
         handleDrawMap,
-        requiredFields
+        requiredFields,
     }) => {
     const { t } = useTranslation();
 
@@ -118,6 +118,7 @@ const FormikHandler: React.FC<IFormikHandler> = (
                 />
             );
         case "select":
+            console.log(errors,222222)
             return (
                 <Select
                     value={values[item.name]}
@@ -125,12 +126,15 @@ const FormikHandler: React.FC<IFormikHandler> = (
                     getOptionLabel={(option: IOption) => t(option.label)}
                     options={selectOptions ? selectOptions[item.name] : selectOptions}
                     /// options={selectOptions}
+                    label={getFieldLabel(t, item.label, item.name, requiredFields)}
+
                     onChange={(option: IOption) => setFieldValue(item.name, option)}
-                    label={t(item.label)}
+                   /// label={t(item.label)}
                     isSearchable={false}
                     name={item.name}
                     placeholder={t(item.label)}
                     allowValueClear={item.allowValueClear}
+                    error={errors[item.name]}
                 />
             );
         case "file":
@@ -171,12 +175,13 @@ const FormikHandler: React.FC<IFormikHandler> = (
                     getOptionLabel={(option: IOption) => t(option.label)}
                     options={values.selectOptions ? values.selectOptions[item.name] : selectOptions[item.name]}
                     onChange={(option: IOption) => setFieldValue(item.name, option)}
-                    label={t(item.label)}
+                    label={getFieldLabel(t, item.label, item.name, requiredFields)}
                     isSearchable={true}
                     name={item.name}
                     isMulti={true}
                     placeholder={t(item.placeholder)}
                     allowValueClear={item.allowValueClear}
+                    error={errors[item.name]}
                 />
             );
         case "datepicker":
@@ -186,7 +191,6 @@ const FormikHandler: React.FC<IFormikHandler> = (
                     setFieldValue={setFieldValue}
                     selectRange={selectRange}
                     ///  handleChange={handleChange}
-                    label={t(item.label)}
                     value={values[item.name]}
                 />
             );
@@ -203,11 +207,14 @@ const FormikHandler: React.FC<IFormikHandler> = (
         case "autocomplete":
             return (
                 <Autocomplete
+                    label={getFieldLabel(t, item.label, item.name, requiredFields)}
                     name={item.name}
                     setFieldValue={setFieldValue}
                     values={values}
                     handleDrawMap={handleDrawMap}
-                    handleChange={handleChange} />
+                    handleChange={handleChange}
+                    error={errors[item.name]}
+                    />
             );
         default:
             return (

@@ -331,7 +331,7 @@ class ClientsController extends Controller
         $client->request_type = $requestData->request_type->id;
         $client->operator_id = $userId;
         $client->stops = (int)$requestData->count;
-        $client->member_uniqie_identifer = $requestData->member_uniqie_identifer;
+        $client->member_uniqie_identifer = $requestData->member_unique_identifier;
         if (isset($requestData->birthday)) {
             $client->birthday = $requestData->birthday;
         }

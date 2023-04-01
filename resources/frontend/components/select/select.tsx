@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import s from "./select.module.scss";
 import Button from "../button/button";
 import removeIcon from "../../svgs/removeIcon.svg"
+import {OptionsType} from "react-select/src/types";
 
 export interface IOption {
     id: number;
@@ -42,12 +43,14 @@ interface ISelect {
     isMulti?: boolean
     authCheckboxLabelStyle?: string
     labelStyle?: string
+    error?: string
     handlerMenuOpen?: () => void
     handlerMenuClose?: () => void
     hideSelectedOptions?: boolean
     isDisabled?: boolean
     isMenuAdd?: boolean,
     handlerAdd?: () => void
+
 }
 
 
@@ -110,7 +113,8 @@ const Select: React.FC<ISelect> = (
         hideSelectedOptions = false,
         isMenuAdd = false,
         isDisabled = false,
-        handlerAdd
+        handlerAdd,
+        error,
     }
 ) => {
     const { t } = useTranslation();
@@ -129,6 +133,8 @@ const Select: React.FC<ISelect> = (
     }
     return (
         <>
+            {error && <div className={s.error}>{error}</div>}
+
             {label && <label style={{
                 color: value ? "#194b76" : "#C4C4C4"
             }} htmlFor={name}>{label}</label>}

@@ -25,7 +25,7 @@ interface Password {
 const Password:React.FC<Password> = ({
     name,
     value,
-    type,
+    type = "password",
     className,
     onChange,
     placeholder,
@@ -39,7 +39,7 @@ const Password:React.FC<Password> = ({
     const [hidden, setHidden] = useState(true)
 
     const toggleHidden = () => {
-        return setHidden(!hidden)
+        setHidden(!hidden)
     }
     return (
         <div className={cls.passwordWrapper}>
@@ -63,7 +63,7 @@ const Password:React.FC<Password> = ({
                             id={name}
                             name={name}
                             className={`${s.input} ${!String(value ?? "") ? s.blankInput : ""}  ${className} ${error && type !== "password" && s.errorBorder}`}
-                            type={type}
+                            type={hidden ? "password" : "text"}
                             placeholder={placeholder}
                             value={value}
                             ref={ref}
@@ -75,7 +75,7 @@ const Password:React.FC<Password> = ({
                             //     }
                             // }}
                             disabled={type === "disabled"}
-                            autoComplete={autoComplete}
+                            autoComplete={"off"}
                         />
                     </>
                 </div>

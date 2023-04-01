@@ -8,6 +8,7 @@ import Input from "../input/input";
 import TextField from "../text-field/text-field";
 import getMapResponse from "../../utils/googleMap";
 import removeIcon from "../../svgs/removeIcon.svg"
+import CustomTimePicker from "../custom-time-picker/customTimePicker";
 
 interface ITextarea {
     values: any,
@@ -16,6 +17,8 @@ interface ITextarea {
     /////FIXME ADD TYPES
     handleChange: any,
     handleDrawMap?: (dataMap: any) => void;
+    label?: string;
+    error?: string;
 
 }
 
@@ -24,8 +27,11 @@ const Autocomplete: React.FC<ITextarea> = (
         ///  name,
         values,
         setFieldValue,
-        handleChange
+        handleChange,
         ///   handleDrawMap
+        label= "",
+        error
+
 
     }) => {
 
@@ -102,7 +108,13 @@ const Autocomplete: React.FC<ITextarea> = (
                             <div className={s.deleteIcon}>
                                 <button
                                     onClick={() => {
-                                        console.log(step)
+                                       delete values[item]
+                                        setFieldValue("steps", values);
+                                       step.pop()
+                                        setStep(step)
+                                        console.log(step,'asd')
+                                        stepCount(count - 1);
+                                      //  setLoad(!load)
                                     }}
                                 >
                                     <img src={removeIcon}/>
@@ -112,6 +124,7 @@ const Autocomplete: React.FC<ITextarea> = (
                         }
                     </div>
                     <div className={s.autocompleteWrapper}>
+                        {error && <div className={s.error}>{error}</div>}
                         <GooglePlacesAutocomplete
                             apiKey={GOOGLE_API_KEY}
                             selectProps={{
@@ -142,23 +155,23 @@ const Autocomplete: React.FC<ITextarea> = (
                         />
                     </div>
                     <div className={s.timePickerContainer}>
-                        {item !== 1 && <TimePickers
-                            label={`Appointment Time`}
+                        {item !== 1 && <CustomTimePicker
+                          ///  label={`Appointment Time`}
                             ////   error={errors[item.name]}
                             name={`drop_${item}`}
                             setFieldValue={setFieldValue}
                             value={values[`drop_${item}`]}
                             className={s.timePickerWrapper}
-                            classNameTime={s.timePicker}
+                         ///   classNameTime={s.timePicker}
                         />}
-                        {item !== step.length && <TimePickers
-                            label={`Pick up time`}
+                        {item !== step.length && <CustomTimePicker
+                         //   label={`Pick up time`}
                             ////   error={errors[item.name]}
                             name={`time_${item}`}
                             setFieldValue={setFieldValue}
                             value={values[`time_${item}`]}
                             className={s.timePickerWrapper}
-                            classNameTime={s.timePicker}
+                         ///   classNameTime={s.timePicker}
                         />}
 
 

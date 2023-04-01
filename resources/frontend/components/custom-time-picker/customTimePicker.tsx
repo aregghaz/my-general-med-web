@@ -10,42 +10,46 @@ interface customTimePickerProps {
     setFieldValue?: any,
 }
 
-const customTimePicker:FC<customTimePickerProps> = ({
-    labelText = "",
-    value="",
-    onChange= () => {},
-    name= "",
-    className = "",
-}) => {
-    const time:Array<string> = value ? value.split(":") : []
-    const hoursMinMax:Array<number> = [0,23]
-    const minutesMinMax:Array<number> = [0,59]
+const customTimePicker: FC<customTimePickerProps> = ({
+                                                         labelText = "",
+                                                         value = "",
+                                                         onChange = () => {
+                                                         },
+                                                         name = "",
+                                                         className = "",
+                                                         setFieldValue
+                                                     }) => {
+    const time: Array<string> = value ? value.split(":") : []
+    const hoursMinMax: Array<number> = [0, 23]
+    const minutesMinMax: Array<number> = [0, 59]
     const [minutes, setMinutes] = useState("")
     const [hours, setHours] = useState("")
-    const handleChange:Function = (type:string ,text:string):void => {
-        let min:number,max:number,value:string
+    const handleChange: Function = (type: string, text: string): void => {
+        let min: number, max: number, value: string
         switch (type) {
             case "hours":
-                [min,max] = hoursMinMax
+                [min, max] = hoursMinMax
                 value = Math.max(min, Math.min(max, +text)).toString();
                 if (value == "0") {
                     value = "00"
                 }
                 setHours(value)
+                setFieldValue(name, `${value}:${minutes}`)
                 break
             case "minutes":
-                [min,max] = minutesMinMax
+                [min, max] = minutesMinMax
                 value = Math.max(min, Math.min(max, +text)).toString();
                 if (value == "0") {
                     value = "00"
                 }
                 setMinutes(value)
+                setFieldValue(name, `${hours}:${value}`)
                 break
         }
     }
     useEffect(() => {
-        handleChange("hours",time[0])
-        handleChange("minutes",time[1])
+        handleChange("hours", time[0])
+        handleChange("minutes", time[1])
     }, [])
     return (
         <div className={`${cls.container} ${className}`}>
@@ -61,7 +65,7 @@ const customTimePicker:FC<customTimePickerProps> = ({
                     inputMode="numeric"
                     name={name}
                     onChange={(event) => {
-                        handleChange("hours",event.target.value)
+                        handleChange("hours", event.target.value)
                         onChange(event)
                     }}
                     value={hours}
@@ -75,7 +79,7 @@ const customTimePicker:FC<customTimePickerProps> = ({
                     inputMode="numeric"
                     name={name}
                     onChange={(event) => {
-                        handleChange("minutes",event.target.value)
+                        handleChange("minutes", event.target.value)
                         onChange(event)
                     }}
                     value={minutes}
