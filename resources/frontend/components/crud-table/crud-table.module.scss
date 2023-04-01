@@ -64,9 +64,6 @@
 }
 
 .iconsWrapper {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
     //.icon{
     //    width: 25px;
     //    height: 25px;
@@ -84,6 +81,7 @@
 
 .iconWrapper {
     position: relative;
+    display: inline-block;
 
     &:hover > .iconLabel {
         opacity: 1;
