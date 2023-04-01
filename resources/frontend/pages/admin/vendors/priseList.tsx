@@ -7,6 +7,7 @@ import s from "./priceList.module.scss";
 import Input from "../../../components/input/input";
 import Select, { IOption } from "../../../components/select/select";
 import Button from "../../../components/button/button";
+import InputCurrency from "../../../components/inputCurrency/inputcurrency";
 
 interface IVendors {
     path: string;
@@ -51,11 +52,12 @@ const PriceList: React.FC<IVendors> = ({ id }) => {
     const { t } = useTranslation();
 
     const selectOptions = [
+        // {
+        //     id: 0,
+        //     value: "Select Type",
+        //     label: "Select Type"
+        // },
         {
-            id: 0,
-            value: "Select Type",
-            label: "Select Type"
-        }, {
             id: 1,
             value: "base",
             label: "base"
@@ -104,7 +106,7 @@ const PriceList: React.FC<IVendors> = ({ id }) => {
                                                     ...state[item.id],
                                                     [service.id]: {
                                                         ...state[item.id]?.[service.id],
-                                                        input: service.price
+                                                        input: service.price,
                                                         value: service.type
                                                     }
                                                 }
@@ -115,7 +117,7 @@ const PriceList: React.FC<IVendors> = ({ id }) => {
                                         <>
                                             <div className={s.inputContainer}>
                                                 <div className={`${s.inputDiv} ${s.selectDiv}`}>
-                                                    <Input name={service.slug}
+                                                    <InputCurrency name={service.slug}
                                                            label={service.slug}
                                                            type={"number"}
                                                            value={(values[item.id] && typeof values[item.id][service.id] !== "undefined") ? values[item.id][service.id].input : service.price}
