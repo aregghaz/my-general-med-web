@@ -226,8 +226,8 @@
 }
 
 .drawer_icon__6lx2m {
-  width: 30px;
-  height: 30px;
+  width: 27px;
+  height: 27px;
   position: relative;
   display: flex;
   align-items: center;
@@ -619,7 +619,8 @@ body {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding-right: 5px;
+  padding-right: 15px;
+  margin-top: 20px;
 }
 .home_iconWrapper__2YuZ6 i {
   font-size: 23px;
@@ -1197,6 +1198,7 @@ svg[focusable=false] {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  padding: 6px;
 }
 .navigationTab_disabled_action__izXmG:hover {
   fill: white;
