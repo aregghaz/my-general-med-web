@@ -9,4 +9,12 @@ class PriceList extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $fillable = [
+        'id',
+        'service_id',
+        'price',
+        'type',
+        'vendor_id',
+        'los_id',
+    ];
 }

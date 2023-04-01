@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
-import {useNavigate} from "@reach/router";
-import {useTranslation} from "react-i18next";
-import {useDispatch} from "react-redux";
-import {AdminApi} from "../../../api/admin-api/admin-api";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "@reach/router";
+import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+import { AdminApi } from "../../../api/admin-api/admin-api";
 import s from "./priceList.module.scss";
 import Input from "../../../components/input/input";
-import Select, {IOption} from "../../../components/select/select";
+import Select, { IOption } from "../../../components/select/select";
 import Button from "../../../components/button/button";
 
 interface IVendors {
@@ -14,6 +14,7 @@ interface IVendors {
 }
 
 interface ILos {
+    id: number;
     name: string;
     services: [];
 }
@@ -21,30 +22,39 @@ interface ILos {
 interface IService {
     name: string;
     slug: string;
+    price: any;
     type: IOption;
-    id? : number;
+    id: number;
 
 }
 
-const PriceList: React.FC<IVendors> = ({id}) => {
+const PriceList: React.FC<IVendors> = ({ id }) => {
     const dispatch = useDispatch();
     const crudKey = "vendors";
     const navigate = useNavigate();
     const [loading, setLoading] = useState<boolean>(false);
-    const [values, setFieldValue] = useState<any>(false);
+    const [priceData, setPriceData] = useState([]);
+    const [values, setFieldValue] = useState<{
+        [id: number]: {
+            [serviceId: number]: {
+                input: number,
+                value: IOption
+            }
+        }
+    }>([]);
     const [data, setData] = useState({
         companyName: "",
         phoneNumber: "",
         los: []
     });
 
-    const {t} = useTranslation();
+    const { t } = useTranslation();
 
     const selectOptions = [
         {
             id: 0,
             value: "Select Type",
-            label: "Select Type",
+            label: "Select Type"
         }, {
             id: 1,
             value: "base",
@@ -60,17 +70,19 @@ const PriceList: React.FC<IVendors> = ({id}) => {
         (async () => {
 
             const vendorData = await AdminApi.getPriceList(id);
+            setPriceData(priceData);
             setData(vendorData.data);
-            // if (loading) {
-            //
-            //  ///   setLoading(false);
-            // }
         })();
         return () => {
             ///homeAPI.cancelRequest();
         };
 
     }, []);
+
+    const handlerSubmit = async (losId: number) => {
+        console.log(values[losId], "valuesvaluesvaluesvalues");
+        await AdminApi.updatePrice(losId, id, values[losId]);
+    };
 
     return Object.keys(data).length > 0 && (
 
@@ -84,13 +96,45 @@ const PriceList: React.FC<IVendors> = ({id}) => {
                             return (<div className={s.service}>
                                 <span className={s.losLabel}>  {item.name}</span>
                                 {item.services.map((service: IService) => {
+                                    if (typeof values[item.id] == "undefined") {
+                                        setFieldValue((state: any) => {
+                                            return {
+                                                ...state,
+                                                [item.id]: {
+                                                    ...state[item.id],
+                                                    [service.id]: {
+                                                        ...state[item.id]?.[service.id],
+                                                        input: service.price
+                                                        value: service.type
+                                                    }
+                                                }
+                                            };
+                                        });
+                                    }
                                     return (
                                         <>
                                             <div className={s.inputContainer}>
                                                 <div className={`${s.inputDiv} ${s.selectDiv}`}>
-
                                                     <Input name={service.slug}
-                                                           label={service.slug} type={"number"}/>
+                                                           label={service.slug}
+                                                           type={"number"}
+                                                           value={(values[item.id] && typeof values[item.id][service.id] !== "undefined") ? values[item.id][service.id].input : service.price}
+                                                           onChange={event => {
+                                                               let valueInput = event.target.value;
+                                                               return setFieldValue((state: any) => {
+                                                                   return {
+                                                                       ...state,
+                                                                       [item.id]: {
+                                                                           ...state[item.id],
+                                                                           [service.id]: {
+                                                                               ...state[item.id]?.[service.id],
+                                                                               input: valueInput
+                                                                           }
+                                                                       }
+                                                                   };
+                                                               });
+                                                           }
+                                                           } />
                                                 </div>
 
                                                 {service.id > 2 && <>
@@ -101,12 +145,19 @@ const PriceList: React.FC<IVendors> = ({id}) => {
                                                             onChange={(options: IOption) => setFieldValue((state: any) => {
                                                                 return {
                                                                     ...state,
-                                                                    car: options
+                                                                    [item.id]: {
+                                                                        ...state[item.id],
+                                                                        [service.id]: {
+                                                                            ...state[item.id]?.[service.id],
+                                                                            value: options
+                                                                        }
+                                                                    }
                                                                 };
                                                             })}
                                                             isDisabled={false}
                                                             options={selectOptions}
-                                                            value={service.type}
+                                                            value={(values[item.id] && typeof values[item.id][service.id] !== "undefined") ? values[item.id][service.id].value : service.type}
+
                                                             name={`${service.slug}_type`}
                                                             isMulti={false}
                                                             label={"serviceType"}
@@ -118,7 +169,7 @@ const PriceList: React.FC<IVendors> = ({id}) => {
                                     );
                                 })}
                                 <div className={s.buttonDiv}>
-                                    <Button type={'adminUpdate'}>Save</Button>
+                                    <Button type={"adminUpdate"} onClick={() => handlerSubmit(item.id)}>Save</Button>
                                 </div>
                             </div>);
                         })

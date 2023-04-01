@@ -18,10 +18,11 @@ const VendorEdit: React.FC<IVendorEditItem> = ({ id }) => {
         { name: "email", type: "input", label: "email" },
         { name: "address", type: "input", label: "address" },
         { name: "phone_number", type: "input", label: "phone_number", inputType: "tel" },
+        { name: "los", type: "multiSelect", inputType: "los" },
+        { name: "password", type: "password", inputType: "password", label: "" },
         { name: "fields", type: "multiSelect", label: "fields" },
         { name: "id", type: "hidden", inputType: "hidden" },
-        { name: "los", type: "multiSelect", inputType: "los" },
-        { name: "password", type: "password", inputType: "password", label: "" }
+
 
     ];
     const requiredFields = [

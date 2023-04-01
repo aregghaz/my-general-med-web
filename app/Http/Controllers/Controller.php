@@ -88,9 +88,6 @@ class Controller extends BaseController
 
     protected function convertSingleDataForInfo($client)
     {
-
-
-
         return [
             'id' => $client->id,
             'trip_id' => $client->trip_id,

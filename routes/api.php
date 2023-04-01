@@ -109,6 +109,7 @@ Route::group([
     Route::get('/deleteStatus/{statusId}/{id}', [AdminController::class, 'delete']);
     Route::get('/changeStatus/{id}/{statusId}', [AdminController::class, 'getStatusById']);
     Route::post('/changeStatus/{statusId}', [AdminController::class, 'createStatus']);
+    Route::post('/set-price/{losId}/{vendorId}', [PriceListController::class, 'setPrice']);
     Route::put('/changeStatus/{statusId}/{id}', [AdminController::class, 'updateStatus']);
 });
 Route::group([
