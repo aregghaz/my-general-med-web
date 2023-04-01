@@ -51,7 +51,7 @@ class PriceListController extends Controller
                     'id' => $service->id,
                     'name' => $service->name,
                     'slug' => $service->slug,
-                    "price" => $price,
+                    "price" => (float)$price,
                     "type" => $priceType
                 ];
             }

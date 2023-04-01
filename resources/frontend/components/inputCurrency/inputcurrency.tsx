@@ -59,16 +59,14 @@ const InputCurrency: React.FC<IInput> = (
             {/*    className={`${s.input} ${!String(value ?? "") ? s.blankInput : ""}  ${className} ${error && s.errorBorder}`}*/}
             {/*    type={type}*/}
             {/*    placeholder={placeholder}*/}
-            {/*    value={state}*/}
             {/*    ref={ref}*/}
             {/*    onBlur={(e) => {*/}
             {/*        onChange(e)*/}
-            {/*        blurHandler(e)*/}
             {/*    }}*/}
+            {/*    value={value}*/}
             {/*    onChange={(e) => {*/}
             {/*        onChange(e)*/}
             {/*    }}*/}
-            {/*    onFocus={focusHandler}*/}
             {/*    // onFocus={(event) => {*/}
             {/*    //     if (!event.target.value) {*/}
             {/*    //         event.target.parentElement.children[0].classList.add("aaa")*/}
@@ -88,17 +86,18 @@ const InputCurrency: React.FC<IInput> = (
                 // @ts-ignore
                 ref={ref}
                 decimalsLimit={2}
+                decimalSeparator={"."}
                 className={`${s.input} ${!String(value ?? "") ? s.blankInput : ""}  ${className} ${error && s.errorBorder}`}
-                prefix={"$"}
-                fixedDecimalLength={2}
+                // fixedDecimalLength={2}
                 maxLength={6}
+                // value={value}
+                defaultValue={value}
                 allowNegativeValue={false}
                 disabled={type === "disabled"}
                 autoComplete={autoComplete}
                 decimalScale={2}
                 onChange={(e) => {
                     onChange(e)
-                    console.log(myVal)
                 }}
                 onValueChange={(value,name,values,) => {
                     setMyVal(values.value)

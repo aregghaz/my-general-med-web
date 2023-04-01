@@ -53,11 +53,11 @@ const PriceList: React.FC<IVendors> = ({ id }) => {
     const { t } = useTranslation();
 
     const selectOptions = [
-        // {
-        //     id: 0,
-        //     value: "Select Type",
-        //     label: "Select Type"
-        // },
+        {
+            id: 0,
+            value: "Select Type",
+            label: "Select Type"
+        },
         {
             id: 1,
             value: "base",
