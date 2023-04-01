@@ -35,7 +35,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         { name: "waitDuration", type: "select", label: "waitDuration" },
         { name: "vendors", type: "select", label: "vendors" },
         { name: "request_type", type: "select", label: "request_type" },
-        { name: "member_uniqie_identifer", type: "input", label: "member_uniqie_identifer" },
+        { name: "member_unique_identifier", type: "input", label: "member_unique_identifier" },
       ///  { name: "price", type: "input", label: "price", inputType: "number" },
         { name: "height", type: "input", label: "height" },
         { name: "weight", type: "input", label: "weight", inputType: "number" },
@@ -54,7 +54,18 @@ const ClientCreate: React.FC<IClientCreate> = () => {
     }, []);
 
     const requiredFields = [
-        "fullName"
+        "fullName",
+        "trip_id",
+        "gender",
+        "birthday",
+        "los",
+        "artificial",
+        "waitDuration",
+        "vendors",
+        "request_type",
+        "member_unique_identifier",
+        "height",
+        "weight",
     ];
 
     const { t } = useTranslation();

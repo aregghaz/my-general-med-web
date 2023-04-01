@@ -27,7 +27,13 @@ const VendorEdit: React.FC<IVendorEditItem> = ({ id }) => {
     ];
     const requiredFields = [
         "companyName",
-        "phone_number"
+        "password",
+        "fields",
+        "email",
+        "address",
+        "phone_number",
+        "los",
+        "fields"
     ];
 
     useEffect(() => {

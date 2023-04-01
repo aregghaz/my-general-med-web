@@ -82,7 +82,8 @@ const InputCurrency: React.FC<IInput> = (
                 name={name}
                 id={name}
                 placeholder={placeholder}
-                defaultValue={value}
+                // defaultValue={value && ""}
+                // value={value}
                 // type={type}
                 // @ts-ignore
                 ref={ref}

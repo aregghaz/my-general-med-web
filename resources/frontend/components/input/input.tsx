@@ -46,7 +46,7 @@ const Input: React.FC<IInput> = (
                     className={`${s.label}`}
                     htmlFor={name}
                     style={{
-                        color: value ? "#19347a" :  "#C4C4C4"
+                        color: error ? "red" : value ? "#19347a" :  "#C4C4C4"
                     }}
                 >
                     {`${label}`} {isAsterisk && <span>*</span>}
@@ -54,7 +54,7 @@ const Input: React.FC<IInput> = (
             <input
                 id={name}
                 name={name}
-                className={`${s.input} ${!String(value ?? "") ? s.blankInput : ""}  ${className} ${error && s.errorBorder}`}
+                className={`${s.input} ${!String(value ?? "") ? s.blankInput : ""}  ${className} ${error && type !== "password" && s.errorBorder}`}
                 type={type}
                 placeholder={placeholder}
                 value={value}

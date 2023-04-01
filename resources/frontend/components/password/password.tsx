@@ -6,6 +6,7 @@ import {IItem} from "../../pages/layouts/templates/formik-handler/formik-handler
 import {FormikValues} from "formik";
 import Checkbox from "../checkbox/checkbox";
 import cls from "./password.module.scss"
+import s from "../input/input.module.scss";
 
 interface Password {
     name: any;
@@ -16,6 +17,9 @@ interface Password {
     placeholder?: any;
     label: any;
     error?: any;
+    isAsterisk?: boolean,
+    ref?: any,
+    autoComplete?: any
 }
 
 const Password:React.FC<Password> = ({
@@ -27,6 +31,9 @@ const Password:React.FC<Password> = ({
     placeholder,
     label,
     error,
+                                         isAsterisk,
+    ref,
+                                         autoComplete,
     }) => {
     const { t } = useTranslation();
     const [hidden, setHidden] = useState(true)
@@ -36,26 +43,50 @@ const Password:React.FC<Password> = ({
     }
     return (
         <div className={cls.passwordWrapper}>
-           <div className={cls.passwordInputWrapper}>
-               <Input
-                   name={name}
-                   value={value}
-                   type={hidden ? "password" : "text"}
-                   className={className}
-                   onChange={onChange}
-                   placeholder={placeholder}
-                   label={label}
-                   error={error}
-               />
-           </div>
-            <div className={cls.showPasswordWrapper}>
-                {/*Show Password:*/}
-                <input
-                    className={cls.checkbox}
-                    type={"checkbox"}
-                    onChange={toggleHidden}
-                />
-
+            <div className={cls.top}>
+                {label &&
+                    <label
+                        className={`${s.label}`}
+                        htmlFor={name}
+                        style={{
+                            color: error ? "red" : value ? "#19347a" :  "#C4C4C4"
+                        }}
+                    >
+                        {`${label}`} {isAsterisk && <span>*</span>}
+                    </label>}
+            </div>
+            <div className={cls.bottom} style={{border: error ? "1px solid red" : ""}}>
+                <div className={cls.passwordInputWrapper}>
+                    <>
+                        {error && <div className={s.error}>{error}</div>}
+                        <input
+                            id={name}
+                            name={name}
+                            className={`${s.input} ${!String(value ?? "") ? s.blankInput : ""}  ${className} ${error && type !== "password" && s.errorBorder}`}
+                            type={type}
+                            placeholder={placeholder}
+                            value={value}
+                            ref={ref}
+                            onBlur={onChange}
+                            onChange={onChange}
+                            // onFocus={(event) => {
+                            //     if (!event.target.value) {
+                            //         event.target.parentElement.children[0].classList.add("aaa")
+                            //     }
+                            // }}
+                            disabled={type === "disabled"}
+                            autoComplete={autoComplete}
+                        />
+                    </>
+                </div>
+                <div className={cls.showPasswordWrapper}>
+                    {/*Show Password:*/}
+                    <input
+                        className={cls.checkbox}
+                        type={"checkbox"}
+                        onChange={toggleHidden}
+                    />
+                </div>
             </div>
         </div>
     )

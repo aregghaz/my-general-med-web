@@ -27,6 +27,11 @@ const VendorCreate: React.FC<IVendorCreate> = () => {
     const requiredFields = [
         "companyName",
         "password",
+        "fields",
+        "email",
+        "address",
+        "phone_number",
+        "los",
         "fields"
     ];
     useEffect(() => {
