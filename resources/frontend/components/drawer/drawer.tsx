@@ -10,7 +10,7 @@ import Close from "-!svg-react-loader!../../images/Close.svg";
 import Account from "-!svg-react-loader!../../images/User.svg";
 import Users from "-!svg-react-loader!../../images/User.svg";
 import Logout from "-!svg-react-loader!../../images/SignOut.svg";
-import ProfileSvg from "-!svg-react-loader!../../images/profile.svg";
+import ProfileSvg from "-!svg-react-loader!../../images/profile1.svg";
 import Settings from "-!svg-react-loader!../../images/Settings.svg";
 import Notification from "-!svg-react-loader!../../images/notifications.svg";
 import NotificationActive from "-!svg-react-loader!../../images/notifications-active.svg";
