@@ -78,6 +78,9 @@ export const AdminApi = {
     getInfoData(id: number, role: string) {
         return axios.get(`/api/admin/get-info/${id}/${role}`, {}).then(res => res.data);
     },
+    getVendorByLosId(id: number) {
+        return axios.get(`/api/admin/getVendorsByLosId/${id}`, {}).then(res => res.data);
+    },
     updatePrice(losId: number, vendorId: number, data: object) {
         return axios.post(`/api/admin/set-price/${losId}/${vendorId}`, { data: data }, {}).then(res => res.data);
     },

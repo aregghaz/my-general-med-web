@@ -97,6 +97,7 @@ Route::group([
     Route::get('/getActivityOperator/{id}', [ActionsController::class, 'getVendorDataSelect']);
     Route::get('/getActivityClient/{id}', [ActionsController::class, 'getActivityClient']);
     Route::post('/assign-vendor-client', [VendorController::class, 'setVendorTtoClient']);
+    Route::get('/getVendorsByLosId/{id}', [VendorController::class, 'getVendorsByLosId']);
     Route::post('/updateClient/{id}', [AdminController::class, 'updateClient']);
 
     Route::get('/audit', [VendorController::class, 'audit']);

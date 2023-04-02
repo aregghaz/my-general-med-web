@@ -19,8 +19,8 @@ class Address extends Model
         'pick_up',
         'drop_down',
     ];
-    protected $casts = [
-        'pick_up'  => 'time:H:m',
-        'drop_down' => 'time:H:m',
-    ];
+//    protected $casts = [
+//        'pick_up'  => 'time:H:m',
+//        'drop_down' => 'time:H:m',
+//    ];
 }

@@ -10,6 +10,7 @@ interface IInput {
     error?: string;
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
     onBlur?: (event: ChangeEvent<HTMLInputElement>) => void;
+    onClick?: () => void;
     autoComplete?: string;
     disable?: boolean;
     label?: string;
@@ -32,6 +33,7 @@ const Input: React.FC<IInput> = (
         placeholder,
         type = "text",
         isAsterisk,
+        onClick,
         className,
         labelStyle,
         ref
@@ -60,6 +62,7 @@ const Input: React.FC<IInput> = (
                 value={value}
                 ref={ref}
                 onBlur={onChange}
+                onClick={onClick}
                 onChange={onChange}
                 // onFocus={(event) => {
                 //     if (!event.target.value) {

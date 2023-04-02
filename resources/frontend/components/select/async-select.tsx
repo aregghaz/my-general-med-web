@@ -55,9 +55,9 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
     return (
 
         <>
-            {!label && <label style={{
+            {label && <label style={{
                 color: defaultValue ? "#194b76" : "#C4C4C4"
-            }} className={`${s.label} ${labelStyle}`} htmlFor={name}>{"label"}</label>}
+            }} className={`${s.label} ${labelStyle}`} htmlFor={name}>{label}</label>}
             <Select
                 isMulti={isMulti}
                 name={name}

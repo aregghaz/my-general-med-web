@@ -336,6 +336,18 @@ class VendorController extends Controller
 
     }
 
+    public function getVendorsByLosId($id){
+      $vendorData=  User::whereHas('los', function ($query) use($id){
+                $query->where('los.id', $id);
+        })->get();
+
+        return response()->json(
+            [
+                'data' => new StatusCollection($vendorData),
+            ],
+            200
+        );
+    }
     public function audit(Request $request)
     {
         $user = User::find(4);

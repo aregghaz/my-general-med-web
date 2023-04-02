@@ -14,7 +14,9 @@ import populateCreateFormFields from "../../../constants/populateCreateFormField
 import Calendar from "react-calendar";
 import DataPicker from "../../../components/data-picker/data-picker";
 import Autocomplete from "../../../components/autocomplate/autocomplete";
-import 'react-calendar/dist/Calendar.css';
+import "react-calendar/dist/Calendar.css";
+import Input from "../../../components/input/input";
+import timestampToDate from "../../../utils/timestampToDate";
 
 interface IClientCreate {
     path: string;
@@ -25,18 +27,20 @@ const ClientCreate: React.FC<IClientCreate> = () => {
     const crudKey = "clients";
     const [data, setData] = useState(null);
     const [show, setShow] = useState(false);
+    const [showCalendar, setShowCalendar] = useState(false);
+    const [vendorsData, setVendorsData] = useState([]);
     const fields: Array<IItem> = [
         { name: "trip_id", type: "select", label: "trip_type" },
         { name: "fullName", type: "input", label: "fullName" },
         { name: "gender", type: "select", label: "gender" },
         { name: "birthday", type: "datepicker", label: "birthday" },
-        { name: "los", type: "select", label: "los" },
+        ///  { name: "los", type: "select", label: "los" },
         { name: "artificial", type: "select", label: "artificial" },
         { name: "waitDuration", type: "select", label: "waitDuration" },
-        { name: "vendors", type: "select", label: "vendors" },
+        /// { name: "vendors", type: "select", label: "vendors" },
         { name: "request_type", type: "select", label: "request_type" },
         { name: "member_unique_identifier", type: "input", label: "member_unique_identifier" },
-      ///  { name: "price", type: "input", label: "price", inputType: "number" },
+        ///  { name: "price", type: "input", label: "price", inputType: "number" },
         { name: "height", type: "input", label: "height" },
         { name: "weight", type: "input", label: "weight", inputType: "number" },
         { name: "miles", type: "input", label: "miles", inputType: "disabled" }
@@ -65,7 +69,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         "request_type",
         "member_unique_identifier",
         "height",
-        "weight",
+        "weight"
     ];
 
     const { t } = useTranslation();
@@ -81,6 +85,9 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         if (Number(res.status === 200)) await navigate(`/admin/${crudKey}`);
     };
 
+    const handlerShowCalendar = () => {
+        setShowCalendar(!showCalendar);
+    };
 
     const loadTripPeriod = async (id: number) => {
         if (id === 1) {
@@ -93,10 +100,15 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         }
 
     };
+    const loadVendorsData = async (id: number) => {
+
+        const vendorData = await AdminApi.getVendorByLosId(id);
+        setVendorsData(vendorData.data);
+    };
 
     const loadStatus = async () => {
         // console.log(make, "aaa");
-        return data["clientType"];
+        return data["los"];
 
 
     };
@@ -152,7 +164,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                             setFieldValue("clientType", option);
                                             loadTripPeriod(option.id);
                                         }}
-                                        label={null}
+                                        label={"clientType"}
                                         isSearchable={false}
                                         name={"clientType"}
                                         placeholder={"Trip type"}
@@ -178,7 +190,11 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                         />
                                     </div>
                                     <div className={s.item}>
-                                        <Calendar
+                                        <Input name={"showDate"} type={"string"}
+                                               value={values["range"] ? `${timestampToDate(values["range"][0])} - ${timestampToDate(values["range"][1])}` : "mm/dd/yyyy - mm/dd/yyyy"}
+                                               label={"range"} onClick={handlerShowCalendar} />
+
+                                        {showCalendar && <Calendar
                                             formats="MM-dd-yyyy"
                                             selected={new Date().toLocaleDateString()}
                                             /// className={s.dataPicker}
@@ -191,7 +207,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                                 setFieldValue("range", date);
                                                 ////  setShow(!show);
                                             }}
-                                        />
+                                        />}
                                     </div>
 
                                 </>
@@ -213,6 +229,44 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                     label={t("date of service")}
                                     setFieldValue={setFieldValue} />
                             </div>}
+                            <div className={s.item}>
+                                {
+                                    <AsyncSelect
+                                        loadOptions={loadStatus}
+                                        defaultValue={values["los"]}
+                                        getOptionValue={(option: IOption) => option.value}
+                                        getOptionLabel={(option: IOption) => t(option.label)}
+                                        ///
+                                        options={data ? data["los"] : data}
+                                        /// options={selectOptions}
+                                        onChange={(option: IOption) => {
+                                            setFieldValue("los", option);
+                                            loadVendorsData(option.id);
+                                        }}
+                                        label={"los"}
+                                        isSearchable={false}
+                                        name={"los"}
+                                        placeholder={"los"}
+                                    />
+                                }
+                            </div>
+                            <div className={s.item}>
+                                {
+                                    <Select
+                                        value={values["vendors"]}
+                                        getOptionValue={(option: IOption) => option.value}
+                                        getOptionLabel={(option: IOption) => option.label}
+                                        ///
+                                        options={vendorsData}
+                                        isMulti={false}
+                                        onChange={(option: IOption) => setFieldValue("vendors", option)}
+                                        label={"vendors"}
+                                        isSearchable={false}
+                                        name={"vendors"}
+                                        placeholder={"vendors"}
+                                    />
+                                }
+                            </div>
                             {
                                 fields
                                     .map((field, index) => {
