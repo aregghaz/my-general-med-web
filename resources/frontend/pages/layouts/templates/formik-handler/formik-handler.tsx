@@ -24,6 +24,8 @@ export interface IItem {
     label?: string;
     selectOptions?: Array<IOption> | Array<IOptionMultiselect>;
     allowValueClear?: boolean,
+
+    autoComplete?: string,
 }
 
 interface IFormikHandler {
@@ -85,6 +87,7 @@ const FormikHandler: React.FC<IFormikHandler> = (
                     placeholder={t(item.placeholder)}
                     label={getFieldLabel(t, item.label, item.name, requiredFields)}
                     error={errors[item.name]}
+                    autoComplete={item.autoComplete}
                 />
             );
         case "checkbox":

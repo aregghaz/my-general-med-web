@@ -4,7 +4,6 @@
 
 
 .select {
-    margin-top: 10px;
     //border: 1px solid red;
     height: auto;
     display: flex;
@@ -97,6 +96,12 @@
     }
 }
 
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
 .selectWrapper {
     display: flex;
     align-items: center;
@@ -124,4 +129,12 @@
 
         }
     }
+}
+
+.error {
+    position: absolute;
+    top: 105%;
+    left: 0;
+    font-size: 13px;
+    color: red;
 }

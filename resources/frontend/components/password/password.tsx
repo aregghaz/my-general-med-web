@@ -49,20 +49,22 @@ const Password:React.FC<Password> = ({
                         className={`${s.label}`}
                         htmlFor={name}
                         style={{
-                            color: error ? "red" : value ? "#19347a" :  "#C4C4C4"
+                            color: error && !value ? "red" : value ? "#19347a" :  "#C4C4C4"
                         }}
                     >
                         {`${label}`} {isAsterisk && <span>*</span>}
                     </label>}
             </div>
-            <div className={cls.bottom} style={{border: error ? "1px solid red" : ""}}>
+            <div className={cls.bottom} style={{
+                border: error && !value ? "1px solid red" : ""
+            }}>
                 <div className={cls.passwordInputWrapper}>
                     <>
-                        {error && <div className={s.error}>{error}</div>}
+                        {error && !value && <div className={s.error}>{error}</div>}
                         <input
                             id={name}
                             name={name}
-                            className={`${s.input} ${!String(value ?? "") ? s.blankInput : ""}  ${className} ${error && type !== "password" && s.errorBorder}`}
+                            className={`${s.input} ${!String(value ?? "") ? s.blankInput : ""}  ${className}`}
                             type={hidden ? "password" : "text"}
                             placeholder={placeholder}
                             value={value}
@@ -75,7 +77,7 @@ const Password:React.FC<Password> = ({
                             //     }
                             // }}
                             disabled={type === "disabled"}
-                            autoComplete={"off"}
+                            autoComplete={autoComplete}
                         />
                     </>
                 </div>

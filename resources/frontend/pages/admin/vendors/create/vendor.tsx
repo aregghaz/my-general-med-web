@@ -19,7 +19,7 @@ const VendorCreate: React.FC<IVendorCreate> = () => {
         { name: "address", type: "input", label: "address" },
         { name: "phone_number", type: "input", label: "phone_number", inputType: "tel" },
         { name: "los", type: "multiSelect", inputType: "los", label: "los"},
-        { name: "password", type: "password", inputType: "password" },
+        { name: "password", type: "password", inputType: "password", autoComplete: "new-password"},
         { name: "fields", type: "multiSelect", label: "fields"},
         { name: "id", type: "hidden", inputType: "hidden" },
 

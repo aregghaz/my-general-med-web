@@ -42,21 +42,24 @@ const Input: React.FC<IInput> = (
 
     return (
         <>
-            {error && <div className={s.error}>{error}</div>}
+            {error && !value && <div className={s.error}>{error}</div>}
             {label &&
                 <label
                     className={`${s.label}`}
                     htmlFor={name}
                     style={{
-                        color: error ? "red" : value ? "#19347a" :  "#C4C4C4"
+                        color: error && !value ? "red" : value ? "#19347a" :  "#C4C4C4"
                     }}
                 >
                     {`${label}`} {isAsterisk && <span>*</span>}
                 </label>}
             <input
+                style={{
+                    border: error && !value ? "1px solid red" : ""
+                }}
                 id={name}
                 name={name}
-                className={`${s.input} ${!String(value ?? "") ? s.blankInput : ""}  ${className} ${error && type !== "password" && s.errorBorder}`}
+                className={`${s.input} ${!String(value ?? "") ? s.blankInput : ""}  ${className}`}
                 type={type}
                 placeholder={placeholder}
                 value={value}

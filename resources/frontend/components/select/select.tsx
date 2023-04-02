@@ -133,134 +133,138 @@ const Select: React.FC<ISelect> = (
     }
     return (
         <>
-            {error && <div className={s.error}>{error}</div>}
+            {error && !value && <div className={s.error}>{error}</div>}
 
             {label && <label style={{
-                color: value ? "#194b76" : "#C4C4C4"
+                color: error && !value ? "red" : value ? "#194b76" : "#C4C4C4",
             }} htmlFor={name}>{label}</label>}
-            <div className={s.buttonsSelect}>
-                {isMulti && <><Button
-                    type={"green"}
-                    onClick={markAll}
-                    key={"one"}
-                    className={s.selectButton}
-                >
-
-                    {t(`admin:mark_all`)}
-                </Button>
-                    <Button
+            <div className={s.wrapper}>
+                <div className={s.buttonsSelect}>
+                    {isMulti && <><Button
                         type={"green"}
-                        onClick={unMarkAll}
-                        key={"two"}
+                        onClick={markAll}
+                        key={"one"}
                         className={s.selectButton}
                     >
-                        {t(`admin:remove_all`)}
-                    </Button></>}
+
+                        {t(`admin:mark_all`)}
+                    </Button>
+                        <Button
+                            type={"green"}
+                            onClick={unMarkAll}
+                            key={"two"}
+                            className={s.selectButton}
+                        >
+                            {t(`admin:remove_all`)}
+                        </Button></>}
+                </div>
+                <div className={s.selectWrapper} style={{
+                    border: error && !value ? "1px solid red" : ""
+                }}>
+                    <ReactSelect
+                        ref={selectRef}
+                        isMulti={isMulti}
+                        styles={{
+                            control: (baseStyles, state) => ({
+                                ...baseStyles,
+                                display: "flex",
+                                borderButton: "1px solid #D63D3D",
+                                width: "100%",
+                                outline: "none",
+                                border: "none",
+                                boxShadow: "none !important",
+                                borderRadius: 0,
+                                overflowX: "auto",
+                                "&:hover": {
+                                    boxShadow: "none",
+                                    // borderBottom: "1px solid #194b76",
+                                }
+                            }),
+                            valueContainer: (baseStyles, state) => ({
+                                ...baseStyles,
+                                display: "flex",
+                                flexDirection: "row"
+                            }),
+                            // indicatorsContainer: base => ({
+                            //     ...base,
+                            //     color: "aqua",
+                            // }),
+                            menu: (baseStyles, state) => ({
+                                ...baseStyles,
+                                backgroundColor: "white",
+                                marginTop: "3px",
+                                zIndex: 9999,
+                                outline: "none",
+                                boxShadow: "0px 3px 3px gray"
+                            }),
+                            option: (baseStyles, state) => ({
+                                ...baseStyles,
+                                padding: "15px",
+                                backgroundColor: state.isSelected ? "#C54944" : baseStyles.backgroundColor
+                            }),
+                            menuList: base => ({
+                                ...base,
+                                // kill the white space on first and last option
+                                padding: "0px",
+                                backgroundColor: "white"
+                                /// borderRadius: "5px",
+                            }),
+                            multiValue: (baseStyles, state) => ({
+                                ...baseStyles,
+                                fontSize: 20,
+                                // borderRadius: "15px",
+                                // lineHeight: 1.5,
+                                // color: "black",
+                                color: "gray",
+                                fontWeight: "bold",
+                                borderButton: "1px solid #D63D3D",
+                                backgroundColor: "white"
+                            }),
+                            multiValueLabel: (styles: any, { data }: any) => ({
+                                ...styles,
+                                // backgroundColor: '#6D9886',
+                                backgroundColor: "white",
+                                color: data.color
+                            }),
+                            placeholder: (base) => ({
+                                ...base,
+                                color: "#C4C4C4",
+                            }),
+                            singleValue: (base) => ({
+                                ...base,
+                                color: "gray",
+                            })
+                        }}
+                        className={s.select}
+                        placeholder={placeholder}
+                        components={isCheckbox ? {
+                                Option,
+                                IndicatorSeparator: () => null
+                            }
+                            :
+                            isMenuAdd ?
+                                {
+                                    Menu: (props) => <Menu props={props} handlerAdd={handlerAdd} />,
+                                    IndicatorSeparator: () => null
+                                }
+                                :
+                                { IndicatorSeparator: () => null }}
+                        options={options}
+                        name={name}
+                        isSearchable={isSearchable}
+                        onChange={onChange}
+                        ///FIXME: ADD THIS PART
+                        isDisabled={isDisabled}
+                        /// isOptionDisabled={() => 5 >= 3}
+                        getOptionLabel={getOptionLabel}
+                        getOptionValue={getOptionValue}
+                        value={value}
+                        authCheckboxLabelStyle={authCheckboxLabelStyle}
+                        onMenuOpen={handlerMenuOpen}
+                        onMenuClose={handlerMenuClose}
+                        hideSelectedOptions={hideSelectedOptions}
+                    />
             </div>
-            <div className={s.selectWrapper}>
-                <ReactSelect
-                    ref={selectRef}
-                    isMulti={isMulti}
-                    styles={{
-                        control: (baseStyles, state) => ({
-                        ...baseStyles,
-                        display: "flex",
-                        borderButton: "1px solid #D63D3D",
-                        width: "100%",
-                        outline: "none",
-                            border: "none",
-                        boxShadow: "none !important",
-                        borderRadius: 0,
-                        overflowX: "auto",
-                        "&:hover": {
-                            boxShadow: "none",
-                            // borderBottom: "1px solid #194b76",
-                        }
-                    }),
-                    valueContainer: (baseStyles, state) => ({
-                        ...baseStyles,
-                        display: "flex",
-                        flexDirection: "row"
-                    }),
-                    // indicatorsContainer: base => ({
-                    //     ...base,
-                    //     color: "aqua",
-                    // }),
-                    menu: (baseStyles, state) => ({
-                        ...baseStyles,
-                        backgroundColor: "white",
-                        marginTop: "3px",
-                        zIndex: 9999,
-                        outline: "none",
-                        boxShadow: "0px 3px 3px gray"
-                    }),
-                    option: (baseStyles, state) => ({
-                        ...baseStyles,
-                        padding: "15px",
-                        backgroundColor: state.isSelected ? "#C54944" : baseStyles.backgroundColor
-                    }),
-                    menuList: base => ({
-                        ...base,
-                        // kill the white space on first and last option
-                        padding: "0px",
-                        backgroundColor: "white"
-                        /// borderRadius: "5px",
-                    }),
-                    multiValue: (baseStyles, state) => ({
-                        ...baseStyles,
-                        fontSize: 20,
-                        // borderRadius: "15px",
-                        // lineHeight: 1.5,
-                        // color: "black",
-                        color: "gray",
-                        fontWeight: "bold",
-                        borderButton: "1px solid #D63D3D",
-                        backgroundColor: "white"
-                    }),
-                    multiValueLabel: (styles: any, { data }: any) => ({
-                        ...styles,
-                        // backgroundColor: '#6D9886',
-                        backgroundColor: "white",
-                        color: data.color
-                    }),
-                    placeholder: (base) => ({
-                        ...base,
-                        color: "#C4C4C4",
-                    }),
-                    singleValue: (base) => ({
-                        ...base,
-                        color: "gray",
-                    })
-                }}
-                className={s.select}
-                placeholder={placeholder}
-                components={isCheckbox ? {
-                        Option,
-                        IndicatorSeparator: () => null
-                    }
-                    :
-                    isMenuAdd ?
-                        {
-                            Menu: (props) => <Menu props={props} handlerAdd={handlerAdd} />,
-                            IndicatorSeparator: () => null
-                        }
-                        :
-                        { IndicatorSeparator: () => null }}
-                options={options}
-                name={name}
-                isSearchable={isSearchable}
-                onChange={onChange}
-                ///FIXME: ADD THIS PART
-                isDisabled={isDisabled}
-                /// isOptionDisabled={() => 5 >= 3}
-                getOptionLabel={getOptionLabel}
-                getOptionValue={getOptionValue}
-                value={value}
-                authCheckboxLabelStyle={authCheckboxLabelStyle}
-                onMenuOpen={handlerMenuOpen}
-                onMenuClose={handlerMenuClose}
-                hideSelectedOptions={hideSelectedOptions}
-            />
                 {(allowValueClear && !isMulti) && <>
                     <div className={s.selectRemove}>
                         <button
