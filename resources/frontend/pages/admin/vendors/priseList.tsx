@@ -8,7 +8,8 @@ import Input from "../../../components/input/input";
 import Select, { IOption } from "../../../components/select/select";
 import Button from "../../../components/button/button";
 import InputCurrency from "../../../components/inputCurrency/inputcurrency";
-import PriceCall from "-!svg-react-loader!../../../images/priceCall.svg"
+import PriceCall from "-!svg-react-loader!../../../images/priceCall.svg";
+import MailIcon from "-!svg-react-loader!../../../images/mailIcon.svg"
 
 interface IVendors {
     path: string;
@@ -91,11 +92,18 @@ const PriceList: React.FC<IVendors> = ({ id }) => {
 
         <>
             <div className={s.allContainer}>
-                <div className={s.companyName}>{data.companyName} </div>
-                <div className={s.companyPhone}>
-                    <PriceCall className={s.iconCall} />
-                     {data.phoneNumber}
+                <div className={s.companyInfo}>
+                    <div className={s.companyName}>{data.companyName}: </div>
+                    <div className={s.companyPhone}>
+                        <PriceCall className={s.iconCall} />
+                        {data.phoneNumber}
+                    </div>
+                    <div className={s.companyPhone}>
+                        <MailIcon className={s.iconCall} />
+                        {"@mail.com"}
+                    </div>
                 </div>
+
                 <div className={s.losContainer}>
                     {
                         data.los.map((item: ILos) => {

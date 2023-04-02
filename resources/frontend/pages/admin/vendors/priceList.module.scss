@@ -9,8 +9,16 @@
     padding: 30px;
 }
 
+.companyInfo{
+    width: 100%;
+    height: auto;
+    display: flex;
+    gap: 30px;
+    padding-top: 5px;
+}
+
 .companyName{
-    font-size: 25px;
+    font-size: 35px;
     margin-bottom: 10px;
     font-family: 'Fira Sans', sans-serif;
     font-weight: 500;
@@ -127,7 +135,7 @@
 
 
 .iconCall{
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
     fill: $borderColor;
 }

@@ -154,7 +154,7 @@ const Autocomplete: React.FC<ITextarea> = (
                             }}
                         />
                     </div>
-                    <div className={s.timePickerContainer}>
+                    <div className={`${s.timePickerContainer} ${s.timePickerRow}`}>
                         {item !== 1 && <CustomTimePicker
                           label={`Appointment Time`}
                             ////   error={errors[item.name]}

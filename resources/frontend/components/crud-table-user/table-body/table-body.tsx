@@ -3,7 +3,7 @@ import TableRow from "../table-row/table-row";
 import TableData from "../table-data/table-data";
 import TrashIcon from "-!svg-react-loader!../../../images/trash.svg";
 import EditIcon from "-!svg-react-loader!../../../images/edit.svg";
-import InfoIcon from "-!svg-react-loader!../../../images/paper.svg";
+import InfoIcon from "-!svg-react-loader!../../../images/infoIcon.svg";
 import AssignIcon from "-!svg-react-loader!../../../images/car-travel-plus-add-svgrepo-com.svg";
 import AssignVendorIcon from "-!svg-react-loader!../../../images/add-company-icon.svg";
 import RemoveIcon from "-!svg-react-loader!../../../images/tripCansle1.svg";
@@ -85,7 +85,7 @@ const TableBody: React.FC<ITableBody> = (
                                             <span className={`${s.tooltip} ${s.infoSpan}`}>
                                             <span className={`${s.tooltiptext} ${s.info}`}>Info</span>
                                             <InfoIcon
-                                                className={s.icon}
+                                                className={`${s.icon} ${s.iconInfo}`}
                                                 onClick={() => handlerAction(item.id, "info")}
                                             />
                                             </span>

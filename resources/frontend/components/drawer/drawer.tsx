@@ -225,7 +225,7 @@ const Drawer: React.FC = ({ children }) => {
                                         </div>
                                     </div>
                                 }
-                            </div>
+                            </div>  
                         </div>
                     </div>
 

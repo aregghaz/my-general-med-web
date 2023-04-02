@@ -138,6 +138,10 @@
     width: 100%;
 }
 
+.timePickerRow{
+    flex-direction: row;
+}
+
 .timePickerWrapper {
     position: relative;
     //left: 50px;
