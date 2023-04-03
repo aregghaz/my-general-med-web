@@ -46,6 +46,7 @@ const DataPicker: React.FC<IDataPicker> = (
             }} type="text"  className={s.input} value={ value ? timestampToDate(new Date(value)) : timestampToDate(new Date().toLocaleDateString())} onClick={() => setShow(!show)}
                    readOnly={true} />
             {show && <div className={s.dataPicker} ref={calendarRef}><Calendar
+
                 value={value ? new Date(value) : new Date()}
                 // className={s.dataPicker}
                 // className={s.dataPickerAlt}

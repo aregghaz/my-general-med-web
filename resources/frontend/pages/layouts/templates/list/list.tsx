@@ -52,6 +52,7 @@ const List: React.FC<IList> = (
                     </Button>
                 }
             </div>
+
             <div className={s.table_wrapper}>
                 <CrudTable
                     titles={titles}

@@ -3,6 +3,7 @@
 @import "resources/frontend/styles/color-pallete";
 
 .dataPicker {
+    width: 100%;
     position: absolute !important;
     top:110%;
     left:50%;
@@ -30,8 +31,7 @@
     border-top: none;
     border-left: none;
     border-right: none;
-    border-bottom: 1px solid $borderColor;
-    cursor: pointer;
+    border-bottom: none;
     outline: none;
     color: gray;
     margin-top: 10px;
