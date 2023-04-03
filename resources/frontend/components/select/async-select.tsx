@@ -64,13 +64,11 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
                 styles={{
                     control: (baseStyles, state) => ({
                         ...baseStyles,
+                        display: "flex",
                         borderButton: "1px solid #D63D3D",
                         width: "100%",
                         outline: "none",
-                        borderTop: "none",
-                        borderLeft: "none",
-                        borderRight: "none",
-                        borderBottom: "1px solid #194b76",
+                        border: "none",
                         boxShadow: "none !important",
                         borderRadius: 0,
                         overflowX: "auto",
@@ -93,18 +91,26 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
                         backgroundColor: "white",
                         marginTop: "3px",
                         zIndex: 9999,
+                        right: "0",
                         outline: "none",
+                        display: "inline-block",
+                        width: 'auto',
                         boxShadow: "0px 3px 3px gray"
                     }),
                     option: (baseStyles, state) => ({
                         ...baseStyles,
+                        display: "inline-block",
+                        width: 'auto',
                         padding: "15px",
-                        backgroundColor: state.isSelected ? "#C54944" : baseStyles.backgroundColor
+                        fontWeight: 500,
+                        backgroundColor: state.isSelected ? "#D63D3D" : baseStyles.backgroundColor
                     }),
                     menuList: base => ({
                         ...base,
                         // kill the white space on first and last option
                         padding: "0px",
+                        display: "flex",
+                        flexDirection: "column",
                         backgroundColor: "white"
                         /// borderRadius: "5px",
                     }),
@@ -112,14 +118,14 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
                         ...baseStyles,
                         fontSize: 20,
                         // borderRadius: "15px",
-                        lineHeight: 1.5,
+                        // lineHeight: 1.5,
                         // color: "black",
                         color: "gray",
                         fontWeight: "bold",
                         borderButton: "1px solid #D63D3D",
                         backgroundColor: "white"
                     }),
-                    multiValueLabel: (styles: any, { data }: any) => ({
+                    multiValueLabel: (styles: any, {data}: any) => ({
                         ...styles,
                         // backgroundColor: '#6D9886',
                         backgroundColor: "white",
@@ -127,7 +133,7 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
                     }),
                     placeholder: (base) => ({
                         ...base,
-                        color: "#C4C4C4",
+                        color: "#757575",
                     }),
                     singleValue: (base) => ({
                         ...base,

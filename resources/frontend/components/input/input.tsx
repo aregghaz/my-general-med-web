@@ -48,7 +48,7 @@ const Input: React.FC<IInput> = (
                     className={`${s.label}`}
                     htmlFor={name}
                     style={{
-                        color: error && !value ? "red" : value ? "#19347a" :  "#C4C4C4"
+                        color: error && !value ? "red" : value ? "#19347a" :  "#757575"
                     }}
                 >
                     {`${label}`} {isAsterisk && <span>*</span>}

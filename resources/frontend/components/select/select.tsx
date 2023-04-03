@@ -1,8 +1,8 @@
 import React, {useEffect, useRef} from "react";
 import useLocalStorage from "../../hooks/use-local-storage";
 import Checkbox from "../checkbox/checkbox";
-import ReactSelect, { components, MenuProps, OptionProps, OptionTypeBase } from "react-select";
-import { useTranslation } from "react-i18next";
+import ReactSelect, {components, MenuProps, OptionProps, OptionTypeBase} from "react-select";
+import {useTranslation} from "react-i18next";
 
 import s from "./select.module.scss";
 import Button from "../button/button";
@@ -55,7 +55,7 @@ interface ISelect {
 
 
 const Option = (props: OptionProps<OptionTypeBase>) => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     return (<components.Option {...props}>
         <Checkbox
             label={t(props.label)}
@@ -65,8 +65,8 @@ const Option = (props: OptionProps<OptionTypeBase>) => {
     </components.Option>);
 };
 
-const Menu: React.FC<IMenu> = ({ props, handlerAdd }) => {
-    const { t } = useTranslation();
+const Menu: React.FC<IMenu> = ({props, handlerAdd}) => {
+    const {t} = useTranslation();
     return (
         <components.Menu {...props} >
             <>
@@ -94,7 +94,7 @@ const Menu: React.FC<IMenu> = ({ props, handlerAdd }) => {
 
 const Select: React.FC<ISelect> = (
     {
-        allowValueClear= true,
+        allowValueClear = true,
         isCheckbox = false,
         isSearchable = false,
         placeholder = "",
@@ -117,7 +117,7 @@ const Select: React.FC<ISelect> = (
         error,
     }
 ) => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const [themeType] = useLocalStorage("theme", "light");
     const selectRef = useRef(null)
     const markAll = () => {
@@ -127,7 +127,7 @@ const Select: React.FC<ISelect> = (
     const unMarkAll = () => {
         onChange([]);
     };
-    const handleOptionRemove:React.MouseEventHandler<HTMLButtonElement> = (e):void => {
+    const handleOptionRemove: React.MouseEventHandler<HTMLButtonElement> = (e): void => {
         e.preventDefault()
         selectRef.current.select.clearValue()
     }
@@ -136,7 +136,7 @@ const Select: React.FC<ISelect> = (
             {error && !value && <div className={s.error}>{error}</div>}
 
             {label && <label style={{
-                color: error && !value ? "red" : value ? "#194b76" : "#C4C4C4",
+                color: error && !value ? "red" : value ? "#194b76" : "#757575",
             }} htmlFor={name}>{label}</label>}
             <div className={s.wrapper}>
                 <div className={s.buttonsSelect}>
@@ -194,18 +194,26 @@ const Select: React.FC<ISelect> = (
                                 backgroundColor: "white",
                                 marginTop: "3px",
                                 zIndex: 9999,
+                                right: "0",
                                 outline: "none",
+                                display: "inline-block",
+                                width: 'auto',
                                 boxShadow: "0px 3px 3px gray"
                             }),
                             option: (baseStyles, state) => ({
                                 ...baseStyles,
+                                display: "inline-block",
+                                width: 'auto',
                                 padding: "15px",
-                                backgroundColor: state.isSelected ? "#C54944" : baseStyles.backgroundColor
+                                fontWeight: 500,
+                                backgroundColor: state.isSelected ? "#D63D3D" : baseStyles.backgroundColor
                             }),
                             menuList: base => ({
                                 ...base,
                                 // kill the white space on first and last option
                                 padding: "0px",
+                                display: "flex",
+                                flexDirection: "column",
                                 backgroundColor: "white"
                                 /// borderRadius: "5px",
                             }),
@@ -220,7 +228,7 @@ const Select: React.FC<ISelect> = (
                                 borderButton: "1px solid #D63D3D",
                                 backgroundColor: "white"
                             }),
-                            multiValueLabel: (styles: any, { data }: any) => ({
+                            multiValueLabel: (styles: any, {data}: any) => ({
                                 ...styles,
                                 // backgroundColor: '#6D9886',
                                 backgroundColor: "white",
@@ -228,7 +236,7 @@ const Select: React.FC<ISelect> = (
                             }),
                             placeholder: (base) => ({
                                 ...base,
-                                color: "#C4C4C4",
+                                color: "#757575",
                             }),
                             singleValue: (base) => ({
                                 ...base,
@@ -244,11 +252,11 @@ const Select: React.FC<ISelect> = (
                             :
                             isMenuAdd ?
                                 {
-                                    Menu: (props) => <Menu props={props} handlerAdd={handlerAdd} />,
+                                    Menu: (props) => <Menu props={props} handlerAdd={handlerAdd}/>,
                                     IndicatorSeparator: () => null
                                 }
                                 :
-                                { IndicatorSeparator: () => null }}
+                                {IndicatorSeparator: () => null}}
                         options={options}
                         name={name}
                         isSearchable={isSearchable}
@@ -275,7 +283,7 @@ const Select: React.FC<ISelect> = (
                         </div>
                     </>
                     }
-            </div>
+                </div>
             </div>
         </>
     );
