@@ -317,8 +317,24 @@ class ClientsController extends Controller
         if (isset($requestData->vendors)) {
             $client->vendor_id = $requestData->vendors->id;
             $client->type_id = 1;
+              $price = 0;
+                        $priceLists = PriceList::where(['los_id'=> $requestData->los->id, 'vendor_id'=>$requestData->vendors->id])->get();
+                        foreach ($priceLists as $priceList){
+                            if($priceList->type == 'base'){
+                                $price = $price+ $priceList->price;
+                            }else{
+                                $price =  $price+ (float)$priceList->price * (float)$requestData->miles;
+                            }
+                        }
+                       /// dd($price);
+                        $client->price = $price;
         } else {
             $client->type_id = 2;
+             if (isset($requestData->specialPrice) && $requestData->specialPrice) {
+                        $client->price = (float)$requestData->price;
+                    }else{
+                     $client->price = 0;
+                    }
         }
         $client->fullName = $requestData->fullName;
         $client->gender = $requestData->gender->id;
@@ -330,18 +346,6 @@ class ClientsController extends Controller
 
         if (isset($requestData->specialPrice) && $requestData->specialPrice) {
             $client->price = (float)$requestData->price;
-        }else{
-            $price = 0;
-            $priceLists = PriceList::where(['los_id'=> $requestData->los->id, 'vendor_id'=>$requestData->vendors->id])->get();
-            foreach ($priceLists as $priceList){
-                if($priceList->type == 'base'){
-                    $price = $price+ $priceList->price;
-                }else{
-                    $price =  $price+ (float)$priceList->price * (float)$requestData->miles;
-                }
-            }
-            dd($price);
-            $client->price = $price;
         }
         $client->request_type = $requestData->request_type->id;
         $client->operator_id = $userId;
