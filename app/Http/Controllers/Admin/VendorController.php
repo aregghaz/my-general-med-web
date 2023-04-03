@@ -313,6 +313,7 @@ class VendorController extends Controller
         $clientsIds = $request->ids;
         $vendorId = $request->vendorId;
         $operatorId = $request->user()->id;
+
         $clients = Clients::whereIn('id', $clientsIds)->update(["vendor_id" => $vendorId, 'type_id' => 1, 'operator_id' => $operatorId]);
         if ($clients) {
             foreach ($clientsIds as $id) {

@@ -688,6 +688,12 @@ body {
   margin: 0 3px;
   transition: 0.1s;
 }
+.crud-table_iconsWrapper__1_0Dv .crud-table_iconInfo__1E59k {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  top: -2px;
+}
 .crud-table_iconsWrapper__1_0Dv .crud-table_icon__2L_AA:hover {
   transform: translateY(-3px);
   color: red;
@@ -942,7 +948,6 @@ svg[focusable=false] {
   color: #E4E6EB;
 }
 .select_select__2DX3u {
-  margin-top: 10px;
   height: auto;
   display: flex;
   width: 100%;
@@ -1000,6 +1005,12 @@ svg[focusable=false] {
   box-shadow: none;
 }
 
+.select_wrapper__2sYBf {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
 .select_selectWrapper__2ba20 {
   display: flex;
   align-items: center;
@@ -1026,6 +1037,14 @@ svg[focusable=false] {
   height: 100%;
   -o-object-fit: contain;
      object-fit: contain;
+}
+
+.select_error__2UAtu {
+  position: absolute;
+  top: 105%;
+  left: 0;
+  font-size: 13px;
+  color: red;
 }
 .popup-modal_popup_container__261LJ {
   position: fixed;
@@ -2673,6 +2692,10 @@ textarea[type=number] {
   width: 100%;
 }
 
+.autocomplete_timePickerRow__1ieE5 {
+  flex-direction: row;
+}
+
 .autocomplete_timePickerWrapper__HqxI0 {
   position: relative;
 }
@@ -2690,7 +2713,7 @@ textarea[type=number] {
   font-size: 16px;
 }
 .customTimePicker_container__1r0GD {
-  width: auto;
+  width: 50%;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -3379,7 +3402,6 @@ input::-webkit-inner-spin-button {
   width: 100%;
   height: auto;
   display: flex;
-  justify-content: flex-end;
   align-items: center;
 }
 
@@ -3476,8 +3498,16 @@ input::-webkit-inner-spin-button {
   padding: 30px;
 }
 
+.priceList_companyInfo__2X-pE {
+  width: 100%;
+  height: auto;
+  display: flex;
+  gap: 30px;
+  padding-top: 5px;
+}
+
 .priceList_companyName__2uiP- {
-  font-size: 25px;
+  font-size: 35px;
   margin-bottom: 10px;
   font-family: "Fira Sans", sans-serif;
   font-weight: 500;
@@ -3584,8 +3614,8 @@ input::-webkit-inner-spin-button {
 }
 
 .priceList_iconCall__3Zkq- {
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   fill: #19347a;
 }
 .inputcurrency_input__1qLow {
