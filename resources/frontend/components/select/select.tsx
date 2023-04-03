@@ -264,18 +264,18 @@ const Select: React.FC<ISelect> = (
                         onMenuClose={handlerMenuClose}
                         hideSelectedOptions={hideSelectedOptions}
                     />
+                    {(allowValueClear && !isMulti) && <>
+                        <div className={s.selectRemove}>
+                            <button
+                                onClick={handleOptionRemove}
+                                style={{
+                                    display: value ? "flex" : "none"
+                                }}
+                            ><img src={removeIcon}/></button>
+                        </div>
+                    </>
+                    }
             </div>
-                {(allowValueClear && !isMulti) && <>
-                    <div className={s.selectRemove}>
-                        <button
-                            onClick={handleOptionRemove}
-                            style={{
-                                display: value ? "flex" : "none"
-                            }}
-                        ><img src={removeIcon}/></button>
-                    </div>
-                </>
-                }
             </div>
         </>
     );

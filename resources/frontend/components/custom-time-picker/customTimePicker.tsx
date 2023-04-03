@@ -26,7 +26,6 @@ const customTimePicker: FC<customTimePickerProps> = ({
     const [hours, setHours] = useState("");
     const handleChange: Function = (type: string, text: string): void => {
         let min: number, max: number, value: string;
-
         switch (type) {
             case "hours":
                 [min, max] = hoursMinMax;
@@ -56,7 +55,11 @@ const customTimePicker: FC<customTimePickerProps> = ({
     return (
         <div className={`${cls.container} ${className}`}>
             <div className={cls.top}>
-                <span>{label}</span>
+                <span
+                    style={{
+                        color: ((hours.length < 3) && (minutes.length < 3)) ? "#19347a" : "#C4C4C4",
+                    }}
+                >{label}</span>
             </div>
             <div className={cls.bottom}>
                 <input
@@ -71,6 +74,9 @@ const customTimePicker: FC<customTimePickerProps> = ({
                         /// onChange(event)
                     }}
                     value={hours}
+                    style={{
+                        borderColor: ((hours.length < 3) && (minutes.length < 3)) ? "#19347a" : "#C4C4C4",
+                    }}
                 />
                 <span>:</span>
                 <input
@@ -85,6 +91,9 @@ const customTimePicker: FC<customTimePickerProps> = ({
                         /// onChange(event)
                     }}
                     value={minutes}
+                    style={{
+                        borderColor: ((hours.length < 3) && (minutes.length < 3)) ? "#19347a" : "#C4C4C4",
+                    }}
                 />
             </div>
         </div>

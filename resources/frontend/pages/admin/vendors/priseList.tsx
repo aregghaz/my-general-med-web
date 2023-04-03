@@ -93,7 +93,7 @@ const PriceList: React.FC<IVendors> = ({ id }) => {
         <>
             <div className={s.allContainer}>
                 <div className={s.companyInfo}>
-                    <div className={s.companyName}>{data.companyName}: </div>
+                    <div className={s.companyName}>{data.companyName}</div>
                     <div className={s.companyPhone}>
                         <PriceCall className={s.iconCall} />
                         {data.phoneNumber}

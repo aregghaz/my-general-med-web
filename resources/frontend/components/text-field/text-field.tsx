@@ -52,6 +52,9 @@ const TextField: React.FC<ITextField> = (
                 value={value}
                 onChange={onChange}
                 autoComplete={autoComplete}
+                style={{
+                    borderColor: value ? "#194b76" : "#C4C4C4"
+                }}
             />
         </div>
     </div>

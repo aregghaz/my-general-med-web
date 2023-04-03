@@ -43,3 +43,8 @@
         font-size: 12px;
     }
 }
+
+
+.error {
+    @include error();
+}

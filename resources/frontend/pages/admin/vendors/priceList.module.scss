@@ -122,6 +122,9 @@
     //border: 1px solid red;
     padding: 10px 10px;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 
     //& > label {
     //    left: 0 !important;

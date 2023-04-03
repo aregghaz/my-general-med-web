@@ -11,7 +11,7 @@
 .top {
     border: inherit;
     width: 100%;
-    color: $borderColor;
+    color: $placeholderColor;
 }
 
 .bottom {
@@ -20,7 +20,7 @@
 }
 
 .bottom > input {
-    border: 1px solid $borderColor;
+    border: 1px solid $placeholderColor;
     outline: none;
     border-radius: 5px;
     width: 100px;

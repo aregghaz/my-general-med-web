@@ -48,3 +48,11 @@ $checkbox: '✔';
 
 $greyColor: #F2E7D5;
 $borderRadius: 15px;
+
+@mixin error() {
+    position: absolute;
+    top: 100%;
+    left: 1%;
+    color: crimson;
+    font-size: 12px;
+}
