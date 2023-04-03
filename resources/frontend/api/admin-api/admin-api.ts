@@ -66,8 +66,8 @@ export const AdminApi = {
     updateClient(data: { pick_up: string, drop_down: string, additionalNote: string }, id: number) {
         return axios.post(`/api/admin/updateClient/${id}`, data, {}).then(res => res.data);
     },
-    getNotification(showMore: number) {
-        return axios.get(`/api/admin/get-notification/${showMore}`, {}).then(res => res.data);
+    getNotification(showMore: number,typeId:number) {
+        return axios.get(`/api/admin/get-notification/${typeId}/${showMore}`, {}).then(res => res.data);
     },
     getCount() {
         return axios.get(`/api/admin/get-count/`, {}).then(res => res.data);

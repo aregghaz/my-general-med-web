@@ -7,6 +7,7 @@ import adminUsersReducer from "./adminUser";
 import adminVendorUsersReducer from "./vendorUsers";
 import tabsReducer from "./tab";
 import NotificationReducer from "./notification";
+import NotifyReducer from "./not";
 
 
 const reducers = combineReducers({
@@ -17,7 +18,8 @@ const reducers = combineReducers({
     adminUsersReducer,
     NotificationReducer,
     adminVendorUsersReducer,
-    tabsReducer
+    tabsReducer,
+    NotifyReducer
 });
 export type ReducerType = typeof reducers
 

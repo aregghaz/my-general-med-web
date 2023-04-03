@@ -229,7 +229,6 @@ const Home: React.FC<IHome> = () => {
     }, [inView]);
     useEffect(() => {
         (async () => {
-            console.log(inView, loading);
             if (loading) {
                 await getClientData(query, date);
                 countRef.current = 1;

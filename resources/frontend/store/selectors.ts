@@ -25,7 +25,13 @@ export const getTabId = (state: AppStateType) => ({
 export const getNotificationCount = (state: AppStateType) => ({
     count: state.NotificationReducer.count
 });
-
+export const getNotify = (state: AppStateType) => ({
+    data: state.NotifyReducer.data,
+    driverCount: state.NotifyReducer.driverCount,
+    carCount: state.NotifyReducer.carCount,
+    patientCount: state.NotifyReducer.patientCount,
+    tripsCount: state.NotifyReducer.tripsCount,
+});
 export const getUserData = (state: AppStateType) => ({
     user: state.authReducer.user,
     loggedIn: state.authReducer.loggedIn

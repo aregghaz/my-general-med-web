@@ -26,7 +26,7 @@ interface INavigationTab {
     onSearchInput: (event: { search: string }) => void,
     setFieldValue?: (name: string, date: string) => void,
     openSearch: () => void,
-    fileUploader: (file: React.ChangeEvent<HTMLInputElement>) => void,
+    fileUploader?: (file: React.ChangeEvent<HTMLInputElement>) => void,
     filtre?: boolean,
     isAssignVednor?: boolean,
     IsDateSearch?: boolean,
@@ -34,6 +34,7 @@ interface INavigationTab {
     isReRoute?: boolean,
     IsAssignCar?: boolean,
     isShowFiltre?: boolean,
+    isFileUploader?: boolean,
     date?: string,
     open: boolean,
     tableRef: any,
@@ -54,6 +55,7 @@ const NavigationTab: React.FC<INavigationTab> = (
         IsAssignCar = false,
         IsDateSearch = false,
         isShowFiltre = false,
+        isFileUploader = false,
         filtre,
         typeId,
         setFieldValue,
@@ -116,7 +118,7 @@ const NavigationTab: React.FC<INavigationTab> = (
                     </div>
                     <Filters height="24px" onClick={showFilter} />
                 </div>}
-                <div className={s.upload_block}>
+                {isFileUploader && <div className={s.upload_block}>
                     <div className={s.iconAbbr}>
                         Upload
                     </div>
@@ -130,7 +132,7 @@ const NavigationTab: React.FC<INavigationTab> = (
                         style={{ display: "none" }}
                         accept=".xls, .xlsx, .csv"
                     />
-                </div>
+                </div>}
                 <div className={s.import_block}>
                     <div className={s.iconAbbr}>
                         Download Excel

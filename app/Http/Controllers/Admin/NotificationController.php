@@ -18,18 +18,28 @@ class NotificationController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(Request $request,$showMore)
+    public function index(Request $request, $typeId, $showMore)
     {
 
         $roleId = $request->user()->role;
+        $driverCount = Notification::where('model', 1)->count();
+        $carCount = Notification::where('model', 2)->count();
+        $patientCount = Notification::where('model', 3)->count();
+        $tripsCount = Notification::where('model', 4)->count();
 
-        $notification = Notification::with('getAction')->with('getCars', 'getDriver')
-           // ->orderBy('new_admin', "desc")
-            ->orderBy('created_at', "desc")
+        $notification = Notification::where('model', (int)$typeId)->with('getAction');
+        $notification = $notification->with('getCars', 'getDriver');
+        // ->orderBy('new_admin', "desc")
+
+        $notification = $notification->orderBy('created_at', "desc")
             ->take(25 * $showMore)->get();
         return response()->json(
             [
                 'data' => new NotificationCollection($notification),
+                'driverCount' => $driverCount,
+                'carCount' => $carCount,
+                'patientCount' => $patientCount,
+                'tripsCount' => $tripsCount,
                 'count' => Notification::where('new_admin', 1)->count(),
             ],
             200
@@ -54,7 +64,7 @@ class NotificationController extends Controller
         })->orWhere(function ($query) use ($carIds) {
             $query->whereIn('value_id', $carIds)->where('model', 'car');
         })
-         //   ->orderBy('new_vendor', "desc")
+            //   ->orderBy('new_vendor', "desc")
             ->orderBy('created_at', "desc")
             ->take(25 * $showMore)->get();;
 
@@ -78,7 +88,7 @@ class NotificationController extends Controller
         );
     }
 
-    public function getInfo(Request $request,$id, $role)
+    public function getInfo(Request $request, $id, $role)
     {
         $notification = Notification::find($id);
 
@@ -93,7 +103,7 @@ class NotificationController extends Controller
         }
         if ($role == 'admin') {
             $notification->new_admin = 0;
-            $userData =  User::with('Company')->find($notification->value_id);
+            $userData = User::with('Company')->find($notification->value_id);
             $companyName = $userData->company->name;
         } else {
             $notification->new_vendor = 0;
@@ -105,8 +115,8 @@ class NotificationController extends Controller
             [
                 'data' => $data->original,
                 'model' => $notification->model,
-                'companyName' =>$companyName,
-                'field' =>($notification->field ?? false),
+                'companyName' => $companyName,
+                'field' => ($notification->field ?? false),
             ],
             200
         );

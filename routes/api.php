@@ -102,7 +102,7 @@ Route::group([
 
     Route::get('/audit', [VendorController::class, 'audit']);
     Route::get('/get-price-list/{id}', [PriceListController::class, 'index']);
-    Route::get('/get-notification/{showMore}', [NotificationController::class, 'index']);
+    Route::get('/get-notification/{typeId}/{showMore}', [NotificationController::class, 'index']);
     Route::get('/get-count', [NotificationController::class, 'getCount']);
     Route::get('/get-info/{id}/{role}', [NotificationController::class, 'getInfo']);
     Route::get('/changeStatus/{slug}', [AdminController::class, 'changeStatus']);
