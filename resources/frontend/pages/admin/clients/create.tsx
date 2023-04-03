@@ -67,7 +67,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         "los",
         "artificial",
         "waitDuration",
-        "vendors",
+        ///"vendors",
         "request_type",
         "member_unique_identifier",
         "height",

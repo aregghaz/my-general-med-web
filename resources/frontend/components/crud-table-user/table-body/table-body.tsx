@@ -71,11 +71,11 @@ const TableBody: React.FC<ITableBody> = (
                                             </span>
                                         }
                                         {
-                                            isEdit && typeId !== 5 && typeId !== 6 &&
+                                            // isEdit && typeId !== 5 && typeId !== 6 &&
                                             <span className={`${s.tooltip} ${s.editSpan}`}>
                                             <span className={`${s.tooltiptext} ${s.edit}`}>Edit</span>
                                             <EditIcon
-                                                className={s.icon}
+                                                className={`${s.icon} ${s.iconColor}`}
                                                 onClick={() => handlerAction(item.id, "edit")}
                                             />
                                             </span>
