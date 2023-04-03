@@ -150,6 +150,11 @@ const Show: React.FC<IShow> = ({ id }) => {
                     <span>{timestampToDate(clientById.date_of_service.toString())}</span>
                     |
                     <span><span>Height: {clientById.height}</span> <span>Weight: {clientById.weight}</span></span>
+                    <div className={cls.updateButton}>
+                        <Button type={"adminUpdate"} onClick={handlerUpdate}>
+                            Update
+                        </Button>
+                    </div>
                 </div>
                 {/*<div className={cls.itemsBlock}>*/}
                 {/*    <span className={cls.b_text}>{t("pick_up")}: </span>*/}
@@ -326,11 +331,6 @@ const Show: React.FC<IShow> = ({ id }) => {
                             </div>
                         </div>}
                     </div>
-                </div>
-                <div className={cls.updateButton}>
-                    <Button type={"adminUpdate"} onClick={handlerUpdate}>
-                        Update
-                    </Button>
                 </div>
             </div>
         </div>

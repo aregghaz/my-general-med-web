@@ -119,16 +119,16 @@ const Show: React.FC<IShow> = ({ id }) => {
     return clientById && <div className={cls.block} ref={blockRef}>
         <div className={cls.infoLeft}>
             <div className={cls.infoLeftName}>
-                <div className={cls.updateButton}>
-                    <Button type={"adminUpdate"} onClick={handlerUpdate}>
-                        Update
-                    </Button>
-                </div>
                 <span className={cls.username}>{clientById.fullName}</span>
                 |
                 <span>{timestampToDate(clientById.date_of_service.toString())}</span>
                 |
                 <span><span>Height: {clientById.height}</span> <span>Weight: {clientById.weight}</span></span>
+                <div className={cls.updateButton}>
+                    <Button type={"adminUpdate"} onClick={handlerUpdate}>
+                        Update
+                    </Button>
+                </div>
             </div>
             <div className={cls.addon}>
                 <div className={cls.addonInfo}>
