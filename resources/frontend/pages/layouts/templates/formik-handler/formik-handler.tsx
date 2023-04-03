@@ -196,6 +196,7 @@ const FormikHandler: React.FC<IFormikHandler> = (
                     ///  handleChange={handleChange}
                     value={values[item.name]}
                     error={errors[item.name]}
+                    label={item.label}
                 />
             );
         case "timePicker":

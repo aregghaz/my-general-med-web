@@ -18,6 +18,7 @@ import "react-calendar/dist/Calendar.css";
 import Input from "../../../components/input/input";
 import timestampToDate from "../../../utils/timestampToDate";
 import Checkbox from "../../../components/checkbox/checkbox";
+import CurrencyInput from "react-currency-input-field";
 
 interface IClientCreate {
     path: string;
@@ -35,7 +36,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         { name: "trip_id", type: "select", label: "trip_type" },
         { name: "fullName", type: "input", label: "fullName" },
         { name: "gender", type: "select", label: "gender" },
-        { name: "birthday", type: "datepicker", label: "birthday" },
+        { name: "birthday", type: "datepicker", label: "birthday"},
         ///  { name: "los", type: "select", label: "los" },
         { name: "artificial", type: "select", label: "artificial" },
         { name: "waitDuration", type: "select", label: "waitDuration" },
@@ -71,7 +72,9 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         "request_type",
         "member_unique_identifier",
         "height",
-        "weight"
+        "weight",
+        "price",
+
     ];
 
     const { t } = useTranslation();
@@ -280,20 +283,31 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                             </div>
                             <div className={s.item}>
                                 {
-                                    <>
-                                        <Checkbox
-                                            handlerCheckbox={() => {
-                                                setFieldValue("specialPrice", !checked);
-                                                handlerCheckbox();
-                                            }
-                                            }
-                                            checked={checked}
-                                            label={"fix price"}
+                                    <div className={s.fixedPriceWrapper}>
+                                        <input
+                                            className={s.fixedCheckbox}
+                                            type={"checkbox"}
+                                            onChange={() => {
+                                                setFieldValue("specialPrice", !checked)
+                                                handlerCheckbox()
+                                            }}
                                         />
-                                        {checked && <Input name={"price"} type={"number"}
-                                                           value={values["price"]}
-                                                           label={"price"} onChange={handleChange} />}</>
-
+                                        {!checked && <span>Fix Price</span>}
+                                        {/*<Checkbox*/}
+                                        {/*    handlerCheckbox={() => {*/}
+                                        {/*        setFieldValue("specialPrice", !checked);*/}
+                                        {/*        handlerCheckbox();*/}
+                                        {/*    }*/}
+                                        {/*    }*/}
+                                        {/*    checked={checked}*/}
+                                        {/*    label={!checked && "fix price"}*/}
+                                        {/*/>*/}
+                                        <div className={s.fixedInputWrapper}>
+                                            {checked && <Input name={"price"} type={"number"}
+                                                               value={values["price"]}
+                                                               label={"Fix price"} onChange={handleChange} />}
+                                        </div>
+                                    </div>
                                 }
                             </div>
                             {
@@ -349,7 +363,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
 
         </Formik>
 
-    </div>;
+    </div>
     //     <Create
     //     crudKey={crudKey}
     //     data={data}

@@ -121,3 +121,26 @@
     height: auto;
     padding: 20px 80px;
 }
+
+.fixedPriceWrapper {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+
+    & span {
+        white-space: nowrap;
+        color: $placeholderColor;
+    }
+}
+
+.fixedInputWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.fixedCheckbox {
+    width: 20px;
+    height: 20px;
+}
