@@ -17,6 +17,7 @@ import Autocomplete from "../../../components/autocomplate/autocomplete";
 import "react-calendar/dist/Calendar.css";
 import Input from "../../../components/input/input";
 import timestampToDate from "../../../utils/timestampToDate";
+import Checkbox from "../../../components/checkbox/checkbox";
 
 interface IClientCreate {
     path: string;
@@ -29,6 +30,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
     const [show, setShow] = useState(false);
     const [showCalendar, setShowCalendar] = useState(false);
     const [vendorsData, setVendorsData] = useState([]);
+    const [checked, setChecked] = useState(false);
     const fields: Array<IItem> = [
         { name: "trip_id", type: "select", label: "trip_type" },
         { name: "fullName", type: "input", label: "fullName" },
@@ -88,6 +90,9 @@ const ClientCreate: React.FC<IClientCreate> = () => {
     const handlerShowCalendar = () => {
         setShowCalendar(!showCalendar);
     };
+    const handlerCheckbox = () => {
+        setChecked(!checked);
+    };
 
     const loadTripPeriod = async (id: number) => {
         if (id === 1) {
@@ -107,6 +112,12 @@ const ClientCreate: React.FC<IClientCreate> = () => {
     };
 
     const loadStatus = async () => {
+        // console.log(make, "aaa");
+        return data["clientType"];
+
+
+    };
+    const loadLos = async () => {
         // console.log(make, "aaa");
         return data["los"];
 
@@ -232,7 +243,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                             <div className={s.item}>
                                 {
                                     <AsyncSelect
-                                        loadOptions={loadStatus}
+                                        loadOptions={loadLos}
                                         defaultValue={values["los"]}
                                         getOptionValue={(option: IOption) => option.value}
                                         getOptionLabel={(option: IOption) => t(option.label)}
@@ -265,6 +276,24 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                         name={"vendors"}
                                         placeholder={"vendors"}
                                     />
+                                }
+                            </div>
+                            <div className={s.item}>
+                                {
+                                    <>
+                                        <Checkbox
+                                            handlerCheckbox={() => {
+                                                setFieldValue("specialPrice", !checked);
+                                                handlerCheckbox();
+                                            }
+                                            }
+                                            checked={checked}
+                                            label={"fix price"}
+                                        />
+                                        {checked && <Input name={"price"} type={"number"}
+                                                           value={values["price"]}
+                                                           label={"price"} onChange={handleChange} />}</>
+
                                 }
                             </div>
                             {

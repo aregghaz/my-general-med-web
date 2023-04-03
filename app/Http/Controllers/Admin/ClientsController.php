@@ -13,6 +13,7 @@ use App\Models\ClientStatus;
 use App\Models\ClientTable;
 use App\Models\Gender;
 use App\Models\Los;
+use App\Models\PriceList;
 use App\Models\RequestType;
 use App\Models\User;
 use App\Models\WaitDuration;
@@ -326,8 +327,22 @@ class ClientsController extends Controller
         $client->duration_id = $requestData->waitDuration->id;
         $client->date_of_service = date('Y-m-d', strtotime($date));
         /////FIXME ADD RIGHT PRICE IF VENDOR SELECTED
-        /////FIXME ADD RIGHT PRICE IF VENDOR SELECTED
-        ///$client->price = (int)$requestData->price + (int)$requestData->waitDuration->value + (int)$requestData->artificial->value;
+
+        if (isset($requestData->specialPrice) && $requestData->specialPrice) {
+            $client->price = (float)$requestData->price;
+        }else{
+            $price = 0;
+            $priceLists = PriceList::where(['los_id'=> $requestData->los->id, 'vendor_id'=>$requestData->vendors->id])->get();
+            foreach ($priceLists as $priceList){
+                if($priceList->type == 'base'){
+                    $price = $price+ $priceList->price;
+                }else{
+                    $price =  $price+ (float)$priceList->price * (float)$requestData->miles;
+                }
+            }
+            dd($price);
+            $client->price = $price;
+        }
         $client->request_type = $requestData->request_type->id;
         $client->operator_id = $userId;
         $client->stops = (int)$requestData->count;
@@ -477,7 +492,7 @@ class ClientsController extends Controller
         $client->artificial_id = $requestData->artificial_id->id;
         $client->duration_id = $requestData->duration_id->id;
         $client->date_of_service = date('Y-m-d', strtotime($requestData->date_of_service));
-      ///  $client->price = (int)$requestData->price + (int)$requestData->duration_id->value + (int)$requestData->artificial_id->value;
+        ///  $client->price = (int)$requestData->price + (int)$requestData->duration_id->value + (int)$requestData->artificial_id->value;
         $client->request_type = $requestData->request_type->id;
         $client->operator_id = $userId;
         $client->stops = $requestData->count;
@@ -491,6 +506,23 @@ class ClientsController extends Controller
         }
         if (isset($requestData->weight)) {
             $client->weight = (float)$requestData->weight;
+        }
+        if (isset($requestData->specialPrice) && $requestData->specialPrice) {
+            $client->price = (float)$requestData->price;
+        }else{
+            $price = 0;
+            $priceLists = PriceList::where(['los_id'=> $requestData->los->id, 'vendor_id'=>$requestData->vendors->id])->get();
+
+            foreach ($priceLists as $priceList){
+                if($priceList->type == 'base'){
+                    $price = $price+ $priceList->price;
+                }else{
+                    ///dd($price+$priceList->price * $requestData->miles);
+                    $price =  $price+ ($priceList->price * $requestData->miles);
+                }
+            }
+            //dd($price);
+            $client->price = $price;
         }
         $client->update();
         /// Address::whereIn('client_id', $id)->delete();
