@@ -8,7 +8,7 @@ import AssignIcon from "-!svg-react-loader!../../../images/car-travel-plus-add-s
 import AssignVendorIcon from "-!svg-react-loader!../../../images/add-company-icon.svg";
 import RemoveIcon from "-!svg-react-loader!../../../images/tripCansle1.svg";
 import s from "../crud-table.module.scss";
-import ClaimTrip from "-!svg-react-loader!../../../images/briefcase-work-business-add-svgrepo-com.svg";
+import ClaimTrip from "-!svg-react-loader!../../../images/tripAdd1.svg";
 import ActivityIcon from "-!svg-react-loader!../../../images/Actions.svg";
 import timestampToDate from "../../../utils/timestampToDate";
 
