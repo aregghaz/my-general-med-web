@@ -307,7 +307,7 @@
   transition: width 0.2s ease-in-out;
   z-index: 11111;
   height: 100%;
-  box-shadow: 0 10px 20px #ddd;
+  box-shadow: 7px 5px 20px #ddd;
 }
 
 .drawer_list__2zYw8 {
@@ -547,6 +547,7 @@ body {
 .home_table_wrapper__1Mi0L {
   margin-top: 10px;
   overflow: auto;
+  padding: 0 20px;
 }
 
 .home_detector__PhYFU {
@@ -1876,6 +1877,7 @@ svg[focusable=false] {
 .list_table_wrapper__3ZU7G {
   width: 100%;
   overflow: auto;
+  padding: 0 20px;
 }
 
 .list_table_upper_tab_box__BIQr0 {
