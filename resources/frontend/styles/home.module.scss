@@ -4,7 +4,6 @@
 
 body {
     overflow-x: hidden;
-
     @include themify($themes) {
         background-color: themed('backgroundColor');
     }
