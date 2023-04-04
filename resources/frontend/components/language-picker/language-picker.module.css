@@ -1,0 +1,45 @@
+.languagePicker {
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 20px;
+  top: 50px;
+}
+@media only screen and (max-width: 992px) {
+  .languagePicker {
+    left: 10px;
+    top: 40px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .languagePicker {
+    left: 5px;
+    top: 35px;
+  }
+}
+
+.languagePickerItem {
+  font-family: tahoma;
+  font-size: 18px;
+  text-transform: uppercase;
+  color: #F7F7F7;
+  margin-bottom: 15px;
+}
+.languagePickerItem:hover {
+  border-bottom: 0.2px solid #F7F7F7;
+}
+@media only screen and (max-width: 992px) {
+  .languagePickerItem {
+    margin-bottom: 10px;
+    font-size: 17px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .languagePickerItem {
+    margin-bottom: 8px;
+    font-size: 11px;
+  }
+}
+
+/*# sourceMappingURL=language-picker.module.css.map */

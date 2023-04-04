@@ -1,0 +1,1 @@
+{"version":3,"sourceRoot":"","sources":["language-picker.module.scss","../../styles/variables.scss"],"names":[],"mappings":"AAEA;EACI;EACA;EACA;EACA;EACA;EACA;;AAEA;EARJ;IASQ;IACA;;;AAGJ;EAbJ;IAcQ;IACA;;;;AAIR;EACI,aCrBU;EDsBV;EACA;EACA,OCtBS;EDuBT;;AAEA;EACI;;AAGJ;EAXJ;IAYQ;IACA;;;AAGJ;EAhBJ;IAiBQ;IACA","file":"language-picker.module.css"}

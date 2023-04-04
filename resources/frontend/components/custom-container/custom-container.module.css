@@ -1,0 +1,15 @@
+.container {
+  padding: 0 100px;
+}
+@media only screen and (max-width: 992px) {
+  .container {
+    padding: 0 50px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .container {
+    padding: 0 15px;
+  }
+}
+
+/*# sourceMappingURL=custom-container.module.css.map */

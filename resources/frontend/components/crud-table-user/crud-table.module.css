@@ -1,0 +1,246 @@
+.root {
+  width: 100%;
+  overflow-x: auto;
+  box-shadow: 2px 2px 14px rgba(87, 87, 102, 0.25);
+}
+.root.altUsage {
+  display: table;
+}
+
+.detector {
+  width: 1px;
+  height: 1px;
+}
+
+.download_btn {
+  background-color: #D63D3D;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.download_btn:hover {
+  background-color: #D63D3D;
+}
+
+.table {
+  table-layout: fixed;
+  border-collapse: inherit;
+  border-spacing: 0;
+  min-width: 100%;
+}
+
+.tableBColor {
+  background-color: rgba(63, 122, 173, 0.15);
+}
+
+.tableHead {
+  display: table-header-group;
+}
+
+.tableBody {
+  display: table-row-group;
+}
+
+.tableFooter {
+  display: table-footer-group;
+}
+
+.iconsWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 7px;
+}
+.iconsWrapper .icon {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  margin: 0 3px;
+  transition: 0.1s;
+  fill: #3F7AAD;
+}
+.iconsWrapper .iconColor {
+  width: 32px;
+  height: 32px;
+}
+.iconsWrapper .iconColor:hover {
+  stroke: red;
+}
+.iconsWrapper .iconInfo {
+  width: 30px;
+  height: 30px;
+}
+.iconsWrapper .icon:hover {
+  transform: translateY(-3px);
+  color: red;
+  fill: red;
+}
+
+.tableRow {
+  color: inherit;
+  display: table-row;
+  outline: 0;
+  vertical-align: middle;
+}
+
+.rotate_arrow {
+  transform: rotate(180deg);
+}
+
+.tooltip {
+  position: relative;
+}
+
+.tooltip .tooltiptext {
+  width: 40px;
+  background-color: #19347a;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 2px 0;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: -20px;
+  left: -5px;
+  font-size: 10px;
+  user-select: none;
+  pointer-events: none;
+  transistion: 0.5s;
+  opacity: 1;
+}
+
+.history, .assignVendor, .info, .edit, .delete, .reRoute, .claim {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.historySpan:hover .history, .infoSpan:hover .info, .editSpan:hover .edit, .deleteSpan:hover .delete, .reRouteSpan:hover .reRoute, .claimSpan:hover .claim {
+  visibility: visible;
+}
+
+.assignVendorSpan:hover .assignVendor {
+  visibility: visible;
+}
+
+.tableTd {
+  text-align: start;
+  vertical-align: inherit;
+  color: #332e2e;
+  padding-left: 20px;
+  min-width: 190px;
+  table-layout: auto;
+  background-color: rgb(228, 235, 243);
+  border-top: 2px solid #3F7AAD;
+  border-bottom: 2px solid #3F7AAD;
+  width: 100%;
+  font-size: min(max(16px, 1vw), 19px);
+}
+@media only screen and (max-width: 992px) {
+  .tableTd {
+    font-size: min(max(12px, 1vw), 19px);
+  }
+}
+@media only screen and (max-width: 768px) {
+  .tableTd {
+    font-size: min(max(10px, 1vw), 19px);
+  }
+}
+.tableTd.searchable {
+  padding-bottom: 0;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.img {
+  width: 100px;
+  height: 100px;
+}
+
+.tableTh {
+  z-index: 2;
+  color: #D63D3D;
+  font-weight: bold;
+  white-space: nowrap;
+  font-size: min(max(16px, 1vw), 25px);
+  min-width: 170px;
+  text-align: center;
+}
+@media only screen and (max-width: 992px) {
+  .tableTh {
+    font-size: min(max(12px, 1vw), 25px);
+  }
+}
+@media only screen and (max-width: 768px) {
+  .tableTh {
+    font-size: min(max(10px, 1vw), 25px);
+  }
+}
+.tableTh:first-of-type {
+  width: 40px;
+}
+
+.classNameField {
+  display: table-cell;
+  text-align: start;
+  vertical-align: inherit;
+  padding-left: 20px;
+  color: #332e2e;
+  border-bottom: 0.1px solid #3F7AAD;
+  height: 70px;
+}
+
+.address {
+  min-width: 350px;
+  width: 100%;
+}
+
+.gender {
+  max-width: 50px;
+  width: 100%;
+}
+
+.inputWrapper {
+  margin-top: 10px;
+}
+
+.tableHeadText {
+  font-weight: normal;
+  color: #332e2e;
+  margin: auto;
+  font-size: 15px;
+  line-height: 22px;
+  max-height: 58px;
+  padding: 0 6px;
+}
+
+.tableHeadBlock {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+:global svg[focusable=false] {
+  width: 20px;
+  height: 20px;
+}
+
+.chosen {
+  background-color: #D63D3D !important;
+  opacity: 0.7;
+}
+.chosen .classNameField .iconsWrapper .icon {
+  fill: white !important;
+}
+.chosen td {
+  color: #F7F7F7;
+}
+
+.arrowSpan {
+  margin: 0 5px;
+}
+
+/*# sourceMappingURL=crud-table.module.css.map */

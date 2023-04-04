@@ -1,0 +1,70 @@
+.form {
+  padding: 25px;
+  box-shadow: 0 5px 25px rgba(34, 41, 97, 0.08);
+  background: #ffffff;
+  display: grid;
+  align-items: flex-start;
+  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  margin: auto;
+}
+
+@media only screen and (max-width: 1250px) {
+  .form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .item {
+    width: 100%;
+    align-items: center;
+  }
+}
+.title {
+  margin-bottom: 25px;
+  text-transform: uppercase;
+}
+
+.item {
+  margin: 10px 10px 15px;
+  position: relative;
+}
+.item svg {
+  width: 20px;
+}
+
+.button {
+  padding: 0 32px;
+}
+
+.actionButtons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttonDiv {
+  grid-column: 1/4;
+  justify-content: end;
+  display: flex;
+}
+@media only screen and (max-width: 1250px) {
+  .buttonDiv {
+    width: 100%;
+  }
+  .buttonDiv > button {
+    width: 100%;
+    margin: 10px 10px 15px;
+  }
+}
+
+.googleMap {
+  position: relative;
+  margin-top: 20px;
+  aspect-ratio: 2/1;
+  overflow: visible;
+}
+
+/*# sourceMappingURL=edit.module.css.map */

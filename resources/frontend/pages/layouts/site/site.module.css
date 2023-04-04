@@ -1,0 +1,19 @@
+.main {
+  min-height: calc(100vh - 200px);
+}
+
+.mainRow {
+  width: 100%;
+  margin-left: 0 !important;
+}
+
+.mainContainer {
+  width: 100%;
+  padding: 0 !important;
+}
+
+.notificationDiv {
+  z-index: 1;
+}
+
+/*# sourceMappingURL=site.module.css.map */

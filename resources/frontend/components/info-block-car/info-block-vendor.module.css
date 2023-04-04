@@ -1,0 +1,105 @@
+.block {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: 0 20px;
+  flex-direction: column-reverse;
+}
+.carInfoBox {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.companyInfoLabel {
+  width: 100%;
+  height: 20%;
+  color: grey;
+}
+.companyInfoLabel > h1 {
+  margin: 0;
+  padding: 0;
+}
+
+.carImgBox {
+  width: 100%;
+  height: 100%;
+}
+
+.infoItem {
+  height: auto;
+  padding: 5px 0 0 0;
+  display: flex;
+  flex-direction: row;
+  font-size: 18px;
+  color: gray;
+}
+.infoItem > span {
+  color: #19347a;
+}
+
+.infoItemDownload {
+  flex-direction: column;
+}
+
+.itemBorder {
+  width: 100%;
+  height: auto;
+  font-size: 20px;
+  font-weight: 600;
+  border-bottom: 0.1px solid gray;
+  padding: 20px 0;
+}
+.itemBorder > a {
+  color: #19347a;
+}
+@media screen and (max-width: 1000px) {
+  .itemBorder {
+    font-size: 18px;
+  }
+}
+
+.selected {
+  border: 1px solid red;
+}
+
+.item {
+  width: 100%;
+  height: auto;
+  font-size: 20px;
+  font-weight: 400;
+  color: grey;
+}
+.item span {
+  width: 25px;
+  display: inline-block;
+}
+.item > a {
+  color: #19347a;
+}
+@media screen and (max-width: 1000px) {
+  .item {
+    font-size: 18px;
+  }
+}
+
+.documents {
+  width: 100%;
+  height: 50%;
+  border-top: 0.1px solid gray;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 30px;
+}
+@media screen and (max-width: 1200px) {
+  .documents {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media screen and (max-width: 850px) {
+  .documents {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+/*# sourceMappingURL=info-block-vendor.module.css.map */

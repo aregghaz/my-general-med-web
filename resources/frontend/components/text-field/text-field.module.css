@@ -1,0 +1,30 @@
+.inputWrapper {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.labelWrapper {
+  width: 100%;
+  height: auto;
+  color: #19347a;
+}
+
+.textareaWrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.input {
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+  outline: none;
+  color: gray;
+  border: 0.1px solid #19347a;
+  resize: none;
+}
+
+/*# sourceMappingURL=text-field.module.css.map */

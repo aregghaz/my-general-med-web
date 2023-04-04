@@ -1,0 +1,30 @@
+.infoSection {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  float: left;
+}
+
+.infoTable {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+}
+
+.fullWidth {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.upload_panel {
+  padding: 10px 20px 10px 40px;
+  border-radius: 5px;
+  width: 100%;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/*# sourceMappingURL=not.module.css.map */

@@ -9,6 +9,7 @@ interface IProps {
     handlerChangeTabs: (id: number) => void,
 }
 
+
 const Tabs: FC<IProps> = ({ tabs, handlerChangeTabs }) => {
     const { t } = useTranslation();
     return (

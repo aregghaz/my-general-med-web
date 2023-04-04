@@ -1,0 +1,109 @@
+.image {
+  max-width: 100%;
+  min-width: 100%;
+  max-height: 650px;
+  min-height: 650px;
+}
+@media only screen and (max-width: 1440px) {
+  .image {
+    max-width: 100%;
+    min-width: 100%;
+    max-height: 550px;
+    min-height: 550px;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .image {
+    max-width: 100%;
+    min-width: 100%;
+    max-height: 350px;
+    min-height: 350px;
+  }
+}
+
+.title {
+  max-height: 30px;
+}
+
+.cardIcon {
+  width: 20px;
+  height: 20px;
+}
+.cardIcon path, .cardIcon circle, .cardIcon g, .cardIcon g path, .cardIcon polygon {
+  fill: #D63D3D;
+}
+
+.list {
+  padding: 5px;
+  list-style: none;
+  text-align: left;
+  color: #0B716B;
+  font-size: 16px;
+}
+
+.quality {
+  border: 1px solid #0B716B;
+  background-color: #0B716B;
+  color: white;
+  padding: 5px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: bolder;
+  display: inline-block;
+}
+
+.infoDiv {
+  border: 1px solid #0B716B;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.noPadding {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.iframe {
+  width: 100%;
+}
+@media only screen and (max-width: 1921px) {
+  .iframe {
+    height: 750px;
+  }
+}
+@media only screen and (max-width: 1921px) {
+  .iframe {
+    height: 750px;
+  }
+}
+@media only screen and (max-width: 1600px) {
+  .iframe {
+    height: 750px;
+  }
+}
+@media only screen and (max-width: 1440px) {
+  .iframe {
+    height: 750px;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .iframe {
+    height: 450px;
+  }
+}
+
+.info {
+  margin-top: 10px;
+  font-weight: bolder;
+}
+
+.cancelIcon {
+  position: absolute;
+  top: 15px;
+  right: 0;
+  font-size: 28px;
+  color: #F7F7F7;
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=madal-item.module.css.map */

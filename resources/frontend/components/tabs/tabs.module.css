@@ -1,0 +1,76 @@
+.bage_count {
+  padding: 3px 6px 3px 6px;
+  font-size: 20px;
+  border-radius: 10px;
+  display: block;
+  text-align: center;
+}
+
+.table_upper_tab_item {
+  background: #ffffff;
+  border-bottom: 1px solid #19347a;
+  position: relative;
+  padding: 10px 30px;
+  color: #19347a;
+  cursor: pointer;
+  text-align: center;
+}
+.table_upper_tab_item:hover {
+  color: #D63D3D;
+  border-bottom-color: #D63D3D;
+}
+.table_upper_tab_item:hover span {
+  color: #D63D3D;
+}
+
+.selected {
+  background: #ffffff;
+  border-bottom: 1px solid #D63D3D;
+  color: #D63D3D;
+  position: relative;
+  padding: 10px 30px;
+  cursor: pointer;
+}
+.selected:hover {
+  color: #D63D3D;
+  border-bottom-color: #D63D3D;
+}
+.selected:hover span {
+  color: #D63D3D;
+}
+
+.tab_text {
+  font-size: 13px;
+}
+
+.table_upper_tab {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.action_block {
+  display: inline-block;
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin: 0 10px;
+  cursor: pointer;
+  background-color: #D63D3D;
+  color: #F7F7F7;
+}
+.action_block label {
+  cursor: pointer;
+}
+.action_block:hover {
+  background-color: #D63D3D;
+  color: white;
+}
+
+.disabled_action {
+  pointer-events: none;
+  opacity: 0.3;
+  user-select: none;
+}
+
+/*# sourceMappingURL=tabs.module.css.map */

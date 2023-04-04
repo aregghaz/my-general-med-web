@@ -1,0 +1,26 @@
+.arrow {
+  display: block;
+  width: 14px;
+  height: 8px;
+}
+
+.button {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 12px;
+  font-weight: 300;
+  color: #637469;
+  text-align: left;
+}
+
+.rotatedArrow {
+  padding-left: 0;
+  transform: rotate(180deg) translateY(-13px);
+}
+
+.label {
+  color: #F7F7F7;
+  font-size: 20px;
+}
+
+/*# sourceMappingURL=dropdown.module.css.map */

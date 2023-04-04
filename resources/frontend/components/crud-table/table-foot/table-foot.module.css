@@ -1,0 +1,30 @@
+.trPagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.number {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: normal;
+  margin: 0 5px;
+  border-radius: 25px;
+  background-color: white;
+}
+.number div button {
+  color: #0B716B;
+}
+
+.active {
+  background-color: #637469;
+}
+.active div button {
+  color: white;
+}
+
+/*# sourceMappingURL=table-foot.module.css.map */

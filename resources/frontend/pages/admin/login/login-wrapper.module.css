@@ -1,0 +1,66 @@
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.form {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  min-width: 400px;
+  max-width: 400px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-radius: 20px;
+}
+.form h3 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+.form label {
+  position: relative !important;
+  transform: translateY(250px) !important;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.button {
+  padding: 0 20px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.actions button {
+  margin-top: 10px;
+  text-transform: uppercase;
+  width: 100%;
+  padding: 20px 0;
+  font-size: 18px;
+  color: #F7F7F7;
+  border-radius: 16px;
+}
+@media only screen and (max-width: 768px) {
+  .actions button {
+    font-size: 14px;
+    padding: 15px 0;
+  }
+}
+
+.logoDiv {
+  display: block;
+  text-align: center;
+}
+.logoDiv img {
+  width: 150px;
+}
+
+/*# sourceMappingURL=login-wrapper.module.css.map */

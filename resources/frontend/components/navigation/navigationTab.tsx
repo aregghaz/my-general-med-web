@@ -122,7 +122,7 @@ const NavigationTab: React.FC<INavigationTab> = (
                     <div className={s.iconAbbr}>
                         Upload
                     </div>
-                    <label htmlFor="uploadFile">
+                    <label className={s.iconTest} htmlFor="uploadFile">
                         <Upload className={s.iconTest}/>
                     </label>
                     <input
@@ -137,7 +137,7 @@ const NavigationTab: React.FC<INavigationTab> = (
                     <div className={s.iconAbbr}>
                         Download Excel
                     </div>
-                    <label htmlFor="downloadTableExcel">
+                    <label   htmlFor="downloadTableExcel">
                         <DownloadTableExcel
                             filename="users table"
                             sheet="users"

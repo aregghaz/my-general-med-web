@@ -1,0 +1,209 @@
+.block {
+  width: 100%;
+  min-height: 200px;
+  height: auto;
+  background-color: white;
+  margin: 20px;
+  display: flex;
+  gap: 20px;
+  padding-right: 40px;
+}
+.infoLeft {
+  width: 40%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-right: 0.1px solid gray;
+  padding-right: 20px;
+}
+
+.addon {
+  width: 100%;
+  height: auto;
+  min-height: 100px;
+  display: flex;
+  border-bottom: 1px solid #19347a;
+  border-top: 1px solid #19347a;
+  padding: 15px 0;
+}
+
+.addonInfo {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+.addonInfo > p {
+  color: #19347a;
+  display: flex;
+  column-gap: 10px;
+}
+.addonInfo > p > span {
+  color: gray;
+}
+
+.infoLeftName {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+}
+.infoLeftName .username {
+  font-size: 25px;
+}
+.infoLeftName span {
+  color: gray;
+  display: flex;
+  gap: 30px;
+}
+
+.infoLeftTop {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.infoLeftBottom {
+  width: 100%;
+  height: 100%;
+}
+
+.infoRight {
+  width: 60%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.infoRightTop {
+  widht: 100%;
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.infoRightBottom {
+  width: 100%;
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.classLabel {
+  font-size: 20px;
+  color: #19347a;
+}
+
+.itemLabel {
+  color: #19347a;
+  white-space: nowrap;
+}
+
+.itemValue {
+  color: gray;
+}
+
+.class {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.item {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.items {
+  width: 100%;
+  height: auto;
+  padding-left: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.selectDiv {
+  width: 100%;
+  height: 90%;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.mapDiv {
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+}
+
+.directionDiv {
+  width: 50%;
+  height: 100%;
+}
+
+.directions {
+  color: gray;
+}
+.directions > b {
+  color: #19347a;
+}
+
+.seperator {
+  width: 100%;
+  height: 1px;
+  background-color: #19347a;
+}
+
+.infoRightBottomTextareas {
+  width: 100%;
+  height: auto;
+  display: flex;
+}
+
+.itemTextarea {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.updateButton {
+  height: auto;
+  display: flex;
+  align-items: center;
+}
+
+.itemLabelBox {
+  width: 18%;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.addInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.item1 {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+/*# sourceMappingURL=info-block.module.css.map */
