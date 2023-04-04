@@ -116,14 +116,14 @@ const NavigationTab: React.FC<INavigationTab> = (
                     <div className={s.iconAbbr}>
                         Filters
                     </div>
-                    <Filters height="24px" onClick={showFilter} />
+                    <Filters height="24px" onClick={showFilter} className={s.iconTest}/>
                 </div>}
                 {isFileUploader && <div className={s.upload_block}>
                     <div className={s.iconAbbr}>
                         Upload
                     </div>
                     <label htmlFor="uploadFile">
-                        <Upload />
+                        <Upload className={s.iconTest}/>
                     </label>
                     <input
                         id="uploadFile"
@@ -153,7 +153,7 @@ const NavigationTab: React.FC<INavigationTab> = (
                     <div className={s.iconAbbr}>
                         {open ? "Close" : "Search"}
                     </div>
-                    {open ? <Close /> : <Search className={s.iconTest}/>}
+                    {open ? <Close className={s.iconTest}/> : <Search className={s.iconTest}/>}
                 </div>
             </div>
             <div
