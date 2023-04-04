@@ -10,6 +10,7 @@
 .table_wrapper {
   width: 100%;
   overflow: auto;
+  padding: 0 20px;
 }
 
 .table_upper_tab_box {

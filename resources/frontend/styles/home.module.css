@@ -166,8 +166,9 @@ body {
 }
 
 .table_wrapper {
-  margin-top: 10px;
+  width: 100%;
   overflow: auto;
+  padding: 0 20px;
 }
 
 .detector {
