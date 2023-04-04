@@ -225,7 +225,7 @@ const Drawer: React.FC = ({ children }) => {
                                         </div>
                                     </div>
                                 }
-                            </div>  
+                            </div>
                         </div>
                     </div>
 
@@ -283,7 +283,7 @@ const Drawer: React.FC = ({ children }) => {
                                                 <span className={s.link_block}>
                                                 <span className={s.side_icon}>
                                                     {/*{li.Icon}*/}
-                                                    {userData.user.count > 1 ? <> <NotificationActive /> <span
+                                                    {notificationCount.count > 0 ? <> <NotificationActive /> <span
                                                             className={s.bage}>{notificationCount.count}</span></> :
                                                         <Notification />}
                                                 </span>

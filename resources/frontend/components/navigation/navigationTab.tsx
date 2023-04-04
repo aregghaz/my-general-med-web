@@ -90,7 +90,7 @@ const NavigationTab: React.FC<INavigationTab> = (
                         Claim Trip
                     </div>
                     <ClaimTrip
-                        className={`${s.icon} ${typeId === 1 || typeId === 4 || typeId === 5 || typeId === 6 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
+                        className={`${s.icon} ${s.iconClime} ${typeId === 1 || typeId === 4 || typeId === 5 || typeId === 6 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
                         onClick={() => handleActionMiddleware(1, "default")}
                     />
                 </div>}
@@ -99,7 +99,7 @@ const NavigationTab: React.FC<INavigationTab> = (
                         ReRoute
                     </div>
                     <RemoveIcon
-                        className={`${s.icon} ${typeId === 2 || typeId === 4 || typeId === 5 || typeId === 6 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
+                        className={`${s.icon} ${s.iconClime} ${typeId === 2 || typeId === 4 || typeId === 5 || typeId === 6 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
                         onClick={() => handleActionMiddleware(4, "reRoute")}
                     />
                 </div>}

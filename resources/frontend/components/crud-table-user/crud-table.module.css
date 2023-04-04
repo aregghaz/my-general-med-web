@@ -60,7 +60,7 @@
   cursor: pointer;
   margin: 0 3px;
   transition: 0.1s;
-  fill: #3F7AAD;
+  fill: $aquaColor;
 }
 .iconsWrapper .iconColor {
   width: 32px;
@@ -134,8 +134,8 @@
   min-width: 190px;
   table-layout: auto;
   background-color: rgb(228, 235, 243);
-  border-top: 2px solid #3F7AAD;
-  border-bottom: 2px solid #3F7AAD;
+  border-top: 2px solid $aquaColor;
+  border-bottom: 2px solid $aquaColor;
   width: 100%;
   font-size: min(max(16px, 1vw), 19px);
 }
@@ -189,7 +189,7 @@
   vertical-align: inherit;
   padding-left: 20px;
   color: #332e2e;
-  border-bottom: 0.1px solid #3F7AAD;
+  border-bottom: 0.1px solid $aquaColor;
   height: 70px;
 }
 
