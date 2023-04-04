@@ -153,7 +153,7 @@ const NavigationTab: React.FC<INavigationTab> = (
                     <div className={s.iconAbbr}>
                         {open ? "Close" : "Search"}
                     </div>
-                    {open ? <Close /> : <Search />}
+                    {open ? <Close /> : <Search className={s.iconTest}/>}
                 </div>
             </div>
             <div

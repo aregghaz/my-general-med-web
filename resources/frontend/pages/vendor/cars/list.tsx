@@ -114,7 +114,7 @@ const Cars: React.FC<Beneficiary> = () => {
                         padding: "10px 10px 0 0"
                     }}><CloseSvg onClick={handlerClose} /></div>
                     <InfoBlockCar data={itemData} is_admin={false} /></div>}
-            <div className={Object.keys(itemData).length > 0 ? s.itemOpen : s.ItemClose}>
+            <div className={`${Object.keys(itemData).length > 0 ? s.itemOpen : s.ItemClose} ${s.driverTable}`}>
                 <List
                     data={data}
                     titles={titles}

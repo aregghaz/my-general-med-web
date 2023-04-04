@@ -1,6 +1,7 @@
 import React, {FC} from "react";
 import {useSelector} from "react-redux";
 import {getUserData} from "../../../store/selectors";
+import cls from "./profile.module.scss"
 
 interface VendorProfileProps {
     path?: string,
@@ -12,10 +13,11 @@ const VendorProfile:FC<VendorProfileProps> = ({
     const userData = useSelector(getUserData).user
     console.log(userData)
     return (
-        <div>
-            {/*{<span><}*/}
+        <div className={cls.profileWrapper}>
+            {<span>{userData.name}</span>}
         </div>
     )
+
 }
 
 // userData.address

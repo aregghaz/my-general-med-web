@@ -126,6 +126,7 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
                             <div className={s.datepicker}>
                                 <DataPicker
                                     name={`${name}_exp`}
+                                    type={true}
                                     setFieldValue={setFieldValue}
                                     selectRange={false}
                                     ///  handleChange={handleChange}

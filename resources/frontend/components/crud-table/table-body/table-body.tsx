@@ -150,6 +150,7 @@ const TableBody: React.FC<ITableBody> = (
                                             <div className={s.iconLabel}>Delete</div>
                                                <TrashIcon
                                             className={s.trashIcon}
+
                                             onClick={() => handlerAction("delete", item.id)}
                                         />
                                         </div>

@@ -3,7 +3,7 @@ import useLocalStorage from "../../hooks/use-local-storage";
 import Checkbox from "../checkbox/checkbox";
 import ReactSelect, {components, MenuProps, OptionProps, OptionTypeBase} from "react-select";
 import {useTranslation} from "react-i18next";
-
+import {selectStyles} from "../../utils/cssUtils";
 import s from "./select.module.scss";
 import Button from "../button/button";
 import removeIcon from "../../svgs/removeIcon.svg"
@@ -164,85 +164,7 @@ const Select: React.FC<ISelect> = (
                     <ReactSelect
                         ref={selectRef}
                         isMulti={isMulti}
-                        styles={{
-                            control: (baseStyles, state) => ({
-                                ...baseStyles,
-                                display: "flex",
-                                borderButton: "1px solid #D63D3D",
-                                width: "100%",
-                                outline: "none",
-                                border: "none",
-                                boxShadow: "none !important",
-                                borderRadius: 0,
-                                overflowX: "auto",
-                                "&:hover": {
-                                    boxShadow: "none",
-                                    // borderBottom: "1px solid #194b76",
-                                }
-                            }),
-                            valueContainer: (baseStyles, state) => ({
-                                ...baseStyles,
-                                display: "flex",
-                                flexDirection: "row"
-                            }),
-                            // indicatorsContainer: base => ({
-                            //     ...base,
-                            //     color: "aqua",
-                            // }),
-                            menu: (baseStyles, state) => ({
-                                ...baseStyles,
-                                backgroundColor: "white",
-                                marginTop: "3px",
-                                zIndex: 9999,
-                                right: "0",
-                                outline: "none",
-                                display: "inline-block",
-                                width: 'auto',
-                                boxShadow: "0px 3px 3px gray"
-                            }),
-                            option: (baseStyles, state) => ({
-                                ...baseStyles,
-                                display: "inline-block",
-                                width: 'auto',
-                                padding: "15px",
-                                fontWeight: 500,
-                                backgroundColor: state.isSelected ? "#D63D3D" : baseStyles.backgroundColor
-                            }),
-                            menuList: base => ({
-                                ...base,
-                                // kill the white space on first and last option
-                                padding: "0px",
-                                display: "flex",
-                                flexDirection: "column",
-                                backgroundColor: "white"
-                                /// borderRadius: "5px",
-                            }),
-                            multiValue: (baseStyles, state) => ({
-                                ...baseStyles,
-                                fontSize: 20,
-                                // borderRadius: "15px",
-                                // lineHeight: 1.5,
-                                // color: "black",
-                                color: "gray",
-                                fontWeight: "bold",
-                                borderButton: "1px solid #D63D3D",
-                                backgroundColor: "white"
-                            }),
-                            multiValueLabel: (styles: any, {data}: any) => ({
-                                ...styles,
-                                // backgroundColor: '#6D9886',
-                                backgroundColor: "white",
-                                color: data.color
-                            }),
-                            placeholder: (base) => ({
-                                ...base,
-                                color: "#757575",
-                            }),
-                            singleValue: (base) => ({
-                                ...base,
-                                color: "gray",
-                            })
-                        }}
+                        styles={selectStyles}
                         className={s.select}
                         placeholder={placeholder}
                         components={isCheckbox ? {

@@ -208,20 +208,22 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                                value={values["range"] ? `${timestampToDate(values["range"][0])} - ${timestampToDate(values["range"][1])}` : "mm/dd/yyyy - mm/dd/yyyy"}
                                                label={"range"} onClick={handlerShowCalendar} />
 
-                                        {showCalendar && <Calendar
-                                            formats="MM-dd-yyyy"
-                                            selected={new Date().toLocaleDateString()}
-                                            /// className={s.dataPicker}
-                                            selectRange={true}
-                                            onKeyDown={(e: any) => {
-                                                e.preventDefault();
-                                            }}
-                                            onChange={(date: any) => {
-                                                console.log(date);
-                                                setFieldValue("range", date);
-                                                ////  setShow(!show);
-                                            }}
-                                        />}
+                                        {/*{showCalendar && <Calendar*/}
+                                        {/*    formats="MM-dd-yyyy"*/}
+                                        {/*    selected={new Date().toLocaleDateString()}*/}
+                                        {/*    /// className={s.dataPicker}*/}
+                                        {/*    selectRange={true}*/}
+                                        {/*    onKeyDown={(e: any) => {*/}
+                                        {/*        e.preventDefault();*/}
+                                        {/*    }}*/}
+                                        {/*    onChange={(date: any) => {*/}
+                                        {/*        console.log(date);*/}
+                                        {/*        setFieldValue("range", date);*/}
+                                        {/*        ////  setShow(!show);*/}
+                                        {/*    }}*/}
+                                        {/*/>}*/}
+
+                                        {showCalendar && <DataPicker name={"range"} selectRange={true} setFieldValue={(name,date) => {}} value={new Date().toLocaleDateString()}/>}
                                     </div>
 
                                 </>

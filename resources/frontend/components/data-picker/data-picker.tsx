@@ -10,6 +10,7 @@ interface IDataPicker {
     ///value: (name: string, option: IOption) => void
     label?: string;
     selectRange: boolean,
+    type?: boolean,
     name: string;
     value: any;
     style?: any;
@@ -23,6 +24,7 @@ const DataPicker: React.FC<IDataPicker> = (
         setFieldValue,
         selectRange = false,
         label,
+        type = false,
         value,
         style = {},
         error
@@ -30,10 +32,10 @@ const DataPicker: React.FC<IDataPicker> = (
     const [show, setShow] = useState<boolean>(false);
     const calendarRef = useRef<HTMLDivElement>(null)
     // const getDateValue = value ? new Date(value) : 'mm/dd/yyyy';
-    const outsideClickHandler = (e:any) => {
+    const outsideClickHandler = (e: any) => {
         setShow(false)
     }
-    useOnClickOutside(calendarRef,outsideClickHandler)
+    useOnClickOutside(calendarRef, outsideClickHandler)
     return (
         <>
             {error && !value && <span className={s.error}>{error}</span>}
@@ -42,9 +44,11 @@ const DataPicker: React.FC<IDataPicker> = (
                 style={{
                     ...style,
                     color: value ? "gray" : "C4C4C4",
-                    border: error && !value ? "1px solid red" : "",
-            }} type="text"  className={s.input} value={ value ? timestampToDate(new Date(value)) : timestampToDate(new Date().toLocaleDateString())} onClick={() => setShow(!show)}
-                   readOnly={true} />
+                    border: error && !value ? "1px solid red" : type ? "none" : "",
+                }} type="text" className={s.input}
+                value={value ? timestampToDate(new Date(value)) : timestampToDate(new Date().toLocaleDateString())}
+                onClick={() => setShow(!show)}
+                readOnly={true}/>
             {show && <div className={s.dataPicker} ref={calendarRef}><Calendar
 
                 value={value ? new Date(value) : new Date()}

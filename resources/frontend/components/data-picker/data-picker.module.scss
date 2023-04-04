@@ -22,6 +22,7 @@
 
 
 .input {
+    cursor: pointer;
     user-select: none;
     position: relative;
     //width: calc(100% - 12px);
@@ -35,6 +36,7 @@
     outline: none;
     color: gray;
     margin-top: 10px;
+    border-bottom: 1px solid $borderColor;
     @include themify($themes) {
         color: themed('modalTitleColor');
         background-color: themed('modalInputBgColor');
