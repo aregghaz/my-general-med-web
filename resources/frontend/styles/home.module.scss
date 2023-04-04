@@ -161,6 +161,14 @@ body {
 .table_wrapper {
     width: 100%;
     overflow: auto;
+<<<<<<< HEAD
+=======
+    //border: 1px solid #ddd;
+    padding: 0 0;
+}
+
+.tableContainer{
+>>>>>>> 7c8d66a (icons)
     padding: 0 20px;
 }
 
@@ -237,7 +245,6 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    //border: 1px solid red;
 }
 
 .modalDiv {
@@ -257,3 +264,7 @@ body {
         cursor: pointer;
     }
 }
+
+//.panel{
+//    border: 1x solid red;
+//}

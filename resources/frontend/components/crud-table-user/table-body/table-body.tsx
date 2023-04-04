@@ -114,7 +114,7 @@ const TableBody: React.FC<ITableBody> = (
                                             <span className={`${s.tooltip} ${s.historySpan}`}>
                                             <span className={`${s.tooltiptext} ${s.history}`}>Assign</span>
                                             <AssignIcon
-                                                className={s.icon}
+                                                className={`${s.icon} ${s.iconCar}`}
                                                 onClick={() => handlerAction(item.id, "assign")}
                                             />
                                             </span>
@@ -133,7 +133,7 @@ const TableBody: React.FC<ITableBody> = (
                                         <span className={`${s.tooltip} ${s.assignVendorSpan}`}>
                                             <span className={`${s.tooltiptext} ${s.assignVendor}`}>Assign</span>
                                         <AssignVendorIcon
-                                            className={s.icon}
+                                            className={`${s.icon} ${s.iconVendor}`}
                                             onClick={() => handlerAction(item.id, "assignVendor")}
                                         />
                                         </span>

@@ -93,6 +93,9 @@
         fill: $asteriskColor;
         color: $asteriskColor;
     }
+
+
+
 }
 
 .iconLabel {
@@ -270,10 +273,31 @@
         width: 30px;
         height: 30px;
         cursor: pointer;
+        fill: none;
         stroke: #3F7AAD;
+        stroke-width: 3px;
         position: relative;
         top: 2px;
     }
+
+    .userEditIcon{
+        width: 25px;
+        height: 25px;
+        stroke-width: 2px;
+        position: relative;
+        top: -2px
+    }
+    .priceIcon{
+        position: relative;
+        left: 3px;
+    }
+
+    .editIcon:hover{
+        fill: none;
+        stroke: red;
+    }
+
+
 
     .trashIcon {
         width: 25px;
@@ -284,4 +308,10 @@
         //top: -5px;
     }
 
+
+
+}
+
+.iconsWrapper:hover .userEditIcon{
+    fill: none;
 }

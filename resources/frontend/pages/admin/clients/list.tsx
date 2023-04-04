@@ -446,26 +446,29 @@ const Home: React.FC<IHome> = () => {
                     </Button>
                 }
             </div>
-            <div ref={contentRef} className={s.table_wrapper}>
-                <CrudTable
-                    titles={selectedTitle}
-                    data={clients}
-                    isEdit
-                    action
-                    isInfo
-                    isGetHistory
-                    isAssignVendor
-                    handlerAction={handlerAction}
-                    tableRef={tableRef}
-                    className={"pagination"}
-                    selectedIds={ids}
-                    typeId={typeId}
-                    isAssign={false}
-                    isClaim={false}
-                    isRemove={false}
-                    isDelete
-                />
-                <div className={s.detector} ref={ref} />
+            <div className={s.tableContainer}>
+                <div ref={contentRef} className={s.table_wrapper}>
+                    <CrudTable
+                        titles={selectedTitle}
+                        data={clients}
+                        isEdit
+                        action
+                        isInfo
+                        isGetHistory
+                        isAssignVendor
+                        handlerAction={handlerAction}
+                        tableRef={tableRef}
+                        className={"pagination"}
+                        selectedIds={ids}
+                        typeId={typeId}
+                        isAssign={false}
+                        isClaim={false}
+                        isRemove={false}
+                        isDelete
+                    />
+                    <div className={s.detector} ref={ref} />
+                </div>
+
             </div>
 
         </>

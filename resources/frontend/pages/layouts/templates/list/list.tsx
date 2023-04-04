@@ -52,22 +52,24 @@ const List: React.FC<IList> = (
                     </Button>
                 }
             </div>
-
-            <div className={s.table_wrapper}>
-                <CrudTable
-                    titles={titles}
-                    data={data}
-                    tableRef={tableRef}
-                    isEdit={isEdit}
-                    isDelete={isDelete}
-                    isGetInfo={isGetInfo}
-                    isPrice={isPrice}
-                    isGetItems={isGetItems}
-                    handlerAction={handlerAction}
-                    className={className}
-                    isGetHistory={isGetHistory}
-                />
+            <div className={s.tableContainer}>
+                <div className={s.table_wrapper}>
+                    <CrudTable
+                        titles={titles}
+                        data={data}
+                        tableRef={tableRef}
+                        isEdit={isEdit}
+                        isDelete={isDelete}
+                        isGetInfo={isGetInfo}
+                        isPrice={isPrice}
+                        isGetItems={isGetItems}
+                        handlerAction={handlerAction}
+                        className={className}
+                        isGetHistory={isGetHistory}
+                    />
+                </div>
             </div>
+
         </>
     );
 };

@@ -81,7 +81,7 @@ const NavigationTab: React.FC<INavigationTab> = (
                         Assign Vendor
                     </div>
                     <AssignVendorIcon
-                        className={`${s.icon}  ${typeId === 5 || typeId === 6 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
+                        className={`${s.icon} ${s.iconVendor}  ${typeId === 5 || typeId === 6 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
                         onClick={() => handleActionMiddleware()}
                     />
                 </div>}
@@ -108,7 +108,7 @@ const NavigationTab: React.FC<INavigationTab> = (
                         Assign Car
                     </div>
                     <AssignIcon
-                        className={`${s.icon} ${typeId === 2 || typeId === 4 || typeId === 5 || typeId === 6 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
+                        className={`${s.icon} ${s.iconCar} ${typeId === 2 || typeId === 4 || typeId === 5 || typeId === 6 || ids.length == 0 ? s.disabled_action : s.enabled_action}`}
                         onClick={() => handleActionMiddleware(99, "assign")}
                     />
                 </div>}

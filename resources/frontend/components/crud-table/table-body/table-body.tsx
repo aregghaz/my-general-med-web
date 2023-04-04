@@ -120,7 +120,7 @@ const TableBody: React.FC<ITableBody> = (
                                         <div className={s.iconWrapper}>
                                             <div className={s.iconLabel}>Users</div>
                                             <UsersIcon
-                                                className={s.editIcon}
+                                                className={`${s.editIcon} ${s.userEditIcon}`}
                                                 onClick={() => handlerAction("getVendorUser", item.id)}
                                             />
                                         </div>
@@ -140,7 +140,7 @@ const TableBody: React.FC<ITableBody> = (
                                         <div className={s.iconWrapper}>
                                             <div className={s.iconLabel}>Price List</div>
                                                <PriceSVG
-                                            className={s.trashIcon}
+                                            className={`${s.trashIcon} ${s.priceIcon}`}
                                             onClick={() => handlerAction("price", item.id)}
                                         />
                                         </div>

@@ -432,27 +432,30 @@ const Home: React.FC<IHome> = () => {
 
             </div>
             <PopupModal isOpen={isOpen} agreeWith={agreeWith} notAgreeWith={notAgreeWith} />
-            <div className={s.table_wrapper}>
-                <CrudTable
-                    titles={selectedTitle}
-                    data={clients}
-                    action
-                    isInfo
-                    isAssign
-                    isClaim
-                    isRemove
-                    tableRef={tableRef}
-                    handlerAction={handlerAction}
-                    className={"pagination"}
-                    selectedIds={ids}
-                    typeId={typeId}
-                    isDelete={false}
-                    isAssignVendor={false}
-                    isEdit={false}
-                    isGetHistory={false}
-                />
-                <div className={s.detector} ref={ref} />
+            <div className={s.tableContainer}>
+                <div className={s.table_wrapper}>
+                    <CrudTable
+                        titles={selectedTitle}
+                        data={clients}
+                        action
+                        isInfo
+                        isAssign
+                        isClaim
+                        isRemove
+                        tableRef={tableRef}
+                        handlerAction={handlerAction}
+                        className={"pagination"}
+                        selectedIds={ids}
+                        typeId={typeId}
+                        isDelete={false}
+                        isAssignVendor={false}
+                        isEdit={false}
+                        isGetHistory={false}
+                    />
+                    <div className={s.detector} ref={ref} />
+                </div>
             </div>
+
 
         </>
     );

@@ -153,3 +153,25 @@ stroke: white;
     stroke: #3F7AAD;
 }
 
+
+
+.iconVendor{
+    stroke-width: 3px;
+    stroke: #3F7AAD;
+    fill: none;
+}
+
+.import_block:hover .iconVendor{
+    stroke: #ffff;
+    opacity: 1;
+}
+
+.iconCar{
+    fill: none;
+    stroke: #3F7AAD;
+    stroke-width: 2px;
+}
+
+.import_block:hover .iconCar{
+    stroke: #ffff;
+}

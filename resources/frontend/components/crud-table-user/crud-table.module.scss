@@ -81,14 +81,23 @@
         fill: #3F7AAD;
     }
 
-    .iconColor {
-        width: 32px;
-        height: 32px;
+
+    .iconCar{
+        fill: none;
+        stroke: #3F7AAD;
+        stroke-width: 2px;
     }
 
-    .iconColor:hover {
-        stroke: red;
+
+    .iconColor {
+        width: 40px;
+        height: 40px;
+        fill: none;
+        stroke: #3F7AAD;
+        stroke-width: 2px;
     }
+
+
 
     .iconInfo {
         width: 30px;
@@ -100,6 +109,30 @@
         color: red;
         fill: red;
     }
+
+    .iconCar:hover{
+        fill: none;
+        stroke: red;
+    }
+
+    .iconColor:hover {
+        stroke: red;
+        fill: none;
+    }
+
+    .iconVendor{
+        width: 30px;
+        height: 30px;
+        fill: none;
+        stroke: #3F7AAD;
+        stroke-width: 3px;
+    }
+
+    .iconVendor:hover{
+        fill: none;
+        stroke: red;
+    }
+
 }
 
 
@@ -287,8 +320,12 @@
 .arrowSpan {
     margin: 0 5px;
 }
+<<<<<<< HEAD
 .table_wrapper {
     width: 100%;
     overflow: auto;
     padding: 0 20px;
 }
+=======
+
+>>>>>>> 7c8d66a (icons)
