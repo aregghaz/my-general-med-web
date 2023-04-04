@@ -64,10 +64,10 @@ const VendorDriverCreate: React.FC<IUserCreate> = () => {
         "drug_test"
     ];
 
-    return data && <Create
+    return  <Create
         crudKey={crudKey}
         redirectKey={redirectKey}
-        data={data}
+       // data={data}
         fields={fields}
         isAdmin={false}
         requiredFields={requiredFields}
