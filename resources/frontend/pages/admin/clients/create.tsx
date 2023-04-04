@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import FormikHandler, { IItem } from "../../layouts/templates/formik-handler/formik-handler";
 import { useTranslation } from "react-i18next";
 import { AdminApi } from "../../../api/admin-api/admin-api";
@@ -19,7 +19,8 @@ import Input from "../../../components/input/input";
 import timestampToDate from "../../../utils/timestampToDate";
 import Checkbox from "../../../components/checkbox/checkbox";
 import CurrencyInput from "react-currency-input-field";
-
+import useOnClickOutside from "../../../hooks/use-on-click-outside"
+import InputCurrency from "../../../components/inputCurrency/inputcurrency";
 interface IClientCreate {
     path: string;
 }
@@ -34,7 +35,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
     const [checked, setChecked] = useState(false);
     const fields: Array<IItem> = [
         { name: "trip_id", type: "select", label: "trip_type" },
-        { name: "fullName", type: "input", label: "fullName" },
+        { name: "fullName", type: "input", label: "fullName", placeholder:"Full name" },
         { name: "gender", type: "select", label: "gender" },
         { name: "birthday", type: "datepicker", label: "birthday"},
         ///  { name: "los", type: "select", label: "los" },
@@ -42,10 +43,10 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         { name: "waitDuration", type: "select", label: "waitDuration" },
         /// { name: "vendors", type: "select", label: "vendors" },
         { name: "request_type", type: "select", label: "request_type" },
-        { name: "member_unique_identifier", type: "input", label: "member_unique_identifier" },
+        { name: "member_unique_identifier", type: "input", label: "member_unique_identifier", placeholder: "Member unique identifier"},
         ///  { name: "price", type: "input", label: "price", inputType: "number" },
-        { name: "height", type: "input", label: "height" },
-        { name: "weight", type: "input", label: "weight", inputType: "number" },
+        { name: "height", type: "input", label: "height", placeholder: "Height" },
+        { name: "weight", type: "input", label: "weight", inputType: "number", placeholder: "Weight" },
         { name: "miles", type: "input", label: "miles", inputType: "disabled" }
     ];
 
@@ -131,6 +132,14 @@ const ClientCreate: React.FC<IClientCreate> = () => {
 
 
     };
+
+    const closeHandler = () => {
+        setShowCalendar(false)
+    }
+
+    const calendarRef = useRef<HTMLDivElement>(null)
+
+    useOnClickOutside(calendarRef, closeHandler)
     return data && <div>
 
         <Formik
@@ -206,24 +215,27 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                     <div className={s.item}>
                                         <Input name={"showDate"} type={"string"}
                                                value={values["range"] ? `${timestampToDate(values["range"][0])} - ${timestampToDate(values["range"][1])}` : "mm/dd/yyyy - mm/dd/yyyy"}
-                                               label={"range"} onClick={handlerShowCalendar} />
+                                               label={"range"} onClick={handlerShowCalendar}/>
 
-                                        {/*{showCalendar && <Calendar*/}
-                                        {/*    formats="MM-dd-yyyy"*/}
-                                        {/*    selected={new Date().toLocaleDateString()}*/}
-                                        {/*    /// className={s.dataPicker}*/}
-                                        {/*    selectRange={true}*/}
-                                        {/*    onKeyDown={(e: any) => {*/}
-                                        {/*        e.preventDefault();*/}
-                                        {/*    }}*/}
-                                        {/*    onChange={(date: any) => {*/}
-                                        {/*        console.log(date);*/}
-                                        {/*        setFieldValue("range", date);*/}
-                                        {/*        ////  setShow(!show);*/}
-                                        {/*    }}*/}
-                                        {/*/>}*/}
-
-                                        {showCalendar && <DataPicker name={"range"} selectRange={true} setFieldValue={(name,date) => {}} value={new Date().toLocaleDateString()}/>}
+                                        {showCalendar && <>
+                                            <div className={s.rangeCalendar}>
+                                                <Calendar
+                                                    ref={calendarRef}
+                                                    formats="MM-dd-yyyy"
+                                                    selected={new Date().toLocaleDateString()}
+                                                    className={s.dataPicker}
+                                                    selectRange={true}
+                                                    onKeyDown={(e: any) => {
+                                                        e.preventDefault();
+                                                    }}
+                                                    onChange={(date: any) => {
+                                                        console.log(date);
+                                                        setFieldValue("range", date);
+                                                        ////  setShow(!show);
+                                                    }}
+                                                />
+                                            </div>
+                                        </>}
                                     </div>
 
                                 </>
@@ -305,9 +317,16 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                         {/*    label={!checked && "fix price"}*/}
                                         {/*/>*/}
                                         <div className={s.fixedInputWrapper}>
-                                            {checked && <Input name={"price"} type={"number"}
-                                                               value={values["price"]}
-                                                               label={"Fix price"} onChange={handleChange} />}
+                                            {/*{checked && <Input name={"price"} type={"number"}*/}
+                                            {/*                   value={values["price"]}*/}
+                                            {/*                   label={"Fix price"} onChange={handleChange} placeholder={"Fixed Price"}/>}*/}
+                                            {checked && <>
+                                                <InputCurrency
+                                                    type={"number"}
+                                                    name={"price"}
+                                                    label={"Fix price"}
+                                                />
+                                            </>}
                                         </div>
                                     </div>
                                 }
@@ -377,4 +396,4 @@ const ClientCreate: React.FC<IClientCreate> = () => {
 
 };
 
-export default ClientCreate;
+export default ClientCreate

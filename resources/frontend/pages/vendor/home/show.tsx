@@ -15,6 +15,7 @@ import Button from "../../../components/button/button";
 import Textarea from "../../../components/textarea/textarea";
 import getMapResponse from "../../../utils/googleMap";
 import timestampToDate from "../../../utils/timestampToDate";
+import CustomTimePicker from "../../../components/custom-time-picker/customTimePicker";
 
 interface IShow {
     path: string;
@@ -240,29 +241,39 @@ const Show: React.FC<IShow> = ({ id }) => {
                     return (<>
                         <div className={cls.class}>
                             <p className={cls.classLabel}>Step: {index + 1}</p>
-                            <div className={cls.items}>
-                                <div className={cls.item}>
-                                    <span className={cls.itemLabel}>Pickup Address:</span>
-                                    <span className={cls.itemValue}>{item.address}</span>
-                                </div>
-                                {index !== 0 && <div className={cls.item}>
-                                    <span className={cls.itemLabel}>Appointment time:</span>
-                                    <span className={cls.itemValue}>{item.drop_down}</span>
-                                </div>}
-                                {clientById.address.length !== index+1 && <div className={cls.item}>
-                                    <span className={cls.itemLabel}>Pickup time:</span>
-                                    <span className={cls.itemValue}>{item.pick_up}</span>
-                                </div>}
+                            <div className={cls.classInfo}>
+                                <div className={cls.classLeft}>
+                                    <div className={cls.items}>
+                                        <div className={cls.item}>
+                                            <span className={cls.itemLabel}>Pickup Address:</span>
+                                            <span className={cls.itemValue}>{item.address}</span>
+                                        </div>
+                                        {index !== 0 && <div className={cls.item}>
+                                            <span className={cls.itemLabel}>Appointment time:</span>
+                                            {/*<span className={cls.itemValue}>{item.drop_down}</span>*/}
+                                            <CustomTimePicker setFieldValue={setFieldValue} value={item.drop_down} name={`appointmentTime ${index + 1}`}/>
+                                        </div>}
+                                        {clientById.address.length !== index+1 && <div className={cls.item}>
+                                            <span className={cls.itemLabel}>Pickup time:</span>
+                                            {/*<span className={cls.itemValue}>{item.pick_up}</span>*/}
+                                            <CustomTimePicker setFieldValue={setFieldValue} value={item.pick_up} name={`pickupTime ${index + 1}`}/>
+                                        </div>}
 
-                                <div className={cls.item}>
-                                    <span className={cls.itemLabel}>Phone:</span>
-                                    <span className={cls.itemValue}>{item.address_phone}</span>
-                                </div>
-                                <div className={cls.item}>
-                                    <span className={cls.itemLabel}>Comment:</span>
-                                    <span className={cls.itemValue}>{item.address_comments}</span>
-                                </div>
+                                        <div className={cls.item}>
+                                            <span className={cls.itemLabel}>Phone:</span>
+                                            <span className={cls.itemValue}>{item.address_phone}</span>
+                                        </div>
+                                        <div className={cls.item}>
+                                            <span className={cls.itemLabel}>Comment:</span>
+                                            <span className={cls.itemValue}>{item.address_comments}</span>
+                                        </div>
 
+                                    </div>
+
+                                </div>
+                                <div className={cls.classRight}>
+                                    <button className={cls.classSave}>Save</button>
+                                </div>
                             </div>
                         </div>
                         <div className={cls.seperator}></div>
