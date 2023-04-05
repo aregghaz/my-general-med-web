@@ -2363,7 +2363,7 @@ svg[focusable=false] {
   height: auto;
   font-size: 20px;
   font-weight: 600;
-  border-bottom: 0.1px solid gray;
+  border-bottom: 0.1px solid #19347a;
   padding: 20px 0;
 }
 .info-block_itemBorder__27TdG > a {
@@ -2754,7 +2754,7 @@ textarea[type=number] {
   width: 100%;
   row-gap: 20px;
   padding: 15px;
-  border: 0.1px solid #757575;
+  border: 0.1px solid #19347a;
 }
 
 .autocomplete_autocompleteWrapper__3ywd0 {
@@ -2814,7 +2814,7 @@ textarea[type=number] {
 }
 
 .autocomplete_phoneInput__3D47G > input {
-  border-bottom: 1px solid #757575;
+  border-bottom: 1px solid #19347a;
 }
 
 .autocomplete_phoneInput__3D47G > label {
@@ -2993,7 +2993,7 @@ input::-webkit-inner-spin-button {
 }
 
 .car_blankLabel__2UlCB {
-  color: gray;
+  color: #757575;
   position: absolute;
   top: 50%;
   transform: translateY(-25%);
@@ -3468,7 +3468,7 @@ input[type=number] {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  border-right: 0.1px solid gray;
+  border-right: 0.1px solid #19347a;
   padding-right: 20px;
 }
 
