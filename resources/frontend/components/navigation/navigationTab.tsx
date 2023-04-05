@@ -75,7 +75,7 @@ const NavigationTab: React.FC<INavigationTab> = (
         <>
             <Tabs tabs={tabs}
                   handlerChangeTabs={handlerChangeTabs} />
-            <div style={{ display: "flex", gap: "10px" }}>
+            <div style={{ display: "flex", gap: "10px", padding: 20 }}>
                 {isAssignVednor && <div className={s.import_block}>
                     <div className={s.iconAbbr}>
                         Assign Vendor

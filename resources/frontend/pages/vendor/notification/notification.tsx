@@ -72,7 +72,7 @@ const Notification: React.FC<INotificationList> = () => {
                 {model === "driver" && <InfoBlockDriver data={info} is_admin={false} />}
                 {model === "car" && <InfoBlockCar data={info} is_admin={false} />}
             </div>}
-            <div  className={model ? s.itemOpen : s.ItemClose}>
+            <div  className={`${model ? s.itemOpen : s.ItemClose} ${s.notificationTable}`}>
                 <List
                     data={data}
                     titles={titles}

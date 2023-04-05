@@ -372,7 +372,6 @@ const Home: React.FC<IHome> = () => {
                         isShowFiltre
                         IsDateSearch
                     />
-
                 </div>
                 {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
 
