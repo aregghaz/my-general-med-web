@@ -134,7 +134,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
     };
 
     const closeHandler = () => {
-        setShowCalendar(false)
+        setShowCalendar(!showCalendar)
     }
 
     const calendarRef = useRef<HTMLDivElement>(null)
@@ -218,9 +218,8 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                                label={"range"} onClick={handlerShowCalendar}/>
 
                                         {showCalendar && <>
-                                            <div className={s.rangeCalendar}>
+                                            <div className={s.rangeCalendar} ref={calendarRef}>
                                                 <Calendar
-                                                    ref={calendarRef}
                                                     formats="MM-dd-yyyy"
                                                     selected={new Date().toLocaleDateString()}
                                                     className={s.dataPicker}

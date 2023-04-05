@@ -11,10 +11,15 @@ const VendorProfile:FC<VendorProfileProps> = ({
 
 }):React.ReactElement => {
     const userData = useSelector(getUserData).user
-    console.log(userData)
     return (
         <div className={cls.profileWrapper}>
-            {<span>{userData.name}</span>}
+            <div className={cls.profile}>
+                <div className={cls.userInfo}>
+                    {userData.image && <div className={cls.userImage}>
+                        <img src={userData.toString()}/>
+                    </div>}
+                </div>
+            </div>
         </div>
     )
 
