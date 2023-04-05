@@ -35,6 +35,7 @@ const Vendors: React.FC<IVendors> = () => {
         threshold: 1
     });
 
+
     useEffect(() => {
         (async () => {
             if ((inView)) {

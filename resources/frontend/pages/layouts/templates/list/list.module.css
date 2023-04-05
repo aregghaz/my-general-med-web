@@ -11,6 +11,7 @@
   width: 100%;
   overflow: auto;
   padding: 0 0;
+  height: calc(100vh - 170px);
 }
 
 .tableContainer {
@@ -189,6 +190,10 @@
   display: flex;
 }
 
+.notificationTable {
+  margin-top: 70px;
+}
+
 .driverTable {
   margin-top: 70px;
 }
@@ -201,7 +206,6 @@
 }
 
 .upload_panel {
-  padding: 10px 20px 10px 40px;
   border-radius: 5px;
   width: 100%;
   margin-bottom: 10px;

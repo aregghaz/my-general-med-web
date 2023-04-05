@@ -1,0 +1,13 @@
+.profileWrapper {
+  width: 100%;
+  height: auto;
+  display: flex;
+}
+
+.profile {
+  width: 500px;
+  height: 100%;
+  border: 1px solid black;
+}
+
+/*# sourceMappingURL=profile.module.css.map */
