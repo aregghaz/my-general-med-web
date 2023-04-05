@@ -30,6 +30,7 @@ const Show: React.FC<IShow> = ({ id }) => {
     const { clientById } = clientData;
     const { t } = useTranslation();
     const blockRef = useRef(null as HTMLDivElement)
+    const [showMap, setShowMap] = useState<boolean>(false);
 
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: GOOGLE_API_KEY,
@@ -124,6 +125,11 @@ const Show: React.FC<IShow> = ({ id }) => {
                 <span>{timestampToDate(clientById.date_of_service.toString())}</span>
                 |
                 <span><span>Height: {clientById.height}</span> <span>Weight: {clientById.weight}</span></span>
+                <div className={cls.updateButton}>
+                    <Button type={"adminUpdate"} onClick={() => {setShowMap(!showMap)}}>
+                        {showMap ? "Hide Map" : "Show Map"}
+                    </Button>
+                </div>
                 <div className={cls.updateButton}>
                     <Button type={"adminUpdate"} onClick={handlerUpdate}>
                         Update
@@ -254,7 +260,7 @@ const Show: React.FC<IShow> = ({ id }) => {
                 </div>
             </div>
             <div className={cls.infoRightTop}>
-                {isLoaded && <div
+                {isLoaded && showMap && <div
                     className={cls.selectDiv}
                     style={{
                         flexDirection: blockRef.current.clientHeight > window.innerHeight ? "column" : "row"

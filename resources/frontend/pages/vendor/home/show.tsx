@@ -40,6 +40,7 @@ const Show: React.FC<IShow> = ({ id }) => {
         libraries: ["geometry", "drawing", "places"]
     });
     const blockRef = useRef(null as HTMLDivElement)
+    const [showMap, setShowMap] = useState<boolean>(false)
 
 
 
@@ -152,6 +153,11 @@ const Show: React.FC<IShow> = ({ id }) => {
                     |
                     <span><span>Height: {clientById.height}</span> <span>Weight: {clientById.weight}</span></span>
                     <div className={cls.updateButton}>
+                        <Button type={"adminUpdate"} onClick={() => {setShowMap(!showMap)}}>
+                            {showMap ? "Hide Map" : "Show Map"}
+                        </Button>
+                    </div>
+                    <div className={cls.updateButton}>
                         <Button type={"adminUpdate"} onClick={handlerUpdate}>
                             Update
                         </Button>
@@ -252,12 +258,12 @@ const Show: React.FC<IShow> = ({ id }) => {
                                             <span className={cls.itemLabel}>Pickup Address:</span>
                                             <span className={cls.itemValue}>{item.address}</span>
                                         </div>
-                                        {index !== 0 && <div className={cls.item}>
+                                        {index !== 0 && <div className={cls.item} style={{alignItems: "center"}}>
                                             <span className={cls.itemLabel}>Appointment time:</span>
                                             {/*<span className={cls.itemValue}>{item.drop_down}</span>*/}
                                             <CustomTimePicker setFieldValue={setFieldValue} value={item.drop_down} name={`appointmentTime ${index + 1}`}/>
                                         </div>}
-                                        {clientById.address.length !== index+1 && <div className={cls.item}>
+                                        {clientById.address.length !== index+1 && <div className={cls.item} style={{alignItems: "center"}}>
                                             <span className={cls.itemLabel}>Pickup time:</span>
                                             {/*<span className={cls.itemValue}>{item.pick_up}</span>*/}
                                             <CustomTimePicker setFieldValue={setFieldValue} value={item.pick_up} name={`pickupTime ${index + 1}`}/>
@@ -271,12 +277,10 @@ const Show: React.FC<IShow> = ({ id }) => {
                                             <span className={cls.itemLabel}>Comment:</span>
                                             <span className={cls.itemValue}>{item.address_comments}</span>
                                         </div>
-
                                     </div>
-
                                 </div>
                                 <div className={cls.classRight}>
-                                    <button className={cls.classSave}>Save</button>
+                                    <Button type={"adminUpdate"}>Save</Button>
                                 </div>
                             </div>
                         </div>
@@ -308,7 +312,7 @@ const Show: React.FC<IShow> = ({ id }) => {
             <div className={cls.addInfo}>
                 <div className={cls.itemsMap}>
                     <div className={cls.mapBlock}>
-                        {isLoaded && <div
+                        {isLoaded && showMap && <div
                             className={cls.selectDiv}
                             style={{
                                 flexDirection: blockRef.current.clientHeight > window.innerHeight ? "column" : "row"
