@@ -24,7 +24,6 @@ interface IHome {
 }
 
 
-
 const Home: React.FC<IHome> = () => {
     const { t } = useTranslation();
     const countRef = useRef(2);
@@ -105,11 +104,15 @@ const Home: React.FC<IHome> = () => {
     const [titles, setTitles] = useState<string[]>([]);
 
     const openSearch = () => {
+        console.log(open, "open");
         if (open) {
             setQuery("");
+            setDate("");
             setLoading(true);
+        } else {
+            setOpen(!open);
         }
-        setOpen(!open);
+
     };
 
 

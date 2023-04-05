@@ -166,8 +166,12 @@ body {
 }
 
 .table_wrapper {
-  width: 100%;
+  margin-top: 10px;
   overflow: auto;
+  padding: 0 0;
+}
+
+.tableContainer {
   padding: 0 20px;
 }
 

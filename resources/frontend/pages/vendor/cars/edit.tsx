@@ -140,10 +140,10 @@ const CarsEdit: React.FC<IUsersEditItem> = ({ id }) => {
                                                 setFieldValue("make", option);
                                                 loadOptions4(option.id);
                                             }}
-                                            label={"make"}
+                                            label={t("make")}
                                             isSearchable={false}
                                             name={"make"}
-                                            placeholder={"make"}
+                                            placeholder={t("make")}
                                         />
                                     }
                                 </div>
@@ -157,11 +157,10 @@ const CarsEdit: React.FC<IUsersEditItem> = ({ id }) => {
                                             options={make}
                                             /// options={selectOptions}
                                             onChange={(option: IOption) => setFieldValue("model", option)}
-
-                                            label={"model"}
+                                            label={t("model")}
                                             isSearchable={false}
                                             name={"model"}
-                                            placeholder={"model"}
+                                            placeholder={t("model")}
                                         />
                                     }
                                 </div>
@@ -177,10 +176,10 @@ const CarsEdit: React.FC<IUsersEditItem> = ({ id }) => {
                                             /// options={selectOptions}
                                             onChange={(option: IOption) => setFieldValue("drivers", option)}
                                             hideSelectedOptions={true}
-                                            label={"drivers"}
+                                            label={t("drivers")}
                                             isSearchable={true}
                                             name={"drivers"}
-                                            placeholder={"drivers"}
+                                            placeholder={t("drivers")}
                                         />
                                     }
                                 </div>

@@ -10,7 +10,12 @@
 .table_wrapper {
   width: 100%;
   overflow: auto;
+  padding: 0 0;
+}
+
+.tableContainer {
   padding: 0 20px;
+  width: 100%;
 }
 
 .table_upper_tab_box {

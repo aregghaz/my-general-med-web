@@ -187,6 +187,22 @@
   align-items: center;
 }
 
+.classInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.classSave {
+  width: 150px;
+  height: 50px;
+  background-color: #D63D3D;
+  border-radius: 25px;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
 .itemLabelBox {
   width: 18%;
   display: flex;

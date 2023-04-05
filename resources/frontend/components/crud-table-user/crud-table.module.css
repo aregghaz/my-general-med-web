@@ -60,14 +60,19 @@
   cursor: pointer;
   margin: 0 3px;
   transition: 0.1s;
-  fill: $aquaColor;
+  fill: #3F7AAD;
+}
+.iconsWrapper .iconCar {
+  fill: none;
+  stroke: #3F7AAD;
+  stroke-width: 2px;
 }
 .iconsWrapper .iconColor {
-  width: 32px;
-  height: 32px;
-}
-.iconsWrapper .iconColor:hover {
-  stroke: red;
+  width: 40px;
+  height: 40px;
+  fill: none;
+  stroke: #3F7AAD;
+  stroke-width: 2px;
 }
 .iconsWrapper .iconInfo {
   width: 30px;
@@ -77,6 +82,25 @@
   transform: translateY(-3px);
   color: red;
   fill: red;
+}
+.iconsWrapper .iconCar:hover {
+  fill: none;
+  stroke: red;
+}
+.iconsWrapper .iconColor:hover {
+  stroke: red;
+  fill: none;
+}
+.iconsWrapper .iconVendor {
+  width: 30px;
+  height: 30px;
+  fill: none;
+  stroke: #3F7AAD;
+  stroke-width: 3px;
+}
+.iconsWrapper .iconVendor:hover {
+  fill: none;
+  stroke: red;
 }
 
 .tableRow {
@@ -134,8 +158,8 @@
   min-width: 190px;
   table-layout: auto;
   background-color: rgb(228, 235, 243);
-  border-top: 2px solid $aquaColor;
-  border-bottom: 2px solid $aquaColor;
+  border-top: 2px solid #3F7AAD;
+  border-bottom: 2px solid #3F7AAD;
   width: 100%;
   font-size: min(max(16px, 1vw), 19px);
 }
@@ -189,7 +213,7 @@
   vertical-align: inherit;
   padding-left: 20px;
   color: #332e2e;
-  border-bottom: 0.1px solid $aquaColor;
+  border-bottom: 0.1px solid #3F7AAD;
   height: 70px;
 }
 
@@ -241,12 +265,6 @@
 
 .arrowSpan {
   margin: 0 5px;
-}
-
-.table_wrapper {
-  width: 100%;
-  overflow: auto;
-  padding: 0 20px;
 }
 
 /*# sourceMappingURL=crud-table.module.css.map */
