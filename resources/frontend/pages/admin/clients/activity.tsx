@@ -36,7 +36,7 @@ const ActivityClient: React.FC<Beneficiary> = ({ clientId }) => {
 
     return (
         data && (
-            <>
+            <div style={{marginTop: 70}}>
                 <List
                     data={data}
                     titles={titles}
@@ -49,7 +49,7 @@ const ActivityClient: React.FC<Beneficiary> = ({ clientId }) => {
                     isGetItems={false}
                     ///   handlerAction={handlerAction}
                 />
-            </>
+            </div>
         )
     );
 };

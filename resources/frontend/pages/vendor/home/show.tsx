@@ -178,49 +178,53 @@ const Show: React.FC<IShow> = ({ id }) => {
             </div>
             <div className={cls.item1}>
                 <div className={cls.itemsBlock}>
-                    <Select
-                        getOptionValue={(option: IOption) => option.value}
-                        getOptionLabel={(option: IOption) => t(option.label)}
-                        onChange={(options: IOption) => setFieldValue((state: any) => {
-                            return {
-                                ...state,
-                                car: options
-                            };
-                        })}
-                        placeholder={"Select Car"}
-                        isDisabled={disabled}
-                        options={carData}
-                        value={values.car}
-                        name={"Cars"}
-                        isMulti={false}
-                        label={"Cars"}
-                    />
+                    <div className={cls.itemsSelects}>
+                        <div className={cls.itemsSelect}>
+                            <Select
+                                getOptionValue={(option: IOption) => option.value}
+                                getOptionLabel={(option: IOption) => t(option.label)}
+                                onChange={(options: IOption) => setFieldValue((state: any) => {
+                                    return {
+                                        ...state,
+                                        car: options
+                                    };
+                                })}
+                                placeholder={"Select Car"}
+                                isDisabled={disabled}
+                                options={carData}
+                                value={values.car}
+                                name={"Cars"}
+                                isMulti={false}
+                                label={"Cars"}
+                            />
+                        </div>
+                        <div className={cls.itemsSelect}>
+                            <Select
+                                getOptionValue={(option: IOption) => option.value}
+                                getOptionLabel={(option: IOption) => t(option.label)}
+                                onChange={(options: IOption) => {
+                                    return setFieldValue((state: any) => {
+                                        return {
+                                            ...state,
+                                            status: options
+                                        };
+                                    });
+                                }}
+                                isDisabled={disabled}
+                                options={statuses}
+                                value={values.status}
+                                name={"Cars"}
+                                isMulti={false}
+                                label={"Status"}
+                                placeholder={"Select status"}
+                            />
+                        </div>
+                    </div>
                 </div>
                 {/*<div className={cls.itemsBlock}>*/}
                 {/*    <span className={cls.b_text}>{t("height")}: </span>*/}
                 {/*    {clientById.height}*/}
                 {/*</div>*/}
-                <div className={`${cls.itemsBlock} ${cls.itemsStatus}`}>
-                     <Select
-                         getOptionValue={(option: IOption) => option.value}
-                         getOptionLabel={(option: IOption) => t(option.label)}
-                         onChange={(options: IOption) => {
-                             return setFieldValue((state: any) => {
-                                 return {
-                                     ...state,
-                                     status: options
-                                 };
-                             });
-                         }}
-                         isDisabled={disabled}
-                         options={statuses}
-                         value={values.status}
-                         name={"Cars"}
-                         isMulti={false}
-                         label={"Status"}
-                         placeholder={"Select status"}
-                     />
-                </div>
                 <div className={cls.addon} style={{
                     borderTop: "none",
                 }}>

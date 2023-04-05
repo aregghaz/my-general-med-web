@@ -17,7 +17,7 @@ const customStyles: ReactModal.Styles = {
         // backgroundColor: "#194b76",
     },
     overlay: {
-        zIndex: 99999,
+        zIndex: 1111111111,
         overflow: "hidden",
         // background: "rgba(0, 0, 0, 0.35)",
         backdropFilter: "blur(5px)",
