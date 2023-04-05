@@ -57,7 +57,7 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
 
         <>
             {label && <label style={{
-                color: defaultValue ? "#194b76" : "#C4C4C4"
+                color: defaultValue ? "#194b76" : "#757575"
             }} className={`${s.label} ${labelStyle}`} htmlFor={name}>{label}</label>}
             <div className={s.selectWrapper}>
                 <Select

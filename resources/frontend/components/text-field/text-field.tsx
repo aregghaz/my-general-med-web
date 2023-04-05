@@ -35,7 +35,7 @@ const TextField: React.FC<ITextField> = (
             {
                 label &&
                 <label className={s.label} htmlFor={name} style={{
-                    color: value ? "#194b76" : "#C4C4C4"
+                    color: value ? "#194b76" : "#757575"
                 }}>
                     {label}
                 </label>
@@ -53,7 +53,7 @@ const TextField: React.FC<ITextField> = (
                 onChange={onChange}
                 autoComplete={autoComplete}
                 style={{
-                    borderColor: value ? "#194b76" : "#C4C4C4"
+                    borderColor: value ? "#194b76" : "#19347a"
                 }}
             />
         </div>

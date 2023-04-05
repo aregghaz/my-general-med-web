@@ -39,11 +39,11 @@ const DataPicker: React.FC<IDataPicker> = (
     return (
         <>
             {error && !value && <span className={s.error}>{error}</span>}
-            {label && <label style={{color: value ? "#194b76" : "#C4C4C4"}} className={s.label}>{label}</label>}
+            {label && <label style={{color: value ? "#194b76" : "#757575"}} className={s.label}>{label}</label>}
             <input
                 style={{
                     ...style,
-                    color: value ? "gray" : "C4C4C4",
+                    color: value ? "grey" : "C4C4C4",
                     border: error && !value ? "1px solid red" : type ? "none" : "",
                 }} type="text" className={s.input}
                 value={value ? timestampToDate(new Date(value)) : timestampToDate(new Date().toLocaleDateString())}

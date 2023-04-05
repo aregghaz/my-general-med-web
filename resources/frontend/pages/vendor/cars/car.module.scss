@@ -109,7 +109,7 @@
 }
 
 .blankLabel {
-    color: gray;
+    color: $placeholderColor;
     position: absolute;
     top: 50%;
     transform: translateY(-25%);

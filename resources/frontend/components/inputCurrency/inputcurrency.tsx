@@ -47,7 +47,7 @@ const InputCurrency: React.FC<IInput> = (
                     className={`${s.label}`}
                     htmlFor={name}
                     style={{
-                        color: myVal ? "#19347a" :  "#C4C4C4"
+                        color: myVal ? "#19347a" :  "#757575"
                     }}
                 >
                     {`${label}`} {isAsterisk && <span>*</span>}

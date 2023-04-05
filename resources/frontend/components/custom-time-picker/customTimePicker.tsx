@@ -57,7 +57,7 @@ const customTimePicker: FC<customTimePickerProps> = ({
             <div className={cls.top}>
                 <span
                     style={{
-                        color: ((hours.length < 3) && (minutes.length < 3)) ? "#19347a" : "#C4C4C4",
+                        color: ((hours.length < 3) && (minutes.length < 3)) ? "#19347a" : "#757575",
                     }}
                 >{label}</span>
             </div>

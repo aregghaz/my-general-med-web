@@ -129,6 +129,7 @@ const Autocomplete: React.FC<ITextarea> = (
                             apiKey={GOOGLE_API_KEY}
                             selectProps={{
                                 name: `step_${item}`,
+
                                 /// placeholder:'Pick up address',
                                 defaultInputValue: values[`step_${item}`],
                                 onChange: (async (originValue: any) => {
@@ -142,6 +143,7 @@ const Autocomplete: React.FC<ITextarea> = (
                                 className: `${s.input}`,
                                 placeholder: `step_${item}`,
                                 styles: {
+
                                     placeholder: (base) => ({
                                         ...base,
                                         color: "#C4C4C4",
@@ -149,7 +151,9 @@ const Autocomplete: React.FC<ITextarea> = (
                                     menu: (base) => ({
                                         ...base,
                                         zIndex: 9999,
+
                                     }),
+
                                 }
                             }}
                         />
