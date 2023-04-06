@@ -7,15 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { GOOGLE_API_KEY } from "../../../environments";
 import { getClientData } from "../../../store/selectors";
 import { useTranslation } from "react-i18next";
-import TimePicker from "react-time-picker";
-import s from "../../../components/time-picker/timepicker.module.scss";
 import Select, { IOption } from "../../../components/select/select";
 import { toast } from "react-toastify";
-import Button from "../../../components/button/button";
 import Textarea from "../../../components/textarea/textarea";
 import getMapResponse from "../../../utils/googleMap";
 import timestampToDate from "../../../utils/timestampToDate";
 import CustomTimePicker from "../../../components/custom-time-picker/customTimePicker";
+import ShowMap from "-!svg-react-loader!../../../images/showMap.svg"
+import Update from "-!svg-react-loader!../../../images/update.svg"
 
 interface IShow {
     path: string;
@@ -152,16 +151,17 @@ const Show: React.FC<IShow> = ({ id }) => {
                     <span>{timestampToDate(clientById.date_of_service.toString())}</span>
                     |
                     <span><span>Height: {clientById.height}</span> <span>Weight: {clientById.weight}</span></span>
-                    <div className={cls.updateButton}>
-                        <Button type={"adminUpdate"} onClick={() => {setShowMap(!showMap)}}>
-                            {showMap ? "Hide Map" : "Show Map"}
-                        </Button>
+                    <div className={cls.iconsWrapper}>
+                        <div className={cls.updateButton}>
+                            <span className={cls.updateButtonLabel}>Show Map</span>
+                            <ShowMap type={"adminUpdate"} onClick={() => {setShowMap(!showMap)}} className={cls.mapIcon}/>
+                        </div>
+                        <div className={cls.updateButton}>
+                            <span className={cls.updateButtonLabel}>Update</span>
+                            <Update type={"adminUpdate"} onClick={handlerUpdate} className={cls.updateIcon}/>
+                        </div>
                     </div>
-                    <div className={cls.updateButton}>
-                        <Button type={"adminUpdate"} onClick={handlerUpdate}>
-                            Update
-                        </Button>
-                    </div>
+
                 </div>
                 {/*<div className={cls.itemsBlock}>*/}
                 {/*    <span className={cls.b_text}>{t("pick_up")}: </span>*/}
@@ -261,12 +261,20 @@ const Show: React.FC<IShow> = ({ id }) => {
                                         {index !== 0 && <div className={cls.item} style={{alignItems: "center"}}>
                                             <span className={cls.itemLabel}>Appointment time:</span>
                                             {/*<span className={cls.itemValue}>{item.drop_down}</span>*/}
-                                            <CustomTimePicker setFieldValue={setFieldValue} value={item.drop_down} name={`appointmentTime ${index + 1}`}/>
+                                            <CustomTimePicker className={cls.timepicker} setFieldValue={setFieldValue} value={item.drop_down} name={`appointmentTime ${index + 1}`}/>
+                                            <div className={cls.updateButton}>
+                                                <span className={cls.updateButtonLabel}>Update</span>
+                                                <ShowMap type={"adminUpdate"} onClick={() => {setShowMap(!showMap)}} className={cls.saveIcon}/>
+                                            </div>
                                         </div>}
                                         {clientById.address.length !== index+1 && <div className={cls.item} style={{alignItems: "center"}}>
                                             <span className={cls.itemLabel}>Pickup time:</span>
                                             {/*<span className={cls.itemValue}>{item.pick_up}</span>*/}
-                                            <CustomTimePicker setFieldValue={setFieldValue} value={item.pick_up} name={`pickupTime ${index + 1}`}/>
+                                            <CustomTimePicker className={cls.timepicker} setFieldValue={setFieldValue} value={item.pick_up} name={`pickupTime ${index + 1}`}/>
+                                            <div className={cls.updateButton}>
+                                                <span className={cls.updateButtonLabel}>Update</span>
+                                                <ShowMap type={"adminUpdate"} onClick={() => {setShowMap(!showMap)}} className={cls.saveIcon}/>
+                                            </div>
                                         </div>}
 
                                         <div className={cls.item}>
@@ -278,9 +286,6 @@ const Show: React.FC<IShow> = ({ id }) => {
                                             <span className={cls.itemValue}>{item.address_comments}</span>
                                         </div>
                                     </div>
-                                </div>
-                                <div className={cls.classRight}>
-                                    <Button type={"adminUpdate"}>Save</Button>
                                 </div>
                             </div>
                         </div>

@@ -13,6 +13,8 @@ import { AdminApi } from "../../../api/admin-api/admin-api";
 import { toast } from "react-toastify";
 import timestampToDate from "../../../utils/timestampToDate";
 import getMapResponse from "../../../utils/googleMap";
+import ShowMap from "-!svg-react-loader!../../../images/showMap.svg"
+import Update from "-!svg-react-loader!../../../images/update.svg"
 
 interface IShow {
     path: string;
@@ -125,15 +127,23 @@ const Show: React.FC<IShow> = ({ id }) => {
                 <span>{timestampToDate(clientById.date_of_service.toString())}</span>
                 |
                 <span><span>Height: {clientById.height}</span> <span>Weight: {clientById.weight}</span></span>
-                <div className={cls.updateButton}>
-                    <Button type={"adminUpdate"} onClick={() => {setShowMap(!showMap)}}>
-                        {showMap ? "Hide Map" : "Show Map"}
-                    </Button>
-                </div>
-                <div className={cls.updateButton}>
-                    <Button type={"adminUpdate"} onClick={handlerUpdate}>
-                        Update
-                    </Button>
+                {/*<div className={cls.updateButton}>*/}
+                {/*    <Button type={"adminUpdate"} onClick={() => {setShowMap(!showMap)}}>*/}
+                {/*        {showMap ? "Hide Map" : "Show Map"}*/}
+                {/*    </Button>*/}
+                {/*</div>*/}
+                {/*<div className={cls.updateButton}>*/}
+                {/*    /!*<Button type={"adminUpdate"} onClick={handlerUpdate}>*!/*/}
+                {/*    /!*    Update*!/*/}
+                {/*    /!*</Button>*!/*/}
+                {/*</div>*/}
+                <div className={cls.iconsWrapper}>
+                    <div className={cls.updateButton}>
+                        <ShowMap type={"adminUpdate"} onClick={() => {setShowMap(!showMap)}} className={cls.mapIcon}/>
+                    </div>
+                    <div className={cls.updateButton}>
+                        <Update type={"adminUpdate"} onClick={handlerUpdate} className={cls.updateIcon}/>
+                    </div>
                 </div>
             </div>
             <div className={cls.addon}>

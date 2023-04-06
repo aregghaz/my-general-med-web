@@ -9,7 +9,6 @@
     display: flex;
     gap: 20px;
     padding-right: 40px;
-    //border: 1px solid red;
     & * {
         //border: 1px solid black;
     }
@@ -139,6 +138,16 @@
     align-items: flex-start;
     //flex-direction: ;
     gap: 10px;
+    //border: 1px solid red;
+}
+
+.saveIcon{
+    //margin-left: -35px;
+    cursor: pointer;
+}
+
+.timepicker {
+    width: auto;
 }
 
 .items {
@@ -202,6 +211,65 @@
     display: flex;
     //justify-content: flex-end;
     align-items: center;
+    cursor: pointer;
+    position: relative;
+
+    & > .updateButtonLabel {
+        //width: 40px;
+        white-space: nowrap;
+        background-color: #19347a;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 2px 0;
+        position: absolute;
+        z-index: 1;
+        top: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 10px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        pointer-events: none;
+        transistion: 0.5s;
+        opacity: 0;
+    }
+
+    &:hover > .updateButtonLabel {
+        opacity: 1;
+    }
+}
+
+
+.iconsWrapper{
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    .mapIcon{
+
+        fill: #3F7AAD;
+        transition: .5s;
+    }
+
+    .mapIcon:hover{
+        transform: translateY(-5px);
+        fill: $asteriskColor;
+    }
+
+    .updateIcon{
+        fill: none;
+        stroke: #3F7AAD;
+        transition: .5s;
+
+    }
+
+    .updateIcon:hover{
+        transform: translateY(-5px);
+        stroke: $asteriskColor;
+    }
 }
 
 .classInfo {
