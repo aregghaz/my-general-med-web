@@ -53,6 +53,11 @@ const ClientCreate: React.FC<IClientCreate> = () => {
 
     const fields2: Array<IItem> = [
         { name: "trip_id", type: "select", label: "trip_type" },
+        { name: "daysOnWeek", type: "select", label: "daysOnWeek" },
+        { name: "date_of_service", type: "datepicker", label: "date of service" },
+        { name: "range", type: "input", label: "range" },
+        { name: "los", type: "select", label: "los" },
+        { name: "price", type: "input", label: "Fix price"},
         { name: "fullName", type: "input", label: "fullName", placeholder:"Full name" },
         { name: "gender", type: "select", label: "gender" },
         { name: "birthday", type: "datepicker", label: "birthday"},
@@ -91,11 +96,13 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         "waitDuration",
         ///"vendors",
         "request_type",
+        show && "daysOnWeek",
         "member_unique_identifier",
         "height",
         "weight",
-        "price",
-
+        checked && "price",
+        !show && "date_of_service",
+        show && "range",
     ];
 
     const { t } = useTranslation();
@@ -158,8 +165,8 @@ const ClientCreate: React.FC<IClientCreate> = () => {
     }
 
     const calendarRef = useRef<HTMLDivElement>(null)
-
     useOnClickOutside(calendarRef, closeHandler)
+    const [priceValue, setPriceValue] = useState<string>("")
     return data && <div>
         <Formik
             selectOptions={data}
@@ -176,7 +183,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                   setFieldValue,
                   errors
               }) => {
-
+                console.log(errors, "erorrorororor")
                 return (
                     <>
                         {
@@ -227,21 +234,31 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                             options={data["daysOnWeek"]}
                                             isMulti
                                             onChange={(option: IOption) => setFieldValue("daysOnWeek", option)}
-                                            label={"daysOnWeek"}
+                                            // label={"daysOnWeek"}
+                                            label={getFieldLabel(t,"daysOnWeek","daysOnWeek", requiredFields)}
                                             isSearchable={false}
                                             name={"daysOnWeek"}
                                             placeholder={"daysOnWeek"}
+                                            error={errors["daysOnWeek"]}
                                         />
                                     </div>
                                     <div className={s.item}>
-                                        <Input name={"showDate"} type={"string"}
-                                               value={values["range"] ? `${timestampToDate(values["range"][0])} - ${timestampToDate(values["range"][1])}` : "mm/dd/yyyy - mm/dd/yyyy"}
-                                               label={"range"} onClick={handlerShowCalendar}/>
-
+                                        <Input
+                                            name={"showDate"}
+                                            type={"string"}
+                                            value={values["range"] ? `${timestampToDate(values["range"][0])} - ${timestampToDate(values["range"][1])}` : ""}
+                                            placeholder={"Time range"}
+                                            // label={"range"} "mm/dd/yyyy - mm/dd/yyyy"
+                                            label={getFieldLabel(t,"range", "range", requiredFields)}
+                                            readOnly={true}
+                                            onClick={handlerShowCalendar}
+                                            error={errors["range"]}
+                                        />
                                         {showCalendar && <>
                                             <div className={s.rangeCalendar} ref={calendarRef}>
                                                 <Calendar
                                                     formats="MM-dd-yyyy"
+                                                    name={"range"}
                                                     selected={new Date().toLocaleDateString()}
                                                     className={s.dataPicker}
                                                     selectRange={true}
@@ -274,7 +291,9 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                     /// placeholder={getFieldLabel(t, "date_of_service", "date_of_service", requiredFields)}
                                     // error={errors['date_of_service']}
                                     // type={"string"}
-                                    label={t("date of service")}
+                                    // label={t("date of service")}
+                                    label={getFieldLabel(t, "date of service", "date_of_service", requiredFields)}
+                                    error={errors["date_of_service"]}
                                     setFieldValue={setFieldValue} />
                             </div>}
                             <div className={s.item}>
@@ -291,10 +310,12 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                             setFieldValue("los", option);
                                             loadVendorsData(option.id);
                                         }}
-                                        label={"los"}
+                                        // label={"los"}
+                                        label={getFieldLabel(t,"los","los", requiredFields)}
                                         isSearchable={false}
                                         name={"los"}
                                         placeholder={"los"}
+                                        error={errors["los"]}
                                     />
                                 }
                             </div>
@@ -317,7 +338,9 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                             </div>
                             <div className={s.item}>
                                 {
-                                    <div className={s.fixedPriceWrapper}>
+                                    <div className={s.fixedPriceWrapper} style={{
+                                        borderBottom: errors["price"] && !priceValue ? "none" : ""
+                                    }}>
                                         <input
                                             className={s.fixedCheckbox}
                                             type={"checkbox"}
@@ -326,7 +349,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                                 handlerCheckbox()
                                             }}
                                         />
-                                        {!checked && <span>Fix Price</span>}
+                                        {!checked && <span>Fix price</span>}
 
                                         <div className={s.fixedInputWrapper}>
                                             {/*{checked && <Input name={"price"} type={"number"}*/}
@@ -336,8 +359,15 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                                 <InputCurrency
                                                     type={"number"}
                                                     name={"price"}
-                                                    label={"Fix price"}
+                                                    // label={"Fix price"}
+                                                    label={getFieldLabel(t,"Fix price","price",requiredFields)}
+                                                    placeholder={"Fix price"}
                                                     setFieldValue={setFieldValue}
+                                                    className={s.fixedInput}
+                                                    error={errors["price"]}
+                                                    onValueChange={(values:any) => {
+                                                        setPriceValue(values.float)
+                                                    }}
                                                 />
                                             </>}
                                         </div>

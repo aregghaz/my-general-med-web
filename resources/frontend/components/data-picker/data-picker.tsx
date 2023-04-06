@@ -15,7 +15,7 @@ interface IDataPicker {
     value: any;
     style?: any;
 
-    error?: string;
+    error?: any;
 }
 
 const DataPicker: React.FC<IDataPicker> = (
@@ -39,7 +39,7 @@ const DataPicker: React.FC<IDataPicker> = (
     return (
         <>
             {error && !value && <span className={s.error}>{error}</span>}
-            {label && <label style={{color: value ? "#194b76" : "#757575"}} className={s.label}>{label}</label>}
+            {label && <label style={{color: error && !value ? "red" : value ? "#194b76" : "#757575"}} className={s.label}>{label}</label>}
             <input
                 style={{
                     ...style,

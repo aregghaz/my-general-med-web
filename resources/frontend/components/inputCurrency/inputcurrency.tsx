@@ -9,7 +9,7 @@ interface IInput {
     value?: string;
     placeholder?: string;
     type: string;
-    error?: string;
+    error?: any;
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
     onBlur?: (event: ChangeEvent<HTMLInputElement>) => void;
 
@@ -21,6 +21,7 @@ interface IInput {
     className?: string;
     labelStyle?: string;
     ref?: string;
+    onValueChange?: Function
 }
 
 const InputCurrency: React.FC<IInput> = (
@@ -31,8 +32,9 @@ const InputCurrency: React.FC<IInput> = (
         autoComplete = "off",
         disable,
         error,
-        onBlur,
-        onChange,
+        onBlur = () => {},
+        onChange= () => {},
+        onValueChange = () => {},
         setFieldValue = () => {},
         placeholder,
         type = "text",
@@ -44,13 +46,13 @@ const InputCurrency: React.FC<IInput> = (
     const [myVal, setMyVal] = useState("")
     return (
         <>
-            {error && <div className={s.error}>{error}</div>}
+            {error && !myVal && <div className={s.error}>{error}</div>}
             {label &&
                 <label
                     className={`${s.label}`}
                     htmlFor={name}
                     style={{
-                        color: myVal ? "#19347a" :  "#757575"
+                        color: error && !myVal ? "crimson" : myVal ? "#19347a" :  "#757575"
                     }}
                 >
                     {`${label}`} {isAsterisk && <span>*</span>}
@@ -80,6 +82,9 @@ const InputCurrency: React.FC<IInput> = (
             {/*/>*/}
 
             <CurrencyInput
+                style={{
+                    border: error && !myVal ? "1px solid red" : ""
+                }}
                 name={name}
                 id={name}
                 placeholder={placeholder}
@@ -90,7 +95,7 @@ const InputCurrency: React.FC<IInput> = (
                 ref={ref}
                 decimalsLimit={2}
                 decimalSeparator={"."}
-                className={`${s.input} ${!String(value ?? "") ? s.blankInput : ""}  ${className} ${error && s.errorBorder}`}
+                className={`${s.input} ${className}`}
                 // fixedDecimalLength={2}
                 maxLength={6}
                 // value={value}
@@ -106,6 +111,7 @@ const InputCurrency: React.FC<IInput> = (
                 onValueChange={(value,name,values,) => {
                     setMyVal(values.value)
                     setFieldValue(name, values.float)
+                    onValueChange(values)
                 }}
                 onBlur={onBlur}
             />
@@ -114,3 +120,5 @@ const InputCurrency: React.FC<IInput> = (
 };
 
 export default InputCurrency;
+
+// {!String(value ?? "") ? s.blankInput : ""}  ${className} ${error && s.errorBorder}

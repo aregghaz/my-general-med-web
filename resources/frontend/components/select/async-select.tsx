@@ -55,15 +55,22 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
         isMulti = false
     }) => {
     const [themeType] = useLocalStorage("theme", "light");
-    console.log(error,'errorerrorerror')
     return (
-
         <>
-            {error && <span>{error}</span>}
-            {label && <label style={{
-                color: defaultValue ? "#194b76" : "#757575"
-            }} className={`${s.label} ${labelStyle}`} htmlFor={name}>{label}</label>}
-            <div className={s.selectWrapper}>
+            {error && !defaultValue && <span className={s.error}>{error}</span>}
+            {label && <label
+                style={{
+                    color: error && !defaultValue ? "red" : defaultValue ? "#194b76" : "#757575",
+                }}
+                className={`${s.label} ${labelStyle}`}
+                htmlFor={name}
+            >{label}</label>}
+            <div
+                className={s.selectWrapper}
+                style={{
+                    border: error && !defaultValue ? "1px solid red" : ""
+                }}
+            >
                 <Select
                     isMulti={isMulti}
                     name={name}
@@ -171,3 +178,7 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
 
 
 export default AsyncSelect;
+
+// style={{
+//     color: defaultValue ? "#194b76" : "#757575"
+// }}

@@ -193,8 +193,10 @@ const Drawer: React.FC = ({ children }) => {
                                                 onClick={() => {
                                                     if (userData.user.role === "admin") {
                                                         navigate("/admin/profile");
+                                                        openAccountMenu()
                                                     } else {
                                                         navigate("/profile");
+                                                        openAccountMenu()
                                                     }
                                                 }}
                                             >

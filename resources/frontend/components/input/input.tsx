@@ -7,7 +7,7 @@ interface IInput {
     value?: string;
     placeholder?: string;
     type: string;
-    error?: string;
+    error?: any;
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
     onBlur?: (event: ChangeEvent<HTMLInputElement>) => void;
     onClick?: () => void;
@@ -18,6 +18,7 @@ interface IInput {
     className?: string;
     labelStyle?: string;
     ref?: string;
+    readOnly?: boolean;
 }
 
 const Input: React.FC<IInput> = (
@@ -36,6 +37,7 @@ const Input: React.FC<IInput> = (
         onClick,
         className,
         labelStyle,
+        readOnly = false,
         ref
     }) => {
     // console.log(value)
@@ -55,7 +57,7 @@ const Input: React.FC<IInput> = (
                 </label>}
             <input
                 style={{
-                    border: error && !value ? "1px solid red" : ""
+                    border: error && !value ? "1px solid crimson" : ""
                 }}
                 id={name}
                 name={name}
@@ -65,6 +67,7 @@ const Input: React.FC<IInput> = (
                 value={value}
                 ref={ref}
                 onBlur={onChange}
+                readOnly={readOnly}
                 onClick={onClick}
                 onChange={onChange}
                 // onFocus={(event) => {

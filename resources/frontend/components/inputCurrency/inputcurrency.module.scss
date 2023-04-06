@@ -10,10 +10,7 @@
     height: 50px;
     padding-left: 10px;
     outline: none;
-    border-bottom: 1px solid $borderColor;
-    border-top: none;
-    border-left: none;
-    border-right: none;
+    border: none;
     @include themify($themes) {
         color: themed('modalTitleColor');
         background-color: themed('modalInputBgColor');
@@ -37,15 +34,11 @@
 
 
 .errorBorder {
-    border: 1.5px solid crimson !important;
+    border: 1px solid crimson !important;
 }
 
 .error {
-    position: absolute;
-    //top: -8px;
-    bottom: -20px;
-    font-size: 12px;
-    color: crimson;
+    @include error();
 }
 
 // Hide Am Pm

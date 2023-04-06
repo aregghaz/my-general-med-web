@@ -1,6 +1,6 @@
-export const selectStyles:any ={
+export const selectStyles:any = {
 
-    control: (baseStyles:any, state:any) => ({
+    control: (baseStyles: any, state: any) => ({
         ...baseStyles,
         display: "flex",
         borderBottom: "1px solid #D63D3D",
@@ -15,16 +15,16 @@ export const selectStyles:any ={
             // borderBottom: "1px solid #194b76",
         }
     }),
-        valueContainer: (baseStyles:any, state:any) => ({
+    valueContainer: (baseStyles: any, state: any) => ({
         ...baseStyles,
         display: "flex",
         flexDirection: "row"
     }),
-        // indicatorsContainer: base => ({
-        //     ...base,
-        //     color: "aqua",
-        // }),
-        menu: (baseStyles:any, state:any) => ({
+    // indicatorsContainer: base => ({
+    //     ...base,
+    //     color: "aqua",
+    // }),
+    menu: (baseStyles: any, state: any) => ({
         ...baseStyles,
         backgroundColor: "white",
         marginTop: "3px",
@@ -35,7 +35,7 @@ export const selectStyles:any ={
         width: 'auto',
         boxShadow: "0px 3px 3px gray"
     }),
-        option: (baseStyles:any, state:any) => ({
+    option: (baseStyles: any, state: any) => ({
         ...baseStyles,
         display: "inline-block",
         width: 'auto',
@@ -43,7 +43,7 @@ export const selectStyles:any ={
         fontWeight: 500,
         backgroundColor: state.isSelected ? "#D63D3D" : baseStyles.backgroundColor
     }),
-        menuList: (base:any) => ({
+    menuList: (base: any) => ({
         ...base,
         // kill the white space on first and last option
         padding: "0px",
@@ -52,7 +52,7 @@ export const selectStyles:any ={
         backgroundColor: "white"
         /// borderRadius: "5px",
     }),
-        multiValue: (baseStyles:any, state:any) => ({
+    multiValue: (baseStyles: any, state: any) => ({
         ...baseStyles,
         fontSize: 20,
         // borderRadius: "15px",
@@ -63,20 +63,18 @@ export const selectStyles:any ={
         borderButton: "1px solid #D63D3D",
         backgroundColor: "white"
     }),
-        multiValueLabel: (baseStyles: any, {data}: any) => ({
+    multiValueLabel: (baseStyles: any, {data}: any) => ({
         ...baseStyles,
         // backgroundColor: '#6D9886',
         backgroundColor: "white",
         color: data.color
     }),
-        placeholder: (base:any) => ({
+    placeholder: (base: any) => ({
         ...base,
         color: "#757575",
     }),
-        singleValue: (base:any) => ({
+    singleValue: (base: any) => ({
         ...base,
         color: "gray",
     })
 }
-
-// export errorCheck = {}

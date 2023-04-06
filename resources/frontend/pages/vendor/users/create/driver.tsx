@@ -50,6 +50,10 @@ const VendorDriverCreate: React.FC<IUserCreate> = () => {
     const requiredFields = [
         "name",
         "surname",
+        "address",
+        "birthday",
+        "phone_number",
+        "password",
         "email",
         "license",
         "picture",

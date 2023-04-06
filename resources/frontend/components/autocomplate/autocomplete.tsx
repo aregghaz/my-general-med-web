@@ -143,7 +143,6 @@ const Autocomplete: React.FC<ITextarea> = (
                                 className: `${s.input}`,
                                 placeholder: `step_${item}`,
                                 styles: {
-
                                     placeholder: (base) => ({
                                         ...base,
                                         color: "#C4C4C4",
@@ -153,6 +152,14 @@ const Autocomplete: React.FC<ITextarea> = (
                                         zIndex: 9999,
 
                                     }),
+                                    control: (base, isActive) => ({
+                                        ...base,
+                                        border: values[`step_${item}`] ? "1px solid #19347a" : "1px solid gray",
+                                        "&:hover": {
+                                            border: values[`step_${item}`] ? "1px solid #19347a" : "1px solid gray",
+                                        },
+                                        boxShadow: isActive ? "none" : "none",
+                                    })
 
                                 }
                             }}

@@ -43,7 +43,7 @@ interface ISelect {
     isMulti?: boolean
     authCheckboxLabelStyle?: string
     labelStyle?: string
-    error?: string
+    error?: any
     handlerMenuOpen?: () => void
     handlerMenuClose?: () => void
     hideSelectedOptions?: boolean

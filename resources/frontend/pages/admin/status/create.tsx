@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import Create from "../../layouts/templates/create/create";
 import Select, { IOption } from "../../../components/select/select";
 import { IItem } from "../../layouts/templates/formik-handler/formik-handler";
-import s from "../../layouts/templates/create/create.module.scss";
+import cls from "./create.module.scss"
 import { AdminApi } from "../../../api/admin-api/admin-api";
 interface IUserCreate {
     path: string,
@@ -77,14 +77,13 @@ const StatusCreate: React.FC<IUserCreate> = ({ statusId }) => {
                 setFields([
                     {name: "status", type: "select"},
                     ///  { name: "slug", type: "input", label: "slug" },
-                    { name: "id", type: "hidden", inputType: "hidden" },
-                    { name: "services", type: "multiSelect", label: "services" }
+                    { name: "services", type: "multiSelect", label: "services" },
                 ]);
             } else if (status !== null) {
                 setFields([
                     { name: "name", type: "input", label: "statusName" },
                     ///     { name: "slug", type: "input", label: "slug" },
-                    { name: "id", type: "hidden", inputType: "hidden" }
+                    // { name: "id", type: "hidden", inputType: "hidden" }
                 ]);
             }
         })();
@@ -95,8 +94,8 @@ const StatusCreate: React.FC<IUserCreate> = ({ statusId }) => {
         "name"
     ];
     return <>
-        <div className={s.item}>
-            <div className={s.select}>
+        <div className={cls.wrapper}>
+            <div className={cls.select}>
                 <Select
                     label={"status"}
                     getOptionValue={(option: IOption) => option.value}
@@ -111,7 +110,7 @@ const StatusCreate: React.FC<IUserCreate> = ({ statusId }) => {
                     allowValueClear={false}
                 />
             </div>
-            <div className={s.mainForm}>
+            <div className={cls.mainForm}>
                 {(status.id === 3 ? data : true) && <Create
                     crudKey={`${crudKey}/${status.id}`}
                     data={data}

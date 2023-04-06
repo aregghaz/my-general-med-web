@@ -48,7 +48,7 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
     //         setViewPDF(null)
     //     }
     // }
-    const [fileName, setFileName] = useState("filename")
+    const [fileName, setFileName] = useState("")
     return (
         // <>
         //     {/* <Viewer fileUrl={url} /> */}
@@ -100,10 +100,13 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
         // </>
 
         <>
-            <div className={s.wrapper}>
+            {error && !fileName && <span className={s.error}>{error}</span>}
+            <div className={s.wrapper} style={{border: error && !fileName ? "1px solid crimson" : ""}}>
                 <div className={s.uploadButtonWrapper}>
                     <div className={s.uploadButtonLabel}>
-                        <span>{label}</span>
+                        <span style={{
+                            color: error && !fileName ? "crimson" : ""
+                        }}>{label}</span>
                     </div>
                     <div className={s.uploadButton}>
                         <label>
@@ -112,7 +115,7 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
                                 onChange(e)
                                 setFileName(e.target.files[0].name)
                             }} />
-                            <span className={s.filename}>{fileName}</span>
+                            <span className={s.filename}>{fileName ? fileName : "Choose a file"}</span>
                         </label>
                     </div>
                 </div>

@@ -151,7 +151,7 @@ const FormikHandler: React.FC<IFormikHandler> = (
                         }}
                         type={item.inputType}
                         setFieldValue={setFieldValue}
-                        label={t(item.label)}
+                        label={getFieldLabel(t, item.label, item.name, requiredFields)}
                         media={"image"}
                         value={values}
                         error={errors[item.name]}

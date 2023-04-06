@@ -127,6 +127,7 @@
     display: flex;
     align-items: flex-start;
     gap: 5px;
+    border-bottom: 1px solid $borderColor;
 
     & span {
         white-space: nowrap;
@@ -143,6 +144,15 @@
 .fixedCheckbox {
     width: 20px;
     height: 20px;
+    position: relative;
+    z-index: 3;
+}
+
+.fixedInput {
+    //border: none !important;
+    position: relative;
+    left: -24px;
+    width: calc(100% + 24px) !important;
 }
 
 .rangeCalendar {
@@ -152,7 +162,6 @@
 
 .dataPicker {
     width: 100% !important;
-    height: 400px;
     border: 0.1px solid gray;
 }
 

@@ -85,7 +85,7 @@
     //gap: 20px;
     //border: 0.1px solid black;
     border-bottom: 1px solid $borderColor;
-    padding-bottom: 10px;
+    padding: 1px 1px 10px 1px;
 }
 
 .uploadButtonWrapper {
@@ -152,4 +152,8 @@
 
 .datePickerLabel {
     color: $borderColor;
+}
+
+.error {
+    @include error();
 }
