@@ -80,6 +80,7 @@
         margin: 0 3px;
         transition: 0.1s;
         fill: $aquaColor;
+
     }
 
 
@@ -164,7 +165,7 @@
     position: absolute;
     z-index: 1;
     top: -20px;
-    left: -5px;
+    left: -2px;
     font-size: 10px;
     user-select: none;
     pointer-events: none;
@@ -308,6 +309,21 @@
         .icon {
             fill: white!important;
         }
+
+        .iconVendor{
+            fill: none!important;
+            stroke: white!important;
+        }
+
+        .iconColor{
+            fill: none!important;
+            stroke: white!important;
+        }
+
+        .iconCar{
+            fill: none!important;
+            stroke: white!important;
+        }
     }
 }
 
@@ -322,3 +338,11 @@
     margin: 0 5px;
 }
 
+.editLeft{
+    margin-left: 8px;
+    margin-top: 7px;
+}
+
+.infoLabel{
+    margin-top: 2px;
+}

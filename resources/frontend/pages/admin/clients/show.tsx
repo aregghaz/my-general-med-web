@@ -139,9 +139,11 @@ const Show: React.FC<IShow> = ({ id }) => {
                 {/*</div>*/}
                 <div className={cls.iconsWrapper}>
                     <div className={cls.updateButton}>
+                        <span className={cls.updateButtonLabel}>Show map</span>
                         <ShowMap type={"adminUpdate"} onClick={() => {setShowMap(!showMap)}} className={cls.mapIcon}/>
                     </div>
                     <div className={cls.updateButton}>
+                        <span className={`${cls.updateButtonLabel} ${cls.updateLabelTop}`}>Update</span>
                         <Update type={"adminUpdate"} onClick={handlerUpdate} className={cls.updateIcon}/>
                     </div>
                 </div>

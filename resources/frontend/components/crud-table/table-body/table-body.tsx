@@ -108,7 +108,7 @@ const TableBody: React.FC<ITableBody> = (
                                     {
                                         isEdit &&
                                         <div className={s.iconWrapper}>
-                                            <div className={s.iconLabel}>Edit</div>
+                                            <div className={`${s.iconLabel} ${s.iconLabelTop}`}>Edit</div>
                                             <EditIcon
                                                 className={s.editIcon}
                                                 onClick={() => handlerAction("edit", item.id)}

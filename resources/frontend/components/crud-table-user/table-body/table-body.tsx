@@ -73,7 +73,7 @@ const TableBody: React.FC<ITableBody> = (
                                         {
                                             isEdit && typeId !== 5 && typeId !== 6 &&
                                             <span className={`${s.tooltip} ${s.editSpan}`}>
-                                            <span className={`${s.tooltiptext} ${s.edit}`}>Edit</span>
+                                            <span className={`${s.tooltiptext} ${s.edit} ${s.editLeft}`}>Edit</span>
                                             <EditIcon
                                                 className={`${s.icon} ${s.iconColor}`}
                                                 onClick={() => handlerAction(item.id, "edit")}
@@ -83,7 +83,7 @@ const TableBody: React.FC<ITableBody> = (
                                         {
                                             isInfo &&
                                             <span className={`${s.tooltip} ${s.infoSpan}`}>
-                                            <span className={`${s.tooltiptext} ${s.info}`}>Info</span>
+                                            <span className={`${s.tooltiptext} ${s.info} ${s.infoLabel}`}>Info</span>
                                             <InfoIcon
                                                 className={`${s.icon} ${s.iconInfo}`}
                                                 onClick={() => handlerAction(item.id, "info")}
@@ -93,7 +93,7 @@ const TableBody: React.FC<ITableBody> = (
 
                                         {isClaim && typeId === 2 &&
                                             <span className={`${s.tooltip} ${s.claimSpan}`}>
-                                            <span className={`${s.tooltiptext} ${s.claim}`}>Claim</span>
+                                            <span className={`${s.tooltiptext} ${s.claim} ${s.claimLabelTop}`}>Claim</span>
                                             <ClaimTrip
                                                 className={s.icon}
                                                 onClick={() => handlerAction(item.id, "claim")}
