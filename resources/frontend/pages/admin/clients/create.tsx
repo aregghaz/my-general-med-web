@@ -339,17 +339,19 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                             <div className={s.item}>
                                 {
                                     <div className={s.fixedPriceWrapper} style={{
-                                        borderBottom: errors["price"] && !priceValue ? "none" : ""
+                                        borderBottom: errors["price"] && !priceValue ? "none" : "",
+                                        paddingBottom: !checked && 10
                                     }}>
                                         <input
                                             className={s.fixedCheckbox}
                                             type={"checkbox"}
+                                            id={"priceCheckbox"}
                                             onChange={() => {
                                                 setFieldValue("specialPrice", !checked)
                                                 handlerCheckbox()
                                             }}
                                         />
-                                        {!checked && <span>Fix price</span>}
+                                        {!checked && <label htmlFor={"priceCheckbox"}>Fix price</label>}
 
                                         <div className={s.fixedInputWrapper}>
                                             {/*{checked && <Input name={"price"} type={"number"}*/}
@@ -359,7 +361,6 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                                 <InputCurrency
                                                     type={"number"}
                                                     name={"price"}
-                                                    // label={"Fix price"}
                                                     label={getFieldLabel(t,"Fix price","price",requiredFields)}
                                                     placeholder={"Fix price"}
                                                     setFieldValue={setFieldValue}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef, useState} from "react";
 import Select from "react-select/async";
 import { components, OptionProps, OptionTypeBase } from "react-select";
 import { IOption } from "./select";
@@ -7,6 +7,7 @@ import Checkbox from "../checkbox/checkbox";
 import useLocalStorage from "../../hooks/use-local-storage";
 import { getStyles } from "./common";
 import {selectStyles} from "../../utils/cssUtils";
+import RemoveIcon from "-!svg-react-loader!../../svgs/removeIcon.svg"
 
 import s from "./select.module.scss";
 
@@ -25,6 +26,7 @@ interface IAsyncSelect {
     error?: any;
     isCheckbox?: boolean;
     isMulti?: boolean;
+    allowValueClear?: boolean
 }
 
 const Option = (props: OptionProps<OptionTypeBase>) => (
@@ -45,6 +47,7 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
         options,
         onChange = () => {},
         getOptionLabel,
+        allowValueClear= true,
         getOptionValue,
         error ='',
         defaultValue,
@@ -55,6 +58,13 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
         isMulti = false
     }) => {
     const [themeType] = useLocalStorage("theme", "light");
+    const selectRef = useRef(null)
+    const handleOptionRemove: React.MouseEventHandler<HTMLButtonElement> = (e): void => {
+        e.preventDefault()
+        console.log(selectRef.current.value)
+        selectRef.current.select.clearValue()
+    }
+    const [value, setValue] = useState(null)
     return (
         <>
             {error && !defaultValue && <span className={s.error}>{error}</span>}
@@ -72,87 +82,9 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
                 }}
             >
                 <Select
+                    ref={selectRef}
                     isMulti={isMulti}
                     name={name}
-                    // styles={{
-                    //     control: (baseStyles, state) => ({
-                    //         ...baseStyles,
-                    //         display: "flex",
-                    //         borderButton: "1px solid #D63D3D",
-                    //         width: "100%",
-                    //         outline: "none",
-                    //         border: "none",
-                    //         boxShadow: "none !important",
-                    //         borderRadius: 0,
-                    //         overflowX: "auto",
-                    //         "&:hover": {
-                    //             boxShadow: "none",
-                    //             // borderBottom: "1px solid #194b76",
-                    //         }
-                    //     }),
-                    //     valueContainer: (baseStyles, state) => ({
-                    //         ...baseStyles,
-                    //         display: "flex",
-                    //         flexDirection: "row"
-                    //     }),
-                    //     // indicatorsContainer: base => ({
-                    //     //     ...base,
-                    //     //     color: "aqua",
-                    //     // }),
-                    //     menu: (baseStyles, state) => ({
-                    //         ...baseStyles,
-                    //         backgroundColor: "white",
-                    //         marginTop: "3px",
-                    //         zIndex: 9999,
-                    //         right: "0",
-                    //         outline: "none",
-                    //         display: "inline-block",
-                    //         width: 'auto',
-                    //         boxShadow: "0px 3px 3px gray"
-                    //     }),
-                    //     option: (baseStyles, state) => ({
-                    //         ...baseStyles,
-                    //         display: "inline-block",
-                    //         width: 'auto',
-                    //         padding: "15px",
-                    //         fontWeight: 500,
-                    //         backgroundColor: state.isSelected ? "#D63D3D" : baseStyles.backgroundColor
-                    //     }),
-                    //     menuList: base => ({
-                    //         ...base,
-                    //         // kill the white space on first and last option
-                    //         padding: "0px",
-                    //         display: "flex",
-                    //         flexDirection: "column",
-                    //         backgroundColor: "white"
-                    //         /// borderRadius: "5px",
-                    //     }),
-                    //     multiValue: (baseStyles, state) => ({
-                    //         ...baseStyles,
-                    //         fontSize: 20,
-                    //         // borderRadius: "15px",
-                    //         // lineHeight: 1.5,
-                    //         // color: "black",
-                    //         color: "gray",
-                    //         fontWeight: "bold",
-                    //         borderButton: "1px solid #D63D3D",
-                    //         backgroundColor: "white"
-                    //     }),
-                    //     multiValueLabel: (styles: any, {data}: any) => ({
-                    //         ...styles,
-                    //         // backgroundColor: '#6D9886',
-                    //         backgroundColor: "white",
-                    //         color: data.color
-                    //     }),
-                    //     placeholder: (base) => ({
-                    //         ...base,
-                    //         color: "#757575",
-                    //     }),
-                    //     singleValue: (base) => ({
-                    //         ...base,
-                    //         color: "gray",
-                    //     })
-                    // }}
                     styles={selectStyles}
                     options={options}
                     className={s.select}
@@ -165,12 +97,25 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
                     defaultOptions
                     cacheOptions
                     isSearchable={isSearchable}
-                    onChange={onChange}
+                    onChange={(option: IOption) => {
+                        onChange(option)
+                        setValue(option)
+                    }}
                     getOptionLabel={getOptionLabel}
                     getOptionValue={getOptionValue}
                     defaultValue={defaultValue}
-
                 />
+                {(allowValueClear && !isMulti && name !== "clientType") && <>
+                    <div className={s.selectRemove}>
+                        <button
+                            onClick={handleOptionRemove}
+                            style={{
+                                display: value ? "flex" : "none"
+                            }}
+                        ><RemoveIcon/></button>
+                    </div>
+                </>
+                }
             </div>
         </>
     );

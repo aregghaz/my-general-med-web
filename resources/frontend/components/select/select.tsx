@@ -6,7 +6,7 @@ import {useTranslation} from "react-i18next";
 import {selectStyles} from "../../utils/cssUtils";
 import s from "./select.module.scss";
 import Button from "../button/button";
-import removeIcon from "../../svgs/removeIcon.svg"
+import RemoveIcon from "-!svg-react-loader!../../svgs/removeIcon.svg"
 import {OptionsType} from "react-select/src/types";
 
 export interface IOption {
@@ -201,7 +201,9 @@ const Select: React.FC<ISelect> = (
                                 style={{
                                     display: value ? "flex" : "none"
                                 }}
-                            ><img src={removeIcon}/></button>
+                            >
+                                <RemoveIcon/>
+                            </button>
                         </div>
                     </>
                     }

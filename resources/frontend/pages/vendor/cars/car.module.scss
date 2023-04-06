@@ -129,7 +129,7 @@
     gap: 5px;
     border-bottom: 1px solid $borderColor;
 
-    & span {
+    & label {
         white-space: nowrap;
         color: $placeholderColor;
     }
@@ -145,7 +145,7 @@
     width: 20px;
     height: 20px;
     position: relative;
-    z-index: 3;
+    z-index: 2;
 }
 
 .fixedInput {

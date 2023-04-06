@@ -110,7 +110,7 @@ const InputCurrency: React.FC<IInput> = (
                 }}
                 onValueChange={(value,name,values,) => {
                     setMyVal(values.value)
-                    setFieldValue(name, values.float)
+                    setFieldValue(name, values.float ?? undefined)
                     onValueChange(values)
                 }}
                 onBlur={onBlur}
