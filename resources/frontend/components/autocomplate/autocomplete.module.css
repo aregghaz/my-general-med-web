@@ -22,7 +22,7 @@
   width: 100%;
   row-gap: 20px;
   padding: 15px;
-  border: 0.1px solid #757575;
+  border: 0.1px solid #19347a;
 }
 
 .autocompleteWrapper {
@@ -81,7 +81,7 @@
 }
 
 .phoneInput > input {
-  border-bottom: 1px solid #757575;
+  border-bottom: 1px solid #19347a;
 }
 
 .phoneInput > label {
