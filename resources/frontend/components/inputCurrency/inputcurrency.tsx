@@ -12,6 +12,8 @@ interface IInput {
     error?: string;
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
     onBlur?: (event: ChangeEvent<HTMLInputElement>) => void;
+
+    setFieldValue?: (name: string, value: number) => void;
     autoComplete?: string;
     disable?: boolean;
     label?: string;
@@ -31,6 +33,7 @@ const InputCurrency: React.FC<IInput> = (
         error,
         onBlur,
         onChange,
+        setFieldValue = () => {},
         placeholder,
         type = "text",
         isAsterisk,
@@ -91,6 +94,7 @@ const InputCurrency: React.FC<IInput> = (
                 // fixedDecimalLength={2}
                 maxLength={6}
                 // value={value}
+                prefix={"$"}
                 defaultValue={value}
                 allowNegativeValue={false}
                 disabled={type === "disabled"}
@@ -101,6 +105,7 @@ const InputCurrency: React.FC<IInput> = (
                 }}
                 onValueChange={(value,name,values,) => {
                     setMyVal(values.value)
+                    setFieldValue(name, values.float)
                 }}
                 onBlur={onBlur}
             />

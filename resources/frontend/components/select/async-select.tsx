@@ -22,6 +22,7 @@ interface IAsyncSelect {
     name?: string;
     label?: string;
     labelStyle?: string;
+    error?: any;
     isCheckbox?: boolean;
     isMulti?: boolean;
 }
@@ -45,6 +46,7 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
         onChange = () => {},
         getOptionLabel,
         getOptionValue,
+        error ='',
         defaultValue,
         loadOptions,
         name,
@@ -53,9 +55,11 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
         isMulti = false
     }) => {
     const [themeType] = useLocalStorage("theme", "light");
+    console.log(error,'errorerrorerror')
     return (
 
         <>
+            {error && <span>{error}</span>}
             {label && <label style={{
                 color: defaultValue ? "#194b76" : "#757575"
             }} className={`${s.label} ${labelStyle}`} htmlFor={name}>{label}</label>}

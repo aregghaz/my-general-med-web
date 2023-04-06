@@ -21,6 +21,7 @@ import Checkbox from "../../../components/checkbox/checkbox";
 import CurrencyInput from "react-currency-input-field";
 import useOnClickOutside from "../../../hooks/use-on-click-outside"
 import InputCurrency from "../../../components/inputCurrency/inputcurrency";
+import getFieldLabel from "../../../utils/getFieldLabel";
 interface IClientCreate {
     path: string;
 }
@@ -50,6 +51,24 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         { name: "miles", type: "input", label: "miles", inputType: "disabled" }
     ];
 
+    const fields2: Array<IItem> = [
+        { name: "trip_id", type: "select", label: "trip_type" },
+        { name: "fullName", type: "input", label: "fullName", placeholder:"Full name" },
+        { name: "gender", type: "select", label: "gender" },
+        { name: "birthday", type: "datepicker", label: "birthday"},
+        ///  { name: "los", type: "select", label: "los" },
+        { name: "artificial", type: "select", label: "artificial" },
+        { name: "clientType", type: "select", label: "clientType" },
+        { name: "waitDuration", type: "select", label: "waitDuration" },
+        /// { name: "vendors", type: "select", label: "vendors" },
+        { name: "request_type", type: "select", label: "request_type" },
+        { name: "member_unique_identifier", type: "input", label: "member_unique_identifier", placeholder: "Member unique identifier"},
+        ///  { name: "price", type: "input", label: "price", inputType: "number" },
+        { name: "height", type: "input", label: "height", placeholder: "Height" },
+        { name: "weight", type: "input", label: "weight", inputType: "number", placeholder: "Weight" },
+        { name: "miles", type: "input", label: "miles", inputType: "disabled" }
+    ];
+
     useEffect(() => {
         (
             async () => {
@@ -67,6 +86,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         "gender",
         "birthday",
         "los",
+        "clientType",
         "artificial",
         "waitDuration",
         ///"vendors",
@@ -81,7 +101,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
     const { t } = useTranslation();
 
     const navigate = useNavigate();
-    const validate = (values: FormikValues) => validationRules(values, requiredFields, fields, t);
+    const validate = (values: FormikValues) => validationRules(values, requiredFields, fields2, t);
 
     const submit = async (values: FormikValues, { setSubmitting }: FormikHelpers<FormikValues>) => {
         setSubmitting(true);
@@ -141,7 +161,6 @@ const ClientCreate: React.FC<IClientCreate> = () => {
 
     useOnClickOutside(calendarRef, closeHandler)
     return data && <div>
-
         <Formik
             selectOptions={data}
             initialValues={populateCreateFormFields(fields, data)}
@@ -187,10 +206,12 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                             setFieldValue("clientType", option);
                                             loadTripPeriod(option.id);
                                         }}
-                                        label={"clientType"}
+                                        label={getFieldLabel(t, 'clientType','clientType', requiredFields)}
+                                      //  label={"clientType"}
                                         isSearchable={false}
                                         name={"clientType"}
                                         placeholder={"Trip type"}
+                                        error={errors['clientType']}
                                     />
                                 }
                             </div>
@@ -306,15 +327,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                             }}
                                         />
                                         {!checked && <span>Fix Price</span>}
-                                        {/*<Checkbox*/}
-                                        {/*    handlerCheckbox={() => {*/}
-                                        {/*        setFieldValue("specialPrice", !checked);*/}
-                                        {/*        handlerCheckbox();*/}
-                                        {/*    }*/}
-                                        {/*    }*/}
-                                        {/*    checked={checked}*/}
-                                        {/*    label={!checked && "fix price"}*/}
-                                        {/*/>*/}
+
                                         <div className={s.fixedInputWrapper}>
                                             {/*{checked && <Input name={"price"} type={"number"}*/}
                                             {/*                   value={values["price"]}*/}
@@ -324,6 +337,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                                     type={"number"}
                                                     name={"price"}
                                                     label={"Fix price"}
+                                                    setFieldValue={setFieldValue}
                                                 />
                                             </>}
                                         </div>

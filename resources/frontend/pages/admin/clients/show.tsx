@@ -273,9 +273,24 @@ const Show: React.FC<IShow> = ({ id }) => {
                 {isLoaded && showMap && <div
                     className={cls.selectDiv}
                     style={{
-                        flexDirection: blockRef.current.clientHeight > window.innerHeight ? "column" : "row"
+                        flexDirection: blockRef.current.clientHeight > window.innerHeight ? "column-reverse" : "row"
                     }}
                 >
+                    <div
+                        className={cls.directionDiv}
+                        style={{
+                            width: blockRef.current.clientHeight > window.innerHeight ? "100%" : "50%"
+                        }}
+                    >
+                        {steps && steps.map((el: any) => {
+                            return (
+                                <div
+                                    className={cls.directions}
+                                    dangerouslySetInnerHTML={{ __html: el.instructions }}
+                                />
+                            );
+                        })}
+                    </div>
                     <div className={cls.mapDiv}>
                         <GoogleMap
                             ///  center={center}
@@ -294,21 +309,6 @@ const Show: React.FC<IShow> = ({ id }) => {
                                 <DirectionsRenderer directions={directionsResponse}/>
                             )}
                         </GoogleMap>
-                    </div>
-                    <div
-                        className={cls.directionDiv}
-                        style={{
-                            width: blockRef.current.clientHeight > window.innerHeight ? "100%" : "50%"
-                        }}
-                    >
-                        {steps && steps.map((el: any) => {
-                            return (
-                                <div
-                                    className={cls.directions}
-                                    dangerouslySetInnerHTML={{ __html: el.instructions }}
-                                />
-                            );
-                        })}
                     </div>
                 </div>}
             </div>

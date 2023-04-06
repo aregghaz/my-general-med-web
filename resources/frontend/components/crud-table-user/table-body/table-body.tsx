@@ -155,7 +155,7 @@ const TableBody: React.FC<ITableBody> = (
                                                 itemData = item[key] + " mile";
                                                 break;
                                             case "price":
-                                                itemData = item[key] + " $";
+                                                itemData = "$" + item[key];
                                                 break;
                                             case "date_of_service":
                                                 itemData = timestampToDate(item[key]);

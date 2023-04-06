@@ -125,6 +125,7 @@ const PriceList: React.FC<IVendors> = ({ id }) => {
                                             };
                                         });
                                     }
+                                    // @ts-ignore
                                     return (
                                         <>
                                             <div className={s.inputContainer}>

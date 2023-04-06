@@ -197,6 +197,7 @@
     width: 100%;
     height: auto;
     display: flex;
+    column-gap: 20px;
 }
 
 .itemTextarea {
@@ -204,6 +205,10 @@
     height: auto;
     display: flex;
     flex-direction: column;
+
+    & > textarea {
+        width: 100%;
+    }
 }
 
 .updateButton {

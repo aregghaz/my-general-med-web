@@ -323,6 +323,16 @@ const Show: React.FC<IShow> = ({ id }) => {
                                 flexDirection: blockRef.current.clientHeight > window.innerHeight ? "column" : "row"
                             }}
                         >
+                            <div className={cls.directionDiv}>
+                                {steps && steps.map((el: any) => {
+                                    return (
+                                        <div
+                                            className={cls.directions}
+                                            dangerouslySetInnerHTML={{ __html: el.instructions }}
+                                        />
+                                    );
+                                })}
+                            </div>
                             <div className={cls.mapDiv}>
                                 <GoogleMap
                                     ///  center={center}
@@ -342,16 +352,6 @@ const Show: React.FC<IShow> = ({ id }) => {
                                     )}
 
                                 </GoogleMap>
-                            </div>
-                            <div className={cls.directionDiv}>
-                                {steps && steps.map((el: any) => {
-                                    return (
-                                        <div
-                                            className={cls.directions}
-                                            dangerouslySetInnerHTML={{ __html: el.instructions }}
-                                        />
-                                    );
-                                })}
                             </div>
                         </div>}
                     </div>
