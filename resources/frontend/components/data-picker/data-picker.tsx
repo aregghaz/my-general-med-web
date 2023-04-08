@@ -16,6 +16,8 @@ interface IDataPicker {
     style?: any;
 
     error?: any;
+
+    singleFileUpload?: boolean
 }
 
 const DataPicker: React.FC<IDataPicker> = (
@@ -27,7 +29,8 @@ const DataPicker: React.FC<IDataPicker> = (
         type = false,
         value,
         style = {},
-        error
+        error,
+        singleFileUpload = false,
     }) => {
     const [show, setShow] = useState<boolean>(false);
     const calendarRef = useRef<HTMLDivElement>(null)
@@ -39,12 +42,12 @@ const DataPicker: React.FC<IDataPicker> = (
     return (
         <>
             {error && !value && <span className={s.error}>{error}</span>}
-            {label && <label style={{color: error && !value ? "red" : value ? "#194b76" : "#757575"}} className={s.label}>{label}</label>}
+            {label && <label style={{color: error && !value ? "crimson" : value ? "#194b76" : "#757575"}} className={s.label}>{label}</label>}
             <input
                 style={{
                     ...style,
                     color: value ? "grey" : "C4C4C4",
-                    border: error && !value ? "1px solid red" : type ? "none" : "",
+                    border: !singleFileUpload && error && !value ? "1px solid crimson" : type ? "none" : "",
                 }} type="text" className={s.input}
                 value={value ? timestampToDate(new Date(value)) : timestampToDate(new Date().toLocaleDateString())}
                 onClick={() => setShow(!show)}

@@ -49,7 +49,7 @@ const Password:React.FC<Password> = ({
                         className={`${s.label}`}
                         htmlFor={name}
                         style={{
-                            color: error && !value ? "red" : value ? "#19347a" :  "#757575"
+                            color: error && !value ? "crimson" : value ? "#19347a" :  "#757575"
                         }}
                     >
                         {`${label}`} {isAsterisk && <span>*</span>}

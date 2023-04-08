@@ -57,6 +57,8 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         { name: "date_of_service", type: "datepicker", label: "date of service" },
         { name: "range", type: "input", label: "range" },
         { name: "los", type: "select", label: "los" },
+        { name: "address", type: "autocomplete", label: "testLabel"},
+        { name: "addressTime", type: "timePicker", label: "testLabel"},
         { name: "price", type: "input", label: "Fix price"},
         { name: "fullName", type: "input", label: "fullName", placeholder:"Full name" },
         { name: "gender", type: "select", label: "gender" },
@@ -100,6 +102,8 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         "member_unique_identifier",
         "height",
         "weight",
+        "address",
+        "addressTime",
         checked && "price",
         !show && "date_of_service",
         show && "range",
@@ -160,6 +164,10 @@ const ClientCreate: React.FC<IClientCreate> = () => {
 
     };
 
+    const validateAutocomplete = () => {
+
+    }
+
     const closeHandler = () => {
         setShowCalendar(!showCalendar)
     }
@@ -183,7 +191,6 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                   setFieldValue,
                   errors
               }) => {
-                console.log(errors, "erorrorororor")
                 return (
                     <>
                         {

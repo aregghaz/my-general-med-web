@@ -136,7 +136,7 @@ const Select: React.FC<ISelect> = (
             {error && !value && <div className={s.error}>{error}</div>}
 
             {label && <label style={{
-                color: error && !value ? "red" : value ? "#194b76" : "#757575",
+                color: error && !value ? "crimson" : value ? "#194b76" : "#757575",
             }} htmlFor={name}>{label}</label>}
             <div className={s.wrapper}>
                 <div className={s.buttonsSelect}>
@@ -199,7 +199,8 @@ const Select: React.FC<ISelect> = (
                             <button
                                 onClick={handleOptionRemove}
                                 style={{
-                                    display: value ? "flex" : "none"
+                                    display: value ? "flex" : "none",
+                                    alignItems: "center",
                                 }}
                             >
                                 <RemoveIcon/>

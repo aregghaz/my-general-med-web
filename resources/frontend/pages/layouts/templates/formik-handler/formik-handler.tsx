@@ -151,9 +151,11 @@ const FormikHandler: React.FC<IFormikHandler> = (
                         type={item.inputType}
                         setFieldValue={setFieldValue}
                         label={getFieldLabel(t, item.label, item.name, requiredFields)}
+                        dataPickerLabel={getFieldLabel(t, "exparation date", item.name, requiredFields)}
                         media={"image"}
                         value={values}
                         error={errors[item.name]}
+                        dataPickerError={errors[item.name]}
                     />
                 </div>
             );

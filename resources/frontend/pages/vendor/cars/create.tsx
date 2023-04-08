@@ -12,6 +12,7 @@ import populateCreateFormFields from "../../../constants/populateCreateFormField
 import s from "./car.module.scss";
 import Select, { IOption } from "../../../components/select/select";
 import AsyncSelect from "../../../components/select/async-select";
+import getFieldLabel from "../../../utils/getFieldLabel";
 
 interface IUserCreate {
     path: string;
@@ -37,6 +38,23 @@ const CarsCreate: React.FC<IUserCreate> = () => {
             { name: "liability", type: "file", label: "Car liability" }
 
         ];
+    const fields2: Array<IItem> = [
+        { name: "year", type: "select", label: "Year" },
+        { name: "registration", type: "input", label: "Car registration" },
+        { name: "make", type: "select", label: "Make"},
+        { name: "model", type: "select", label: "Model"},
+        { name: "drivers", type: "select", label: "Assign drivers"},
+        { name: "front", type: "file", label: "Car front photo", inputType: "hidden" },
+        { name: "rear", type: "file", label: "Car rear photo", inputType: "hidden" },
+        { name: "right", type: "file", label: "Car right side photo", inputType: "hidden" },
+        { name: "left", type: "file", label: "Car left side photo", inputType: "hidden" },
+        { name: "interior_1", type: "file", label: "Car interior photo 1", inputType: "hidden" },
+        { name: "interior_2", type: "file", label: "Car interior photo 2", inputType: "hidden" },
+        { name: "inspection", type: "file", label: "Car inspection" },
+        { name: "insurance", type: "file", label: "Car insurance" },
+        { name: "liability", type: "file", label: "Car liability" }
+
+    ];
         useEffect(() => {
             (
                 async () => {
@@ -48,18 +66,25 @@ const CarsCreate: React.FC<IUserCreate> = () => {
 
         }, []);
         const requiredFields = [
-            // 'make',
-            // 'model',
-            // 'year',
-            "registration"
-            // 'inspection',
-            // 'insurance',
-            // 'liability',
+            'make',
+            'model',
+            'year',
+            "registration",
+            'inspection',
+            'insurance',
+            'liability',
+            "front",
+            "rear",
+            "right",
+            "left",
+            "interior_1",
+            "interior_2",
+
         ];
 
         const navigate = useNavigate();
 
-        const validate = (values: FormikValues) => validationRules(values, requiredFields, fields, t);
+        const validate = (values: FormikValues) => validationRules(values, requiredFields, fields2, t);
 
         const create = async (values: FormikValues, { setSubmitting }: FormikHelpers<FormikValues>) => {
             setSubmitting(true);
@@ -129,6 +154,8 @@ const CarsCreate: React.FC<IUserCreate> = () => {
                                                 isSearchable={false}
                                                 name={"make"}
                                                 placeholder={t("make")}
+                                                label={getFieldLabel(t,"Make", "make", requiredFields)}
+                                                error={errors["make"]}
                                             />
                                         }
                                     </div>
@@ -147,6 +174,8 @@ const CarsCreate: React.FC<IUserCreate> = () => {
                                                 ///   label={t("model")}
                                                 isSearchable={false}
                                                 name={"model"}
+                                                label={getFieldLabel(t,"Model", "model", requiredFields)}
+                                                error={errors["model"]}
                                                 placeholder={t("model")}
                                             />
                                         }

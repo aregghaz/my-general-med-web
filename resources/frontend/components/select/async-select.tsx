@@ -105,17 +105,6 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
                     getOptionValue={getOptionValue}
                     defaultValue={defaultValue}
                 />
-                {(allowValueClear && !isMulti && name !== "clientType") && <>
-                    <div className={s.selectRemove}>
-                        <button
-                            onClick={handleOptionRemove}
-                            style={{
-                                display: value ? "flex" : "none"
-                            }}
-                        ><RemoveIcon/></button>
-                    </div>
-                </>
-                }
             </div>
         </>
     );

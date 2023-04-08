@@ -18,6 +18,10 @@ interface ISingleFileUpload {
     setFieldValue: any;
     media: string;
     name: string;
+
+    dataPickerLabel?: any
+
+    dataPickerError?: any
 }
 
 const SingleFileUpload: React.FC<ISingleFileUpload> = (
@@ -32,7 +36,9 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
         oldImage,
         oldName,
         oldVideo,
-        onChange
+        onChange,
+        dataPickerLabel = "",
+        dataPickerError,
     }) => {
     const { t } = useTranslation();
     console.log(error);
@@ -123,9 +129,9 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
                 {
                     type !== "hidden" && <>
                         <div className={s.datePickerWrapper}>
-                            <div className={s.datePickerLabel}>
-                                <span>Experation Date</span>
-                            </div>
+                            {/*<div className={s.datePickerLabel}>*/}
+                            {/*    <span>Experation Date</span>*/}
+                            {/*</div>*/}
                             <div className={s.datepicker}>
                                 <DataPicker
                                     name={`${name}_exp`}
@@ -133,9 +139,11 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
                                     setFieldValue={setFieldValue}
                                     selectRange={false}
                                     ///  handleChange={handleChange}
-                                    label={``}
+                                    label={dataPickerLabel}
                                     value={value[`${name}_exp`]}
                                     style={{border: "none"}}
+                                    error={dataPickerError}
+                                    singleFileUpload={true}
                                 /><div style={{
                                 height: 50,
                             }}></div>

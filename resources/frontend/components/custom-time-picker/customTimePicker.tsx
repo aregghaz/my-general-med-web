@@ -17,7 +17,7 @@ const customTimePicker: FC<customTimePickerProps> = ({
                                                          label,
                                                          name = "",
                                                          className = "",
-                                                         setFieldValue
+                                                         setFieldValue,
                                                      }) => {
     const time: Array<string> = value ? value.split(":") : [];
     const hoursMinMax: Array<number> = [0, 23];
