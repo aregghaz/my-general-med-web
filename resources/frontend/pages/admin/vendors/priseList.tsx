@@ -133,6 +133,7 @@ const PriceList: React.FC<IVendors> = ({ id }) => {
                                                     <InputCurrency name={service.slug}
                                                            label={service.slug}
                                                            type={"number"}
+                                                                   className={s.currencyInput}
                                                            value={(values[item.id] && typeof values[item.id][service.id] !== "undefined") ? values[item.id][service.id].input : service.price}
                                                            onChange={event => {
                                                                let valueInput = event.target.value;
