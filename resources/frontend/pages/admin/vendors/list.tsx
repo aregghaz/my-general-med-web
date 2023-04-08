@@ -26,7 +26,7 @@ const Vendors: React.FC<IVendors> = () => {
     const adminUsersData = useSelector(getAdminUsersData);
     const { userdata, operatorCount, vendorCount } = adminUsersData;
     const navigate = useNavigate();
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
     const [agreement, setAgreement] = useState<boolean>(false);
     const [open, setOpen] = useState<boolean>(false);
     const { t } = useTranslation();
@@ -38,16 +38,9 @@ const Vendors: React.FC<IVendors> = () => {
 
     useEffect(() => {
         (async () => {
+            console.log(inView, "inView");
             if ((inView)) {
-                const data = await AdminApi.getAllVendorData(crudKey, typeId, query);
-                dispatch(actions.fetching(
-                    {
-                        userdata: data.data,
-                        operatorCount: data.operators,
-                        vendorCount: data.vendors
-                    }
-                ));
-                countRef.current++;
+                await getVendorData(2);
             }
         })();
         return () => {
@@ -56,20 +49,25 @@ const Vendors: React.FC<IVendors> = () => {
 
     }, [inView]);
 
+    const getVendorData = async (action: number) => {
+        const data = await AdminApi.getAllVendorData(crudKey, typeId, query);
+        dispatch(actions.fetching(
+            {
+                userdata: data.data,
+                operatorCount: data.operators,
+                vendorCount: data.vendors
+            }
+        ));
+        action == 1 ? countRef.current = 1 : countRef.current++;
 
+        setLoading(false);
+    };
     useEffect(() => {
+
         (async () => {
+            console.log(loading, "loading");
             if (loading) {
-                const data = await AdminApi.getAllVendorData(crudKey, typeId, query);
-                dispatch(actions.fetching(
-                    {
-                        userdata: data.data,
-                        operatorCount: data.operators,
-                        vendorCount: data.vendors
-                    }
-                ));
-                countRef.current = 1;
-                setLoading(false);
+                await getVendorData(1);
             }
         })();
         return () => {
@@ -108,7 +106,7 @@ const Vendors: React.FC<IVendors> = () => {
         },
         {
             id: 4,
-            name: "Operator",
+            name: "operator",
             count: operatorCount,
             selected: false
         }
@@ -193,8 +191,10 @@ const Vendors: React.FC<IVendors> = () => {
                     className={"pagination"}
                     isGetHistory={typeId === 4}
                 />
+                <div className={s.detector} ref={ref} />
             </div>
-            <div className={s.detector} ref={ref} />
+
+
             {/*<Modal*/}
             {/*    isOpen={isModalOpen !== false}*/}
             {/*    style={customStyles}*/}

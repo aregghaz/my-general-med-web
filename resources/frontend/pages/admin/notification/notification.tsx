@@ -29,7 +29,7 @@ const NotificationList: React.FC<INotificationList> = () => {
     const [query, setQuery] = useState("");
     const [open, setOpen] = useState<boolean>(false);
     const notifyData = useSelector(getNotify);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const countRef = useRef(1);
     const dispatch = useDispatch();
     const [ref, inView] = useInView({

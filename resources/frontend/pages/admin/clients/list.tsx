@@ -220,7 +220,7 @@ const Home: React.FC<IHome> = () => {
             if (inView && !loading) {
                 await getClientData(query, date);
                 countRef.current++;
-               //// setLoading(false);
+               setLoading(false);
             }
         })();
         return () => {

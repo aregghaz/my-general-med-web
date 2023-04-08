@@ -13,12 +13,10 @@ const NotificationReducer = (state = initialState, action: Actions): InitialStat
     switch (action.type) {
         case "FETCHING_NOTIFICATION_COUNT":
             return {
-                ...state,
                 count: action.payload.count
             };
         case "RESET_TAB_ID":
             return {
-                ...state,
                 count: 0
             };
         default:

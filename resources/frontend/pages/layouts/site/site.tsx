@@ -30,7 +30,9 @@ const Site: React.FC<ISite> = ({ children }) => {
     useEffect(() => {
         (
             async () => {
+
                 if (user && user.count >= 0) {
+                    console.log(user.count ,'user.count ');
                     dispatch(actionsNotification.fetching({ count: user.count }));
 
                 }

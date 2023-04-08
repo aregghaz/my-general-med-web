@@ -11,24 +11,23 @@ import Account from "-!svg-react-loader!../../images/User.svg";
 import Users from "-!svg-react-loader!../../images/User.svg";
 import Logout from "-!svg-react-loader!../../images/SignOut.svg";
 import ProfileSvg from "-!svg-react-loader!../../images/profile1.svg";
-import Settings from "-!svg-react-loader!../../images/Settings.svg";
 import Notification from "-!svg-react-loader!../../images/notifications.svg";
 import NotificationActive from "-!svg-react-loader!../../images/notifications-active.svg";
 import Clients from "-!svg-react-loader!../../images/Clients.svg";
 import Cars from "-!svg-react-loader!../../images/Car.svg";
-import ArrowDown from "-!svg-react-loader!../../svgs/arrow-down.svg";
 import HomeIcon from "-!svg-react-loader!../../images/my-services.svg";
 import Status from "-!svg-react-loader!../../images/Status.svg";
 import { getNotificationCount, getUserData } from "../../store/selectors";
-import Profile from "../../pages/admin/profile/profile";
+import { actionsNotification } from "../../store/notification";
 
 const Drawer: React.FC = ({ children }) => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const logoutRef = useRef(null);
-    const accountRef = useRef(null)
+    const accountRef = useRef(null);
     const userData = useSelector(getUserData);
+    //  const { user, loggedIn } = useSelector(getUserData);
     /// const selectedPage = useSelector(getSelectedMenu);
     const notificationCount = useSelector(getNotificationCount);
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
@@ -47,12 +46,15 @@ const Drawer: React.FC = ({ children }) => {
     var selectedPage = parseFloat(selectedPage2);
     useEffect(() => {
         document.addEventListener("mousedown", outsideClickHandler);
-
+        if (userData.user) {
+            console.log(userData, "userData");
+            dispatch(actionsNotification.fetching({ count: userData.user.count }));
+        }
         return () => {
             document.removeEventListener("mousedown", outsideClickHandler);
         };
     }, [logoutRef]);
-
+    console.log(notificationCount, "notificationCount");
 
     var menuItemsFirst: Array<{
         id: number,
@@ -60,7 +62,9 @@ const Drawer: React.FC = ({ children }) => {
         item: string,
         page: string,
     }> = [];
+
     if (userData.user && (userData.user.role == "vendor")) {
+
         menuItemsFirst = [
             {
                 id: 4,
@@ -87,6 +91,7 @@ const Drawer: React.FC = ({ children }) => {
             }
         ];
     } else if (userData.user && userData.user.role == "admin") {
+
         menuItemsFirst = [
             {
                 id: 1,
@@ -177,7 +182,10 @@ const Drawer: React.FC = ({ children }) => {
                             <div className={s.iconBlock} ref={accountRef}>
                                 <Button
                                     type={"blank"}
-                                    onClick={() => {console.log(menuOpen); openAccountMenu()}}
+                                    onClick={() => {
+                                        console.log(menuOpen);
+                                        openAccountMenu();
+                                    }}
                                 >
                                 <span className={s.icon}>
                                     <Account />
@@ -274,7 +282,9 @@ const Drawer: React.FC = ({ children }) => {
                                     )
                                 )
                         }
+
                         {
+
                             userData.user && <li className={s.item} key={`first-notification`}>
                                 <Link
 
@@ -285,8 +295,8 @@ const Drawer: React.FC = ({ children }) => {
                                                 <span className={s.link_block}>
                                                 <span className={s.side_icon}>
                                                     {/*{li.Icon}*/}
-                                                    {notificationCount.count > 0 ? <> <NotificationActive /> <span
-                                                            className={s.bage}>{notificationCount.count}</span></> :
+                                                    {userData.user.count > 0 ? <> <NotificationActive /> <span
+                                                            className={s.bage}>{userData.user.count}</span></> :
                                                         <Notification />}
                                                 </span>
                                                 <span className={s.side_text}>
