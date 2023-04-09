@@ -129,7 +129,7 @@
   position: absolute;
   z-index: 1;
   top: -20px;
-  left: -5px;
+  left: -2px;
   font-size: 10px;
   user-select: none;
   pointer-events: none;
@@ -259,12 +259,33 @@
 .chosen .classNameField .iconsWrapper .icon {
   fill: white !important;
 }
+.chosen .classNameField .iconsWrapper .iconVendor {
+  fill: none !important;
+  stroke: white !important;
+}
+.chosen .classNameField .iconsWrapper .iconColor {
+  fill: none !important;
+  stroke: white !important;
+}
+.chosen .classNameField .iconsWrapper .iconCar {
+  fill: none !important;
+  stroke: white !important;
+}
 .chosen td {
   color: #F7F7F7;
 }
 
 .arrowSpan {
   margin: 0 5px;
+}
+
+.editLeft {
+  margin-left: 8px;
+  margin-top: 7px;
+}
+
+.infoLabel {
+  margin-top: 2px;
 }
 
 /*# sourceMappingURL=crud-table.module.css.map */

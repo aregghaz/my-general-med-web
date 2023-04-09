@@ -127,6 +127,14 @@
   gap: 10px;
 }
 
+.saveIcon {
+  cursor: pointer;
+}
+
+.timepicker {
+  width: auto;
+}
+
 .items {
   width: 100%;
   height: auto;
@@ -172,6 +180,7 @@
   width: 100%;
   height: auto;
   display: flex;
+  column-gap: 20px;
 }
 
 .itemTextarea {
@@ -180,11 +189,63 @@
   display: flex;
   flex-direction: column;
 }
+.itemTextarea > textarea {
+  width: 100%;
+}
 
 .updateButton {
   height: auto;
   display: flex;
   align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+.updateButton > .updateButtonLabel {
+  white-space: nowrap;
+  background-color: #19347a;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 3px 7px;
+  position: absolute;
+  z-index: 1;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  transistion: 0.5s;
+  opacity: 0;
+}
+.updateButton:hover > .updateButtonLabel {
+  opacity: 1;
+}
+
+.iconsWrapper {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.iconsWrapper .mapIcon {
+  fill: #3F7AAD;
+  transition: 0.5s;
+}
+.iconsWrapper .mapIcon:hover {
+  transform: translateY(-5px);
+  fill: #D63D3D;
+}
+.iconsWrapper .updateIcon {
+  fill: none;
+  stroke: #3F7AAD;
+  transition: 0.5s;
+}
+.iconsWrapper .updateIcon:hover {
+  transform: translateY(-5px);
+  stroke: #D63D3D;
 }
 
 .classInfo {
@@ -230,6 +291,27 @@
 
 .itemsSelect {
   width: 100%;
+}
+
+.saveIcon {
+  fill: #3F7AAD;
+  transition: 0.5s;
+}
+
+.saveIcon:hover {
+  fill: #D63D3D;
+}
+
+.updateLabelTop {
+  margin-top: -5px;
+}
+
+.showMapLabel {
+  margin-top: 0;
+}
+
+.updateLabel {
+  margin-top: -5px;
 }
 
 /*# sourceMappingURL=info-block.module.css.map */

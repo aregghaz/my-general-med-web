@@ -208,6 +208,7 @@ const Drawer: React.FC = ({ children }) => {
                                                     }
                                                 }}
                                             >
+
                                                 <span className={s.icon}>
                                                     <ProfileSvg />
                                                 </span>

@@ -5,7 +5,7 @@
   justify-content: space-between;
   column-gap: 10px;
   border-bottom: 1px solid #19347a;
-  padding-bottom: 10px;
+  padding: 1px 1px 10px 1px;
 }
 
 .uploadButtonWrapper {
@@ -62,6 +62,14 @@
 
 .datePickerLabel {
   color: #19347a;
+}
+
+.error {
+  position: absolute;
+  top: 100%;
+  left: 1%;
+  color: crimson;
+  font-size: 12px;
 }
 
 /*# sourceMappingURL=single-file-upload.module.css.map */
