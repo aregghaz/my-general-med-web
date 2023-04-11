@@ -130,4 +130,8 @@
   fill: #19347a;
 }
 
+.currencyInput {
+  border-bottom: 1px solid #19347a;
+}
+
 /*# sourceMappingURL=priceList.module.css.map */
