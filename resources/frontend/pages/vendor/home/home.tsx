@@ -399,6 +399,14 @@ const Home: React.FC<IHome> = () => {
                                         onChange={(options: IOption) => setCar(options)}
                                         /// onChange={handlerSetCar}
                                         options={carData}
+                                        styles={{
+                                            menu: {
+                                                width: "100%",
+                                            },
+                                            option: {
+                                                width: "100%",
+                                            }
+                                        }}
                                         // value={selectedTitle}
                                         name={"Cars"}
                                         isMulti={false}

@@ -409,6 +409,11 @@ const Home: React.FC<IHome> = () => {
                                         getOptionLabel={(option: IOption) => option.label}
                                         onChange={(options: IOption) => setSelectedVendor(options)}
                                         options={vendorData}
+                                        styles={{
+                                            menu: {
+                                                width: "100%",
+                                            },
+                                        }}
                                         // value={selectedTitle}
                                         name={"Cars"}
                                         isMulti={false}

@@ -3,7 +3,7 @@ import useLocalStorage from "../../hooks/use-local-storage";
 import Checkbox from "../checkbox/checkbox";
 import ReactSelect, {components, MenuProps, OptionProps, OptionTypeBase} from "react-select";
 import {useTranslation} from "react-i18next";
-import {selectStyles} from "../../utils/cssUtils";
+import {selectStyles, selectStylesFunction} from "../../utils/cssUtils";
 import s from "./select.module.scss";
 import Button from "../button/button";
 import RemoveIcon from "-!svg-react-loader!../../svgs/removeIcon.svg"
@@ -29,6 +29,7 @@ interface IMenu {
 }
 
 interface ISelect {
+    styles?: any,
     allowValueClear?: boolean
     isCheckbox?: boolean
     isSearchable?: boolean
@@ -95,6 +96,7 @@ const Menu: React.FC<IMenu> = ({props, handlerAdd}) => {
 const Select: React.FC<ISelect> = (
     {
         allowValueClear = true,
+        styles = {},
         isCheckbox = false,
         isSearchable = false,
         placeholder = "",
@@ -164,7 +166,7 @@ const Select: React.FC<ISelect> = (
                     <ReactSelect
                         ref={selectRef}
                         isMulti={isMulti}
-                        styles={selectStyles}
+                        styles={selectStylesFunction(styles)}
                         className={s.select}
                         placeholder={placeholder}
                         components={isCheckbox ? {
