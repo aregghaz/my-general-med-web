@@ -57,6 +57,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         { name: "date_of_service", type: "datepicker", label: "date of service" },
         { name: "range", type: "input", label: "range" },
         { name: "los", type: "select", label: "los" },
+        { name: "step", type: "autocomplete"},
         { name: "address", type: "autocomplete", label: "testLabel"},
         { name: "addressTime", type: "timePicker", label: "testLabel"},
         { name: "price", type: "input", label: "Fix price"},
@@ -94,6 +95,8 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         "birthday",
         "los",
         "clientType",
+        "step_*",
+        "drop",
         "artificial",
         "waitDuration",
         ///"vendors",
@@ -110,7 +113,6 @@ const ClientCreate: React.FC<IClientCreate> = () => {
     ];
 
     const { t } = useTranslation();
-
     const navigate = useNavigate();
     const validate = (values: FormikValues) => validationRules(values, requiredFields, fields2, t);
 
@@ -201,6 +203,9 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                     values={values}
                                     name={"address"}
                                     handleChange={handleChange}
+                                    validate={validate}
+                                    requiredFields={requiredFields}
+                                    error={errors['address']}
                                 />
                             </div>
                         }

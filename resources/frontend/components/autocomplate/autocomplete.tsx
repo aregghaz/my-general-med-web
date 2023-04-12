@@ -9,6 +9,8 @@ import TextField from "../text-field/text-field";
 import getMapResponse from "../../utils/googleMap";
 import removeIcon from "../../svgs/removeIcon.svg"
 import CustomTimePicker from "../custom-time-picker/customTimePicker";
+import {useTranslation} from "react-i18next";
+import getFieldLabel from "../../utils/getFieldLabel";
 
 interface ITextarea {
     values: any,
@@ -17,8 +19,10 @@ interface ITextarea {
     /////FIXME ADD TYPES
     handleChange: any,
     handleDrawMap?: (dataMap: any) => void;
-    label?: string;
-    error?: string;
+    label?: any;
+    error?: any;
+    validate?:any,
+    requiredFields:Array<string>
 
 
 }
@@ -32,10 +36,12 @@ const Autocomplete: React.FC<ITextarea> = (
         ///   handleDrawMap
         label= "",
         error,
+        validate,
+        requiredFields,
 
 
     }) => {
-
+    const { t } = useTranslation();
     const [load, setLoad] = useState(false);
     const [step, setStep] = useState(typeof values.stops !== "undefined" ? values.stops : [1, 2]);
     const [count, stepCount] = useState(typeof values.stops !== "undefined" ? values.stops.length : 2);
@@ -102,9 +108,16 @@ const Autocomplete: React.FC<ITextarea> = (
             return (
                 <div
                     className={s.row}
+                    style={{
+                        border: error ? "1px solid crimson" : ""
+                    }}
                 >
                     <div className={s.autocompleteName}>
-                        <span>{`Step ${item}`}</span>
+                        <span
+                            style={{
+                                color: error ? "crimson" : ""
+                            }}
+                        >{`Step ${item}`}</span>
                         {count > 2 && item > 2 && <>
                             <div className={s.deleteIcon}>
                                 <button
@@ -142,11 +155,12 @@ const Autocomplete: React.FC<ITextarea> = (
                                     setLoad(!load);
                                 }),
                                 className: `${s.input}`,
-                                placeholder: `step_${item}`,
+                              /// placeholder: `step_${item}`,
+                                placeholder: getFieldLabel(t, `step_${item}`,`step_${item}`, requiredFields),
                                 styles: {
                                     placeholder: (base) => ({
                                         ...base,
-                                        color: "#C4C4C4",
+                                        color: getFieldLabel(t, `step_${item}`,`step_${item}`, requiredFields),
                                     }),
                                     menu: (base) => ({
                                         ...base,
@@ -168,8 +182,8 @@ const Autocomplete: React.FC<ITextarea> = (
                     </div>
                     <div className={`${s.timePickerContainer} ${s.timePickerRow}`}>
                         {item !== 1 && <CustomTimePicker
-                          label={`Appointment Time`}
-                            ////   error={errors[item.name]}
+                          label={getFieldLabel(t,"Appointment Time", `drop_${item}`, requiredFields)}
+                            //   error={errors[item.name]}
                             name={`drop_${item}`}
                             setFieldValue={setFieldValue}
                             value={values[`drop_${item}`]}
@@ -177,8 +191,8 @@ const Autocomplete: React.FC<ITextarea> = (
                          ///   classNameTime={s.timePicker}
                         />}
                         {item !== step.length && <CustomTimePicker
-                            label={`Pick up time`}
-                            ////   error={errors[item.name]}
+                            label={getFieldLabel(t,"Pickup Time", `time_${item}`, requiredFields)}
+                            //   error={errors[item.name]}
                             name={`time_${item}`}
                             setFieldValue={setFieldValue}
                             value={values[`time_${item}`]}

@@ -11,11 +11,11 @@ const VendorProfile:FC<VendorProfileProps> = ({
 
 }):React.ReactElement => {
     const userData = useSelector(getUserData).user
-    return (
+    return userData && (
         <div className={cls.profileWrapper}>
             <div className={cls.profile}>
                 <div className={cls.userInfo}>
-                    {userData.image && <div className={cls.userImage}>
+                    {Object.keys(userData).length > 0 && <div className={cls.userImage}>
                         <img src={userData.toString()}/>
                     </div>}
                 </div>

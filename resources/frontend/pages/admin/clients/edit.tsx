@@ -122,6 +122,7 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
                                     setFieldValue={setFieldValue}
                                     values={values}
                                     name={"address"}
+                                    requiredFields={requiredFields}
                                     handleChange={handleChange}
                                 />
                             </div>

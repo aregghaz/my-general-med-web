@@ -217,6 +217,7 @@ const FormikHandler: React.FC<IFormikHandler> = (
                     name={item.name}
                     setFieldValue={setFieldValue}
                     values={values}
+                    requiredFields={requiredFields}
                     handleDrawMap={handleDrawMap}
                     handleChange={handleChange}
                     error={errors[item.name]}
