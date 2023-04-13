@@ -19,6 +19,8 @@ import { navigate } from "@reach/router";
 import { actionsTabs } from "../../../store/tab";
 import { toast } from "react-toastify";
 import NavigationTab from "../../../components/navigation/navigationTab";
+import ModalNew from "-!svg-react-loader!../../../images/modalNew1.svg"
+import Close from "-!svg-react-loader!../../../images/Close.svg"
 
 
 interface IHome {
@@ -41,19 +43,20 @@ const customStyles: ReactModal.Styles = {
         // height: "60vh"
         // ///  alignItems: "center",
 
-
+        border:"none",
         position: "fixed",
         overflowY: "unset",
         outline: "none",
         top: "50%",
         left: "50%",
-        overflow: "visable",
+        overflow: "visible",
         transform: "translate(-50% , -50%)",
         /// display: 'flex',
         justifyContent: "center",
         ///  alignItems: "center",
         width: "500px",
-        height: "300px",
+        height: "200px",
+        padding: 0,
     },
     overlay: {
         // zIndex: 999999,
@@ -395,37 +398,50 @@ const Home: React.FC<IHome> = () => {
                     onRequestClose={handlerCloseModal}
                 >
                     <div className={s.modalBody}>
-                        <div className={s.iconWrapper}>
-                            <i className="cancelicon-"
-                               onClick={handlerCloseModal}
-                            />
+                        <div className={s.leftButton}>
+
+                            <Button
+                                className={s.buttonContent}
+                                isSubmit={true}
+                                type={"adminUpdate"}
+                                onClick={handlerSetVendor}>
+                                <ModalNew className={s.buttonIcon}/>
+                                {t("assign")}
+                            </Button>
+
                         </div>
 
                         {
                             vendorData && <div className={s.modalDiv}>
+                                <div className={s.iconWrapper}>
+                                    <div className={s.iconCircle}>
+
+                                        <Close onClick={handlerCloseModal} className={s.modalClose}/>
+                                    </div>
+
+                                </div>
                                 <div className={s.selectDiv}>
                                     <Select
                                         getOptionValue={(option: IOption) => option.value}
-                                        getOptionLabel={(option: IOption) => option.label}
+                                        getOptionLabel={(option: IOption) => t(option.label)}
                                         onChange={(options: IOption) => setSelectedVendor(options)}
                                         options={vendorData}
                                         styles={{
                                             menu: {
                                                 width: "100%",
                                             },
+                                            option: {
+                                                width: "100%",
+                                            }
                                         }}
                                         // value={selectedTitle}
                                         name={"Cars"}
                                         isMulti={false}
                                     />
-                                    <div className={s.assign}>
-                                        <Button isSubmit={true} type={"adminUpdate"}
-                                                onClick={handlerSetVendor}> {t("assign")}</Button>
-                                    </div>
+
                                 </div>
                             </div>
                         }
-
                     </div>
                 </Modal>
                 <div className={s.iconBlock}>

@@ -18,6 +18,8 @@ import { actionsTabs } from "../../../store/tab";
 import { toast } from "react-toastify";
 import NavigationTab from "../../../components/navigation/navigationTab";
 import customStyles from "../../../utils/style";
+import ModalNew from "-!svg-react-loader!../../../images/modalNew1.svg"
+import Close from "-!svg-react-loader!../../../images/Close.svg"
 
 interface IHome {
     path: string;
@@ -385,13 +387,28 @@ const Home: React.FC<IHome> = () => {
                     onRequestClose={handlerCloseModal}
                 >
                     <div className={s.modalBody}>
-                        <div className={s.iconWrapper}>
-                            <i className="cancelicon-"
-                               onClick={handlerCloseModal}
-                            />
+                        <div className={s.leftButton}>
+
+                                <Button
+                                    className={s.buttonContent}
+                                    isSubmit={true}
+                                    type={"adminUpdate"}
+                                    onClick={handlerSetCar}>
+                                    <ModalNew className={s.buttonIcon}/>
+                                    {t("assign")}
+                                </Button>
+
                         </div>
+
                         {
                             carData && <div className={s.modalDiv}>
+                                <div className={s.iconWrapper}>
+                                    <div className={s.iconCircle}>
+
+                                        <Close onClick={handlerCloseModal} className={s.modalClose}/>
+                                    </div>
+
+                                </div>
                                 <div className={s.selectDiv}>
                                     <Select
                                         getOptionValue={(option: IOption) => option.value}
@@ -411,14 +428,7 @@ const Home: React.FC<IHome> = () => {
                                         name={"Cars"}
                                         isMulti={false}
                                     />
-                                    <div className={s.assign}>
-                                        <Button
-                                            isSubmit={true}
-                                            type={"adminUpdate"}
-                                            onClick={handlerSetCar}>
-                                            {t("assign")}
-                                        </Button>
-                                    </div>
+
                                 </div>
                             </div>
                         }

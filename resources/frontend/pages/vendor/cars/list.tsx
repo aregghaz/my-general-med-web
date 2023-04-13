@@ -12,6 +12,9 @@ import InfoBlockCar from "../../../components/info-block-car/info-block";
 import customStyles from "../../../utils/style";
 import { homeAPI } from "../../../api/site-api/home-api";
 import CloseSvg from "-!svg-react-loader!../../../images/Close.svg";
+import Close from "-!svg-react-loader!../../../images/Close.svg"
+
+
 
 interface Beneficiary {
     path: string;
@@ -137,9 +140,11 @@ const Cars: React.FC<Beneficiary> = () => {
             >
                 <div className={s.modalBody}>
                     <div className={s.iconWrapper}>
-                        <i className="cancelicon-"
-                           onClick={handlerCloseModal}
-                        />
+                        <div className={s.iconCircle}>
+
+                            <Close onClick={handlerCloseModal} className={s.modalClose}/>
+                        </div>
+
                     </div>
 
                     <div className={s.modalContent}>

@@ -9,6 +9,7 @@ import axios from "axios";
 import Modal from "react-modal";
 import Button from "../../../components/button/button";
 import customStyles from "../../../utils/style";
+import Close from "-!svg-react-loader!../../../images/Close.svg"
 
 interface Beneficiary {
     path: string;
@@ -201,10 +202,10 @@ const Status: React.FC<Beneficiary> = () => {
                 >
                     <div className={s.modalBody}>
                         <div className={s.iconWrapper}>
-                            <i
-                                className="cancelicon-"
-                                onClick={handlerCloseModal}
-                            />
+                            <div className={s.iconCircle}>
+
+                                <Close onClick={handlerCloseModal} className={s.modalClose}/>
+                            </div>
                         </div>
                         <div className={s.contentWrapper}>
                             <p className={s.text}>

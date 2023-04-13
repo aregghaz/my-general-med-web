@@ -8,12 +8,12 @@ const customStyles: ReactModal.Styles = {
         left: "50%",
         overflow: "visible",
         transform: "translate(-50% , -50%)",
-
+        padding: 0,
         /// display: 'flex',
         justifyContent: "center",
         ///  alignItems: "center",
         width: "500px",
-        height: "250px",
+        height: "200px",
         // backgroundColor: "#194b76",
     },
     overlay: {
