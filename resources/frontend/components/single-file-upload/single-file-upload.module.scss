@@ -98,7 +98,11 @@
 }
 
 .uploadButtonLabel {
-    color: $borderColor;
+    color: $placeholderColor;
+}
+
+.errorInput {
+    @include errorColor();
 }
 
 .uploadFileText {

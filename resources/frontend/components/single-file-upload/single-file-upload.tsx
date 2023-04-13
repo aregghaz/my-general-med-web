@@ -41,7 +41,6 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
         dataPickerError,
     }) => {
     const { t } = useTranslation();
-    console.log(error);
     const [viewPDF, setViewPDF] = useState<null | object>(null);
     const fileType = ["application/pdf"];
     // if (oldImage) {
@@ -107,21 +106,23 @@ const SingleFileUpload: React.FC<ISingleFileUpload> = (
 
         <>
             {error && !fileName && <span className={s.error}>{error}</span>}
-            <div className={s.wrapper} style={{border: error && !fileName ? "1px solid crimson" : ""}}>
+            <div className={s.wrapper}>
                 <div className={s.uploadButtonWrapper}>
                     <div className={s.uploadButtonLabel}>
                         <span style={{
-                            color: error && !fileName ? "crimson" : ""
+                            color: error && !fileName ? "crimson" : fileName ? "#19347a" : ""
                         }}>{label}</span>
                     </div>
                     <div className={s.uploadButton}>
                         <label>
                             <span className={s.uploadFileText}><ButtonSVg/></span>
-                            <input name={name} type="file" className={s.fileInput} onChange={(e) => {
+                            <input name={name} type="file" className={`${s.fileInput} `} onChange={(e) => {
                                 onChange(e)
                                 setFileName(e.target.files[0].name)
                             }} />
-                            <span className={s.filename}>{fileName ? fileName : "Choose a file"}</span>
+                            <span className={`${s.filename} ${error && !fileName && s.errorInput}`} style={{
+                                color: fileName && !error && "#19347a"
+                            }}>{fileName ? fileName : "Choose a file"}</span>
                         </label>
                     </div>
                 </div>

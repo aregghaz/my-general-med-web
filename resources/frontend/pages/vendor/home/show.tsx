@@ -266,7 +266,9 @@ const Show: React.FC<IShow> = ({ id }) => {
                                             <CustomTimePicker className={cls.timepicker} setFieldValue={setFieldValue} value={item.drop_down} name={`appointmentTime ${index + 1}`}/>
                                             <div className={cls.updateButton}>
                                                 <span className={cls.updateButtonLabel}>Save</span>
-                                                <Save type={"adminUpdate"} className={cls.saveIcon}/>
+                                                <button className={cls.adminUpdate}>
+                                                    <Save type={"adminUpdate"} className={cls.saveIcon}/>
+                                                </button>
                                             </div>
                                         </div>}
                                         {clientById.address.length !== index+1 && <div className={cls.item} style={{alignItems: "center"}}>
@@ -275,7 +277,9 @@ const Show: React.FC<IShow> = ({ id }) => {
                                             <CustomTimePicker className={cls.timepicker} setFieldValue={setFieldValue} value={item.pick_up} name={`pickupTime ${index + 1}`}/>
                                             <div className={cls.updateButton}>
                                                 <span className={cls.updateButtonLabel}>Save</span>
-                                                <Save type={"adminUpdate"}  className={cls.saveIcon}/>
+                                                <button className={cls.adminUpdate}>
+                                                    <Save type={"adminUpdate"} className={cls.saveIcon}/>
+                                                </button>
                                             </div>
                                         </div>}
 
@@ -321,9 +325,9 @@ const Show: React.FC<IShow> = ({ id }) => {
                     <div className={cls.mapBlock}>
                         {isLoaded && showMap && <div
                             className={cls.selectDiv}
-                            style={{
-                                flexDirection: blockRef.current.clientHeight > window.innerHeight ? "column" : "row"
-                            }}
+                            // style={{
+                            //     flexDirection: blockRef.current.clientHeight > window.innerHeight ? "column" : "row"
+                            // }}
                         >
                             <div className={cls.directionDiv}>
                                 {steps && steps.map((el: any) => {

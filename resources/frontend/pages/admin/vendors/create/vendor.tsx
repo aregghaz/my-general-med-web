@@ -14,13 +14,13 @@ const VendorCreate: React.FC<IVendorCreate> = () => {
     const crudKey = "vendors";
     const [data, setData] = useState(null);
     const fields: Array<IItem> = [
-        { name: "companyName", type: "input", label: "companyName" },
-        { name: "email", type: "input", label: "email" },
-        { name: "address", type: "input", label: "address" },
-        { name: "phone_number", type: "input", label: "phone_number", inputType: "tel" },
-        { name: "los", type: "multiSelect", inputType: "los", label: "los"},
-        { name: "password", type: "password", inputType: "password", autoComplete: "new-password"},
-        { name: "fields", type: "multiSelect", label: "fields"},
+        { name: "companyName", type: "input", label: "companyName", placeholder: "Company name" },
+        { name: "email", type: "input", label: "email", placeholder: "Email" },
+        { name: "address", type: "input", label: "address", placeholder: "Address" },
+        { name: "phone_number", type: "input", label: "phone_number", inputType: "tel", placeholder: "Phone number" },
+        { name: "los", type: "multiSelect", inputType: "los", label: "los", placeholder: "LOS"},
+        { name: "password", type: "password", inputType: "password", autoComplete: "new-password", placeholder: "Password"},
+        { name: "fields", type: "multiSelect", label: "fields", placeholder: "Table fields"},
         { name: "id", type: "hidden", inputType: "hidden" },
 
     ];

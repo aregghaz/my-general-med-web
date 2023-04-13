@@ -15,19 +15,24 @@ const OperatorCreate: React.FC<IVendorCreate> = () => {
     const redirectKey = "vendors";
     const [data, setData] = useState(null);
     const fields: Array<IItem> = [
-        { name: "name", type: "input", label: "name" },
-        { name: "surname", type: "input", label: "surname" },
-        { name: "email", type: "input", label: "email" },
-        { name: "address", type: "input", label: "address" },
-        { name: "phone_number", type: "input", label: "phone_number", inputType: "tel" },
-        { name: "fields", type: "multiSelect", label: "fields" },
+        { name: "name", type: "input", label: "name", placeholder: "First name" },
+        { name: "surname", type: "input", label: "surname", placeholder: "Last name" },
+        { name: "email", type: "input", label: "email", placeholder: "Email" },
+        { name: "address", type: "input", label: "address", placeholder: "Address" },
+        { name: "phone_number", type: "input", label: "phone_number", inputType: "tel", placeholder: "Phone number"},
+        { name: "fields", type: "multiSelect", label: "fields", placeholder: "Table fields" },
         { name: "id", type: "hidden", inputType: "hidden" },
-        { name: "password", type: "password", inputType: "password" }
+        { name: "password", type: "password", inputType: "password", placeholder: "Password" }
     ];
     const requiredFields = [
         "name",
         "password",
-        "fields"
+        "fields",
+        "name",
+        "surname",
+        "email",
+        "address",
+        "phone_number",
     ];
     useEffect(() => {
         (

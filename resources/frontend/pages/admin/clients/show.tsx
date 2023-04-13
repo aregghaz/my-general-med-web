@@ -274,9 +274,9 @@ const Show: React.FC<IShow> = ({ id }) => {
             <div className={cls.infoRightTop}>
                 {isLoaded && showMap && <div
                     className={cls.selectDiv}
-                    style={{
-                        flexDirection: blockRef.current.clientHeight > window.innerHeight ? "column-reverse" : "row"
-                    }}
+                    // style={{
+                    //     flexDirection: blockRef.current.clientHeight > window.innerHeight ? "column-reverse" : "row"
+                    // }}
                 >
                     <div
                         className={cls.directionDiv}

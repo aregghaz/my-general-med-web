@@ -47,8 +47,8 @@ const DataPicker: React.FC<IDataPicker> = (
                 style={{
                     ...style,
                     color: value ? "grey" : "C4C4C4",
-                    border: !singleFileUpload && error && !value ? "1px solid crimson" : type ? "none" : "",
-                }} type="text" className={s.input}
+                    // border: !singleFileUpload && error && !value ? "1px solid crimson" : type ? "none" : "",
+                }} type="text" className={`${s.input} ${error && !value && s.errorInput}`}
                 value={value ? timestampToDate(new Date(value)) : timestampToDate(new Date().toLocaleDateString())}
                 onClick={() => setShow(!show)}
                 readOnly={true}/>

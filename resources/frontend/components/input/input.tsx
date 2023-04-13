@@ -56,12 +56,9 @@ const Input: React.FC<IInput> = (
                     {`${label}`} {isAsterisk && <span>*</span>}
                 </label>}
             <input
-                style={{
-                    border: error && !value ? "1px solid crimson" : ""
-                }}
                 id={name}
                 name={name}
-                className={`${s.input} ${!String(value ?? "") ? s.blankInput : ""}  ${className}`}
+                className={`${s.input} ${className} ${error && !value ? s.errorInput : ""}`}
                 type={type}
                 placeholder={placeholder}
                 value={value}
@@ -83,3 +80,5 @@ const Input: React.FC<IInput> = (
 };
 
 export default Input;
+
+// className={`${s.input} ${!String(value ?? "") ? s.blankInput : ""}  ${className}`}

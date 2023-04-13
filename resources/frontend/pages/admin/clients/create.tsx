@@ -41,7 +41,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         { name: "birthday", type: "datepicker", label: "birthday"},
         ///  { name: "los", type: "select", label: "los" },
         { name: "artificial", type: "select", label: "artificial" },
-        { name: "waitDuration", type: "select", label: "waitDuration" },
+        { name: "waitDuration", type: "select", label: "waitDuration"},
         /// { name: "vendors", type: "select", label: "vendors" },
         { name: "request_type", type: "select", label: "request_type" },
         { name: "member_unique_identifier", type: "input", label: "member_unique_identifier", placeholder: "Member unique identifier"},
@@ -351,8 +351,8 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                             <div className={s.item}>
                                 {
                                     <div className={s.fixedPriceWrapper} style={{
-                                        borderBottom: errors["price"] && !priceValue ? "none" : "",
-                                        paddingBottom: !checked && 10
+                                        // borderBottom: errors["price"] && !priceValue ? "none" : "",
+                                        // paddingBottom: !checked && 10
                                     }}>
                                         <input
                                             className={s.fixedCheckbox}

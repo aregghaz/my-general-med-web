@@ -31,6 +31,7 @@ $headColor: #393E46;
 //$menuColor: #6D9886;
 $menuColor: #D63D3D;
 $menuHoverColor: #D63D3D;
+$errorColor: #DC143C; // crimson
 //$iconColor: #6D9886;
 $iconColor: #4466b0;
 $backgroundColor:rgb(228 235 243);
@@ -53,8 +54,18 @@ $borderRadius: 15px;
 
 @mixin error() {
     position: absolute;
-    top: 100%;
+    top: 105%;
     left: 1%;
-    color: crimson;
+    color: $errorColor;
     font-size: 12px;
+}
+
+@mixin errorPlaceholder() {
+    &::placeholder {
+        color: $errorColor;
+    }
+}
+
+@mixin errorColor() {
+    color: $errorColor;
 }

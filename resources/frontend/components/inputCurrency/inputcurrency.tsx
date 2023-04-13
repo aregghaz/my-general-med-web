@@ -82,9 +82,6 @@ const InputCurrency: React.FC<IInput> = (
             {/*/>*/}
 
             <CurrencyInput
-                style={{
-                    border: error && !myVal ? "1px solid red" : ""
-                }}
                 name={name}
                 id={name}
                 placeholder={placeholder}
@@ -95,7 +92,7 @@ const InputCurrency: React.FC<IInput> = (
                 ref={ref}
                 decimalsLimit={2}
                 decimalSeparator={"."}
-                className={`${s.input} ${className}`}
+                className={`${s.input} ${className} ${error && !myVal && s.inputError}`}
                 // fixedDecimalLength={2}
                 maxLength={6}
                 // value={value}

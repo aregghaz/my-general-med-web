@@ -6,7 +6,7 @@ import { OptionsType } from "react-select/src/types";
 import Checkbox from "../checkbox/checkbox";
 import useLocalStorage from "../../hooks/use-local-storage";
 import { getStyles } from "./common";
-import {selectStyles} from "../../utils/cssUtils";
+import {selectStyles, selectStylesFunction} from "../../utils/cssUtils";
 import RemoveIcon from "-!svg-react-loader!../../svgs/removeIcon.svg"
 
 import s from "./select.module.scss";
@@ -77,15 +77,12 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
             >{label}</label>}
             <div
                 className={s.selectWrapper}
-                style={{
-                    border: error && !defaultValue ? "1px solid red" : ""
-                }}
             >
                 <Select
                     ref={selectRef}
                     isMulti={isMulti}
                     name={name}
-                    styles={selectStyles}
+                    styles={selectStylesFunction({},error)}
                     options={options}
                     className={s.select}
                     loadOptions={loadOptions}

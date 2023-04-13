@@ -160,13 +160,11 @@ const Select: React.FC<ISelect> = (
                             {t(`admin:remove_all`)}
                         </Button></>}
                 </div>
-                <div className={s.selectWrapper} style={{
-                    border: error && !value ? "1px solid red" : ""
-                }}>
+                <div className={s.selectWrapper}>
                     <ReactSelect
                         ref={selectRef}
                         isMulti={isMulti}
-                        styles={selectStylesFunction(styles)}
+                        styles={selectStylesFunction(styles, error)}
                         className={s.select}
                         placeholder={placeholder}
                         components={isCheckbox ? {

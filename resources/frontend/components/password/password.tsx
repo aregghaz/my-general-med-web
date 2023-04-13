@@ -55,16 +55,14 @@ const Password:React.FC<Password> = ({
                         {`${label}`} {isAsterisk && <span>*</span>}
                     </label>}
             </div>
-            <div className={cls.bottom} style={{
-                border: error && !value ? "1px solid red" : ""
-            }}>
+            <div className={cls.bottom}>
                 <div className={cls.passwordInputWrapper}>
                     <>
                         {error && !value && <div className={s.error}>{error}</div>}
                         <input
                             id={name}
                             name={name}
-                            className={`${s.input} ${!String(value ?? "") ? s.blankInput : ""}  ${className}`}
+                            className={`${s.input} ${className} ${error && !value ? cls.errorInput : ""}`}
                             type={hidden ? "password" : "text"}
                             placeholder={placeholder}
                             value={value}

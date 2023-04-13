@@ -50,3 +50,7 @@
 .error {
     @include error();
 }
+
+.errorInput {
+    @include errorColor()
+}

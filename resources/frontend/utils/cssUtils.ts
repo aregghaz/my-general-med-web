@@ -79,8 +79,7 @@ export const selectStyles:any = {
     })
 }
 
-export const selectStylesFunction = (styles:any) => ( {
-
+export const selectStylesFunction = (styles?:any,error?:any) => ( {
     control: (baseStyles: any, state: any) => ({
         ...baseStyles,
         display: "flex",
@@ -154,7 +153,7 @@ export const selectStylesFunction = (styles:any) => ( {
     }),
     placeholder: (base: any) => ({
         ...base,
-        color: "#757575",
+        color: error ? "crimson" : "#757575",
     }),
     singleValue: (base: any) => ({
         ...base,
