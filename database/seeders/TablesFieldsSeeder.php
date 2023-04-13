@@ -51,6 +51,7 @@ class TablesFieldsSeeder extends Seeder
             'operator_id',
             'additionalNote',
             'operator_note',
+            'insurance_exp',
         ];
 
         foreach ($fields as $field) {

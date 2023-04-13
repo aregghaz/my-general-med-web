@@ -38,6 +38,8 @@ class Clients extends Model
         'birthday',
         'weight',
         'height',
+        'insurance',
+        'insurance_exp',
         'additionalNote',
         'operator_note',
         'reason_id',

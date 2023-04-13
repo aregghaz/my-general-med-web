@@ -11,9 +11,8 @@ import CloseSvg from "-!svg-react-loader!../../../images/Close.svg";
 import NavigationTab from "../../../components/navigation/navigationTab";
 import { actionsNotify } from "../../../store/not";
 import { getNotify } from "../../../store/selectors";
-import infoBlockTrips from "../../../components/info-block-trips/info-block";
-import InfoBlockPatient from "../../../components/info-block-patient/info-block";
 import InfoBlockTrips from "../../../components/info-block-trips/info-block";
+import InfoBlockPatient from "../../../components/info-block-patient/info-block";
 
 interface INotificationList {
     path: string;
@@ -67,7 +66,7 @@ const NotificationList: React.FC<INotificationList> = () => {
                 }
             }
         )();
-    }, [inView, loading,typeId]);
+    }, [inView, loading, typeId]);
 
     const handlerAction = async (action: string, id: number) => {
         const notifData = await AdminApi.getInfoData(id, "admin");
@@ -130,7 +129,7 @@ const NotificationList: React.FC<INotificationList> = () => {
     };
     const handlerClose = () => setModel(null);
     console.log(data, "carcar");
-    return data && (
+    return data &&  (
 
         <>
             <div className={s.upload_panel}>
@@ -157,12 +156,12 @@ const NotificationList: React.FC<INotificationList> = () => {
                 {model === "car" &&
                     <InfoBlockCar data={info} companyName={companyName} updatedField={updatedField} is_admin={true} />}
 
-                {model === "patient" && <InfoBlockPatient data={info} is_admin={true}/>}
+                {model === "patient" && <InfoBlockPatient data={info} is_admin={true} />}
 
-                {model === "trips" && <InfoBlockTrips data={info} is_admin={true}/>}
+                {model === "trips" && <InfoBlockTrips data={info} is_admin={true} />}
             </div>}
             <div className={!model ? s.fullWidth : s.infoTable}>
-                <List
+                {data && <List
                     data={data}
                     titles={titles}
                     tableRef={tableRef}
@@ -175,7 +174,7 @@ const NotificationList: React.FC<INotificationList> = () => {
                     isDelete={false}
                     isEdit={false}
                     isGetItems={false}
-                />
+                />}
                 <div className={s.detector} ref={ref} />
             </div>
         </>

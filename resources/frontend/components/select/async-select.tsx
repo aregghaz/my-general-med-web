@@ -49,7 +49,7 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
         getOptionLabel,
         allowValueClear= true,
         getOptionValue,
-        error ='',
+        error,
         defaultValue,
         loadOptions,
         name,

@@ -18,7 +18,7 @@ const NotifyReducer = (state = initialState, action: Actions): InitialState => {
         case "FETCHING_NOTIFICATION_COUNT":
             return {
                 ...state,
-                data: [...action.payload.data],
+                data:action.payload.data,
                 driverCount: action.payload.driverCount,
                 carCount: action.payload.carCount,
                 patientCount: action.payload.patientCount,

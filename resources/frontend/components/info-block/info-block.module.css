@@ -314,4 +314,10 @@
   margin-top: -5px;
 }
 
+.adminUpdate {
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
 /*# sourceMappingURL=info-block.module.css.map */

@@ -17,7 +17,11 @@
 }
 
 .uploadButtonLabel {
-  color: #19347a;
+  color: #757575;
+}
+
+.errorInput {
+  color: #DC143C;
 }
 
 .uploadFileText > svg {
@@ -66,9 +70,9 @@
 
 .error {
   position: absolute;
-  top: 100%;
+  top: 105%;
   left: 1%;
-  color: crimson;
+  color: #DC143C;
   font-size: 12px;
 }
 

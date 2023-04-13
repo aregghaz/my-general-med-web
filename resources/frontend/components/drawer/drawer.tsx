@@ -201,10 +201,10 @@ const Drawer: React.FC = ({ children }) => {
                                                 onClick={() => {
                                                     if (userData.user.role === "admin") {
                                                         navigate("/admin/profile");
-                                                        openAccountMenu()
+                                                        openAccountMenu();
                                                     } else {
                                                         navigate("/profile");
-                                                        openAccountMenu()
+                                                        openAccountMenu();
                                                     }
                                                 }}
                                             >

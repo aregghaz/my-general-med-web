@@ -4,11 +4,10 @@ import cls from "./customTimePicker.module.scss";
 interface customTimePickerProps {
     labelText?: string,
     value?: string,
-    onChange?: Function,
     name: string,
     className?: string,
     label?: string,
-    setFieldValue?: any,
+    setFieldValue?: (name: string, value: string) => void;
 }
 
 const customTimePicker: FC<customTimePickerProps> = ({
@@ -34,6 +33,7 @@ const customTimePicker: FC<customTimePickerProps> = ({
                     value = "00";
                 }
                 setHours(value);
+                console.log(value,'value');
                 setFieldValue(name, `${value}:${time[1]}`);
                 break;
             case "minutes":

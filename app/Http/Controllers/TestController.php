@@ -13,7 +13,7 @@ class TestController extends Controller
 
 {
 
-   public function index2()
+    public function index2()
     {
         $queryData = date('Y-m-d', strtotime("+60 days"));
         $driverData = Driver::where(function ($query) use ($queryData) {
@@ -40,18 +40,18 @@ class TestController extends Controller
 
         foreach ($driverData as $data) {
             foreach ($data as $key => $value) {
-                $actionid  = false;
-              ///  dd(date('Y-m-d', strtotime("+15 days")) ,date('Y-m-d', strtotime($value)));
-                if(date('Y-m-d', strtotime($value)) <  date('Y-m-d', strtotime("+15 days"))){
-                    $actionid  = 14;
-                }else if(date('Y-m-d', strtotime($value)) <  date('Y-m-d', strtotime("+30 days"))) {
-                    $actionid  = 13;
-                }else if(date('Y-m-d', strtotime($value)) <  date('Y-m-d', strtotime("+60 days"))) {
-                    $actionid  = 12;
+                $actionid = false;
+                ///  dd(date('Y-m-d', strtotime("+15 days")) ,date('Y-m-d', strtotime($value)));
+                if (date('Y-m-d', strtotime($value)) < date('Y-m-d', strtotime("+15 days"))) {
+                    $actionid = 14;
+                } else if (date('Y-m-d', strtotime($value)) < date('Y-m-d', strtotime("+30 days"))) {
+                    $actionid = 13;
+                } else if (date('Y-m-d', strtotime($value)) < date('Y-m-d', strtotime("+60 days"))) {
+                    $actionid = 12;
                 }
-           /// dd($data);
+                /// dd($data);
                 ///
-                if($actionid){
+                if ($actionid) {
                     switch ($key) {
                         case 'sex_offender_check_exp' :
                             $this->saveNotification('driver', 'Sex Offender Check', $data['user_id'], $actionid);
@@ -84,21 +84,20 @@ class TestController extends Controller
                             break;
                     }
                 }
-
             }
         }
 
         dd(1);
     }
 
-        public function index(Request $request)
+    public function index(Request $request)
     {
         /* open this for local file testing purposes only*/
 
 
         /// DB::beginTransaction();
 
-      ///  $vendorId = $request->user()->vendor_id;
+        ///  $vendorId = $request->user()->vendor_id;
 
         $path = $request->file('file');
         $csv_data = file_get_contents($path);
@@ -275,23 +274,23 @@ class TestController extends Controller
                     'type_id' => 2,
                     'operator_id' => 1,
                     'trip_id' => $data[$trip_id],
-                    'fullName' => $data[$name] . ' '.  $data[$surname],
+                    'fullName' => $data[$name] . ' ' . $data[$surname],
                     'gender' => $genderType,
                     'los_id' => $losType,
-                   /// 'phone_number' => $data[$phone_number],
+                    /// 'phone_number' => $data[$phone_number],
                     'date_of_service' => date('Y-m-d', strtotime($data[$date_of_service])),
                     ///'appointment_time' => $data[$appointment_time],
                     'pick_up' => $data[$pick_up],
                     'drop_down' => $data[$drop_down],
                     'request_type' => $requestTypeId, ///seect
-                ///    'status' => $statusId, ///seect
+                    ///    'status' => $statusId, ///seect
                     'origin' => $data[$originData[0]] . ' ' . $data[$originData[1]] . ' ' . $data[$originData[2]] . ' ' . $data[$originData[3]],
                     'origin_phone' => $data[$originData[7]],
                     ///'origin_id' => $originDataId,
                     'origin_comment' => $data[$origin_comment],
                     'destination_phone' => $data[$destinetionData[7]],
                     "destination" => $data[$destinetionData[0]] . ' ' . $data[$destinetionData[1]] . ' ' . $data[$destinetionData[2]] . ' ' . $data[$destinetionData[3]],
-                   /// "destination_id" => $destinetionDataId,
+                    /// "destination_id" => $destinetionDataId,
                     'destination_comments' => $data[$destination_comments],
                     'miles' => (int)$data[$miles],
                     'member_uniqie_identifer' => $data[$member_uniqie_identifer],

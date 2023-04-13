@@ -31,7 +31,8 @@ const defaultDat = {
         address_comments: '',
         address_phone: "",
         pick_up:'00:00',
-        drop_down:'00:00'
+        drop_down:'00:00',
+        step:0
     }],
     height: 0,
     weight: 0,

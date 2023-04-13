@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import cls from "../../../components/info-block/info-block.module.scss";
 import { DirectionsRenderer, GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { homeAPI } from "../../../api/site-api/home-api";
@@ -13,9 +13,9 @@ import Textarea from "../../../components/textarea/textarea";
 import getMapResponse from "../../../utils/googleMap";
 import timestampToDate from "../../../utils/timestampToDate";
 import CustomTimePicker from "../../../components/custom-time-picker/customTimePicker";
-import ShowMap from "-!svg-react-loader!../../../images/showMap.svg"
-import Update from "-!svg-react-loader!../../../images/update.svg"
-import Save from "-!svg-react-loader!../../../images/saveImg.svg"
+import ShowMap from "-!svg-react-loader!../../../images/showMap.svg";
+import Update from "-!svg-react-loader!../../../images/update.svg";
+import Save from "-!svg-react-loader!../../../images/saveImg.svg";
 
 
 interface IShow {
@@ -36,35 +36,36 @@ const Show: React.FC<IShow> = ({ id }) => {
     const { t } = useTranslation();
     const [carData, setCarData] = useState<Array<any>>(null);
     const [disabled, setDisabled] = useState(false);
+    const [mapData, setMapData] = useState({
+        destination: "",
+        origin: "",
+        waypoint: []
+    });
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: GOOGLE_API_KEY,
         libraries: ["geometry", "drawing", "places"]
     });
-    const blockRef = useRef(null as HTMLDivElement)
-    const [showMap, setShowMap] = useState<boolean>(false)
-
+    const blockRef = useRef(null as HTMLDivElement);
+    const [showMap, setShowMap] = useState<boolean>(false);
 
 
     const [values, setFieldValue] = useState({
-        pick_up: clientById.pick_up,
-        drop_down: clientById.drop_down,
         additionalNote: clientById.additionalNote,
         status: clientById.type_id,
         car: clientById.car
 
     });
+    const [dateValue, setFieldDateValue] = useState(null);
     useEffect(() => {
         (async () => {
             const homeData = await homeAPI.getCLientById(id);
             setStatuses(homeData.status);
-            if(homeData.client.type_id.id===6){
-                setDisabled(true)
+            if (homeData.client.type_id.id === 6) {
+                setDisabled(true);
             }
             dispatch(clientAction.fetching({ clientById: homeData.client }));
             setCarData(homeData.cars);
             setFieldValue({
-                pick_up: homeData.client.pick_up,
-                drop_down: homeData.client.drop_down,
                 additionalNote: homeData.client.additionalNote,
                 status: homeData.client.type_id,
                 car: homeData.client.car
@@ -89,21 +90,9 @@ const Show: React.FC<IShow> = ({ id }) => {
                     });
                 }
             }
-            const results = await getMapResponse(origin, destination, waypoint);
-            setDirectionsResponse(results);
-            if (results.routes[0].legs.length > 0) {
-                var miles = 0;
-                results.routes[0].legs.map((item: any) => {
-                    miles += parseFloat(item.distance.text);
-                    setSteps((state) => {
-                        return [...state,
-                            ...item.steps
+            setMapData({ origin: origin, destination: destination, waypoint: waypoint });
 
-                        ];
-                    });
-                });
-                setDistance(results.routes[0].legs[0].duration.text);
-            }
+
         })();
         return () => {
             homeAPI.cancelRequest();
@@ -111,9 +100,37 @@ const Show: React.FC<IShow> = ({ id }) => {
 
     }, []);
 
-    // const sendNotification = (options: ToastOptions, text: string) => {
-    //     toast(t(text), options);
-    // };
+    const shopMapHandler = async () => {
+        if (!showMap) {
+            console.log(steps.length, "steps.length");
+            if (steps.length === 0) {
+                setSteps([]);
+                const results = await getMapResponse(mapData.origin, mapData.destination, mapData.waypoint);
+                setDirectionsResponse(results);
+                if (results.routes[0].legs.length > 0) {
+                    var miles = 0;
+                    results.routes[0].legs.map((item: any) => {
+                        miles += parseFloat(item.distance.text);
+                        setSteps((state) => {
+                            return [...state,
+                                ...item.steps
+
+                            ];
+                        });
+                    });
+                    setDistance(results.routes[0].legs[0].duration.text);
+                    setDistance(results.routes[0].legs[0].duration.text);
+                    setShowMap(true);
+                }
+            } else {
+                setShowMap(true);
+            }
+        } else {
+            setShowMap(false);
+        }
+
+
+    };
     const handlerUpdate = async () => {
         ////TODO optimize this part
         if (!values.car.value) {
@@ -142,8 +159,13 @@ const Show: React.FC<IShow> = ({ id }) => {
 
 
     };
+    const updateTimeHandler = async (step: number, field: string) => {
+        console.log(step, field, dateValue, "step");
+        console.log(dateValue, "step");
+    };
+    const onChange = () => {
 
-
+    };
     return clientById && <div className={cls.block} ref={blockRef}>
         <div className={cls.infoLeft}>
             <div>
@@ -156,33 +178,15 @@ const Show: React.FC<IShow> = ({ id }) => {
                     <div className={cls.iconsWrapper}>
                         <div className={cls.updateButton}>
                             <span className={`${cls.updateButtonLabel} ${cls.showMapLabel}`}>Show Map</span>
-                            <ShowMap type={"adminUpdate"} onClick={() => {setShowMap(!showMap)}} className={cls.mapIcon}/>
+                            <ShowMap type={"adminUpdate"} onClick={shopMapHandler} className={cls.mapIcon} />
                         </div>
                         <div className={cls.updateButton}>
                             <span className={`${cls.updateButtonLabel} ${cls.updateLabel}`}>Update</span>
-                            <Update type={"adminUpdate"} onClick={handlerUpdate} className={cls.updateIcon}/>
+                            <Update type={"adminUpdate"} onClick={handlerUpdate} className={cls.updateIcon} />
                         </div>
                     </div>
 
                 </div>
-                {/*<div className={cls.itemsBlock}>*/}
-                {/*    <span className={cls.b_text}>{t("pick_up")}: </span>*/}
-                {/*        <TimePicker*/}
-                {/*            className={s.time}*/}
-                {/*            format={"HH:mm"}*/}
-                {/*            clockIcon={null}*/}
-                {/*            clearIcon={null}*/}
-                {/*            amPmAriaLabel={false}*/}
-                {/*            onChange={(time: string) => setFieldValue((state: any) => {*/}
-                {/*                return {*/}
-                {/*                    ...state,*/}
-                {/*                    "pick_up": time*/}
-                {/*               };*/}
-                {/*            })}*/}
-                {/*            name={"pick_up"}*/}
-                {/*            value={clientById.pick_up}*/}
-                {/*        />*/}
-                {/*</div>*/}
             </div>
             <div className={cls.item1}>
                 <div className={cls.itemsBlock}>
@@ -234,7 +238,7 @@ const Show: React.FC<IShow> = ({ id }) => {
                 {/*    {clientById.height}*/}
                 {/*</div>*/}
                 <div className={cls.addon} style={{
-                    borderTop: "none",
+                    borderTop: "none"
                 }}>
                     <div className={cls.addonInfo}>
                         <p>LOS: <span>{clientById.los}</span></p>
@@ -260,28 +264,40 @@ const Show: React.FC<IShow> = ({ id }) => {
                                             <span className={cls.itemLabel}>Pickup Address:</span>
                                             <span className={cls.itemValue}>{item.address}</span>
                                         </div>
-                                        {index !== 0 && <div className={cls.item} style={{alignItems: "center"}}>
+                                        {index !== 0 && <div className={cls.item} style={{ alignItems: "center" }}>
                                             <span className={cls.itemLabel}>Appointment time:</span>
                                             {/*<span className={cls.itemValue}>{item.drop_down}</span>*/}
-                                            <CustomTimePicker className={cls.timepicker} setFieldValue={setFieldValue} value={item.drop_down} name={`appointmentTime ${index + 1}`}/>
+                                            <CustomTimePicker
+                                                className={cls.timepicker}
+                                                setFieldValue={setFieldDateValue}
+                                                value={item.drop_down}
+                                                name={`drop_down`}
+                                            />
                                             <div className={cls.updateButton}>
                                                 <span className={cls.updateButtonLabel}>Save</span>
                                                 <button className={cls.adminUpdate}>
-                                                    <Save type={"adminUpdate"} className={cls.saveIcon}/>
+                                                    <Save type={"adminUpdate"}
+                                                          onClick={() => updateTimeHandler(item.step, "drop_down")}
+                                                          className={cls.saveIcon} />
                                                 </button>
                                             </div>
                                         </div>}
-                                        {clientById.address.length !== index+1 && <div className={cls.item} style={{alignItems: "center"}}>
-                                            <span className={cls.itemLabel}>Pickup time:</span>
-                                            {/*<span className={cls.itemValue}>{item.pick_up}</span>*/}
-                                            <CustomTimePicker className={cls.timepicker} setFieldValue={setFieldValue} value={item.pick_up} name={`pickupTime ${index + 1}`}/>
-                                            <div className={cls.updateButton}>
-                                                <span className={cls.updateButtonLabel}>Save</span>
-                                                <button className={cls.adminUpdate}>
-                                                    <Save type={"adminUpdate"} className={cls.saveIcon}/>
-                                                </button>
-                                            </div>
-                                        </div>}
+                                        {clientById.address.length !== index + 1 &&
+                                            <div className={cls.item} style={{ alignItems: "center" }}>
+                                                <span className={cls.itemLabel}>Pickup time:</span>
+                                                {/*<span className={cls.itemValue}>{item.pick_up}</span>*/}
+                                                <CustomTimePicker className={cls.timepicker}
+                                                                  setFieldValue={setFieldDateValue} value={item.pick_up}
+                                                                  name={`pick_up`} />
+                                                <div className={cls.updateButton}>
+                                                    <span className={cls.updateButtonLabel}>Save</span>
+                                                    <button className={cls.adminUpdate}>
+                                                        <Save type={"adminUpdate"}
+                                                              onClick={() => updateTimeHandler(item.step, "pick_up")}
+                                                              className={cls.saveIcon} />
+                                                    </button>
+                                                </div>
+                                            </div>}
 
                                         <div className={cls.item}>
                                             <span className={cls.itemLabel}>Phone:</span>
@@ -340,10 +356,10 @@ const Show: React.FC<IShow> = ({ id }) => {
                                 })}
                             </div>
                             <div className={cls.mapDiv}>
-                                <GoogleMap
+                                {directionsResponse && <GoogleMap
                                     ///  center={center}
                                     zoom={15}
-                                    mapContainerStyle={{ width: "100%", height: "100%", minHeight: "500px", }}
+                                    mapContainerStyle={{ width: "100%", height: "100%", minHeight: "500px" }}
                                     options={{
                                         zoomControl: true,
                                         streetViewControl: false,
@@ -357,7 +373,7 @@ const Show: React.FC<IShow> = ({ id }) => {
                                         <DirectionsRenderer directions={directionsResponse} />
                                     )}
 
-                                </GoogleMap>
+                                </GoogleMap>}
                             </div>
                         </div>}
                     </div>
