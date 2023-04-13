@@ -22,7 +22,7 @@ const OperatorCreate: React.FC<IVendorCreate> = () => {
         { name: "phone_number", type: "input", label: "phone_number", inputType: "tel", placeholder: "Phone number"},
         { name: "fields", type: "multiSelect", label: "fields", placeholder: "Table fields" },
         { name: "id", type: "hidden", inputType: "hidden" },
-        { name: "password", type: "password", inputType: "password", placeholder: "Password" }
+        { name: "password", type: "password", inputType: "password", placeholder: "Password", autoComplete: "new-password",}
     ];
     const requiredFields = [
         "name",
