@@ -230,10 +230,24 @@
   align-items: center;
   justify-content: flex-end;
   padding-right: 30px;
+  padding-top: 30px;
 }
-.iconWrapper > i {
-  font-size: 24px;
+
+.iconCircle {
+  width: 30px;
+  height: 30px;
+  background-color: #D63D3D;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+}
+
+.modalClose {
+  width: 15px;
+  height: 15px;
+  fill: #fff;
 }
 
 .contentWrapper {
@@ -258,7 +272,7 @@
   flex-direction: column;
   align-items: center;
   gap: 30px;
-  padding-top: 60px;
+  padding-top: 30px;
 }
 .modalContent i {
   font-size: 30px;

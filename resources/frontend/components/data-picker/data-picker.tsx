@@ -29,7 +29,7 @@ const DataPicker: React.FC<IDataPicker> = (
         type = false,
         value,
         style = {},
-        error,
+        error ='',
         singleFileUpload = false,
     }) => {
     const [show, setShow] = useState<boolean>(false);

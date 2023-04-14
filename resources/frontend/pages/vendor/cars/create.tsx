@@ -41,6 +41,7 @@ const CarsCreate: React.FC<IUserCreate> = () => {
     const fields2: Array<IItem> = [
         { name: "year", type: "select", label: "Year" },
         { name: "registration", type: "input", label: "Car registration" },
+        { name: "step", type: "input", label: "Car registration" },
         { name: "make", type: "select", label: "Make"},
         { name: "model", type: "select", label: "Model"},
         { name: "drivers", type: "select", label: "Assign drivers"},

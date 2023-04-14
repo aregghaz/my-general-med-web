@@ -361,6 +361,9 @@ class ClientsController extends Controller
         if (isset($requestData->weight)) {
             $client->weight = (float)$requestData->weight;
         }
+        if (isset($requestData->weight)) {
+            $client->insurance_exp = date('Y-m-d', strtotime($requestData->insurance_exp));
+        }
         if (!$client->save()) {
             return false;
         }

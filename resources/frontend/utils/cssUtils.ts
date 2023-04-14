@@ -79,7 +79,7 @@ export const selectStyles:any = {
     })
 }
 
-export const selectStylesFunction = (styles?:any,error?:any) => ( {
+export const selectStylesFunction = (styles?:any,error?:string) => ( {
     control: (baseStyles: any, state: any) => ({
         ...baseStyles,
         display: "flex",

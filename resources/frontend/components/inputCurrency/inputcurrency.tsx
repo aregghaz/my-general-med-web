@@ -31,7 +31,7 @@ const InputCurrency: React.FC<IInput> = (
         label,
         autoComplete = "off",
         disable,
-        error,
+        error='',
         onBlur = () => {},
         onChange= () => {},
         onValueChange = () => {},

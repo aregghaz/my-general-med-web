@@ -29,7 +29,7 @@ const Input: React.FC<IInput> = (
         label,
         autoComplete = "off",
         disable,
-        error,
+        error ='',
         onBlur,
         inLogin = false,
         onChange,

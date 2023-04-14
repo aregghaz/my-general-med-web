@@ -1,13 +1,11 @@
-import React, {useRef, useState} from "react";
+import React, { useRef, useState } from "react";
 import Select from "react-select/async";
 import { components, OptionProps, OptionTypeBase } from "react-select";
 import { IOption } from "./select";
 import { OptionsType } from "react-select/src/types";
 import Checkbox from "../checkbox/checkbox";
 import useLocalStorage from "../../hooks/use-local-storage";
-import { getStyles } from "./common";
-import {selectStyles, selectStylesFunction} from "../../utils/cssUtils";
-import RemoveIcon from "-!svg-react-loader!../../svgs/removeIcon.svg"
+import { selectStylesFunction } from "../../utils/cssUtils";
 
 import s from "./select.module.scss";
 
@@ -26,7 +24,7 @@ interface IAsyncSelect {
     error?: any;
     isCheckbox?: boolean;
     isMulti?: boolean;
-    allowValueClear?: boolean
+    allowValueClear?: boolean;
 }
 
 const Option = (props: OptionProps<OptionTypeBase>) => (
@@ -45,11 +43,12 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
         isSearchable = false,
         placeholder = "",
         options,
-        onChange = () => {},
+        onChange = () => {
+        },
         getOptionLabel,
-        allowValueClear= true,
+        allowValueClear = true,
         getOptionValue,
-        error,
+        error = "",
         defaultValue,
         loadOptions,
         name,
@@ -58,19 +57,19 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
         isMulti = false
     }) => {
     const [themeType] = useLocalStorage("theme", "light");
-    const selectRef = useRef(null)
+    const selectRef = useRef(null);
     const handleOptionRemove: React.MouseEventHandler<HTMLButtonElement> = (e): void => {
-        e.preventDefault()
-        console.log(selectRef.current.value)
-        selectRef.current.select.clearValue()
-    }
-    const [value, setValue] = useState(null)
+        e.preventDefault();
+        console.log(selectRef.current.value);
+        selectRef.current.select.clearValue();
+    };
+    const [value, setValue] = useState(null);
     return (
         <>
             {error && !defaultValue && <span className={s.error}>{error}</span>}
             {label && <label
                 style={{
-                    color: error && !defaultValue ? "red" : defaultValue ? "#194b76" : "#757575",
+                    color: error && !defaultValue ? "red" : defaultValue ? "#194b76" : "#757575"
                 }}
                 className={`${s.label} ${labelStyle}`}
                 htmlFor={name}
@@ -82,7 +81,7 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
                     ref={selectRef}
                     isMulti={isMulti}
                     name={name}
-                    styles={selectStylesFunction({},error)}
+                    styles={selectStylesFunction({}, error)}
                     options={options}
                     className={s.select}
                     loadOptions={loadOptions}
@@ -95,8 +94,8 @@ const AsyncSelect: React.FC<IAsyncSelect> = (
                     cacheOptions
                     isSearchable={isSearchable}
                     onChange={(option: IOption) => {
-                        onChange(option)
-                        setValue(option)
+                        onChange(option);
+                        setValue(option);
                     }}
                     getOptionLabel={getOptionLabel}
                     getOptionValue={getOptionValue}

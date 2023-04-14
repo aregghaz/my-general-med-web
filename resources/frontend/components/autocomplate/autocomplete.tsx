@@ -35,7 +35,7 @@ const Autocomplete: React.FC<ITextarea> = (
         handleChange,
         ///   handleDrawMap
         label= "",
-        error,
+        error ='',
         validate,
         requiredFields,
 
@@ -156,7 +156,7 @@ const Autocomplete: React.FC<ITextarea> = (
                                 }),
                                 className: `${s.input}`,
                               /// placeholder: `step_${item}`,
-                                placeholder: getFieldLabel(t, `step_${item}`,`step_${item}`, requiredFields),
+                                placeholder: getFieldLabel(t, `address`,`address`, requiredFields),
                                 styles: {
                                     placeholder: (base) => ({
                                         ...base,
