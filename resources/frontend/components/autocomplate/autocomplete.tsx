@@ -138,7 +138,7 @@ const Autocomplete: React.FC<ITextarea> = (
                         }
                     </div>
                     <div className={s.autocompleteWrapper}>
-                        {error && <div className={s.error}>{error}</div>}
+                        {error && !values[`step_${item}`] && <div className={s.error}>{error}</div>}
                         <GooglePlacesAutocomplete
                             apiKey={GOOGLE_API_KEY}
                             selectProps={{
@@ -160,7 +160,7 @@ const Autocomplete: React.FC<ITextarea> = (
                                 styles: {
                                     placeholder: (base) => ({
                                         ...base,
-                                        color: getFieldLabel(t, `step_${item}`,`step_${item}`, requiredFields),
+                                        color: error && "crimson" || "#757575"
                                     }),
                                     menu: (base) => ({
                                         ...base,
@@ -169,11 +169,12 @@ const Autocomplete: React.FC<ITextarea> = (
                                     }),
                                     control: (base, isActive) => ({
                                         ...base,
-                                        border: values[`step_${item}`] ? "1px solid #19347a" : "1px solid gray",
+                                        border: error && !values[`step_${item}`] ? "1px solid crimson" : !values[`step_${item}`] ? "1px solid #757575" : "1px solid #19347a",
                                         "&:hover": {
-                                            border: values[`step_${item}`] ? "1px solid #19347a" : "1px solid gray",
+                                            border: error && !values[`step_${item}`] ? "1px solid crimson" : !values[`step_${item}`] ? "1px solid #757575" : "1px solid #19347a",
                                         },
                                         boxShadow: isActive ? "none" : "none",
+                                        cursor: "pointer",
                                     })
 
                                 }

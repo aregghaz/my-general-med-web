@@ -10,6 +10,7 @@ export const selectStyles:any = {
         boxShadow: "none !important",
         borderRadius: 0,
         overflowX: "auto",
+        cursor: "pointer",
         "&:hover": {
             boxShadow: "none",
             // borderBottom: "1px solid #194b76",
@@ -90,6 +91,7 @@ export const selectStylesFunction = (styles?:any,error?:string) => ( {
         boxShadow: "none !important",
         borderRadius: 0,
         overflowX: "auto",
+        cursor: "pointer",
         "&:hover": {
             boxShadow: "none",
             // borderBottom: "1px solid #194b76",

@@ -111,10 +111,10 @@ const Home: React.FC<IHome> = () => {
             setQuery("");
             setDate("");
             setLoading(true);
-        } else {
-            setOpen(!open);
-        }
-
+        }/// else {
+            ///setOpen(!open);
+        ///}
+        setOpen(!open)
     };
 
 
