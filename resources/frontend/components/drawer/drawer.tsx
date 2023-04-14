@@ -48,7 +48,7 @@ const Drawer: React.FC = ({ children }) => {
         document.addEventListener("mousedown", outsideClickHandler);
         if (userData.user) {
             console.log(userData, "userData");
-            dispatch(actionsNotification.fetching({ count: userData.user.count }));
+          ///  dispatch(actionsNotification.fetching({ count: userData.user.count }));
         }
         return () => {
             document.removeEventListener("mousedown", outsideClickHandler);
