@@ -19,7 +19,8 @@ interface Password {
     error?: any;
     isAsterisk?: boolean,
     ref?: any,
-    autoComplete?: any
+    autoComplete?: any,
+    onBlur?: any
 }
 
 const Password:React.FC<Password> = ({
@@ -34,6 +35,7 @@ const Password:React.FC<Password> = ({
                                          isAsterisk,
     ref,
                                          autoComplete,
+    onBlur = () => {}
     }) => {
     const { t } = useTranslation();
     const [hidden, setHidden] = useState(true)
@@ -67,7 +69,10 @@ const Password:React.FC<Password> = ({
                             placeholder={placeholder}
                             value={value}
                             ref={ref}
-                            onBlur={onChange}
+                            onBlur={(e) => {
+                                onChange(e)
+                                onBlur(e)
+                            }}
                             onChange={onChange}
                             // onFocus={(event) => {
                             //     if (!event.target.value) {

@@ -18,6 +18,7 @@ interface IInput {
     className?: string;
     labelStyle?: string;
     ref?: string;
+    inLogin?:true;
     readOnly?: boolean;
 }
 
@@ -30,6 +31,7 @@ const Input: React.FC<IInput> = (
         disable,
         error,
         onBlur,
+        inLogin = false,
         onChange,
         placeholder,
         type = "text",
@@ -44,7 +46,7 @@ const Input: React.FC<IInput> = (
 
     return (
         <>
-            {error && !value && <div className={s.error}>{error}</div>}
+            {error && !value && !inLogin && <div className={s.error}>{error}</div>}
             {label &&
                 <label
                     className={`${s.label}`}
