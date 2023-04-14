@@ -163,11 +163,17 @@ const Dashboard: React.FC<IDashboard> = () => {
     }, []);
     return (
         <div className={s.root}>
-            <div className={s.block} ref={blockRef}>
+            <div className={s.chartBox}>
+            <div className={`${s.block} ${s.chartBlocks}`} ref={blockRef}>
                 <div className={s.dashBordItem}>
-                    <div className={`${s.itemHeader} ${s.title}`}>Total Revenue</div>
-                    <div
-                        className={`${s.itemHeader} ${s.number}`}>{data.totalProfit.price ? data.totalProfit.price.toFixed(2) : 0} $
+                    <div className={s.dashBoardInfoBox}>
+                        <div className={`${s.itemHeader} ${s.title}`}>Total Revenue</div>
+                        <div
+                            className={`${s.itemHeader} ${s.number}`}>{data.totalProfit.price ? data.totalProfit.price.toFixed(2) : 0} $
+                        </div>
+                    </div>
+                    <div className={s.dashBoardCircle}>
+
                     </div>
                 </div>
                 <div className={s.dashBordItem}>
@@ -196,6 +202,7 @@ const Dashboard: React.FC<IDashboard> = () => {
                         className={`${s.itemHeader} ${s.number}`}>{data.totalProfit.price && data.totalProfit.count ? (data.totalProfit.price / data.totalProfit.count).toFixed(2) : 0} $
                     </div>
                 </div>
+            </div>
             </div>
             <div className={s.block}>
                 <div className={s.chartItem}>

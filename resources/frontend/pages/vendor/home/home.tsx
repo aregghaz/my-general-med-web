@@ -403,9 +403,9 @@ const Home: React.FC<IHome> = () => {
                         {
                             carData && <div className={s.modalDiv}>
                                 <div className={s.iconWrapper}>
-                                    <div className={s.iconCircle}>
+                                    <div className={s.iconCircle} onClick={handlerCloseModal} >
 
-                                        <Close onClick={handlerCloseModal} className={s.modalClose}/>
+                                        <Close  className={s.modalClose}/>
                                     </div>
 
                                 </div>

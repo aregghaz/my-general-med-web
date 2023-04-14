@@ -414,9 +414,9 @@ const Home: React.FC<IHome> = () => {
                         {
                             vendorData && <div className={s.modalDiv}>
                                 <div className={s.iconWrapper}>
-                                    <div className={s.iconCircle}>
+                                    <div className={s.iconCircle} onClick={handlerCloseModal}>
 
-                                        <Close onClick={handlerCloseModal} className={s.modalClose}/>
+                                        <Close  className={s.modalClose}/>
                                     </div>
 
                                 </div>
