@@ -19,3 +19,6 @@ composer-setup.php
 composer.phar
 .idea
 .public/.DS_Store
+
+public/fonts/.DS_Store
+public/fonts/vendor/.DS_Store
