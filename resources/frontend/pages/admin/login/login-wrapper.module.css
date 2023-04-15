@@ -63,4 +63,11 @@
   width: 150px;
 }
 
+.userNotFound {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  color: #DC143C;
+}
+
 /*# sourceMappingURL=login-wrapper.module.css.map */
