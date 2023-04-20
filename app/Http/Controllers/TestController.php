@@ -153,6 +153,11 @@ class TestController extends Controller
         dd('1');
     }
 
+
+
+    public function notificationTrips() {
+
+    }
     public function index(Request $request)
     {
         /* open this for local file testing purposes only*/

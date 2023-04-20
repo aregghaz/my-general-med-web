@@ -41,8 +41,8 @@ const NotificationList: React.FC<INotificationList> = () => {
     const titles: Array<string> = [
         "id",
         "new",
-        typeId === 1 ? "drivers" : (typeId === 2 ? "Car" : (typeId === 3 ? "patient" : "tripNot")),
-        "field",
+        typeId === 1 ? "drivers" : (typeId === 2 ? "Car" : (typeId === 3 ? "field" : "tripNot")),
+        typeId === 3 ?  "member_uniqie_identifer": "field",
         "type_id",
         "model",
         "created_at"

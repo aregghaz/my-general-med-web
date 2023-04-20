@@ -29,6 +29,7 @@ Route::get('/test2', [\App\Http\Controllers\TestController::class, 'index2']);
 Route::get('/test3', [\App\Http\Controllers\TestController::class, 'notificationCLinet']);
 Route::post('/test', [\App\Http\Controllers\TestController::class, 'index']);
 Route::get('/test1', [\App\Http\Controllers\TestController::class, 'notificationCars']);
+Route::get('/test4', [\App\Http\Controllers\TestController::class, 'notificationTrips']);
 
 
 Route::group([
