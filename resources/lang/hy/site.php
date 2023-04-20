@@ -95,6 +95,9 @@ return [
     'field' => 'Updated file',
     'type_id' => 'Action',
     'New' => 'New',
+    'patient' => 'Patient',
+    'tripNot' => 'Trip',
+
 
     'license' => 'Driver License',
     'date' => 'Date',

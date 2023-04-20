@@ -10,6 +10,8 @@ import Button from "../../../components/button/button";
 import populateEditFormFields from "../../../constants/populateEditFormFields";
 import validationRules from "../../../utils/validationRule";
 import { toast } from "react-toastify";
+import InputCurrency from "../../../components/inputCurrency/inputcurrency";
+import getFieldLabel from "../../../utils/getFieldLabel";
 
 interface IClientEditItem {
     path: string;
@@ -27,7 +29,7 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
     const [distance, setDistance] = useState("");
     const [duration, setDuration] = useState("");
     const [steps, setSteps] = useState<Array<any>>([]);
-
+    const [checked, setChecked] = useState(false);
     // const {isLoaded} = useJsApiLoader({
     //     googleMapsApiKey: GOOGLE_API_KEY,
     //     libraries: ["geometry", "drawing", "places"]
@@ -49,7 +51,8 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
         { name: "miles", type: "input", label: "miles", inputType: "disabled" },
         { name: "address", type: "address", label: "" },
         { name: "stops", type: "hidden", label: "stops" },
-        { name: "count", type: "hidden", label: "count" }
+        { name: "count", type: "hidden", label: "count" },
+        { name: "insurance", type: "file", label: "insurance"},
 
 
     ];
@@ -77,7 +80,9 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
         // 'insurance',
         // 'liability',
     ];
-
+    const handlerCheckbox = () => {
+        setChecked(!checked);
+    };
 
     const validate = (values: FormikValues) => validationRules(values, requiredFields, fields, t);
 
@@ -85,6 +90,7 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
         setSubmitting(true);
         const formData: FormData = new FormData();
         formData.append("_method", "put");
+        formData.append("insurance", values["insurance"]);
         formData.append("value", JSON.stringify(values));
         const res: any = await AdminApi.update(formData, `admin/${crudKey}`, id);
         if (Number(res.status === 200)) {
@@ -161,6 +167,45 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
                                         }
                                     )
                             }
+                            <div className={s.item}>
+                                {
+                                    <div className={s.fixedPriceWrapper} style={{
+                                        // borderBottom: errors["price"] && !priceValue ? "none" : "",
+                                        // paddingBottom: !checked && 10
+                                    }}>
+                                        <input
+                                            className={s.fixedCheckbox}
+                                            type={"checkbox"}
+                                            id={"priceCheckbox"}
+                                            onChange={() => {
+                                                setFieldValue("specialPrice", !checked)
+                                                handlerCheckbox()
+                                            }}
+                                        />
+                                        {!checked && <label htmlFor={"priceCheckbox"}>Fix price</label>}
+
+                                        <div className={s.fixedInputWrapper}>
+                                            {/*{checked && <Input name={"price"} type={"number"}*/}
+                                            {/*                   value={values["price"]}*/}
+                                            {/*                   label={"Fix price"} onChange={handleChange} placeholder={"Fixed Price"}/>}*/}
+                                            {checked && <>
+                                                <InputCurrency
+                                                    type={"number"}
+                                                    name={"price"}
+                                                    label={getFieldLabel(t,"Fix price","price",requiredFields)}
+                                                    placeholder={"Fix price"}
+                                                    setFieldValue={setFieldValue}
+                                                    className={s.fixedInput}
+                                                    error={errors["price"]}
+                                                    // onValueChange={(values:any) => {
+                                                    //     setPriceValue(values.float)
+                                                    // }}
+                                                />
+                                            </>}
+                                        </div>
+                                    </div>
+                                }
+                            </div>
                             <div className={s.buttonDiv}>
                                 <Button
                                     type={"adminUpdate"}

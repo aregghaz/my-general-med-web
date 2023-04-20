@@ -37,7 +37,6 @@ class TestController extends Controller
             'first_aid_exp',
             'company_training_exp',
             'drug_test_exp', 'user_id')->get()->toArray();
-
         foreach ($driverData as $data) {
             foreach ($data as $key => $value) {
                 $actionid = false;
@@ -49,8 +48,6 @@ class TestController extends Controller
                 } else if (date('Y-m-d', strtotime($value)) < date('Y-m-d', strtotime("+60 days"))) {
                     $actionid = 12;
                 }
-                /// dd($data);
-                ///
                 if ($actionid) {
                     switch ($key) {
                         case 'sex_offender_check_exp' :
@@ -70,11 +67,9 @@ class TestController extends Controller
                             break;
                         case 'emt_1_exp' :
                             $this->saveNotification('driver', 'EMT 1 Certificate', $data['user_id'], $actionid);
-
                             break;
                         case 'first_aid_exp' :
                             $this->saveNotification('driver', 'First Aid and CPR Certificate', $data['user_id'], $actionid);
-
                             break;
                         case 'company_training_exp' :
                             $this->saveNotification('driver', 'Company Training Letter', $data['user_id'], $actionid);
@@ -87,7 +82,31 @@ class TestController extends Controller
             }
         }
 
-        dd(1);
+    }
+
+    public function notificationCLinet()
+    {
+        $queryData = date('Y-m-d', strtotime("+60 days"));
+        $clinetsData = Clients::where('insurance_exp', "<=", $queryData)->select('member_uniqie_identifer', 'insurance_exp')->groupBy('member_uniqie_identifer', 'insurance_exp')->pluck('member_uniqie_identifer', 'insurance_exp');
+
+        foreach ($clinetsData as $key => $data) {
+
+            /// foreach ($data as $key => $value) {
+            $actionid = false;
+            ///  dd(date('Y-m-d', strtotime("+15 days")) ,date('Y-m-d', strtotime($value)));
+            if (date('Y-m-d', strtotime($key)) < date('Y-m-d', strtotime("+15 days"))) {
+                $actionid = 14;
+            } else if (date('Y-m-d', strtotime($key)) < date('Y-m-d', strtotime("+30 days"))) {
+                $actionid = 13;
+            } else if (date('Y-m-d', strtotime($key)) < date('Y-m-d', strtotime("+60 days"))) {
+                $actionid = 12;
+            }
+            if ($actionid) {
+                $this->saveNotification('client', $data, 0, $actionid);
+            }
+            // }
+        }
+        dd('1');
     }
 
     public function index(Request $request)

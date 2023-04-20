@@ -107,8 +107,8 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         "member_unique_identifier",
         "height",
         "weight",
-        "address",
-        "addressTime",
+        // "address",
+        // "addressTime",
         checked && "price",
         !show && "date_of_service",
         show && "range",
@@ -121,6 +121,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
     const submit = async (values: FormikValues, { setSubmitting }: FormikHelpers<FormikValues>) => {
         setSubmitting(true);
         const formData: FormData = new FormData();
+        formData.append("insurance", values["insurance"]);
         formData.append("value", JSON.stringify(values));
         const res: any = await AdminApi.store(formData, crudKey, true);
         if (Number(res.status === 200)) await navigate(`/admin/${crudKey}`);
@@ -380,9 +381,9 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                                     setFieldValue={setFieldValue}
                                                     className={s.fixedInput}
                                                     error={errors["price"]}
-                                                    onValueChange={(values:any) => {
-                                                        setPriceValue(values.float)
-                                                    }}
+                                                    // onValueChange={(values:any) => {
+                                                    //     setPriceValue(values.float)
+                                                    // }}
                                                 />
                                             </>}
                                         </div>

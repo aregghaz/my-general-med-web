@@ -2,6 +2,12 @@
   position: relative;
   height: calc(100vh - 200px);
 }
+.root > h1 {
+  margin-left: 30px;
+  margin-top: 30px;
+  color: #343d37;
+  font-size: 30px;
+}
 
 .block {
   margin-top: 20px;
@@ -48,6 +54,79 @@
   margin-top: 20px;
   color: #D63D3D;
   font-size: 35px;
+}
+
+.chartBlocks {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  row-gap: 30px;
+  column-gap: 50px;
+}
+
+.newDashboardItem {
+  width: 100%;
+  height: 150px;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 5%;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px gray;
+  transition: 0.5s;
+}
+.newDashboardItem:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0px 5px 10px gray;
+}
+.newDashboardItem > div {
+  width: 100%;
+  height: auto;
+}
+
+.newDashboardTop {
+  display: flex;
+  justify-content: space-between;
+}
+
+.newDashboardBottom {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.newDashboardName {
+  color: #878a99;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.9px;
+  word-spacing: 3px;
+}
+
+.newDashboardPercents {
+  color: #6ADA7D;
+  font-size: 14px;
+}
+
+.newDashboardValue {
+  font-size: 30px;
+  color: #343d37;
+  position: relative;
+  top: 10px;
+}
+
+.newDashboardIconWrapper {
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background-color: #19347a;
+}
+.newDashboardIconWrapper > svg {
+  width: 30px;
+  height: 30px;
+  fill: white;
 }
 
 /*# sourceMappingURL=dashboard.module.css.map */

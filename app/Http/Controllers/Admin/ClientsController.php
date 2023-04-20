@@ -246,8 +246,8 @@ class ClientsController extends Controller
             "los" => new StatusCollection($los),
             "vendors" => new StatusCollection($vendors),
             'trip_id' => $this->tripType(),
-            'artificial' => new SelectAndPriceCollection($artificial),
-            'waitDuration' => new SelectAndPriceCollection($waitDuration),
+            'artificial' => new StatusCollection($artificial),
+            'waitDuration' => new StatusCollection($waitDuration),
             ///'status' => new StatusCollection($clientStatus),
 
         ], 200);
@@ -283,19 +283,33 @@ class ClientsController extends Controller
      */
     public function store(Request $request)
     {
-
+        /// dd( $request->file('insurance'));
         $requestData = json_decode($request->value);
 
+        if ($request->hasFile('insurance')) {
+            $insurance = $request->file('insurance');
+            $file_name = time() + Rand(1, 700) . $insurance->getClientOriginalName();
+            $insurance->move(
+                public_path() . "/uploads/clients/$requestData->member_unique_identifier/",
+                $file_name
+            );
+
+            $ins['path'] = "/uploads/clients/$requestData->member_unique_identifier/$file_name";
+            $ins['exp'] = date('Y-m-d', strtotime($requestData->insurance_exp));
+        } else {
+            $ins['path'] = null;
+            $ins['exp'] = null;
+        }
         $userId = $request->user()->id;
         if ((int)$requestData->clientType->id === 2) {
             foreach ($requestData->daysOnWeek as $days) {
                 $dataData = $this->getMondaysInRange($requestData->range[0], $requestData->range[1], $days->label);
                 foreach ($dataData as $date) {
-                    $this->createClient($requestData, $userId, $date);
+                    $this->createClient($requestData, $userId, $date, $ins);
                 }
             }
         } else {
-            $this->createClient($requestData, $userId, $requestData->date_of_service);
+            $this->createClient($requestData, $userId, $requestData->date_of_service, $ins);
         }
 
 
@@ -310,31 +324,31 @@ class ClientsController extends Controller
 
     }
 
-    protected function getClientFieldsForCreate($requestData, $userId, $date, $tripType)
+    protected function getClientFieldsForCreate($requestData, $userId, $date, $tripType, $ins)
     {
 
         $client = new Clients();
         if (isset($requestData->vendors)) {
             $client->vendor_id = $requestData->vendors->id;
             $client->type_id = 1;
-              $price = 0;
-                        $priceLists = PriceList::where(['los_id'=> $requestData->los->id, 'vendor_id'=>$requestData->vendors->id])->get();
-                        foreach ($priceLists as $priceList){
-                            if($priceList->type == 'base'){
-                                $price = $price+ $priceList->price;
-                            }else{
-                                $price =  $price+ (float)$priceList->price * (float)$requestData->miles;
-                            }
-                        }
-                       /// dd($price);
-                        $client->price = $price;
+            $price = 0;
+            $priceLists = PriceList::where(['los_id' => $requestData->los->id, 'vendor_id' => $requestData->vendors->id])->get();
+            foreach ($priceLists as $priceList) {
+                if ($priceList->type == 'base') {
+                    $price = $price + $priceList->price;
+                } else {
+                    $price = $price + (float)$priceList->price * (float)$requestData->miles;
+                }
+            }
+            /// dd($price);
+            $client->price = $price;
         } else {
             $client->type_id = 2;
-             if (isset($requestData->specialPrice) && $requestData->specialPrice) {
-                        $client->price = (float)$requestData->price;
-                    }else{
-                     $client->price = 0;
-                    }
+            if (isset($requestData->specialPrice) && $requestData->specialPrice) {
+                $client->price = (float)$requestData->price;
+            } else {
+                $client->price = 0;
+            }
         }
         $client->fullName = $requestData->fullName;
         $client->gender = $requestData->gender->id;
@@ -343,10 +357,6 @@ class ClientsController extends Controller
         $client->duration_id = $requestData->waitDuration->id;
         $client->date_of_service = date('Y-m-d', strtotime($date));
         /////FIXME ADD RIGHT PRICE IF VENDOR SELECTED
-
-        if (isset($requestData->specialPrice) && $requestData->specialPrice) {
-            $client->price = (float)$requestData->price;
-        }
         $client->request_type = $requestData->request_type->id;
         $client->operator_id = $userId;
         $client->stops = (int)$requestData->count;
@@ -361,15 +371,18 @@ class ClientsController extends Controller
         if (isset($requestData->weight)) {
             $client->weight = (float)$requestData->weight;
         }
-        if (isset($requestData->weight)) {
-            $client->insurance_exp = date('Y-m-d', strtotime($requestData->insurance_exp));
-        }
+
+
         if (!$client->save()) {
             return false;
         }
+
         $client->update([
             "trip_id" => "CC-$client->id-$tripType",
+            "insurance" => $ins['path'],
+            "insurance_exp" => $ins['exp'],
         ]);
+
 
         for ($i = 1; $i <= $requestData->count; $i++) {
             $address = new Address();
@@ -407,7 +420,7 @@ class ClientsController extends Controller
         return true;
     }
 
-    protected function createClient($requestData, $userId, $date)
+    protected function createClient($requestData, $userId, $date, $ins)
     {
 
         $tripType = $requestData->trip_id;
@@ -415,14 +428,14 @@ class ClientsController extends Controller
 
             foreach (['A', 'B'] as $value) {
                 if ($value === 'A') {
-                    $this->getClientFieldsForCreate($requestData, $userId, $date, $value);
+                    $this->getClientFieldsForCreate($requestData, $userId, $date, $value, $ins);
                 } else {
-                    $this->getClientFieldsForCreate($requestData, $userId, $date, $value);
+                    $this->getClientFieldsForCreate($requestData, $userId, $date, $value, $ins);
 
                 }
             }
         } else {
-            $this->getClientFieldsForCreate($requestData, $userId, $date, $tripType->label);
+            $this->getClientFieldsForCreate($requestData, $userId, $date, $tripType->label, $ins);
         }
         return true;
     }
@@ -516,20 +529,30 @@ class ClientsController extends Controller
         }
         if (isset($requestData->specialPrice) && $requestData->specialPrice) {
             $client->price = (float)$requestData->price;
-        }else{
+        } else if (isset($requestData->vendors)) {
             $price = 0;
-            $priceLists = PriceList::where(['los_id'=> $requestData->los->id, 'vendor_id'=>$requestData->vendors->id])->get();
+            $priceLists = PriceList::where(['los_id' => $requestData->los->id, 'vendor_id' => $requestData->vendors->id])->get();
 
-            foreach ($priceLists as $priceList){
-                if($priceList->type == 'base'){
-                    $price = $price+ $priceList->price;
-                }else{
+            foreach ($priceLists as $priceList) {
+                if ($priceList->type == 'base') {
+                    $price = $price + $priceList->price;
+                } else {
                     ///dd($price+$priceList->price * $requestData->miles);
-                    $price =  $price+ ($priceList->price * $requestData->miles);
+                    $price = $price + ($priceList->price * $requestData->miles);
                 }
             }
             //dd($price);
             $client->price = $price;
+        }
+        if ($request->hasFile('insurance')) {
+            $insurance = $request->file('insurance');
+            $file_name = time() + Rand(1, 700) . $insurance->getClientOriginalName();
+            $insurance->move(
+                public_path() . "/uploads/clients/$requestData->member_uniqie_identifer/",
+                $file_name
+            );
+
+            $this->updateAll($requestData->member_uniqie_identifer, "/uploads/clients/$requestData->member_uniqie_identifer/$file_name", date('Y-m-d', strtotime($requestData->insurance_exp)));
         }
         $client->update();
         /// Address::whereIn('client_id', $id)->delete();
@@ -601,4 +624,12 @@ class ClientsController extends Controller
 
     }
 
+    public function updateAll($insuranceId, $path, $date)
+    {
+        $clinets = Clients::where('member_uniqie_identifer', $insuranceId)->update([
+            'insurance_exp' =>$date,
+            'insurance' => $path,
+        ]);
+        return true;
+    }
 }

@@ -41,12 +41,13 @@ const NotificationList: React.FC<INotificationList> = () => {
     const titles: Array<string> = [
         "id",
         "new",
-        "value_id",
+        typeId === 1 ? "drivers" : (typeId === 2 ? "Car" : (typeId === 3 ? "patient" : "tripNot")),
         "field",
         "type_id",
         "model",
         "created_at"
     ];
+
 
     useEffect(() => {
         (
@@ -129,7 +130,7 @@ const NotificationList: React.FC<INotificationList> = () => {
     };
     const handlerClose = () => setModel(null);
     console.log(data, "carcar");
-    return data &&  (
+    return data && (
 
         <>
             <div className={s.upload_panel}>

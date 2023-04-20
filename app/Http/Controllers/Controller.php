@@ -66,6 +66,8 @@ class Controller extends BaseController
             ],
             ///select
             'miles' => $client->miles,
+            'insurance' => $client->insurance,
+            'insurance_exp' => $client->insurance_exp,
             'stops' => $count,
             'member_uniqie_identifer' => $client->member_uniqie_identifer,
             'birthday' => $client->birthday,

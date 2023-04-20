@@ -109,6 +109,8 @@ return [
     'field' => 'Updated file',
     'type_id' => 'Action',
     'New' => 'New',
+    'patient' => 'Patient',
+    'tripNot' => 'Trip',
 
 
     "welcome_message_part_one" => "Բարի գալուստ",

@@ -26,11 +26,9 @@ class NotificationController extends Controller
         $carCount = Notification::where('model', 2)->count();
         $patientCount = Notification::where('model', 3)->count();
         $tripsCount = Notification::where('model', 4)->count();
-
+//dd($typeId);
         $notification = Notification::where('model', (int)$typeId)->with('getAction');
         $notification = $notification->with('getCars', 'getDriver');
-        // ->orderBy('new_admin', "desc")
-
         $notification = $notification->orderBy('created_at', "desc")
             ->take(25 * $showMore)->get();
         return response()->json(
