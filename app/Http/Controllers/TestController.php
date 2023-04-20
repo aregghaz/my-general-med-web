@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cars;
 use App\Models\Clients;
 use App\Models\Driver;
 use App\Models\Gender;
@@ -103,6 +104,49 @@ class TestController extends Controller
             }
             if ($actionid) {
                 $this->saveNotification('client', $data, 0, $actionid);
+            }
+            // }
+        }
+        dd('1');
+    }
+
+    public function notificationCars()
+    {
+        $queryData = date('Y-m-d', strtotime("+60 days"));
+        $driverData = Cars::where(function ($query) use ($queryData) {
+            $query->where('inspection_exp', "<=", $queryData)
+                ->orWhere('insurance_exp', "<=", $queryData)
+                ->orWhere('liability_exp', "<=", $queryData);
+        })->select(
+            'inspection_exp',
+            'insurance_exp',
+            'liability_exp',
+            'id')->get()->toArray();
+        foreach ($driverData as $key => $data) {
+
+            /// foreach ($data as $key => $value) {
+            $actionid = false;
+            ///  dd(date('Y-m-d', strtotime("+15 days")) ,date('Y-m-d', strtotime($value)));
+            if (date('Y-m-d', strtotime($key)) < date('Y-m-d', strtotime("+15 days"))) {
+                $actionid = 14;
+            } else if (date('Y-m-d', strtotime($key)) < date('Y-m-d', strtotime("+30 days"))) {
+                $actionid = 13;
+            } else if (date('Y-m-d', strtotime($key)) < date('Y-m-d', strtotime("+60 days"))) {
+                $actionid = 12;
+            }
+            if ($actionid) {
+                switch ($key) {
+                    case 'inspection_exp':
+                        $this->saveNotification('car', 'Car inspection', $data['id'], $actionid);
+                        break;
+                    case 'liability_exp':
+                        $this->saveNotification('car', 'Car liability', $data['id'], $actionid);
+                        break;
+                    case 'insurance_exp':
+                        $this->saveNotification('car', 'Car insurance', $data['id'], $actionid);
+                        break;
+                }
+
             }
             // }
         }

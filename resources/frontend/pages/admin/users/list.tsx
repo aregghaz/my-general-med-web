@@ -16,6 +16,7 @@ import InfoBlockDriver from "../../../components/info-block-driver/info-block";
 import { vendorAPI } from "../../../api/site-api/vendor-api";
 import CloseSvg from "-!svg-react-loader!../../../images/Close.svg";
 import customStyles from "../../../utils/style";
+import InfoBlockCar from "../../../components/info-block-car/info-block";
 
 interface Beneficiary {
     path: string;
@@ -32,6 +33,8 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
     const { t } = useTranslation();
     const [isLoading, setLoading] = useState(true);
     const [itemData, setItemData] = useState({});
+    const [carData, setCarData] = useState({});
+    const [model, setModel] = useState(3);
 
     useEffect(() => {
         (async () => {
@@ -108,16 +111,25 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
         }
     ];
     const handleActionMiddleware = async (id: number) => {
-        const data = await vendorAPI.getItemData("vendorClients", id);
-        console.log(data, "data");
-        setItemData(data);
+        var data = {};
+        if (tabIdSelected !== 5) {
+            data = await vendorAPI.getItemData("vendorClients", id);
+            setModel(3);
+            setItemData(data);
+        } else {
+            data = await vendorAPI.getItemData("cars", id);
+            setModel(5);
+            setItemData(data);
+
+        }
+
     };
     const handlerChangeTabs = async (tabId: number) => {
         setTabIdSelected(tabId);
         setLoading(true);
     };
     const handlerAction = async (action: string, id: number) => {
-        console.log(action, "action");
+        console.log(action, id, "action");
         switch (action) {
             case "get":
                 await handleActionMiddleware(id);
@@ -182,9 +194,15 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
                         justifyContent: "end",
                         padding: "10px 10px 0 0"
                     }}><CloseSvg onClick={handlerClose} /></div>
-                    <div className={s.itemInfoAdmin}><InfoBlockDriver data={itemData} is_admin={false} /></div>
+                    <div className={s.itemInfoAdmin}>
+                        {model === 3 ? <InfoBlockDriver data={itemData} is_admin={false} /> :
+                            <InfoBlockCar data={itemData} is_admin={false} />}
+                    </div>
                 </div>}
-                <div className={Object.keys(itemData).length > 0 ? s.itemOpen : s.ItemClose}>
+
+
+                <div
+                    className={Object.keys(itemData).length > 0 ? s.itemOpen : s.ItemClose}>
                     <List
                         data={userdata}
                         titles={tabIdSelected == 5 ? carsTitle : titles}
