@@ -84,11 +84,14 @@ class PriceListController extends Controller
             $priceList = new PriceList();
             $priceList->vendor_id = $vendorId;
             $priceList->service_id = $index;
-            $priceList->price = $price['input'];
+            $priceList->price = ltrim($price['input'], '$');
             $priceList->los_id = $losId;
-            if (isset($price['value'])) {
+            if (isset($price['value']) and $index > 2) {
                 $priceList->type = $price['value']['id'] == 2 ? 'perMile': 'base' ;
 
+            }else{
+
+                $priceList->type =  $index == 2 ? 'perMile': 'base' ;
             }
             $priceList->save();
         }

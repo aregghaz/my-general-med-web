@@ -12,6 +12,7 @@ use App\Models\Clients;
 use App\Models\ClientStatus;
 use App\Models\ClientTable;
 use App\Models\Los;
+use App\Models\PriceList;
 use App\Models\User;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
@@ -313,33 +314,80 @@ class VendorController extends Controller
         $clientsIds = $request->ids;
         $vendorId = $request->vendorId;
         $operatorId = $request->user()->id;
+        $user = User::find($vendorId);
+        $losIds = $user->los->pluck('id')->toArray();
+        $price = 0;
+        if (count($clientsIds) === 1) {
+            $client = Clients::find($clientsIds[0]);
 
-        $clients = Clients::whereIn('id', $clientsIds)->update(["vendor_id" => $vendorId, 'type_id' => 1, 'operator_id' => $operatorId]);
-        if ($clients) {
-            foreach ($clientsIds as $id) {
-                $this->createAction($operatorId, $id, 8, $vendorId);
+            if(gettype(array_search($client->los_id,$losIds)) == 'integer'){
+                $priceLists = PriceList::where(['los_id' => $client->los_id, 'vendor_id' => $vendorId])->get();
+                foreach ($priceLists as $priceList) {
+                    if ($priceList->type == 'base') {
+                        $price +=$priceList->price;
+                    } else {
+                     ///   var_dump($priceList->price * $client->miles,$priceList->price , $client->miles);
+                        $price += $priceList->price * $client->miles;
+                    }
+var_dump($price);
+                }
 
+                $client->price = $price;
+                $client->vendor_id = $vendorId;
+                $client->type_id = 1;
+                $client->operator_id = $operatorId;
+                $client->update();
+                $this->createAction($operatorId, $clientsIds[0], 8, $vendorId);
+            }else{
+                return response()->json(
+                    [
+                        'success' => 0,
+                        //'type' => 'validation_filed',
+                        'error' => 'Check LOS',
+                    ],
+                    200
+                );
             }
+
 
             return response()->json([
                 'success' => 1,
             ], 200);
         } else {
-            return response()->json(
-                [
-                    'success' => 0,
-                    //'type' => 'validation_filed',
-                    'error' => 'something wrong with your reqeuest',
-                ],
-                200
-            );
+            foreach ($clientsIds as $id) {
+                $this->createAction($operatorId, $id, 8, $vendorId);
+
+            }
         }
+
+
+    ///    $clients = Clients::whereIn('id', $clientsIds)->whereIn('los_id', $losIds)->update(["vendor_id" => $vendorId, 'type_id' => 1, 'operator_id' => $operatorId]);
+//        if ($clients) {
+//            foreach ($clientsIds as $id) {
+//                $this->createAction($operatorId, $id, 8, $vendorId);
+//
+//            }
+//
+//            return response()->json([
+//                'success' => 1,
+//            ], 200);
+//        } else {
+//            return response()->json(
+//                [
+//                    'success' => 0,
+//                    //'type' => 'validation_filed',
+//                    'error' => 'something wrong with your reqeuest',
+//                ],
+//                200
+//            );
+//        }
 
     }
 
-    public function getVendorsByLosId($id){
-      $vendorData=  User::whereHas('los', function ($query) use($id){
-                $query->where('los.id', $id);
+    public function getVendorsByLosId($id)
+    {
+        $vendorData = User::whereHas('los', function ($query) use ($id) {
+            $query->where('los.id', $id);
         })->get();
 
         return response()->json(
@@ -349,6 +397,7 @@ class VendorController extends Controller
             200
         );
     }
+
     public function audit(Request $request)
     {
         $user = User::find(4);

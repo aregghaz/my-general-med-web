@@ -74,27 +74,12 @@ class ClientsController extends Controller
         ///  $clients = DB::table('clients')->where('type_id', $request->typeId);
         if (isset($queryData)) {
             $this->convertQuery($queryData, $vendorFields, $clients);
+            $this->convertQuery($queryData, $vendorFields, $tripCount);
+            $this->convertQuery($queryData, $vendorFields, $available);
+            $this->convertQuery($queryData, $vendorFields, $cancelCount);
+            $this->convertQuery($queryData, $vendorFields, $progressCount);
+            $this->convertQuery($queryData, $vendorFields, $doneCount);
 
-            $tripCount = $tripCount->where(function ($query) use ($queryData) {
-                $query->where('fullName', 'LIKE', '%' . $queryData . '%')
-                    ->orWhere('trip_id', 'LIKE', '%' . $queryData . '%');
-            });
-            $available = $available->where(function ($query) use ($queryData) {
-                $query->where('fullName', 'LIKE', '%' . $queryData . '%')
-                    ->orWhere('trip_id', 'LIKE', '%' . $queryData . '%');
-            });
-            $cancelCount = $cancelCount->where(function ($query) use ($queryData) {
-                $query->where('fullName', 'LIKE', '%' . $queryData . '%')
-                    ->orWhere('trip_id', 'LIKE', '%' . $queryData . '%');
-            });
-            $progressCount = $progressCount->where(function ($query) use ($queryData) {
-                $query->where('fullName', 'LIKE', '%' . $queryData . '%')
-                    ->orWhere('trip_id', 'LIKE', '%' . $queryData . '%');
-            });
-            $doneCount = $doneCount->where(function ($query) use ($queryData) {
-                $query->where('fullName', 'LIKE', '%' . $queryData . '%')
-                    ->orWhere('trip_id', 'LIKE', '%' . $queryData . '%');
-            });
         }
 
         $doneCount = $doneCount->count();
@@ -627,7 +612,7 @@ class ClientsController extends Controller
     public function updateAll($insuranceId, $path, $date)
     {
         $clinets = Clients::where('member_uniqie_identifer', $insuranceId)->update([
-            'insurance_exp' =>$date,
+            'insurance_exp' => $date,
             'insurance' => $path,
         ]);
         return true;

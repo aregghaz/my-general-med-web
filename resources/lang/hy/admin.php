@@ -111,6 +111,8 @@ return [
     'New' => 'New',
     'patient' => 'Patient',
     'tripNot' => 'Trip',
+    'perMile' => 'Per Mile',
+    'base' => 'Base',
 
 
     "welcome_message_part_one" => "Բարի գալուստ",

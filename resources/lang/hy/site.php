@@ -97,6 +97,9 @@ return [
     'New' => 'New',
     'patient' => 'Patient',
     'tripNot' => 'Trip',
+    'perMile' => 'Per Mile',
+    'base' => 'Base',
+
 
 
     'license' => 'Driver License',

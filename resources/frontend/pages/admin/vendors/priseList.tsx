@@ -4,12 +4,11 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { AdminApi } from "../../../api/admin-api/admin-api";
 import s from "./priceList.module.scss";
-import Input from "../../../components/input/input";
 import Select, { IOption } from "../../../components/select/select";
 import Button from "../../../components/button/button";
 import InputCurrency from "../../../components/inputCurrency/inputcurrency";
 import PriceCall from "-!svg-react-loader!../../../images/priceCall.svg";
-import MailIcon from "-!svg-react-loader!../../../images/mailIcon.svg"
+import MailIcon from "-!svg-react-loader!../../../images/mailIcon.svg";
 
 interface IVendors {
     path: string;
@@ -83,6 +82,8 @@ const PriceList: React.FC<IVendors> = ({ id }) => {
 
     }, []);
 
+
+
     const handlerSubmit = async (losId: number) => {
         console.log(values[losId], "valuesvaluesvaluesvalues");
         await AdminApi.updatePrice(losId, id, values[losId]);
@@ -103,7 +104,6 @@ const PriceList: React.FC<IVendors> = ({ id }) => {
                         {"@mail.com"}
                     </div>
                 </div>
-
                 <div className={s.losContainer}>
                     {
                         data.los.map((item: ILos) => {
@@ -125,32 +125,32 @@ const PriceList: React.FC<IVendors> = ({ id }) => {
                                             };
                                         });
                                     }
-                                    // @ts-ignore
                                     return (
                                         <>
                                             <div className={s.inputContainer}>
                                                 <div className={`${s.inputDiv} ${s.selectDiv}`}>
                                                     <InputCurrency name={service.slug}
-                                                           label={service.slug}
-                                                           type={"number"}
+                                                                   label={service.slug}
+                                                                   type={"number"}
                                                                    className={s.currencyInput}
-                                                           value={(values[item.id] && typeof values[item.id][service.id] !== "undefined") ? values[item.id][service.id].input : service.price}
-                                                           onChange={event => {
-                                                               let valueInput = event.target.value;
-                                                               return setFieldValue((state: any) => {
-                                                                   return {
-                                                                       ...state,
-                                                                       [item.id]: {
-                                                                           ...state[item.id],
-                                                                           [service.id]: {
-                                                                               ...state[item.id]?.[service.id],
-                                                                               input: valueInput
-                                                                           }
-                                                                       }
-                                                                   };
-                                                               });
-                                                           }
-                                                           } />
+                                                                   value={(values[item.id] && typeof values[item.id][service.id] !== "undefined") ? values[item.id][service.id].input : service.price}
+                                                                   onChange={event => {
+                                                                       let valueInput = event.target.value;
+                                                                       return setFieldValue((state: any) => {
+                                                                           return {
+                                                                               ...state,
+                                                                               [item.id]: {
+                                                                                   ...state[item.id],
+                                                                                   [service.id]: {
+                                                                                       ...state[item.id]?.[service.id],
+                                                                                       input: valueInput
+
+                                                                                   }
+                                                                               }
+                                                                           };
+                                                                       });
+                                                                   }
+                                                                   } />
                                                 </div>
 
                                                 {service.id > 2 && <>

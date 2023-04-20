@@ -256,7 +256,8 @@ class Controller extends BaseController
 
         $clients = $clients->where(function ($query) use ($queryData) {
             $query->where('fullName', 'LIKE', '%' . $queryData . '%')
-                ->orWhere('trip_id', 'LIKE', '%' . $queryData . '%');
+                ->orWhere('trip_id', 'LIKE', '%' . $queryData . '%')
+                ->orWhere('member_uniqie_identifer', 'LIKE', '%' . $queryData . '%');
         });
 //        $clients = $clients->where(function ($query) use ($title, $queryData) {
 //            // $clients =  $this->convertQuery($request->queryData, $vendorFields, $clients);

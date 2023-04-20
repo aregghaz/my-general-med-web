@@ -62,7 +62,7 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
         "address",
         "phone_number",
         "birthday",
-        "actions"
+      ///  "actions"
         /// "image",
     ];
     const carsTitle: Array<string> = [
@@ -71,7 +71,7 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
         "make",
         "model",
         "year",
-        "action"
+       /// "action"
     ];
     const handlerAddItem = () => navigate(`/admin/${crudKey}/create/${id}`);
 
@@ -210,7 +210,7 @@ const Users: React.FC<Beneficiary> = ({ id }) => {
                         isDelete={false}
                         isEdit={false}
                         tableRef={tableRef}
-                        isGetHistory
+                        isGetHistory={false}
                         isCreate={false}
                         isGetInfo
                         isGetItems={false}
