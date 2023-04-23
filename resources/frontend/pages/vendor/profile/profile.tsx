@@ -13,28 +13,48 @@ const VendorProfile:FC<VendorProfileProps> = ({
     const userData = useSelector(getUserData).user
     return userData && (
         <div className={cls.profileWrapper}>
-            <div className={cls.profile}>
-                <div className={cls.profileLeft}>
-                    <div className={cls.profileImgWrapper}>
-                        <div className={cls.userInfo}>
-                            {Object.keys(userData).length > 0 && <div className={cls.userImage}>
-                                <img src={userData.toString()}/>
-                            </div>}
-                        </div>
+            <div className={cls.profileLeft}>
+                <div className={cls.profileUser}>
+                    <div className={cls.userImageWrapper}>
+                        <img src={userData.image ?? "/images/logo.png"}/>
+                    </div>
+                    <hr/>
+                    <div className={cls.userData}>
+                        <span className={cls.title}>Role: {userData.role.toLocaleLowerCase()}</span>
                     </div>
                 </div>
-                <div className={cls.profileRight}>
-                    <div className={cls.nameBox}>
-                        <h2>{userData.name} {userData.surname}</h2>
-                    </div>
-
-                    <div className={cls.contentBox}>
-                        <p><span>Email</span>  {userData.email}</p>
-                        <p><span>Phone</span>  {userData.phone_number}</p>
-                        <p><span>Birthday</span> {userData.birthday} testBirthday</p>
-                        <p><span>Address</span> {userData.business_address} testAddress</p>
-                    </div>
+            </div>
+            <div className={cls.profileRight}>
+                <div className={cls.userData}>
+                    <span className={cls.title}>Full Name:</span>
+                    <span className={cls.value}>{userData.name} {userData.surname}</span>
                 </div>
+                <hr/>
+                <div className={cls.userData}>
+                    <span className={cls.title}>Birthdate:</span>
+                    <span className={cls.value}>{userData.birthday || "Unspecified"}</span>
+                </div>
+                <hr/>
+                <div className={cls.userData}>
+                    <span className={cls.title}>Email:</span>
+                    <span className={cls.value}>{userData.email || "Unspecified"}</span>
+                </div>
+                <hr/>
+                <div className={cls.userData}>
+                    <span className={cls.title}>Phone Number:</span>
+                    <span className={cls.value}>{userData.phone_number || "Unspecified"}</span>
+                </div>
+                <hr/>
+                <div className={cls.userData}>
+                    <span className={cls.title}>Address:</span>
+                    <span className={cls.value}>{userData.business_address || "Unspecified"}</span>
+                </div>
+                <hr/>
+                <div className={cls.userData}>
+                    <span className={cls.title}>Phone Number:</span>
+                    <span className={cls.value}>{userData.phone_number || "Unspecified"}</span>
+                </div>
+                <hr/>
             </div>
         </div>
     )

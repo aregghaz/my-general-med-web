@@ -103,59 +103,59 @@ const TableBody: React.FC<ITableBody> = (
 
                             {
                                 (isEdit || isDelete || isGetItems || isGetHistory) &&
-                                <TableData isGetInfo={isGetInfo} className={s.iconsWrapper}>
-
-                                    {
-                                        isEdit &&
-                                        <div className={s.iconWrapper}>
-                                            <div className={`${s.iconLabel} ${s.iconLabelTop}`}>Edit</div>
-                                            <EditIcon
-                                                className={s.editIcon}
-                                                onClick={() => handlerAction("edit", item.id)}
-                                            />
-                                        </div>
-                                    }
-                                    {
-                                        isGetItems &&
-                                        <div className={s.iconWrapper}>
-                                            <div className={s.iconLabel}>Users</div>
-                                            <UsersIcon
-                                                className={`${s.editIcon} ${s.userEditIcon}`}
-                                                onClick={() => handlerAction("getVendorUser", item.id)}
-                                            />
-                                        </div>
-                                    }
-                                    {
-                                        isGetHistory &&
-                                        <div className={s.iconWrapper}>
-                                            <div className={s.iconLabel}>Activity</div>
-                                            <ActivityIcon
-                                            className={s.editIcon}
-                                            onClick={() => handlerAction("history", item.id)}
-                                        />
-                                        </div>
-                                    }
-                                    {
-                                        isPrice &&
-                                        <div className={s.iconWrapper}>
-                                            <div className={s.iconLabel}>Price List</div>
-                                               <PriceSVG
-                                            className={`${s.trashIcon} ${s.priceIcon}`}
-                                            onClick={() => handlerAction("price", item.id)}
-                                        />
-                                        </div>
-                                    }  {
+                                <TableData isGetInfo={isGetInfo}>
+                                    <div className={s.iconsWrapper}>
+                                        {
+                                            isEdit &&
+                                            <div className={s.iconWrapper}>
+                                                <div className={`${s.iconLabel} ${s.iconLabelTop}`}>Edit</div>
+                                                <EditIcon
+                                                    className={s.editIcon}
+                                                    onClick={() => handlerAction("edit", item.id)}
+                                                />
+                                            </div>
+                                        }
+                                        {
+                                            isGetItems &&
+                                            <div className={s.iconWrapper}>
+                                                <div className={s.iconLabel}>Users</div>
+                                                <UsersIcon
+                                                    className={`${s.editIcon} ${s.userEditIcon}`}
+                                                    onClick={() => handlerAction("getVendorUser", item.id)}
+                                                />
+                                            </div>
+                                        }
+                                        {
+                                            isGetHistory &&
+                                            <div className={s.iconWrapper}>
+                                                <div className={s.iconLabel}>Activity</div>
+                                                <ActivityIcon
+                                                    className={s.editIcon}
+                                                    onClick={() => handlerAction("history", item.id)}
+                                                />
+                                            </div>
+                                        }
+                                        {
+                                            isPrice &&
+                                            <div className={s.iconWrapper}>
+                                                <div className={s.iconLabel}>Price List</div>
+                                                <PriceSVG
+                                                    className={`${s.trashIcon} ${s.priceIcon}`}
+                                                    onClick={() => handlerAction("price", item.id)}
+                                                />
+                                            </div>
+                                        }  {
                                         isDelete &&
                                         <div className={s.iconWrapper}>
                                             <div className={s.iconLabel}>Delete</div>
-                                               <TrashIcon
-                                            className={s.trashIcon}
+                                            <TrashIcon
+                                                className={s.trashIcon}
 
-                                            onClick={() => handlerAction("delete", item.id)}
-                                        />
+                                                onClick={() => handlerAction("delete", item.id)}
+                                            />
                                         </div>
                                     }
-
+                                    </div>
                                 </TableData>
                             }
 

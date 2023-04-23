@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+ import React, { FC, useEffect, useState } from "react";
 import cls from "./customTimePicker.module.scss";
 
 interface customTimePickerProps {

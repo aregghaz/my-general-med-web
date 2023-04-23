@@ -39,6 +39,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         { name: "fullName", type: "input", label: "fullName", placeholder:"Full name" },
         { name: "gender", type: "select", label: "gender" },
         { name: "birthday", type: "datepicker", label: "birthday"},
+        { name: "insurance", type: "file", label: "insurance"},
         ///  { name: "los", type: "select", label: "los" },
         { name: "artificial", type: "select", label: "artificial" },
         { name: "waitDuration", type: "select", label: "waitDuration"},
@@ -49,7 +50,6 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         { name: "height", type: "input", label: "height", placeholder: "Height" },
         { name: "weight", type: "input", label: "weight", inputType: "number", placeholder: "Weight" },
         { name: "miles", type: "input", label: "miles", inputType: "disabled" },
-        { name: "insurance", type: "file", label: "insurance"},
     ];
 
     const fields2: Array<IItem> = [
@@ -107,6 +107,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         "member_unique_identifier",
         "height",
         "weight",
+        "insurance",
         // "address",
         // "addressTime",
         checked && "price",
