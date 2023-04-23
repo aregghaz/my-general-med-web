@@ -21,6 +21,7 @@ import { toast } from "react-toastify";
 import NavigationTab from "../../../components/navigation/navigationTab";
 import ModalNew from "-!svg-react-loader!../../../images/modalNew1.svg"
 import Close from "-!svg-react-loader!../../../images/Close.svg"
+import ErrorIcon from "-!svg-react-loader!../../../svgs/error.svg"
 
 
 interface IHome {
@@ -365,7 +366,6 @@ const Home: React.FC<IHome> = () => {
     const handlerAddItem = () => navigate("/admin/clients/create");
     return (
         clients && <>
-
             <div className={s.panel}>
                 <div className={s.upload_panel}>
                     <NavigationTab
@@ -389,8 +389,7 @@ const Home: React.FC<IHome> = () => {
                     />
 
                 </div>
-                {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
-
+                {errorMessage && <div className={s.errorMessage}><ErrorIcon/> {errorMessage}</div>}
                 <Modal
                     isOpen={isModalOpen !== false}
                     style={customStyles}

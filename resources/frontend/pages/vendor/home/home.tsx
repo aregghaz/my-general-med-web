@@ -20,6 +20,7 @@ import NavigationTab from "../../../components/navigation/navigationTab";
 import customStyles from "../../../utils/style";
 import ModalNew from "-!svg-react-loader!../../../images/modalNew1.svg"
 import Close from "-!svg-react-loader!../../../images/Close.svg"
+import ErrorIcon from "-!svg-react-loader!../../../svgs/error.svg"
 
 interface IHome {
     path: string;
@@ -378,8 +379,7 @@ const Home: React.FC<IHome> = () => {
                         IsDateSearch
                     />
                 </div>
-                {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
-
+                {errorMessage && <div className={s.errorMessage}><ErrorIcon/> {errorMessage}</div>}
                 <Modal
                     isOpen={isModalOpen !== false}
                     style={customStyles}

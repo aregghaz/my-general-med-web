@@ -310,3 +310,19 @@ body {
 //.panel{
 //    border: 1x solid red;
 //}
+
+.errorMessage {
+    padding-left: 20px;
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+    color: $errorColor;
+
+    & > svg {
+        width: 30px;
+        height: 30px;
+        fill: $errorColor;
+    }
+}
