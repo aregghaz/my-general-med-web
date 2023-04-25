@@ -56,10 +56,12 @@ const TableBody: React.FC<ITableBody> = (
                                                                    isGetInfo={isGetInfo}
                                                                    handlerAction={handlerAction}
                                                         >
-                                                            {item[key].map((e: string, ind: number) => {
-                                                                return <span key={ind}
-                                                                             className={s.label_span}>{t(e)}</span>;
-                                                            })}
+                                                            <div className={s.addressWrapper}>
+                                                                {item[key].map((e: string, ind: number) => {
+                                                                    return <span key={ind}
+                                                                                 className={s.label_span}>{t(e)}</span>;
+                                                                })}
+                                                            </div>
                                                         </TableData>
                                                     );
                                                 } else if (key == "image") {
