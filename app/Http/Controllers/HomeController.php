@@ -229,6 +229,7 @@ class HomeController extends Controller
 
     public function index(Request $request): JsonResponse
     {
+        die('index');
         $vendorID = $request->user()->vendor_id;
         $showMore = $request->showmore;
 
