@@ -294,4 +294,19 @@ body {
   filter: drop-shadow(0 0 10px black);
 }
 
+.errorMessage {
+  padding-left: 20px;
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
+  color: #DC143C;
+}
+.errorMessage > svg {
+  width: 30px;
+  height: 30px;
+  fill: #DC143C;
+}
+
 /*# sourceMappingURL=home.module.css.map */
