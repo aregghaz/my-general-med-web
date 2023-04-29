@@ -74,6 +74,7 @@ const NotificationList: React.FC<INotificationList> = () => {
         setInfoData(notifData.data)
         setField(notifData.field);
         setVendor(notifData.companyName);
+
         setModel(notifData.model);
         setLoading(true);
     };

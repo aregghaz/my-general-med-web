@@ -21,7 +21,6 @@ const InfoBlockPatient: FC<IProps> = ({ data, is_admin,companyName,updatedField 
     /// const infoData: any = items.find(item => item.id === idData);
     const newData = data;
     const { t } = useTranslation();
-
     return (
         <div className={cls.block}>
             <span>This is patient</span>

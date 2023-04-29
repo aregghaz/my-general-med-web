@@ -39,6 +39,7 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
         { name: "date_of_service", type: "datepicker", label: "date_of_service" },
         { name: "gender", type: "select", label: "gender" },
         { name: "birthday", type: "datepicker", label: "birthday" },
+        { name: "insurance", type: "file", label: "insurance"},
         { name: "los", type: "select", label: "los", allowValueClear:false},
         { name: "artificial_id", type: "select", label: "artificial" },
         { name: "duration_id", type: "select", label: "waitDuration" },
@@ -49,10 +50,9 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
         { name: "height", type: "input", label: "height" },
         { name: "weight", type: "input", label: "weight", inputType: "number" },
         { name: "miles", type: "input", label: "miles", inputType: "disabled" },
-        { name: "address", type: "address", label: "" },
-        { name: "stops", type: "hidden", label: "stops" },
-        { name: "count", type: "hidden", label: "count" },
-        { name: "insurance", type: "file", label: "insurance"},
+        // { name: "address", type: "address", label: "" },
+        // { name: "stops", type: "hidden", label: "stops" },
+        // { name: "count", type: "hidden", label: "count" },
 
 
     ];
