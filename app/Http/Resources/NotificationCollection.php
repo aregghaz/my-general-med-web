@@ -27,6 +27,9 @@ class NotificationCollection extends ResourceCollection
                 case "client" :
                     $typeID = 'Insurance';
                     break;
+                case "trip" :
+                    $typeID = $data->getTrip->trip_id;
+                    break;
             }
             return [
                 ///  'id' => $data->id,

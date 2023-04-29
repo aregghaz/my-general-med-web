@@ -75,7 +75,7 @@ const StatusCreate: React.FC<IUserCreate> = ({ statusId }) => {
                 const data = await AdminApi.createStatus(crudKey, status.id);
                 setData(data);
                 setFields([
-                    {name: "status", type: "select"},
+                    { name: "name", type: "input", label: "statusName" },
                     ///  { name: "slug", type: "input", label: "slug" },
                     { name: "services", type: "multiSelect", label: "services" },
                 ]);

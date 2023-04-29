@@ -21,14 +21,14 @@ const NotifyReducer = (state = initialState, action: Actions): InitialState => {
                 data: [...action.payload.data],
                 driverCount: action.payload.driverCount,
                 carCount: action.payload.carCount,
-                patientCount: action.payload.patientCount
-                // tripsCount: action.payload.tripsCount,
+                patientCount: action.payload.patientCount,
+                tripsCount: action.payload.tripsCount
             };
         case "RESET_TAB_ID":
             return {
                 ...state,
                 data: [],
-                ///  tripsCount: 0,
+                tripsCount: 0,
                 patientCount: 0,
                 carCount: 0,
                 driverCount: 0

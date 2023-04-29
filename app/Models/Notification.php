@@ -27,4 +27,7 @@ class Notification extends Model
     public function getDriver() {
         return $this->hasOne(User::class, 'id', 'value_id');
     }
+    public function getTrip() {
+        return $this->hasOne(Clients::class, 'id', 'value_id');
+    }
 }

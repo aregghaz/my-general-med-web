@@ -7,6 +7,7 @@ use App\Http\Controllers\Vendor\CarsController;
 use App\Http\Controllers\Vendor\VendorUsersController;
 use App\Http\Resources\NotificationCollection;
 use App\Models\Cars;
+use App\Models\Clients;
 use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -25,10 +26,11 @@ class NotificationController extends Controller
         $driverCount = Notification::where('model', 1)->count();
         $carCount = Notification::where('model', 2)->count();
         $patientCount = Notification::where('model', 3)->count();
-        $tripsCount = Notification::where('model', 4)->count();
+        $tripsCount = Notification::where('model', 5)->count();
 //dd($typeId);
         $notification = Notification::where('model', (int)$typeId)->with('getAction');
-        $notification = $notification->with('getCars', 'getDriver');
+        /////FIXME OPTIMAZE THIS PART
+        $notification = $notification->with('getCars', 'getDriver', 'getTrip');
         $notification = $notification->orderBy('created_at', "desc")
             ->take(25 * $showMore)->get();
         return response()->json(
@@ -92,18 +94,34 @@ class NotificationController extends Controller
 
         switch ($notification->model) {
             case 'driver':
-                $data = VendorUsersController::show($notification->value_id);
+                $dataNotif = VendorUsersController::show($notification->value_id);
                 break;
             case 'car':
                 $car = new CarsController();
-                $data = $car->show($notification->value_id);
+                $dataNotif = $car->show($notification->value_id);
+                break;
+            case 'client':
+                $dataNotif = Clients::where('member_uniqie_identifer', $notification->field)->select('fullName', 'member_uniqie_identifer', 'insurance', 'insurance_exp')->first();
+                break;
+            case 'trip':
+                $dataNotif = Clients::where('id', $notification->value_id)->with('address')->first();
                 break;
         }
         if ($role == 'admin') {
             $notification->new_admin = 0;
-            $userData = User::with('Company')->find($notification->value_id);
-            $companyName = $userData->company->name;
+            if ($notification->model == 'client') {
+                $companyName = '';
+                $data = $dataNotif;
+            } else if ($notification->model == 'trip') {
+                $companyName = '';
+                $data = $this->convertSingleDataForInfo($dataNotif);
+            } else {
+                $userData = User::with('Company')->find($notification->value_id);
+                $companyName = $userData->company->name;
+                $data = $dataNotif->original;
+            }
         } else {
+            $data = $dataNotif->original;
             $notification->new_vendor = 0;
             $companyName = $request->user()->name;
         }
@@ -111,7 +129,7 @@ class NotificationController extends Controller
         $notification->update();
         return response()->json(
             [
-                'data' => $data->original,
+                'data' => $data,
                 'model' => $notification->model,
                 'companyName' => $companyName,
                 'field' => ($notification->field ?? false),

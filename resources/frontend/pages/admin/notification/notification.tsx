@@ -71,17 +71,9 @@ const NotificationList: React.FC<INotificationList> = () => {
 
     const handlerAction = async (action: string, id: number) => {
         const notifData = await AdminApi.getInfoData(id, "admin");
-        switch (notifData.model) {
-            case "driver":
-                setInfoData(notifData.data);
-                break;
-            case "car":
-                setInfoData(notifData.data);
-                break;
-        }
+        setInfoData(notifData.data)
         setField(notifData.field);
         setVendor(notifData.companyName);
-
         setModel(notifData.model);
         setLoading(true);
     };
@@ -105,7 +97,7 @@ const NotificationList: React.FC<INotificationList> = () => {
             count: patientCount,
             selected: false
         }, {
-            id: 4,
+            id: 5,
             name: "Trips",
             count: tripsCount,
             selected: false
