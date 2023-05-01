@@ -12,8 +12,8 @@ class OperatorsController extends Controller
 {
     public function getClients(Request $request)
     {
-        $allFields  =  $this->title;
-        $vendorFields = $request->titles ?$request->titles :  $allFields;
+        $allFields = $this->title;
+        $vendorFields = $request->titles ? $request->titles : $allFields;
 
         $clientData = new ClientFieldCollection($vendorFields);
         $showMore = $request->showMore;
@@ -43,29 +43,27 @@ class OperatorsController extends Controller
                 $clients = $clients->join('request_types', 'clients.request_type', '=', 'request_types.id');
                 $clientsData[] = "request_types.name as request_type";
                 //////status reletion cheking and add to title
-            }
-            else if ($vendorFields[$i] == 'status') {
+            } else if ($vendorFields[$i] == 'status') {
                 $clients = $clients->join('client_statuses', 'clients.status', '=', 'client_statuses.id');
                 $clientsData[] = "client_statuses.name as status";
                 //////gender reletion cheking and add to title
-            }
-            else if ($vendorFields[$i] == 'gender') {
+            } else if ($vendorFields[$i] == 'gender') {
                 $clients = $clients->join('genders', 'clients.gender', '=', 'genders.id');
                 $clientsData[] = "genders.name as gender";
                 //////adding default fields in to select
-            }  else if($vendorFields[$i] !== 'action') {
-                $clientsData[] =  'clients.' . $selectedFieldsTitle[$i] . " as " . $selectedFieldsTitle[$i];
+            } else if ($vendorFields[$i] !== 'action') {
+                $clientsData[] = 'clients.' . $selectedFieldsTitle[$i] . " as " . $selectedFieldsTitle[$i];
             }
         }
 
-        $result = array_diff( $allFields, $selectedFieldsTitle);
+        $result = array_diff($allFields, $selectedFieldsTitle);
         $selectedFields = count($clientsData) > 0 ? $clientsData : $clientData;
         array_unshift($selectedFields, 'clients.id as id');
         ///dd( $selectedFields);
 
         $clients = $clients->select($selectedFields);
 
-        $clients =  $clients->take(15 * $showMore)->get();
+        $clients = $clients->take(15 * $showMore)->get();
         // // dd($clients);
         // // dd( $clients->get());
         // if(count($selectedFieldsTitle) > 1){
@@ -75,7 +73,7 @@ class OperatorsController extends Controller
         //   dd($selectedFieldsTitle);
         return response()->json([
             'clients' => $clients,
-            'selectedFields' =>  new ClientFieldCollection($selectedFieldsTitle),
+            'selectedFields' => new ClientFieldCollection($selectedFieldsTitle),
             "titles" => new ClientFieldCollection($result),
             'tripCount' => $tripCount,
             'availableCount' => $available,

@@ -12,21 +12,24 @@ class ActionsController extends Controller
 {
 
 
+    public function getVendorDataSelect($id)
+    {
 
-    public function getVendorDataSelect($id){
-
-      $actions = Actions::where('user_id', $id)->with(['getClient','getOperator','getVendor','getAction'])->get();
+        $actions = Actions::where('user_id', $id)->with(['getClient', 'getOperator', 'getVendor', 'getAction'])->get();
         return response()->json([
             'actions' => new OperatorActionCollection($actions),
         ], 200);
     }
-    public function getActivityClient($id){
 
-      $actions = Actions::where('client_id', $id)->with(['getClient','getOperator','getVendor','getAction'])->get();
+    public function getActivityClient($id)
+    {
+
+        $actions = Actions::where('client_id', $id)->with(['getClient', 'getOperator', 'getVendor', 'getAction'])->get();
         return response()->json([
             'actions' => new ClientActivityCollection($actions),
         ], 200);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -50,7 +53,7 @@ class ActionsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -61,7 +64,7 @@ class ActionsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Actions  $actions
+     * @param \App\Models\Actions $actions
      * @return \Illuminate\Http\Response
      */
     public function show(Actions $actions)
@@ -72,7 +75,7 @@ class ActionsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Actions  $actions
+     * @param \App\Models\Actions $actions
      * @return \Illuminate\Http\Response
      */
     public function edit(Actions $actions)
@@ -83,8 +86,8 @@ class ActionsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Actions  $actions
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Actions $actions
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Actions $actions)
@@ -95,7 +98,7 @@ class ActionsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Actions  $actions
+     * @param \App\Models\Actions $actions
      * @return \Illuminate\Http\Response
      */
     public function destroy(Actions $actions)

@@ -20,7 +20,7 @@ class ApiController extends Controller
             'requestType',
             'address'
         ])->where(['vendor_id' => $vendorId, 'car_id' => $carId])->whereIn('type_id', [1, 5]);
-            ///->orWhere('type_id', 5);
+        ///->orWhere('type_id', 5);
         if (isset($request->search)) {
             $this->convertQuery($request->search, [], $clients);
         }
@@ -78,12 +78,12 @@ class ApiController extends Controller
             ], 200);
         } else {
             $client = Clients::find($id);
-            if($client->type_id == 5){
+            if ($client->type_id == 5) {
                 $client->update([
                     "type_id" => 6,
                     'end_time' => date('H:i')
                 ]);
-            }else{
+            } else {
                 return response()->json([
 //                    'clientId' => $check->id,
 //                    'tripId' => $check->trip_id,

@@ -69,7 +69,7 @@ class DashBoardController extends Controller
         $totalProfit = Clients::select(
 //            DB::raw('year(created_at) as year'),
 //            DB::raw('month(created_at) as month'),
-          ///  DB::raw('vendor_id as vendor_id'),
+        ///  DB::raw('vendor_id as vendor_id'),
             DB::raw('sum(price) as price'),
             DB::raw('count(id) as count'),
         )

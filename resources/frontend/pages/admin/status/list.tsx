@@ -30,6 +30,7 @@ const Status: React.FC<Beneficiary> = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [servicesCount, setServices] = useState(0);
+    const [stairchairCount, setStairchairCount] = useState(0);
 
     const { t } = useTranslation();
     useEffect(() => {
@@ -45,6 +46,7 @@ const Status: React.FC<Beneficiary> = () => {
                 setWaitDuration(data.counts.waitDuration);
                 setArtificial(data.counts.artificial);
                 setServices(data.counts.services);
+                setStairchairCount(data.counts.stairchair);
 
             }
         )();
@@ -99,6 +101,11 @@ const Status: React.FC<Beneficiary> = () => {
             id: 8,
             name: "services",
             count: servicesCount,
+            selected: false
+        },{
+            id: 9,
+            name: "stairchair",
+            count: stairchairCount,
             selected: false
         }
     ];

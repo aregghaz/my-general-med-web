@@ -15,6 +15,7 @@ use App\Models\Gender;
 use App\Models\Los;
 use App\Models\PriceList;
 use App\Models\RequestType;
+use App\Models\Stairchair;
 use App\Models\User;
 use App\Models\WaitDuration;
 use Illuminate\Http\Request;
@@ -221,6 +222,7 @@ class ClientsController extends Controller
         $los = Los::get();
         $artificial = Artificial::get();
         $waitDuration = WaitDuration::get();
+        $stairchair = Stairchair::get();
         $vendors = User::where('role_id', 2)->get();
 
         return response()->json([
@@ -233,6 +235,7 @@ class ClientsController extends Controller
             'trip_id' => $this->tripType(),
             'artificial' => new StatusCollection($artificial),
             'waitDuration' => new StatusCollection($waitDuration),
+            'stairchair' => new StatusCollection($stairchair),
             ///'status' => new StatusCollection($clientStatus),
 
         ], 200);

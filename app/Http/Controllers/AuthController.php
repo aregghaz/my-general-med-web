@@ -3,18 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PasswordRequest;
+use App\Http\Resources\RegionCollection;
 use App\Models\Cars;
-use App\Models\User;
 use App\Models\Province;
+use App\Models\User;
+use App\Notifications\PasswordChange;
+use App\Notifications\UserCreateNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use \Validator;
-use App\Notifications\UserCreateNotification;
-use App\Notifications\PasswordChange;
-use Illuminate\Support\Facades\Notification;
-use App\Http\Resources\RegionCollection;
+use Validator;
 
 class AuthController extends Controller
 {
@@ -43,9 +42,9 @@ class AuthController extends Controller
             'phone_number' => $requestData['phone_number'],
             'email' => $requestData['email'],
             /////TODO CHANGE IT
-           'password' => bcrypt($requestData['password']),
-          ///  'password' => bcrypt('admin'),
-            'birthday' => date ('Y-m-d', strtotime($requestData['birthday'])),
+            'password' => bcrypt($requestData['password']),
+            ///  'password' => bcrypt('admin'),
+            'birthday' => date('Y-m-d', strtotime($requestData['birthday'])),
             'address' => $requestData['address'],
             'state_id' => $state->id,
         ]);
@@ -148,17 +147,17 @@ class AuthController extends Controller
             'address' => $user->address,
             'birthday' => $user->birthday,
         ];
-        if($user->role->name == 'admin'){
+        if ($user->role->name == 'admin') {
             $data['count'] = \App\Models\Notification::where('new_admin', 1)->count();
-        }else{
-            $ids = User::where('vendor_id',  $user->vendor_id)->where(
+        } else {
+            $ids = User::where('vendor_id', $user->vendor_id)->where(
                 'id',
                 '!=',
                 $user->vendor_id
             )->select('id')->get()->toArray();
-         //   dd($ids);
-            $carIds = Cars::where('vendor_id',  $user->vendor_id)->select('id')->get()->toArray();
-            $data['count'] =  \App\Models\Notification::where(function ($query) use ($ids) {
+            //   dd($ids);
+            $carIds = Cars::where('vendor_id', $user->vendor_id)->select('id')->get()->toArray();
+            $data['count'] = \App\Models\Notification::where(function ($query) use ($ids) {
                 $query->whereIn('value_id', $ids)->where('model', 'driver');
             })->orWhere(function ($query) use ($carIds) {
                 $query->whereIn('value_id', $carIds)->where('model', 'car');
@@ -192,12 +191,12 @@ class AuthController extends Controller
 
     public function uploadAvatar(Request $request)
     {
-        $image =  $request->file;
+        $image = $request->file;
         $image_new_name = time() . $image->getClientOriginalName();
         $image->move('uploads/partners', $image_new_name);
         $user = User::find($request->input('userId'));
-        if($user->image){
-            $oldImage =  public_path("uploads/partners/$user->image");
+        if ($user->image) {
+            $oldImage = public_path("uploads/partners/$user->image");
             if (file_exists($oldImage)) {
                 unlink($oldImage);
             }
@@ -209,13 +208,13 @@ class AuthController extends Controller
 
     public function registerForm()
     {
-       /// $regions = Province::get();
-       $regions =[
-        ['name' =>'californa',
-        'slug' =>'californa',
-        'id' =>1]
-    ];
-        $province =new RegionCollection($regions);
+        /// $regions = Province::get();
+        $regions = [
+            ['name' => 'californa',
+                'slug' => 'californa',
+                'id' => 1]
+        ];
+        $province = new RegionCollection($regions);
         ////new RegionCollection($regions);
         return response()->json($province);
     }

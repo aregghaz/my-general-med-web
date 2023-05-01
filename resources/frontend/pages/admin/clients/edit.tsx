@@ -12,6 +12,7 @@ import validationRules from "../../../utils/validationRule";
 import { toast } from "react-toastify";
 import InputCurrency from "../../../components/inputCurrency/inputcurrency";
 import getFieldLabel from "../../../utils/getFieldLabel";
+import { navigate } from "@reach/router";
 
 interface IClientEditItem {
     path: string;
@@ -50,10 +51,10 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
         { name: "height", type: "input", label: "height" },
         { name: "weight", type: "input", label: "weight", inputType: "number" },
         { name: "miles", type: "input", label: "miles", inputType: "disabled" },
-        // { name: "address", type: "address", label: "" },
-        // { name: "stops", type: "hidden", label: "stops" },
-        // { name: "count", type: "hidden", label: "count" },
-
+        { name: "address", type: "address", label: "" },
+        { name: "stops", type: "hidden", label: "stops" },
+        { name: "count", type: "hidden", label: "count" },
+        { name: "stairchair", type: "select", label: "stairchair"},
 
     ];
 
@@ -100,7 +101,7 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
             };
 
             toast(t("record_successfully_edited"), options);
-            // await navigate(`/${redirectKey ?? crudKey}`);
+             await navigate(`/admin/${crudKey}`);
         }
     };
     return data && <div>

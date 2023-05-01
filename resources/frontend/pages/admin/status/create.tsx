@@ -67,6 +67,10 @@ const StatusCreate: React.FC<IUserCreate> = ({ statusId }) => {
             id: 8,
             value: "services",
             label: "services",
+        } ,{
+            id: 9,
+            value: "stairchair",
+            label: "stairchair",
         }
     ];
     useEffect(() => {

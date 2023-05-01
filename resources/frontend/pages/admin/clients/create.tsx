@@ -50,6 +50,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         { name: "height", type: "input", label: "height", placeholder: "Height" },
         { name: "weight", type: "input", label: "weight", inputType: "number", placeholder: "Weight" },
         { name: "miles", type: "input", label: "miles", inputType: "disabled" },
+        { name: "stairchair", type: "select", label: "stairchair"},
     ];
 
     const fields2: Array<IItem> = [
@@ -77,6 +78,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         { name: "weight", type: "input", label: "weight", inputType: "number", placeholder: "Weight" },
         { name: "miles", type: "input", label: "miles", inputType: "disabled" },
         { name: "insurance", type: "file", label: "insurance", inputType: "hidden" },
+        { name: "stairchair", type: "select", label: "stairchair"},
     ];
 
     useEffect(() => {

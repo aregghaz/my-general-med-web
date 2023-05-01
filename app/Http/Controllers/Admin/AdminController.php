@@ -14,6 +14,7 @@ use App\Models\Los;
 use App\Models\Reason;
 use App\Models\RequestType;
 use App\Models\Service;
+use App\Models\Stairchair;
 use App\Models\WaitDuration;
 use Illuminate\Http\Request;
 
@@ -44,6 +45,7 @@ class AdminController extends Controller
         $waitDuration = WaitDuration::count();
         $artificial = Artificial::count();
         $services = Service::count();
+        $stairchair = Stairchair::count();
         return [
             "gender" => $gender,
             "los" => $los,
@@ -53,6 +55,7 @@ class AdminController extends Controller
             "waitDuration" => $waitDuration,
             "artificial" => $artificial,
             'services' => $services,
+            'stairchair' => $stairchair,
         ];
     }
 
@@ -219,6 +222,9 @@ class AdminController extends Controller
                 break;
             case 8:
                 $table = new Service;
+                break;
+            case 9:
+                $table = new Stairchair;
                 break;
         }
         return $table;

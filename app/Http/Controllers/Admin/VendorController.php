@@ -320,16 +320,16 @@ class VendorController extends Controller
         if (count($clientsIds) === 1) {
             $client = Clients::find($clientsIds[0]);
 
-            if(gettype(array_search($client->los_id,$losIds)) == 'integer'){
+            if (gettype(array_search($client->los_id, $losIds)) == 'integer') {
                 $priceLists = PriceList::where(['los_id' => $client->los_id, 'vendor_id' => $vendorId])->get();
                 foreach ($priceLists as $priceList) {
                     if ($priceList->type == 'base') {
-                        $price +=$priceList->price;
+                        $price += $priceList->price;
                     } else {
-                     ///   var_dump($priceList->price * $client->miles,$priceList->price , $client->miles);
+                        ///   var_dump($priceList->price * $client->miles,$priceList->price , $client->miles);
                         $price += $priceList->price * $client->miles;
                     }
-var_dump($price);
+                    var_dump($price);
                 }
 
                 $client->price = $price;
@@ -338,7 +338,7 @@ var_dump($price);
                 $client->operator_id = $operatorId;
                 $client->update();
                 $this->createAction($operatorId, $clientsIds[0], 8, $vendorId);
-            }else{
+            } else {
                 return response()->json(
                     [
                         'success' => 0,
@@ -361,7 +361,7 @@ var_dump($price);
         }
 
 
-    ///    $clients = Clients::whereIn('id', $clientsIds)->whereIn('los_id', $losIds)->update(["vendor_id" => $vendorId, 'type_id' => 1, 'operator_id' => $operatorId]);
+        ///    $clients = Clients::whereIn('id', $clientsIds)->whereIn('los_id', $losIds)->update(["vendor_id" => $vendorId, 'type_id' => 1, 'operator_id' => $operatorId]);
 //        if ($clients) {
 //            foreach ($clientsIds as $id) {
 //                $this->createAction($operatorId, $id, 8, $vendorId);

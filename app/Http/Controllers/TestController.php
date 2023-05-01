@@ -154,15 +154,16 @@ class TestController extends Controller
     }
 
 
-
-    public function notificationTrips() {
+    public function notificationTrips()
+    {
         $queryData = date('Y-m-d');
         $clinetsData = Clients::with('address')->where('date_of_service', "=", $queryData)->where('vendor_id', null)->get();
-        foreach ($clinetsData as $client){
+        foreach ($clinetsData as $client) {
             $this->saveNotification('trip', 'pick_up', $client['id'], 15);
         }
         dd('1');
     }
+
     public function index(Request $request)
     {
         /* open this for local file testing purposes only*/

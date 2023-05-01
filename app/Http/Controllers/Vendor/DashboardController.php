@@ -19,8 +19,8 @@ class DashboardController extends Controller
         $driverName = [];
         foreach ($cars as $index => $car) {
             $driverName[$index] = '';
-            foreach ($car->driver as $key =>  $driver ) {
-                $driverName[$index] .= ($key >= 1 ? '-' : '').$driver->user->name ;
+            foreach ($car->driver as $key => $driver) {
+                $driverName[$index] .= ($key >= 1 ? '-' : '') . $driver->user->name;
             }
         }
         $carsIdData = array_column($cars->toArray(), 'id');

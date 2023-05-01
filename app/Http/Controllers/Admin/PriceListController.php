@@ -27,12 +27,12 @@ class PriceListController extends Controller
                 $priceData = PriceList::where(['vendor_id' => $id, 'los_id' => $item->id, 'service_id' => $service->id])->first();
                 if (isset($priceData)) {
                     $price = $priceData->price;
-                    $priceType = $priceData->type == 'perMile' ?  [
+                    $priceType = $priceData->type == 'perMile' ? [
                         'id' => 2,
                         'label' => 'perMile',
                         'slug' => 'perMile',
                         'value' => 'perMile',
-                    ]:[
+                    ] : [
                         'id' => 1,
                         'label' => 'base',
                         'slug' => 'base',
@@ -79,7 +79,7 @@ class PriceListController extends Controller
     public function setPrice($losId, $vendorId, Request $request)
     {
         $losData = Los::find($losId);
-        PriceList::where(['los_id'=> $losId, 'vendor_id'=> $vendorId])->delete();
+        PriceList::where(['los_id' => $losId, 'vendor_id' => $vendorId])->delete();
         foreach ($request->data as $index => $price) {
             $priceList = new PriceList();
             $priceList->vendor_id = $vendorId;
@@ -87,11 +87,11 @@ class PriceListController extends Controller
             $priceList->price = ltrim($price['input'], '$');
             $priceList->los_id = $losId;
             if (isset($price['value']) and $index > 2) {
-                $priceList->type = $price['value']['id'] == 2 ? 'perMile': 'base' ;
+                $priceList->type = $price['value']['id'] == 2 ? 'perMile' : 'base';
 
-            }else{
+            } else {
 
-                $priceList->type =  $index == 2 ? 'perMile': 'base' ;
+                $priceList->type = $index == 2 ? 'perMile' : 'base';
             }
             $priceList->save();
         }

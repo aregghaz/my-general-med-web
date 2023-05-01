@@ -4,15 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\RoleCollection;
 use App\Http\Resources\StatusCollection;
+use App\Http\Resources\UserCollection;
+use App\Models\ClientStatus;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Resources\UserCollection;
-use App\Models\Role;
-use App\Models\ClientStatus;
-use App\Models\Status;
-use Illuminate\Support\Facades\DB;
-use App\Http\Requests\UserRequest;
-use \Validator;
+use Validator;
 
 class UserController extends Controller
 {
@@ -21,19 +18,21 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    protected function getRole($id){
+    protected function getRole($id)
+    {
 
     }
+
     public function index(Request $request)
     {
         $users = new User;
         if ($request->input('tabId')) {
-            $users = $users->where('role_id',$request->input('tabId'));
+            $users = $users->where('role_id', $request->input('tabId'));
         }
         $roles = Role::withCount('users')->get();
 
         $users = $users->orderBy('name', 'asc')->get();
-      ///  $users = User::get();
+        ///  $users = User::get();
         return response()->json([
             'data' => new UserCollection($users),
             'roles' => new RoleCollection($roles),
@@ -49,7 +48,7 @@ class UserController extends Controller
     public function create()
     {
         $role = Role::get();
-        $status =ClientStatus::get();
+        $status = ClientStatus::get();
         return response()->json([
             "role" => new RoleCollection($role),
             'status' => new StatusCollection($status)
@@ -161,7 +160,7 @@ class UserController extends Controller
         }
         $requestData = $validator->validated();
 
-       User::update([
+        User::update([
             'name' => $requestData['name'],
             'surname' => $requestData['surname'],
             'phone_number' => $requestData['phone_number'],
