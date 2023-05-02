@@ -38,6 +38,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
             );
             setData(data.data);
             setTabs(data.roles);
+
         })();
         return () => {
             homeAPI.cancelRequest();
@@ -81,6 +82,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
 
     const handlerChangeTabs = async (tabId: number) => {
         setTabIdSelected(tabId);
+        setTypeName(tabId === 3 ? 'operator' : 'driver')
         // setLoading(true)
     };
     const handlerGetItemData = async (id: number) => {

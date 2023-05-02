@@ -55,6 +55,7 @@ const VendorEdit: React.FC<IVendorEditItem> = ({ id }) => {
             fields={fields}
             title={""}
             children={t("update")}
+            isStatus={false}
         />
     );
 };

@@ -60,6 +60,7 @@ const StatusEdit: React.FC<IUsersEditItem> = ({ id, statusId }) => {
             fields={fields}
             title={""}
             children={t("update")}
+            isStatus={true}
         />
     );
 };

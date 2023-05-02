@@ -21,6 +21,7 @@ interface IEdit {
     selectRange?: boolean
     redirectKey?: string,
     requiredFields?: Array<string>
+    isStatus?:boolean,
 }
 
 const Edit: React.FC<IEdit> = (
@@ -32,7 +33,8 @@ const Edit: React.FC<IEdit> = (
         redirectKey,
         selectRange,
         handleDrawMap,
-        requiredFields
+        requiredFields,
+        isStatus = false,
     }) => {
     const { t } = useTranslation();
 
@@ -71,7 +73,7 @@ const Edit: React.FC<IEdit> = (
 
 
     return (
-        <div>
+        <div className={s.glob}>
             <Formik
                 initialValues={populateEditFormFields(fields, data)}
                 onSubmit={submit}
@@ -90,26 +92,30 @@ const Edit: React.FC<IEdit> = (
 
                     return (
                         <>
-                            <form className={s.form}>
-                                {
-                                    fields
-                                        .map((field, index) =>
-                                            <div key={index} className={s.item}
-                                                 style={field.type == "hidden" ? { display: "none" } : {}}>
-                                                <FormikHandler
-                                                    item={field}
-                                                    handleDrawMap={handleDrawMap}
-                                                    handleChange={handleChange}
-                                                    values={values}
-                                                    selectRange={selectRange}
-                                                    requiredFields={requiredFields}
-                                                    setFieldValue={setFieldValue}
-                                                    selectOptions={data}
-                                                    errors={errors}
-                                                />
-                                            </div>
-                                        )
-                                }
+                            <form className={`${s.form} ${isStatus ? s.statusForm : ""}`}>
+                                    {
+                                        fields
+                                            .map((field, index) =>
+
+                                                <div key={index} className={s.item}
+                                                     style={field.type == "hidden" ? { display: "none" } : {}}>
+                                                    <FormikHandler
+                                                        item={field}
+                                                        handleDrawMap={handleDrawMap}
+                                                        handleChange={handleChange}
+                                                        values={values}
+                                                        selectRange={selectRange}
+                                                        requiredFields={requiredFields}
+                                                        setFieldValue={setFieldValue}
+                                                        selectOptions={data}
+                                                        errors={errors}
+                                                    />
+                                                </div>
+
+
+                                            )
+                                    }
+
 
                                 <div className={s.buttonDiv}>
                                     <Button

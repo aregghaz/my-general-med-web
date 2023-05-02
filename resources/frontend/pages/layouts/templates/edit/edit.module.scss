@@ -9,22 +9,18 @@
     gap: 20px;
     grid-template-columns: repeat(3, 1fr);
     width: 100%;
-    margin: auto;
+    //border: 1px solid red;
 }
 
-@media only screen and (max-width: 1250px) {
-    .form {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        gap: 20px;
-    }
+.statusForm {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
 
-    .item {
-        width: 100%;
-        align-items: center;
-    }
+.glob{
+    padding: 30px;
 }
 
 .title {
@@ -32,15 +28,24 @@
     text-transform: uppercase;
 }
 
+.itemsWrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    //border: 1px solid red;
+    gap: 60px;
+}
 
 .item {
     //margin-bottom: 15px;
     //width: 30%;
-    //width: 100%;
+    width: 80%;
     //display: flex;
     //flex-direction: column;
-    margin: 10px 10px 15px;
+    //margin: 10px 10px 15px;
     position: relative;
+    align-items: center;
+    //border: 1px solid red;
 
     svg {
         width: 20px;
@@ -62,13 +67,15 @@
         width: 100%;
 
         & > button {
-            width: 100%;
+            width: 200px;
             margin: 10px 10px 15px;
         }
     }
     grid-column: 1/4;
-    justify-content: end;
+    justify-content: start;
     display: flex;
+    margin-top: 50px;
+    //border: 1px solid red;
 }
 
 .googleMap {
@@ -79,5 +86,22 @@
 
     & > div:first-child {
 
+    }
+}
+
+
+@media only screen and (max-width: 1250px) {
+    .form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .item {
+        width: 100%;
+        align-items: center;
     }
 }
