@@ -150,7 +150,7 @@ const NotificationList: React.FC<INotificationList> = () => {
                 {model === "car" &&
                     <InfoBlockCar data={info} companyName={companyName} updatedField={updatedField} is_admin={true} />}
 
-                {model === "patient" && <InfoBlockPatient data={info} is_admin={true} />}
+                {model === "client" && <InfoBlockPatient data={info} is_admin={true} />}
 
                 {model === "trips" && <InfoBlockTrips data={info} is_admin={true} />}
             </div>}

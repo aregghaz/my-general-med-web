@@ -18,8 +18,11 @@ interface IProps {
 
 
 const InfoBlockPatient: FC<IProps> = ({ data, is_admin,companyName,updatedField }) => {
-    /// const infoData: any = items.find(item => item.id === idData);
     const newData = data;
+    // newData.fullName
+    // newData.insurance "faylna esi"
+    // newData.insurance_exp "esi ira experation date-na"
+    // newData.member_uniqie_identifer "ira unique identifierna"
     const { t } = useTranslation();
     return (
         <div className={cls.block}>
