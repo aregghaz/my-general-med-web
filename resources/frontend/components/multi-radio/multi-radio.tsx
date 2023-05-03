@@ -18,16 +18,19 @@ const multiRadio:FC<multiRadioProps> = ({
     selected
 }) => {
     return (
-        <div>
+        <div className={cls.radioWrapper}>
             {
                 options.map((item,index) => {
                     return (
-                        <div>
-                            <input defaultChecked={JSON.stringify(item) === JSON.stringify(selected)} type={"radio"} name={name} id={id + index} onChange={() => {
-                                onChange(item)
-                            }}/>
-                            <label htmlFor={id + index}>{item.value}</label>
-                        </div>
+                        <label htmlFor={id + index}>
+                            <div className={cls.radioItem} >
+                                <input defaultChecked={JSON.stringify(item) === JSON.stringify(selected)} type={"radio"} name={name} id={id + index} onChange={() => {
+                                    onChange(item)
+                                }}/>
+                                <label htmlFor={id + index}>{item.value}</label>
+                            </div>
+                        </label>
+
                     )
                 })
             }
