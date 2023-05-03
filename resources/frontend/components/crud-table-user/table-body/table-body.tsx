@@ -80,6 +80,15 @@ const TableBody: React.FC<ITableBody> = (
                                             />
                                             </span>
                                         }
+                                        {isRemove && typeId === 1 &&
+                                            <span className={`${s.tooltip} ${s.reRouteSpan}`}>
+                                            <span className={`${s.tooltiptext} ${s.reRoute}`}>ReRoute</span>
+                                            <RemoveIcon
+                                                className={s.icon}
+                                                onClick={() => handlerAction(item.id, "reRoute")}
+                                            />
+                                                  </span>
+                                        }
                                         {
                                             isInfo &&
                                             <span className={`${s.tooltip} ${s.infoSpan}`}>
@@ -99,15 +108,6 @@ const TableBody: React.FC<ITableBody> = (
                                                 onClick={() => handlerAction(item.id, "claim")}
                                             />
                                                 </span>
-                                        }
-                                        {isRemove && typeId === 1 &&
-                                            <span className={`${s.tooltip} ${s.reRouteSpan}`}>
-                                            <span className={`${s.tooltiptext} ${s.reRoute}`}>ReRoute</span>
-                                            <RemoveIcon
-                                                className={s.icon}
-                                                onClick={() => handlerAction(item.id, "reRoute")}
-                                            />
-                                                  </span>
                                         }
                                         {
                                             isAssign && typeId === 1 &&

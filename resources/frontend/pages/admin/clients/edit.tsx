@@ -50,11 +50,11 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
       ///  { name: "price", type: "input", label: "price", inputType: "number" },
         { name: "height", type: "input", label: "height" },
         { name: "weight", type: "input", label: "weight", inputType: "number" },
+        { name: "stairchair", type: "select", label: "stairchair"},
         { name: "miles", type: "input", label: "miles", inputType: "disabled" },
         { name: "address", type: "address", label: "" },
         { name: "stops", type: "hidden", label: "stops" },
         { name: "count", type: "hidden", label: "count" },
-        { name: "stairchair", type: "select", label: "stairchair"},
 
     ];
 
@@ -135,39 +135,6 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
                             </div>
                         }
                         <form className={s.form}>
-                            {
-                                fields
-                                    .map((field, index) => {
-                                            if (data && data[field.name]) {
-                                                return <div key={index} className={s.item}>
-                                                    <FormikHandler
-                                                        item={field}
-                                                        className={s.item}
-                                                        handleChange={handleChange}
-                                                        values={values}
-                                                        setFieldValue={setFieldValue}
-                                                        selectOptions={data}
-                                                        requiredFields={requiredFields}
-                                                        errors={errors}
-                                                    />
-                                                </div>;
-                                            } else {
-                                                return <div key={index} className={s.item}>
-                                                    <FormikHandler
-                                                        item={field}
-                                                        className={s.item}
-                                                        handleChange={handleChange}
-                                                        values={values}
-                                                        setFieldValue={setFieldValue}
-                                                        requiredFields={requiredFields}
-                                                        errors={errors}
-                                                    />
-                                                </div>;
-                                            }
-
-                                        }
-                                    )
-                            }
                             <div className={s.item}>
                                 {
                                     <div className={s.fixedPriceWrapper} style={{
@@ -207,6 +174,39 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
                                     </div>
                                 }
                             </div>
+                            {
+                                fields
+                                    .map((field, index) => {
+                                            if (data && data[field.name]) {
+                                                return <div key={index} className={s.item}>
+                                                    <FormikHandler
+                                                        item={field}
+                                                        className={s.item}
+                                                        handleChange={handleChange}
+                                                        values={values}
+                                                        setFieldValue={setFieldValue}
+                                                        selectOptions={data}
+                                                        requiredFields={requiredFields}
+                                                        errors={errors}
+                                                    />
+                                                </div>;
+                                            } else {
+                                                return <div key={index} className={s.item}>
+                                                    <FormikHandler
+                                                        item={field}
+                                                        className={s.item}
+                                                        handleChange={handleChange}
+                                                        values={values}
+                                                        setFieldValue={setFieldValue}
+                                                        requiredFields={requiredFields}
+                                                        errors={errors}
+                                                    />
+                                                </div>;
+                                            }
+
+                                        }
+                                    )
+                            }
                             <div className={s.buttonDiv}>
                                 <Button
                                     type={"adminUpdate"}

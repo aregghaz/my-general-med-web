@@ -260,10 +260,6 @@ const Show: React.FC<IShow> = ({ id }) => {
                             <div className={cls.classInfo}>
                                 <div className={cls.classLeft}>
                                     <div className={cls.items}>
-                                        <div className={cls.item}>
-                                            <span className={cls.itemLabel}>Pickup Address:</span>
-                                            <span className={cls.itemValue}>{item.address}</span>
-                                        </div>
                                         {index !== 0 && <div className={cls.item} style={{ alignItems: "center" }}>
                                             <span className={cls.itemLabel}>Appointment time:</span>
                                             {/*<span className={cls.itemValue}>{item.drop_down}</span>*/}
@@ -298,7 +294,10 @@ const Show: React.FC<IShow> = ({ id }) => {
                                                     </button>
                                                 </div>
                                             </div>}
-
+                                        <div className={cls.item}>
+                                            <span className={cls.itemLabel}>Pickup Address:</span>
+                                            <span className={cls.itemValue}>{item.address}</span>
+                                        </div>
                                         <div className={cls.item}>
                                             <span className={cls.itemLabel}>Phone:</span>
                                             <span className={cls.itemValue}>{item.address_phone}</span>

@@ -138,14 +138,14 @@ const Show: React.FC<IShow> = ({ id }) => {
                 {/*    /!*</Button>*!/*/}
                 {/*</div>*/}
                 <div className={cls.iconsWrapper}>
-                    <div className={cls.updateButton}>
+                    <button className={cls.updateButton} onClick={() => {setShowMap(!showMap)}}>
                         <span className={cls.updateButtonLabel}>Show map</span>
-                        <ShowMap type={"adminUpdate"} onClick={() => {setShowMap(!showMap)}} className={cls.mapIcon}/>
-                    </div>
-                    <div className={cls.updateButton}>
+                        <ShowMap type={"adminUpdate"} className={cls.mapIcon}/>
+                    </button>
+                    <button className={cls.updateButton} onClick={handlerUpdate}>
                         <span className={`${cls.updateButtonLabel} ${cls.updateLabelTop}`}>Update</span>
-                        <Update type={"adminUpdate"} onClick={handlerUpdate} className={cls.updateIcon}/>
-                    </div>
+                        <Update type={"adminUpdate"} className={cls.updateIcon}/>
+                    </button>
                 </div>
             </div>
             <div className={cls.addon}>
