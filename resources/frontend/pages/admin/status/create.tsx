@@ -5,6 +5,7 @@ import Select, { IOption } from "../../../components/select/select";
 import { IItem } from "../../layouts/templates/formik-handler/formik-handler";
 import cls from "./create.module.scss"
 import { AdminApi } from "../../../api/admin-api/admin-api";
+import MultiRadio from "../../../components/multi-radio/multi-radio";
 interface IUserCreate {
     path: string,
     statusId?: number
@@ -100,18 +101,25 @@ const StatusCreate: React.FC<IUserCreate> = ({ statusId }) => {
     return <>
         <div className={cls.wrapper}>
             <div className={cls.select}>
-                <Select
-                    label={"status"}
-                    getOptionValue={(option: IOption) => option.value}
-                    getOptionLabel={(option: IOption) => t(option.label)}
-                    onChange={(options: IOption) => setStatus(options)}
-                    /// onChange={handlerSetCar}
+                {/*<Select*/}
+                {/*    label={"status"}*/}
+                {/*    getOptionValue={(option: IOption) => option.value}*/}
+                {/*    getOptionLabel={(option: IOption) => t(option.label)}*/}
+                {/*    onChange={(options: IOption) => setStatus(options)}*/}
+                {/*    /// onChange={handlerSetCar}*/}
+                {/*    options={tabs}*/}
+                {/*    // value={selectedTitle}*/}
+                {/*    name={"Cars"}*/}
+                {/*    isMulti={false}*/}
+                {/*    value={status}*/}
+                {/*    allowValueClear={false}*/}
+                {/*/>*/}
+                <MultiRadio
                     options={tabs}
-                    // value={selectedTitle}
-                    name={"Cars"}
-                    isMulti={false}
-                    value={status}
-                    allowValueClear={false}
+                    name={"statusSelect"}
+                    id={"status"}
+                    selected={status}
+                    onChange={(options: IOption) => setStatus(options)}
                 />
             </div>
             <div className={cls.mainForm}>
