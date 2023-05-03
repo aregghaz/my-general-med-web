@@ -78,22 +78,7 @@ const VendorProfile: FC<VendorProfileProps> = ({}): React.ReactElement => {
                             })
                         }</>
                     }
-                    {/*<div className={cls.userData}>*/}
-                    {/*    <span className={cls.title}>Birthdate:</span>*/}
-                    {/*    <span className={cls.value}>{userData.birthday || "Unspecified"}</span>*/}
-                    {/*</div>*/}
-                    {/*<div className={cls.userData}>*/}
-                    {/*    <span className={cls.title}>Email:</span>*/}
-                    {/*    <span className={cls.value}>{userData.email || "Unspecified"}</span>*/}
-                    {/*</div>*/}
-                    {/*<div className={cls.userData}>*/}
-                    {/*    <span className={cls.title}>Phone Number:</span>*/}
-                    {/*    <span className={cls.value}>{userData.phone_number || "Unspecified"}</span>*/}
-                    {/*</div>*/}
-                    {/*<div className={cls.userData}>*/}
-                    {/*    <span className={cls.title}>Address:</span>*/}
-                    {/*    <span className={cls.value}>{userData.business_address || "Unspecified"}</span>*/}
-                    {/*</div>*/}
+
                     <div className={cls.buttonsBox}>
                         {
                             edit ? <><button onClick={() => {
@@ -108,48 +93,6 @@ const VendorProfile: FC<VendorProfileProps> = ({}): React.ReactElement => {
                 </div>
 
             </div>
-            {/*<div className={cls.profileLeft}>*/}
-            {/*    <div className={cls.profileUser}>*/}
-            {/*        <div className={cls.userImageWrapper}>*/}
-            {/*            <img src={userData.image ?? "/images/logo.png"}/>*/}
-            {/*        </div>*/}
-            {/*        <div className={cls.userData}>*/}
-            {/*            <span className={cls.title}>Role: {userData.role.toLocaleLowerCase()}</span>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
-            {/*<div className={cls.profileRight}>*/}
-            {/*    <div className={cls.userData}>*/}
-            {/*        <span className={cls.title}>Full Name:</span>*/}
-            {/*        <span className={cls.value}>{userData.name} {userData.surname}</span>*/}
-            {/*    </div>*/}
-            {/*    <hr/>*/}
-            {/*    <div className={cls.userData}>*/}
-            {/*        <span className={cls.title}>Birthdate:</span>*/}
-            {/*        <span className={cls.value}>{userData.birthday || "Unspecified"}</span>*/}
-            {/*    </div>*/}
-            {/*    <hr/>*/}
-            {/*    <div className={cls.userData}>*/}
-            {/*        <span className={cls.title}>Email:</span>*/}
-            {/*        <span className={cls.value}>{userData.email || "Unspecified"}</span>*/}
-            {/*    </div>*/}
-            {/*    <hr/>*/}
-            {/*    <div className={cls.userData}>*/}
-            {/*        <span className={cls.title}>Phone Number:</span>*/}
-            {/*        <span className={cls.value}>{userData.phone_number || "Unspecified"}</span>*/}
-            {/*    </div>*/}
-            {/*    <hr/>*/}
-            {/*    <div className={cls.userData}>*/}
-            {/*        <span className={cls.title}>Address:</span>*/}
-            {/*        <span className={cls.value}>{userData.business_address || "Unspecified"}</span>*/}
-            {/*    </div>*/}
-            {/*    <hr/>*/}
-            {/*    <div className={cls.userData}>*/}
-            {/*        <span className={cls.title}>Phone Number:</span>*/}
-            {/*        <span className={cls.value}>{userData.phone_number || "Unspecified"}</span>*/}
-            {/*    </div>*/}
-            {/*    <hr/>*/}
-            {/*</div>*/}
         </div>
     </>)
 
