@@ -1,115 +1,71 @@
 @import "../../styles/variables";
 
+
 .block {
     width: 100%;
     height: auto;
     background-color: white;
+    padding: 0 20px;
+
     & * {
         //border: 1px solid black;
     }
 }
 
-.items {
+.title{
     width: 100%;
+    height: auto;
+    //border: 1px solid red;
+    //padding-left: 5%;
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding: 0 20px;
+
+    & > span{
+        font-size: 22px;
+        color: $borderColor;
+    }
+}
+
+.name{
+    margin-left: 19px;
+    color: #656565;
+    font-size: 22px;
+}
+
+
+.infoItem{
+    ///  width: 80%;
+    height: auto;
+    padding: 5px 0 0  0;
+    display: flex;
+    flex-direction: row;
+    //  gap: 10px;
+    font-size: 22px;
+    //color: gray;
+
+    & > span {
+        color: $borderColor;
+    }
+}
+
+.infoItemDownload {
+    flex-direction: column;
+}
+.itemBorder {
+
+    width: 100%;
+    height: auto;
+    font-size: 24px;
+    font-weight: 600;
+    border-bottom: 0.1px solid gray;
+    padding: 20px 0;
+    & > a {
+        color: $borderColor;
+    }
 
     @media screen and (max-width: 1000px) {
-        padding: 20px;
-    }
-}
-
-.driver {
-    width: 100%;
-    height: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    /// border-bottom: 0.1px solid gray;
-    padding-bottom: 5px;
-}
-
-.driverInfoLabel {
-    width: 100%;
-    height: 20%;
-    margin-bottom: 10px;
-
-    & > h1 {
-        margin: 0;
-        padding: 0;
-    }
-}
-.companyInfoLabel {
-    width: 100%;
-    height: 20%;
-    color: grey;
-    & > h1 {
-        margin: 0;
-        padding: 0;
-    }
-}
-
-.driverInfo {
-    width: 100%;
-    height: 80%;
-    display: flex;
-    gap: 30px;
-}
-
-.driverPicture {
-    width: 20%;
-    height: 100%;
-
-    @media screen and (max-width: 1200px) {
-        width: 35%;
-    }
-
-    @media screen and (max-width: 1024px) {
-        width: 50%;
-    }
-
-    & > .item {
-        width: 100%;
-        height: 100%;
-
-        & > img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            object-position: left;
-        }
-    }
-}
-
-.driverPersonal {
-    //width: 30%;
-    //display: grid;
-    //grid-template-columns: repeat(1, 1fr);
-    align-items: start;
-}
-
-.driverActions {
-    width: 50%;
-    height: 100%;
-    ///   border: 1px solid black;
-}
-
-.documents {
-    width: 100%;
-    height: 50%;
-    border-top: 0.1px solid gray;
-    //display: flex;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 30px;
-    @media screen and (max-width: 1200px) {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    @media screen and (max-width: 850px) {
-        grid-template-columns: repeat(1, 1fr);
+        font-size: 18px
     }
 }
 
@@ -132,24 +88,164 @@
         font-size: 18px
     }
 }
-
-.itemBorder {
-
+.documents {
     width: 100%;
-    height: auto;
-    font-size: 20px;
-    font-weight: 600;
-    border-bottom: 0.1px solid $borderColor;
-    padding: 20px 0;
-
-    & > a {
-        color: $borderColor;
+    height: 50%;
+    border-top: 0.1px solid gray;
+    //display: flex;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 30px;
+    @media screen and (max-width: 1200px) {
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    @media screen and (max-width: 1000px) {
-        font-size: 18px
+    @media screen and (max-width: 850px) {
+        grid-template-columns: repeat(1, 1fr);
     }
 }
-.selected{
-    border:1px solid red;
-}
+
+//
+//.items {
+//    width: 100%;
+//    display: flex;
+//    flex-direction: column;
+//    gap: 20px;
+//    padding: 0 20px;
+//
+//    @media screen and (max-width: 1000px) {
+//        padding: 20px;
+//    }
+//}
+//
+//.driver {
+//    width: 100%;
+//    height: 50%;
+//    display: flex;
+//    flex-direction: column;
+//    justify-content: flex-start;
+//    align-items: flex-start;
+//    /// border-bottom: 0.1px solid gray;
+//    padding-bottom: 5px;
+//}
+//
+//.driverInfoLabel {
+//    width: 100%;
+//    height: 20%;
+//    margin-bottom: 10px;
+//
+//    & > h1 {
+//        margin: 0;
+//        padding: 0;
+//    }
+//}
+//.companyInfoLabel {
+//    width: 100%;
+//    height: 20%;
+//    color: grey;
+//    & > h1 {
+//        margin: 0;
+//        padding: 0;
+//    }
+//}
+//
+//.driverInfo {
+//    width: 100%;
+//    height: 80%;
+//    display: flex;
+//    gap: 30px;
+//}
+//
+//.driverPicture {
+//    width: 20%;
+//    height: 100%;
+//
+//    @media screen and (max-width: 1200px) {
+//        width: 35%;
+//    }
+//
+//    @media screen and (max-width: 1024px) {
+//        width: 50%;
+//    }
+//
+//    & > .item {
+//        width: 100%;
+//        height: 100%;
+//
+//        & > img {
+//            width: 100%;
+//            height: 100%;
+//            object-fit: contain;
+//            object-position: left;
+//        }
+//    }
+//}
+//
+//.driverPersonal {
+//    //width: 30%;
+//    //display: grid;
+//    //grid-template-columns: repeat(1, 1fr);
+//    align-items: start;
+//}
+//
+//.driverActions {
+//    width: 50%;
+//    height: 100%;
+//    ///   border: 1px solid black;
+//}
+//
+//.documents {
+//    width: 100%;
+//    height: 50%;
+//    border-top: 0.1px solid gray;
+//    //display: flex;
+//    grid-template-columns: repeat(3, 1fr);
+//    grid-gap: 30px;
+//    @media screen and (max-width: 1200px) {
+//        grid-template-columns: repeat(2, 1fr);
+//    }
+//
+//    @media screen and (max-width: 850px) {
+//        grid-template-columns: repeat(1, 1fr);
+//    }
+//}
+//
+//.item {
+//    width: 100%;
+//    height: auto;
+//    //padding: 5px;
+//    font-size: 20px;
+//    font-weight: 400;
+//    span  {
+//        width: 25px;
+//        display: inline-block;
+//    }
+//    color: grey;
+//    & > a {
+//        color: $borderColor;
+//    }
+//
+//    @media screen and (max-width: 1000px) {
+//        font-size: 18px
+//    }
+//}
+//
+//.itemBorder {
+//
+//    width: 100%;
+//    height: auto;
+//    font-size: 20px;
+//    font-weight: 600;
+//    border-bottom: 0.1px solid $borderColor;
+//    padding: 20px 0;
+//
+//    & > a {
+//        color: $borderColor;
+//    }
+//
+//    @media screen and (max-width: 1000px) {
+//        font-size: 18px
+//    }
+//}
+//.selected{
+//    border:1px solid red;
+//}
