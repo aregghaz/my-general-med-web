@@ -13,6 +13,8 @@ import { actionsNotify } from "../../../store/not";
 import { getNotify } from "../../../store/selectors";
 import InfoBlockTrips from "../../../components/info-block-trips/info-block";
 import InfoBlockPatient from "../../../components/info-block-patient/info-block";
+import {useNavigate} from "@reach/router";
+
 
 interface INotificationList {
     path: string;
@@ -20,6 +22,8 @@ interface INotificationList {
 
 
 const NotificationList: React.FC<INotificationList> = () => {
+
+    const navigate = useNavigate()
 
     const tableRef = useRef(null);
 
@@ -74,10 +78,15 @@ const NotificationList: React.FC<INotificationList> = () => {
         setInfoData(notifData.data)
         setField(notifData.field);
         setVendor(notifData.companyName);
-
         setModel(notifData.model);
         setLoading(true);
     };
+
+    useEffect(() => {
+        if (info) {
+            navigate(info.id ? `client/${info.id}` : "")
+        }
+    }, [info])
 
     const tabs = [
         {
@@ -152,7 +161,8 @@ const NotificationList: React.FC<INotificationList> = () => {
 
                 {model === "client" && <InfoBlockPatient data={info} is_admin={true} />}
 
-                {model === "trips" && <InfoBlockTrips data={info} is_admin={true} />}
+
+                {model === "trip" && <div>Hello {JSON.stringify(data)}</div>}
             </div>}
             <div className={!model ? s.fullWidth : s.infoTable}>
                 {data && <List

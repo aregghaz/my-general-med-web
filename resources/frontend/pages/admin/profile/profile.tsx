@@ -38,8 +38,6 @@ const VendorProfile: FC<VendorProfileProps> = ({}): React.ReactElement => {
         ] : [])
     }, [userData])
 
-    console.log(data, "dataaaaaaa")
-
     const [edit, setEdit] = useState<boolean>(false)
 
     return userData && (<>
@@ -59,13 +57,18 @@ const VendorProfile: FC<VendorProfileProps> = ({}): React.ReactElement => {
                                     <ProfileItem
                                         key={index}
                                         edit={edit}
-                                        editHandler={(newData:string) => {
+                                        onFieldEdit={(e:any) => {
+                                            console.log(data.filter(value => value.name !== item.name))
                                             setData([
-                                                ...data.filter(value => value.name !== item.name),
-                                                {
-                                                    name: name,
-                                                    data: newData
-                                                }
+                                                ...data.map(value => {
+                                                    if (value.name === item.name) {
+                                                        return {
+                                                            name: item.name,
+                                                            data: e.target.value
+                                                        }
+                                                    }
+                                                    return value
+                                                }),
                                             ])
                                         }}
                                         name={item.name}
@@ -92,9 +95,15 @@ const VendorProfile: FC<VendorProfileProps> = ({}): React.ReactElement => {
                     {/*    <span className={cls.value}>{userData.business_address || "Unspecified"}</span>*/}
                     {/*</div>*/}
                     <div className={cls.buttonsBox}>
-                        <button onClick={() => {
-                            setEdit(!edit)
-                        }}>Edit Profile</button>
+                        {
+                            edit ? <><button onClick={() => {
+                                setEdit(false)
+                                }}>Save</button></>
+                                :
+                                <button onClick={() => {
+                                    setEdit(true)
+                                }}>Edit Profile</button>
+                        }
                     </div>
                 </div>
 

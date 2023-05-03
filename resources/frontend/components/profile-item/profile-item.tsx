@@ -5,22 +5,22 @@ interface ProfileItemProps {
     name: string,
     data: string,
     edit: boolean,
-    editHandler: Function
+    onFieldEdit: Function,
 }
 
 const ProfileItem:FC<ProfileItemProps> = ({
     name,
     data,
     edit,
-    editHandler = () => {},
+    onFieldEdit,
 }) => {
     return (
         <div className={cls.userData}>
             <span className={cls.title}>{name}:</span>
                 {
                     edit ?
-                        <input className={cls.editInput} defaultValue={data} onChange={e => {
-                            editHandler(e.target.value)
+                        <input className={cls.editInput} value={data} onChange={(e) => {
+                            onFieldEdit(e)
                         }}/>
                         :
                         <span className={cls.value}>{data}</span>

@@ -38,6 +38,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
             );
             setData(data.data);
             setTabs(data.roles);
+            console.log(tabIdSelected)
 
         })();
         return () => {
@@ -55,7 +56,13 @@ const VendorUsers: React.FC<Beneficiary> = () => {
         "action"
     ];
 
-    const handlerAddItem = () => navigate(`/users/${typeName}/create`);
+    const handlerAddItem = () => {
+        if (tabIdSelected === 3) {
+            navigate(`/users/driver/create`)
+        } else if (tabIdSelected === 4) {
+            navigate("/users/operator/create")
+        }
+    };
 
     const handlerCloseModal = () => {
         setIsModalOpen(false);

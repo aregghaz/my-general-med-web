@@ -59,6 +59,7 @@ const App = (): JSX.Element => (
                 <VendorUsers path="/users" />
                 <VendorDriverEdit path="/users/driver/:id" />
                 <VendorDriverCreate path="/users/driver/create" />
+                <OperatorCreate path="users/operator/create" />
                 <Cars path="/cars" />
                 <CarsCreate path="/cars/create" />
                 <CarsEdit path="/cars/:id" />
