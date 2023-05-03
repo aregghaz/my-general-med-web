@@ -18,14 +18,17 @@ const PopupModal: FC<IProps> = ({ isOpen, agreeWith, notAgreeWith }) => {
                 isOpen &&
                 <div className={cls.popup_container}>
                     <div className={cls.popup_body}>
-                        <div>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium earum nesciunt
-                            provident
-                            quaerat
-                            voluptates! Adipisci commodi iste molestiae, perferendis quidem quo rerum similique suscipit
-                            ut
-                            vero.
-                            Aliquid consequatur eum omnis.
+                        <div className={cls.infoBox}>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium earum nesciunt
+                                provident
+                                quaerat
+                                voluptates! Adipisci commodi iste molestiae, perferendis quidem quo rerum similique suscipit
+                                ut
+                                vero.
+                                Aliquid consequatur eum omnis.
+                            </p>
+
                         </div>
                         <div className={cls.popup_footer}>
                             <button
@@ -40,7 +43,11 @@ const PopupModal: FC<IProps> = ({ isOpen, agreeWith, notAgreeWith }) => {
                             >
                                 No
                             </button>
+
                         </div>
+                        <a href="" target={"_blank"}>
+                            Terms and conditions
+                        </a>
                     </div>
                 </div>
             }
