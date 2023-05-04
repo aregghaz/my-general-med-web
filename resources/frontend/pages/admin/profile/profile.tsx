@@ -3,6 +3,7 @@ import {useSelector} from "react-redux";
 import {getUserData} from "../../../store/selectors";
 import cls from "./profile.module.scss"
 import ProfileItem from "../../../components/profile-item/profile-item";
+import {Input} from "postcss";
 
 interface VendorProfileProps {
     path?: string,
@@ -35,6 +36,8 @@ const VendorProfile: FC<VendorProfileProps> = ({}): React.ReactElement => {
                 name: "Address",
                 data: userData.business_address,
             },
+
+
         ] : [])
     }, [userData])
 
