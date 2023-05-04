@@ -84,9 +84,12 @@ const NotificationList: React.FC<INotificationList> = () => {
 
     useEffect(() => {
         if (info) {
-            navigate(info.id ? `client/${info.id}` : "")
+            // navigate(info.id ? `client/${info.id}` : "")
+            if (info.id && model === "trip") {
+                window.open(`client/${info.id}`, "_blank")
+            }
         }
-    }, [info])
+    }, [model, info])
 
     const tabs = [
         {
@@ -146,7 +149,7 @@ const NotificationList: React.FC<INotificationList> = () => {
 
             </div>
             {/*{errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}*/}
-            {model && <div className={s.infoSection}>
+            {model && model !== "trip" && <div className={s.infoSection}>
                 <div style={{
                     display: "flex",
                     flexDirection: "row",
@@ -162,9 +165,9 @@ const NotificationList: React.FC<INotificationList> = () => {
                 {model === "client" && <InfoBlockPatient data={info} is_admin={true} />}
 
 
-                {model === "trip" && <div>Hello {JSON.stringify(data)}</div>}
+                {/*{model === "trip" && <div>Hello {JSON.stringify(data)}</div>}*/}
             </div>}
-            <div className={!model ? s.fullWidth : s.infoTable}>
+            <div className={model === "trip" ? s.fullWidth : !model ? s.fullWidth : s.infoTable}>
                 {data && <List
                     data={data}
                     titles={titles}
