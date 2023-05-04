@@ -505,7 +505,7 @@ class ClientsController extends Controller
         ///  $client->price = (int)$requestData->price + (int)$requestData->duration_id->value + (int)$requestData->artificial_id->value;
         $client->request_type = $requestData->request_type->id;
         $client->operator_id = $userId;
-        $client->stops = $requestData->count;
+        $client->stops = count($requestData->stops);
         $client->member_uniqie_identifer = $requestData->member_uniqie_identifer;
         if (isset($requestData->birthday)) {
             $client->birthday = $requestData->birthday;
