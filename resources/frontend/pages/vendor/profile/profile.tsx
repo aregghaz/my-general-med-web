@@ -3,6 +3,8 @@ import {useSelector} from "react-redux";
 import {getUserData} from "../../../store/selectors";
 import cls from "./profile.module.scss"
 import ProfileItem from "../../../components/profile-item/profile-item";
+import Password from "../../../components/password/password";
+import Modal from "react-modal";
 
 interface VendorProfileProps {
     path?: string,
@@ -13,6 +15,11 @@ const VendorProfile: FC<VendorProfileProps> = ({}): React.ReactElement => {
     const userData = useSelector(getUserData).user
 
     const [data, setData] = useState<Array<any>>([])
+    const [password, setPassword] = useState({
+        currentPassword: "",
+        newPassword: "",
+        newPasswordAgain: "",
+    })
 
     useEffect(() => {
         setData(userData ? [
@@ -40,6 +47,45 @@ const VendorProfile: FC<VendorProfileProps> = ({}): React.ReactElement => {
     }, [userData])
 
     const [edit, setEdit] = useState<boolean>(false)
+    const [change, setChange] = useState<boolean>(false)
+    const [error, setError] = useState<any>({})
+
+
+
+    const customStyles: ReactModal.Styles = {
+        content: {
+            position: "fixed",
+            border: "none",
+            overflowY: "unset",
+            outline: "none",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50% , -50%)",
+        },
+        overlay: {
+            zIndex: 500,
+            background: "rgba(0, 0, 0, 0.35)",
+            backdropFilter: "blur(5px)"
+        }
+    };
+
+
+    const handlePasswordInputChange = (e:any) => {
+        setPassword({
+            ...password,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const handlePasswordChange = () => {
+        setError({})
+        if (password.newPassword !== password.newPasswordAgain) {
+            setError({
+                passwordNotMatch: true
+            })
+        }
+    }
+
 
     return userData && (<>
         <div className={cls.profileWrapper}>
@@ -78,15 +124,79 @@ const VendorProfile: FC<VendorProfileProps> = ({}): React.ReactElement => {
                             })
                         }</>
                     }
+
+                    {
+                        change && <>
+                            <Modal className={cls.modalBody}
+                                   isOpen={change}
+                                   style={customStyles}
+                                   onRequestClose={() => {
+                                       setChange(false)
+                                   }}>
+                                <div className={cls.modalTop}>
+                                    <div className={cls.closeButton} onClick={() => {
+                                        setChange(false)
+                                    }
+                                    }>
+                                        <i className="cancelicon-"/>
+                                    </div>
+
+
+                                </div>
+                                <div className={cls.passwordsContainer}>
+                                    <Password
+                                        name={"currentPassword"}
+                                        value={password.currentPassword}
+                                        onChange={handlePasswordInputChange}
+                                        label={""}
+                                        placeholder={"Current password"}
+                                        autoComplete={"new-password"}
+                                    />
+                                    <Password
+                                        name={"newPassword"}
+                                        value={password.newPassword}
+                                        onChange={handlePasswordInputChange}
+                                        label={""}
+                                        placeholder={"New password"}
+                                        autoComplete={"new-password"}
+                                    />
+                                    <Password
+                                        name={"newPasswordAgain"}
+                                        value={password.newPasswordAgain}
+                                        onChange={handlePasswordInputChange}
+                                        label={""}
+                                        placeholder={"New password again"}
+                                        autoComplete={"new-password"}
+                                    />
+                                    {
+                                        error.passwordNotMatch && <>
+                                            <p style={{color: "red"}} className={cls.text}>Password not matching</p>
+                                        </>
+                                    }
+                                    <button onClick={handlePasswordChange} className={cls.changePasswordEnd}>change password</button>
+                                </div>
+                            </Modal>
+                        </>
+                    }
+
                     <div className={cls.buttonsBox}>
                         {
-                            edit ? <><button onClick={() => {
-                                    setEdit(false)
-                                }}>Save</button></>
-                                :
-                                <button onClick={() => {
-                                    setEdit(true)
-                                }}>Edit Profile</button>
+                                edit ? <>
+                                        <button onClick={() => {
+                                            setEdit(false)
+                                        }}>Save</button>
+                                        <button className={cls.changePassword} onClick={() => {
+                                            setChange(true)
+
+                                        }
+                                        }>
+                                            Change Password
+                                        </button>
+                                    </>
+                                    :
+                                    <button onClick={() => {
+                                        setEdit(true)
+                                    }}>Edit Profile</button>
                         }
                     </div>
                 </div>
@@ -97,8 +207,6 @@ const VendorProfile: FC<VendorProfileProps> = ({}): React.ReactElement => {
     </>)
 
 }
-
-
 
 // userData.address
 // userData.birthday

@@ -1,6 +1,7 @@
 import React, {FC} from "react"
 import cls from "./multi-radio.module.scss"
 import {IOption} from "../select/select";
+import {Translation, useTranslation} from "react-i18next";
 
 interface multiRadioProps {
     options: {id: number, value: string, label: string}[],
@@ -17,6 +18,7 @@ const multiRadio:FC<multiRadioProps> = ({
     onChange= () => {},
     selected
 }) => {
+    const {t} = useTranslation()
     return (
         <div className={cls.radioWrapper}>
             {
@@ -27,7 +29,7 @@ const multiRadio:FC<multiRadioProps> = ({
                                 <input defaultChecked={JSON.stringify(item) === JSON.stringify(selected)} type={"radio"} name={name} id={id + index} onChange={() => {
                                     onChange(item)
                                 }}/>
-                                <label htmlFor={id + index}>{item.value}</label>
+                                <label htmlFor={id + index}>{t(item.value)}</label>
                             </div>
                         </label>
 
