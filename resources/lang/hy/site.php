@@ -40,6 +40,7 @@ return [
     'escortType' => 'Escorts',
     'type_of_trip' => 'Type Of Trip',
     'member_uniqie_identifer' => 'Member Unique Identifier',
+    'member_unique_identifier' => 'Member Unique Identifier',
     'birthday' => 'Date Of Birth',
     'weight' => 'Weight',
     'height' => 'Height',
@@ -100,6 +101,8 @@ return [
     'perMile' => 'Per Mile',
     'base' => 'Base',
     'stairchair' => 'Stair Chairs',
+    'trip_type' => 'Trip ride type',
+    'clientType' => 'Trip type',
 
 
 
@@ -121,6 +124,7 @@ return [
     'carMake' => 'Car make',
     'carInspection' => 'Car inspection',
     'carInsurance' => 'Car insurance',
+    'insurance' => 'Insurance',
     'carLiability' => 'Car liability',
     'carRegistration' => 'Car registration',
 

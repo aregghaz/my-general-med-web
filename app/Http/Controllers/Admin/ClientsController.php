@@ -372,7 +372,7 @@ class ClientsController extends Controller
         ]);
 
 
-        for ($i = 1; $i <= $requestData->stops; $i++) {
+        for ($i = 1; $i <= $requestData->count; $i++) {
             $address = new Address();
             $address->client_id = $client->id;
             $stepAddress = "step_$i";

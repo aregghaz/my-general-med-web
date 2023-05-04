@@ -114,7 +114,10 @@ return [
     'perMile' => 'Per Mile',
     'base' => 'Base',
     'stairchairs' => 'Stair Chairs',
-
+    'trip_type' => 'Trip ride type',
+    'clientType' => 'Trip type',
+    'member_unique_identifier' => 'Member Unique Identifier',
+    'insurance' => 'Insurance',
     "welcome_message_part_one" => "Բարի գալուստ",
     "welcome_message_part_two" => "Ընտանիքում բռնության դեպքերի կենտրոնացված հաշվառման տեղեկատվական համակարգ",
     'news-item' => 'Նորություններ',

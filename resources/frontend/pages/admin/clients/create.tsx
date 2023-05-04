@@ -17,14 +17,13 @@ import Autocomplete from "../../../components/autocomplate/autocomplete";
 import "react-calendar/dist/Calendar.css";
 import Input from "../../../components/input/input";
 import timestampToDate from "../../../utils/timestampToDate";
-import Checkbox from "../../../components/checkbox/checkbox";
-import CurrencyInput from "react-currency-input-field";
 import useOnClickOutside from "../../../hooks/use-on-click-outside"
 import InputCurrency from "../../../components/inputCurrency/inputcurrency";
 import getFieldLabel from "../../../utils/getFieldLabel";
 interface IClientCreate {
     path: string;
 }
+
 
 
 const ClientCreate: React.FC<IClientCreate> = () => {
@@ -310,7 +309,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
                                     // error={errors['date_of_service']}
                                     // type={"string"}
                                     // label={t("date of service")}
-                                    label={getFieldLabel(t, "date of service", "date_of_service", requiredFields)}
+                                    label={getFieldLabel(t, "date_of_service", "date_of_service", requiredFields)}
                                     error={errors["date_of_service"]}
                                     setFieldValue={setFieldValue} />
                             </div>}
