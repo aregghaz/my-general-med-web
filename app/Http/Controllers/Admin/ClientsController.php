@@ -372,7 +372,7 @@ class ClientsController extends Controller
         ]);
 
 
-        for ($i = 1; $i <= $requestData->count; $i++) {
+        for ($i = 1; $i <= $requestData->stops; $i++) {
             $address = new Address();
             $address->client_id = $client->id;
             $stepAddress = "step_$i";
@@ -443,6 +443,7 @@ class ClientsController extends Controller
         $artificial = Artificial::get();
         $waitDuration = WaitDuration::get();
         $vendors = User::where('role_id', 2)->get();
+        $stairchair = Stairchair::get();
         $client = Clients::with([
             'waiteDuration',
             'artificial',
@@ -463,8 +464,9 @@ class ClientsController extends Controller
             ///  "type_of_trip" => new StatusCollection($typeOfTrip),
             'status' => new StatusCollection($clientStatus),
             "vendors" => new StatusCollection($vendors),
-            'artificial_id' => new SelectAndPriceCollection($artificial),
-            'duration_id' => new SelectAndPriceCollection($waitDuration),
+            "stairchair" => new StatusCollection($stairchair),
+            'artificial_id' => new StatusCollection($artificial),
+            'duration_id' => new StatusCollection($waitDuration),
         ], 200);
     }
 
@@ -543,8 +545,8 @@ class ClientsController extends Controller
             $this->updateAll($requestData->member_uniqie_identifer, "/uploads/clients/$requestData->member_uniqie_identifer/$file_name", date('Y-m-d', strtotime($requestData->insurance_exp)));
         }
         $client->update();
-        /// Address::whereIn('client_id', $id)->delete();
-        for ($i = 1; $i <= $requestData->count; $i++) {
+        /// Address::where('client_id', $id)->delete();
+        for ($i = 1; $i <= count($requestData->stops); $i++) {
             $stepAddress = "step_$i";
             $stepComment = "comment_$i";
             $stepPhone = "phone_$i";

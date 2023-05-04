@@ -105,7 +105,7 @@ const FormikHandler: React.FC<IFormikHandler> = (
                 // TODO:  type in function handlerEditorChange
                 <RichText
                     handleEditorChange={(content, editor) => {
-                        console.log(content, editor);
+
                     }}
                     initialValue={item.name}
                 />

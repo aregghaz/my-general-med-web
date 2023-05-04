@@ -15,7 +15,6 @@ import Home from "./pages/vendor/home/home";
 import NotFound from "./pages/vendor/not-found/not-found";
 import LoginWrapper from "./pages/admin/login/login-wrapper";
 
-
 // Admin Pages
 import Dashboard from "./pages/admin/dashbord/dashboard";
 import Users from "./pages/admin/users/list";

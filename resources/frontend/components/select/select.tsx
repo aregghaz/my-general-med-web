@@ -139,7 +139,7 @@ const Select: React.FC<ISelect> = (
 
             {label && <label style={{
                 color: error && !value ? "crimson" : value ? "#194b76" : "#757575",
-            }} htmlFor={name}>{label}</label>}
+            }} htmlFor={name}>{t(label)}</label>}
             <div className={s.wrapper}>
                 <div className={s.buttonsSelect}>
                     {isMulti && <><Button
@@ -166,7 +166,7 @@ const Select: React.FC<ISelect> = (
                         isMulti={isMulti}
                         styles={selectStylesFunction(styles, error)}
                         className={s.select}
-                        placeholder={placeholder}
+                        placeholder={t(placeholder)}
                         components={isCheckbox ? {
                                 Option,
                                 IndicatorSeparator: () => null

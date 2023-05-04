@@ -122,7 +122,7 @@ const CarsEdit: React.FC<IUsersEditItem> = ({ id }) => {
                       setFieldValue,
                       errors
                   }) => {
-                    console.log(values, "values in cars edit");
+
                     return (
                         <>
                             <form className={s.form}>

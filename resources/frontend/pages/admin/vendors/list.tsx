@@ -65,7 +65,7 @@ const Vendors: React.FC<IVendors> = () => {
     useEffect(() => {
 
         (async () => {
-            console.log(loading, "loading");
+
             if (loading) {
                 await getVendorData(1);
             }

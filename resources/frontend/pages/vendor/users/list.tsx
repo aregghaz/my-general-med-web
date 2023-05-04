@@ -38,8 +38,6 @@ const VendorUsers: React.FC<Beneficiary> = () => {
             );
             setData(data.data);
             setTabs(data.roles);
-            console.log(tabIdSelected)
-
         })();
         return () => {
             homeAPI.cancelRequest();

@@ -71,11 +71,6 @@ const Status: React.FC<Beneficiary> = () => {
             name: "request_type",
             count: requestType,
             selected: false
-        }, {
-            id: 3,
-            name: "los",
-            count: los,
-            selected: false
         },
         {
             id: 4,
@@ -98,14 +93,19 @@ const Status: React.FC<Beneficiary> = () => {
             count: waitDuration,
             selected: false
         }, {
-            id: 8,
-            name: "services",
-            count: servicesCount,
-            selected: false
-        },{
             id: 9,
             name: "stairchair",
             count: stairchairCount,
+            selected: false
+        },{
+            id: 3,
+            name: "los",
+            count: los,
+            selected: false
+        }, {
+            id: 8,
+            name: "Services",
+            count: servicesCount,
             selected: false
         }
     ];

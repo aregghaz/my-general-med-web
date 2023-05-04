@@ -76,7 +76,7 @@ const Show: React.FC<IShow> = ({ id }) => {
             var destination = "";
             var waypoint = [];
             for (let i = 0; i < homeData.client.stops; i++) {
-                console.log(address[i], "address[i]");
+
                 if (i === 0) {
                     origin = address[i]["address"];
                 } else if (i === homeData.client.stops - 1) {
@@ -102,7 +102,7 @@ const Show: React.FC<IShow> = ({ id }) => {
 
     const shopMapHandler = async () => {
         if (!showMap) {
-            console.log(steps.length, "steps.length");
+
             if (steps.length === 0) {
                 setSteps([]);
                 const results = await getMapResponse(mapData.origin, mapData.destination, mapData.waypoint);
@@ -160,8 +160,7 @@ const Show: React.FC<IShow> = ({ id }) => {
 
     };
     const updateTimeHandler = async (step: number, field: string) => {
-        console.log(step, field, dateValue, "step");
-        console.log(dateValue, "step");
+
     };
     const onChange = () => {
 

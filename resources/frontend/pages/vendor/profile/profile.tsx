@@ -59,7 +59,6 @@ const VendorProfile: FC<VendorProfileProps> = ({}): React.ReactElement => {
                                         key={index}
                                         edit={edit}
                                         onFieldEdit={(e:any) => {
-                                            console.log(data.filter(value => value.name !== item.name))
                                             setData([
                                                 ...data.map(value => {
                                                     if (value.name === item.name) {

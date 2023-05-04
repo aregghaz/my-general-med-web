@@ -99,6 +99,7 @@ return [
     'tripNot' => 'Trip',
     'perMile' => 'Per Mile',
     'base' => 'Base',
+    'stairchair' => 'Stair Chairs',
 
 
 

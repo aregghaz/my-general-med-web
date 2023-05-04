@@ -107,7 +107,7 @@ const Home: React.FC<IHome> = () => {
     const [titles, setTitles] = useState<string[]>([]);
 
     const openSearch = () => {
-        console.log(open, "open");
+
         if (open) {
             setQuery("");
             setDate("");

@@ -33,7 +33,6 @@ const customTimePicker: FC<customTimePickerProps> = ({
                     value = "00";
                 }
                 setHours(value);
-                console.log(value,'value');
                 setFieldValue(name, `${value}:${time[1]}`);
                 break;
             case "minutes":

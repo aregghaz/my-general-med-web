@@ -40,7 +40,7 @@ const TableFildsEdit: React.FC<ITableFildsList> = ({ id }) => {
         (
             async () => {
                 const data = await AdminApi.getUserData(crudKey, id);
-                console.log(data);
+
                 setData(data);
 
             }
