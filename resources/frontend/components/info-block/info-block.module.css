@@ -199,6 +199,9 @@
   align-items: center;
   cursor: pointer;
   position: relative;
+  outline: none;
+  border: none;
+  background-color: transparent;
 }
 .updateButton > .updateButtonLabel {
   white-space: nowrap;
@@ -228,7 +231,7 @@
 .iconsWrapper {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 10px;
 }
 .iconsWrapper .mapIcon {
   fill: #3F7AAD;

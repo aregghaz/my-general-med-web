@@ -1,0 +1,26 @@
+.userData {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.userData .title {
+  font-size: 22px;
+}
+.userData .value {
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.61);
+}
+.userData .role {
+  font-size: 30px;
+}
+
+.editInput {
+  width: 90%;
+  border: none;
+  border-bottom: 1px solid #19347a;
+  outline: none;
+  padding: 10px 6px;
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+/*# sourceMappingURL=profile-item.module.css.map */

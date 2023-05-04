@@ -2,106 +2,55 @@
   width: 100%;
   height: auto;
   background-color: white;
+  padding: 0 20px;
 }
-.items {
+.title {
   width: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 0 20px;
+}
+.title > span {
+  font-size: 22px;
+  color: #19347a;
+}
+
+.name {
+  margin-left: 19px;
+  color: #656565;
+  font-size: 22px;
+}
+
+.infoItem {
+  height: auto;
+  padding: 5px 0 0 0;
+  display: flex;
+  flex-direction: row;
+  font-size: 22px;
+}
+.infoItem > span {
+  color: #19347a;
+}
+
+.infoItemDownload {
+  flex-direction: column;
+}
+
+.itemBorder {
+  width: 100%;
+  height: auto;
+  font-size: 24px;
+  font-weight: 600;
+  border-bottom: 0.1px solid gray;
+  padding: 20px 0;
+}
+.itemBorder > a {
+  color: #19347a;
 }
 @media screen and (max-width: 1000px) {
-  .items {
-    padding: 20px;
-  }
-}
-
-.driver {
-  width: 100%;
-  height: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding-bottom: 5px;
-}
-
-.driverInfoLabel {
-  width: 100%;
-  height: 20%;
-  margin-bottom: 10px;
-}
-.driverInfoLabel > h1 {
-  margin: 0;
-  padding: 0;
-}
-
-.companyInfoLabel {
-  width: 100%;
-  height: 20%;
-  color: grey;
-}
-.companyInfoLabel > h1 {
-  margin: 0;
-  padding: 0;
-}
-
-.driverInfo {
-  width: 100%;
-  height: 80%;
-  display: flex;
-  gap: 30px;
-}
-
-.driverPicture {
-  width: 20%;
-  height: 100%;
-}
-@media screen and (max-width: 1200px) {
-  .driverPicture {
-    width: 35%;
-  }
-}
-@media screen and (max-width: 1024px) {
-  .driverPicture {
-    width: 50%;
-  }
-}
-.driverPicture > .item {
-  width: 100%;
-  height: 100%;
-}
-.driverPicture > .item > img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: left;
-}
-
-.driverPersonal {
-  align-items: start;
-}
-
-.driverActions {
-  width: 50%;
-  height: 100%;
-}
-
-.documents {
-  width: 100%;
-  height: 50%;
-  border-top: 0.1px solid gray;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 30px;
-}
-@media screen and (max-width: 1200px) {
-  .documents {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media screen and (max-width: 850px) {
-  .documents {
-    grid-template-columns: repeat(1, 1fr);
+  .itemBorder {
+    font-size: 18px;
   }
 }
 
@@ -125,25 +74,22 @@
   }
 }
 
-.itemBorder {
+.documents {
   width: 100%;
-  height: auto;
-  font-size: 20px;
-  font-weight: 600;
-  border-bottom: 0.1px solid #19347a;
-  padding: 20px 0;
+  height: 50%;
+  border-top: 0.1px solid gray;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 30px;
 }
-.itemBorder > a {
-  color: #19347a;
-}
-@media screen and (max-width: 1000px) {
-  .itemBorder {
-    font-size: 18px;
+@media screen and (max-width: 1200px) {
+  .documents {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
-
-.selected {
-  border: 1px solid red;
+@media screen and (max-width: 850px) {
+  .documents {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 /*# sourceMappingURL=info-block.module.css.map */
