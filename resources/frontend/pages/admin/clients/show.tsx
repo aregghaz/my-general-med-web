@@ -12,8 +12,10 @@ import { AdminApi } from "../../../api/admin-api/admin-api";
 import { toast } from "react-toastify";
 import timestampToDate from "../../../utils/timestampToDate";
 import getMapResponse from "../../../utils/googleMap";
-import ShowMap from "-!svg-react-loader!../../../images/showMap.svg";
-import Update from "-!svg-react-loader!../../../images/update.svg";
+import ShowMap from "-!svg-react-loader!../../../images/showMap.svg"
+import Update from "-!svg-react-loader!../../../images/update.svg"
+import CustomTimePicker from "../../../components/custom-time-picker/customTimePicker";
+import Save from "-!svg-react-loader!../../../images/saveImg.svg";
 
 interface IShow {
     path: string;
@@ -46,7 +48,6 @@ const Show: React.FC<IShow> = ({ id }) => {
         drop_down: clientById.drop_down,
         additionalNote: clientById.additionalNote,
         operator_note: clientById.operator_note
-
     });
     useEffect(() => {
         (async () => {
@@ -59,7 +60,41 @@ const Show: React.FC<IShow> = ({ id }) => {
                 operator_note: homeData.client.operator_note
 
             });
-            setData(homeData.client);
+            var address = homeData.client.address;
+            var origin = "";
+            var destination = "";
+            var waypoint = [];
+            for (let i = 0; i < homeData.client.stops; i++) {
+                console.log(address[i], "address[i]");
+                if (i === 0) {
+                    origin = address[i]["address"];
+                } else if (i === homeData.client.stops - 1) {
+                    destination = address[i]["address"];
+                } else {
+                    waypoint.push({
+                        location:
+                            {
+                                placeId: address[i]["address_id"]
+                            }
+                    });
+                }
+            }
+            const results = await getMapResponse(origin, destination, waypoint);
+            setDirectionsResponse(results);
+            if (results.routes[0].legs.length > 0) {
+                var miles = 0;
+                results.routes[0].legs.map((item: any) => {
+                    miles += parseFloat(item.distance.text);
+                    setSteps((state) => {
+                        return [...state,
+                            ...item.steps
+
+                        ];
+                    });
+                });
+                setDistance(results.routes[0].legs[0].duration.text);
+            }
+            ///  setDistance(results.routes[0].legs[0].distance.text);
         })();
         return () => {
             homeAPI.cancelRequest();
@@ -85,45 +120,12 @@ const Show: React.FC<IShow> = ({ id }) => {
             toast(t("record_successfully_edited"), options);
         }
     };
-
-
-    const handlerShowMap = async () => {
-        var address = data.address;
-        var origin = "";
-        var destination = "";
-        var waypoint = [];
-        for (let i = 0; i < data.stops; i++) {
-            console.log(address[i], "address[i]");
-            if (i === 0) {
-                origin = address[i]["address"];
-            } else if (i === data.stops - 1) {
-                destination = address[i]["address"];
-            } else {
-                waypoint.push({
-                    location:
-                        {
-                            placeId: address[i]["address_id"]
-                        }
-                });
-            }
-        }
-        const results = await getMapResponse(origin, destination, waypoint);
-        setDirectionsResponse(results);
-        if (results.routes[0].legs.length > 0) {
-            var miles = 0;
-            results.routes[0].legs.map((item: any) => {
-                miles += parseFloat(item.distance.text);
-                setSteps((state) => {
-                    return [...state,
-                        ...item.steps
-
-                    ];
-                });
-            });
-            setDistance(results.routes[0].legs[0].duration.text);
-        }
-        setShowMap(!showMap);
+    const [dateValue, setFieldDateValue] = useState(null);
+    const updateTimeHandler = async (step: number, field: string) => {
+        console.log(step, field, dateValue, "step");
+        console.log(dateValue, "step");
     };
+    console.log(clientById)
     return clientById && <div className={cls.block} ref={blockRef}>
         <div className={cls.infoLeft}>
             <div className={cls.infoLeftName}>
@@ -132,14 +134,24 @@ const Show: React.FC<IShow> = ({ id }) => {
                 <span>{timestampToDate(clientById.date_of_service.toString())}</span>
                 |
                 <span><span>Height: {clientById.height}</span> <span>Weight: {clientById.weight}</span></span>
+                {/*<div className={cls.updateButton}>*/}
+                {/*    <Button type={"adminUpdate"} onClick={() => {setShowMap(!showMap)}}>*/}
+                {/*        {showMap ? "Hide Map" : "Show Map"}*/}
+                {/*    </Button>*/}
+                {/*</div>*/}
+                {/*<div className={cls.updateButton}>*/}
+                {/*    /!*<Button type={"adminUpdate"} onClick={handlerUpdate}>*!/*/}
+                {/*    /!*    Update*!/*/}
+                {/*    /!*</Button>*!/*/}
+                {/*</div>*/}
                 <div className={cls.iconsWrapper}>
-                    <button className={cls.updateButton} onClick={handlerShowMap}>
+                    <button className={cls.updateButton} onClick={() => {setShowMap(!showMap)}}>
                         <span className={cls.updateButtonLabel}>Show map</span>
-                        <ShowMap type={"adminUpdate"} className={cls.mapIcon} />
+                        <ShowMap type={"adminUpdate"} className={cls.mapIcon}/>
                     </button>
                     <button className={cls.updateButton} onClick={handlerUpdate}>
                         <span className={`${cls.updateButtonLabel} ${cls.updateLabelTop}`}>Update</span>
-                        <Update type={"adminUpdate"} className={cls.updateIcon} />
+                        <Update type={"adminUpdate"} className={cls.updateIcon}/>
                     </button>
                 </div>
             </div>
@@ -159,27 +171,56 @@ const Show: React.FC<IShow> = ({ id }) => {
                     return (<>
                         <div className={cls.class}>
                             <p className={cls.classLabel}>Step: {index + 1}</p>
-                            <div className={cls.items}>
-                                <div className={cls.item}>
-                                    <span className={cls.itemLabel}>Pickup Address:</span>
-                                    <span className={cls.itemValue}>{item.address}</span>
-                                </div>
-                                {index !== 0 && <div className={cls.item}>
-                                    <span className={cls.itemLabel}>Appointment time:</span>
-                                    <span className={cls.itemValue}>{item.drop_down}</span>
-                                </div>}
-                                {clientById.address.length !== index + 1 && <div className={cls.item}>
-                                    <span className={cls.itemLabel}>Pickup time:</span>
-                                    <span className={cls.itemValue}>{item.pick_up}</span>
-                                </div>}
-
-                                <div className={cls.item}>
-                                    <span className={cls.itemLabel}>Phone:</span>
-                                    <span className={cls.itemValue}>{item.address_phone}</span>
-                                </div>
-                                <div className={cls.item}>
-                                    <span className={cls.itemLabel}>Comment:</span>
-                                    <span className={cls.itemValue}>{item.address_comments}</span>
+                            <div className={cls.classInfo}>
+                                <div className={cls.classLeft}>
+                                    <div className={cls.items}>
+                                        {index !== 0 && <div className={cls.item} style={{ alignItems: "center" }}>
+                                            <span className={cls.itemLabel}>Appointment time:</span>
+                                            {/*<span className={cls.itemValue}>{item.drop_down}</span>*/}
+                                            <CustomTimePicker
+                                                className={cls.timepicker}
+                                                setFieldValue={setFieldDateValue}
+                                                value={item.drop_down}
+                                                name={`drop_down`}
+                                            />
+                                            <div className={cls.updateButton}>
+                                                <span className={cls.updateButtonLabel}>Save</span>
+                                                <button className={cls.adminUpdate}>
+                                                    <Save type={"adminUpdate"}
+                                                          onClick={() => updateTimeHandler(item.step, "drop_down")}
+                                                          className={cls.saveIcon} />
+                                                </button>
+                                            </div>
+                                        </div>}
+                                        {clientById.address.length !== index + 1 &&
+                                            <div className={cls.item} style={{ alignItems: "center" }}>
+                                                <span className={cls.itemLabel}>Pickup time:</span>
+                                                {/*<span className={cls.itemValue}>{item.pick_up}</span>*/}
+                                                <CustomTimePicker className={cls.timepicker}
+                                                                  setFieldValue={setFieldDateValue} value={item.pick_up}
+                                                                  name={`pick_up`} />
+                                                <div className={cls.updateButton}>
+                                                    <span className={cls.updateButtonLabel}>Save</span>
+                                                    <button className={cls.adminUpdate}>
+                                                        <Save type={"adminUpdate"}
+                                                              onClick={() => updateTimeHandler(item.step, "pick_up")}
+                                                              className={cls.saveIcon} />
+                                                    </button>
+                                                </div>
+                                            </div>}
+                                        <div className={cls.item}>
+                                            <span className={cls.itemLabel}>Pickup Address:</span>
+                                            <span className={cls.itemValue}>{item.address}</span>
+                                        </div>
+                                        <div className={cls.item}>
+                                            <span className={cls.itemLabel}>Phone:</span>
+                                            <span className={cls.itemValue}>{item.address_phone}</span>
+                                        </div>
+                                        <div className={cls.item}>
+                                            <span className={cls.itemLabel}>Comment:</span>
+                                            <span className={cls.itemValue}>{item.address_comments}</span>
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>
@@ -189,6 +230,42 @@ const Show: React.FC<IShow> = ({ id }) => {
                 })
             }
 
+
+            {/*<div className={cls.seperator}></div>*/}
+            {/*<div className={cls.class}>*/}
+            {/*    <p className={cls.classLabel}>Times:</p>*/}
+            {/*    <div className={cls.items}>*/}
+            {/*        <div className={cls.item} style={{ alignItems: "center" }}>*/}
+            {/*            <div className={cls.itemLabelBox}>*/}
+            {/*                <span className={cls.itemLabel}>Drop Down:</span>*/}
+            {/*            </div>*/}
+            {/*            <div className={cls.itemItemBox}>*/}
+            {/*                <TimePicker format={"h:m"} className={s.time} clockIcon={null} clearIcon={null}*/}
+            {/*                            onChange={(time: string) => setFieldValue((state: any) => {*/}
+            {/*                                return {*/}
+            {/*                                    ...state,*/}
+            {/*                                    "drop_down": time*/}
+            {/*                                };*/}
+            {/*                            })} name={"drop_down"} value={clientById.drop_down} />*/}
+            {/*            </div>*/}
+            {/*        </div>*/}
+            {/*        <div className={cls.item} style={{ alignItems: "center" }}>*/}
+            {/*            <div className={cls.itemLabelBox}>*/}
+            {/*                <span className={cls.itemLabel}>Pick Up:</span>*/}
+            {/*            </div>*/}
+            {/*            <div className={cls.itemItemBox}>*/}
+            {/*                <TimePicker format={"h:m"} className={s.time} clockIcon={null} clearIcon={null}*/}
+            {/*                            onChange={(time: string) => setFieldValue((state: any) => {*/}
+            {/*                                return {*/}
+            {/*                                    ...state,*/}
+            {/*                                    "pick_up": time*/}
+            {/*                                };*/}
+            {/*                            })} name={"pick_up"} value={clientById.pick_up} />*/}
+            {/*            </div>*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
+            {/*<div className={cls.infoLeftBottom}></div>*/}
         </div>
         <div className={cls.infoRight}>
             <div className={cls.infoRightBottom}>
@@ -256,18 +333,18 @@ const Show: React.FC<IShow> = ({ id }) => {
                         <GoogleMap
                             ///  center={center}
                             zoom={15}
-                            mapContainerStyle={{ width: "100%", height: "100%", minHeight: "500px" }}
+                            mapContainerStyle={{ width: "100%", height: "100%", minHeight: "500px"}}
                             options={{
                                 zoomControl: true,
                                 streetViewControl: false,
                                 mapTypeControl: false,
-                                fullscreenControl: false
+                                fullscreenControl: false,
                             }}
                             onLoad={map => setMap(map)}
                         >
                             {/* <Marker position={center} /> */}
                             {directionsResponse && (
-                                <DirectionsRenderer directions={directionsResponse} />
+                                <DirectionsRenderer directions={directionsResponse}/>
                             )}
                         </GoogleMap>
                     </div>
@@ -279,3 +356,226 @@ const Show: React.FC<IShow> = ({ id }) => {
 
 export default Show;
 
+// <div className={cls.updateButton}>
+//     <Button type={"adminUpdate"} onClick={handlerUpdate}>
+//         Update
+//     </Button>
+// </div>
+
+
+// <div className={cls.item}>
+//     <span className={cls.b_text}>{t("fullName")}: </span>
+//     {clientById.fullName}
+// </div>
+// <div className={cls.item}>
+//     <span className={cls.b_text}>{t("date_of_service")}: </span>
+//     {clientById.date_of_service}
+// </div>
+// <div className={cls.item}>
+//     <TimePicker format={"h:m"} className={s.time} clockIcon={null} clearIcon={null} onChange={(time:string) => setFieldValue((state:any) => {
+//         return {
+//             ...state,
+//             'pick_up':time
+//         }
+//     }) }  name={'pick_up'} value={clientById.pick_up} />
+// </div>
+//
+// <div className={cls.item}>
+//     <TimePicker format={"h:m"} className={s.time} clockIcon={null} clearIcon={null} onChange={(time:string) => setFieldValue((state:any) => {
+//         return {
+//             ...state,
+//             'drop_down':time
+//         }
+//     }) }  name={'drop_down'} value={clientById.drop_down} />
+// </div>
+//
+// <div className={cls.item}>
+//     <span className={cls.b_text}>{t("pick_up_address")}: </span>
+//     {clientById.origin ? clientById.origin : "Unspecified"}
+// </div>
+// <div className={cls.item}>
+//     <span className={cls.b_text}>{t("origin_comment")}: </span>
+//     {clientById.origin_comment ? clientById.origin_comment : "Unspecified"}
+// </div>
+// <div className={cls.item}>
+//     <span className={cls.b_text}>{t("origin_phone")}: </span>
+//     {clientById.origin_phone ? clientById.origin_phone : "Unspecified"}
+// </div>
+// <div className={cls.item}>
+//     <span className={cls.b_text}>{t("destination")}: </span>
+//     {clientById.destination ? clientById.destination : "Unspecified"}
+// </div>
+//
+// <div className={cls.item}>
+//     <span className={cls.b_text}>{t("destination_comments")}: </span>
+//     {clientById.destination_comment ? clientById.destination_id : "Unspecified"}
+// </div>
+// <div className={cls.item}>
+//     <span className={cls.b_text}>{t("destination_phone")}: </span>
+//     {clientById.destination_phone ? clientById.destination_phone : "Unspecified"}
+// </div>
+// <div className={cls.item}>
+//     <span className={cls.b_text}>{t("weight")}: </span>
+//     {clientById.weight ? clientById.weight : "Unspecified"}
+// </div>
+// <div className={cls.item}>
+//     <span className={cls.b_text}>{t("height")}: </span>
+//     {clientById.height ? clientById.height : "Unspecified"}
+// </div>
+// <div className={cls.item}>
+//     <Textarea
+//         name={'additionalNote'}
+//         value={values.additionalNote}
+//         placeholder={t('additionalNote')}
+//         onChange={(event:any) => {
+//             event.persist();
+//             return setFieldValue((state: any) => {
+//                 return {
+//                     ...state,
+//                     additionalNote: event.target.value
+//                 };
+//             });
+//         } }
+//         label={t('additionalNote')}
+//     />
+// </div>
+//
+// <div className={cls.item}>
+//     <Textarea
+//         name={'operator_note'}
+//         value={values.operator_note}
+//         placeholder={t('operator_note')}
+//         onChange={(event:any) => {
+//             event.persist();
+//             return setFieldValue((state: any) => {
+//                 return {
+//                     ...state,
+//                     operator_note: event.target.value
+//                 };
+//             });
+//         } }
+//         label={t('operator_note')}
+//     />
+// </div>
+//
+//
+// <div>
+//     <Button type={'adminUpdate'} onClick={handlerUpdate}>
+//         Update
+//     </Button>
+// </div>
+// {isLoaded && <div className={cls.selectDiv}>
+//
+//     <div className={cls.mapDiv}>
+//         <GoogleMap
+//             ///  center={center}
+//             zoom={15}
+//             mapContainerStyle={{ width: "100%", height: "100%" }}
+//             options={{
+//                 zoomControl: true,
+//                 streetViewControl: false,
+//                 mapTypeControl: false,
+//                 fullscreenControl: false
+//             }}
+//             onLoad={map => setMap(map)}
+//         >
+//             {/* <Marker position={center} /> */}
+//             {directionsResponse && (
+//                 <DirectionsRenderer directions={directionsResponse} />
+//             )}
+//
+//         </GoogleMap>
+//     </div>
+//     <div  className={cls.directionDiv}>
+//         {steps && steps.map((el: any) => {
+//             return (
+//                 <div
+//                     className={cls.directions}
+//                     dangerouslySetInnerHTML={{ __html: el.instructions }}
+//                 />
+//             );
+//         })}
+//     </div>
+// </div>}
+//
+
+
+// <div className={cls.itemsMap}>
+//     <div className={cls.mapBlock}>
+//         {isLoaded && <div className={cls.selectDiv}>
+//             <div className={cls.mapDiv}>
+//                 <GoogleMap
+//                     ///  center={center}
+//                     zoom={15}
+//                     mapContainerStyle={{ width: "100%", height: "100%" }}
+//                     options={{
+//                         zoomControl: true,
+//                         streetViewControl: false,
+//                         mapTypeControl: false,
+//                         fullscreenControl: false
+//                     }}
+//                     onLoad={map => setMap(map)}
+//                 >
+//                     {/* <Marker position={center} /> */}
+//                     {directionsResponse && (
+//                         <DirectionsRenderer directions={directionsResponse} />
+//                     )}
+//
+//                 </GoogleMap>
+//             </div>
+//             <div className={cls.directionDiv}>
+//                 {steps && steps.map((el: any) => {
+//                     return (
+//                         <div
+//                             className={cls.directions}
+//                             dangerouslySetInnerHTML={{ __html: el.instructions }}
+//                         />
+//                     );
+//                 })}
+//             </div>
+//         </div>}
+//     </div>
+// </div>
+// <div className={cls.addInfo}>
+//     <div className={cls.info}>
+//         <div className={cls.item}>
+//             <Textarea
+//                 name={"additionalNote"}
+//                 value={values.additionalNote}
+//                 placeholder={t("additionalNote")}
+//                 onChange={(event: any) => {
+//                     event.persist();
+//                     return setFieldValue((state: any) => {
+//                         return {
+//                             ...state,
+//                             additionalNote: event.target.value
+//                         };
+//                     });
+//                 }}
+//                 label={t("additionalNote")}
+//             />
+//         </div>
+//         <div className={cls.item}>
+//             <Textarea
+//                 name={'operator_note'}
+//                 value={values.operator_note}
+//                 placeholder={t('operator_note')}
+//                 onChange={(event:any) => {
+//                     event.persist();
+//                     return setFieldValue((state: any) => {
+//                         return {
+//                             ...state,
+//                             operator_note: event.target.value
+//                         };
+//                     });
+//                 } }
+//                 label={t('operator_note')}
+//             />
+//         </div>
+//     </div>
+//     <div className={cls.updateButton}>
+//         <Button type={"adminUpdate"} onClick={handlerUpdate}>
+//             Update
+//         </Button>
+//     </div>
+// </div>
