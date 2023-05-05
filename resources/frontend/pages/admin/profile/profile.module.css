@@ -88,12 +88,12 @@
   color: #fff;
   cursor: pointer;
 }
-@media screen and (max-width: 1450px) {
-  .buttonsBox {
-    flex-direction: column;
-    justify-content: flex-start;
-  }
-}
+/*@media screen and (max-width: 1450px) {*/
+/*  .buttonsBox {*/
+/*    flex-direction: column;*/
+/*    justify-content: flex-start;*/
+/*  }*/
+/*}*/
 
 .modalBody {
   width: 500px;

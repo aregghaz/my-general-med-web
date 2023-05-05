@@ -52,11 +52,16 @@
 
 .buttons {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     margin-top: 30px;
+    gap: 30px;
 
     .button {
-        width: 48%;
+        width: 38%;
         padding: 15px;
+    }
+    .buttonNo{
+        border-color: $borderColor;
+        color: $borderColor;
     }
 }

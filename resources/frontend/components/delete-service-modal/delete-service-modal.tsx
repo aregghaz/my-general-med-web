@@ -20,7 +20,9 @@ const customStyles: ReactModal.Styles = {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "290px"
+        height: "290px",
+        width: "600px"
+
     },
     overlay: {
         zIndex: 400,
@@ -38,8 +40,8 @@ const customStylesMobile: ReactModal.Styles = {
         top: "50%",
         left: "50%",
         transform: "translate(-50% , -50%)",
-        height: "100%",
-        width: "100%",
+        height: "25%",
+        width: "90%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -87,11 +89,11 @@ const DeleteServiceModal: React.FC<IDeleteServiceModal> = (
                 </div>
 
                 <i className={`binicon- ${s.icon}`} />
-                <p className={s.text}>{t("do_you_want_to_delete")}</p>
+                <p className={s.text}>{t("Do you want to delete")}</p>
                 <div className={s.buttons}>
                     <Button type={"green"} onClick={handlerDelete}
                             className={s.button}>{t("yes")}</Button>
-                    <Button type={"transparent"} onClick={handleCloseModal} className={s.button}>{t("no")}</Button>
+                    <Button type={"transparent"} onClick={handleCloseModal} className={`${s.button} ${s.buttonNo}`}>{t("no")}</Button>
                 </div>
             </div>
         </Modal>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import TableRow from "../table-row/table-row";
 import TableData from "../table-data/table-data";
 import TrashIcon from "-!svg-react-loader!../../../images/trash.svg";
@@ -11,7 +11,7 @@ import s from "../crud-table.module.scss";
 import ClaimTrip from "-!svg-react-loader!../../../images/tripAdd1.svg";
 import ActivityIcon from "-!svg-react-loader!../../../images/Actions.svg";
 import timestampToDate from "../../../utils/timestampToDate";
-
+import DeleteServiceModal from "../../delete-service-modal/delete-service-modal"
 interface ITableBody {
     data: Array<any>
     isEdit: boolean
@@ -44,43 +44,49 @@ const TableBody: React.FC<ITableBody> = (
         typeId
     }) => {
     let count = 0;
-
+    const [deleteModal, setDeleteModal] = useState<boolean>(false)
+    const [deleteId, setDeleteId] = useState<number>(-1)
     return (
-        <tbody>
+        <>
+            <tbody>
 
-        {
-            data
-                .map((item, index) => {
-                    const keys = Object.keys(item);
-                    return keys.length > 0 && (
+            {
+                data
+                    .map((item, index) => {
+                        const keys = Object.keys(item);
+                        return keys.length > 0 && (
 
-                        <TableRow key={index} data-rowid={item["id"]}
-                                  className={`${selectedIds?.includes(item["id"]) ? s.chosen : ""} ${s.tableBColor}`}>
-                            {
-                                (isEdit || isDelete || isInfo || isAssign) &&
-                                <TableData item={item} key={999999} click={false}>
-                                    <div className={s.iconsWrapper}>
-                                        {
-                                            isDelete && typeId !== 5 && typeId !== 6 &&
-                                            <span className={`${s.tooltip} ${s.deleteSpan}`}>
+                            <TableRow key={index} data-rowid={item["id"]}
+                                      className={`${selectedIds?.includes(item["id"]) ? s.chosen : ""} ${s.tableBColor}`}>
+                                {
+                                    (isEdit || isDelete || isInfo || isAssign) &&
+                                    <TableData item={item} key={999999} click={false}>
+                                        <div className={s.iconsWrapper}>
+                                            {
+                                                isDelete && typeId !== 5 && typeId !== 6 &&
+                                                <span className={`${s.tooltip} ${s.deleteSpan}`}>
                                             <span className={`${s.tooltiptext} ${s.delete}`}>Delete</span>
                                             <TrashIcon
                                                 className={s.icon}
-                                                onClick={() => handlerAction(item.id, "delete")}
+                                                onClick={() => {
+                                                    // handlerAction(item.id, "delete")
+                                                    setDeleteId(item.id)
+                                                    setDeleteModal(true)
+                                                }}
                                             />
                                             </span>
-                                        }
-                                        {
-                                            isEdit && typeId !== 5 && typeId !== 6 &&
-                                            <span className={`${s.tooltip} ${s.editSpan}`}>
+                                            }
+                                            {
+                                                isEdit && typeId !== 5 && typeId !== 6 &&
+                                                <span className={`${s.tooltip} ${s.editSpan}`}>
                                             <span className={`${s.tooltiptext} ${s.edit} ${s.editLeft}`}>Edit</span>
                                             <EditIcon
                                                 className={`${s.icon} ${s.iconColor}`}
                                                 onClick={() => handlerAction(item.id, "edit")}
                                             />
                                             </span>
-                                        }
-                                        {isRemove && typeId === 1 &&
+                                            }
+                                            {isRemove && typeId === 1 &&
                                             <span className={`${s.tooltip} ${s.reRouteSpan}`}>
                                             <span className={`${s.tooltiptext} ${s.reRoute}`}>ReRoute</span>
                                             <RemoveIcon
@@ -88,19 +94,19 @@ const TableBody: React.FC<ITableBody> = (
                                                 onClick={() => handlerAction(item.id, "reRoute")}
                                             />
                                                   </span>
-                                        }
-                                        {
-                                            isInfo &&
-                                            <span className={`${s.tooltip} ${s.infoSpan}`}>
+                                            }
+                                            {
+                                                isInfo &&
+                                                <span className={`${s.tooltip} ${s.infoSpan}`}>
                                             <span className={`${s.tooltiptext} ${s.info} ${s.infoLabel}`}>Info</span>
                                             <InfoIcon
                                                 className={`${s.icon} ${s.iconInfo}`}
                                                 onClick={() => handlerAction(item.id, "info")}
                                             />
                                             </span>
-                                        }
+                                            }
 
-                                        {isClaim && typeId === 2 &&
+                                            {isClaim && typeId === 2 &&
                                             <span className={`${s.tooltip} ${s.claimSpan}`}>
                                             <span className={`${s.tooltiptext} ${s.claim} ${s.claimLabelTop}`}>Claim</span>
                                             <ClaimTrip
@@ -108,82 +114,86 @@ const TableBody: React.FC<ITableBody> = (
                                                 onClick={() => handlerAction(item.id, "claim")}
                                             />
                                                 </span>
-                                        }
-                                        {
-                                            isAssign && typeId === 1 &&
-                                            <span className={`${s.tooltip} ${s.historySpan}`}>
+                                            }
+                                            {
+                                                isAssign && typeId === 1 &&
+                                                <span className={`${s.tooltip} ${s.historySpan}`}>
                                             <span className={`${s.tooltiptext} ${s.history}`}>Assign</span>
                                             <AssignIcon
                                                 className={`${s.icon} ${s.iconCar}`}
                                                 onClick={() => handlerAction(item.id, "assign")}
                                             />
                                             </span>
-                                        }
-                                        {
-                                            isGetHistory &&
-                                            <span className={`${s.tooltip} ${s.historySpan}`}>
+                                            }
+                                            {
+                                                isGetHistory &&
+                                                <span className={`${s.tooltip} ${s.historySpan}`}>
                                             <span className={`${s.tooltiptext} ${s.history}`}>History</span>
                                             <ActivityIcon
                                                 className={`${s.icon} `}
                                                 onClick={() => handlerAction(item.id, "history")}
                                             />
                                         </span>
-                                        }{
-                                        isAssignVendor && (typeId === 2 || typeId === 1 || typeId === 4) &&
-                                        <span className={`${s.tooltip} ${s.assignVendorSpan}`}>
+                                            }{
+                                            isAssignVendor && (typeId === 2 || typeId === 1 || typeId === 4) &&
+                                            <span className={`${s.tooltip} ${s.assignVendorSpan}`}>
                                             <span className={`${s.tooltiptext} ${s.assignVendor}`}>Assign</span>
                                         <AssignVendorIcon
                                             className={`${s.icon} ${s.iconVendor}`}
                                             onClick={() => handlerAction(item.id, "assignVendor")}
                                         />
                                         </span>
-                                    }
-                                    </div>
-                                </TableData>
-                            }
-                            {
-                                keys.map((key: any, i: number) => {
-                                        let itemData = "";
-                                        switch (key) {
-                                            case "car_id":
-                                                itemData = item["car_id"] != null ? item["car_name"] : "";
-                                                break;
-                                            case "duration_id":
-                                                itemData = item[key] + " minute";
-                                                break;
-                                            case "miles":
-                                                itemData = item[key] + " mile";
-                                                break;
-                                            case "price":
-                                                itemData = "$" + item[key];
-                                                break;
-                                            case "date_of_service":
-                                                itemData = timestampToDate(item[key]);
-                                                break;
-                                            case "birthday":
-                                                itemData = timestampToDate(item[key]);
-                                                break;
-                                            default:
-                                                itemData = item[key];
                                         }
+                                        </div>
+                                    </TableData>
+                                }
+                                {
+                                    keys.map((key: any, i: number) => {
+                                            let itemData = "";
+                                            switch (key) {
+                                                case "car_id":
+                                                    itemData = item["car_id"] != null ? item["car_name"] : "";
+                                                    break;
+                                                case "duration_id":
+                                                    itemData = item[key] + " minute";
+                                                    break;
+                                                case "miles":
+                                                    itemData = item[key] + " mile";
+                                                    break;
+                                                case "price":
+                                                    itemData = "$" + item[key];
+                                                    break;
+                                                case "date_of_service":
+                                                    itemData = timestampToDate(item[key]);
+                                                    break;
+                                                case "birthday":
+                                                    itemData = timestampToDate(item[key]);
+                                                    break;
+                                                default:
+                                                    itemData = item[key];
+                                            }
 
 
-                                        return i !== 0 && key !== "car_name" && (
-                                            <TableData key={key} item={item} className={key} click={true}
-                                                       handlerAction={handlerAction}>
-                                                {itemData}
+                                            return i !== 0 && key !== "car_name" && (
+                                                <TableData key={key} item={item} className={key} click={true}
+                                                           handlerAction={handlerAction}>
+                                                    {itemData}
 
-                                            </TableData>
-                                        );
-                                    }
-                                )
-                            }
+                                                </TableData>
+                                            );
+                                        }
+                                    )
+                                }
 
-                        </TableRow>
-                    );
-                })
-        }
-        </tbody>
+                            </TableRow>
+                        );
+                    })
+            }
+            </tbody>
+            <DeleteServiceModal id={12} isOpen={deleteModal} handleCloseModal={() => {
+                setDeleteModal(false)
+            }} handlerDeleteItem={() => {handlerAction(deleteId, "delete")}}/>
+        </>
     );
 };
 
