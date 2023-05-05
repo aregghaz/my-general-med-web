@@ -8,12 +8,12 @@
 }
 
 .profileContainer {
-  width: 70%;
+  width: 80%;
   height: auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.54);
   border-radius: 14px;
   display: flex;
-  padding-left: 5%;
+  padding: 0 5%;
 }
 @media screen and (max-width: 1500px) {
   .profileContainer {
@@ -83,7 +83,7 @@
   height: auto;
   display: flex;
   gap: 24px;
-  align-items: center;
+  align-items: flex-end;
   justify-content: flex-start;
 }
 .buttonsBox > button {
@@ -94,12 +94,6 @@
   border-radius: 25px;
   color: #fff;
   cursor: pointer;
-}
-@media screen and (max-width: 1450px) {
-  .buttonsBox {
-    flex-direction: column;
-    justify-content: flex-start;
-  }
 }
 
 .modalBody {

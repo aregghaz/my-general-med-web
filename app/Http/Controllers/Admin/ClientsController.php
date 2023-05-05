@@ -449,7 +449,8 @@ class ClientsController extends Controller
             'genderType',
             'address',
             'clientStatus',
-            'requestType'
+            'requestType',
+            'stairchair'
         ])->find($id);
 
         $clientdata = $this->convertSingleData($client);
@@ -463,7 +464,7 @@ class ClientsController extends Controller
             ///  "type_of_trip" => new StatusCollection($typeOfTrip),
             'status' => new StatusCollection($clientStatus),
             "vendors" => new StatusCollection($vendors),
-            "stairchair" => new StatusCollection($stairchair),
+            "stairchair_id" => new StatusCollection($stairchair),
             'artificial_id' => new StatusCollection($artificial),
             'duration_id' => new StatusCollection($waitDuration),
         ], 200);
@@ -506,6 +507,7 @@ class ClientsController extends Controller
         $client->operator_id = $userId;
         $client->stops = $requestData->count;
         $client->member_uniqie_identifer = $requestData->member_uniqie_identifer;
+        $client->stairchair_id = $requestData->stairchair_id->id;
         if (isset($requestData->birthday)) {
             $client->birthday = $requestData->birthday;
         }

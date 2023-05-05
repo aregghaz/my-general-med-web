@@ -37,6 +37,7 @@ class Clients extends Model
         'additionalNote',
         'operator_note',
         'reason_id',
+        'stairchair_id',
 
     ];
 
@@ -78,6 +79,10 @@ class Clients extends Model
     public function waiteDuration()
     {
         return $this->hasOne(WaitDuration::class, 'id', 'duration_id');
+    }
+    public function stairchair()
+    {
+        return $this->hasOne(Stairchair::class, 'id', 'stairchair_id');
     }
     public function artificial()
     {

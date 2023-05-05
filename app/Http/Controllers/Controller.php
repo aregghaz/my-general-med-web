@@ -49,6 +49,11 @@ class Controller extends BaseController
                 'label' => $client->waiteDuration->name,
                 'slug' => $client->waiteDuration->slug,
                 'value' => $client->waiteDuration->slug,
+            ],'stairchair_id' => [
+                'id' => $client->stairchair->id,
+                'label' => $client->stairchair->name,
+                'slug' => $client->stairchair->slug,
+                'value' => $client->stairchair->slug,
             ],
             'artificial_id' => [
                 'id' => $client->artificial->id,

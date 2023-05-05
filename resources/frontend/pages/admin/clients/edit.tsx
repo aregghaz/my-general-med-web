@@ -50,7 +50,7 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
       ///  { name: "price", type: "input", label: "price", inputType: "number" },
         { name: "height", type: "input", label: "height" },
         { name: "weight", type: "input", label: "weight", inputType: "number" },
-        { name: "stairchair", type: "select", label: "stairchair"},
+        { name: "stairchair_id", type: "select", label: "stairchair"},
         { name: "miles", type: "input", label: "miles", inputType: "disabled" },
         { name: "address", type: "address", label: "" },
         { name: "stops", type: "hidden", label: "stops" },
