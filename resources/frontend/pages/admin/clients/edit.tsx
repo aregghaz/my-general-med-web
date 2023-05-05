@@ -101,7 +101,7 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
             };
 
             toast(t("record_successfully_edited"), options);
-             await navigate(`/admin/${crudKey}`);
+           ///  await navigate(`/admin/${crudKey}`);
         }
     };
     return data && <div>

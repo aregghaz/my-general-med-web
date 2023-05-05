@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ClientFieldCollection;
-use App\Http\Resources\SelectAndPriceCollection;
 use App\Http\Resources\StatusCollection;
 use App\Models\Address;
 use App\Models\Artificial;
@@ -505,7 +504,7 @@ class ClientsController extends Controller
         ///  $client->price = (int)$requestData->price + (int)$requestData->duration_id->value + (int)$requestData->artificial_id->value;
         $client->request_type = $requestData->request_type->id;
         $client->operator_id = $userId;
-        $client->stops = count($requestData->stops);
+        $client->stops = $requestData->count;
         $client->member_uniqie_identifer = $requestData->member_uniqie_identifer;
         if (isset($requestData->birthday)) {
             $client->birthday = $requestData->birthday;
@@ -546,7 +545,7 @@ class ClientsController extends Controller
         }
         $client->update();
         /// Address::where('client_id', $id)->delete();
-        for ($i = 1; $i <= count($requestData->stops); $i++) {
+        for ($i = 1; $i <= $requestData->count; $i++) {
             $stepAddress = "step_$i";
             $stepComment = "comment_$i";
             $stepPhone = "phone_$i";
@@ -600,7 +599,13 @@ class ClientsController extends Controller
 
                 $address->save();
             }
+            if ($i === $requestData->count) {
+                $addressCount = Address::where('client_id', $id)->get()->count();
+                if ($addressCount > $i) {
+                    Address::where(['client_id' => $id])->where('step', '>', $i)->delete();
 
+                }
+            }
         }
         $this->createAction($userId, $id, 9, 1);
         return response()->json(
@@ -614,7 +619,8 @@ class ClientsController extends Controller
 
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         ////FIXME REMOVE INSURANCE FILE
         Clients::find($id)->delete();
         Address::where(['client_id' => $id])->delete();
@@ -627,6 +633,7 @@ class ClientsController extends Controller
             201
         );
     }
+
     public function updateAll($insuranceId, $path, $date)
     {
         $clinets = Clients::where('member_uniqie_identifer', $insuranceId)->update([
