@@ -97,4 +97,8 @@ class Clients extends Model
     {
         return $this->hasMany(Address::class, 'client_id', 'id');
     }
+    public function vendor()
+    {
+        return $this->hasOne(User::class, 'id', 'vendor_id');
+    }
 }

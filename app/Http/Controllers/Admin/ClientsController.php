@@ -321,10 +321,8 @@ class ClientsController extends Controller
             $price = 0;
             $priceLists = PriceList::where(['los_id' => $requestData->los->id, 'vendor_id' => $requestData->vendors->id])->get();
             foreach ($priceLists as $priceList) {
-                if ($priceList->type == 'base') {
-                    $price = $price + $priceList->price;
-                } else {
-                    $price = $price + (float)$priceList->price * (float)$requestData->miles;
+                if(($priceList->service_id === 5 && $requestData->stairchair_id->id > 1) || ($priceList->service_id === 4 && $requestData->duration_id->id > 1) || ($priceList->service_id === 3 && $requestData->artificial_id->id > 1)|| ($priceList->service_id === 2 or $priceList->service_id === 2 )) {
+                    $price = $this->calculatePrice($priceList,$price,$requestData->miles) ;
                 }
             }
             /// dd($price);
@@ -347,6 +345,7 @@ class ClientsController extends Controller
         $client->request_type = $requestData->request_type->id;
         $client->operator_id = $userId;
         $client->stops = (int)$requestData->count;
+        $client->stairchair_id = $requestData->stairchair_id->id;
         $client->member_uniqie_identifer = $requestData->member_unique_identifier;
         if (isset($requestData->birthday)) {
             $client->birthday = $requestData->birthday;
@@ -450,7 +449,8 @@ class ClientsController extends Controller
             'address',
             'clientStatus',
             'requestType',
-            'stairchair'
+            'stairchair',
+            'vendor'
         ])->find($id);
 
         $clientdata = $this->convertSingleData($client);
@@ -520,16 +520,13 @@ class ClientsController extends Controller
         }
         if (isset($requestData->specialPrice) && $requestData->specialPrice) {
             $client->price = (float)$requestData->price;
-        } else if (isset($requestData->vendors)) {
+        } else if (isset($requestData->vendor_id)) {
             $price = 0;
-            $priceLists = PriceList::where(['los_id' => $requestData->los->id, 'vendor_id' => $requestData->vendors->id])->get();
+            $priceLists = PriceList::where(['los_id' => $requestData->los->id, 'vendor_id' => $requestData->vendor_id->id])->get();
 
             foreach ($priceLists as $priceList) {
-                if ($priceList->type == 'base') {
-                    $price = $price + $priceList->price;
-                } else {
-                    ///dd($price+$priceList->price * $requestData->miles);
-                    $price = $price + ($priceList->price * $requestData->miles);
+                if(($priceList->service_id === 5 && $requestData->stairchair_id->id > 1) || ($priceList->service_id === 4 && $requestData->duration_id->id > 1) || ($priceList->service_id === 3 && $requestData->artificial_id->id > 1)|| ($priceList->service_id === 2 or $priceList->service_id === 2 )) {
+                    $price = $this->calculatePrice($priceList,$price,$requestData->miles) ;
                 }
             }
             //dd($price);
@@ -620,6 +617,8 @@ class ClientsController extends Controller
         );
 
     }
+
+
 
     public function delete($id)
     {

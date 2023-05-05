@@ -77,7 +77,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         { name: "weight", type: "input", label: "weight", inputType: "number", placeholder: "Weight" },
         { name: "miles", type: "input", label: "miles", inputType: "disabled" },
         { name: "insurance", type: "file", label: "insurance", inputType: "hidden" },
-        { name: "stairchair", type: "select", label: "stairchair"},
+        { name: "stairchair_id", type: "select", label: "stairchair"},
     ];
 
     useEffect(() => {

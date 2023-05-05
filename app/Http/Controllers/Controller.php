@@ -44,12 +44,18 @@ class Controller extends BaseController
                 'slug' => $client->requestType->slug,
                 'value' => $client->requestType->slug,
             ],
+            'vendor_id' => [
+                'id' => $client->vendor->id,
+                'label' => $client->vendor->name,
+                'slug' => $client->vendor->slug,
+                'value' => $client->vendor->slug,
+            ],
             'duration_id' => [
                 'id' => $client->waiteDuration->id,
                 'label' => $client->waiteDuration->name,
                 'slug' => $client->waiteDuration->slug,
                 'value' => $client->waiteDuration->slug,
-            ],'stairchair_id' => [
+            ], 'stairchair_id' => [
                 'id' => $client->stairchair->id,
                 'label' => $client->stairchair->name,
                 'slug' => $client->stairchair->slug,
@@ -275,4 +281,14 @@ class Controller extends BaseController
         return $clients;
     }
 
+    public function calculatePrice($priceList, $price, $miles)
+    {
+        if ($priceList->type == 'base') {
+            $price = $price + $priceList->price;
+        } else {
+            ///dd($price+$priceList->price * $requestData->miles);
+            $price = $price + ($priceList->price * $miles);
+        }
+        return $price;
+    }
 }

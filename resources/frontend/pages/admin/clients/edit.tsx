@@ -44,7 +44,7 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
         { name: "los", type: "select", label: "los", allowValueClear:false},
         { name: "artificial_id", type: "select", label: "artificial" },
         { name: "duration_id", type: "select", label: "waitDuration" },
-        { name: "vendors", type: "select", label: "vendors" },
+        { name: "vendor_id", type: "select", label: "vendors" },
         { name: "request_type", type: "select", label: "request_type" },
         { name: "member_uniqie_identifer", type: "input", label: "member_uniqie_identifer" },
       ///  { name: "price", type: "input", label: "price", inputType: "number" },
