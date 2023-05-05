@@ -14,6 +14,7 @@ import Tabs from "../../../components/tabs/tabs";
 import CloseSvg from "-!svg-react-loader!../../../images/Close.svg";
 import customStyles from "../../../utils/style";
 import Close from "-!svg-react-loader!../../../images/Close.svg"
+import DeleteServiceModal from "../../../components/delete-service-modal/delete-service-modal";
 
 interface Beneficiary {
     path: string;
@@ -118,6 +119,11 @@ const VendorUsers: React.FC<Beneficiary> = () => {
             backdropFilter: "blur(5px)"
         }
     };
+
+    function handleModalOpen() {
+        setIsModalOpen(true)
+    }
+
     const handlerAction = async (action: string, id: number) => {
         switch (action) {
             case "get":
@@ -129,12 +135,13 @@ const VendorUsers: React.FC<Beneficiary> = () => {
             case "edit":
                 await handlerEditItem(id);
                 break;
+            case "delete":
+                handleModalOpen();
+                break;
 
         }
     };
     const handlerClose = () => setItemData({});
-
-
     return (
         data && (
             <>
@@ -164,41 +171,43 @@ const VendorUsers: React.FC<Beneficiary> = () => {
                         className={"pagination"}
                         isGetHistory={false}
                         isGetItems={false} />
-                    <Modal
-                        isOpen={isModalOpen !== false}
-                        style={customStyles}
-                        onRequestClose={handlerCloseModal}
-                    >
-                        <div className={s.modalBody}>
-                            <div className={s.iconWrapper}>
-                                <i
-                                    className="cancelicon-"
-                                    onClick={handlerCloseModal}
-                                />
-                            </div>
+                    {/*chi jnjum*/}
+                    <DeleteServiceModal id={1} isOpen={isModalOpen} handleCloseModal={handlerCloseModal} handlerDeleteItem={() => {}}/>
+                    {/*<Modal*/}
+                    {/*    isOpen={isModalOpen !== false}*/}
+                    {/*    style={customStyles}*/}
+                    {/*    onRequestClose={handlerCloseModal}*/}
+                    {/*>*/}
+                    {/*    <div className={s.modalBody}>*/}
+                    {/*        <div className={s.iconWrapper}>*/}
+                    {/*            <i*/}
+                    {/*                className="cancelicon-"*/}
+                    {/*                onClick={handlerCloseModal}*/}
+                    {/*            />*/}
+                    {/*        </div>*/}
 
-                            <i className={`binicon- ${s.icon}`} />
-                            <p className={s.text}>
-                                {t("admin.do_you_want_to_deletee")}
-                            </p>
-                            <div className={s.buttons}>
-                                <Button
-                                    type={"green"}
-                                    onClick={handlerDeleteItem}
-                                    className={s.button}
-                                >
-                                    {t("admin.yes")}
-                                </Button>
-                                <Button
-                                    type={"transparent"}
-                                    onClick={handlerCloseModal}
-                                    className={s.button}
-                                >
-                                    {t("admin.no")}
-                                </Button>
-                            </div>
-                        </div>
-                    </Modal>
+                    {/*        <i className={`binicon- ${s.icon}`} />*/}
+                    {/*        <p className={s.text}>*/}
+                    {/*            {t("admin.do_you_want_to_deletee")}*/}
+                    {/*        </p>*/}
+                    {/*        <div className={s.buttons}>*/}
+                    {/*            <Button*/}
+                    {/*                type={"green"}*/}
+                    {/*                onClick={handlerDeleteItem}*/}
+                    {/*                className={s.button}*/}
+                    {/*            >*/}
+                    {/*                {t("admin.yes")}*/}
+                    {/*            </Button>*/}
+                    {/*            <Button*/}
+                    {/*                type={"transparent"}*/}
+                    {/*                onClick={handlerCloseModal}*/}
+                    {/*                className={s.button}*/}
+                    {/*            >*/}
+                    {/*                {t("admin.no")}*/}
+                    {/*            </Button>*/}
+                    {/*        </div>*/}
+                    {/*    </div>*/}
+                    {/*</Modal>*/}
 
                 </div>
             </>

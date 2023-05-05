@@ -40,7 +40,6 @@ const List: React.FC<IList> = (
         className,
         tableRef
     }) => {
-
     const { t } = useTranslation();
     return (
         <>

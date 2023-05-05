@@ -11,6 +11,7 @@ import { homeAPI } from "../../../api/site-api/home-api";
 import { useInView } from "react-intersection-observer";
 import NavigationTab from "../../../components/navigation/navigationTab";
 import axios from "axios";
+import DeleteServiceModal from "../../../components/delete-service-modal/delete-service-modal";
 
 interface IVendors {
     path: string;
@@ -94,6 +95,9 @@ const Vendors: React.FC<IVendors> = () => {
             case "price":
                 await navigate(`/admin/priceList/${id}`);
                 break;
+            case "delete":
+                await setIsModalOpen(true);
+                break;
         }
     };
 
@@ -126,7 +130,7 @@ const Vendors: React.FC<IVendors> = () => {
         "action"
     ];
     const handlerAddItem = () => navigate(`/admin/${crudKey}/create/${typeId}`);
-    const handlerCloseModal = () => setIsModalOpen(false);
+    const handlerCloseModal = () => setIsModalOpen(!isModalOpen);
     const handlerEditItem = (id: number) => navigate(`/admin/${crudKey}/${id}/${typeId}`);
     const handlerGetVendorUsers = async (id: number) => navigate(`/admin/users/${id}`);
     const handlerGetActivityOperator = async (id: number) => navigate(`/admin/activity/${id}`);
@@ -160,6 +164,10 @@ const Vendors: React.FC<IVendors> = () => {
 
         }
     };
+
+    const handleDeleteItem = () => {
+        console.log("delete code here")
+    }
     return (
         userdata &&
         <>
@@ -193,6 +201,8 @@ const Vendors: React.FC<IVendors> = () => {
                 />
                 <div className={s.detector} ref={ref} />
             </div>
+
+            <DeleteServiceModal id={1} isOpen={isModalOpen} handleCloseModal={handlerCloseModal} handlerDeleteItem={handleDeleteItem}/>
 
 
             {/*<Modal*/}

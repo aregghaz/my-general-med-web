@@ -10,6 +10,7 @@ import Modal from "react-modal";
 import Button from "../../../components/button/button";
 import customStyles from "../../../utils/style";
 import Close from "-!svg-react-loader!../../../images/Close.svg"
+import DeleteServiceModal from "../../../components/delete-service-modal/delete-service-modal";
 
 interface Beneficiary {
     path: string;
@@ -202,41 +203,41 @@ const Status: React.FC<Beneficiary> = () => {
                     className={"pagination"}
                     paginated={false}
                 />
-                <Modal
-                    isOpen={isModalOpen !== false}
-                    style={customStyles}
-                    onRequestClose={handlerCloseModal}
-                >
-                    <div className={s.modalBody}>
-                        <div className={s.iconWrapper}>
-                            <div className={s.iconCircle} onClick={handlerCloseModal}>
-
-                                <Close  className={s.modalClose}/>
-                            </div>
-                        </div>
-                        <div className={s.contentWrapper}>
-                            <p className={s.text}>
-                                {t("Do you want to delete")}
-                            </p>
-                            <div className={s.buttons}>
-                                <Button
-                                    type={"transparent"}
-                                    onClick={handlerDeleteItem}
-                                    className={`${s.button} ${s.yesButton}`}
-                                >
-                                    {t("yes")}
-                                </Button>
-                                <Button
-                                    type={"transparent"}
-                                    onClick={handlerCloseModal}
-                                    className={s.button}
-                                >
-                                    {t("no")}
-                                </Button>
-                            </div>
-                        </div>
-                    </div>
-                </Modal>
+                <DeleteServiceModal id={1} isOpen={isModalOpen} handleCloseModal={handlerCloseModal} handlerDeleteItem={handlerDeleteItem}/>
+                {/*<Modal*/}
+                {/*    isOpen={isModalOpen !== false}*/}
+                {/*    style={customStyles}*/}
+                {/*    onRequestClose={handlerCloseModal}*/}
+                {/*>*/}
+                {/*    <div className={s.modalBody}>*/}
+                {/*        <div className={s.iconWrapper}>*/}
+                {/*            <div className={s.iconCircle} onClick={handlerCloseModal}>*/}
+                {/*                <Close  className={s.modalClose}/>*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
+                {/*        <div className={s.contentWrapper}>*/}
+                {/*            <p className={s.text}>*/}
+                {/*                {t("Do you want to delete")}*/}
+                {/*            </p>*/}
+                {/*            <div className={s.buttons}>*/}
+                {/*                <Button*/}
+                {/*                    type={"transparent"}*/}
+                {/*                    onClick={handlerDeleteItem}*/}
+                {/*                    className={`${s.button} ${s.yesButton}`}*/}
+                {/*                >*/}
+                {/*                    {t("yes")}*/}
+                {/*                </Button>*/}
+                {/*                <Button*/}
+                {/*                    type={"transparent"}*/}
+                {/*                    onClick={handlerCloseModal}*/}
+                {/*                    className={s.button}*/}
+                {/*                >*/}
+                {/*                    {t("no")}*/}
+                {/*                </Button>*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
+                {/*</Modal>*/}
             </div>
 
         </>
