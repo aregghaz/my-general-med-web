@@ -45,7 +45,7 @@ const PopupModal: FC<IProps> = ({ isOpen, agreeWith, notAgreeWith }) => {
                             </button>
 
                         </div>
-                        <a href="" target={"_blank"}>
+                        <a href="/terms" target={"_blank"}>
                             Terms and conditions
                         </a>
                     </div>

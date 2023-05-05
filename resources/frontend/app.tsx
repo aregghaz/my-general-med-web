@@ -43,8 +43,9 @@ import VendorDashboard from "./pages/vendor/dashbord/dashboard";
 import NotificationList from "./pages/admin/notification/notification";
 import Notification from "./pages/vendor/notification/notification";
 import PriceList from "./pages/admin/vendors/priseList";
-import Profile from "./pages/admin/profile/profile";
+// import Profile from "./pages/admin/profile/profile";
 import VendorProfile from "./pages/vendor/profile/profile";
+import TermsPage from "./pages/vendor/terms/terms"
 
 const App = (): JSX.Element => (
     <Provider store={store}>
@@ -64,6 +65,7 @@ const App = (): JSX.Element => (
                 <CarsEdit path="/cars/:id" />
                 <NotFound default />
                 <Notification path="/notification" />
+                <TermsPage path={"/terms"}/>
             </Site>
             <Site path="/operators">
                 <Clients path="clients" />
@@ -71,7 +73,7 @@ const App = (): JSX.Element => (
                 <ClientCreate path="clients/create" />
             </Site>
             <Site path="/admin">
-                <Profile path="/profile"/>
+                {/*<Profile path="/profile"/>*/}
                 <Dashboard path="/" />
                 <Users path="/users/:id" />
                 <Clients path="clients" />

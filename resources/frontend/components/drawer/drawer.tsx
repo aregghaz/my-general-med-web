@@ -198,13 +198,15 @@ const Drawer: React.FC = ({ children }) => {
                                                 className={s.logOutButton}
                                                 type={"blank"}
                                                 onClick={() => {
-                                                    if (userData.user.role === "admin") {
-                                                        navigate("/admin/profile");
-                                                        openAccountMenu();
-                                                    } else {
-                                                        navigate("/profile");
-                                                        openAccountMenu();
-                                                    }
+                                                    navigate("/profile")
+                                                    openAccountMenu()
+                                                    // if (userData.user.role === "admin") {
+                                                    //     navigate("/admin/profile");
+                                                    //     openAccountMenu();
+                                                    // } else {
+                                                    //     navigate("/profile");
+                                                    //     openAccountMenu();
+                                                    // }
                                                 }}
                                             >
 
