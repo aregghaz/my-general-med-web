@@ -12,10 +12,13 @@ import InfoBlockDriver from "../../../components/info-block-driver/info-block";
 import { vendorAPI } from "../../../api/site-api/vendor-api";
 import Tabs from "../../../components/tabs/tabs";
 import CloseSvg from "-!svg-react-loader!../../../images/Close.svg";
+import customStyles from "../../../utils/style";
+import Close from "-!svg-react-loader!../../../images/Close.svg"
 
 interface Beneficiary {
     path: string;
 }
+
 
 const VendorUsers: React.FC<Beneficiary> = () => {
     const dispatch = useDispatch();
@@ -196,6 +199,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
                             </div>
                         </div>
                     </Modal>
+
                 </div>
             </>
         )

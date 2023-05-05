@@ -22,6 +22,7 @@ interface ITableBody {
     handlerAction: (action: string, id: number) => void
 }
 
+
 const TableBody: React.FC<ITableBody> = (
     {
         data,
@@ -153,7 +154,9 @@ const TableBody: React.FC<ITableBody> = (
                                             <TrashIcon
                                                 className={s.trashIcon}
 
-                                                onClick={() => handlerAction("delete", item.id)}
+                                                onClick={() => {handlerAction("delete", item.id)
+                                                    console.log("aa")
+                                                }}
                                             />
                                         </div>
                                     }

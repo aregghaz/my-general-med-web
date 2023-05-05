@@ -9,11 +9,38 @@ import Modal from "react-modal";
 import { useDispatch } from "react-redux";
 import { vendorAPI } from "../../../api/site-api/vendor-api";
 import InfoBlockCar from "../../../components/info-block-car/info-block";
-import customStyles from "../../../utils/style";
+// import customStyles from "../../../utils/style";
 import { homeAPI } from "../../../api/site-api/home-api";
 import CloseSvg from "-!svg-react-loader!../../../images/Close.svg";
 import Close from "-!svg-react-loader!../../../images/Close.svg"
 
+const customStyles: ReactModal.Styles = {
+    content: {
+        position: "fixed",
+        border: "none",
+        overflowY: "unset",
+        outline: "none",
+        top: "50%",
+        left: "50%",
+        overflow: "visible",
+        transform: "translate(-50% , -50%)",
+        padding: 0,
+        /// display: 'flex',
+        justifyContent: "center",
+        ///  alignItems: "center",
+        width: "500px",
+        height: "270px",
+        // backgroundColor: "#194b76",
+    },
+    overlay: {
+        zIndex: 1111111111,
+        overflow: "hidden",
+        // background: "rgba(0, 0, 0, 0.35)",
+        backdropFilter: "blur(5px)",
+        backgroundColor: "rgba(0, 0, 0, 0.3)",
+
+    }
+};
 
 
 interface Beneficiary {
@@ -148,7 +175,7 @@ const Cars: React.FC<Beneficiary> = () => {
                     </div>
 
                     <div className={s.modalContent}>
-                        {/*<i className={`binicon- ${s.icon}`} />*/}
+                        <i className={`binicon- ${s.icon}`} />
                         <p className={s.text}>{t("Do you really want to delete?")}</p>
                         <div className={s.buttons}>
                             <Button type={"green"} onClick={handlerDeleteItem}
