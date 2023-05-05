@@ -14,7 +14,7 @@ class UpdateClientStairchairId extends Migration
     public function up()
     {
         Schema::table('clients', function(Blueprint $table){
-            $table->tinyInteger('stairchair_id')->nullable()->after('duration_id');
+            $table->tinyInteger('stairchair_id')->default(1)->after('duration_id');
         });
     }
 

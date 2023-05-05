@@ -46,6 +46,13 @@ class StatusSeeder extends Seeder
             'name' => 'No',
             'slug' => 'No',
         ]);
+        $status = ['10 min.', '20 min.', '30 min.', '40 min.', '50 min.', '60 min.'];
+        foreach ($status as $item) {
+            DB::table('wait_durations')->insert([
+                'name' => $item,
+                'slug' => $item,
+            ]);
+        }
         Service::truncate();
         $status = ['Base', 'Per Mile', 'Oxygen' , 'Waiting time' , 'Stair Chair'];
         foreach ($status as $item) {

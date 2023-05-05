@@ -8,6 +8,7 @@ use App\Http\Resources\ClientFieldCollection;
 use App\Http\Resources\StatusCollection;
 use App\Models\Cars;
 use App\Models\Clients;
+use App\Models\PriceList;
 use App\Models\Reason;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -296,6 +297,20 @@ class HomeController extends Controller
         } else if ((int)$request->status === 4) {
             Clients::whereIn('id', $ids)->update(['type_id' => 2, "car_id" => null, 'reason_id' => (int)$request->reasonId]);
         } else if ((int)$request->status === 1) {
+            $clients = Clients::whereIn('id', $ids)->get();
+            ///->update(['type_id' => 1, 'vendor_id' => $vendorId, "car_id" => null]);
+
+
+            foreach ($clients as $client) {
+                $price = 0;
+                $priceLists = PriceList::where(['los_id' => $client->los_id, 'vendor_id' => $vendorId])->get();
+                foreach ($priceLists as $priceList) {
+                    if (($priceList->service_id === 5 && $client->stairchair_id > 1) || ($priceList->service_id === 4 && $client->waitDuration > 1) || ($priceList->service_id === 3 && $client->artificial_id > 1) || ($priceList->service_id === 2 or $priceList->service_id === 2)) {
+                        $price = $this->calculatePrice($priceList, $price, $client->miles);
+                        Clients::find($client->id)->update(['type_id' => 1, 'vendor_id' => $vendorId, "car_id" => null, 'price' => $price]);
+                    }
+                }
+            }
             Clients::whereIn('id', $ids)->update(['type_id' => 1, 'vendor_id' => $vendorId, "car_id" => null]);
         } else {
             Clients::whereIn('id', $ids)->update(['type_id' => $request->status, 'vendor_id' => $vendorId]);
