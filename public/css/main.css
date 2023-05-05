@@ -1053,6 +1053,7 @@ svg[focusable=false] {
   width: 38%;
   padding: 15px;
   border-radius: 5px;
+  color: #fff;
 }
 .delete-service-modal_buttons__23Sik .delete-service-modal_buttonNo__3QOKJ {
   border-color: #19347a;
@@ -2443,7 +2444,7 @@ svg[focusable=false] {
 
 .list_modalBody__JKcoM {
   width: 100%;
-  height: 270px;
+  height: 200px;
 }
 
 .list_iconWrapper__2m7GX {
