@@ -81,6 +81,10 @@
 .buttonsBox {
   width: 100%;
   height: auto;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  justify-content: flex-start;
 }
 .buttonsBox > button {
   width: 150px;
@@ -90,6 +94,65 @@
   border-radius: 25px;
   color: #fff;
   cursor: pointer;
+}
+@media screen and (max-width: 1450px) {
+  .buttonsBox {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+}
+
+.modalBody {
+  width: 500px;
+  height: auto;
+  position: relative;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.modalTop {
+  width: 100%;
+  height: 70px;
+  background-color: #D63D3D;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 20px;
+}
+
+.closeButton {
+  width: 32px;
+  height: 32px;
+  background-color: #fff;
+  border-radius: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.passwordsContainer {
+  width: 100%;
+  height: calc(100% - 70px);
+  padding: 10%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.changePasswordEnd {
+  background-color: #D63D3D;
+  border: none;
+  border-radius: 28px;
+  color: #fff;
+  cursor: pointer;
+  padding: 20px;
+}
+
+.text {
+  text-align: center;
 }
 
 /*# sourceMappingURL=profile.module.css.map */

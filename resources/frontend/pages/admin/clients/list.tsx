@@ -19,59 +19,15 @@ import { navigate } from "@reach/router";
 import { actionsTabs } from "../../../store/tab";
 import { toast } from "react-toastify";
 import NavigationTab from "../../../components/navigation/navigationTab";
-import ModalNew from "-!svg-react-loader!../../../images/modalNew1.svg"
-import Close from "-!svg-react-loader!../../../images/Close.svg"
-import ErrorIcon from "-!svg-react-loader!../../../svgs/error.svg"
+import ModalNew from "-!svg-react-loader!../../../images/modalNew1.svg";
+import Close from "-!svg-react-loader!../../../images/Close.svg";
+import ErrorIcon from "-!svg-react-loader!../../../svgs/error.svg";
+import customStyles from "../../../utils/style";
 
 
 interface IHome {
     path: string;
 }
-
-const customStyles: ReactModal.Styles = {
-    content: {
-        // position: "fixed",
-        // border: "none",
-        // overflowY: "unset",
-        // outline: "none",
-        // top: "50%",
-        // left: "50%",
-        // overflow: "hidden",
-        // transform: "translate(-50% , -50%)",
-        // /// display: 'flex',
-        // justifyContent: "center",
-        // width: "80%",
-        // height: "60vh"
-        // ///  alignItems: "center",
-
-        border:"none",
-        position: "fixed",
-        overflowY: "unset",
-        outline: "none",
-        top: "50%",
-        left: "50%",
-        overflow: "visible",
-        transform: "translate(-50% , -50%)",
-        /// display: 'flex',
-        justifyContent: "center",
-        ///  alignItems: "center",
-        width: "500px",
-        height: "200px",
-        padding: 0,
-    },
-    overlay: {
-        // zIndex: 999999,
-        // overflow: "hidden",
-        // background: "rgba(0, 0, 0, 0.35)",
-        // backdropFilter: "blur(5px)"
-
-        zIndex: 1111111111,
-        overflow: "hidden",
-        // background: "rgba(0, 0, 0, 0.35)",
-        backdropFilter: "blur(5px)",
-        backgroundColor: "rgba(0, 0, 0, 0.3)"
-    }
-};
 
 const Home: React.FC<IHome> = () => {
     const { t } = useTranslation();
@@ -192,6 +148,10 @@ const Home: React.FC<IHome> = () => {
             case "history":
                 await handleGetHistory(id);
                 break;
+            case "delete":
+                await handlerDelete(id);
+                //// await handleGetHistory(id);
+                break;
         }
     };
 
@@ -224,7 +184,7 @@ const Home: React.FC<IHome> = () => {
             if (inView && !loading) {
                 await getClientData(query, date);
                 countRef.current++;
-               setLoading(false);
+                setLoading(false);
             }
         })();
         return () => {
@@ -257,6 +217,10 @@ const Home: React.FC<IHome> = () => {
             setTitles(result);
             setLoading(true);
         }
+    };
+    const handlerDelete = async (id: number) => {
+        const homeData = await AdminApi.deleteTrip(id);
+        setLoading(true);
     };
 
     const fileUploader = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -389,7 +353,7 @@ const Home: React.FC<IHome> = () => {
                     />
 
                 </div>
-                {errorMessage && <div className={s.errorMessage}><ErrorIcon/> {errorMessage}</div>}
+                {errorMessage && <div className={s.errorMessage}><ErrorIcon /> {errorMessage}</div>}
                 <Modal
                     isOpen={isModalOpen !== false}
                     style={customStyles}
@@ -404,7 +368,7 @@ const Home: React.FC<IHome> = () => {
                                 isSubmit={true}
                                 type={"adminUpdate"}
                                 onClick={handlerSetVendor}>
-                                <ModalNew className={s.buttonIcon}/>
+                                <ModalNew className={s.buttonIcon} />
                                 {t("assign")}
                             </Button>
 
@@ -415,7 +379,7 @@ const Home: React.FC<IHome> = () => {
                                 <div className={s.iconWrapper}>
                                     <div className={s.iconCircle} onClick={handlerCloseModal}>
 
-                                        <Close  className={s.modalClose}/>
+                                        <Close className={s.modalClose} />
                                     </div>
 
                                 </div>
@@ -427,10 +391,10 @@ const Home: React.FC<IHome> = () => {
                                         options={vendorData}
                                         styles={{
                                             menu: {
-                                                width: "100%",
+                                                width: "100%"
                                             },
                                             option: {
-                                                width: "100%",
+                                                width: "100%"
                                             }
                                         }}
                                         // value={selectedTitle}

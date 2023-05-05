@@ -3,12 +3,13 @@ import GooglePlacesAutocomplete, { geocodeByPlaceId } from "react-google-places-
 import { GOOGLE_API_KEY } from "../../environments";
 import Button from "../button/button";
 import s from "./autocomplete.module.scss";
+import TimePickers from "../time-picker/timepicker";
 import Input from "../input/input";
 import TextField from "../text-field/text-field";
 import getMapResponse from "../../utils/googleMap";
-import removeIcon from "../../svgs/removeIcon.svg";
+import removeIcon from "../../svgs/removeIcon.svg"
 import CustomTimePicker from "../custom-time-picker/customTimePicker";
-import { useTranslation } from "react-i18next";
+import {useTranslation} from "react-i18next";
 import getFieldLabel from "../../utils/getFieldLabel";
 
 interface ITextarea {
@@ -20,8 +21,8 @@ interface ITextarea {
     handleDrawMap?: (dataMap: any) => void;
     label?: any;
     error?: any;
-    validate?: any,
-    requiredFields: Array<string>
+    validate?:any,
+    requiredFields:Array<string>
 
 
 }
@@ -33,10 +34,10 @@ const Autocomplete: React.FC<ITextarea> = (
         setFieldValue,
         handleChange,
         ///   handleDrawMap
-        label = "",
-        error = "",
+        label= "",
+        error ='',
         validate,
-        requiredFields
+        requiredFields,
 
 
     }) => {
@@ -47,65 +48,54 @@ const Autocomplete: React.FC<ITextarea> = (
     const [newStep, setNewStep] = useState(false);
     const [dataMap, setDataMap] = useState({});
     const [firstLoad, setFirstLoad] = useState(true);
-    const [allowRemove, setAllowRemove] = useState(false);
-
+    const [allowRemove, setAllowRemove] = useState(false)
 
     useEffect(() => {
         (async () => {
-            await handlerGetMapData()
+            var origin = "";
+            var destination = "";
+            var waypoint = [];
+            for (let i = 1; i <= count; i++) {
+                if (i === 1) {
+                    origin = values[`step_${i}`]["address"];
+                } else if (i === count) {
+                    destination = values[`step_${i}`]["address"];
+                } else {
+                    waypoint.push({
+                        location:
+                            {
+                                placeId: values[`step_${i}`]["id"]
+                            }
+                    });
+                }
+            }
+            const results = await getMapResponse(origin, destination, waypoint);
+            if (results.routes[0].legs.length > 0) {
+                var miles = 0;
+                results.routes[0].legs.map((item: any) => {
+                    miles += parseFloat(item.distance.text);
+                });
+                setFieldValue("miles", `${miles} mile`);
+                setFieldValue("duration", `${miles} mile`);
+            }
         })();
     }, [load]);
 
-
-    const handlerGetMapData = async () => {
-        var origin = "";
-        var destination = "";
-        var waypoint = [];
-        for (let i = 1; i <= step.length; i++) {
-            console.log(values, "1111111");
-            if (i === 1) {
-                origin = values[`step_${i}`]["address"] ? values[`step_${i}`]["address"] : values[`step_${i}`];
-            } else if (i === step.length) {
-                destination = values[`step_${i}`]["address"] ? values[`step_${i}`]["address"] : values[`step_${i}`];
-            } else {
-                let waypoitnData = values[`step_${i}`]["id"] ? ({ placeId: values[`step_${i}`]["id"] }) : values[`step_${i}`]
-                console.log(waypoitnData,'waypoitnDatawaypoitnData');
-                waypoint.push({
-                    location:
-                    waypoitnData
-                });
-            }
-        }
-        const results = await getMapResponse(origin, destination, waypoint);
-        console.log(results, "milesmiles");
-        if (results.routes[0].legs.length > 0) {
-            var miles = 0;
-            results.routes[0].legs.map((item: any) => {
-                miles += parseFloat(item.distance.text);
-            });
-            console.log(miles, "milesmiles");
-            setFieldValue("miles", `${miles} mile`);
-            setFieldValue("duration", `${miles} mile`);
-        }
-    };
     useEffect(() => {
         (async () => {
-            console.log(firstLoad);
             if (!firstLoad) {
-                // setStep((state: Array<number>) => {
-                //         return [
-                //             ...state,
-                //             step[step.length - 1] + 1
-                //         ];
-                //
-                //     }
-                // );
+                setStep((state: Array<number>) => {
+                        return [
+                            ...state,
+                            step[step.length - 1] + 1
+                        ];
+
+                    }
+                );
                 stepCount(count + 1);
-                setFieldValue("count", count);
+                setFieldValue("count", count + 1);
                 setFieldValue("steps", step);
             } else {
-                console.log(step,'stepstep');
-
                 setFieldValue("count", count);
             }
             setFirstLoad(false);
@@ -114,7 +104,6 @@ const Autocomplete: React.FC<ITextarea> = (
 
 
     const addStep = () => {
-        console.log(values,'4444444444');
         return (step.map((item: number) => {
             return (
                 <div
@@ -129,29 +118,23 @@ const Autocomplete: React.FC<ITextarea> = (
                                 color: error ? "crimson" : ""
                             }}
                         >{`Step ${item}`}</span>
-                        { item > 2 && <>
+                        {count > 2 && item > 2 && <>
                             <div className={s.deleteIcon}>
                                 <button
                                     onClick={() => {
-                                        // delete values[item]
-                                        //  setFieldValue("steps", values);
-                                        step.pop();
-                                        setStep(step);
-                                        delete values[`step_${item}`];
-                                        delete values[`time_${item}`];
-                                        delete values[`drop_${item}`];
-                                        delete values[`phone_${item}`];
-                                        delete values[`comment_${item}`];
-                                        setFieldValue("steps", step);
-                                        setFieldValue("count", count - 1);
+                                       delete values[item]
+                                        setFieldValue("steps", values);
+                                       step.pop()
+                                        setStep(step)
+                                        console.log(step,'asd')
                                         stepCount(count - 1);
-                                        setLoad(!load)
+                                      //  setLoad(!load)
                                     }}
                                 >
-                                    <img src={removeIcon} />
+                                    <img src={removeIcon}/>
                                 </button>
                             </div>
-                        </>
+                            </>
                         }
                     </div>
                     <div className={s.autocompleteWrapper}>
@@ -160,6 +143,8 @@ const Autocomplete: React.FC<ITextarea> = (
                             apiKey={GOOGLE_API_KEY}
                             selectProps={{
                                 name: `step_${item}`,
+
+                                /// placeholder:'Pick up address',
                                 defaultInputValue: values[`step_${item}`],
                                 onChange: (async (originValue: any) => {
                                     const originData = await geocodeByPlaceId(originValue.value.place_id);
@@ -167,10 +152,11 @@ const Autocomplete: React.FC<ITextarea> = (
                                         address: originData[0].formatted_address,
                                         id: originValue.value.place_id
                                     });
-                                    setLoad(!load)
+                                    setLoad(!load);
                                 }),
                                 className: `${s.input}`,
-                                placeholder: getFieldLabel(t, `address`, `address`, requiredFields),
+                              /// placeholder: `step_${item}`,
+                                placeholder: getFieldLabel(t, `address`,`address`, requiredFields),
                                 styles: {
                                     placeholder: (base) => ({
                                         ...base,
@@ -178,17 +164,17 @@ const Autocomplete: React.FC<ITextarea> = (
                                     }),
                                     menu: (base) => ({
                                         ...base,
-                                        zIndex: 9999
+                                        zIndex: 9999,
 
                                     }),
                                     control: (base, isActive) => ({
                                         ...base,
                                         border: error && !values[`step_${item}`] ? "1px solid crimson" : !values[`step_${item}`] ? "1px solid #757575" : "1px solid #19347a",
                                         "&:hover": {
-                                            border: error && !values[`step_${item}`] ? "1px solid crimson" : !values[`step_${item}`] ? "1px solid #757575" : "1px solid #19347a"
+                                            border: error && !values[`step_${item}`] ? "1px solid crimson" : !values[`step_${item}`] ? "1px solid #757575" : "1px solid #19347a",
                                         },
                                         boxShadow: isActive ? "none" : "none",
-                                        cursor: "pointer"
+                                        cursor: "pointer",
                                     })
 
                                 }
@@ -197,22 +183,22 @@ const Autocomplete: React.FC<ITextarea> = (
                     </div>
                     <div className={`${s.timePickerContainer} ${s.timePickerRow}`}>
                         {item !== 1 && <CustomTimePicker
-                            label={getFieldLabel(t, "Appointment Time", `drop_${item}`, requiredFields)}
+                          label={getFieldLabel(t,"Appointment Time", `drop_${item}`, requiredFields)}
                             //   error={errors[item.name]}
                             name={`drop_${item}`}
                             setFieldValue={setFieldValue}
                             value={values[`drop_${item}`]}
                             className={s.timePickerWrapper}
-                            ///   classNameTime={s.timePicker}
+                         ///   classNameTime={s.timePicker}
                         />}
                         {item !== step.length && <CustomTimePicker
-                            label={getFieldLabel(t, "Pickup Time", `time_${item}`, requiredFields)}
+                            label={getFieldLabel(t,"Pickup Time", `time_${item}`, requiredFields)}
                             //   error={errors[item.name]}
                             name={`time_${item}`}
                             setFieldValue={setFieldValue}
                             value={values[`time_${item}`]}
                             className={s.timePickerWrapper}
-                            ///   classNameTime={s.timePicker}
+                         ///   classNameTime={s.timePicker}
                         />}
 
 
@@ -246,15 +232,6 @@ const Autocomplete: React.FC<ITextarea> = (
         }));
     };
     const addInput = () => {
-        stepCount(count + 1);
-        setStep((state: any) => {
-            return [
-                ...state,
-                parseFloat(step[step.length -1]) + 1
-            ];
-        });
-       /// setFieldValue("count", count+1);
-        setFieldValue("steps", step);
         setNewStep(!newStep);
     };
     return (<>

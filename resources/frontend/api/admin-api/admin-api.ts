@@ -86,5 +86,8 @@ export const AdminApi = {
     },
     deleteStatus(id: number, tabId: number) {
         return axios.get(`/api/admin/deleteStatus/${tabId}/${id}`);
+    },
+    deleteTrip(id: number) {
+        return axios.get(`/api/admin/deleteTrip/${id}`);
     }
 };

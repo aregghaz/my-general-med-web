@@ -614,6 +614,19 @@ class ClientsController extends Controller
 
     }
 
+    public function delete($id) {
+        ////FIXME REMOVE INSURANCE FILE
+        Clients::find($id)->delete();
+        Address::where(['client_id' => $id])->delete();
+        return response()->json(
+            [
+                'success' => '1',
+                'type' => 'success',
+                'status' => 200,
+            ],
+            201
+        );
+    }
     public function updateAll($insuranceId, $path, $date)
     {
         $clinets = Clients::where('member_uniqie_identifer', $insuranceId)->update([

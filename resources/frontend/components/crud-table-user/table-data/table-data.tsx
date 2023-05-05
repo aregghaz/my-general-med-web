@@ -6,6 +6,7 @@ interface ITableData {
     rowspan?: number
     colspan?: number
     className?: string,
+    click?: boolean,
     item: any,
     handlerAction?: (id: number, action: string) => void
 }
@@ -17,6 +18,7 @@ const TableData: React.FC<ITableData> = (
         className,
         children,
         item,
+        click,
         handlerAction
     }
 ) => {
@@ -26,7 +28,7 @@ const TableData: React.FC<ITableData> = (
             colSpan={colspan || 1}
 
             rowSpan={rowspan || 1}
-            onClick={(event) => handlerAction(item["id"], "get")}
+            onClick={(event) =>  !click ? click : handlerAction(item["id"], "get")}
         >
             {children}
         </td>

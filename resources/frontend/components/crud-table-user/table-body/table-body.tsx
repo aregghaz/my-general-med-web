@@ -58,7 +58,7 @@ const TableBody: React.FC<ITableBody> = (
                                   className={`${selectedIds?.includes(item["id"]) ? s.chosen : ""} ${s.tableBColor}`}>
                             {
                                 (isEdit || isDelete || isInfo || isAssign) &&
-                                <TableData item={item} key={999999}>
+                                <TableData item={item} key={999999} click={false}>
                                     <div className={s.iconsWrapper}>
                                         {
                                             isDelete && typeId !== 5 && typeId !== 6 &&
@@ -169,7 +169,7 @@ const TableBody: React.FC<ITableBody> = (
 
 
                                         return i !== 0 && key !== "car_name" && (
-                                            <TableData key={key} item={item} className={key}
+                                            <TableData key={key} item={item} className={key} click={true}
                                                        handlerAction={handlerAction}>
                                                 {itemData}
 

@@ -111,6 +111,7 @@ Route::group([
     Route::get('/changeStatus/{slug}', [AdminController::class, 'changeStatus']);
     Route::get('/changeStatus/{tabId}/create', [AdminController::class, 'createNewStatus']);
     Route::get('/deleteStatus/{statusId}/{id}', [AdminController::class, 'delete']);
+    Route::get('/deleteTrip/{id}', [ClientsController::class, 'delete']);
     Route::get('/changeStatus/{id}/{statusId}', [AdminController::class, 'getStatusById']);
     Route::post('/changeStatus/{statusId}', [AdminController::class, 'createStatus']);
     Route::post('/set-price/{losId}/{vendorId}', [PriceListController::class, 'setPrice']);
