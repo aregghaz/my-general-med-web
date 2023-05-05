@@ -120,7 +120,7 @@ const Show: React.FC<IShow> = ({ id }) => {
             toast(t("record_successfully_edited"), options);
         }
     };
-    coŒnst [dateValue, setFieldDateValue] = useState(null);
+    const [dateValue, setFieldDateValue] = useState(null);
     const updateTimeHandler = async (step: number, field: string) => {
         console.log(step, field, dateValue, "step");
         console.log(dateValue, "step");
