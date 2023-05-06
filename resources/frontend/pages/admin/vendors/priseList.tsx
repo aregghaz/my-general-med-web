@@ -9,6 +9,7 @@ import Button from "../../../components/button/button";
 import InputCurrency from "../../../components/inputCurrency/inputcurrency";
 import PriceCall from "-!svg-react-loader!../../../images/priceCall.svg";
 import MailIcon from "-!svg-react-loader!../../../images/mailIcon.svg";
+import { toast } from "react-toastify";
 
 interface IVendors {
     path: string;
@@ -87,6 +88,12 @@ const PriceList: React.FC<IVendors> = ({ id }) => {
     const handlerSubmit = async (losId: number) => {
         console.log(values[losId], "valuesvaluesvaluesvalues");
         await AdminApi.updatePrice(losId, id, values[losId]);
+        const options = {
+            type: toast.TYPE.SUCCESS,
+            position: toast.POSITION.TOP_RIGHT
+        };
+
+        toast(t("record_successfully_edited"), options);
     };
 
     return Object.keys(data).length > 0 && (

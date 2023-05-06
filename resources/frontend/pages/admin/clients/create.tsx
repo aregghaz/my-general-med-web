@@ -38,18 +38,19 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         { name: "fullName", type: "input", label: "fullName", placeholder:"Full name" },
         { name: "gender", type: "select", label: "gender" },
         { name: "birthday", type: "datepicker", label: "birthday"},
+        { name: "member_unique_identifier", type: "input", label: "member_unique_identifier", placeholder: "Member unique identifier"},
         { name: "insurance", type: "file", label: "insurance"},
         ///  { name: "los", type: "select", label: "los" },
         { name: "artificial", type: "select", label: "artificial" },
         { name: "waitDuration", type: "select", label: "waitDuration"},
+        { name: "stairchair", type: "select", label: "stairchair"},
         /// { name: "vendors", type: "select", label: "vendors" },
         { name: "request_type", type: "select", label: "request_type" },
-        { name: "member_unique_identifier", type: "input", label: "member_unique_identifier", placeholder: "Member unique identifier"},
         ///  { name: "price", type: "input", label: "price", inputType: "number" },
         { name: "height", type: "input", label: "height", placeholder: "Height" },
         { name: "weight", type: "input", label: "weight", inputType: "number", placeholder: "Weight" },
         { name: "miles", type: "input", label: "miles", inputType: "disabled" },
-        { name: "stairchair", type: "select", label: "stairchair"},
+
     ];
 
     const fields2: Array<IItem> = [
@@ -65,19 +66,21 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         { name: "fullName", type: "input", label: "fullName", placeholder:"Full name" },
         { name: "gender", type: "select", label: "gender" },
         { name: "birthday", type: "datepicker", label: "birthday"},
+        { name: "member_unique_identifier", type: "input", label: "member_unique_identifier", placeholder: "Member unique identifier"},
+        { name: "insurance", type: "file", label: "insurance", inputType: "hidden" },
         ///  { name: "los", type: "select", label: "los" },
         { name: "artificial", type: "select", label: "artificial" },
         { name: "clientType", type: "select", label: "clientType" },
         { name: "waitDuration", type: "select", label: "waitDuration" },
+        { name: "stairchair_id", type: "select", label: "stairchair"},
         /// { name: "vendors", type: "select", label: "vendors" },
         { name: "request_type", type: "select", label: "request_type" },
-        { name: "member_unique_identifier", type: "input", label: "member_unique_identifier", placeholder: "Member unique identifier"},
         ///  { name: "price", type: "input", label: "price", inputType: "number" },
         { name: "height", type: "input", label: "height", placeholder: "Height" },
         { name: "weight", type: "input", label: "weight", inputType: "number", placeholder: "Weight" },
         { name: "miles", type: "input", label: "miles", inputType: "disabled" },
-        { name: "insurance", type: "file", label: "insurance", inputType: "hidden" },
-        { name: "stairchair_id", type: "select", label: "stairchair"},
+
+
     ];
 
     useEffect(() => {

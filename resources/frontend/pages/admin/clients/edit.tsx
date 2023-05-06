@@ -37,21 +37,22 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
     // });
     const fields: Array<IItem> = [
         { name: "fullName", type: "input", label: "fullName" },
-        { name: "date_of_service", type: "datepicker", label: "date_of_service" },
+        { name: "member_uniqie_identifer", type: "input", label: "member_uniqie_identifer" },
+        { name: "insurance", type: "file", label: "insurance"},
         { name: "gender", type: "select", label: "gender" },
         { name: "birthday", type: "datepicker", label: "birthday" },
-        { name: "insurance", type: "file", label: "insurance"},
         { name: "los", type: "select", label: "los", allowValueClear:false},
+        { name: "date_of_service", type: "datepicker", label: "date_of_service" },
+        { name: "vendor_id", type: "select", label: "vendors" },
         { name: "artificial_id", type: "select", label: "artificial" },
         { name: "duration_id", type: "select", label: "waitDuration" },
-        { name: "vendor_id", type: "select", label: "vendors" },
+        { name: "stairchair_id", type: "select", label: "stairchair"},
         { name: "request_type", type: "select", label: "request_type" },
-        { name: "member_uniqie_identifer", type: "input", label: "member_uniqie_identifer" },
       ///  { name: "price", type: "input", label: "price", inputType: "number" },
         { name: "height", type: "input", label: "height" },
         { name: "weight", type: "input", label: "weight", inputType: "number" },
-        { name: "stairchair_id", type: "select", label: "stairchair"},
         { name: "miles", type: "input", label: "miles", inputType: "disabled" },
+     //   { name: "duration", type: "input", label: "duration", inputType: "disabled" },
         { name: "address", type: "address", label: "" },
         { name: "stops", type: "hidden", label: "stops" },
         { name: "count", type: "hidden", label: "count" },
@@ -101,7 +102,7 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
             };
 
             toast(t("record_successfully_edited"), options);
-           ///  await navigate(`/admin/${crudKey}`);
+          await navigate(`/admin/${crudKey}`);
         }
     };
     return data && <div>

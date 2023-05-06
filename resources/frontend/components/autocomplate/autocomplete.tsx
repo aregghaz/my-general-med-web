@@ -84,8 +84,8 @@ const Autocomplete: React.FC<ITextarea> = (
                 miles += parseFloat(item.distance.text);
             });
             console.log(miles, "milesmiles");
-            setFieldValue("miles", `${miles} mile`);
-            setFieldValue("duration", `${miles} mile`);
+            setFieldValue("miles", miles);
+            setFieldValue("duration", `${miles}`);
         }
     };
     useEffect(() => {
