@@ -322,7 +322,7 @@ class VendorController extends Controller
             if (gettype(array_search($client->los_id, $losIds)) == 'integer') {
                 $priceLists = PriceList::where(['los_id' => $client->los_id, 'vendor_id' => $vendorId])->get();
                 foreach ($priceLists as $priceList) {
-                    if (($priceList->service_id === 5 && $client->stairchair_id > 1) || ($priceList->service_id === 4 && $client->waitDuration > 1) || ($priceList->service_id === 3 && $client->artificial_id > 1) || ($priceList->service_id === 2 or $priceList->service_id === 2)) {
+                    if (($priceList->service_id === 5 && $client->stairchair_id > 1) || ($priceList->service_id === 4 && $client->waitDuration > 1) || ($priceList->service_id === 3 && $client->artificial_id > 1) || ($priceList->service_id === 2 or $priceList->service_id === 1)) {
                         $price = $this->calculatePrice($priceList, $price, $client->miles);
                     }
                 }
