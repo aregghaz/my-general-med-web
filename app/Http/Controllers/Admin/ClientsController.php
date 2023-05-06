@@ -345,7 +345,7 @@ class ClientsController extends Controller
         $client->request_type = $requestData->request_type->id;
         $client->operator_id = $userId;
         $client->stops = (int)$requestData->count;
-        $client->stairchair_id = $requestData->stairchair_id->id;
+        $client->stairchair_id = $requestData->stairchair->id;
         $client->member_uniqie_identifer = $requestData->member_unique_identifier;
         if (isset($requestData->birthday)) {
             $client->birthday = $requestData->birthday;
@@ -507,7 +507,7 @@ class ClientsController extends Controller
         $client->operator_id = $userId;
         $client->stops = $requestData->count;
         $client->member_uniqie_identifer = $requestData->member_uniqie_identifer;
-        $client->stairchair_id = $requestData->stairchair->id;
+        $client->stairchair_id = $requestData->stairchair_id->id;
         if (isset($requestData->birthday)) {
             $client->birthday = $requestData->birthday;
         }
