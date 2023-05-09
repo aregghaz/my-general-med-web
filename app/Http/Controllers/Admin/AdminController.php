@@ -172,8 +172,6 @@ class AdminController extends Controller
     public function updateClient(Request $request, $id)
     {
         Clients::find($id)->update([
-            "pick_up" => $request->pick_up,
-            "drop_down" => $request->drop_down,
             ///"additionalNote"=>$request->additionalNote,
             "operator_note" => $request->operator_note,
         ]);

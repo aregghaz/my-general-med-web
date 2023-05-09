@@ -68,9 +68,14 @@ const App = (): JSX.Element => (
                 <TermsPage path={"/terms"}/>
             </Site>
             <Site path="/operators">
+                <Vendors path="vendors" />
+                <VendorEdit path="vendors/:id/2" />
+                <OperatorEdit path="vendors/:id/4" />
+                <VendorCreate path="vendors/create/2" />
                 <Clients path="clients" />
                 <ClientEdit path="clients/:id" />
                 <ClientCreate path="clients/create" />
+                <NotificationList path="notification" />
             </Site>
             <Site path="/admin">
                 {/*<Profile path="/profile"/>*/}

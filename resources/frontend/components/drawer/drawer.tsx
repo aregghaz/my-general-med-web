@@ -127,12 +127,12 @@ const Drawer: React.FC = ({ children }) => {
 
     } else if (userData.user && userData.user.role == "operator") {
         menuItemsFirst = [
-            {
-                id: 1,
-                Icon: <HomeIcon />,
-                item: "Home",
-                page: "/operators"
-            },
+            // {
+            //     id: 1,
+            //     Icon: <HomeIcon />,
+            //     item: "Home",
+            //     page: "/operators"
+            // },
             {
                 id: 2,
                 Icon: <Account />,
@@ -290,7 +290,7 @@ const Drawer: React.FC = ({ children }) => {
                             userData.user && <li className={s.item} key={`first-notification`}>
                                 <Link
 
-                                    to={userData.user && userData.user.role === "admin" ? "/admin/notification" : "/notification"}
+                                    to={userData.user && userData.user.role === "admin" ? "/admin/notification" : (userData.user.role === "vendor" ? "/notification" : '/operators/notification')}
                                     className={`${s.link} ${selectedPage === 6 ? s.active_icon : s.passive_icon}`}
                                     onClick={() => setActiveIcon(6)}
                                 >

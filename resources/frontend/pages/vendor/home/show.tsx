@@ -16,6 +16,10 @@ import CustomTimePicker from "../../../components/custom-time-picker/customTimeP
 import ShowMap from "-!svg-react-loader!../../../images/showMap.svg";
 import Update from "-!svg-react-loader!../../../images/update.svg";
 import Save from "-!svg-react-loader!../../../images/saveImg.svg";
+import populateEditFormFields from "../../../constants/populateEditFormFields";
+import { Simulate } from "react-dom/test-utils";
+import submit = Simulate.submit;
+import { Formik, FormikHelpers, FormikValues } from "formik";
 
 
 interface IShow {
@@ -49,13 +53,14 @@ const Show: React.FC<IShow> = ({ id }) => {
     const [showMap, setShowMap] = useState<boolean>(false);
 
 
-    const [values, setFieldValue] = useState({
+    const [values22, setFieldValue] = useState({
         additionalNote: clientById.additionalNote,
         status: clientById.type_id,
         car: clientById.car
 
     });
-    const [dateValue, setFieldDateValue] = useState(null);
+    ///const [dateValue, setFieldDateValue] = useState<Array<{[key:number]: { [key:string]:string }}>>([]);
+    var dateValue: Array<[{[step:number]:{key :string, value: string}}]> =[]
     useEffect(() => {
         (async () => {
             const homeData = await homeAPI.getCLientById(id);
@@ -131,41 +136,73 @@ const Show: React.FC<IShow> = ({ id }) => {
 
 
     };
-    const handlerUpdate = async () => {
-        ////TODO optimize this part
-        if (!values.car.value) {
-            const options = {
-                type: toast.TYPE.WARNING,
-                position: toast.POSITION.TOP_RIGHT
-            };
-            toast(t("please select car"), options);
-        } else {
-            const homeData = await homeAPI.updateClient(values, id).catch((e) => {
-                const options = {
-                    type: toast.TYPE.ERROR,
-                    position: toast.POSITION.TOP_RIGHT
-                };
-                toast(t(e), options);
-            });
-            if (homeData.success) {
-                const options = {
-                    type: toast.TYPE.SUCCESS,
-                    position: toast.POSITION.TOP_RIGHT
-                };
-
-                toast(t("record_successfully_edited"), options);
-            }
-        }
-
-
-    };
+    // const handlerUpdate = async () => {
+    //     ////TODO optimize this part
+    //     if (!values22.car.value) {
+    //         const options = {
+    //             type: toast.TYPE.WARNING,
+    //             position: toast.POSITION.TOP_RIGHT
+    //         };
+    //         toast(t("please select car"), options);
+    //     } else {
+    //         const homeData = await homeAPI.updateClient(values22, id).catch((e) => {
+    //             const options = {
+    //                 type: toast.TYPE.ERROR,
+    //                 position: toast.POSITION.TOP_RIGHT
+    //             };
+    //             toast(t(e), options);
+    //         });
+    //         if (homeData.success) {
+    //             const options = {
+    //                 type: toast.TYPE.SUCCESS,
+    //                 position: toast.POSITION.TOP_RIGHT
+    //             };
+    //
+    //             toast(t("record_successfully_edited"), options);
+    //         }
+    //     }
+    //
+    //
+    // };
     const updateTimeHandler = async (step: number, field: string) => {
-
+        console.log(step,field,dateValue,'44444');
     };
-    const onChange = () => {
+    const submit = async (values: FormikValues, { setSubmitting }: FormikHelpers<FormikValues>) => {
+        console.log(values,'valuesvaluesvaluesvalues');
 
+        if(values.status.id === 0){
+            delete values.status
+        }
+        if(values.car.id === 0){
+            delete values.car
+        }
+                const homeData = await homeAPI.updateClient(values22, id).catch((e) => {
+                    const options = {
+                        type: toast.TYPE.ERROR,
+                        position: toast.POSITION.TOP_RIGHT
+                    };
+                    toast(t(e), options);
+                });
     };
     return clientById && <div className={cls.block} ref={blockRef}>
+        <Formik
+            initialValues={values22}
+            onSubmit={submit}
+            //  validate={validate}
+            validateOnChange={false}
+            validateOnBlur={false}
+        >
+            {({
+                  handleSubmit,
+                  handleChange,
+                  values,
+                  setFieldValue,
+                  errors
+              }) => {
+
+
+                return (
+                    <>
         <div className={cls.infoLeft}>
             <div>
                 <div className={cls.infoLeftName}>
@@ -181,7 +218,7 @@ const Show: React.FC<IShow> = ({ id }) => {
                         </div>
                         <div className={cls.updateButton}>
                             <span className={`${cls.updateButtonLabel} ${cls.updateLabel}`}>Update</span>
-                            <Update type={"adminUpdate"} onClick={handlerUpdate} className={cls.updateIcon} />
+                            <Update type={"adminUpdate"} onClick={handleSubmit}      isSubmit={true} className={cls.updateIcon} />
                         </div>
                     </div>
 
@@ -194,17 +231,12 @@ const Show: React.FC<IShow> = ({ id }) => {
                             <Select
                                 getOptionValue={(option: IOption) => option.value}
                                 getOptionLabel={(option: IOption) => t(option.label)}
-                                onChange={(options: IOption) => setFieldValue((state: any) => {
-                                    return {
-                                        ...state,
-                                        car: options
-                                    };
-                                })}
+                                onChange={(options: IOption) => setFieldValue( "cars", options)}
                                 placeholder={"Select Car"}
                                 isDisabled={disabled}
                                 options={carData}
-                                value={values.car}
-                                name={"Cars"}
+                                value={values22.car}
+                                name={"cars"}
                                 isMulti={false}
                                 label={"Cars"}
                             />
@@ -213,18 +245,11 @@ const Show: React.FC<IShow> = ({ id }) => {
                             <Select
                                 getOptionValue={(option: IOption) => option.value}
                                 getOptionLabel={(option: IOption) => t(option.label)}
-                                onChange={(options: IOption) => {
-                                    return setFieldValue((state: any) => {
-                                        return {
-                                            ...state,
-                                            status: options
-                                        };
-                                    });
-                                }}
+                                onChange={(options: IOption) => setFieldValue( "status", options)}
                                 isDisabled={disabled}
                                 options={statuses}
-                                value={values.status}
-                                name={"Cars"}
+                                value={values22.status}
+                                name={"status"}
                                 isMulti={false}
                                 label={"Status"}
                                 placeholder={"Select status"}
@@ -264,34 +289,27 @@ const Show: React.FC<IShow> = ({ id }) => {
                                             {/*<span className={cls.itemValue}>{item.drop_down}</span>*/}
                                             <CustomTimePicker
                                                 className={cls.timepicker}
-                                                setFieldValue={setFieldDateValue}
+                                                setFieldValue={setFieldValue}
                                                 value={item.drop_down}
-                                                name={`drop_down`}
+                                                name={`drop_down_${index}`}
                                             />
-                                            <div className={cls.updateButton}>
-                                                <span className={cls.updateButtonLabel}>Save</span>
-                                                <button className={cls.adminUpdate}>
-                                                    <Save type={"adminUpdate"}
-                                                          onClick={() => updateTimeHandler(item.step, "drop_down")}
-                                                          className={cls.saveIcon} />
-                                                </button>
-                                            </div>
+                                            {/*<div className={cls.updateButton}>*/}
+                                            {/*    <span className={cls.updateButtonLabel}>Save</span>*/}
+                                            {/*    <button className={cls.adminUpdate}>*/}
+                                            {/*        <Save type={"adminUpdate"}*/}
+                                            {/*              onClick={() => updateTimeHandler(item.step, `drop_down_${index}`)}*/}
+                                            {/*              className={cls.saveIcon} />*/}
+                                            {/*    </button>*/}
+                                            {/*</div>*/}
                                         </div>}
                                         {clientById.address.length !== index + 1 &&
                                             <div className={cls.item} style={{ alignItems: "center" }}>
                                                 <span className={cls.itemLabel}>Pickup time:</span>
                                                 {/*<span className={cls.itemValue}>{item.pick_up}</span>*/}
                                                 <CustomTimePicker className={cls.timepicker}
-                                                                  setFieldValue={setFieldDateValue} value={item.pick_up}
-                                                                  name={`pick_up`} />
-                                                <div className={cls.updateButton}>
-                                                    <span className={cls.updateButtonLabel}>Save</span>
-                                                    <button className={cls.adminUpdate}>
-                                                        <Save type={"adminUpdate"}
-                                                              onClick={() => updateTimeHandler(item.step, "pick_up")}
-                                                              className={cls.saveIcon} />
-                                                    </button>
-                                                </div>
+                                                                  setFieldValue={setFieldValue}
+                                                                  value={item.pick_up}
+                                                                  name={`pick_up_${index}`} />
                                             </div>}
                                         <div className={cls.item}>
                                             <span className={cls.itemLabel}>Pickup Address:</span>
@@ -314,21 +332,17 @@ const Show: React.FC<IShow> = ({ id }) => {
                 })
             }
         </div>
+
         <div className={cls.infoRight}>
             <div className={cls.info}>
                 <div className={cls.itemTextarea}>
                     <Textarea
                         name={"additionalNote"}
-                        value={values.additionalNote}
+                        value={values22.additionalNote}
                         placeholder={t("additionalNote")}
                         onChange={(event: any) => {
-                            event.persist();
-                            return setFieldValue((state: any) => {
-                                return {
-                                    ...state,
-                                    additionalNote: event.target.value
-                                };
-                            });
+                            event.persist()
+                            setFieldValue("additionalNote", event.target.value)
                         }}
                         label={t("additionalNote")}
                     />
@@ -378,6 +392,8 @@ const Show: React.FC<IShow> = ({ id }) => {
                 </div>
             </div>
         </div>
+                    </>)}}
+        </Formik>
     </div>;
 };
 
