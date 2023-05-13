@@ -305,7 +305,7 @@ class HomeController extends Controller
                 $price = 0;
                 $priceLists = PriceList::where(['los_id' => $client->los_id, 'vendor_id' => $vendorId])->get();
                 foreach ($priceLists as $priceList) {
-                    if (($priceList->service_id === 5 && $client->stairchair_id > 1) || ($priceList->service_id === 4 && $client->waitDuration > 1) || ($priceList->service_id === 3 && $client->artificial_id > 1) || ($priceList->service_id === 2 or $priceList->service_id === 2)) {
+                    if (($priceList->service_id === 5 && $client->stairchair_id > 1) || ($priceList->service_id === 4 && $client->waitDuration > 1) || ($priceList->service_id === 3 && $client->artificial_id > 1) || ($priceList->service_id === 2 or $priceList->service_id === 1)) {
                         $price = $this->calculatePrice($priceList, $price, $client->miles);
                         Clients::find($client->id)->update(['type_id' => 1, 'vendor_id' => $vendorId, "car_id" => null, 'price' => $price]);
                     }

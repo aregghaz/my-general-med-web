@@ -284,11 +284,14 @@ class Controller extends BaseController
 
     public function calculatePrice($priceList, $price, $miles)
     {
+
         if ($priceList->type == 'base') {
             $price = $price + $priceList->price;
+          ///  var_dump($price);
         } else {
             ///dd($price+$priceList->price * $requestData->miles);
             $price = $price + ($priceList->price * $miles);
+           // dd($price);
         }
         return $price;
     }
