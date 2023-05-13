@@ -321,8 +321,8 @@ class ClientsController extends Controller
             $price = 0;
             $priceLists = PriceList::where(['los_id' => $requestData->los->id, 'vendor_id' => $requestData->vendors->id])->get();
             foreach ($priceLists as $priceList) {
-                if(($priceList->service_id === 5 && $requestData->stairchair_id->id > 1) || ($priceList->service_id === 4 && $requestData->duration_id->id > 1) || ($priceList->service_id === 3 && $requestData->artificial_id->id > 1)|| ($priceList->service_id === 2 or $priceList->service_id === 1 )) {
-                    $price = $this->calculatePrice($priceList,$price,$requestData->miles) ;
+                if (($priceList->service_id === 5 && $requestData->stairchair_id->id > 1) || ($priceList->service_id === 4 && $requestData->duration_id->id > 1) || ($priceList->service_id === 3 && $requestData->artificial_id->id > 1) || ($priceList->service_id === 2 or $priceList->service_id === 1)) {
+                    $price = $this->calculatePrice($priceList, $price, $requestData->miles);
                 }
             }
             /// dd($price);
@@ -463,7 +463,7 @@ class ClientsController extends Controller
             'los' => new StatusCollection($los),
             ///  "type_of_trip" => new StatusCollection($typeOfTrip),
             'status' => new StatusCollection($clientStatus),
-            "vendors" => new StatusCollection($vendors),
+            "vendor_id" => new StatusCollection($vendors),
             "stairchair_id" => new StatusCollection($stairchair),
             'artificial_id' => new StatusCollection($artificial),
             'duration_id' => new StatusCollection($waitDuration),
@@ -520,13 +520,13 @@ class ClientsController extends Controller
         }
         if (isset($requestData->specialPrice) && $requestData->specialPrice) {
             $client->price = (float)$requestData->price;
-        } else if (isset($requestData->vendors) || isset($client->x)) {
+        } else if (isset($requestData->vendor_id)) {
             $price = 0;
-            $priceLists = PriceList::where(['los_id' => $requestData->los->id, 'vendor_id' => $client->vendor_id])->get();
-      ///      $client->vendor_id = $requestData->vendors->id;
+            $priceLists = PriceList::where(['los_id' => $requestData->los->id, 'vendor_id' => $requestData->vendor_id->id])->get();
+            $client->vendor_id = $requestData->vendor_id->id;
             foreach ($priceLists as $priceList) {
-                if(($priceList->service_id === 5  && $requestData->stairchair_id->id > 1) || ($priceList->service_id === 4 && $requestData->duration_id->id > 1) || ($priceList->service_id === 3 && $requestData->artificial_id->id > 1)|| ($priceList->service_id === 2 or $priceList->service_id === 1 )) {
-                    $price = $this->calculatePrice($priceList,$price,$requestData->miles) ;
+                if (($priceList->service_id === 5 && $requestData->stairchair_id->id > 1) || ($priceList->service_id === 4 && $requestData->duration_id->id > 1) || ($priceList->service_id === 3 && $requestData->artificial_id->id > 1) || ($priceList->service_id === 2 or $priceList->service_id === 1)) {
+                    $price = $this->calculatePrice($priceList, $price, $requestData->miles);
                 }
             }
             //dd($price);
@@ -617,7 +617,6 @@ class ClientsController extends Controller
         );
 
     }
-
 
 
     public function delete($id)
