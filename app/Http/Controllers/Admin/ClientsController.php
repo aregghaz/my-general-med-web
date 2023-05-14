@@ -189,6 +189,9 @@ class ClientsController extends Controller
             }
         }
 
+
+
+
         $result = array_diff($allFields, $selectedFieldsTitle);
         $selectedFields = count($clientsData) > 0 ? $clientsData : $clientData;
         array_unshift($selectedFields, 'clients.id as id');
