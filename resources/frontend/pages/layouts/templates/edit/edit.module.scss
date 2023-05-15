@@ -72,8 +72,9 @@
             margin: 10px 10px 15px;
         }
     }
+    width: 100%;
     grid-column: 1/4;
-    justify-content: start;
+    justify-content: flex-end;
     display: flex;
     margin-top: 50px;
     //border: 1px solid red;
