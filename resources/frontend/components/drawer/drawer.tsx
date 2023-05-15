@@ -8,7 +8,7 @@ import { setLogOut } from "../../store/auth";
 import Bars from "-!svg-react-loader!../../images/Bars.svg";
 import Close from "-!svg-react-loader!../../images/Close.svg";
 import Account from "-!svg-react-loader!../../images/User.svg";
-import Users from "-!svg-react-loader!../../images/User.svg";
+import Drivers from "-!svg-react-loader!../../images/driver.svg";
 import Logout from "-!svg-react-loader!../../images/SignOut.svg";
 import ProfileSvg from "-!svg-react-loader!../../images/profile1.svg";
 import Notification from "-!svg-react-loader!../../images/notifications.svg";
@@ -16,9 +16,9 @@ import NotificationActive from "-!svg-react-loader!../../images/notifications-ac
 import Clients from "-!svg-react-loader!../../images/Clients.svg";
 import Cars from "-!svg-react-loader!../../images/Car.svg";
 import HomeIcon from "-!svg-react-loader!../../images/my-services.svg";
-import Status from "-!svg-react-loader!../../images/Status.svg";
+import Status from "-!svg-react-loader!../../images/Settings.svg";
 import { getNotificationCount, getUserData } from "../../store/selectors";
-import { actionsNotification } from "../../store/notification";
+import AssignVendorIcon from "-!svg-react-loader!../../images/add-company-icon.svg";
 
 const Drawer: React.FC = ({ children }) => {
     const { t } = useTranslation();
@@ -47,7 +47,7 @@ const Drawer: React.FC = ({ children }) => {
     useEffect(() => {
         document.addEventListener("mousedown", outsideClickHandler);
         if (userData.user) {
-          ///  dispatch(actionsNotification.fetching({ count: userData.user.count }));
+            ///  dispatch(actionsNotification.fetching({ count: userData.user.count }));
         }
         return () => {
             document.removeEventListener("mousedown", outsideClickHandler);
@@ -60,97 +60,59 @@ const Drawer: React.FC = ({ children }) => {
         Icon: any,
         item: string,
         page: string,
+        count: number,
     }> = [];
 
-    if (userData.user && (userData.user.role == "vendor")) {
 
-        menuItemsFirst = [
+    if (userData.user) {
+
+        const IconArray = [
             {
-                id: 4,
-                Icon: <HomeIcon />,
-                item: "Dashboard",
-                page: "/dashboard"
+                id: 1,
+                icon: <HomeIcon />
             }, {
-                id: 1,
-                Icon: <Clients />,
-                item: "clients",
-                page: "/"
-            },
-            {
                 id: 2,
-                Icon: <Account />,
-                item: "Users",
-                page: "/users"
-            },
-            {
+                icon: <AssignVendorIcon />
+            }, {
                 id: 3,
-                Icon: <Cars />,
-                item: "Cars",
-                page: "/cars"
-            }
-        ];
-    } else if (userData.user && userData.user.role == "admin") {
-
-        menuItemsFirst = [
-            {
-                id: 1,
-                Icon: <HomeIcon />,
-                item: "Home",
-                page: "/admin"
-            },
-            {
-                id: 2,
-                Icon: <Account />,
-                item: "vendors",
-                page: "/admin/vendors"
-            },
-            {
+                icon: <Clients />
+            }, {
                 id: 4,
-                Icon: <Clients />,
-                item: "clients",
-                page: "/admin/clients"
+                icon: <Drivers />
             },
             {
                 id: 5,
-                Icon: <Status />,
-                item: "status",
-                page: "/admin/status"
-            }
-            // {
-            //     id: 6,
-            //     Icon: <UserRole />,
-            //     item: "role",
-            //     page: "/admin"
-            // }
-
-        ];
-
-    } else if (userData.user && userData.user.role == "operator") {
-        menuItemsFirst = [
-            // {
-            //     id: 1,
-            //     Icon: <HomeIcon />,
-            //     item: "Home",
-            //     page: "/operators"
-            // },
-            {
-                id: 2,
-                Icon: <Account />,
-                item: "vendors",
-                page: "/operators/vendors"
+                icon: <Cars />
             },
             {
-                id: 4,
-                Icon: <Clients />,
-                item: "clients",
-                page: "/operators/clients"
+                id: 7,
+                icon: <Notification />,
+                count: userData.user.count
+            }, {
+                id: 8,
+                icon: <Status />
             }
-
-
         ];
+        userData.user.pages.map((item, index) => {
+            console.log(IconArray.find(x => x.id == item.id), "menuItemsFirst");
+            const pathUrl = userData.user.role == "admin" ? `/${userData.user.role}` : "";
+            menuItemsFirst.push({
+                id: item.id,
+                Icon: IconArray.find(x => x.id == item.id).icon,
+                item: item.name,
+                page: `${pathUrl}${item.slug}`,
+                count: item.count
+            });
+        });
     }
 
+
     ///  const [activeIcon, setActiveIcon] = useState<number>(1);
+
+
+
+
+
 
     const setActiveIcon = (pageId: number) => {
         localStorage.setItem("page", `${pageId}`);
@@ -198,8 +160,8 @@ const Drawer: React.FC = ({ children }) => {
                                                 className={s.logOutButton}
                                                 type={"blank"}
                                                 onClick={() => {
-                                                    navigate("/profile")
-                                                    openAccountMenu()
+                                                    navigate("/profile");
+                                                    openAccountMenu();
                                                     // if (userData.user.role === "admin") {
                                                     //     navigate("/admin/profile");
                                                     //     openAccountMenu();
@@ -263,7 +225,7 @@ const Drawer: React.FC = ({ children }) => {
                     <ul className={s.list}>
                         {
                             menuItemsFirst
-                                .map(li => (
+                                .map((li) => (
                                         <li className={s.item} key={`first-${li.item}`}>
                                             <Link
                                                 to={li.page}
@@ -272,7 +234,10 @@ const Drawer: React.FC = ({ children }) => {
                                             >
                                                 <span className={s.link_block}>
                                                 <span className={s.side_icon}>
-                                                    {li.Icon}
+                                                    {li.id === 2 ? (li.count > 0 ? <> <NotificationActive /> <span
+                                                            className={s.bage}>{li.count}</span></> :
+                                                        li.Icon) : li.Icon}
+
                                                 </span>
                                                 <span className={s.side_text}>
                                                     {t(li.item)}
@@ -285,29 +250,7 @@ const Drawer: React.FC = ({ children }) => {
                                 )
                         }
 
-                        {
 
-                            userData.user && <li className={s.item} key={`first-notification`}>
-                                <Link
-
-                                    to={userData.user && userData.user.role === "admin" ? "/admin/notification" : (userData.user.role === "vendor" ? "/notification" : '/operators/notification')}
-                                    className={`${s.link} ${selectedPage === 6 ? s.active_icon : s.passive_icon}`}
-                                    onClick={() => setActiveIcon(6)}
-                                >
-                                                <span className={s.link_block}>
-                                                <span className={s.side_icon}>
-                                                    {/*{li.Icon}*/}
-                                                    {userData.user.count > 0 ? <> <NotificationActive /> <span
-                                                            className={s.bage}>{userData.user.count}</span></> :
-                                                        <Notification />}
-                                                </span>
-                                                <span className={s.side_text}>
-                                                    {t("Notification")}
-                                                </span>
-                                                </span>
-                                </Link>
-                            </li>
-                        }
                     </ul>
                 </nav>
                 <div className={s.main_content}

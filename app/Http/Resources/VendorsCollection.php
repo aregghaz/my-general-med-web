@@ -30,6 +30,13 @@ class VendorsCollection extends ResourceCollection
 
                 }
             }
+            $pages = [];
+            if (count($vendor->pages)) {
+                for ($i = 0; $i < count($vendor->pages); $i++) {
+                    $pages[] = $vendor->pages[$i]->name;
+
+                }
+            }
             return [
                 'id' => $vendor->id,
                 "companyName" => $vendor->name,
@@ -38,7 +45,8 @@ class VendorsCollection extends ResourceCollection
                 'phone_number' => $vendor->phone_number,
                 /// 'birthday' => $vendor->phone_number,
                 'fields' => $fields,
-                'losService' => $losService
+                'losService' => $losService,
+                'pages' => $pages
             ];
         });
     }

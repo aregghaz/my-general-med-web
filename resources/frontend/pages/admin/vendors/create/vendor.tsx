@@ -21,6 +21,7 @@ const VendorCreate: React.FC<IVendorCreate> = () => {
         { name: "password", type: "password", inputType: "password", autoComplete: "new-password", placeholder: "Password"},
         { name: "los", type: "multiSelect", inputType: "los", label: "los", placeholder: "LOS"},
         { name: "fields", type: "multiSelect", label: "fields", placeholder: "Table fields"},
+        { name: "pages", type: "multiSelect", label: "Menu pages", placeholder: "Menu pages"},
         { name: "id", type: "hidden", inputType: "hidden" },
 
     ];

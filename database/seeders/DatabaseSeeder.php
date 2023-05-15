@@ -16,10 +16,11 @@ class DatabaseSeeder extends Seeder
         $this->call([
 //            UserSeeder::class,
 //            RoleSeeder::class,
-            StatusSeeder::class,
+           /// StatusSeeder::class,
+            PagesSeeder::class,
 //            // ClientSeeder::class,
 //            // VendorSeeder::class,
-            TablesFieldsSeeder::class,
+            ///TablesFieldsSeeder::class,
             ///        ActionsSeeder::class,
 //            MakeSeeder::class,
 //            YearSeeder::class,

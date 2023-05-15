@@ -127,6 +127,7 @@ const Vendors: React.FC<IVendors> = () => {
         "phone_number",
         "fields",
         "losService",
+        "pages",
         "action"
     ];
     const handlerAddItem = () => navigate(`/admin/${crudKey}/create/${typeId}`);

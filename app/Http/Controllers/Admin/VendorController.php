@@ -12,6 +12,7 @@ use App\Models\Clients;
 use App\Models\ClientStatus;
 use App\Models\ClientTable;
 use App\Models\Los;
+use App\Models\Pages;
 use App\Models\PriceList;
 use App\Models\User;
 use App\Models\Vendor;
@@ -43,7 +44,7 @@ class VendorController extends Controller
                 $vendorData = User::where(['role_id' => $request->typeId]);
             }
         }
-        $vendorData = $vendorData->with('fields', 'los')
+        $vendorData = $vendorData->with('fields', 'los', 'pages')
             ->get();
         return response()->json(
             [
@@ -66,11 +67,13 @@ class VendorController extends Controller
         /// $users = User::get();
         $status = ClientStatus::get();
         $los = Los::get();
+        $pages = Pages::get();
         return response()->json(
             [
                 'status' => new StatusCollection($status),
                 'fields' => new StatusCollection($clientTable),
                 'los' => new StatusCollection($los),
+                'pages' => new StatusCollection($pages),
             ],
             200
         );
@@ -93,6 +96,7 @@ class VendorController extends Controller
             'address' => 'string',
             'fields' => 'required',
             'los' => 'required',
+            'pages' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -130,8 +134,10 @@ class VendorController extends Controller
             $vendor->save();
 
             $idCats = array_column($requestData['fields'], 'id');
-            $vendor->fields()->sync($idCats);
+            $idPages = array_column($requestData['pages'], 'id');
             $idLos = array_column($requestData['los'], 'id');
+            $vendor->fields()->sync($idCats);
+            $vendor->pages()->sync($idPages);
             $vendor->los()->sync($idLos);
         }
         return response()->json(
@@ -174,11 +180,12 @@ class VendorController extends Controller
      */
     public function edit(Request $request)
     {
-        $vendorData = User::with('fields', 'los')
+        $vendorData = User::with('fields', 'los','pages')
             ->where('id', $request->id)
             ->first();
         $clientTable = ClientTable::get();
         $losData = Los::get();
+        $pages = Pages::get();
 
         return response()->json(
             [
@@ -190,9 +197,11 @@ class VendorController extends Controller
                     'phone_number' => $vendorData->phone_number,
                     'fields' => new StatusCollection($vendorData->fields),
                     'los' => new StatusCollection($vendorData->los),
+                    'pages' => new StatusCollection($vendorData->pages),
                 ], ///  new VendorsCollection($vendor),
                 'fields' => new StatusCollection($clientTable),
                 'los' => new StatusCollection($losData),
+                'pages' => new StatusCollection($pages),
                 ///   'users' => new StatusCollection($users),
                 ///    'status' => new StatusCollection($status)
             ],
@@ -217,6 +226,7 @@ class VendorController extends Controller
             'address' => 'string',
             'fields' => 'array',
             'los' => 'array',
+            'pages' => 'array',
         ]);
         if ($validator->fails()) {
             return response()->json(
@@ -239,12 +249,15 @@ class VendorController extends Controller
             /// 'role_id' => 2,
         ]);
         $idCats = array_column($requestData['fields'], 'id');
-
+        $idPages = array_column($requestData['pages'], 'id');
+        $idLos = array_column($requestData['los'], 'id');
         $vendorData = User::find($request->id);
 
         $vendorData->fields()
             ->sync($idCats);
-        $idLos = array_column($requestData['los'], 'id');
+        $vendorData->pages()
+            ->sync($idPages);
+
         $vendorData->los()->sync($idLos);
         return response()->json(
             [

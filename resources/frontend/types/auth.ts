@@ -1,6 +1,8 @@
 export interface ISelect {
     id: number;
     name: string;
+    slug: string;
+    count?: number;
 }
 
 
@@ -20,6 +22,7 @@ export interface IUser {
     surname: string;
     rating?: number;
     role: string;
+    pages:  Array<ISelect>;
 }
 
 

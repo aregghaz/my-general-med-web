@@ -21,6 +21,7 @@ class StatusCollection extends ResourceCollection
                 'label' => $status->name,
                 'name' => $status->name,
                 "value"=> $status->name,
+                "slug"=> $status->slug,
 
             ];
         });

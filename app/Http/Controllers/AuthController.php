@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PasswordRequest;
 use App\Http\Resources\RegionCollection;
+use App\Http\Resources\StatusCollection;
 use App\Models\Cars;
 use App\Models\Province;
 use App\Models\User;
@@ -146,6 +147,7 @@ class AuthController extends Controller
             // 'state' => $state->name,
             'address' => $user->address,
             'birthday' => $user->birthday,
+            'pages' =>new StatusCollection( $user->pages),
         ];
         if ($user->role->name == 'admin') {
             $data['count'] = \App\Models\Notification::where('new_admin', 1)->count();

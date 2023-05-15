@@ -50,7 +50,7 @@ const TableBody: React.FC<ITableBody> = (
                                     keys
                                         .map((key, i) => {
 
-                                                if (key == "fields" || key == "losService") {
+                                                if (key == "fields" || key == "losService"|| key == "pages") {
                                                     return i != 0 && (
                                                         <TableData data={item.id} key={i} className={s.address}
                                                                    isGetInfo={isGetInfo}

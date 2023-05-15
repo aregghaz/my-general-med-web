@@ -53,9 +53,9 @@ const App = (): JSX.Element => (
             <LoginWrapper path="/login" />
             <Site path="/">
                 <VendorProfile path="/profile"/>
-                <Home path="/" />
+                <Home path="/trips" />
                 <VendorDashboard path="/dashboard" />
-                <Show path="/client/:id" />
+                <Show path="/trip/:id" />
                 <VendorUsers path="/users" />
                 <VendorDriverEdit path="/users/driver/:id" />
                 <VendorDriverCreate path="/users/driver/create" />
@@ -72,18 +72,18 @@ const App = (): JSX.Element => (
                 <VendorEdit path="vendors/:id/2" />
                 <OperatorEdit path="vendors/:id/4" />
                 <VendorCreate path="vendors/create/2" />
-                <Clients path="clients" />
-                <ClientEdit path="clients/:id" />
-                <ClientCreate path="clients/create" />
+                <Clients path="trips" />
+                <ClientEdit path="trips/:id" />
+                <ClientCreate path="trips/create" />
                 <NotificationList path="notification" />
             </Site>
             <Site path="/admin">
                 {/*<Profile path="/profile"/>*/}
-                <Dashboard path="/" />
+                <Dashboard path="/dashboard" />
                 <Users path="/users/:id" />
-                <Clients path="clients" />
-                <ShowAdmin path="/client/:id" />
-                <ClientEdit path="clients/:id" />
+                <Clients path="/trips" />
+                <ShowAdmin path="/trip/:id" />
+                <ClientEdit path="trips/:id" />
                 <ClientCreate path="clients/create" />
                 <Activity path="activity/:id" />
                 <ActivityClient path="activity-client/:clientId" />
