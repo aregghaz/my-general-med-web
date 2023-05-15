@@ -93,6 +93,9 @@ const Drawer: React.FC = ({ children }) => {
                 icon: <Status />
             }
         ];
+
+
+
         userData.user.pages.map((item, index) => {
             console.log(IconArray.find(x => x.id == item.id), "menuItemsFirst");
             const pathUrl = userData.user.role == "admin" ? `/${userData.user.role}` : "";
