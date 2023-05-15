@@ -52,8 +52,9 @@
 }
 
 .buttonDiv {
+  width: 100%;
   grid-column: 1/4;
-  justify-content: start;
+  justify-content: flex-end;
   display: flex;
   margin-top: 50px;
 }
