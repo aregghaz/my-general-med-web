@@ -88,6 +88,9 @@ const Drawer: React.FC = ({ children }) => {
                 id: 7,
                 icon: <Notification />,
                 count: userData.user.count
+            },{
+                id: 6,
+                icon: <Clients />,
             }, {
                 id: 8,
                 icon: <Status />
