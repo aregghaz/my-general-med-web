@@ -39,7 +39,7 @@ Route::group([
     Route::get('/get-notification/{showMore}', [NotificationController::class, 'vendorNotification']);
     Route::get('/get-reason-data', [HomeController::class, 'getReasonData']);
     Route::get('/car-data-for-select', [HomeController::class, 'carDataForSelect']);
-    Route::post('/clients-data-driver', [ApiController::class, 'getClientsDataForDriver']);
+    Route::post('/clients-data-driver/', [ApiController::class, 'getClientsDataForDriver']);
     Route::get('/start-trip/{id}', [ApiController::class, 'startTrip']);
     Route::get('/done-trip/{id}', [ApiController::class, 'doneTrip']);
     Route::get('/client-route-driver/{id}', [ApiController::class, 'clientRoute']);
