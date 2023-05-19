@@ -94,7 +94,7 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
         formData.append("_method", "put");
         formData.append("insurance", values["insurance"]);
         formData.append("value", JSON.stringify(values));
-        const res: any = await AdminApi.update(formData, `admin/trips`, id);
+        const res: any = await AdminApi.update(formData, `admin/${crudKey}`, id);
         if (Number(res.status === 200)) {
             const options = {
                 type: toast.TYPE.SUCCESS,
@@ -102,7 +102,7 @@ const ClientEdit: React.FC<IClientEditItem> = ({ id }) => {
             };
 
             toast(t("record_successfully_edited"), options);
-          await navigate(`/admin/${crudKey}`);
+          await navigate(`/admin/trips`);
         }
     };
     return data && <div>
