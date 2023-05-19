@@ -84,7 +84,7 @@ const App = (): JSX.Element => (
                 <Clients path="/trips" />
                 <ShowAdmin path="/trip/:id" />
                 <ClientEdit path="trips/:id" />
-                <ClientCreate path="clients/create" />
+                <ClientCreate path="trip/create" />
                 <Activity path="activity/:id" />
                 <ActivityClient path="activity-client/:clientId" />
                 <Vendors path="vendors" />

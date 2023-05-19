@@ -180,7 +180,7 @@ class VendorController extends Controller
      */
     public function edit(Request $request)
     {
-        $vendorData = User::with('fields', 'los','pages')
+        $vendorData = User::with('fields', 'los', 'pages')
             ->where('id', $request->id)
             ->first();
         $clientTable = ClientTable::get();
@@ -330,68 +330,52 @@ class VendorController extends Controller
         $user = User::find($vendorId);
         $losIds = $user->los->pluck('id')->toArray();
         $price = 0;
-        if (count($clientsIds) === 1) {
-            $client = Clients::find($clientsIds[0]);
-            if (gettype(array_search($client->los_id, $losIds)) == 'integer') {
-                $priceLists = PriceList::where(['los_id' => $client->los_id, 'vendor_id' => $vendorId])->get();
-                foreach ($priceLists as $priceList) {
-                  ///  var_dump($priceList->service_id);
+        if (count($clientsIds)) {
+            $clients = Clients::whereIn('id', $clientsIds)->whereIn('los_id', $losIds)->get();
+            foreach ($clients as $client) {
+                if (gettype(array_search($client->los_id, $losIds)) == 'integer') {
+                    $priceLists = PriceList::where(['los_id' => $client->los_id, 'vendor_id' => $vendorId])->get();
+                    foreach ($priceLists as $priceList) {
+                        ///  var_dump($priceList->service_id);
 
-                    if (($priceList->service_id === 5   && $client->stairchair_id > 1) || ($priceList->service_id === 4 && $client->duration_id > 1) || ($priceList->service_id === 3 && $client->artificial_id > 1) || ($priceList->service_id === 2 or $priceList->service_id === 1)) {
-                 //     var_dump('a');
-                        $price = $this->calculatePrice($priceList, $price, $client->miles);
+                        if (($priceList->service_id === 5 && $client->stairchair_id > 1) || ($priceList->service_id === 4 && $client->duration_id > 1) || ($priceList->service_id === 3 && $client->artificial_id > 1) || ($priceList->service_id === 2 or $priceList->service_id === 1)) {
+                            //     var_dump('a');
+                            $price = $this->calculatePrice($priceList, $price, $client->miles);
+                        }
                     }
-                }
 //                dd($price);
-                $client->price = $price;
-                $client->vendor_id = $vendorId;
-                $client->type_id = 1;
-                $client->operator_id = $operatorId;
-                $client->update();
-                $this->createAction($operatorId, $clientsIds[0], 8, $vendorId);
-            } else {
-                return response()->json(
-                    [
-                        'success' => 0,
-                        //'type' => 'validation_filed',
-                        'error' => 'Check LOS',
-                    ],
-                    200
-                );
+                    $client->price = $price;
+                    $client->vendor_id = $vendorId;
+                    $client->type_id = 1;
+                    $client->operator_id = $operatorId;
+                    $client->update();
+                    $this->createAction($operatorId, $clientsIds[0], 8, $vendorId);
+                }
+                else {
+                    return response()->json(
+                        [
+                            'success' => 0,
+                            //'type' => 'validation_filed',
+                            'error' => 'Check LOS',
+                        ],
+                        200
+                    );
+                }
             }
-
-
             return response()->json([
                 'success' => 1,
             ], 200);
-        } else {
-            foreach ($clientsIds as $id) {
-                $this->createAction($operatorId, $id, 8, $vendorId);
-
-            }
         }
 
+            return response()->json(
+                [
+                    'success' => 0,
+                    //'type' => 'validation_filed',
+                    'error' => 'something wrong with your reqeuest',
+                ],
+                200
+            );
 
-        ///    $clients = Clients::whereIn('id', $clientsIds)->whereIn('los_id', $losIds)->update(["vendor_id" => $vendorId, 'type_id' => 1, 'operator_id' => $operatorId]);
-//        if ($clients) {
-//            foreach ($clientsIds as $id) {
-//                $this->createAction($operatorId, $id, 8, $vendorId);
-//
-//            }
-//
-//            return response()->json([
-//                'success' => 1,
-//            ], 200);
-//        } else {
-//            return response()->json(
-//                [
-//                    'success' => 0,
-//                    //'type' => 'validation_filed',
-//                    'error' => 'something wrong with your reqeuest',
-//                ],
-//                200
-//            );
-//        }
 
     }
 

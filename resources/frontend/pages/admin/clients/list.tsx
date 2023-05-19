@@ -326,8 +326,8 @@ const Home: React.FC<IHome> = () => {
         await getClientData(query, dateData);
     };
 
-    const handlerEditItem = (id: number) => navigate(`/admin/clients/${id}`);
-    const handlerAddItem = () => navigate("/admin/clients/create");
+    const handlerEditItem = (id: number) => navigate(`/admin/trips/${id}`);
+    const handlerAddItem = () => navigate("/admin/trip/create");
     return (
         clients && <>
             <div className={s.panel}>
