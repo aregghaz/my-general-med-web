@@ -129,7 +129,7 @@ const ClientCreate: React.FC<IClientCreate> = () => {
         formData.append("insurance", values["insurance"]);
         formData.append("value", JSON.stringify(values));
         const res: any = await AdminApi.store(formData, crudKey, true);
-        if (Number(res.status === 200)) await navigate(`/admin/${crudKey}`);
+        if (Number(res.status === 200)) await navigate(`/admin/trips`);
     };
 
     const handlerShowCalendar = () => {
