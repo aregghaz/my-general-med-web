@@ -100,7 +100,7 @@ const Drawer: React.FC = ({ children }) => {
 
 
         userData.user.pages.map((item, index) => {
-            console.log(IconArray.find(x => x.id == item.id), "menuItemsFirst");
+            console.log(IconArray.find(x => x.id == item.id),item.id, "menuItemsFirst");
             const pathUrl = userData.user.role == "admin" ? `/${userData.user.role}` : "";
             menuItemsFirst.push({
                 id: item.id,
