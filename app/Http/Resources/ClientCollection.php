@@ -34,6 +34,8 @@ class ClientCollection extends ResourceCollection
                 'member_uniqie_identifer' => $client->member_uniqie_identifer,
                 'weight' => $client->weight,
                 'height' => $client->height,
+
+
                 //// 'operator_note' => $client->operator_note,
             ];
         });
