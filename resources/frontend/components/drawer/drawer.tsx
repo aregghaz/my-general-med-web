@@ -18,7 +18,8 @@ import Cars from "-!svg-react-loader!../../images/Car.svg";
 import HomeIcon from "-!svg-react-loader!../../images/my-services.svg";
 import Status from "-!svg-react-loader!../../images/Settings.svg";
 import { getNotificationCount, getUserData } from "../../store/selectors";
-import AssignVendorIcon from "-!svg-react-loader!../../images/add-company-icon.svg";
+import AssignVendorIcon from "-!svg-react-loader!../../images/vendor.svg";
+
 
 const Drawer: React.FC = ({ children }) => {
     const { t } = useTranslation();
@@ -27,8 +28,6 @@ const Drawer: React.FC = ({ children }) => {
     const logoutRef = useRef(null);
     const accountRef = useRef(null);
     const userData = useSelector(getUserData);
-    //  const { user, loggedIn } = useSelector(getUserData);
-    /// const selectedPage = useSelector(getSelectedMenu);
     const notificationCount = useSelector(getNotificationCount);
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -43,17 +42,14 @@ const Drawer: React.FC = ({ children }) => {
     };
 
     var selectedPage2: string = localStorage.getItem("page");
-    var selectedPage = parseFloat(selectedPage2);
+    console.log(parseFloat(selectedPage2),'sadas');
+    var selectedPage = parseFloat(selectedPage2) || 1;
     useEffect(() => {
         document.addEventListener("mousedown", outsideClickHandler);
-        if (userData.user) {
-            ///  dispatch(actionsNotification.fetching({ count: userData.user.count }));
-        }
         return () => {
             document.removeEventListener("mousedown", outsideClickHandler);
         };
     }, [logoutRef]);
-    console.log(notificationCount, "notificationCount");
 
     var menuItemsFirst: Array<{
         id: number,
@@ -97,8 +93,6 @@ const Drawer: React.FC = ({ children }) => {
             }
         ];
 
-
-
         userData.user.pages.map((item, index) => {
             console.log(IconArray.find(x => x.id == item.id),item.id, "menuItemsFirst");
             const pathUrl = userData.user.role == "admin" ? `/${userData.user.role}` : "";
@@ -112,17 +106,8 @@ const Drawer: React.FC = ({ children }) => {
         });
     }
 
-
-    ///  const [activeIcon, setActiveIcon] = useState<number>(1);
-
-
-
-
-
-
     const setActiveIcon = (pageId: number) => {
         localStorage.setItem("page", `${pageId}`);
-        /// dispatch(navigationActions.fetching({page:pageId}));
     };
     return (
         <>

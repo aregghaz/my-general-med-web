@@ -52,6 +52,7 @@ const App = (): JSX.Element => (
         <Router>
             <LoginWrapper path="/login" />
             <Site path="/">
+                <VendorDashboard path="/" />
                 <VendorProfile path="/profile"/>
                 <Home path="/trips" />
                 <VendorDashboard path="/dashboard" />
@@ -78,7 +79,7 @@ const App = (): JSX.Element => (
                 <NotificationList path="notification" />
             </Site>
             <Site path="/admin">
-                {/*<Profile path="/profile"/>*/}
+                <Dashboard path="/" />
                 <Dashboard path="/dashboard" />
                 <Users path="/users/:id" />
                 <Clients path="/trips" />
