@@ -204,26 +204,27 @@ const Dashboard: React.FC<IDashboard> = () => {
                     <div className={s.newDashboardCenter}><span className={s.newDashboardValue}>${data.totalProfit.price ? data.totalProfit.price.toFixed(2) : 0}</span></div>
                     <div className={s.newDashboardBottom}><div className={s.newDashboardIconWrapper}><MoneyIcon/></div></div>
                 </div>
-                <div className={s.newDashboardItem}>
-                    <div className={s.newDashboardTop}><span className={s.newDashboardName}>Total Rides</span><span className={s.newDashboardPercents}>+10%</span></div>
-                    <div className={s.newDashboardCenter}><span className={s.newDashboardValue}>{data.totalProfit.count}</span></div>
-                    <div className={s.newDashboardBottom}><div className={s.newDashboardIconWrapper}><MoneyIcon/></div></div>
-                </div>
-                <div className={s.newDashboardItem}>
-                    <div className={s.newDashboardTop}><span className={s.newDashboardName}>Avg Revenue Per Ride</span><span className={s.newDashboardPercents}>+10%</span></div>
-                    <div className={s.newDashboardCenter}><span className={s.newDashboardValue}>${data.totalProfit.price && data.totalProfit.count ? (data.totalProfit.price / data.totalProfit.count).toFixed(2) : 0} </span></div>
-                    <div className={s.newDashboardBottom}><div className={s.newDashboardIconWrapper}><MoneyIcon/></div></div>
-                </div>
-                <div className={s.newDashboardItem}>
-                    <div className={s.newDashboardTop}><span className={s.newDashboardName}>Total Rides</span><span className={s.newDashboardPercents}>+10%</span></div>
-                    <div className={s.newDashboardCenter}><span className={s.newDashboardValue}>{data.totalProfit.count}</span></div>
-                    <div className={s.newDashboardBottom}><div className={s.newDashboardIconWrapper}><MoneyIcon/></div></div>
-                </div>
-                <div className={s.newDashboardItem}>
-                    <div className={s.newDashboardTop}><span className={s.newDashboardName}>Avg Revenue Per Ride</span><span className={s.newDashboardPercents}>+10%</span></div>
-                    <div className={s.newDashboardCenter}><span className={s.newDashboardValue}>${data.totalProfit.price && data.totalProfit.count ? (data.totalProfit.price / data.totalProfit.count).toFixed(2) : 0} </span></div>
-                    <div className={s.newDashboardBottom}><div className={s.newDashboardIconWrapper}><MoneyIcon/></div></div>
-                </div>
+
+                {/*<div className={s.newDashboardItem}>*/}
+                {/*    <div className={s.newDashboardTop}><span className={s.newDashboardName}>Total Rides</span><span className={s.newDashboardPercents}>+10%</span></div>*/}
+                {/*    <div className={s.newDashboardCenter}><span className={s.newDashboardValue}>{data.totalProfit.count}</span></div>*/}
+                {/*    <div className={s.newDashboardBottom}><div className={s.newDashboardIconWrapper}><MoneyIcon/></div></div>*/}
+                {/*</div>*/}
+                {/*<div className={s.newDashboardItem}>*/}
+                {/*    <div className={s.newDashboardTop}><span className={s.newDashboardName}>Avg Revenue Per Ride</span><span className={s.newDashboardPercents}>+10%</span></div>*/}
+                {/*    <div className={s.newDashboardCenter}><span className={s.newDashboardValue}>${data.totalProfit.price && data.totalProfit.count ? (data.totalProfit.price / data.totalProfit.count).toFixed(2) : 0} </span></div>*/}
+                {/*    <div className={s.newDashboardBottom}><div className={s.newDashboardIconWrapper}><MoneyIcon/></div></div>*/}
+                {/*</div>*/}
+                {/*<div className={s.newDashboardItem}>*/}
+                {/*    <div className={s.newDashboardTop}><span className={s.newDashboardName}>Total Rides</span><span className={s.newDashboardPercents}>+10%</span></div>*/}
+                {/*    <div className={s.newDashboardCenter}><span className={s.newDashboardValue}>{data.totalProfit.count}</span></div>*/}
+                {/*    <div className={s.newDashboardBottom}><div className={s.newDashboardIconWrapper}><MoneyIcon/></div></div>*/}
+                {/*</div>*/}
+                {/*<div className={s.newDashboardItem}>*/}
+                {/*    <div className={s.newDashboardTop}><span className={s.newDashboardName}>Avg Revenue Per Ride</span><span className={s.newDashboardPercents}>+10%</span></div>*/}
+                {/*    <div className={s.newDashboardCenter}><span className={s.newDashboardValue}>${data.totalProfit.price && data.totalProfit.count ? (data.totalProfit.price / data.totalProfit.count).toFixed(2) : 0} </span></div>*/}
+                {/*    <div className={s.newDashboardBottom}><div className={s.newDashboardIconWrapper}><MoneyIcon/></div></div>*/}
+                {/*</div>*/}
                 {/*<div className={s.dashBordItem}>*/}
                 {/*    <div className={`${s.itemHeader} ${s.title}`}>DATA 4</div>*/}
                 {/*    <div*/}

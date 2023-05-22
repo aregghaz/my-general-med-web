@@ -240,8 +240,6 @@ const Drawer: React.FC = ({ children }) => {
                                     )
                                 )
                         }
-
-
                     </ul>
                 </nav>
                 <div className={s.main_content}

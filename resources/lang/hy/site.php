@@ -46,7 +46,7 @@ return [
     'height' => 'Height',
     'driver' => 'Drivers',
     'drivers' => 'Drivers',
-    'operator' => 'Dispatcher',
+    'operator' => 'Dispatchers',
     'password' => 'Password',
     'login' => 'Login',
     'address' => 'Address',
@@ -56,7 +56,7 @@ return [
     'clients' => 'Trips',
     'companyName' => 'Company Name',
     'fields' => 'Table fields',
-    'vendors' => 'Vendors',
+    'vendors' => 'Companies',
     'slug' => 'Slug',
     'miles' => 'Miles',
     'price' => 'Trip price',
@@ -103,6 +103,10 @@ return [
     'stairchair' => 'Stair Chairs',
     'trip_type' => 'Trip ride type',
     'clientType' => 'Trip type',
+    'home' => 'Home',
+    'trips' => 'Trips',
+    'cars' => 'Cars',
+    'notification' => 'Notifications',
 
 
 

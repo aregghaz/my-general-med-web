@@ -104,7 +104,7 @@ const Vendors: React.FC<IVendors> = () => {
     const tabs = [
         {
             id: 2,
-            name: "Vendor",
+            name: "vendors",
             count: vendorCount,
             selected: false
         },
