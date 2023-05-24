@@ -53,11 +53,11 @@ const LoginWrapper: React.FC<ILoginWrapper> = () => {
     useEffect(() => {
         if (user) {
             if (user && user.role == "vendor") {
-                navigate("/");
+                navigate("/dashboard");
             } else if (user && user.role == "admin") {
-                navigate("/admin");
+                navigate("/admin/dashboard");
             } else if (user && user.role == "operator") {
-                navigate("/operators");
+                navigate("/operator");
             } else {
                 navigate("/login");
             }

@@ -52,7 +52,6 @@ const App = (): JSX.Element => (
         <Router>
             <LoginWrapper path="/login" />
             <Site path="/">
-                <VendorDashboard path="/" />
                 <VendorProfile path="/profile"/>
                 <Home path="/trips" />
                 <VendorDashboard path="/dashboard" />
@@ -61,6 +60,7 @@ const App = (): JSX.Element => (
                 <VendorDriverEdit path="/users/driver/:id" />
                 <VendorDriverCreate path="/users/driver/create" />
                 <OperatorCreate path="users/operator/create" />
+                <OperatorEdit path="users/operator/:id" />
                 <Cars path="/cars" />
                 <CarsCreate path="/cars/create" />
                 <CarsEdit path="/cars/:id" />
@@ -68,7 +68,7 @@ const App = (): JSX.Element => (
                 <Notification path="/notification" />
                 <TermsPage path={"/terms"}/>
             </Site>
-            <Site path="/operators">
+            <Site path="/operator">
                 <Vendors path="vendors" />
                 <VendorEdit path="vendors/:id/2" />
                 <OperatorEdit path="vendors/:id/4" />
@@ -76,10 +76,21 @@ const App = (): JSX.Element => (
                 <Clients path="trips" />
                 <ClientEdit path="trips/:id" />
                 <ClientCreate path="trips/create" />
-                <NotificationList path="notification" />
+                <NotificationList path="notifications" />
+                <VendorUsers path="/users" />
+                <VendorDriverEdit path="/users/driver/:id" />
+                <VendorDriverCreate path="/users/driver/create" />
+                <OperatorCreate path="users/operator/create" />
+                <OperatorEdit path="users/operator/:id" />
+                <Cars path="/cars" />
+                <CarsCreate path="/cars/create" />
+                <CarsEdit path="/cars/:id" />
+                <Notification path="/notification" />
+                <Status path="status" />
+                <StatusCreate path="addStatus/:statusId/create" />
+                <StatusEdit path="changeStatus/:id/:statusId" />
             </Site>
             <Site path="/admin">
-                <Dashboard path="/" />
                 <Dashboard path="/dashboard" />
                 <Users path="/users/:id" />
                 <Clients path="/trips" />

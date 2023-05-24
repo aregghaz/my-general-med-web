@@ -67,7 +67,7 @@ const Edit: React.FC<IEdit> = (
             };
 
             toast(t("record_successfully_edited"), options);
-            await navigate(`/${redirectKey ?? crudKey}`);
+            await navigate(-1);
         }
     };
 

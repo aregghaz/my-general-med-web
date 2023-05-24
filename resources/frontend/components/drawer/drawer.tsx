@@ -42,7 +42,7 @@ const Drawer: React.FC = ({ children }) => {
     };
 
     var selectedPage2: string = localStorage.getItem("page");
-    console.log(parseFloat(selectedPage2),'sadas');
+    console.log(parseFloat(selectedPage2), "sadas");
     var selectedPage = parseFloat(selectedPage2) || 1;
     useEffect(() => {
         document.addEventListener("mousedown", outsideClickHandler);
@@ -61,7 +61,6 @@ const Drawer: React.FC = ({ children }) => {
 
 
     if (userData.user) {
-
         const IconArray = [
             {
                 id: 1,
@@ -84,9 +83,9 @@ const Drawer: React.FC = ({ children }) => {
                 id: 7,
                 icon: <Notification />,
                 count: userData.user.count
-            },{
+            }, {
                 id: 6,
-                icon: <Clients />,
+                icon: <Clients />
             }, {
                 id: 8,
                 icon: <Status />
@@ -94,8 +93,20 @@ const Drawer: React.FC = ({ children }) => {
         ];
 
         userData.user.pages.map((item, index) => {
-            console.log(IconArray.find(x => x.id == item.id),item.id, "menuItemsFirst");
-            const pathUrl = userData.user.role == "admin" ? `/${userData.user.role}` : "";
+            var pathUrl = "";
+            ///  userData.user.role == "admin" ? `/${userData.user.role}` : "";
+            switch (userData.user.role) {
+                case "admin" :
+                    pathUrl = "/admin";
+                    break;
+                case "operator" :
+                    pathUrl = "/operator";
+                    break;
+                case "vendor" :
+                    pathUrl = "";
+                    break;
+
+            }
             menuItemsFirst.push({
                 id: item.id,
                 Icon: IconArray.find(x => x.id == item.id).icon,
@@ -153,16 +164,8 @@ const Drawer: React.FC = ({ children }) => {
                                                 onClick={() => {
                                                     navigate("/profile");
                                                     openAccountMenu();
-                                                    // if (userData.user.role === "admin") {
-                                                    //     navigate("/admin/profile");
-                                                    //     openAccountMenu();
-                                                    // } else {
-                                                    //     navigate("/profile");
-                                                    //     openAccountMenu();
-                                                    // }
                                                 }}
                                             >
-
                                                 <span className={s.icon}>
                                                     <ProfileSvg />
                                                 </span>
@@ -225,7 +228,7 @@ const Drawer: React.FC = ({ children }) => {
                                             >
                                                 <span className={s.link_block}>
                                                 <span className={s.side_icon}>
-                                                    {li.id === 2 ? (li.count > 0 ? <> <NotificationActive /> <span
+                                                    {li.id === 2 ? (li.count > 0 ? <><NotificationActive /> <span
                                                             className={s.bage}>{li.count}</span></> :
                                                         li.Icon) : li.Icon}
 

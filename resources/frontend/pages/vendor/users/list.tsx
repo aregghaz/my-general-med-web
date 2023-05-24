@@ -2,18 +2,14 @@ import React, { useEffect, useState } from "react";
 import { AdminApi } from "../../../api/admin-api/admin-api";
 import List from "../../layouts/templates/list/list";
 import { useNavigate } from "@reach/router";
-import Button from "../../../components/button/button";
 import s from "../../layouts/templates/list/list.module.scss";
 import { useTranslation } from "react-i18next";
-import Modal from "react-modal";
 import { useDispatch } from "react-redux";
 import { homeAPI } from "../../../api/site-api/home-api";
 import InfoBlockDriver from "../../../components/info-block-driver/info-block";
 import { vendorAPI } from "../../../api/site-api/vendor-api";
 import Tabs from "../../../components/tabs/tabs";
 import CloseSvg from "-!svg-react-loader!../../../images/Close.svg";
-import customStyles from "../../../utils/style";
-import Close from "-!svg-react-loader!../../../images/Close.svg"
 import DeleteServiceModal from "../../../components/delete-service-modal/delete-service-modal";
 
 interface Beneficiary {
@@ -60,9 +56,9 @@ const VendorUsers: React.FC<Beneficiary> = () => {
 
     const handlerAddItem = () => {
         if (tabIdSelected === 3) {
-            navigate(`/users/driver/create`)
+            navigate(`/users/driver/create`);
         } else if (tabIdSelected === 4) {
-            navigate("/users/operator/create")
+            navigate("/users/operator/create");
         }
     };
 
@@ -84,44 +80,18 @@ const VendorUsers: React.FC<Beneficiary> = () => {
         navigate(`/users/${typeName}/${id}`);
 
 
-    const HandlerPagination = (activeItem: number) => {
-        const role = localStorage.getItem("role");
-        localStorage.setItem("page", activeItem.toString());
-    };
-
     const handlerChangeTabs = async (tabId: number) => {
         setTabIdSelected(tabId);
-        setTypeName(tabId === 3 ? 'operator' : 'driver')
-        // setLoading(true)
+        console.log(tabId,'tabIdtabIdtabId');
+        setTypeName(tabId === 4 ? "operator" : "driver");
     };
     const handlerGetItemData = async (id: number) => {
         const data = await vendorAPI.getItemData("vendorClients", id);
-
         setItemData(data);
-    };
-    const customStyles: ReactModal.Styles = {
-        content: {
-            position: "fixed",
-            border: "none",
-            overflowY: "unset",
-            outline: "none",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50% , -50%)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "290px"
-        },
-        overlay: {
-            zIndex: 400,
-            background: "rgba(0, 0, 0, 0.35)",
-            backdropFilter: "blur(5px)"
-        }
     };
 
     function handleModalOpen() {
-        setIsModalOpen(true)
+        setIsModalOpen(true);
     }
 
     const handlerAction = async (action: string, id: number) => {
@@ -172,7 +142,9 @@ const VendorUsers: React.FC<Beneficiary> = () => {
                         isGetHistory={false}
                         isGetItems={false} />
                     {/*chi jnjum*/}
-                    <DeleteServiceModal id={1} isOpen={isModalOpen} handleCloseModal={handlerCloseModal} handlerDeleteItem={() => {}}/>
+                    <DeleteServiceModal id={1} isOpen={isModalOpen} handleCloseModal={handlerCloseModal}
+                                        handlerDeleteItem={() => {
+                                        }} />
                     {/*<Modal*/}
                     {/*    isOpen={isModalOpen !== false}*/}
                     {/*    style={customStyles}*/}

@@ -119,17 +119,32 @@ const Vendors: React.FC<IVendors> = () => {
         setTypeId(tabId);
         setLoading(true);
     };
-    const titles: Array<string> = [
-        "id",
-        typeId == 2 ? "companyName" : "fullName",
-        "email",
-        "address",
-        "phone_number",
-        "fields",
-        "losService",
-        "pages",
-        "action"
-    ];
+    var titles: Array<string> = []
+    if(typeId == 2) {
+         titles = [
+            "id",
+            "companyName",
+            "email",
+            "address",
+            "phone_number",
+            "fields",
+            "losService",
+            "pages",
+            "action"
+        ];
+    }else{
+         titles = [
+            "id",
+            "fullName",
+            "email",
+            "address",
+            "phone_number",
+            "fields",
+            "pages",
+            "action"
+        ];
+    }
+
     const handlerAddItem = () => navigate(`/admin/${crudKey}/create/${typeId}`);
     const handlerCloseModal = () => setIsModalOpen(!isModalOpen);
     const handlerEditItem = (id: number) => navigate(`/admin/${crudKey}/${id}/${typeId}`);

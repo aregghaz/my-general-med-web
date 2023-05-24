@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\StatusCollection;
 use App\Models\ClientStatus;
 use App\Models\ClientTable;
+use App\Models\Pages;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Validator;
@@ -17,15 +18,18 @@ class OperatorController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function create()
+    public function create(Request $request)
     {
-        $clientTable = ClientTable::get();
+        $clientTable = $request->user()->fields;
         /// $users = User::get();
         $status = ClientStatus::get();
+        $pages =$request->user()->pages;
+
         return response()->json(
             [
                 'status' => new StatusCollection($status),
                 'fields' => new StatusCollection($clientTable),
+                'pages' => new StatusCollection($pages),
             ],
             200
         );
@@ -48,6 +52,7 @@ class OperatorController extends Controller
             //  'status' => 'required',
             'address' => 'string',
             'fields' => 'required',
+            'pages' => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json(
@@ -71,7 +76,7 @@ class OperatorController extends Controller
             'address' => $requestData['address'],
             'password' => bcrypt($requestData['password']),
             'role_id' => 4,
-            'vendor_id' => 1,
+            'vendor_id' => $request->user()->role->id === 1 ? 1 : $request->user()->role->id,
         ]);
         if (!$operator->save()) {
             return response()->json(
@@ -83,7 +88,8 @@ class OperatorController extends Controller
             );
         } else {
             $idCats = array_column($requestData['fields'], 'id');
-
+            $idPages = array_column($requestData['pages'], 'id');
+            $operator->pages()->sync($idPages);
             $operator->fields()->sync($idCats);
         }
         return response()->json(
@@ -107,6 +113,7 @@ class OperatorController extends Controller
         $vendorData = User::with('fields')
             ->find($id);
         $clientTable = ClientTable::get();
+        $pages =  $pages =$request->user()->pages;
         return response()->json(
             [
                 'data' => [
@@ -117,7 +124,9 @@ class OperatorController extends Controller
                     'address' => $vendorData->address,
                     'phone_number' => $vendorData->phone_number,
                     'fields' => new StatusCollection($vendorData->fields),
+                    'pages' => new StatusCollection($vendorData->pages),
                 ],
+                'pages' => new StatusCollection($pages),
                 'fields' => new StatusCollection($clientTable),
             ],
             200
@@ -142,6 +151,7 @@ class OperatorController extends Controller
             'address' => 'string',
             'password' => 'string',
             'fields' => 'required',
+            'pages' => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json(
@@ -168,10 +178,14 @@ class OperatorController extends Controller
             User::find($id)->update(['password' => bcrypt($requestData['password'])]);
         }
         $idCats = array_column($requestData['fields'], 'id');
+        $idPages = array_column($requestData['pages'], 'id');
 
         User::find($id)
             ->fields()
             ->sync($idCats);
+        User::find($id)
+            ->pages()
+            ->sync($idPages);
 
         return response()->json(
             [

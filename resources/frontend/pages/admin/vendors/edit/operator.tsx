@@ -20,10 +20,12 @@ const OperatorEdit: React.FC<IVendorEditItem> = ({ id }) => {
         { name: "email", type: "input", label: "email" },
         { name: "address", type: "input", label: "address" },
         { name: "phone_number", type: "input", label: "phone_number", inputType: "tel" },
+        { name: "password", type: "input", inputType: "password" },
+        { name: "pages", type: "multiSelect", label: "Menu pages", placeholder: "Menu pages"},
         { name: "fields", type: "multiSelect", label: "fields" },
         { name: "id", type: "hidden", inputType: "hidden" },
-        { name: "password", type: "input", inputType: "password" }
     ];
+
     const requiredFields = [
         "name",
         ///     "password",
