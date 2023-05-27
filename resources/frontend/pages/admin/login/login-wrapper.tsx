@@ -56,8 +56,10 @@ const LoginWrapper: React.FC<ILoginWrapper> = () => {
                 navigate("/dashboard");
             } else if (user && user.role == "admin") {
                 navigate("/admin/dashboard");
-            } else if (user && user.role == "operator") {
-                navigate("/operator");
+            } else if (user && user.role == "dispatcher") {
+                navigate("/admin/");
+            } else if (user && user.role == "operators") {
+                navigate("/");
             } else {
                 navigate("/login");
             }

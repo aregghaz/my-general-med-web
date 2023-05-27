@@ -65,7 +65,7 @@ const Create: React.FC<ICreate> = (
             };
 
             toast(t("record_successfully_added"), options);
-            await navigate(`/${isAdmin ? "admin/" : ""}${redirectKey ?? crudKey}`);
+            await navigate(-1);
         }
     };
 

@@ -10,6 +10,7 @@ use App\Models\Cars;
 use App\Models\Clients;
 use App\Models\PriceList;
 use App\Models\Reason;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,9 +21,14 @@ class HomeController extends Controller
     {
         $allFields = $request->user()->fields()->get()->pluck('name')->toArray();
         $vendorFields = $request->titles ? $request->titles : $allFields;
-        $los = $request->user()->los()->get()->pluck('id');
-        // dd($los);
-        // dd($los);
+        if($request->user()->role->id === 5){
+            $los =  User::with("los")->find($request->user()->vendor_id)->pluck('id');
+          ///  $los = $request->user()->los()->get()->pluck('id');
+
+        }else{
+            $los = $request->user()->los()->get()->pluck('id');
+
+        }
         $clientData = new ClientFieldCollection($vendorFields);
         $showMore = $request->showMore;
         $clientsData = [];

@@ -57,7 +57,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
     const handlerAddItem = () => {
         if (tabIdSelected === 3) {
             navigate(`/users/driver/create`);
-        } else if (tabIdSelected === 4) {
+        } else if (tabIdSelected === 5) {
             navigate("/users/operator/create");
         }
     };
@@ -83,7 +83,7 @@ const VendorUsers: React.FC<Beneficiary> = () => {
     const handlerChangeTabs = async (tabId: number) => {
         setTabIdSelected(tabId);
         console.log(tabId,'tabIdtabIdtabId');
-        setTypeName(tabId === 4 ? "operator" : "driver");
+        setTypeName(tabId === 5 ? "operator" : "driver");
     };
     const handlerGetItemData = async (id: number) => {
         const data = await vendorAPI.getItemData("vendorClients", id);

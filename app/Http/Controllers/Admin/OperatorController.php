@@ -67,6 +67,12 @@ class OperatorController extends Controller
 
         $requestData = $validator->validated();
 
+
+        if($request->user()->role->id === 1  || $request->user()->role->id === 4){
+            $roleId = 4;
+        }else{
+            $roleId = 5;
+        }
         $operator = new User([
             'name' => $requestData['name'],
             'surname' => $requestData['surname'],
@@ -75,7 +81,7 @@ class OperatorController extends Controller
             ///  'status' => json_decode($request->value)->status->id,
             'address' => $requestData['address'],
             'password' => bcrypt($requestData['password']),
-            'role_id' => 4,
+            'role_id' => $roleId,
             'vendor_id' => $request->user()->role->id === 1 ? 1 : $request->user()->role->id,
         ]);
         if (!$operator->save()) {

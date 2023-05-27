@@ -42,7 +42,6 @@ const Drawer: React.FC = ({ children }) => {
     };
 
     var selectedPage2: string = localStorage.getItem("page");
-    console.log(parseFloat(selectedPage2), "sadas");
     var selectedPage = parseFloat(selectedPage2) || 1;
     useEffect(() => {
         document.addEventListener("mousedown", outsideClickHandler);
@@ -94,19 +93,24 @@ const Drawer: React.FC = ({ children }) => {
 
         userData.user.pages.map((item, index) => {
             var pathUrl = "";
+            console.log(userData.user.role, "userData.user.roleuserData.user.role");
             ///  userData.user.role == "admin" ? `/${userData.user.role}` : "";
             switch (userData.user.role) {
                 case "admin" :
                     pathUrl = "/admin";
                     break;
+                case "dispatcher" :
+                    pathUrl = "/admin";
+                    break;
                 case "operator" :
-                    pathUrl = "/operator";
+                    pathUrl = '';
                     break;
                 case "vendor" :
                     pathUrl = "";
                     break;
 
             }
+            console.log(pathUrl, "pathUrlpathUrl");
             menuItemsFirst.push({
                 id: item.id,
                 Icon: IconArray.find(x => x.id == item.id).icon,

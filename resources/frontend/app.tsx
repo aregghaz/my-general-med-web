@@ -46,12 +46,14 @@ import PriceList from "./pages/admin/vendors/priseList";
 // import Profile from "./pages/admin/profile/profile";
 import VendorProfile from "./pages/vendor/profile/profile";
 import TermsPage from "./pages/vendor/terms/terms"
+import Blank from "./pages/vendor/blank";
 
 const App = (): JSX.Element => (
     <Provider store={store}>
         <Router>
             <LoginWrapper path="/login" />
             <Site path="/">
+                <Blank path="/"/>
                 <VendorProfile path="/profile"/>
                 <Home path="/trips" />
                 <VendorDashboard path="/dashboard" />
@@ -68,29 +70,8 @@ const App = (): JSX.Element => (
                 <Notification path="/notification" />
                 <TermsPage path={"/terms"}/>
             </Site>
-            <Site path="/operator">
-                <Vendors path="vendors" />
-                <VendorEdit path="vendors/:id/2" />
-                <OperatorEdit path="vendors/:id/4" />
-                <VendorCreate path="vendors/create/2" />
-                <Clients path="trips" />
-                <ClientEdit path="trips/:id" />
-                <ClientCreate path="trips/create" />
-                <NotificationList path="notifications" />
-                <VendorUsers path="/users" />
-                <VendorDriverEdit path="/users/driver/:id" />
-                <VendorDriverCreate path="/users/driver/create" />
-                <OperatorCreate path="users/operator/create" />
-                <OperatorEdit path="users/operator/:id" />
-                <Cars path="/cars" />
-                <CarsCreate path="/cars/create" />
-                <CarsEdit path="/cars/:id" />
-                <Notification path="/notification" />
-                <Status path="status" />
-                <StatusCreate path="addStatus/:statusId/create" />
-                <StatusEdit path="changeStatus/:id/:statusId" />
-            </Site>
             <Site path="/admin">
+                <Blank path="/"/>
                 <Dashboard path="/dashboard" />
                 <Users path="/users/:id" />
                 <Clients path="/trips" />
