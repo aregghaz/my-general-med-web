@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
 //            UserSeeder::class,
             RoleSeeder::class,
            /// StatusSeeder::class,
-            ///PagesSeeder::class,
+         PagesSeeder::class,
 //            // ClientSeeder::class,
 //            // VendorSeeder::class,
             ///TablesFieldsSeeder::class,
