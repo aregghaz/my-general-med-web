@@ -260,6 +260,11 @@ class VendorController extends Controller
             ->sync($idPages);
 
         $vendorData->los()->sync($idLos);
+
+        if(isset($requestData['password'])){
+            $vendorData->password = $requestData['password'];
+        }
+        $vendorData->update();
         return response()->json(
             [
                 'success' => '1',
