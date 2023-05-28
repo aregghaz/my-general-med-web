@@ -224,6 +224,7 @@ class VendorController extends Controller
             'email' => 'required|string|unique:users,email,' . $request->id,
             ///  'status' => 'required',
             'address' => 'string',
+            'password' => 'string',
             'fields' => 'array',
             'los' => 'array',
             'pages' => 'array',
