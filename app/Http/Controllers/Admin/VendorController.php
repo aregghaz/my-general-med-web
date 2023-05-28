@@ -262,7 +262,7 @@ class VendorController extends Controller
         $vendorData->los()->sync($idLos);
 
         if(isset($requestData['password'])){
-            $vendorData->password = $requestData['password'];
+            $vendorData->password = bcrypt($requestData['password']);
         }
         $vendorData->update();
         return response()->json(
