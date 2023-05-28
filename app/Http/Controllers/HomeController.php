@@ -41,7 +41,7 @@ class HomeController extends Controller
         $available = Clients::where('type_id', 2)->whereIn('los_id', $los);
         $cancelCount = Clients::where(['type_id' => 2, 'vendor_id' => $vendorId])->whereIn('los_id', $los);
         ////FIXME ADD VENDOR_ID
-        $progressCount = Clients::where('type_id', 5)->whereIn('los_id', $los);
+        $progressCount = Clients::where(['type_id' => 5,'vendor_id' => $vendorId])->whereIn('los_id', $los);
         $doneCount = Clients::where(['type_id' => 6, 'vendor_id' => $vendorId]);
 
         if ($typeId === 2 || $typeId === 3 || $typeId === 4) {
