@@ -30,7 +30,9 @@ const TableData: React.FC<ITableData> = (
             rowSpan={rowspan || 1}
             onClick={(event) =>  !click ? click : handlerAction(item["id"], "get")}
         >
-            {children}
+            <div className={(className === "origin_comment" || className === "destination_comments") ? s.addressWrapper : undefined}>
+                {children}
+            </div>
         </td>
     );
 };

@@ -12,6 +12,7 @@ import ClaimTrip from "-!svg-react-loader!../../../images/tripAdd1.svg";
 import ActivityIcon from "-!svg-react-loader!../../../images/Actions.svg";
 import timestampToDate from "../../../utils/timestampToDate";
 import DeleteServiceModal from "../../delete-service-modal/delete-service-modal"
+
 interface ITableBody {
     data: Array<any>
     isEdit: boolean
@@ -87,7 +88,7 @@ const TableBody: React.FC<ITableBody> = (
                                             </span>
                                             }
                                             {isRemove && typeId === 1 &&
-                                            <span className={`${s.tooltip} ${s.reRouteSpan}`}>
+                                                <span className={`${s.tooltip} ${s.reRouteSpan}`}>
                                             <span className={`${s.tooltiptext} ${s.reRoute}`}>ReRoute</span>
                                             <RemoveIcon
                                                 className={s.icon}
@@ -107,8 +108,9 @@ const TableBody: React.FC<ITableBody> = (
                                             }
 
                                             {isClaim && typeId === 2 &&
-                                            <span className={`${s.tooltip} ${s.claimSpan}`}>
-                                            <span className={`${s.tooltiptext} ${s.claim} ${s.claimLabelTop}`}>Claim</span>
+                                                <span className={`${s.tooltip} ${s.claimSpan}`}>
+                                            <span
+                                                className={`${s.tooltiptext} ${s.claim} ${s.claimLabelTop}`}>Claim</span>
                                             <ClaimTrip
                                                 className={s.icon}
                                                 onClick={() => handlerAction(item.id, "claim")}
@@ -173,7 +175,6 @@ const TableBody: React.FC<ITableBody> = (
                                                     itemData = item[key];
                                             }
 
-
                                             return i !== 0 && key !== "car_name" && (
                                                 <TableData key={key} item={item} className={key} click={true}
                                                            handlerAction={handlerAction}>
@@ -192,7 +193,9 @@ const TableBody: React.FC<ITableBody> = (
             </tbody>
             <DeleteServiceModal id={12} isOpen={deleteModal} handleCloseModal={() => {
                 setDeleteModal(false)
-            }} handlerDeleteItem={() => {handlerAction(deleteId, "delete")}}/>
+            }} handlerDeleteItem={() => {
+                handlerAction(deleteId, "delete")
+            }}/>
         </>
     );
 };

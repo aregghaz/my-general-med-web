@@ -191,6 +191,8 @@ const Home: React.FC<IHome> = () => {
             ///   homeAPI.cancelRequest();
         };
     }, [inView]);
+
+
     useEffect(() => {
         (async () => {
             if (loading) {
