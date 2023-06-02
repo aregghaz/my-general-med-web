@@ -51,7 +51,7 @@ const Home: React.FC<IHome> = () => {
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [ids, setIds] = useState([]);
     const [open, setOpen] = useState<boolean>(false);
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
     ///  const [typeId, setTypeId] = useState<number>(1);
     const [filtre, setfiltre] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -154,7 +154,10 @@ const Home: React.FC<IHome> = () => {
                 break;
         }
     };
-
+    const fetchMoreData = async () => {
+        countRef.current++
+        await getClientData(query, date);
+    };
     const getClientData = async (queryData: string, date: string) => {
         const titlesData = localStorage.getItem("titles");
         const homeData = await AdminApi.getAllData({
@@ -178,23 +181,13 @@ const Home: React.FC<IHome> = () => {
         }));
     };
 
-    useEffect(() => {
-        (async () => {
-            console.log(inView);
-            if (inView && !loading) {
-                await getClientData(query, date);
-                countRef.current++;
-                setLoading(false);
-            }
-        })();
-        return () => {
-            ///   homeAPI.cancelRequest();
-        };
-    }, [inView]);
+
 
 
     useEffect(() => {
         (async () => {
+
+            console.log('ffffff');
             if (loading) {
                 await getClientData(query, date);
                 countRef.current = 1;
@@ -247,9 +240,7 @@ const Home: React.FC<IHome> = () => {
         setLoading(true);
     };
 
-
     const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
     if (agreement) {
         // delay(200).then(async () => {
         //     await homeAPI.changeClientsTypes({ status, ids });
@@ -258,7 +249,6 @@ const Home: React.FC<IHome> = () => {
         //     setAgreement(false);
         // });
     }
-
     const handleActionMiddleware = async (id?: number) => {
         if (typeof id === "number") {
             setIds([id]);
@@ -272,19 +262,14 @@ const Home: React.FC<IHome> = () => {
         setIsOpen(false);
     };
     const notAgreeWith = () => setIsOpen(false);
-
-
     const handlerCloseModal = () => {
         setSelectedVendor(null);
         setVendorData(null);
         setIsModalOpen(false);
     };
-
     const handleGetHistory = (id: number) => {
         navigate(`/admin/activity-client/${id}`);
     };
-
-
     const changeSortPosition = (arr: Array<IOption>) => {
         let result = arr.map(a => a.slug);
         localStorage.setItem("titles", JSON.stringify(result));
@@ -442,6 +427,7 @@ const Home: React.FC<IHome> = () => {
                         isInfo
                         isGetHistory
                         isAssignVendor
+                        fetchMoreData={fetchMoreData}
                         handlerAction={handlerAction}
                         tableRef={tableRef}
                         className={"pagination"}

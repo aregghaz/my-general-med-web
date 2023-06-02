@@ -8,18 +8,14 @@ import { GOOGLE_API_KEY } from "../../../environments";
 import { getClientData } from "../../../store/selectors";
 import { useTranslation } from "react-i18next";
 import Select, { IOption } from "../../../components/select/select";
-import { toast } from "react-toastify";
 import Textarea from "../../../components/textarea/textarea";
 import getMapResponse from "../../../utils/googleMap";
 import timestampToDate from "../../../utils/timestampToDate";
 import CustomTimePicker from "../../../components/custom-time-picker/customTimePicker";
 import ShowMap from "-!svg-react-loader!../../../images/showMap.svg";
 import Update from "-!svg-react-loader!../../../images/update.svg";
-import Save from "-!svg-react-loader!../../../images/saveImg.svg";
-import populateEditFormFields from "../../../constants/populateEditFormFields";
-import { Simulate } from "react-dom/test-utils";
-import submit = Simulate.submit;
 import { Formik, FormikHelpers, FormikValues } from "formik";
+import toastNotification from "../../../utils/toast";
 
 
 interface IShow {
@@ -40,6 +36,7 @@ const Show: React.FC<IShow> = ({ id }) => {
     const { t } = useTranslation();
     const [carData, setCarData] = useState<Array<any>>(null);
     const [disabled, setDisabled] = useState(false);
+    const [loading, setLoading] = useState<boolean>(false);
     const [mapData, setMapData] = useState({
         destination: "",
         origin: "",
@@ -52,15 +49,12 @@ const Show: React.FC<IShow> = ({ id }) => {
     const blockRef = useRef(null as HTMLDivElement);
     const [showMap, setShowMap] = useState<boolean>(false);
 
-
-    const [values22, setFieldValue] = useState({
+    const [data, setData] = useState({
         additionalNote: clientById.additionalNote,
         status: clientById.type_id,
         car: clientById.car
 
     });
-    ///const [dateValue, setFieldDateValue] = useState<Array<{[key:number]: { [key:string]:string }}>>([]);
-    var dateValue: Array<[{[step:number]:{key :string, value: string}}]> =[]
     useEffect(() => {
         (async () => {
             const homeData = await homeAPI.getCLientById(id);
@@ -70,7 +64,7 @@ const Show: React.FC<IShow> = ({ id }) => {
             }
             dispatch(clientAction.fetching({ clientById: homeData.client }));
             setCarData(homeData.cars);
-            setFieldValue({
+            setData({
                 additionalNote: homeData.client.additionalNote,
                 status: homeData.client.type_id,
                 car: homeData.client.car
@@ -96,7 +90,7 @@ const Show: React.FC<IShow> = ({ id }) => {
                 }
             }
             setMapData({ origin: origin, destination: destination, waypoint: waypoint });
-
+            setLoading(true);
 
         })();
         return () => {
@@ -153,40 +147,40 @@ const Show: React.FC<IShow> = ({ id }) => {
     //             toast(t(e), options);
     //         });
     //         if (homeData.success) {
-    //             const options = {
-    //                 type: toast.TYPE.SUCCESS,
-    //                 position: toast.POSITION.TOP_RIGHT
-    //             };
-    //
-    //             toast(t("record_successfully_edited"), options);
+
     //         }
     //     }
     //
     //
     // };
-    const updateTimeHandler = async (step: number, field: string) => {
-        console.log(step,field,dateValue,'44444');
-    };
-    const submit = async (values: FormikValues, { setSubmitting }: FormikHelpers<FormikValues>) => {
-        console.log(values,'valuesvaluesvaluesvalues');
 
-        if(values.status.id === 0){
-            delete values.status
+    const submit = async (values: FormikValues, { setSubmitting }: FormikHelpers<FormikValues>) => {
+        if (values.status.id === 0) {
+            delete values.status;
         }
-        if(values.car.id === 0){
-            delete values.car
+        if (values.car.id === 0) {
+            delete values.car;
         }
-                const homeData = await homeAPI.updateClient(values22, id).catch((e) => {
-                    const options = {
-                        type: toast.TYPE.ERROR,
-                        position: toast.POSITION.TOP_RIGHT
-                    };
-                    toast(t(e), options);
-                });
+        await homeAPI.updateClient(values, id).catch((e) => {
+            toastNotification(e, 1);
+        }).then((homeData: any) => {
+            if (homeData.success) {
+                console.log(homeData.success, "1111");
+                toastNotification(t("record_successfully_edited"), 2);
+            } else {
+                console.log("2222");
+                toastNotification("something wrong", 1);
+            }
+        });
+
+
+
     };
-    return clientById && <div className={cls.block} ref={blockRef}>
+
+
+    return loading && <div className={cls.block} ref={blockRef}>
         <Formik
-            initialValues={values22}
+            initialValues={data}
             onSubmit={submit}
             //  validate={validate}
             validateOnChange={false}
@@ -200,199 +194,212 @@ const Show: React.FC<IShow> = ({ id }) => {
                   errors
               }) => {
 
-
+                console.log(values, "valuesvalues");
                 return (
                     <>
-        <div className={cls.infoLeft}>
-            <div>
-                <div className={cls.infoLeftName}>
-                    <span className={cls.username}>{clientById.fullName}</span>
-                    |
-                    <span>{timestampToDate(clientById.date_of_service.toString())}</span>
-                    |
-                    <span><span>Height: {clientById.height}</span> <span>Weight: {clientById.weight}</span></span>
-                    <div className={cls.iconsWrapper}>
-                        <div className={cls.updateButton}>
-                            <span className={`${cls.updateButtonLabel} ${cls.showMapLabel}`}>Show Map</span>
-                            <ShowMap type={"adminUpdate"} onClick={shopMapHandler} className={cls.mapIcon} />
-                        </div>
-                        <div className={cls.updateButton}>
-                            <span className={`${cls.updateButtonLabel} ${cls.updateLabel}`}>Update</span>
-                            <Update type={"adminUpdate"} onClick={handleSubmit}      isSubmit={true} className={cls.updateIcon} />
-                        </div>
-                    </div>
+                        <div className={cls.infoLeft}>
+                            <div>
+                                <div className={cls.infoLeftName}>
+                                    <span className={cls.username}>{clientById.fullName}</span>
+                                    |
+                                    <span>{timestampToDate(clientById.date_of_service.toString())}</span>
+                                    |
+                                    <span><span>Height: {clientById.height}</span> <span>Weight: {clientById.weight}</span></span>
+                                    <div className={cls.iconsWrapper}>
+                                        <div className={cls.updateButton}>
+                                            <span
+                                                className={`${cls.updateButtonLabel} ${cls.showMapLabel}`}>Show Map</span>
+                                            <ShowMap type={"adminUpdate"} onClick={shopMapHandler}
+                                                     className={cls.mapIcon} />
+                                        </div>
+                                        <div className={cls.updateButton}>
+                                            <span
+                                                className={`${cls.updateButtonLabel} ${cls.updateLabel}`}>Update</span>
+                                            <Update type={"adminUpdate"} onClick={handleSubmit}
+                                                    className={cls.updateIcon} />
+                                        </div>
+                                    </div>
 
-                </div>
-            </div>
-            <div className={cls.item1}>
-                <div className={cls.itemsBlock}>
-                    <div className={cls.itemsSelects}>
-                        <div className={cls.itemsSelect}>
-                            <Select
-                                getOptionValue={(option: IOption) => option.value}
-                                getOptionLabel={(option: IOption) => t(option.label)}
-                                onChange={(options: IOption) => setFieldValue( "cars", options)}
-                                placeholder={"Select Car"}
-                                isDisabled={disabled}
-                                options={carData}
-                                value={values22.car}
-                                name={"cars"}
-                                isMulti={false}
-                                label={"Cars"}
-                            />
-                        </div>
-                        <div className={cls.itemsSelect}>
-                            <Select
-                                getOptionValue={(option: IOption) => option.value}
-                                getOptionLabel={(option: IOption) => t(option.label)}
-                                onChange={(options: IOption) => setFieldValue( "status", options)}
-                                isDisabled={disabled}
-                                options={statuses}
-                                value={values22.status}
-                                name={"status"}
-                                isMulti={false}
-                                label={"Status"}
-                                placeholder={"Select status"}
-                            />
-                        </div>
-                    </div>
-                </div>
-                {/*<div className={cls.itemsBlock}>*/}
-                {/*    <span className={cls.b_text}>{t("height")}: </span>*/}
-                {/*    {clientById.height}*/}
-                {/*</div>*/}
-                <div className={cls.addon} style={{
-                    borderTop: "none"
-                }}>
-                    <div className={cls.addonInfo}>
-                        <p>LOS: <span>{clientById.los}</span></p>
-                        <p>Member unique identifer: <span>{clientById.member_uniqie_identifer}</span></p>
-                        <p>Miles: <span>{clientById.miles}</span></p>
-                        <p>Request type: <span>{clientById.request_type}</span></p>
-                        <p>Trip ID: <span>{clientById.trip_id}</span></p>
-                        <p>Wait duration: <span>{clientById.waitDuration} minutes</span></p>
-                        <p>Oxygen: <span>{clientById.oxygen}</span></p>
-                    </div>
-                </div>
-            </div>
-
-            {
-                clientById.address.map((item, index: number) => {
-                    return (<>
-                        <div className={cls.class}>
-                            <p className={cls.classLabel}>Step: {index + 1}</p>
-                            <div className={cls.classInfo}>
-                                <div className={cls.classLeft}>
-                                    <div className={cls.items}>
-                                        {index !== 0 && <div className={cls.item} style={{ alignItems: "center" }}>
-                                            <span className={cls.itemLabel}>Appointment time:</span>
-                                            {/*<span className={cls.itemValue}>{item.drop_down}</span>*/}
-                                            <CustomTimePicker
-                                                className={cls.timepicker}
-                                                setFieldValue={setFieldValue}
-                                                value={item.drop_down}
-                                                name={`drop_down_${index}`}
+                                </div>
+                            </div>
+                            <div className={cls.item1}>
+                                <div className={cls.itemsBlock}>
+                                    <div className={cls.itemsSelects}>
+                                        <div className={cls.itemsSelect}>
+                                            <Select
+                                                getOptionValue={(option: IOption) => option.value}
+                                                getOptionLabel={(option: IOption) => t(option.label)}
+                                                onChange={(options: IOption) => setFieldValue("car", options)}
+                                                placeholder={"Select Car"}
+                                                isDisabled={disabled}
+                                                options={carData}
+                                                value={values["car"]}
+                                                name={"car"}
+                                                isMulti={false}
+                                                label={"Cars"}
                                             />
-                                            {/*<div className={cls.updateButton}>*/}
-                                            {/*    <span className={cls.updateButtonLabel}>Save</span>*/}
-                                            {/*    <button className={cls.adminUpdate}>*/}
-                                            {/*        <Save type={"adminUpdate"}*/}
-                                            {/*              onClick={() => updateTimeHandler(item.step, `drop_down_${index}`)}*/}
-                                            {/*              className={cls.saveIcon} />*/}
-                                            {/*    </button>*/}
-                                            {/*</div>*/}
+                                        </div>
+
+                                        <div className={cls.itemsSelect}>
+                                            <Select
+                                                getOptionValue={(option: IOption) => option.value}
+                                                getOptionLabel={(option: IOption) => t(option.label)}
+                                                onChange={(options: IOption) => setFieldValue("status", options)}
+                                                isDisabled={disabled}
+                                                options={statuses}
+                                                value={values["status"]}
+                                                name={"status"}
+                                                isMulti={false}
+                                                label={"Status"}
+                                                placeholder={"Select status"}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                {/*<div className={cls.itemsBlock}>*/}
+                                {/*    <span className={cls.b_text}>{t("height")}: </span>*/}
+                                {/*    {clientById.height}*/}
+                                {/*</div>*/}
+                                <div className={cls.addon} style={{
+                                    borderTop: "none"
+                                }}>
+                                    <div className={cls.addonInfo}>
+                                        <p>LOS: <span>{clientById.los}</span></p>
+                                        <p>Member unique identifer: <span>{clientById.member_uniqie_identifer}</span>
+                                        </p>
+                                        <p>Miles: <span>{clientById.miles}</span></p>
+                                        <p>Request type: <span>{clientById.request_type}</span></p>
+                                        <p>Trip ID: <span>{clientById.trip_id}</span></p>
+                                        <p>Wait duration: <span>{clientById.waitDuration} minutes</span></p>
+                                        <p>Oxygen: <span>{clientById.oxygen}</span></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {
+                                clientById.address.map((item, index: number) => {
+                                    return (<>
+                                        <div className={cls.class}>
+                                            <p className={cls.classLabel}>Step: {index + 1}</p>
+                                            <div className={cls.classInfo}>
+                                                <div className={cls.classLeft}>
+                                                    <div className={cls.items}>
+                                                        {index !== 0 &&
+                                                            <div className={cls.item} style={{ alignItems: "center" }}>
+                                                                <span className={cls.itemLabel}>Appointment time:</span>
+                                                                {/*<span className={cls.itemValue}>{item.drop_down}</span>*/}
+                                                                <CustomTimePicker
+                                                                    className={cls.timepicker}
+                                                                    setFieldValue={setFieldValue}
+                                                                    value={item.drop_down}
+                                                                    name={`drop_down_${index + 1}`}
+                                                                />
+                                                                {/*<div className={cls.updateButton}>*/}
+                                                                {/*    <span className={cls.updateButtonLabel}>Save</span>*/}
+                                                                {/*    <button className={cls.adminUpdate}>*/}
+                                                                {/*        <Save type={"adminUpdate"}*/}
+                                                                {/*              onClick={() => updateTimeHandler(item.step, `drop_down_${index}`)}*/}
+                                                                {/*              className={cls.saveIcon} />*/}
+                                                                {/*    </button>*/}
+                                                                {/*</div>*/}
+                                                            </div>}
+                                                        {clientById.address.length !== index + 1 &&
+                                                            <div className={cls.item} style={{ alignItems: "center" }}>
+                                                                <span className={cls.itemLabel}>Pickup time:</span>
+                                                                {/*<span className={cls.itemValue}>{item.pick_up}</span>*/}
+                                                                <CustomTimePicker className={cls.timepicker}
+                                                                                  setFieldValue={setFieldValue}
+                                                                                  value={item.pick_up}
+                                                                                  name={`pick_up_${index + 1}`} />
+                                                            </div>}
+                                                        <div className={cls.item}>
+                                                            <span className={cls.itemLabel}>Pickup Address:</span>
+                                                            <span className={cls.itemValue}>{item.address}</span>
+                                                        </div>
+                                                        <div className={cls.item}>
+                                                            <span className={cls.itemLabel}>Phone:</span>
+                                                            <span className={cls.itemValue}>{item.address_phone}</span>
+                                                        </div>
+                                                        <div className={cls.item}>
+                                                            <span className={cls.itemLabel}>Comment:</span>
+                                                            <span
+                                                                className={cls.itemValue}>{item.address_comments}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className={cls.seperator}></div>
+                                    </>);
+                                })
+                            }
+                        </div>
+
+                        <div className={cls.infoRight}>
+                            <div className={cls.info}>
+                                <div className={cls.itemTextarea}>
+                                    <Textarea
+                                        name={"additionalNote"}
+                                        value={values["additionalNote"]}
+                                        placeholder={t("additionalNote")}
+                                        onChange={(event: any) => {
+                                            event.persist();
+                                            setFieldValue("additionalNote", event.target.value);
+                                        }}
+                                        label={t("additionalNote")}
+                                    />
+                                </div>
+                            </div>
+                            <div className={cls.addInfo}>
+                                <div className={cls.itemsMap}>
+                                    <div className={cls.mapBlock}>
+                                        {isLoaded && showMap && <div
+                                            className={cls.selectDiv}
+                                            // style={{
+                                            //     flexDirection: blockRef.current.clientHeight > window.innerHeight ? "column" : "row"
+                                            // }}
+                                        >
+                                            <div className={cls.directionDiv}>
+                                                {steps && steps.map((el: any) => {
+                                                    return (
+                                                        <div
+                                                            className={cls.directions}
+                                                            dangerouslySetInnerHTML={{ __html: el.instructions }}
+                                                        />
+                                                    );
+                                                })}
+                                            </div>
+                                            <div className={cls.mapDiv}>
+                                                {directionsResponse && <GoogleMap
+                                                    ///  center={center}
+                                                    zoom={15}
+                                                    mapContainerStyle={{
+                                                        width: "100%",
+                                                        height: "100%",
+                                                        minHeight: "500px"
+                                                    }}
+                                                    options={{
+                                                        zoomControl: true,
+                                                        streetViewControl: false,
+                                                        mapTypeControl: false,
+                                                        fullscreenControl: false
+                                                    }}
+                                                    onLoad={map => setMap(map)}
+                                                >
+                                                    {/* <Marker position={center} /> */}
+                                                    {directionsResponse && (
+                                                        <DirectionsRenderer directions={directionsResponse} />
+                                                    )}
+
+                                                </GoogleMap>}
+                                            </div>
                                         </div>}
-                                        {clientById.address.length !== index + 1 &&
-                                            <div className={cls.item} style={{ alignItems: "center" }}>
-                                                <span className={cls.itemLabel}>Pickup time:</span>
-                                                {/*<span className={cls.itemValue}>{item.pick_up}</span>*/}
-                                                <CustomTimePicker className={cls.timepicker}
-                                                                  setFieldValue={setFieldValue}
-                                                                  value={item.pick_up}
-                                                                  name={`pick_up_${index}`} />
-                                            </div>}
-                                        <div className={cls.item}>
-                                            <span className={cls.itemLabel}>Pickup Address:</span>
-                                            <span className={cls.itemValue}>{item.address}</span>
-                                        </div>
-                                        <div className={cls.item}>
-                                            <span className={cls.itemLabel}>Phone:</span>
-                                            <span className={cls.itemValue}>{item.address_phone}</span>
-                                        </div>
-                                        <div className={cls.item}>
-                                            <span className={cls.itemLabel}>Comment:</span>
-                                            <span className={cls.itemValue}>{item.address_comments}</span>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className={cls.seperator}></div>
                     </>);
-                })
-            }
-        </div>
-
-        <div className={cls.infoRight}>
-            <div className={cls.info}>
-                <div className={cls.itemTextarea}>
-                    <Textarea
-                        name={"additionalNote"}
-                        value={values22.additionalNote}
-                        placeholder={t("additionalNote")}
-                        onChange={(event: any) => {
-                            event.persist()
-                            setFieldValue("additionalNote", event.target.value)
-                        }}
-                        label={t("additionalNote")}
-                    />
-                </div>
-            </div>
-            <div className={cls.addInfo}>
-                <div className={cls.itemsMap}>
-                    <div className={cls.mapBlock}>
-                        {isLoaded && showMap && <div
-                            className={cls.selectDiv}
-                            // style={{
-                            //     flexDirection: blockRef.current.clientHeight > window.innerHeight ? "column" : "row"
-                            // }}
-                        >
-                            <div className={cls.directionDiv}>
-                                {steps && steps.map((el: any) => {
-                                    return (
-                                        <div
-                                            className={cls.directions}
-                                            dangerouslySetInnerHTML={{ __html: el.instructions }}
-                                        />
-                                    );
-                                })}
-                            </div>
-                            <div className={cls.mapDiv}>
-                                {directionsResponse && <GoogleMap
-                                    ///  center={center}
-                                    zoom={15}
-                                    mapContainerStyle={{ width: "100%", height: "100%", minHeight: "500px" }}
-                                    options={{
-                                        zoomControl: true,
-                                        streetViewControl: false,
-                                        mapTypeControl: false,
-                                        fullscreenControl: false
-                                    }}
-                                    onLoad={map => setMap(map)}
-                                >
-                                    {/* <Marker position={center} /> */}
-                                    {directionsResponse && (
-                                        <DirectionsRenderer directions={directionsResponse} />
-                                    )}
-
-                                </GoogleMap>}
-                            </div>
-                        </div>}
-                    </div>
-                </div>
-            </div>
-        </div>
-                    </>)}}
+            }}
         </Formik>
     </div>;
 };

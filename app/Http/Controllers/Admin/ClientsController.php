@@ -189,9 +189,6 @@ class ClientsController extends Controller
             }
         }
 
-
-
-
         $result = array_diff($allFields, $selectedFieldsTitle);
         $selectedFields = count($clientsData) > 0 ? $clientsData : $clientData;
         array_unshift($selectedFields, 'clients.id as id');
@@ -283,7 +280,6 @@ class ClientsController extends Controller
                 public_path() . "/uploads/clients/$requestData->member_unique_identifier/",
                 $file_name
             );
-
             $ins['path'] = "/uploads/clients/$requestData->member_unique_identifier/$file_name";
             $ins['exp'] = date('Y-m-d', strtotime($requestData->insurance_exp));
         } else {

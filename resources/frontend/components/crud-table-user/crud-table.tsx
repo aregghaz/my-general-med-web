@@ -3,6 +3,7 @@ import TableHead from "./table-head/table-head";
 import TableBody from "./table-body/table-body";
 import s from "./crud-table.module.scss";
 import { IOption } from "../select/select";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 
 const CrudTable: React.FC<ICrudTable> = (
@@ -18,6 +19,7 @@ const CrudTable: React.FC<ICrudTable> = (
         isAssignVendor,
         isInfo,
         tableRef,
+        fetchMoreData,
         handlerAction,
         action,
         selectedIds,
@@ -47,25 +49,34 @@ const CrudTable: React.FC<ICrudTable> = (
 
     return (
         <>
-            <table className={s.table} ref={tableRef}>
-                <TableHead action={action} titles={titles} titleSort={titleSort} filterTable={filterTable}
-                           titleName={titleName} />
-                <TableBody
-                    data={resetOrNotTable}
-                    isEdit={isEdit}
-                    isInfo={isInfo}
-                    isAssign={isAssign}
-                    isDelete={isDelete}
-                    isGetHistory={isGetHistory}
-                    isClaim={isClaim}
-                    isRemove={isRemove}
-                    typeId={typeId}
-                    isAssignVendor={isAssignVendor}
-                    handlerAction={handlerAction}
-                    selectedIds={selectedIds}
-                />
+            <InfiniteScroll
+                dataLength={resetOrNotTable.length} //This is important field to render the next data
+                next={fetchMoreData}
+                hasMore={resetOrNotTable.length > 0}
+                loader={<h4>Loading...</h4>}
+                height={700}
+            >
+                <table className={s.table} ref={tableRef}>
+                    <TableHead action={action} titles={titles} titleSort={titleSort} filterTable={filterTable}
+                               titleName={titleName} />
 
-            </table>
+                    <TableBody
+                        data={resetOrNotTable}
+                        isEdit={isEdit}
+                        isInfo={isInfo}
+                        isAssign={isAssign}
+                        isDelete={isDelete}
+                        isGetHistory={isGetHistory}
+                        isClaim={isClaim}
+                        isRemove={isRemove}
+                        typeId={typeId}
+                        isAssignVendor={isAssignVendor}
+                        handlerAction={handlerAction}
+                        selectedIds={selectedIds}
+                    />
+
+                </table>
+            </InfiniteScroll>
         </>
     );
 };
@@ -85,6 +96,7 @@ interface ICrudTable {
     isAssignVendor: boolean
     className: string
     handlerAction: (id: number, action: string) => void
+    fetchMoreData: () => void
     selectedIds: number[]
     typeId: number,
     tableRef: any

@@ -191,18 +191,11 @@ const Home: React.FC<IHome> = () => {
     };
 
 
-    useEffect(() => {
-        (async () => {
-            if (inView) {
-                await getClientData(query, date);
-                countRef.current++;
-                //// setLoading(false);
-            }
-        })();
-        return () => {
-            ///   homeAPI.cancelRequest();
-        };
-    }, [inView]);
+
+    const fetchMoreData = async () => {
+        countRef.current++
+        await getClientData(query, date);
+    };
     useEffect(() => {
         (async () => {
             if (loading) {
@@ -462,6 +455,7 @@ const Home: React.FC<IHome> = () => {
                         isAssign
                         isClaim
                         isRemove
+                        fetchMoreData={fetchMoreData}
                         tableRef={tableRef}
                         handlerAction={handlerAction}
                         className={"pagination"}

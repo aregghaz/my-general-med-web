@@ -12,8 +12,7 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
-    protected function convertSingleData($client)
+    protected function convertSingleData($client): array
     {
         $count = [];
         for ($i = 1; $i <= $client->stops; $i++) {
@@ -89,7 +88,6 @@ class Controller extends BaseController
             ///  'additionalNote' => $client->additionalNote,
         ];
     }
-
     protected function saveNotification($model, $field, $id, $actionid)
     {
         $notification = new Notification();
@@ -99,8 +97,7 @@ class Controller extends BaseController
         $notification->type_id = $actionid;
         $notification->save();
     }
-
-    protected function convertSingleDataForInfo($client)
+    protected function convertSingleDataForInfo($client): array
     {
         return [
             'id' => $client->id,
@@ -135,7 +132,6 @@ class Controller extends BaseController
             'operator_note' => $client->operator_note,
         ];
     }
-
     protected function createAction($userId, $clientId, $action, $vendorId = 1): bool
     {
         Actions::create([
@@ -146,8 +142,6 @@ class Controller extends BaseController
         ]);
         return true;
     }
-
-
     protected function clientTypes(): array
     {
         return [
@@ -180,7 +174,6 @@ class Controller extends BaseController
             ],
         ];
     }
-
     public function clientCreateType(): array
     {
         return [
@@ -198,8 +191,7 @@ class Controller extends BaseController
             ]
         ];
     }
-
-    public function tripType()
+    public function tripType(): array
     {
         return [
             [
@@ -221,8 +213,7 @@ class Controller extends BaseController
             ]
         ];
     }
-
-    public function daysOnWeek()
+    public function daysOnWeek(): array
     {
         return [[
             'id' => 1,
@@ -262,7 +253,6 @@ class Controller extends BaseController
         ]
         ];
     }
-
     protected function convertQuery($queryData, $title, $clients)
     {
 
@@ -271,17 +261,9 @@ class Controller extends BaseController
                 ->orWhere('trip_id', 'LIKE', '%' . $queryData . '%')
                 ->orWhere('member_uniqie_identifer', 'LIKE', '%' . $queryData . '%');
         });
-//        $clients = $clients->where(function ($query) use ($title, $queryData) {
-//            // $clients =  $this->convertQuery($request->queryData, $vendorFields, $clients);
-//            for ($i = 0; $i < count($title); $i++) {
-//                if ($title[$i] !== 'id') {
-//                    $query->orWhere($title[$i], 'LIKE', '%' . $queryData . '%');
-//                }
-//            }
-//        });
+
         return $clients;
     }
-
     public function calculatePrice($priceList, $price, $miles)
     {
 

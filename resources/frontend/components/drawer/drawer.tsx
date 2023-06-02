@@ -93,8 +93,6 @@ const Drawer: React.FC = ({ children }) => {
 
         userData.user.pages.map((item, index) => {
             var pathUrl = "";
-            console.log(userData.user.role, "userData.user.roleuserData.user.role");
-            ///  userData.user.role == "admin" ? `/${userData.user.role}` : "";
             switch (userData.user.role) {
                 case "admin" :
                     pathUrl = "/admin";
@@ -110,7 +108,7 @@ const Drawer: React.FC = ({ children }) => {
                     break;
 
             }
-            console.log(pathUrl, "pathUrlpathUrl");
+
             menuItemsFirst.push({
                 id: item.id,
                 Icon: IconArray.find(x => x.id == item.id).icon,

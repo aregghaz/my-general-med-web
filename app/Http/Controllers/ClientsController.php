@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ClientCollection;
 use App\Http\Resources\StatusCollection;
+use App\Models\Address;
 use App\Models\Clients;
 use App\Models\ClientStatus;
 use App\Models\Gender;
@@ -228,16 +229,46 @@ class ClientsController extends Controller
 
     public function updateClient(Request $request, $id)
     {
-        Clients::find($id)->update([
-            "pick_up" => $request->pick_up,
-            "drop_down" => $request->drop_down,
-            "additionalNote" => $request->additionalNote,
-            "type_id" => $request->status['id'],
-            "car_id" => (int)$request->car['value'],
-        ]);
+
+        $statusId = 0;
+        $client = Clients::find($id);
+        if (isset($request->cars)) {
+            $client->car_id = (int)$request->cars['value'];
+        }
+        if (isset($request->status)) {
+            $client->type_id = (int)$request->status['id'];
+            $statusId = (int)$request->status['id'];
+        } else {
+            $statusId = $client->type_id;
+        }
+        $client->additionalNote = $request->additionalNote;
+        $client->update();
+        $address = Address::where('client_id', $id)->get();
+
+        foreach ($address as $index => $value){
+            $count = $index+1;
+           $singleAddress = Address::find($value->id);
+
+            if ($count === 1) {
+                $stepTimePickUp = "pick_up_$count";
+               /// dd($request->$stepTimePickUp);
+               /// dd($request->$stepTimePickUp);
+                $singleAddress->pick_up = $request->$stepTimePickUp;
+            } else if ($count === $client->count) {
+                $stepTimeDropDown = "drop_down_$count";
+                $singleAddress->drop_down = $request->$stepTimeDropDown;
+            } else {
+                $stepTimePickUp = "pick_up_$count";
+                $singleAddress->pick_up = $request->$stepTimePickUp;
+                $stepTimeDropDown = "drop_down_$count";
+                $singleAddress->drop_down = $request->$stepTimeDropDown;
+            };
+            $singleAddress->update();
+
+        }
         $vendorId = $request->user()->vendor_id;
         /////TODO SHOULD ADD IF CHANGE STATUS
-        $this->createAction($vendorId, $id, $request->status['id'], 1);
+        $this->createAction($vendorId, $id, $statusId, $vendorId);
         return response()->json([
             "success" => 1
         ], 200);
