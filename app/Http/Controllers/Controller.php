@@ -12,6 +12,7 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
     protected function convertSingleData($client): array
     {
         $count = [];
@@ -88,6 +89,7 @@ class Controller extends BaseController
             ///  'additionalNote' => $client->additionalNote,
         ];
     }
+
     protected function saveNotification($model, $field, $id, $actionid)
     {
         $notification = new Notification();
@@ -97,6 +99,7 @@ class Controller extends BaseController
         $notification->type_id = $actionid;
         $notification->save();
     }
+
     protected function convertSingleDataForInfo($client): array
     {
         return [
@@ -132,6 +135,7 @@ class Controller extends BaseController
             'operator_note' => $client->operator_note,
         ];
     }
+
     protected function createAction($userId, $clientId, $action, $vendorId = 1): bool
     {
         Actions::create([
@@ -142,6 +146,7 @@ class Controller extends BaseController
         ]);
         return true;
     }
+
     protected function clientTypes(): array
     {
         return [
@@ -174,6 +179,7 @@ class Controller extends BaseController
             ],
         ];
     }
+
     public function clientCreateType(): array
     {
         return [
@@ -191,6 +197,7 @@ class Controller extends BaseController
             ]
         ];
     }
+
     public function tripType(): array
     {
         return [
@@ -213,6 +220,7 @@ class Controller extends BaseController
             ]
         ];
     }
+
     public function daysOnWeek(): array
     {
         return [[
@@ -253,6 +261,7 @@ class Controller extends BaseController
         ]
         ];
     }
+
     protected function convertQuery($queryData, $title, $clients)
     {
 
@@ -264,16 +273,40 @@ class Controller extends BaseController
 
         return $clients;
     }
-    public function calculatePrice($priceList, $price, $miles)
+
+    public function calculatePrice($priceList, $price, $miles, $duration_id = false)
     {
 
+
         if ($priceList->type == 'base') {
-            $price = $price + $priceList->price;
-          ///  var_dump($price);
+            if ($duration_id and $priceList->service_id === 4) {
+               /// dd($duration_id);
+                switch ($duration_id) {
+                    case 2 :
+                        $price = $price + ($priceList->price/6);
+                        break;
+                    case 3 :
+                        $price = $price + ($priceList->price *2/6);
+                        break;
+                    case 4 :
+                        $price = $price + ($priceList->price *3/6);
+                        break;
+                    case 5 :
+                        $price = $price + ($priceList->price *4/6);
+                        break;
+                    case 6 :
+                        $price = $price + ($priceList->price *5/6);
+                        break;
+                    case 7 :
+                        $price = $price + $priceList->price;
+                        break;
+                }
+            } else {
+                $price = $price + $priceList->price;
+            }
+
         } else {
-            ///dd($price+$priceList->price * $requestData->miles);
             $price = $price + ($priceList->price * $miles);
-           // dd($price);
         }
         return $price;
     }

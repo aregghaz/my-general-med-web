@@ -525,7 +525,7 @@ class ClientsController extends Controller
             $client->vendor_id = $requestData->vendor_id->id;
             foreach ($priceLists as $priceList) {
                 if (($priceList->service_id === 5 && $requestData->stairchair_id->id > 1) || ($priceList->service_id === 4 && $requestData->duration_id->id > 1) || ($priceList->service_id === 3 && $requestData->artificial_id->id > 1) || ($priceList->service_id === 2 or $priceList->service_id === 1)) {
-                    $price = $this->calculatePrice($priceList, $price, $requestData->miles);
+                    $price = $this->calculatePrice($priceList, $price, $requestData->miles, $requestData->duration_id->id);
                 }
             }
             //dd($price);

@@ -8,14 +8,14 @@ import { GOOGLE_API_KEY } from "../../../environments";
 import { getClientData } from "../../../store/selectors";
 import { useTranslation } from "react-i18next";
 import Textarea from "../../../components/textarea/textarea";
-import { AdminApi } from "../../../api/admin-api/admin-api";
-import { toast } from "react-toastify";
-import timestampToDate from "../../../utils/timestampToDate";
 import getMapResponse from "../../../utils/googleMap";
-import ShowMap from "-!svg-react-loader!../../../images/showMap.svg"
-import Update from "-!svg-react-loader!../../../images/update.svg"
+import timestampToDate from "../../../utils/timestampToDate";
 import CustomTimePicker from "../../../components/custom-time-picker/customTimePicker";
-import Save from "-!svg-react-loader!../../../images/saveImg.svg";
+import ShowMap from "-!svg-react-loader!../../../images/showMap.svg";
+import Update from "-!svg-react-loader!../../../images/update.svg";
+import { Formik, FormikHelpers, FormikValues } from "formik";
+import toastNotification from "../../../utils/toast";
+
 
 interface IShow {
     path: string;
@@ -28,44 +28,50 @@ const Show: React.FC<IShow> = ({ id }) => {
     const [map, setMap] = useState(/** @type google.maps.Map */(null));
     const [directionsResponse, setDirectionsResponse] = useState(null);
     const [distance, setDistance] = useState("");
+    const [statuses, setStatuses] = useState([]);
     const dispatch = useDispatch();
     const clientData = useSelector(getClientData);
     const { clientById } = clientData;
     const { t } = useTranslation();
-    const blockRef = useRef(null as HTMLDivElement);
-    const [showMap, setShowMap] = useState<boolean>(false);
-    const [data, setData] = useState<any>({});
-
+    const [carData, setCarData] = useState<Array<any>>(null);
+    const [disabled, setDisabled] = useState(false);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [mapData, setMapData] = useState({
+        destination: "",
+        origin: "",
+        waypoint: []
+    });
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: GOOGLE_API_KEY,
         libraries: ["geometry", "drawing", "places"]
     });
+    const blockRef = useRef(null as HTMLDivElement);
+    const [showMap, setShowMap] = useState<boolean>(false);
 
-
-
-    const [values, setFieldValue] = useState({
-        pick_up: clientById.pick_up,
-        drop_down: clientById.drop_down,
+    const [data, setData] = useState({
         additionalNote: clientById.additionalNote,
         operator_note: clientById.operator_note
+
     });
     useEffect(() => {
         (async () => {
             const homeData = await homeAPI.getCLientById(id);
+            setStatuses(homeData.status);
+            if (homeData.client.type_id.id === 6) {
+                setDisabled(true);
+            }
             dispatch(clientAction.fetching({ clientById: homeData.client }));
-            setFieldValue({
-                pick_up: homeData.client.pick_up,
-                drop_down: homeData.client.drop_down,
+            setCarData(homeData.cars);
+            setData({
                 additionalNote: homeData.client.additionalNote,
                 operator_note: homeData.client.operator_note
-
             });
             var address = homeData.client.address;
             var origin = "";
             var destination = "";
             var waypoint = [];
             for (let i = 0; i < homeData.client.stops; i++) {
-                console.log(address[i], "address[i]");
+
                 if (i === 0) {
                     origin = address[i]["address"];
                 } else if (i === homeData.client.stops - 1) {
@@ -79,22 +85,9 @@ const Show: React.FC<IShow> = ({ id }) => {
                     });
                 }
             }
-            const results = await getMapResponse(origin, destination, waypoint);
-            setDirectionsResponse(results);
-            if (results.routes[0].legs.length > 0) {
-                var miles = 0;
-                results.routes[0].legs.map((item: any) => {
-                    miles += parseFloat(item.distance.text);
-                    setSteps((state) => {
-                        return [...state,
-                            ...item.steps
+            setMapData({ origin: origin, destination: destination, waypoint: waypoint });
+            setLoading(true);
 
-                        ];
-                    });
-                });
-                setDistance(results.routes[0].legs[0].duration.text);
-            }
-            ///  setDistance(results.routes[0].legs[0].distance.text);
         })();
         return () => {
             homeAPI.cancelRequest();
@@ -102,480 +95,252 @@ const Show: React.FC<IShow> = ({ id }) => {
 
     }, []);
 
+    const shopMapHandler = async () => {
+        if (!showMap) {
 
-    const handlerUpdate = async () => {
-        const homeData = await AdminApi.updateClient(values, id).catch((e) => {
-            const options = {
-                type: toast.TYPE.ERROR,
-                position: toast.POSITION.TOP_RIGHT
-            };
-            toast(t(e), options);
-        });
-        if (homeData.success) {
-            const options = {
-                type: toast.TYPE.SUCCESS,
-                position: toast.POSITION.TOP_RIGHT
-            };
+            if (steps.length === 0) {
+                setSteps([]);
+                const results = await getMapResponse(mapData.origin, mapData.destination, mapData.waypoint);
+                setDirectionsResponse(results);
+                if (results.routes[0].legs.length > 0) {
+                    var miles = 0;
+                    results.routes[0].legs.map((item: any) => {
+                        miles += parseFloat(item.distance.text);
+                        setSteps((state) => {
+                            return [...state,
+                                ...item.steps
 
-            toast(t("record_successfully_edited"), options);
+                            ];
+                        });
+                    });
+                    setDistance(results.routes[0].legs[0].duration.text);
+                    setDistance(results.routes[0].legs[0].duration.text);
+                    setShowMap(true);
+                }
+            } else {
+                setShowMap(true);
+            }
+        } else {
+            setShowMap(false);
         }
+
+
     };
-    const [dateValue, setFieldDateValue] = useState(null);
-    const updateTimeHandler = async (step: number, field: string) => {
-        console.log(step, field, dateValue, "step");
-        console.log(dateValue, "step");
+
+    const submit = async (values: FormikValues, { setSubmitting }: FormikHelpers<FormikValues>) => {
+        await homeAPI.updateClient(values, id).catch((e) => {
+            toastNotification(e, 1);
+        }).then((homeData: any) => {
+            if (homeData.success) {
+                toastNotification(t("record_successfully_edited"), 2);
+            } else {
+                toastNotification("something wrong", 1);
+            }
+        });
+
+
     };
-    console.log(clientById)
-    return clientById && <div className={cls.block} ref={blockRef}>
-        <div className={cls.infoLeft}>
-            <div className={cls.infoLeftName}>
-                <span className={cls.username}>{clientById.fullName}</span>
-                |
-                <span>{timestampToDate(clientById.date_of_service.toString())}</span>
-                |
-                <span><span>Height: {clientById.height}</span> <span>Weight: {clientById.weight}</span></span>
-                {/*<div className={cls.updateButton}>*/}
-                {/*    <Button type={"adminUpdate"} onClick={() => {setShowMap(!showMap)}}>*/}
-                {/*        {showMap ? "Hide Map" : "Show Map"}*/}
-                {/*    </Button>*/}
-                {/*</div>*/}
-                {/*<div className={cls.updateButton}>*/}
-                {/*    /!*<Button type={"adminUpdate"} onClick={handlerUpdate}>*!/*/}
-                {/*    /!*    Update*!/*/}
-                {/*    /!*</Button>*!/*/}
-                {/*</div>*/}
-                <div className={cls.iconsWrapper}>
-                    <button className={cls.updateButton} onClick={() => {setShowMap(!showMap)}}>
-                        <span className={cls.updateButtonLabel}>Show map</span>
-                        <ShowMap type={"adminUpdate"} className={cls.mapIcon}/>
-                    </button>
-                    <button className={cls.updateButton} onClick={handlerUpdate}>
-                        <span className={`${cls.updateButtonLabel} ${cls.updateLabelTop}`}>Update</span>
-                        <Update type={"adminUpdate"} className={cls.updateIcon}/>
-                    </button>
-                </div>
-            </div>
-            <div className={cls.addon}>
-                <div className={cls.addonInfo}>
-                    <p>LOS: <span>{clientById.los}</span></p>
-                    <p>Member unique identifer: <span>{clientById.member_uniqie_identifer}</span></p>
-                    <p>Miles: <span>{clientById.miles}</span></p>
-                    <p>Request type: <span>{clientById.request_type}</span></p>
-                    <p>Trip ID: <span>{clientById.trip_id}</span></p>
-                    <p>Wait duration: <span>{clientById.waitDuration} minutes</span></p>
-                    <p>Oxygen: <span>{clientById.oxygen}</span></p>
-                </div>
-            </div>
-            {
-                clientById.address.map((item, index: number) => {
-                    return (<>
-                        <div className={cls.class}>
-                            <p className={cls.classLabel}>Step: {index + 1}</p>
-                            <div className={cls.classInfo}>
-                                <div className={cls.classLeft}>
-                                    <div className={cls.items}>
-                                        {index !== 0 && <div className={cls.item} style={{ alignItems: "center" }}>
-                                            <span className={cls.itemLabel}>Appointment time:</span>
-                                            {/*<span className={cls.itemValue}>{item.drop_down}</span>*/}
-                                            <CustomTimePicker
-                                                className={cls.timepicker}
-                                                setFieldValue={setFieldDateValue}
-                                                value={item.drop_down}
-                                                name={`drop_down`}
-                                            />
-                                            <div className={cls.updateButton}>
-                                                <span className={cls.updateButtonLabel}>Save</span>
-                                                <button className={cls.adminUpdate}>
-                                                    <Save type={"adminUpdate"}
-                                                          onClick={() => updateTimeHandler(item.step, "drop_down")}
-                                                          className={cls.saveIcon} />
-                                                </button>
-                                            </div>
-                                        </div>}
-                                        {clientById.address.length !== index + 1 &&
-                                            <div className={cls.item} style={{ alignItems: "center" }}>
-                                                <span className={cls.itemLabel}>Pickup time:</span>
-                                                {/*<span className={cls.itemValue}>{item.pick_up}</span>*/}
-                                                <CustomTimePicker className={cls.timepicker}
-                                                                  setFieldValue={setFieldDateValue} value={item.pick_up}
-                                                                  name={`pick_up`} />
-                                                <div className={cls.updateButton}>
-                                                    <span className={cls.updateButtonLabel}>Save</span>
-                                                    <button className={cls.adminUpdate}>
-                                                        <Save type={"adminUpdate"}
-                                                              onClick={() => updateTimeHandler(item.step, "pick_up")}
-                                                              className={cls.saveIcon} />
-                                                    </button>
-                                                </div>
-                                            </div>}
-                                        <div className={cls.item}>
-                                            <span className={cls.itemLabel}>Pickup Address:</span>
-                                            <span className={cls.itemValue}>{item.address}</span>
+
+
+    return loading && <div className={cls.block} ref={blockRef}>
+        <Formik
+            initialValues={data}
+            onSubmit={submit}
+            //  validate={validate}
+            validateOnChange={false}
+            validateOnBlur={false}
+        >
+            {({
+                  handleSubmit,
+                  handleChange,
+                  values,
+                  setFieldValue,
+                  errors
+              }) => {
+
+                return (
+                    <>
+                        <div className={cls.infoLeft}>
+                            <div>
+                                <div className={cls.infoLeftName}>
+                                    <span className={cls.username}>{clientById.fullName}</span>
+                                    |
+                                    <span>{timestampToDate(clientById.date_of_service.toString())}</span>
+                                    |
+                                    <span><span>Height: {clientById.height}</span> <span>Weight: {clientById.weight}</span></span>
+                                    <div className={cls.iconsWrapper}>
+                                        <div className={cls.updateButton}>
+                                            <span
+                                                className={`${cls.updateButtonLabel} ${cls.showMapLabel}`}>Show Map</span>
+                                            <ShowMap type={"adminUpdate"} onClick={shopMapHandler}
+                                                     className={cls.mapIcon} />
                                         </div>
-                                        <div className={cls.item}>
-                                            <span className={cls.itemLabel}>Phone:</span>
-                                            <span className={cls.itemValue}>{item.address_phone}</span>
-                                        </div>
-                                        <div className={cls.item}>
-                                            <span className={cls.itemLabel}>Comment:</span>
-                                            <span className={cls.itemValue}>{item.address_comments}</span>
+                                        <div className={cls.updateButton}>
+                                            <span
+                                                className={`${cls.updateButtonLabel} ${cls.updateLabel}`}>Update</span>
+                                            <Update type={"adminUpdate"} onClick={handleSubmit}
+                                                    className={cls.updateIcon} />
                                         </div>
                                     </div>
-                                </div>
 
+                                </div>
+                            </div>
+                            <div className={cls.item1}>
+                                <div className={cls.addon} style={{
+                                    borderTop: "none"
+                                }}>
+                                    <div className={cls.addonInfo}>
+                                        <p>LOS: <span>{clientById.los}</span></p>
+                                        <p>Member unique identifer: <span>{clientById.member_uniqie_identifer}</span>
+                                        </p>
+                                        <p>Miles: <span>{clientById.miles}</span></p>
+                                        <p>Request type: <span>{clientById.request_type}</span></p>
+                                        <p>Trip ID: <span>{clientById.trip_id}</span></p>
+                                        <p>Wait duration: <span>{clientById.waitDuration} minutes</span></p>
+                                        <p>Oxygen: <span>{clientById.oxygen}</span></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {
+                                clientById.address.map((item, index: number) => {
+                                    return (<>
+                                        <div className={cls.class}>
+                                            <p className={cls.classLabel}>Step: {index + 1}</p>
+                                            <div className={cls.classInfo}>
+                                                <div className={cls.classLeft}>
+                                                    <div className={cls.items}>
+                                                        {index !== 0 &&
+                                                            <div className={cls.item} style={{ alignItems: "center" }}>
+                                                                <span className={cls.itemLabel}>Appointment time:</span>
+                                                                {/*<span className={cls.itemValue}>{item.drop_down}</span>*/}
+                                                                <CustomTimePicker
+                                                                    className={cls.timepicker}
+                                                                    setFieldValue={setFieldValue}
+                                                                    value={item.drop_down}
+                                                                    name={`drop_down_${index + 1}`}
+                                                                />
+                                                                {/*<div className={cls.updateButton}>*/}
+                                                                {/*    <span className={cls.updateButtonLabel}>Save</span>*/}
+                                                                {/*    <button className={cls.adminUpdate}>*/}
+                                                                {/*        <Save type={"adminUpdate"}*/}
+                                                                {/*              onClick={() => updateTimeHandler(item.step, `drop_down_${index}`)}*/}
+                                                                {/*              className={cls.saveIcon} />*/}
+                                                                {/*    </button>*/}
+                                                                {/*</div>*/}
+                                                            </div>}
+                                                        {clientById.address.length !== index + 1 &&
+                                                            <div className={cls.item} style={{ alignItems: "center" }}>
+                                                                <span className={cls.itemLabel}>Pickup time:</span>
+                                                                {/*<span className={cls.itemValue}>{item.pick_up}</span>*/}
+                                                                <CustomTimePicker className={cls.timepicker}
+                                                                                  setFieldValue={setFieldValue}
+                                                                                  value={item.pick_up}
+                                                                                  name={`pick_up_${index + 1}`} />
+                                                            </div>}
+                                                        <div className={cls.item}>
+                                                            <span className={cls.itemLabel}>Pickup Address:</span>
+                                                            <span className={cls.itemValue}>{item.address}</span>
+                                                        </div>
+                                                        <div className={cls.item}>
+                                                            <span className={cls.itemLabel}>Phone:</span>
+                                                            <span className={cls.itemValue}>{item.address_phone}</span>
+                                                        </div>
+                                                        <div className={cls.item}>
+                                                            <span className={cls.itemLabel}>Comment:</span>
+                                                            <span
+                                                                className={cls.itemValue}>{item.address_comments}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className={cls.seperator}></div>
+                                    </>);
+                                })
+                            }
+                        </div>
+
+                        <div className={cls.infoRight}>
+                            <div className={cls.infoRightBottomTextareas}>
+                                <div className={cls.itemTextarea}>
+                                    <Textarea
+                                        name={"additionalNote"}
+                                        value={values["additionalNote"]}
+                                        placeholder={t("additionalNote")}
+                                        onChange={(event: any) => {
+                                            event.persist();
+                                            setFieldValue("additionalNote", event.target.value);
+                                        }}
+                                        label={t("additionalNote")}
+                                    />
+                                </div>
+                                <div className={cls.itemTextarea}>
+                                    <Textarea
+                                        name={"operator_note"}
+                                        value={values.operator_note}
+                                        placeholder={t("operator_note")}
+                                        onChange={(event: any) => {
+                                            event.persist();
+                                            setFieldValue("operator_note", event.target.value);
+                                        }}
+                                        label={t("operator_note")}
+                                    />
+                                </div>
+                            </div>
+                            <div className={cls.addInfo}>
+                                <div className={cls.itemsMap}>
+                                    <div className={cls.mapBlock}>
+                                        {isLoaded && showMap && <div
+                                            className={cls.selectDiv}
+                                            // style={{
+                                            //     flexDirection: blockRef.current.clientHeight > window.innerHeight ? "column" : "row"
+                                            // }}
+                                        >
+                                            <div className={cls.directionDiv}>
+                                                {steps && steps.map((el: any) => {
+                                                    return (
+                                                        <div
+                                                            className={cls.directions}
+                                                            dangerouslySetInnerHTML={{ __html: el.instructions }}
+                                                        />
+                                                    );
+                                                })}
+                                            </div>
+
+                                            <div className={cls.mapDiv}>
+                                                {directionsResponse && <GoogleMap
+                                                    ///  center={center}
+                                                    zoom={15}
+                                                    mapContainerStyle={{
+                                                        width: "100%",
+                                                        height: "100%",
+                                                        minHeight: "500px"
+                                                    }}
+                                                    options={{
+                                                        zoomControl: true,
+                                                        streetViewControl: false,
+                                                        mapTypeControl: false,
+                                                        fullscreenControl: false
+                                                    }}
+                                                    onLoad={map => setMap(map)}
+                                                >
+                                                    {/* <Marker position={center} /> */}
+                                                    {directionsResponse && (
+                                                        <DirectionsRenderer directions={directionsResponse} />
+                                                    )}
+
+                                                </GoogleMap>}
+                                            </div>
+                                        </div>}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div className={cls.seperator}></div>
                     </>);
-                })
-            }
-
-
-            {/*<div className={cls.seperator}></div>*/}
-            {/*<div className={cls.class}>*/}
-            {/*    <p className={cls.classLabel}>Times:</p>*/}
-            {/*    <div className={cls.items}>*/}
-            {/*        <div className={cls.item} style={{ alignItems: "center" }}>*/}
-            {/*            <div className={cls.itemLabelBox}>*/}
-            {/*                <span className={cls.itemLabel}>Drop Down:</span>*/}
-            {/*            </div>*/}
-            {/*            <div className={cls.itemItemBox}>*/}
-            {/*                <TimePicker format={"h:m"} className={s.time} clockIcon={null} clearIcon={null}*/}
-            {/*                            onChange={(time: string) => setFieldValue((state: any) => {*/}
-            {/*                                return {*/}
-            {/*                                    ...state,*/}
-            {/*                                    "drop_down": time*/}
-            {/*                                };*/}
-            {/*                            })} name={"drop_down"} value={clientById.drop_down} />*/}
-            {/*            </div>*/}
-            {/*        </div>*/}
-            {/*        <div className={cls.item} style={{ alignItems: "center" }}>*/}
-            {/*            <div className={cls.itemLabelBox}>*/}
-            {/*                <span className={cls.itemLabel}>Pick Up:</span>*/}
-            {/*            </div>*/}
-            {/*            <div className={cls.itemItemBox}>*/}
-            {/*                <TimePicker format={"h:m"} className={s.time} clockIcon={null} clearIcon={null}*/}
-            {/*                            onChange={(time: string) => setFieldValue((state: any) => {*/}
-            {/*                                return {*/}
-            {/*                                    ...state,*/}
-            {/*                                    "pick_up": time*/}
-            {/*                                };*/}
-            {/*                            })} name={"pick_up"} value={clientById.pick_up} />*/}
-            {/*            </div>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
-            {/*<div className={cls.infoLeftBottom}></div>*/}
-        </div>
-        <div className={cls.infoRight}>
-            <div className={cls.infoRightBottom}>
-                <div className={cls.infoRightBottomTextareas}>
-                    <div className={cls.itemTextarea}>
-                        <Textarea
-                            name={"additionalNote"}
-                            value={values.additionalNote}
-                            placeholder={t("additionalNote")}
-                            onChange={(event: any) => {
-                                event.persist();
-                                return setFieldValue((state: any) => {
-                                    return {
-                                        ...state,
-                                        additionalNote: event.target.value
-                                    };
-                                });
-                            }}
-                            label={t(`Additional note (readonly)`)}
-                            readonly={true}
-                        />
-                    </div>
-                    <div className={cls.itemTextarea}>
-                        <Textarea
-                            name={"operator_note"}
-                            value={values.operator_note}
-                            placeholder={t("operator_note")}
-                            onChange={(event: any) => {
-                                event.persist();
-                                return setFieldValue((state: any) => {
-                                    return {
-                                        ...state,
-                                        operator_note: event.target.value
-                                    };
-                                });
-                            }}
-                            label={t("operator_note")}
-                        />
-                    </div>
-                </div>
-            </div>
-            <div className={cls.infoRightTop}>
-                {isLoaded && showMap && <div
-                    className={cls.selectDiv}
-                    // style={{
-                    //     flexDirection: blockRef.current.clientHeight > window.innerHeight ? "column-reverse" : "row"
-                    // }}
-                >
-                    <div
-                        className={cls.directionDiv}
-                        style={{
-                            width: blockRef.current.clientHeight > window.innerHeight ? "100%" : "50%"
-                        }}
-                    >
-                        {steps && steps.map((el: any) => {
-                            return (
-                                <div
-                                    className={cls.directions}
-                                    dangerouslySetInnerHTML={{ __html: el.instructions }}
-                                />
-                            );
-                        })}
-                    </div>
-                    <div className={cls.mapDiv}>
-                        <GoogleMap
-                            ///  center={center}
-                            zoom={15}
-                            mapContainerStyle={{ width: "100%", height: "100%", minHeight: "500px"}}
-                            options={{
-                                zoomControl: true,
-                                streetViewControl: false,
-                                mapTypeControl: false,
-                                fullscreenControl: false,
-                            }}
-                            onLoad={map => setMap(map)}
-                        >
-                            {/* <Marker position={center} /> */}
-                            {directionsResponse && (
-                                <DirectionsRenderer directions={directionsResponse}/>
-                            )}
-                        </GoogleMap>
-                    </div>
-                </div>}
-            </div>
-        </div>
+            }}
+        </Formik>
     </div>;
 };
 
 export default Show;
-
-// <div className={cls.updateButton}>
-//     <Button type={"adminUpdate"} onClick={handlerUpdate}>
-//         Update
-//     </Button>
-// </div>
-
-
-// <div className={cls.item}>
-//     <span className={cls.b_text}>{t("fullName")}: </span>
-//     {clientById.fullName}
-// </div>
-// <div className={cls.item}>
-//     <span className={cls.b_text}>{t("date_of_service")}: </span>
-//     {clientById.date_of_service}
-// </div>
-// <div className={cls.item}>
-//     <TimePicker format={"h:m"} className={s.time} clockIcon={null} clearIcon={null} onChange={(time:string) => setFieldValue((state:any) => {
-//         return {
-//             ...state,
-//             'pick_up':time
-//         }
-//     }) }  name={'pick_up'} value={clientById.pick_up} />
-// </div>
-//
-// <div className={cls.item}>
-//     <TimePicker format={"h:m"} className={s.time} clockIcon={null} clearIcon={null} onChange={(time:string) => setFieldValue((state:any) => {
-//         return {
-//             ...state,
-//             'drop_down':time
-//         }
-//     }) }  name={'drop_down'} value={clientById.drop_down} />
-// </div>
-//
-// <div className={cls.item}>
-//     <span className={cls.b_text}>{t("pick_up_address")}: </span>
-//     {clientById.origin ? clientById.origin : "Unspecified"}
-// </div>
-// <div className={cls.item}>
-//     <span className={cls.b_text}>{t("origin_comment")}: </span>
-//     {clientById.origin_comment ? clientById.origin_comment : "Unspecified"}
-// </div>
-// <div className={cls.item}>
-//     <span className={cls.b_text}>{t("origin_phone")}: </span>
-//     {clientById.origin_phone ? clientById.origin_phone : "Unspecified"}
-// </div>
-// <div className={cls.item}>
-//     <span className={cls.b_text}>{t("destination")}: </span>
-//     {clientById.destination ? clientById.destination : "Unspecified"}
-// </div>
-//
-// <div className={cls.item}>
-//     <span className={cls.b_text}>{t("destination_comments")}: </span>
-//     {clientById.destination_comment ? clientById.destination_id : "Unspecified"}
-// </div>
-// <div className={cls.item}>
-//     <span className={cls.b_text}>{t("destination_phone")}: </span>
-//     {clientById.destination_phone ? clientById.destination_phone : "Unspecified"}
-// </div>
-// <div className={cls.item}>
-//     <span className={cls.b_text}>{t("weight")}: </span>
-//     {clientById.weight ? clientById.weight : "Unspecified"}
-// </div>
-// <div className={cls.item}>
-//     <span className={cls.b_text}>{t("height")}: </span>
-//     {clientById.height ? clientById.height : "Unspecified"}
-// </div>
-// <div className={cls.item}>
-//     <Textarea
-//         name={'additionalNote'}
-//         value={values.additionalNote}
-//         placeholder={t('additionalNote')}
-//         onChange={(event:any) => {
-//             event.persist();
-//             return setFieldValue((state: any) => {
-//                 return {
-//                     ...state,
-//                     additionalNote: event.target.value
-//                 };
-//             });
-//         } }
-//         label={t('additionalNote')}
-//     />
-// </div>
-//
-// <div className={cls.item}>
-//     <Textarea
-//         name={'operator_note'}
-//         value={values.operator_note}
-//         placeholder={t('operator_note')}
-//         onChange={(event:any) => {
-//             event.persist();
-//             return setFieldValue((state: any) => {
-//                 return {
-//                     ...state,
-//                     operator_note: event.target.value
-//                 };
-//             });
-//         } }
-//         label={t('operator_note')}
-//     />
-// </div>
-//
-//
-// <div>
-//     <Button type={'adminUpdate'} onClick={handlerUpdate}>
-//         Update
-//     </Button>
-// </div>
-// {isLoaded && <div className={cls.selectDiv}>
-//
-//     <div className={cls.mapDiv}>
-//         <GoogleMap
-//             ///  center={center}
-//             zoom={15}
-//             mapContainerStyle={{ width: "100%", height: "100%" }}
-//             options={{
-//                 zoomControl: true,
-//                 streetViewControl: false,
-//                 mapTypeControl: false,
-//                 fullscreenControl: false
-//             }}
-//             onLoad={map => setMap(map)}
-//         >
-//             {/* <Marker position={center} /> */}
-//             {directionsResponse && (
-//                 <DirectionsRenderer directions={directionsResponse} />
-//             )}
-//
-//         </GoogleMap>
-//     </div>
-//     <div  className={cls.directionDiv}>
-//         {steps && steps.map((el: any) => {
-//             return (
-//                 <div
-//                     className={cls.directions}
-//                     dangerouslySetInnerHTML={{ __html: el.instructions }}
-//                 />
-//             );
-//         })}
-//     </div>
-// </div>}
-//
-
-
-// <div className={cls.itemsMap}>
-//     <div className={cls.mapBlock}>
-//         {isLoaded && <div className={cls.selectDiv}>
-//             <div className={cls.mapDiv}>
-//                 <GoogleMap
-//                     ///  center={center}
-//                     zoom={15}
-//                     mapContainerStyle={{ width: "100%", height: "100%" }}
-//                     options={{
-//                         zoomControl: true,
-//                         streetViewControl: false,
-//                         mapTypeControl: false,
-//                         fullscreenControl: false
-//                     }}
-//                     onLoad={map => setMap(map)}
-//                 >
-//                     {/* <Marker position={center} /> */}
-//                     {directionsResponse && (
-//                         <DirectionsRenderer directions={directionsResponse} />
-//                     )}
-//
-//                 </GoogleMap>
-//             </div>
-//             <div className={cls.directionDiv}>
-//                 {steps && steps.map((el: any) => {
-//                     return (
-//                         <div
-//                             className={cls.directions}
-//                             dangerouslySetInnerHTML={{ __html: el.instructions }}
-//                         />
-//                     );
-//                 })}
-//             </div>
-//         </div>}
-//     </div>
-// </div>
-// <div className={cls.addInfo}>
-//     <div className={cls.info}>
-//         <div className={cls.item}>
-//             <Textarea
-//                 name={"additionalNote"}
-//                 value={values.additionalNote}
-//                 placeholder={t("additionalNote")}
-//                 onChange={(event: any) => {
-//                     event.persist();
-//                     return setFieldValue((state: any) => {
-//                         return {
-//                             ...state,
-//                             additionalNote: event.target.value
-//                         };
-//                     });
-//                 }}
-//                 label={t("additionalNote")}
-//             />
-//         </div>
-//         <div className={cls.item}>
-//             <Textarea
-//                 name={'operator_note'}
-//                 value={values.operator_note}
-//                 placeholder={t('operator_note')}
-//                 onChange={(event:any) => {
-//                     event.persist();
-//                     return setFieldValue((state: any) => {
-//                         return {
-//                             ...state,
-//                             operator_note: event.target.value
-//                         };
-//                     });
-//                 } }
-//                 label={t('operator_note')}
-//             />
-//         </div>
-//     </div>
-//     <div className={cls.updateButton}>
-//         <Button type={"adminUpdate"} onClick={handlerUpdate}>
-//             Update
-//         </Button>
-//     </div>
-// </div>

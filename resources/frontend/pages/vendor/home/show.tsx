@@ -130,29 +130,6 @@ const Show: React.FC<IShow> = ({ id }) => {
 
 
     };
-    // const handlerUpdate = async () => {
-    //     ////TODO optimize this part
-    //     if (!values22.car.value) {
-    //         const options = {
-    //             type: toast.TYPE.WARNING,
-    //             position: toast.POSITION.TOP_RIGHT
-    //         };
-    //         toast(t("please select car"), options);
-    //     } else {
-    //         const homeData = await homeAPI.updateClient(values22, id).catch((e) => {
-    //             const options = {
-    //                 type: toast.TYPE.ERROR,
-    //                 position: toast.POSITION.TOP_RIGHT
-    //             };
-    //             toast(t(e), options);
-    //         });
-    //         if (homeData.success) {
-
-    //         }
-    //     }
-    //
-    //
-    // };
 
     const submit = async (values: FormikValues, { setSubmitting }: FormikHelpers<FormikValues>) => {
         if (values.status.id === 0) {
@@ -194,7 +171,6 @@ const Show: React.FC<IShow> = ({ id }) => {
                   errors
               }) => {
 
-                console.log(values, "valuesvalues");
                 return (
                     <>
                         <div className={cls.infoLeft}>
@@ -403,132 +379,5 @@ const Show: React.FC<IShow> = ({ id }) => {
         </Formik>
     </div>;
 };
-
-// <div className={cls.item}>
-//     <span className={cls.b_text}>{t("fullName")}: </span>
-//     {clientById.fullName}
-// </div>
-
-// <div className={cls.item}>
-//     <span className={cls.b_text}>{t("date_of_service")}: </span>
-//     {clientById.date_of_service}
-// </div>
-// <div className={cls.item}>
-//     <span className={cls.b_text}>{t("pick_up")}: </span>
-//     <TimePicker
-//         className={s.time}
-//         format={"HH:mm"}
-//         clockIcon={null}
-//         clearIcon={null}
-//         amPmAriaLabel={false}
-//         onChange={(time: string) => setFieldValue((state: any) => {
-//             return {
-//                 ...state,
-//                 "pick_up": time
-//             };
-//         })}
-//         name={"pick_up"}
-//         value={clientById.pick_up}
-//     />
-// </div>
-//
-// <div className={cls.item}>
-//     <span className={cls.b_text}>{t("drop_down")}: </span>
-//     <TimePicker
-//         className={s.time}
-//         format={"HH:mm"}
-//         clockIcon={null}
-//         clearIcon={null}
-//         amPmAriaLabel={false}
-//         onChange={(time: string) => setFieldValue((state: any) => {
-//             return {
-//                 ...state,
-//                 "drop_down": time
-//             };
-//         })}
-//         name={"drop_down"}
-//         value={clientById.drop_down}
-//     />
-// </div>
-//
-// <div className={cls.item}>
-//     <span className={cls.b_text}>{t("pick_up_address")}: </span>
-//     {clientById.origin}
-//
-// </div>
-// <div className={cls.item}>
-//     <span className={cls.b_text}>{t("origin_comment")}: </span>
-//     {clientById.origin_comment}
-// </div>
-// <div className={cls.item}>
-//     <span className={cls.b_text}>{t("origin_phone")}: </span>
-//     {clientById.origin_phone}
-// </div>
-// <div className={cls.item}>
-//     <span className={cls.b_text}>{t("destination")}: </span>
-//     {clientById.destination}
-// </div>
-//
-// <div className={cls.item}>
-//     <span className={cls.b_text}>{t("destination_comments")}: </span>
-//     {clientById.destination_comment}
-// </div>
-// <div className={cls.item}>
-//     <span className={cls.b_text}>{t("destination_phone")}: </span>
-//     {clientById.destination_phone}
-// </div>
-// <div className={cls.item}>
-//     <span className={cls.b_text}>{t("weight")}: </span>
-//     {clientById.weight}
-// </div>
-// <div className={cls.item}>
-//     <span className={cls.b_text}>{t("height")}: </span>
-//     {clientById.height}
-// </div>
-// <div>
-//     <Select
-//         getOptionValue={(option: IOption) => option.value}
-//         getOptionLabel={(option: IOption) => t(option.label)}
-//         onChange={(options: IOption) => setFieldValue((state: any) => {
-//             return {
-//                 ...state,
-//                 car: options
-//             };
-//         })}
-//         isDisabled={(values.status.id == 6)}
-//         options={carData}
-//         value={values.car}
-//         name={"Cars"}
-//         isMulti={false}
-//     />
-// </div>
-// <div className={cls.item}>
-//     <span className={cls.b_text}>{t("status")}: </span>
-//     <Select
-//         getOptionValue={(option: IOption) => option.value}
-//         getOptionLabel={(option: IOption) => t(option.label)}
-//         onChange={(options: IOption) => {
-//             return setFieldValue((state: any) => {
-//                 return {
-//                     ...state,
-//                     status: options
-//                 };
-//             });
-//         }}
-//         isDisabled={(values.status.id == 6)}
-//         options={statuses}
-//         value={values.status}
-//         name={"Cars"}
-//         isMulti={false}
-//     />
-//     {/*{clientById.status}*/}
-// </div>
-
-//
-//
-// <div>
-
-// </div>
-
 
 export default Show;

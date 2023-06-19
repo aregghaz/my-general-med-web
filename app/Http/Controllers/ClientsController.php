@@ -241,18 +241,20 @@ class ClientsController extends Controller
         } else {
             $statusId = $client->type_id;
         }
+
+        if (isset($request->operator_note)) {
+            $client->operator_note = $request->operator_note;
+        }
         $client->additionalNote = $request->additionalNote;
         $client->update();
         $address = Address::where('client_id', $id)->get();
 
-        foreach ($address as $index => $value){
-            $count = $index+1;
-           $singleAddress = Address::find($value->id);
+        foreach ($address as $index => $value) {
+            $count = $index + 1;
+            $singleAddress = Address::find($value->id);
 
             if ($count === 1) {
                 $stepTimePickUp = "pick_up_$count";
-               /// dd($request->$stepTimePickUp);
-               /// dd($request->$stepTimePickUp);
                 $singleAddress->pick_up = $request->$stepTimePickUp;
             } else if ($count === $client->count) {
                 $stepTimeDropDown = "drop_down_$count";
