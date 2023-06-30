@@ -125,7 +125,7 @@ class ApiController extends Controller
     }
     public function getDriverData(Request $request)
     {
-        return Driver::where(['user_id' => $request->user->id])->first();
+        return Driver::where(['user_id' => $request->user()->id])->first();
 
     }
 
