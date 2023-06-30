@@ -125,8 +125,8 @@ class ApiController extends Controller
     }
     public function getDriverData(Request $request)
     {
-        return Driver::where(['user_id' => $request->user()->id])->first();
-
+        $driver = Driver::where(['user_id' => $request->user()->id])->select('picture')->first();
+        return response()->json($driver, 200);
     }
 
 
