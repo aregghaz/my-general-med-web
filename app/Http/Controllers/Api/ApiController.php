@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ClientCollection;
 use App\Models\Address;
 use App\Models\Clients;
+use App\Models\Driver;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller
@@ -122,4 +123,11 @@ class ApiController extends Controller
         return Clients::where(['type_id' => 5, 'car_id' => $carId])->first();
 
     }
+    public function getDriverData(Request $request)
+    {
+        return Driver::where(['user_id' => $request->user->id])->first();
+
+    }
+
+
 }

@@ -39,11 +39,16 @@ Route::group([
     Route::get('/get-notification/{showMore}', [NotificationController::class, 'vendorNotification']);
     Route::get('/get-reason-data', [HomeController::class, 'getReasonData']);
     Route::get('/car-data-for-select', [HomeController::class, 'carDataForSelect']);
+
+
+    Route::get('/get-driver-data', [ApiController::class, 'getDriverData']);
     Route::post('/clients-data-driver/', [ApiController::class, 'getClientsDataForDriver']);
     Route::get('/start-trip/{id}', [ApiController::class, 'startTrip']);
     Route::get('/done-trip/{id}', [ApiController::class, 'doneTrip']);
     Route::get('/client-route-driver/{id}', [ApiController::class, 'clientRoute']);
     Route::get('/client-data-driver/{id}', [ApiController::class, 'getClientDataForDriver']);
+
+
     Route::post('/clientData', [HomeController::class, 'clientData']);
     Route::post('/changeClientType', [HomeController::class, 'changeClientType']);
     Route::post('/assign-car-client', [HomeController::class, 'assignCarDriver']);
@@ -59,22 +64,13 @@ Route::group([
 Route::group([
     'prefix' => 'auth'
 ], function () {
-
     Route::post('login', [\App\Http\Controllers\AuthController::class, 'login']);
     Route::post('signup', [\App\Http\Controllers\AuthController::class, 'signup']);
     Route::get('getFormData', [\App\Http\Controllers\AuthController::class, 'registerForm']);
-
     Route::group([
         'middleware' => 'auth:api'
     ], function () {
-
         Route::get('user', [\App\Http\Controllers\AuthController::class, 'user']);
-        // Route::get('account-data', [\App\Http\Controllers\AuthController::class, 'userData']);
-        // Route::post('reset', [\App\Http\Controllers\AuthController::class, 'reset']);
-
-        // /////TOODO CHECK THIS PART
-        // Route::post('uploadAvatar', [\App\Http\Controllers\AuthController::class, 'uploadAvatar']);
-        // Route::post('edit', [\App\Http\Controllers\AuthController::class, 'edit']);
         Route::get('logout', [\App\Http\Controllers\AuthController::class, 'logout']);
     });
 });
@@ -85,7 +81,6 @@ Route::group([
         'users' => UserController::class,
         'clients' => ClientsController::class,
         'operators' => OperatorController::class,
-
     ]);
     Route::get('/dashboard', [DashBoardController::class, 'index']);
     Route::post('/clientsData', [ClientsController::class, 'clientsData']);
@@ -102,7 +97,6 @@ Route::group([
     Route::post('/assign-vendor-client', [VendorController::class, 'setVendorTtoClient']);
     Route::get('/getVendorsByLosId/{id}', [VendorController::class, 'getVendorsByLosId']);
     Route::post('/updateClient/{id}', [AdminController::class, 'updateClient']);
-
     Route::get('/audit', [VendorController::class, 'audit']);
     Route::get('/get-price-list/{id}', [PriceListController::class, 'index']);
     Route::get('/get-notification/{typeId}/{showMore}', [NotificationController::class, 'index']);
