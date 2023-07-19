@@ -506,7 +506,7 @@ class ClientsController extends Controller
         $client->stops = $requestData->count;
         $client->member_uniqie_identifer = $requestData->member_uniqie_identifer;
         $client->stairchair_id = $requestData->stairchair_id->id;
-
+       // dd(empty($requestData->vendor_id));
         if (isset($requestData->birthday)) {
             $client->birthday = $requestData->birthday;
         }
@@ -519,7 +519,8 @@ class ClientsController extends Controller
         }
         if (isset($requestData->specialPrice) && $requestData->specialPrice) {
             $client->price = (float)$requestData->price;
-        } else if (isset($requestData->vendor_id)) {
+        } else if (isset($requestData->vendor_id) and !empty($requestData->vendor_id)) {
+
             $price = 0;
             $priceLists = PriceList::where(['los_id' => $requestData->los->id, 'vendor_id' => $requestData->vendor_id->id])->get();
             $client->vendor_id = $requestData->vendor_id->id;
