@@ -44,12 +44,12 @@ class Controller extends BaseController
                 'slug' => $client->requestType->slug,
                 'value' => $client->requestType->slug,
             ],
-            'vendor_id' => [
+            'vendor_id' => $client->vendor ? [
                 'id' => $client->vendor->id,
                 'label' => $client->vendor->name,
                 'slug' => $client->vendor->slug,
                 'value' => $client->vendor->slug,
-            ],
+            ] : [],
             'duration_id' => [
                 'id' => $client->waiteDuration->id,
                 'label' => $client->waiteDuration->name,
