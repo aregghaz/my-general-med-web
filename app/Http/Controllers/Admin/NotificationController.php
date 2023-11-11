@@ -94,7 +94,8 @@ class NotificationController extends Controller
 
         switch ($notification->model) {
             case 'driver':
-                $dataNotif = VendorUsersController::show($notification->value_id);
+                $vendorUSer = new VendorUsersController();
+                $dataNotif = $vendorUSer->show($notification->value_id);
                 break;
             case 'car':
                 $car = new CarsController();
